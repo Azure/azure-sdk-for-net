@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Mutable batch inference settings per deployment. </summary>
     internal partial class PartialBatchDeployment
     {
-        /// <summary> Initializes a new instance of PartialBatchDeployment. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PartialBatchDeployment"/>. </summary>
         public PartialBatchDeployment()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PartialBatchDeployment"/>. </summary>
+        /// <param name="description"> Description of the endpoint deployment. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PartialBatchDeployment(string description, Dictionary<string, BinaryData> rawData)
+        {
+            Description = description;
+            _rawData = rawData;
         }
 
         /// <summary> Description of the endpoint deployment. </summary>

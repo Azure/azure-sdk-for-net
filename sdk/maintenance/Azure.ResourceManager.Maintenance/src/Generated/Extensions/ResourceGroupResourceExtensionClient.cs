@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.Maintenance
         public virtual AsyncPageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdatesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplyUpdateForResourceGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MaintenanceApplyUpdateResource(Client, MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(e)), ApplyUpdateForResourceGroupClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetMaintenanceApplyUpdates", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new MaintenanceApplyUpdateResource(Client, MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(e)), ApplyUpdateForResourceGroupClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetMaintenanceApplyUpdates", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -803,7 +803,7 @@ namespace Azure.ResourceManager.Maintenance
         public virtual Pageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdates(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplyUpdateForResourceGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MaintenanceApplyUpdateResource(Client, MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(e)), ApplyUpdateForResourceGroupClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetMaintenanceApplyUpdates", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new MaintenanceApplyUpdateResource(Client, MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(e)), ApplyUpdateForResourceGroupClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetMaintenanceApplyUpdates", "value", null, cancellationToken);
         }
 
         /// <summary>

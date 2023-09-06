@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Limit settings for the AutoML job. </summary>
     public partial class ImageLimitSettings
     {
-        /// <summary> Initializes a new instance of ImageLimitSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ImageLimitSettings"/>. </summary>
         public ImageLimitSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageLimitSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageLimitSettings"/>. </summary>
         /// <param name="maxConcurrentTrials"> Maximum number of concurrent AutoML iterations. </param>
         /// <param name="maxTrials"> Maximum number of AutoML iterations. </param>
         /// <param name="timeout"> AutoML job timeout. </param>
-        internal ImageLimitSettings(int? maxConcurrentTrials, int? maxTrials, TimeSpan? timeout)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImageLimitSettings(int? maxConcurrentTrials, int? maxTrials, TimeSpan? timeout, Dictionary<string, BinaryData> rawData)
         {
             MaxConcurrentTrials = maxConcurrentTrials;
             MaxTrials = maxTrials;
             Timeout = timeout;
+            _rawData = rawData;
         }
 
         /// <summary> Maximum number of concurrent AutoML iterations. </summary>

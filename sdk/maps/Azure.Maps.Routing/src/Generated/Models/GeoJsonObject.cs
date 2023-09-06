@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Routing.Models
 {
     /// <summary>
@@ -14,9 +17,21 @@ namespace Azure.Maps.Routing.Models
     /// </summary>
     internal abstract partial class GeoJsonObject
     {
-        /// <summary> Initializes a new instance of GeoJsonObject. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GeoJsonObject"/>. </summary>
         protected GeoJsonObject()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GeoJsonObject"/>. </summary>
+        /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GeoJsonObject(GeoJsonObjectType type, Dictionary<string, BinaryData> rawData)
+        {
+            Type = type;
+            _rawData = rawData;
         }
 
         /// <summary> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </summary>

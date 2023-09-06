@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningSslConfiguration : IUtf8JsonSerializable
+    public partial class MachineLearningSslConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningSslConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningSslConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningSslConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningSslConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
@@ -73,11 +81,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("overwriteExistingDomain"u8);
                 writer.WriteBooleanValue(OverwriteExistingDomain.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningSslConfiguration DeserializeMachineLearningSslConfiguration(JsonElement element)
+        internal static MachineLearningSslConfiguration DeserializeMachineLearningSslConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -88,6 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> cname = default;
             Optional<string> leafDomainLabel = default;
             Optional<bool> overwriteExistingDomain = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -148,8 +171,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     overwriteExistingDomain = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningSslConfiguration(Optional.ToNullable(status), cert.Value, key.Value, cname.Value, leafDomainLabel.Value, Optional.ToNullable(overwriteExistingDomain));
+            return new MachineLearningSslConfiguration(Optional.ToNullable(status), cert.Value, key.Value, cname.Value, leafDomainLabel.Value, Optional.ToNullable(overwriteExistingDomain), rawData);
+        }
+
+        MachineLearningSslConfiguration IModelJsonSerializable<MachineLearningSslConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningSslConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningSslConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningSslConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningSslConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningSslConfiguration IModelSerializable<MachineLearningSslConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningSslConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningSslConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningSslConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningSslConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningSslConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningSslConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningSslConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningSslConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,26 +14,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Base definition for endpoint deployment. </summary>
     public partial class MachineLearningEndpointDeploymentProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningEndpointDeploymentProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointDeploymentProperties"/>. </summary>
         public MachineLearningEndpointDeploymentProperties()
         {
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEndpointDeploymentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointDeploymentProperties"/>. </summary>
         /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
         /// <param name="description"> Description of the endpoint deployment. </param>
         /// <param name="environmentId"> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </param>
         /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
-        internal MachineLearningEndpointDeploymentProperties(MachineLearningCodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningEndpointDeploymentProperties(MachineLearningCodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, Dictionary<string, BinaryData> rawData)
         {
             CodeConfiguration = codeConfiguration;
             Description = description;
             EnvironmentId = environmentId;
             EnvironmentVariables = environmentVariables;
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Code configuration for the endpoint deployment. </summary>

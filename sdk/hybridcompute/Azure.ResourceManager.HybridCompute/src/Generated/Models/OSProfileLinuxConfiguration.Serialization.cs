@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class OSProfileLinuxConfiguration : IUtf8JsonSerializable
+    public partial class OSProfileLinuxConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<OSProfileLinuxConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OSProfileLinuxConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OSProfileLinuxConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<OSProfileLinuxConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("patchSettings"u8);
             writer.WriteStartObject();
@@ -28,17 +36,32 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStringValue(PatchMode.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OSProfileLinuxConfiguration DeserializeOSProfileLinuxConfiguration(JsonElement element)
+        internal static OSProfileLinuxConfiguration DeserializeOSProfileLinuxConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AssessmentModeType> assessmentMode = default;
             Optional<PatchModeType> patchMode = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("patchSettings"u8))
@@ -71,8 +94,61 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OSProfileLinuxConfiguration(Optional.ToNullable(assessmentMode), Optional.ToNullable(patchMode));
+            return new OSProfileLinuxConfiguration(Optional.ToNullable(assessmentMode), Optional.ToNullable(patchMode), rawData);
+        }
+
+        OSProfileLinuxConfiguration IModelJsonSerializable<OSProfileLinuxConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OSProfileLinuxConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOSProfileLinuxConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OSProfileLinuxConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OSProfileLinuxConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OSProfileLinuxConfiguration IModelSerializable<OSProfileLinuxConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OSProfileLinuxConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOSProfileLinuxConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OSProfileLinuxConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OSProfileLinuxConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(OSProfileLinuxConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OSProfileLinuxConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OSProfileLinuxConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOSProfileLinuxConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

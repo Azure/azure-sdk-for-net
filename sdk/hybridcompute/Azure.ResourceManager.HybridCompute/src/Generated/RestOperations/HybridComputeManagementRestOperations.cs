@@ -54,9 +54,7 @@ namespace Azure.ResourceManager.HybridCompute
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(extensionUpgradeParameters);
-            request.Content = content;
+            request.Content = extensionUpgradeParameters;
             _userAgent.Apply(message);
             return message;
         }

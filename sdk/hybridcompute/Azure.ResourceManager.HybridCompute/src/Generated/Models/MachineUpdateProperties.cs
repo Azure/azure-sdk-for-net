@@ -5,14 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes the ARM updatable properties of a hybrid machine. </summary>
     public partial class MachineUpdateProperties
     {
-        /// <summary> Initializes a new instance of MachineUpdateProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineUpdateProperties"/>. </summary>
         public MachineUpdateProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineUpdateProperties"/>. </summary>
+        /// <param name="locationData"> Metadata pertaining to the geographic location of the resource. </param>
+        /// <param name="osProfile"> Specifies the operating system settings for the hybrid machine. </param>
+        /// <param name="cloudMetadata"> The metadata of the cloud environment (Azure/GCP/AWS/OCI...). </param>
+        /// <param name="parentClusterResourceId"> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </param>
+        /// <param name="privateLinkScopeResourceId"> The resource id of the private link scope this machine is assigned to, if any. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineUpdateProperties(LocationData locationData, OSProfile osProfile, CloudMetadata cloudMetadata, string parentClusterResourceId, string privateLinkScopeResourceId, Dictionary<string, BinaryData> rawData)
+        {
+            LocationData = locationData;
+            OSProfile = osProfile;
+            CloudMetadata = cloudMetadata;
+            ParentClusterResourceId = parentClusterResourceId;
+            PrivateLinkScopeResourceId = privateLinkScopeResourceId;
+            _rawData = rawData;
         }
 
         /// <summary> Metadata pertaining to the geographic location of the resource. </summary>

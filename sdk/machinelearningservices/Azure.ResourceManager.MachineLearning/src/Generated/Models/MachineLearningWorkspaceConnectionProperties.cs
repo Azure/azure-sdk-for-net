@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -12,26 +16,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="MachineLearningWorkspaceConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningSasAuthTypeWorkspaceConnection"/> and <see cref="MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownWorkspaceConnectionPropertiesV2))]
     public abstract partial class MachineLearningWorkspaceConnectionProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionProperties"/>. </summary>
         protected MachineLearningWorkspaceConnectionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionProperties"/>. </summary>
         /// <param name="authType"> Authentication type of the connection target. </param>
         /// <param name="category"> Category of the connection. </param>
         /// <param name="target"></param>
         /// <param name="value"> Value details of the workspace connection. </param>
         /// <param name="valueFormat"> format for the workspace connection value. </param>
-        internal MachineLearningWorkspaceConnectionProperties(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, string target, string value, MachineLearningValueFormat? valueFormat)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningWorkspaceConnectionProperties(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, string target, string value, MachineLearningValueFormat? valueFormat, Dictionary<string, BinaryData> rawData)
         {
             AuthType = authType;
             Category = category;
             Target = target;
             Value = value;
             ValueFormat = valueFormat;
+            _rawData = rawData;
         }
 
         /// <summary> Authentication type of the connection target. </summary>

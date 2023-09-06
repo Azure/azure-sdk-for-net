@@ -5,23 +5,45 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class TrackDescriptor : IUtf8JsonSerializable
+    public partial class TrackDescriptor : IUtf8JsonSerializable, IModelJsonSerializable<TrackDescriptor>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TrackDescriptor>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TrackDescriptor>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TrackDescriptor>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TrackDescriptor DeserializeTrackDescriptor(JsonElement element)
+        internal static TrackDescriptor DeserializeTrackDescriptor(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,7 +60,72 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.VideoTrackDescriptor": return VideoTrackDescriptor.DeserializeVideoTrackDescriptor(element);
                 }
             }
-            return UnknownTrackDescriptor.DeserializeUnknownTrackDescriptor(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            string odataType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("@odata.type"u8))
+                {
+                    odataType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownTrackDescriptor(odataType, rawData);
+        }
+
+        TrackDescriptor IModelJsonSerializable<TrackDescriptor>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrackDescriptor>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrackDescriptor(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TrackDescriptor>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrackDescriptor>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TrackDescriptor IModelSerializable<TrackDescriptor>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrackDescriptor>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTrackDescriptor(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TrackDescriptor"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TrackDescriptor"/> to convert. </param>
+        public static implicit operator RequestContent(TrackDescriptor model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TrackDescriptor"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TrackDescriptor(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTrackDescriptor(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class FlowAccessControlConfigurationPolicy : IUtf8JsonSerializable
+    public partial class FlowAccessControlConfigurationPolicy : IUtf8JsonSerializable, IModelJsonSerializable<FlowAccessControlConfigurationPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FlowAccessControlConfigurationPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FlowAccessControlConfigurationPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FlowAccessControlConfigurationPolicy>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AllowedCallerIPAddresses))
             {
@@ -22,26 +29,55 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in AllowedCallerIPAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<FlowAccessControlIPAddressRange>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OpenAuthenticationPolicies))
             {
                 writer.WritePropertyName("openAuthenticationPolicies"u8);
-                writer.WriteObjectValue(OpenAuthenticationPolicies);
+                if (OpenAuthenticationPolicies is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<OpenAuthenticationAccessPolicies>)OpenAuthenticationPolicies).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static FlowAccessControlConfigurationPolicy DeserializeFlowAccessControlConfigurationPolicy(JsonElement element)
+        internal static FlowAccessControlConfigurationPolicy DeserializeFlowAccessControlConfigurationPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<FlowAccessControlIPAddressRange>> allowedCallerIPAddresses = default;
             Optional<OpenAuthenticationAccessPolicies> openAuthenticationPolicies = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedCallerIpAddresses"u8))
@@ -67,8 +103,61 @@ namespace Azure.ResourceManager.Logic.Models
                     openAuthenticationPolicies = OpenAuthenticationAccessPolicies.DeserializeOpenAuthenticationAccessPolicies(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FlowAccessControlConfigurationPolicy(Optional.ToList(allowedCallerIPAddresses), openAuthenticationPolicies.Value);
+            return new FlowAccessControlConfigurationPolicy(Optional.ToList(allowedCallerIPAddresses), openAuthenticationPolicies.Value, rawData);
+        }
+
+        FlowAccessControlConfigurationPolicy IModelJsonSerializable<FlowAccessControlConfigurationPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FlowAccessControlConfigurationPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFlowAccessControlConfigurationPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FlowAccessControlConfigurationPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FlowAccessControlConfigurationPolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FlowAccessControlConfigurationPolicy IModelSerializable<FlowAccessControlConfigurationPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FlowAccessControlConfigurationPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFlowAccessControlConfigurationPolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FlowAccessControlConfigurationPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FlowAccessControlConfigurationPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(FlowAccessControlConfigurationPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FlowAccessControlConfigurationPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FlowAccessControlConfigurationPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFlowAccessControlConfigurationPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Search.Models
 {
     /// <summary> POI category. </summary>
     public partial class PointOfInterestCategorySet
     {
-        /// <summary> Initializes a new instance of PointOfInterestCategorySet. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PointOfInterestCategorySet"/>. </summary>
         internal PointOfInterestCategorySet()
         {
         }
 
-        /// <summary> Initializes a new instance of PointOfInterestCategorySet. </summary>
+        /// <summary> Initializes a new instance of <see cref="PointOfInterestCategorySet"/>. </summary>
         /// <param name="id"> Category ID. </param>
-        internal PointOfInterestCategorySet(int? id)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PointOfInterestCategorySet(int? id, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
+            _rawData = rawData;
         }
 
         /// <summary> Category ID. </summary>

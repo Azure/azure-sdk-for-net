@@ -15,6 +15,9 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> The response for the Trial Matcher request. </summary>
     public partial class TrialMatcherResult
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of TrialMatcherResult. </summary>
         internal TrialMatcherResult()
         {
@@ -29,7 +32,8 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="status"> The status of the processing job. </param>
         /// <param name="errors"> An array of errors, if any errors occurred during the processing job. </param>
         /// <param name="results"> The inference results for the Trial Matcher request. </param>
-        internal TrialMatcherResult(Guid jobId, DateTimeOffset createdDateTime, DateTimeOffset expirationDateTime, DateTimeOffset lastUpdateDateTime, JobStatus status, IReadOnlyList<ResponseError> errors, TrialMatcherResults results)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrialMatcherResult(Guid jobId, DateTimeOffset createdDateTime, DateTimeOffset expirationDateTime, DateTimeOffset lastUpdateDateTime, JobStatus status, IReadOnlyList<ResponseError> errors, TrialMatcherResults results, Dictionary<string, BinaryData> rawData)
         {
             JobId = jobId;
             CreatedDateTime = createdDateTime;
@@ -38,6 +42,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             Status = status;
             Errors = errors;
             Results = results;
+            _rawData = rawData;
         }
 
         /// <summary> A processing job identifier. </summary>

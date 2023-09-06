@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> Routes that matched. </summary>
     public partial class IotHubMatchedRoute
     {
-        /// <summary> Initializes a new instance of IotHubMatchedRoute. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubMatchedRoute"/>. </summary>
         internal IotHubMatchedRoute()
         {
         }
 
-        /// <summary> Initializes a new instance of IotHubMatchedRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubMatchedRoute"/>. </summary>
         /// <param name="properties"> Properties of routes that matched. </param>
-        internal IotHubMatchedRoute(RoutingRuleProperties properties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubMatchedRoute(RoutingRuleProperties properties, Dictionary<string, BinaryData> rawData)
         {
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Properties of routes that matched. </summary>

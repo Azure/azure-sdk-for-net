@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Media.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.Media
     /// </summary>
     public partial class MediaAssetTrackData : ResourceData
     {
-        /// <summary> Initializes a new instance of MediaAssetTrackData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaAssetTrackData"/>. </summary>
         public MediaAssetTrackData()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaAssetTrackData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaAssetTrackData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,10 +38,12 @@ namespace Azure.ResourceManager.Media
         /// The available derived classes include <see cref="AudioTrack"/>, <see cref="TextTrack"/> and <see cref="VideoTrack"/>.
         /// </param>
         /// <param name="provisioningState"> Provisioning state of the asset track. </param>
-        internal MediaAssetTrackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MediaAssetTrackBase track, MediaServicesProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaAssetTrackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MediaAssetTrackBase track, MediaServicesProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Track = track;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
         }
 
         /// <summary>

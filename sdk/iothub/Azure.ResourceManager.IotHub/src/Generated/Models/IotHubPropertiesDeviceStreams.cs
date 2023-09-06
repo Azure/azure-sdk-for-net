@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The device streams properties of iothub. </summary>
     internal partial class IotHubPropertiesDeviceStreams
     {
-        /// <summary> Initializes a new instance of IotHubPropertiesDeviceStreams. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubPropertiesDeviceStreams"/>. </summary>
         public IotHubPropertiesDeviceStreams()
         {
             StreamingEndpoints = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of IotHubPropertiesDeviceStreams. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubPropertiesDeviceStreams"/>. </summary>
         /// <param name="streamingEndpoints"> List of Device Streams Endpoints. </param>
-        internal IotHubPropertiesDeviceStreams(IList<string> streamingEndpoints)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubPropertiesDeviceStreams(IList<string> streamingEndpoints, Dictionary<string, BinaryData> rawData)
         {
             StreamingEndpoints = streamingEndpoints;
+            _rawData = rawData;
         }
 
         /// <summary> List of Device Streams Endpoints. </summary>

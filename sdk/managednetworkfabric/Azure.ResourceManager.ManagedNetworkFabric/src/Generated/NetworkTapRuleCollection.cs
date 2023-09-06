@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkTapRuleRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkTapRuleRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkTapRuleResource(Client, NetworkTapRuleData.DeserializeNetworkTapRuleData(e)), _networkTapRuleClientDiagnostics, Pipeline, "NetworkTapRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkTapRuleResource(Client, NetworkTapRuleData.DeserializeNetworkTapRuleData(e)), _networkTapRuleClientDiagnostics, Pipeline, "NetworkTapRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkTapRuleRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkTapRuleRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkTapRuleResource(Client, NetworkTapRuleData.DeserializeNetworkTapRuleData(e)), _networkTapRuleClientDiagnostics, Pipeline, "NetworkTapRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkTapRuleResource(Client, NetworkTapRuleData.DeserializeNetworkTapRuleData(e)), _networkTapRuleClientDiagnostics, Pipeline, "NetworkTapRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

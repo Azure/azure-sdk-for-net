@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Logic.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    public partial class LogicWorkflowRunActionRepetitionDefinitionData : IUtf8JsonSerializable
+    public partial class LogicWorkflowRunActionRepetitionDefinitionData : IUtf8JsonSerializable, IModelJsonSerializable<LogicWorkflowRunActionRepetitionDefinitionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LogicWorkflowRunActionRepetitionDefinitionData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LogicWorkflowRunActionRepetitionDefinitionData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LogicWorkflowRunActionRepetitionDefinitionData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -47,7 +53,14 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Correlation))
             {
                 writer.WritePropertyName("correlation"u8);
-                writer.WriteObjectValue(Correlation);
+                if (Correlation is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LogicWorkflowRunActionCorrelation>)Correlation).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Status))
             {
@@ -74,7 +87,14 @@ namespace Azure.ResourceManager.Logic
                 writer.WriteStartArray();
                 foreach (var item in RetryHistory)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<LogicWorkRetryHistory>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,16 +109,37 @@ namespace Azure.ResourceManager.Logic
                 writer.WriteStartArray();
                 foreach (var item in RepetitionIndexes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<LogicWorkflowRepetitionIndex>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LogicWorkflowRunActionRepetitionDefinitionData DeserializeLogicWorkflowRunActionRepetitionDefinitionData(JsonElement element)
+        internal static LogicWorkflowRunActionRepetitionDefinitionData DeserializeLogicWorkflowRunActionRepetitionDefinitionData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -124,6 +165,7 @@ namespace Azure.ResourceManager.Logic
             Optional<IList<LogicWorkRetryHistory>> retryHistory = default;
             Optional<int> iterationCount = default;
             Optional<IList<LogicWorkflowRepetitionIndex>> repetitionIndexes = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -322,8 +364,61 @@ namespace Azure.ResourceManager.Logic
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LogicWorkflowRunActionRepetitionDefinitionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(startTime), Optional.ToNullable(endTime), correlation.Value, Optional.ToNullable(status), code.Value, error.Value, Optional.ToNullable(trackingId), inputs.Value, inputsLink.Value, outputs.Value, outputsLink.Value, trackedProperties.Value, Optional.ToList(retryHistory), Optional.ToNullable(iterationCount), Optional.ToList(repetitionIndexes));
+            return new LogicWorkflowRunActionRepetitionDefinitionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(startTime), Optional.ToNullable(endTime), correlation.Value, Optional.ToNullable(status), code.Value, error.Value, Optional.ToNullable(trackingId), inputs.Value, inputsLink.Value, outputs.Value, outputsLink.Value, trackedProperties.Value, Optional.ToList(retryHistory), Optional.ToNullable(iterationCount), Optional.ToList(repetitionIndexes), rawData);
+        }
+
+        LogicWorkflowRunActionRepetitionDefinitionData IModelJsonSerializable<LogicWorkflowRunActionRepetitionDefinitionData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LogicWorkflowRunActionRepetitionDefinitionData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicWorkflowRunActionRepetitionDefinitionData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LogicWorkflowRunActionRepetitionDefinitionData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LogicWorkflowRunActionRepetitionDefinitionData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LogicWorkflowRunActionRepetitionDefinitionData IModelSerializable<LogicWorkflowRunActionRepetitionDefinitionData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LogicWorkflowRunActionRepetitionDefinitionData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLogicWorkflowRunActionRepetitionDefinitionData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LogicWorkflowRunActionRepetitionDefinitionData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LogicWorkflowRunActionRepetitionDefinitionData"/> to convert. </param>
+        public static implicit operator RequestContent(LogicWorkflowRunActionRepetitionDefinitionData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LogicWorkflowRunActionRepetitionDefinitionData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LogicWorkflowRunActionRepetitionDefinitionData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLogicWorkflowRunActionRepetitionDefinitionData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

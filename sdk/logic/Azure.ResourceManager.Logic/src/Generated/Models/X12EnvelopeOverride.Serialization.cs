@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class X12EnvelopeOverride : IUtf8JsonSerializable
+    public partial class X12EnvelopeOverride : IUtf8JsonSerializable, IModelJsonSerializable<X12EnvelopeOverride>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<X12EnvelopeOverride>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<X12EnvelopeOverride>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<X12EnvelopeOverride>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("targetNamespace"u8);
             writer.WriteStringValue(TargetNamespace);
@@ -38,11 +46,25 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(DateFormat.ToString());
             writer.WritePropertyName("timeFormat"u8);
             writer.WriteStringValue(TimeFormat.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static X12EnvelopeOverride DeserializeX12EnvelopeOverride(JsonElement element)
+        internal static X12EnvelopeOverride DeserializeX12EnvelopeOverride(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +79,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> functionalIdentifierCode = default;
             X12DateFormat dateFormat = default;
             X12TimeFormat timeFormat = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetNamespace"u8))
@@ -109,8 +132,61 @@ namespace Azure.ResourceManager.Logic.Models
                     timeFormat = new X12TimeFormat(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new X12EnvelopeOverride(targetNamespace, protocolVersion, messageId, responsibleAgencyCode, headerVersion, senderApplicationId, receiverApplicationId, functionalIdentifierCode.Value, dateFormat, timeFormat);
+            return new X12EnvelopeOverride(targetNamespace, protocolVersion, messageId, responsibleAgencyCode, headerVersion, senderApplicationId, receiverApplicationId, functionalIdentifierCode.Value, dateFormat, timeFormat, rawData);
+        }
+
+        X12EnvelopeOverride IModelJsonSerializable<X12EnvelopeOverride>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<X12EnvelopeOverride>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeX12EnvelopeOverride(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<X12EnvelopeOverride>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<X12EnvelopeOverride>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        X12EnvelopeOverride IModelSerializable<X12EnvelopeOverride>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<X12EnvelopeOverride>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeX12EnvelopeOverride(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="X12EnvelopeOverride"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="X12EnvelopeOverride"/> to convert. </param>
+        public static implicit operator RequestContent(X12EnvelopeOverride model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="X12EnvelopeOverride"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator X12EnvelopeOverride(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeX12EnvelopeOverride(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

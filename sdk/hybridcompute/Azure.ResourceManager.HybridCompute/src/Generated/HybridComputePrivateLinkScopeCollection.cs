@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridComputePrivateLinkScopeResource(Client, HybridComputePrivateLinkScopeData.DeserializeHybridComputePrivateLinkScopeData(e)), _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, "HybridComputePrivateLinkScopeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new HybridComputePrivateLinkScopeResource(Client, HybridComputePrivateLinkScopeData.DeserializeHybridComputePrivateLinkScopeData(e)), _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, "HybridComputePrivateLinkScopeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridComputePrivateLinkScopeResource(Client, HybridComputePrivateLinkScopeData.DeserializeHybridComputePrivateLinkScopeData(e)), _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, "HybridComputePrivateLinkScopeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new HybridComputePrivateLinkScopeResource(Client, HybridComputePrivateLinkScopeData.DeserializeHybridComputePrivateLinkScopeData(e)), _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, "HybridComputePrivateLinkScopeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

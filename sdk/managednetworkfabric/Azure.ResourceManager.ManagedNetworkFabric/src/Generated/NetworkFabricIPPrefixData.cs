@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
@@ -18,14 +19,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkFabricIPPrefixData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkFabricIPPrefixData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricIPPrefixData"/>. </summary>
         /// <param name="location"> The location. </param>
         public NetworkFabricIPPrefixData(AzureLocation location) : base(location)
         {
             IPPrefixRules = new ChangeTrackingList<IPPrefixRule>();
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricIPPrefixData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricIPPrefixData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,13 +41,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
-        internal NetworkFabricIPPrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IList<IPPrefixRule> ipPrefixRules, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFabricIPPrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IList<IPPrefixRule> ipPrefixRules, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
             IPPrefixRules = ipPrefixRules;
             ConfigurationState = configurationState;
             ProvisioningState = provisioningState;
             AdministrativeState = administrativeState;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricIPPrefixData"/> for deserialization. </summary>
+        internal NetworkFabricIPPrefixData()
+        {
         }
 
         /// <summary> Switch configuration description. </summary>

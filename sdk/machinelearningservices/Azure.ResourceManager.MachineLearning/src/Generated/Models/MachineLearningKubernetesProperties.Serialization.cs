@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningKubernetesProperties : IUtf8JsonSerializable
+    public partial class MachineLearningKubernetesProperties : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningKubernetesProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningKubernetesProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningKubernetesProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningKubernetesProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RelayConnectionString))
             {
@@ -79,15 +86,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 foreach (var item in InstanceTypes)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MachineLearningInstanceTypeSchema>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningKubernetesProperties DeserializeMachineLearningKubernetesProperties(JsonElement element)
+        internal static MachineLearningKubernetesProperties DeserializeMachineLearningKubernetesProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -100,6 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> @namespace = default;
             Optional<string> defaultInstanceType = default;
             Optional<IDictionary<string, MachineLearningInstanceTypeSchema>> instanceTypes = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("relayConnectionString"u8))
@@ -166,8 +195,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     instanceTypes = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningKubernetesProperties(relayConnectionString.Value, serviceBusConnectionString.Value, extensionPrincipalId.Value, extensionInstanceReleaseTrain.Value, vcName.Value, @namespace.Value, defaultInstanceType.Value, Optional.ToDictionary(instanceTypes));
+            return new MachineLearningKubernetesProperties(relayConnectionString.Value, serviceBusConnectionString.Value, extensionPrincipalId.Value, extensionInstanceReleaseTrain.Value, vcName.Value, @namespace.Value, defaultInstanceType.Value, Optional.ToDictionary(instanceTypes), rawData);
+        }
+
+        MachineLearningKubernetesProperties IModelJsonSerializable<MachineLearningKubernetesProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningKubernetesProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningKubernetesProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningKubernetesProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningKubernetesProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningKubernetesProperties IModelSerializable<MachineLearningKubernetesProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningKubernetesProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningKubernetesProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningKubernetesProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningKubernetesProperties"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningKubernetesProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningKubernetesProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningKubernetesProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningKubernetesProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

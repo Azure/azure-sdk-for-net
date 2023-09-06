@@ -5,16 +5,94 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class PrivateStoreNotificationsState
+    public partial class PrivateStoreNotificationsState : IUtf8JsonSerializable, IModelJsonSerializable<PrivateStoreNotificationsState>
     {
-        internal static PrivateStoreNotificationsState DeserializePrivateStoreNotificationsState(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PrivateStoreNotificationsState>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PrivateStoreNotificationsState>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PrivateStoreNotificationsState>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(StopSellNotifications))
+            {
+                writer.WritePropertyName("stopSellNotifications"u8);
+                writer.WriteStartArray();
+                foreach (var item in StopSellNotifications)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<StopSellNotifications>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(NewNotifications))
+            {
+                writer.WritePropertyName("newNotifications"u8);
+                writer.WriteStartArray();
+                foreach (var item in NewNotifications)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<NewPlanNotification>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ApprovalRequests))
+            {
+                writer.WritePropertyName("approvalRequests"u8);
+                writer.WriteStartArray();
+                foreach (var item in ApprovalRequests)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<RequestApprovalsDetails>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PrivateStoreNotificationsState DeserializePrivateStoreNotificationsState(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +100,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<IReadOnlyList<StopSellNotifications>> stopSellNotifications = default;
             Optional<IReadOnlyList<NewPlanNotification>> newNotifications = default;
             Optional<IReadOnlyList<RequestApprovalsDetails>> approvalRequests = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("stopSellNotifications"u8))
@@ -66,8 +145,61 @@ namespace Azure.ResourceManager.Marketplace.Models
                     approvalRequests = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PrivateStoreNotificationsState(Optional.ToList(stopSellNotifications), Optional.ToList(newNotifications), Optional.ToList(approvalRequests));
+            return new PrivateStoreNotificationsState(Optional.ToList(stopSellNotifications), Optional.ToList(newNotifications), Optional.ToList(approvalRequests), rawData);
+        }
+
+        PrivateStoreNotificationsState IModelJsonSerializable<PrivateStoreNotificationsState>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PrivateStoreNotificationsState>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePrivateStoreNotificationsState(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PrivateStoreNotificationsState>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PrivateStoreNotificationsState>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PrivateStoreNotificationsState IModelSerializable<PrivateStoreNotificationsState>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PrivateStoreNotificationsState>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePrivateStoreNotificationsState(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PrivateStoreNotificationsState"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PrivateStoreNotificationsState"/> to convert. </param>
+        public static implicit operator RequestContent(PrivateStoreNotificationsState model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PrivateStoreNotificationsState"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PrivateStoreNotificationsState(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePrivateStoreNotificationsState(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

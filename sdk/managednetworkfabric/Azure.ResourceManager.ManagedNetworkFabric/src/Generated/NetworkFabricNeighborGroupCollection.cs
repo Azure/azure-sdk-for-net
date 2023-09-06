@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricNeighborGroupNeighborGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricNeighborGroupNeighborGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricNeighborGroupResource(Client, NetworkFabricNeighborGroupData.DeserializeNetworkFabricNeighborGroupData(e)), _networkFabricNeighborGroupNeighborGroupsClientDiagnostics, Pipeline, "NetworkFabricNeighborGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkFabricNeighborGroupResource(Client, NetworkFabricNeighborGroupData.DeserializeNetworkFabricNeighborGroupData(e)), _networkFabricNeighborGroupNeighborGroupsClientDiagnostics, Pipeline, "NetworkFabricNeighborGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricNeighborGroupNeighborGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricNeighborGroupNeighborGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricNeighborGroupResource(Client, NetworkFabricNeighborGroupData.DeserializeNetworkFabricNeighborGroupData(e)), _networkFabricNeighborGroupNeighborGroupsClientDiagnostics, Pipeline, "NetworkFabricNeighborGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkFabricNeighborGroupResource(Client, NetworkFabricNeighborGroupData.DeserializeNetworkFabricNeighborGroupData(e)), _networkFabricNeighborGroupNeighborGroupsClientDiagnostics, Pipeline, "NetworkFabricNeighborGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

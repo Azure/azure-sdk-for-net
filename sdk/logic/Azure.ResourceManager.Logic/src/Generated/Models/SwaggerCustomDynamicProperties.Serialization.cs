@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class SwaggerCustomDynamicProperties : IUtf8JsonSerializable
+    public partial class SwaggerCustomDynamicProperties : IUtf8JsonSerializable, IModelJsonSerializable<SwaggerCustomDynamicProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SwaggerCustomDynamicProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SwaggerCustomDynamicProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SwaggerCustomDynamicProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(OperationId))
             {
@@ -33,15 +40,36 @@ namespace Azure.ResourceManager.Logic.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SwaggerCustomDynamicProperties>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SwaggerCustomDynamicProperties DeserializeSwaggerCustomDynamicProperties(JsonElement element)
+        internal static SwaggerCustomDynamicProperties DeserializeSwaggerCustomDynamicProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +77,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> operationId = default;
             Optional<string> valuePath = default;
             Optional<IDictionary<string, SwaggerCustomDynamicProperties>> parameters = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationId"u8))
@@ -75,8 +104,61 @@ namespace Azure.ResourceManager.Logic.Models
                     parameters = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SwaggerCustomDynamicProperties(operationId.Value, valuePath.Value, Optional.ToDictionary(parameters));
+            return new SwaggerCustomDynamicProperties(operationId.Value, valuePath.Value, Optional.ToDictionary(parameters), rawData);
+        }
+
+        SwaggerCustomDynamicProperties IModelJsonSerializable<SwaggerCustomDynamicProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SwaggerCustomDynamicProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSwaggerCustomDynamicProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SwaggerCustomDynamicProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SwaggerCustomDynamicProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SwaggerCustomDynamicProperties IModelSerializable<SwaggerCustomDynamicProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SwaggerCustomDynamicProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSwaggerCustomDynamicProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SwaggerCustomDynamicProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SwaggerCustomDynamicProperties"/> to convert. </param>
+        public static implicit operator RequestContent(SwaggerCustomDynamicProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SwaggerCustomDynamicProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SwaggerCustomDynamicProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSwaggerCustomDynamicProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

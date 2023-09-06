@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Describes the Machine Extension Upgrade Properties. </summary>
     public partial class MachineExtensionUpgrade
     {
-        /// <summary> Initializes a new instance of MachineExtensionUpgrade. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionUpgrade"/>. </summary>
         public MachineExtensionUpgrade()
         {
             ExtensionTargets = new ChangeTrackingDictionary<string, ExtensionTargetProperties>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionUpgrade"/>. </summary>
+        /// <param name="extensionTargets"> Describes the Extension Target Properties. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineExtensionUpgrade(IDictionary<string, ExtensionTargetProperties> extensionTargets, Dictionary<string, BinaryData> rawData)
+        {
+            ExtensionTargets = extensionTargets;
+            _rawData = rawData;
         }
 
         /// <summary> Describes the Extension Target Properties. </summary>

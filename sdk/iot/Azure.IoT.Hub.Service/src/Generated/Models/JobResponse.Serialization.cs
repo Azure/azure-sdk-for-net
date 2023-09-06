@@ -6,15 +6,128 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class JobResponse
+    public partial class JobResponse : IUtf8JsonSerializable, IModelJsonSerializable<JobResponse>
     {
-        internal static JobResponse DeserializeJobResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JobResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<JobResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<JobResponse>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(JobId))
+            {
+                writer.WritePropertyName("jobId"u8);
+                writer.WriteStringValue(JobId);
+            }
+            if (Optional.IsDefined(QueryCondition))
+            {
+                writer.WritePropertyName("queryCondition"u8);
+                writer.WriteStringValue(QueryCondition);
+            }
+            if (Optional.IsDefined(CreatedTime))
+            {
+                writer.WritePropertyName("createdTime"u8);
+                writer.WriteStringValue(CreatedTime.Value, "O");
+            }
+            if (Optional.IsDefined(StartTime))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartTime.Value, "O");
+            }
+            if (Optional.IsDefined(EndTime))
+            {
+                writer.WritePropertyName("endTime"u8);
+                writer.WriteStringValue(EndTime.Value, "O");
+            }
+            if (Optional.IsDefined(MaxExecutionTimeInSeconds))
+            {
+                writer.WritePropertyName("maxExecutionTimeInSeconds"u8);
+                writer.WriteNumberValue(MaxExecutionTimeInSeconds.Value);
+            }
+            if (Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type.Value.ToString());
+            }
+            if (Optional.IsDefined(CloudToDeviceMethod))
+            {
+                writer.WritePropertyName("cloudToDeviceMethod"u8);
+                if (CloudToDeviceMethod is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CloudToDeviceMethodRequest>)CloudToDeviceMethod).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(UpdateTwin))
+            {
+                writer.WritePropertyName("updateTwin"u8);
+                if (UpdateTwin is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TwinData>)UpdateTwin).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (Optional.IsDefined(FailureReason))
+            {
+                writer.WritePropertyName("failureReason"u8);
+                writer.WriteStringValue(FailureReason);
+            }
+            if (Optional.IsDefined(StatusMessage))
+            {
+                writer.WritePropertyName("statusMessage"u8);
+                writer.WriteStringValue(StatusMessage);
+            }
+            if (Optional.IsDefined(DeviceJobStatistics))
+            {
+                writer.WritePropertyName("deviceJobStatistics"u8);
+                if (DeviceJobStatistics is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DeviceJobStatistics>)DeviceJobStatistics).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static JobResponse DeserializeJobResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +145,7 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<string> failureReason = default;
             Optional<string> statusMessage = default;
             Optional<DeviceJobStatistics> deviceJobStatistics = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobId"u8))
@@ -135,8 +249,61 @@ namespace Azure.IoT.Hub.Service.Models
                     deviceJobStatistics = DeviceJobStatistics.DeserializeDeviceJobStatistics(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new JobResponse(jobId.Value, queryCondition.Value, Optional.ToNullable(createdTime), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(maxExecutionTimeInSeconds), Optional.ToNullable(type), cloudToDeviceMethod.Value, updateTwin.Value, Optional.ToNullable(status), failureReason.Value, statusMessage.Value, deviceJobStatistics.Value);
+            return new JobResponse(jobId.Value, queryCondition.Value, Optional.ToNullable(createdTime), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(maxExecutionTimeInSeconds), Optional.ToNullable(type), cloudToDeviceMethod.Value, updateTwin.Value, Optional.ToNullable(status), failureReason.Value, statusMessage.Value, deviceJobStatistics.Value, rawData);
+        }
+
+        JobResponse IModelJsonSerializable<JobResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JobResponse>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJobResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<JobResponse>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JobResponse>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        JobResponse IModelSerializable<JobResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JobResponse>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeJobResponse(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="JobResponse"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="JobResponse"/> to convert. </param>
+        public static implicit operator RequestContent(JobResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="JobResponse"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator JobResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeJobResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

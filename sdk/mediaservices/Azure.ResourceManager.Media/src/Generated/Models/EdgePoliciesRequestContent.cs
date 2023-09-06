@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The EdgePoliciesRequestContent. </summary>
     public partial class EdgePoliciesRequestContent
     {
-        /// <summary> Initializes a new instance of EdgePoliciesRequestContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgePoliciesRequestContent"/>. </summary>
         public EdgePoliciesRequestContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdgePoliciesRequestContent"/>. </summary>
+        /// <param name="deviceId"> Unique identifier of the edge device. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgePoliciesRequestContent(string deviceId, Dictionary<string, BinaryData> rawData)
+        {
+            DeviceId = deviceId;
+            _rawData = rawData;
         }
 
         /// <summary> Unique identifier of the edge device. </summary>

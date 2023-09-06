@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class AS2SecuritySettings : IUtf8JsonSerializable
+    public partial class AS2SecuritySettings : IUtf8JsonSerializable, IModelJsonSerializable<AS2SecuritySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AS2SecuritySettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AS2SecuritySettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AS2SecuritySettings>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("overrideGroupSigningCertificate"u8);
             writer.WriteBooleanValue(OverrideGroupSigningCertificate);
@@ -44,11 +52,25 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("sha2AlgorithmFormat"u8);
                 writer.WriteStringValue(Sha2AlgorithmFormat);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AS2SecuritySettings DeserializeAS2SecuritySettings(JsonElement element)
+        internal static AS2SecuritySettings DeserializeAS2SecuritySettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -63,6 +85,7 @@ namespace Azure.ResourceManager.Logic.Models
             bool enableNrrForOutboundDecodedMessages = default;
             bool enableNrrForInboundMdn = default;
             Optional<string> sha2AlgorithmFormat = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("overrideGroupSigningCertificate"u8))
@@ -115,8 +138,61 @@ namespace Azure.ResourceManager.Logic.Models
                     sha2AlgorithmFormat = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AS2SecuritySettings(overrideGroupSigningCertificate, signingCertificateName.Value, encryptionCertificateName.Value, enableNrrForInboundEncodedMessages, enableNrrForInboundDecodedMessages, enableNrrForOutboundMdn, enableNrrForOutboundEncodedMessages, enableNrrForOutboundDecodedMessages, enableNrrForInboundMdn, sha2AlgorithmFormat.Value);
+            return new AS2SecuritySettings(overrideGroupSigningCertificate, signingCertificateName.Value, encryptionCertificateName.Value, enableNrrForInboundEncodedMessages, enableNrrForInboundDecodedMessages, enableNrrForOutboundMdn, enableNrrForOutboundEncodedMessages, enableNrrForOutboundDecodedMessages, enableNrrForInboundMdn, sha2AlgorithmFormat.Value, rawData);
+        }
+
+        AS2SecuritySettings IModelJsonSerializable<AS2SecuritySettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AS2SecuritySettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAS2SecuritySettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AS2SecuritySettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AS2SecuritySettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AS2SecuritySettings IModelSerializable<AS2SecuritySettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AS2SecuritySettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAS2SecuritySettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AS2SecuritySettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AS2SecuritySettings"/> to convert. </param>
+        public static implicit operator RequestContent(AS2SecuritySettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AS2SecuritySettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AS2SecuritySettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAS2SecuritySettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

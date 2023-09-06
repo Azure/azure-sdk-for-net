@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningWorkspaceConnectionManagedIdentity. </summary>
     public partial class MachineLearningWorkspaceConnectionManagedIdentity
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionManagedIdentity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionManagedIdentity"/>. </summary>
         public MachineLearningWorkspaceConnectionManagedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionManagedIdentity"/>. </summary>
         /// <param name="resourceId"></param>
         /// <param name="clientId"></param>
-        internal MachineLearningWorkspaceConnectionManagedIdentity(ResourceIdentifier resourceId, string clientId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningWorkspaceConnectionManagedIdentity(ResourceIdentifier resourceId, string clientId, Dictionary<string, BinaryData> rawData)
         {
             ResourceId = resourceId;
             ClientId = clientId;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the resource id. </summary>

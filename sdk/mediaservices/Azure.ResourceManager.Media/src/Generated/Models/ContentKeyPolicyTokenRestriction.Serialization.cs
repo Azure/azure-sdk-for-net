@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ContentKeyPolicyTokenRestriction : IUtf8JsonSerializable
+    public partial class ContentKeyPolicyTokenRestriction : IUtf8JsonSerializable, IModelJsonSerializable<ContentKeyPolicyTokenRestriction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContentKeyPolicyTokenRestriction>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContentKeyPolicyTokenRestriction>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContentKeyPolicyTokenRestriction>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("issuer"u8);
             writer.WriteStringValue(Issuer);
@@ -23,7 +30,14 @@ namespace Azure.ResourceManager.Media.Models
             if (PrimaryVerificationKey != null)
             {
                 writer.WritePropertyName("primaryVerificationKey"u8);
-                writer.WriteObjectValue(PrimaryVerificationKey);
+                if (PrimaryVerificationKey is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContentKeyPolicyRestrictionTokenKey>)PrimaryVerificationKey).Serialize(writer, options);
+                }
             }
             else
             {
@@ -35,7 +49,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in AlternateVerificationKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ContentKeyPolicyRestrictionTokenKey>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -45,7 +66,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in RequiredClaims)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ContentKeyPolicyTokenClaim>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -58,11 +86,25 @@ namespace Azure.ResourceManager.Media.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContentKeyPolicyTokenRestriction DeserializeContentKeyPolicyTokenRestriction(JsonElement element)
+        internal static ContentKeyPolicyTokenRestriction DeserializeContentKeyPolicyTokenRestriction(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -75,6 +117,7 @@ namespace Azure.ResourceManager.Media.Models
             ContentKeyPolicyRestrictionTokenType restrictionTokenType = default;
             Optional<string> openIdConnectDiscoveryDocument = default;
             string odataType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("issuer"u8))
@@ -140,8 +183,61 @@ namespace Azure.ResourceManager.Media.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContentKeyPolicyTokenRestriction(odataType, issuer, audience, primaryVerificationKey, Optional.ToList(alternateVerificationKeys), Optional.ToList(requiredClaims), restrictionTokenType, openIdConnectDiscoveryDocument.Value);
+            return new ContentKeyPolicyTokenRestriction(odataType, issuer, audience, primaryVerificationKey, Optional.ToList(alternateVerificationKeys), Optional.ToList(requiredClaims), restrictionTokenType, openIdConnectDiscoveryDocument.Value, rawData);
+        }
+
+        ContentKeyPolicyTokenRestriction IModelJsonSerializable<ContentKeyPolicyTokenRestriction>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContentKeyPolicyTokenRestriction>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContentKeyPolicyTokenRestriction(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContentKeyPolicyTokenRestriction>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContentKeyPolicyTokenRestriction>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContentKeyPolicyTokenRestriction IModelSerializable<ContentKeyPolicyTokenRestriction>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContentKeyPolicyTokenRestriction>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContentKeyPolicyTokenRestriction(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContentKeyPolicyTokenRestriction"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContentKeyPolicyTokenRestriction"/> to convert. </param>
+        public static implicit operator RequestContent(ContentKeyPolicyTokenRestriction model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContentKeyPolicyTokenRestriction"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContentKeyPolicyTokenRestriction(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContentKeyPolicyTokenRestriction(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The workflow parameters. </summary>
     public partial class LogicWorkflowParameterInfo
     {
-        /// <summary> Initializes a new instance of LogicWorkflowParameterInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowParameterInfo"/>. </summary>
         public LogicWorkflowParameterInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowParameterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowParameterInfo"/>. </summary>
         /// <param name="parameterType"> The type. </param>
         /// <param name="value"> The value. </param>
         /// <param name="metadata"> The metadata. </param>
         /// <param name="description"> The description. </param>
-        internal LogicWorkflowParameterInfo(LogicWorkflowParameterType? parameterType, BinaryData value, BinaryData metadata, string description)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkflowParameterInfo(LogicWorkflowParameterType? parameterType, BinaryData value, BinaryData metadata, string description, Dictionary<string, BinaryData> rawData)
         {
             ParameterType = parameterType;
             Value = value;
             Metadata = metadata;
             Description = description;
+            _rawData = rawData;
         }
 
         /// <summary> The type. </summary>

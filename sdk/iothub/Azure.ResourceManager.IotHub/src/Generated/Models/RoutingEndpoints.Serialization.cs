@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class RoutingEndpoints : IUtf8JsonSerializable
+    public partial class RoutingEndpoints : IUtf8JsonSerializable, IModelJsonSerializable<RoutingEndpoints>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RoutingEndpoints>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RoutingEndpoints>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RoutingEndpoints>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ServiceBusQueues))
             {
@@ -22,7 +29,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceBusQueues)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<RoutingServiceBusQueueEndpointProperties>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -32,7 +46,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceBusTopics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<RoutingServiceBusTopicEndpointProperties>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +63,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in EventHubs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<RoutingEventHubProperties>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +80,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageContainers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<RoutingStorageContainerProperties>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -62,15 +97,36 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in CosmosDBSqlContainers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<RoutingCosmosDBSqlApiProperties>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static RoutingEndpoints DeserializeRoutingEndpoints(JsonElement element)
+        internal static RoutingEndpoints DeserializeRoutingEndpoints(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -80,6 +136,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<IList<RoutingEventHubProperties>> eventHubs = default;
             Optional<IList<RoutingStorageContainerProperties>> storageContainers = default;
             Optional<IList<RoutingCosmosDBSqlApiProperties>> cosmosDBSqlContainers = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceBusQueues"u8))
@@ -152,8 +209,61 @@ namespace Azure.ResourceManager.IotHub.Models
                     cosmosDBSqlContainers = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RoutingEndpoints(Optional.ToList(serviceBusQueues), Optional.ToList(serviceBusTopics), Optional.ToList(eventHubs), Optional.ToList(storageContainers), Optional.ToList(cosmosDBSqlContainers));
+            return new RoutingEndpoints(Optional.ToList(serviceBusQueues), Optional.ToList(serviceBusTopics), Optional.ToList(eventHubs), Optional.ToList(storageContainers), Optional.ToList(cosmosDBSqlContainers), rawData);
+        }
+
+        RoutingEndpoints IModelJsonSerializable<RoutingEndpoints>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RoutingEndpoints>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoutingEndpoints(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RoutingEndpoints>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RoutingEndpoints>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RoutingEndpoints IModelSerializable<RoutingEndpoints>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RoutingEndpoints>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRoutingEndpoints(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RoutingEndpoints"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RoutingEndpoints"/> to convert. </param>
+        public static implicit operator RequestContent(RoutingEndpoints model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RoutingEndpoints"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RoutingEndpoints(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRoutingEndpoints(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

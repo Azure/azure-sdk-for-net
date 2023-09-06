@@ -6,15 +6,77 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class ArcAgentStatus
+    public partial class ArcAgentStatus : IUtf8JsonSerializable, IModelJsonSerializable<ArcAgentStatus>
     {
-        internal static ArcAgentStatus DeserializeArcAgentStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ArcAgentStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ArcAgentStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ArcAgentStatus>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DeploymentState))
+            {
+                writer.WritePropertyName("deploymentState"u8);
+                writer.WriteStringValue(DeploymentState.Value.ToString());
+            }
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                writer.WritePropertyName("errorMessage"u8);
+                writer.WriteStringValue(ErrorMessage);
+            }
+            if (Optional.IsDefined(OnboardingPublicKey))
+            {
+                writer.WritePropertyName("onboardingPublicKey"u8);
+                writer.WriteStringValue(OnboardingPublicKey);
+            }
+            if (Optional.IsDefined(AgentVersion))
+            {
+                writer.WritePropertyName("agentVersion"u8);
+                writer.WriteStringValue(AgentVersion);
+            }
+            if (Optional.IsDefined(CoreCount))
+            {
+                writer.WritePropertyName("coreCount"u8);
+                writer.WriteNumberValue(CoreCount.Value);
+            }
+            if (Optional.IsDefined(ManagedIdentityCertificateExpirationOn))
+            {
+                writer.WritePropertyName("managedIdentityCertificateExpirationTime"u8);
+                writer.WriteStringValue(ManagedIdentityCertificateExpirationOn.Value, "O");
+            }
+            if (Optional.IsDefined(LastConnectivityOn))
+            {
+                writer.WritePropertyName("lastConnectivityTime"u8);
+                writer.WriteStringValue(LastConnectivityOn.Value, "O");
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ArcAgentStatus DeserializeArcAgentStatus(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +88,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<long> coreCount = default;
             Optional<DateTimeOffset> managedIdentityCertificateExpirationTime = default;
             Optional<DateTimeOffset> lastConnectivityTime = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deploymentState"u8))
@@ -79,8 +142,61 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     lastConnectivityTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ArcAgentStatus(Optional.ToNullable(deploymentState), errorMessage.Value, onboardingPublicKey.Value, agentVersion.Value, Optional.ToNullable(coreCount), Optional.ToNullable(managedIdentityCertificateExpirationTime), Optional.ToNullable(lastConnectivityTime));
+            return new ArcAgentStatus(Optional.ToNullable(deploymentState), errorMessage.Value, onboardingPublicKey.Value, agentVersion.Value, Optional.ToNullable(coreCount), Optional.ToNullable(managedIdentityCertificateExpirationTime), Optional.ToNullable(lastConnectivityTime), rawData);
+        }
+
+        ArcAgentStatus IModelJsonSerializable<ArcAgentStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArcAgentStatus>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeArcAgentStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ArcAgentStatus>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArcAgentStatus>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ArcAgentStatus IModelSerializable<ArcAgentStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArcAgentStatus>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeArcAgentStatus(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ArcAgentStatus"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ArcAgentStatus"/> to convert. </param>
+        public static implicit operator RequestContent(ArcAgentStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ArcAgentStatus"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ArcAgentStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeArcAgentStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

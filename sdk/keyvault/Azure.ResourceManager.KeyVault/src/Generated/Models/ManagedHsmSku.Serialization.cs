@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class ManagedHsmSku : IUtf8JsonSerializable
+    public partial class ManagedHsmSku : IUtf8JsonSerializable, IModelJsonSerializable<ManagedHsmSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedHsmSku>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedHsmSku>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedHsmSku>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("family"u8);
             writer.WriteStringValue(Family.ToString());
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToSerialString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedHsmSku DeserializeManagedHsmSku(JsonElement element)
+        internal static ManagedHsmSku DeserializeManagedHsmSku(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ManagedHsmSkuFamily family = default;
             ManagedHsmSkuName name = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("family"u8))
@@ -42,8 +65,61 @@ namespace Azure.ResourceManager.KeyVault.Models
                     name = property.Value.GetString().ToManagedHsmSkuName();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedHsmSku(family, name);
+            return new ManagedHsmSku(family, name, rawData);
+        }
+
+        ManagedHsmSku IModelJsonSerializable<ManagedHsmSku>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedHsmSku>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedHsmSku(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedHsmSku>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedHsmSku>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedHsmSku IModelSerializable<ManagedHsmSku>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedHsmSku>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedHsmSku(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagedHsmSku"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagedHsmSku"/> to convert. </param>
+        public static implicit operator RequestContent(ManagedHsmSku model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagedHsmSku"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagedHsmSku(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedHsmSku(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class MapsAddress
+    public partial class MapsAddress : IUtf8JsonSerializable, IModelJsonSerializable<MapsAddress>
     {
-        internal static MapsAddress DeserializeMapsAddress(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MapsAddress>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MapsAddress>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MapsAddress>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MapsAddress DeserializeMapsAddress(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +67,7 @@ namespace Azure.Maps.Search.Models
             Optional<string> countrySubdivisionName = default;
             Optional<string> localName = default;
             Optional<BoundingBoxCompassNotation> boundingBox = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("buildingNumber"u8))
@@ -160,8 +188,61 @@ namespace Azure.Maps.Search.Models
                     boundingBox = BoundingBoxCompassNotation.DeserializeBoundingBoxCompassNotation(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MapsAddress(buildingNumber.Value, street.Value, crossStreet.Value, streetNumber.Value, Optional.ToList(routeNumbers), streetName.Value, streetNameAndNumber.Value, municipality.Value, municipalitySubdivision.Value, countryTertiarySubdivision.Value, countrySecondarySubdivision.Value, countrySubdivision.Value, postalCode.Value, extendedPostalCode.Value, countryCode.Value, country.Value, countryCodeISO3.Value, freeformAddress.Value, countrySubdivisionName.Value, localName.Value, boundingBox.Value);
+            return new MapsAddress(buildingNumber.Value, street.Value, crossStreet.Value, streetNumber.Value, Optional.ToList(routeNumbers), streetName.Value, streetNameAndNumber.Value, municipality.Value, municipalitySubdivision.Value, countryTertiarySubdivision.Value, countrySecondarySubdivision.Value, countrySubdivision.Value, postalCode.Value, extendedPostalCode.Value, countryCode.Value, country.Value, countryCodeISO3.Value, freeformAddress.Value, countrySubdivisionName.Value, localName.Value, boundingBox.Value, rawData);
+        }
+
+        MapsAddress IModelJsonSerializable<MapsAddress>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MapsAddress>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMapsAddress(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MapsAddress>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MapsAddress>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MapsAddress IModelSerializable<MapsAddress>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MapsAddress>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMapsAddress(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MapsAddress"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MapsAddress"/> to convert. </param>
+        public static implicit operator RequestContent(MapsAddress model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MapsAddress"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MapsAddress(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMapsAddress(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

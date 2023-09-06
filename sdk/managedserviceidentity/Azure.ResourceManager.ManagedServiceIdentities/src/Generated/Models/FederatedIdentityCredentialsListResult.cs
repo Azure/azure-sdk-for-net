@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ManagedServiceIdentities;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
     /// <summary> Values returned by the List operation for federated identity credentials. </summary>
     internal partial class FederatedIdentityCredentialsListResult
     {
-        /// <summary> Initializes a new instance of FederatedIdentityCredentialsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FederatedIdentityCredentialsListResult"/>. </summary>
         internal FederatedIdentityCredentialsListResult()
         {
             Value = new ChangeTrackingList<FederatedIdentityCredentialData>();
         }
 
-        /// <summary> Initializes a new instance of FederatedIdentityCredentialsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FederatedIdentityCredentialsListResult"/>. </summary>
         /// <param name="value"> The collection of federated identity credentials returned by the listing operation. </param>
         /// <param name="nextLink"> The url to get the next page of results, if any. </param>
-        internal FederatedIdentityCredentialsListResult(IReadOnlyList<FederatedIdentityCredentialData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FederatedIdentityCredentialsListResult(IReadOnlyList<FederatedIdentityCredentialData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The collection of federated identity credentials returned by the listing operation. </summary>

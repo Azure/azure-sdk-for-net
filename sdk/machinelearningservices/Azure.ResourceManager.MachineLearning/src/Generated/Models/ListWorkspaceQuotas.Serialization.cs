@@ -5,22 +5,50 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class ListWorkspaceQuotas
+    internal partial class ListWorkspaceQuotas : IUtf8JsonSerializable, IModelJsonSerializable<ListWorkspaceQuotas>
     {
-        internal static ListWorkspaceQuotas DeserializeListWorkspaceQuotas(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ListWorkspaceQuotas>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ListWorkspaceQuotas>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ListWorkspaceQuotas>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ListWorkspaceQuotas DeserializeListWorkspaceQuotas(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<MachineLearningResourceQuota>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -42,8 +70,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ListWorkspaceQuotas(Optional.ToList(value), nextLink.Value);
+            return new ListWorkspaceQuotas(Optional.ToList(value), nextLink.Value, rawData);
+        }
+
+        ListWorkspaceQuotas IModelJsonSerializable<ListWorkspaceQuotas>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ListWorkspaceQuotas>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeListWorkspaceQuotas(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ListWorkspaceQuotas>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ListWorkspaceQuotas>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ListWorkspaceQuotas IModelSerializable<ListWorkspaceQuotas>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ListWorkspaceQuotas>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeListWorkspaceQuotas(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ListWorkspaceQuotas"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ListWorkspaceQuotas"/> to convert. </param>
+        public static implicit operator RequestContent(ListWorkspaceQuotas model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ListWorkspaceQuotas"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ListWorkspaceQuotas(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeListWorkspaceQuotas(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

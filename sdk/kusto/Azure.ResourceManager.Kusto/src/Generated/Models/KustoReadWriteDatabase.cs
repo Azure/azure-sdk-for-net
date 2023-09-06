@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
@@ -15,13 +16,13 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Class representing a read write database. </summary>
     public partial class KustoReadWriteDatabase : KustoDatabaseData
     {
-        /// <summary> Initializes a new instance of KustoReadWriteDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoReadWriteDatabase"/>. </summary>
         public KustoReadWriteDatabase()
         {
             Kind = KustoKind.ReadWrite;
         }
 
-        /// <summary> Initializes a new instance of KustoReadWriteDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoReadWriteDatabase"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="isFollowed"> Indicates whether the database is followed. </param>
         /// <param name="keyVaultProperties"> KeyVault properties for the database encryption. </param>
         /// <param name="suspensionDetails"> The database suspension details. If the database is suspended, this object contains information related to the database's suspension state. </param>
-        internal KustoReadWriteDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KustoKind kind, KustoProvisioningState? provisioningState, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, DatabaseStatistics statistics, bool? isFollowed, KustoKeyVaultProperties keyVaultProperties, SuspensionDetails suspensionDetails) : base(id, name, resourceType, systemData, location, kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoReadWriteDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KustoKind kind, KustoProvisioningState? provisioningState, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, DatabaseStatistics statistics, bool? isFollowed, KustoKeyVaultProperties keyVaultProperties, SuspensionDetails suspensionDetails, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, location, kind, rawData)
         {
             ProvisioningState = provisioningState;
             SoftDeletePeriod = softDeletePeriod;

@@ -6,25 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The retry history. </summary>
     public partial class LogicWorkRetryHistory
     {
-        /// <summary> Initializes a new instance of LogicWorkRetryHistory. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkRetryHistory"/>. </summary>
         public LogicWorkRetryHistory()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicWorkRetryHistory. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkRetryHistory"/>. </summary>
         /// <param name="startOn"> Gets the start time. </param>
         /// <param name="endOn"> Gets the end time. </param>
         /// <param name="code"> Gets the status code. </param>
         /// <param name="clientRequestId"> Gets the client request Id. </param>
         /// <param name="serviceRequestId"> Gets the service request Id. </param>
         /// <param name="error"> Gets the error response. </param>
-        internal LogicWorkRetryHistory(DateTimeOffset? startOn, DateTimeOffset? endOn, string code, string clientRequestId, string serviceRequestId, LogicErrorResponse error)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkRetryHistory(DateTimeOffset? startOn, DateTimeOffset? endOn, string code, string clientRequestId, string serviceRequestId, LogicErrorResponse error, Dictionary<string, BinaryData> rawData)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.Logic.Models
             ClientRequestId = clientRequestId;
             ServiceRequestId = serviceRequestId;
             Error = error;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the start time. </summary>

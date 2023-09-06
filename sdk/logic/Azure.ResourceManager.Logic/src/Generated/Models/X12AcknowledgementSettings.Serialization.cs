@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class X12AcknowledgementSettings : IUtf8JsonSerializable
+    public partial class X12AcknowledgementSettings : IUtf8JsonSerializable, IModelJsonSerializable<X12AcknowledgementSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<X12AcknowledgementSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<X12AcknowledgementSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<X12AcknowledgementSettings>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("needTechnicalAcknowledgement"u8);
             writer.WriteBooleanValue(NeedTechnicalAcknowledgement);
@@ -57,11 +65,25 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteNumberValue(AcknowledgementControlNumberUpperBound);
             writer.WritePropertyName("rolloverAcknowledgementControlNumber"u8);
             writer.WriteBooleanValue(RolloverAcknowledgementControlNumber);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static X12AcknowledgementSettings DeserializeX12AcknowledgementSettings(JsonElement element)
+        internal static X12AcknowledgementSettings DeserializeX12AcknowledgementSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -81,6 +103,7 @@ namespace Azure.ResourceManager.Logic.Models
             int acknowledgementControlNumberLowerBound = default;
             int acknowledgementControlNumberUpperBound = default;
             bool rolloverAcknowledgementControlNumber = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("needTechnicalAcknowledgement"u8))
@@ -158,8 +181,61 @@ namespace Azure.ResourceManager.Logic.Models
                     rolloverAcknowledgementControlNumber = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new X12AcknowledgementSettings(needTechnicalAcknowledgement, batchTechnicalAcknowledgements, needFunctionalAcknowledgement, functionalAcknowledgementVersion.Value, batchFunctionalAcknowledgements, needImplementationAcknowledgement, implementationAcknowledgementVersion.Value, batchImplementationAcknowledgements, needLoopForValidMessages, sendSynchronousAcknowledgement, acknowledgementControlNumberPrefix.Value, acknowledgementControlNumberSuffix.Value, acknowledgementControlNumberLowerBound, acknowledgementControlNumberUpperBound, rolloverAcknowledgementControlNumber);
+            return new X12AcknowledgementSettings(needTechnicalAcknowledgement, batchTechnicalAcknowledgements, needFunctionalAcknowledgement, functionalAcknowledgementVersion.Value, batchFunctionalAcknowledgements, needImplementationAcknowledgement, implementationAcknowledgementVersion.Value, batchImplementationAcknowledgements, needLoopForValidMessages, sendSynchronousAcknowledgement, acknowledgementControlNumberPrefix.Value, acknowledgementControlNumberSuffix.Value, acknowledgementControlNumberLowerBound, acknowledgementControlNumberUpperBound, rolloverAcknowledgementControlNumber, rawData);
+        }
+
+        X12AcknowledgementSettings IModelJsonSerializable<X12AcknowledgementSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<X12AcknowledgementSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeX12AcknowledgementSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<X12AcknowledgementSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<X12AcknowledgementSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        X12AcknowledgementSettings IModelSerializable<X12AcknowledgementSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<X12AcknowledgementSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeX12AcknowledgementSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="X12AcknowledgementSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="X12AcknowledgementSettings"/> to convert. </param>
+        public static implicit operator RequestContent(X12AcknowledgementSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="X12AcknowledgementSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator X12AcknowledgementSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeX12AcknowledgementSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

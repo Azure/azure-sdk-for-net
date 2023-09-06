@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningComputeInstanceProperties : IUtf8JsonSerializable
+    public partial class MachineLearningComputeInstanceProperties : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningComputeInstanceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningComputeInstanceProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningComputeInstanceProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningComputeInstanceProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(VmSize))
             {
@@ -26,7 +33,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Subnet != null)
                 {
                     writer.WritePropertyName("subnet"u8);
-                    writer.WriteObjectValue(Subnet);
+                    if (Subnet is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ResourceId>)Subnet).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -43,7 +57,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (SshSettings != null)
                 {
                     writer.WritePropertyName("sshSettings"u8);
-                    writer.WriteObjectValue(SshSettings);
+                    if (SshSettings is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MachineLearningComputeInstanceSshSettings>)SshSettings).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -67,7 +88,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (PersonalComputeInstanceSettings != null)
                 {
                     writer.WritePropertyName("personalComputeInstanceSettings"u8);
-                    writer.WriteObjectValue(PersonalComputeInstanceSettings);
+                    if (PersonalComputeInstanceSettings is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<PersonalComputeInstanceSettings>)PersonalComputeInstanceSettings).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -79,7 +107,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (SetupScriptsSettings != null)
                 {
                     writer.WritePropertyName("setupScripts"u8);
-                    writer.WriteObjectValue(SetupScriptsSettings);
+                    if (SetupScriptsSettings is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SetupScripts>)SetupScriptsSettings).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -91,11 +126,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("enableNodePublicIp"u8);
                 writer.WriteBooleanValue(EnableNodePublicIP.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningComputeInstanceProperties DeserializeMachineLearningComputeInstanceProperties(JsonElement element)
+        internal static MachineLearningComputeInstanceProperties DeserializeMachineLearningComputeInstanceProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -119,6 +168,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IReadOnlyList<MachineLearningComputeInstanceDataDisk>> dataDisks = default;
             Optional<IReadOnlyList<MachineLearningComputeInstanceDataMount>> dataMounts = default;
             Optional<ComputeInstanceVersion> versions = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmSize"u8))
@@ -323,8 +373,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     versions = ComputeInstanceVersion.DeserializeComputeInstanceVersion(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningComputeInstanceProperties(vmSize.Value, subnet.Value, Optional.ToNullable(applicationSharingPolicy), sshSettings.Value, connectivityEndpoints.Value, Optional.ToList(applications), createdBy.Value, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToNullable(computeInstanceAuthorizationType), personalComputeInstanceSettings.Value, setupScripts.Value, lastOperation.Value, schedules.Value, Optional.ToNullable(enableNodePublicIP), Optional.ToList(containers), Optional.ToList(dataDisks), Optional.ToList(dataMounts), versions.Value);
+            return new MachineLearningComputeInstanceProperties(vmSize.Value, subnet.Value, Optional.ToNullable(applicationSharingPolicy), sshSettings.Value, connectivityEndpoints.Value, Optional.ToList(applications), createdBy.Value, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToNullable(computeInstanceAuthorizationType), personalComputeInstanceSettings.Value, setupScripts.Value, lastOperation.Value, schedules.Value, Optional.ToNullable(enableNodePublicIP), Optional.ToList(containers), Optional.ToList(dataDisks), Optional.ToList(dataMounts), versions.Value, rawData);
+        }
+
+        MachineLearningComputeInstanceProperties IModelJsonSerializable<MachineLearningComputeInstanceProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningComputeInstanceProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningComputeInstanceProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningComputeInstanceProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningComputeInstanceProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningComputeInstanceProperties IModelSerializable<MachineLearningComputeInstanceProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningComputeInstanceProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningComputeInstanceProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningComputeInstanceProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningComputeInstanceProperties"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningComputeInstanceProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningComputeInstanceProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningComputeInstanceProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningComputeInstanceProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

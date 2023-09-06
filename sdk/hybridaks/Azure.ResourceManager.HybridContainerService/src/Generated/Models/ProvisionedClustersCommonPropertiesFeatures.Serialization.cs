@@ -5,31 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    internal partial class ProvisionedClustersCommonPropertiesFeatures : IUtf8JsonSerializable
+    internal partial class ProvisionedClustersCommonPropertiesFeatures : IUtf8JsonSerializable, IModelJsonSerializable<ProvisionedClustersCommonPropertiesFeatures>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProvisionedClustersCommonPropertiesFeatures>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ProvisionedClustersCommonPropertiesFeatures>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ProvisionedClustersCommonPropertiesFeatures>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ArcAgentProfile))
             {
                 writer.WritePropertyName("arcAgentProfile"u8);
-                writer.WriteObjectValue(ArcAgentProfile);
+                if (ArcAgentProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ArcAgentProfile>)ArcAgentProfile).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ProvisionedClustersCommonPropertiesFeatures DeserializeProvisionedClustersCommonPropertiesFeatures(JsonElement element)
+        internal static ProvisionedClustersCommonPropertiesFeatures DeserializeProvisionedClustersCommonPropertiesFeatures(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ArcAgentProfile> arcAgentProfile = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("arcAgentProfile"u8))
@@ -41,8 +71,61 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     arcAgentProfile = ArcAgentProfile.DeserializeArcAgentProfile(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ProvisionedClustersCommonPropertiesFeatures(arcAgentProfile.Value);
+            return new ProvisionedClustersCommonPropertiesFeatures(arcAgentProfile.Value, rawData);
+        }
+
+        ProvisionedClustersCommonPropertiesFeatures IModelJsonSerializable<ProvisionedClustersCommonPropertiesFeatures>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProvisionedClustersCommonPropertiesFeatures>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeProvisionedClustersCommonPropertiesFeatures(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ProvisionedClustersCommonPropertiesFeatures>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProvisionedClustersCommonPropertiesFeatures>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ProvisionedClustersCommonPropertiesFeatures IModelSerializable<ProvisionedClustersCommonPropertiesFeatures>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProvisionedClustersCommonPropertiesFeatures>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeProvisionedClustersCommonPropertiesFeatures(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ProvisionedClustersCommonPropertiesFeatures"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ProvisionedClustersCommonPropertiesFeatures"/> to convert. </param>
+        public static implicit operator RequestContent(ProvisionedClustersCommonPropertiesFeatures model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ProvisionedClustersCommonPropertiesFeatures"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ProvisionedClustersCommonPropertiesFeatures(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeProvisionedClustersCommonPropertiesFeatures(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

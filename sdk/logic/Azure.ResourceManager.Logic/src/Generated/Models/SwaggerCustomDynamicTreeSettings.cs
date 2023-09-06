@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The swagger custom dynamic tree settings. </summary>
     public partial class SwaggerCustomDynamicTreeSettings
     {
-        /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SwaggerCustomDynamicTreeSettings"/>. </summary>
         public SwaggerCustomDynamicTreeSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerCustomDynamicTreeSettings"/>. </summary>
         /// <param name="canSelectParentNodes"> Indicates whether parent nodes can be selected. </param>
         /// <param name="canSelectLeafNodes"> Indicates whether leaf nodes can be selected. </param>
-        internal SwaggerCustomDynamicTreeSettings(bool? canSelectParentNodes, bool? canSelectLeafNodes)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SwaggerCustomDynamicTreeSettings(bool? canSelectParentNodes, bool? canSelectLeafNodes, Dictionary<string, BinaryData> rawData)
         {
             CanSelectParentNodes = canSelectParentNodes;
             CanSelectLeafNodes = canSelectLeafNodes;
+            _rawData = rawData;
         }
 
         /// <summary> Indicates whether parent nodes can be selected. </summary>

@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Kubernetes.Models
 {
     /// <summary> The ListClusterUserCredentialProperties. </summary>
     public partial class ListClusterUserCredentialProperties
     {
-        /// <summary> Initializes a new instance of ListClusterUserCredentialProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListClusterUserCredentialProperties"/>. </summary>
         /// <param name="authenticationMethod"> The mode of client authentication. </param>
         /// <param name="clientProxy"> Boolean value to indicate whether the request is for client side proxy or not. </param>
         public ListClusterUserCredentialProperties(AuthenticationMethod authenticationMethod, bool clientProxy)
         {
             AuthenticationMethod = authenticationMethod;
             ClientProxy = clientProxy;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ListClusterUserCredentialProperties"/>. </summary>
+        /// <param name="authenticationMethod"> The mode of client authentication. </param>
+        /// <param name="clientProxy"> Boolean value to indicate whether the request is for client side proxy or not. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListClusterUserCredentialProperties(AuthenticationMethod authenticationMethod, bool clientProxy, Dictionary<string, BinaryData> rawData)
+        {
+            AuthenticationMethod = authenticationMethod;
+            ClientProxy = clientProxy;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ListClusterUserCredentialProperties"/> for deserialization. </summary>
+        internal ListClusterUserCredentialProperties()
+        {
         }
 
         /// <summary> The mode of client authentication. </summary>

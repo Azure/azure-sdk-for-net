@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.HybridContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSpacestorageSpacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageSpacestorageSpacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageSpaceResource(Client, StorageSpaceData.DeserializeStorageSpaceData(e)), _storageSpacestorageSpacesClientDiagnostics, Pipeline, "StorageSpaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new StorageSpaceResource(Client, StorageSpaceData.DeserializeStorageSpaceData(e)), _storageSpacestorageSpacesClientDiagnostics, Pipeline, "StorageSpaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.HybridContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSpacestorageSpacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageSpacestorageSpacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageSpaceResource(Client, StorageSpaceData.DeserializeStorageSpaceData(e)), _storageSpacestorageSpacesClientDiagnostics, Pipeline, "StorageSpaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new StorageSpaceResource(Client, StorageSpaceData.DeserializeStorageSpaceData(e)), _storageSpacestorageSpacesClientDiagnostics, Pipeline, "StorageSpaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

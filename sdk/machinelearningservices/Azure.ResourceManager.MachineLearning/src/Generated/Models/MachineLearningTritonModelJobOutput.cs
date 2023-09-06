@@ -6,24 +6,26 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningTritonModelJobOutput. </summary>
     public partial class MachineLearningTritonModelJobOutput : MachineLearningJobOutput
     {
-        /// <summary> Initializes a new instance of MachineLearningTritonModelJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningTritonModelJobOutput"/>. </summary>
         public MachineLearningTritonModelJobOutput()
         {
             JobOutputType = JobOutputType.TritonModel;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningTritonModelJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningTritonModelJobOutput"/>. </summary>
         /// <param name="description"> Description for the output. </param>
         /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
         /// <param name="mode"> Output Asset Delivery Mode. </param>
         /// <param name="uri"> Output Asset URI. </param>
-        internal MachineLearningTritonModelJobOutput(string description, JobOutputType jobOutputType, MachineLearningOutputDeliveryMode? mode, Uri uri) : base(description, jobOutputType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningTritonModelJobOutput(string description, JobOutputType jobOutputType, MachineLearningOutputDeliveryMode? mode, Uri uri, Dictionary<string, BinaryData> rawData) : base(description, jobOutputType, rawData)
         {
             Mode = mode;
             Uri = uri;

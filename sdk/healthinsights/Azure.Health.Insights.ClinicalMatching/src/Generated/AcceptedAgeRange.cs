@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Health.Insights.ClinicalMatching
 {
     /// <summary> A definition of the range of ages accepted by a clinical trial. Contains a minimum age and/or a maximum age. </summary>
     public partial class AcceptedAgeRange
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of AcceptedAgeRange. </summary>
         public AcceptedAgeRange()
         {
@@ -18,10 +24,12 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <summary> Initializes a new instance of AcceptedAgeRange. </summary>
         /// <param name="minimumAge"> A person's age, given as a number (value) and a unit (e.g. years, months). </param>
         /// <param name="maximumAge"> A person's age, given as a number (value) and a unit (e.g. years, months). </param>
-        internal AcceptedAgeRange(AcceptedAge minimumAge, AcceptedAge maximumAge)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcceptedAgeRange(AcceptedAge minimumAge, AcceptedAge maximumAge, Dictionary<string, BinaryData> rawData)
         {
             MinimumAge = minimumAge;
             MaximumAge = maximumAge;
+            _rawData = rawData;
         }
 
         /// <summary> A person's age, given as a number (value) and a unit (e.g. years, months). </summary>

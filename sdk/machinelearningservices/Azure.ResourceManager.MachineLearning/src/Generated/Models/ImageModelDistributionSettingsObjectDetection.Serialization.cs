@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ImageModelDistributionSettingsObjectDetection : IUtf8JsonSerializable
+    public partial class ImageModelDistributionSettingsObjectDetection : IUtf8JsonSerializable, IModelJsonSerializable<ImageModelDistributionSettingsObjectDetection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ImageModelDistributionSettingsObjectDetection>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ImageModelDistributionSettingsObjectDetection>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ImageModelDistributionSettingsObjectDetection>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BoxDetectionsPerImage))
             {
@@ -507,11 +515,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("weightDecay");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ImageModelDistributionSettingsObjectDetection DeserializeImageModelDistributionSettingsObjectDetection(JsonElement element)
+        internal static ImageModelDistributionSettingsObjectDetection DeserializeImageModelDistributionSettingsObjectDetection(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -557,6 +579,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> warmupCosineLRCycles = default;
             Optional<string> warmupCosineLRWarmupEpochs = default;
             Optional<string> weightDecay = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("boxDetectionsPerImage"u8))
@@ -969,8 +992,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     weightDecay = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ImageModelDistributionSettingsObjectDetection(amsGradient.Value, augmentations.Value, beta1.Value, beta2.Value, distributed.Value, earlyStopping.Value, earlyStoppingDelay.Value, earlyStoppingPatience.Value, enableOnnxNormalization.Value, evaluationFrequency.Value, gradientAccumulationStep.Value, layersToFreeze.Value, learningRate.Value, learningRateScheduler.Value, modelName.Value, momentum.Value, nesterov.Value, numberOfEpochs.Value, numberOfWorkers.Value, optimizer.Value, randomSeed.Value, stepLRGamma.Value, stepLRStepSize.Value, trainingBatchSize.Value, validationBatchSize.Value, warmupCosineLRCycles.Value, warmupCosineLRWarmupEpochs.Value, weightDecay.Value, boxDetectionsPerImage.Value, boxScoreThreshold.Value, imageSize.Value, maxSize.Value, minSize.Value, modelSize.Value, multiScale.Value, nmsIouThreshold.Value, tileGridSize.Value, tileOverlapRatio.Value, tilePredictionsNmsThreshold.Value, validationIouThreshold.Value, validationMetricType.Value);
+            return new ImageModelDistributionSettingsObjectDetection(amsGradient.Value, augmentations.Value, beta1.Value, beta2.Value, distributed.Value, earlyStopping.Value, earlyStoppingDelay.Value, earlyStoppingPatience.Value, enableOnnxNormalization.Value, evaluationFrequency.Value, gradientAccumulationStep.Value, layersToFreeze.Value, learningRate.Value, learningRateScheduler.Value, modelName.Value, momentum.Value, nesterov.Value, numberOfEpochs.Value, numberOfWorkers.Value, optimizer.Value, randomSeed.Value, stepLRGamma.Value, stepLRStepSize.Value, trainingBatchSize.Value, validationBatchSize.Value, warmupCosineLRCycles.Value, warmupCosineLRWarmupEpochs.Value, weightDecay.Value, boxDetectionsPerImage.Value, boxScoreThreshold.Value, imageSize.Value, maxSize.Value, minSize.Value, modelSize.Value, multiScale.Value, nmsIouThreshold.Value, tileGridSize.Value, tileOverlapRatio.Value, tilePredictionsNmsThreshold.Value, validationIouThreshold.Value, validationMetricType.Value, rawData);
+        }
+
+        ImageModelDistributionSettingsObjectDetection IModelJsonSerializable<ImageModelDistributionSettingsObjectDetection>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ImageModelDistributionSettingsObjectDetection>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeImageModelDistributionSettingsObjectDetection(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ImageModelDistributionSettingsObjectDetection>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ImageModelDistributionSettingsObjectDetection>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ImageModelDistributionSettingsObjectDetection IModelSerializable<ImageModelDistributionSettingsObjectDetection>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ImageModelDistributionSettingsObjectDetection>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeImageModelDistributionSettingsObjectDetection(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ImageModelDistributionSettingsObjectDetection"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ImageModelDistributionSettingsObjectDetection"/> to convert. </param>
+        public static implicit operator RequestContent(ImageModelDistributionSettingsObjectDetection model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ImageModelDistributionSettingsObjectDetection"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ImageModelDistributionSettingsObjectDetection(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeImageModelDistributionSettingsObjectDetection(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> List result for binary hardening. </summary>
     internal partial class BinaryHardeningList
     {
-        /// <summary> Initializes a new instance of BinaryHardeningList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BinaryHardeningList"/>. </summary>
         internal BinaryHardeningList()
         {
             Value = new ChangeTrackingList<BinaryHardening>();
         }
 
-        /// <summary> Initializes a new instance of BinaryHardeningList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BinaryHardeningList"/>. </summary>
         /// <param name="value"> The list of binary hardening results. </param>
         /// <param name="nextLink"> The uri to fetch the next page of asset. </param>
-        internal BinaryHardeningList(IReadOnlyList<BinaryHardening> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BinaryHardeningList(IReadOnlyList<BinaryHardening> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of binary hardening results. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
@@ -12,18 +13,23 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Streaming endpoint access control definition. </summary>
     public partial class StreamingEndpointAccessControl
     {
-        /// <summary> Initializes a new instance of StreamingEndpointAccessControl. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointAccessControl"/>. </summary>
         public StreamingEndpointAccessControl()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingEndpointAccessControl. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointAccessControl"/>. </summary>
         /// <param name="akamai"> The access control of Akamai. </param>
         /// <param name="iPs"> The IP access control of the streaming endpoint. </param>
-        internal StreamingEndpointAccessControl(AkamaiAccessControl akamai, IPAccessControl iPs)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingEndpointAccessControl(AkamaiAccessControl akamai, IPAccessControl iPs, Dictionary<string, BinaryData> rawData)
         {
             Akamai = akamai;
             IPs = iPs;
+            _rawData = rawData;
         }
 
         /// <summary> The access control of Akamai. </summary>

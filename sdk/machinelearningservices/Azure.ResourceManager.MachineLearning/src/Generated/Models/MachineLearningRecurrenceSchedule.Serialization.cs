@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningRecurrenceSchedule : IUtf8JsonSerializable
+    public partial class MachineLearningRecurrenceSchedule : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningRecurrenceSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningRecurrenceSchedule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningRecurrenceSchedule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningRecurrenceSchedule>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("hours"u8);
             writer.WriteStartArray();
@@ -64,11 +71,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("weekDays");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningRecurrenceSchedule DeserializeMachineLearningRecurrenceSchedule(JsonElement element)
+        internal static MachineLearningRecurrenceSchedule DeserializeMachineLearningRecurrenceSchedule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -77,6 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IList<int> minutes = default;
             Optional<IList<int>> monthDays = default;
             Optional<IList<MachineLearningDayOfWeek>> weekDays = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hours"u8))
@@ -129,8 +151,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     weekDays = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningRecurrenceSchedule(hours, minutes, Optional.ToList(monthDays), Optional.ToList(weekDays));
+            return new MachineLearningRecurrenceSchedule(hours, minutes, Optional.ToList(monthDays), Optional.ToList(weekDays), rawData);
+        }
+
+        MachineLearningRecurrenceSchedule IModelJsonSerializable<MachineLearningRecurrenceSchedule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningRecurrenceSchedule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningRecurrenceSchedule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningRecurrenceSchedule>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningRecurrenceSchedule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningRecurrenceSchedule IModelSerializable<MachineLearningRecurrenceSchedule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningRecurrenceSchedule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningRecurrenceSchedule(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningRecurrenceSchedule"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningRecurrenceSchedule"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningRecurrenceSchedule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningRecurrenceSchedule"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningRecurrenceSchedule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningRecurrenceSchedule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

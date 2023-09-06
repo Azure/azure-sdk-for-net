@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicApiOperationProperties : IUtf8JsonSerializable
+    public partial class LogicApiOperationProperties : IUtf8JsonSerializable, IModelJsonSerializable<LogicApiOperationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LogicApiOperationProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LogicApiOperationProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LogicApiOperationProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Summary))
             {
@@ -49,17 +56,38 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
-                writer.WriteObjectValue(Annotation);
+                if (Annotation is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LogicApiOperationAnnotation>)Annotation).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Api))
             {
                 writer.WritePropertyName("api"u8);
-                writer.WriteObjectValue(Api);
+                if (Api is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LogicApiReference>)Api).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(InputsDefinition))
             {
                 writer.WritePropertyName("inputsDefinition"u8);
-                writer.WriteObjectValue(InputsDefinition);
+                if (InputsDefinition is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SwaggerSchema>)InputsDefinition).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(ResponsesDefinition))
             {
@@ -68,7 +96,14 @@ namespace Azure.ResourceManager.Logic.Models
                 foreach (var item in ResponsesDefinition)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SwaggerSchema>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -82,11 +117,25 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("isNotification"u8);
                 writer.WriteBooleanValue(IsNotification.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LogicApiOperationProperties DeserializeLogicApiOperationProperties(JsonElement element)
+        internal static LogicApiOperationProperties DeserializeLogicApiOperationProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -103,6 +152,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<IDictionary<string, SwaggerSchema>> responsesDefinition = default;
             Optional<bool> isWebhook = default;
             Optional<bool> isNotification = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"u8))
@@ -198,8 +248,61 @@ namespace Azure.ResourceManager.Logic.Models
                     isNotification = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LogicApiOperationProperties(summary.Value, description.Value, visibility.Value, trigger.Value, triggerHint.Value, Optional.ToNullable(pageable), annotation.Value, api.Value, inputsDefinition.Value, Optional.ToDictionary(responsesDefinition), Optional.ToNullable(isWebhook), Optional.ToNullable(isNotification));
+            return new LogicApiOperationProperties(summary.Value, description.Value, visibility.Value, trigger.Value, triggerHint.Value, Optional.ToNullable(pageable), annotation.Value, api.Value, inputsDefinition.Value, Optional.ToDictionary(responsesDefinition), Optional.ToNullable(isWebhook), Optional.ToNullable(isNotification), rawData);
+        }
+
+        LogicApiOperationProperties IModelJsonSerializable<LogicApiOperationProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LogicApiOperationProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicApiOperationProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LogicApiOperationProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LogicApiOperationProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LogicApiOperationProperties IModelSerializable<LogicApiOperationProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LogicApiOperationProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLogicApiOperationProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LogicApiOperationProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LogicApiOperationProperties"/> to convert. </param>
+        public static implicit operator RequestContent(LogicApiOperationProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LogicApiOperationProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LogicApiOperationProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLogicApiOperationProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

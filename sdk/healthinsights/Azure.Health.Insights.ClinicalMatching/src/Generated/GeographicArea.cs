@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
@@ -13,6 +14,9 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> A geographic area, expressed as a `Circle` geometry represented using a `GeoJSON Feature` (see [GeoJSON spec](https://tools.ietf.org/html/rfc7946)). </summary>
     public partial class GeographicArea
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of GeographicArea. </summary>
         /// <param name="type"> `GeoJSON` type. </param>
         /// <param name="geometry"> `GeoJSON` geometry, representing the area circle's center. </param>
@@ -26,6 +30,24 @@ namespace Azure.Health.Insights.ClinicalMatching
             Type = type;
             Geometry = geometry;
             Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of GeographicArea. </summary>
+        /// <param name="type"> `GeoJSON` type. </param>
+        /// <param name="geometry"> `GeoJSON` geometry, representing the area circle's center. </param>
+        /// <param name="properties"> `GeoJSON` object properties. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GeographicArea(GeoJsonType type, AreaGeometry geometry, AreaProperties properties, Dictionary<string, BinaryData> rawData)
+        {
+            Type = type;
+            Geometry = geometry;
+            Properties = properties;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GeographicArea"/> for deserialization. </summary>
+        internal GeographicArea()
+        {
         }
 
         /// <summary> `GeoJSON` type. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabConnectionProfile : IUtf8JsonSerializable
+    public partial class LabConnectionProfile : IUtf8JsonSerializable, IModelJsonSerializable<LabConnectionProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LabConnectionProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LabConnectionProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LabConnectionProfile>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(WebSshAccess))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WritePropertyName("clientRdpAccess"u8);
                 writer.WriteStringValue(ClientRdpAccess.Value.ToSerialString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LabConnectionProfile DeserializeLabConnectionProfile(JsonElement element)
+        internal static LabConnectionProfile DeserializeLabConnectionProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.LabServices.Models
             Optional<LabVirtualMachineConnectionType> webRdpAccess = default;
             Optional<LabVirtualMachineConnectionType> clientSshAccess = default;
             Optional<LabVirtualMachineConnectionType> clientRdpAccess = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("webSshAccess"u8))
@@ -86,8 +109,61 @@ namespace Azure.ResourceManager.LabServices.Models
                     clientRdpAccess = property.Value.GetString().ToLabVirtualMachineConnectionType();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LabConnectionProfile(Optional.ToNullable(webSshAccess), Optional.ToNullable(webRdpAccess), Optional.ToNullable(clientSshAccess), Optional.ToNullable(clientRdpAccess));
+            return new LabConnectionProfile(Optional.ToNullable(webSshAccess), Optional.ToNullable(webRdpAccess), Optional.ToNullable(clientSshAccess), Optional.ToNullable(clientRdpAccess), rawData);
+        }
+
+        LabConnectionProfile IModelJsonSerializable<LabConnectionProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LabConnectionProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLabConnectionProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LabConnectionProfile>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LabConnectionProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LabConnectionProfile IModelSerializable<LabConnectionProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LabConnectionProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLabConnectionProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LabConnectionProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LabConnectionProfile"/> to convert. </param>
+        public static implicit operator RequestContent(LabConnectionProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LabConnectionProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LabConnectionProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLabConnectionProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

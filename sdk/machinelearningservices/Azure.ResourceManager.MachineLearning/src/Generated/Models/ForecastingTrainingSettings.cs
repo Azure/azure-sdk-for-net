@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Forecasting Training related configuration. </summary>
     public partial class ForecastingTrainingSettings : MachineLearningTrainingSettings
     {
-        /// <summary> Initializes a new instance of ForecastingTrainingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastingTrainingSettings"/>. </summary>
         public ForecastingTrainingSettings()
         {
             AllowedTrainingAlgorithms = new ChangeTrackingList<ForecastingModel>();
             BlockedTrainingAlgorithms = new ChangeTrackingList<ForecastingModel>();
         }
 
-        /// <summary> Initializes a new instance of ForecastingTrainingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastingTrainingSettings"/>. </summary>
         /// <param name="isDnnTrainingEnabled"> Enable recommendation of DNN models. </param>
         /// <param name="isModelExplainabilityEnabled"> Flag to turn on explainability on best model. </param>
         /// <param name="isOnnxCompatibleModelsEnabled"> Flag for enabling onnx compatible models. </param>
@@ -34,7 +34,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="stackEnsembleSettings"> Stack ensemble settings for stack ensemble run. </param>
         /// <param name="allowedTrainingAlgorithms"> Allowed models for forecasting task. </param>
         /// <param name="blockedTrainingAlgorithms"> Blocked models for forecasting task. </param>
-        internal ForecastingTrainingSettings(bool? isDnnTrainingEnabled, bool? isModelExplainabilityEnabled, bool? isOnnxCompatibleModelsEnabled, bool? isStackEnsembleEnabled, bool? isVoteEnsembleEnabled, TimeSpan? ensembleModelDownloadTimeout, MachineLearningStackEnsembleSettings stackEnsembleSettings, IList<ForecastingModel> allowedTrainingAlgorithms, IList<ForecastingModel> blockedTrainingAlgorithms) : base(isDnnTrainingEnabled, isModelExplainabilityEnabled, isOnnxCompatibleModelsEnabled, isStackEnsembleEnabled, isVoteEnsembleEnabled, ensembleModelDownloadTimeout, stackEnsembleSettings)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ForecastingTrainingSettings(bool? isDnnTrainingEnabled, bool? isModelExplainabilityEnabled, bool? isOnnxCompatibleModelsEnabled, bool? isStackEnsembleEnabled, bool? isVoteEnsembleEnabled, TimeSpan? ensembleModelDownloadTimeout, MachineLearningStackEnsembleSettings stackEnsembleSettings, IList<ForecastingModel> allowedTrainingAlgorithms, IList<ForecastingModel> blockedTrainingAlgorithms, Dictionary<string, BinaryData> rawData) : base(isDnnTrainingEnabled, isModelExplainabilityEnabled, isOnnxCompatibleModelsEnabled, isStackEnsembleEnabled, isVoteEnsembleEnabled, ensembleModelDownloadTimeout, stackEnsembleSettings, rawData)
         {
             AllowedTrainingAlgorithms = allowedTrainingAlgorithms;
             BlockedTrainingAlgorithms = blockedTrainingAlgorithms;

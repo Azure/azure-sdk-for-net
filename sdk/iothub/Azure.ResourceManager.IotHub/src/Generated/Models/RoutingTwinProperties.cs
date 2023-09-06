@@ -6,15 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> The RoutingTwinProperties. </summary>
     public partial class RoutingTwinProperties
     {
-        /// <summary> Initializes a new instance of RoutingTwinProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoutingTwinProperties"/>. </summary>
         public RoutingTwinProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RoutingTwinProperties"/>. </summary>
+        /// <param name="desired"> Twin desired properties. </param>
+        /// <param name="reported"> Twin desired properties. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoutingTwinProperties(BinaryData desired, BinaryData reported, Dictionary<string, BinaryData> rawData)
+        {
+            Desired = desired;
+            Reported = reported;
+            _rawData = rawData;
         }
 
         /// <summary>

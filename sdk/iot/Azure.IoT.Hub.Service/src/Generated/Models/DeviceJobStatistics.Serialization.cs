@@ -5,15 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class DeviceJobStatistics
+    public partial class DeviceJobStatistics : IUtf8JsonSerializable, IModelJsonSerializable<DeviceJobStatistics>
     {
-        internal static DeviceJobStatistics DeserializeDeviceJobStatistics(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DeviceJobStatistics>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DeviceJobStatistics>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DeviceJobStatistics>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DeviceCount))
+            {
+                writer.WritePropertyName("deviceCount"u8);
+                writer.WriteNumberValue(DeviceCount.Value);
+            }
+            if (Optional.IsDefined(FailedCount))
+            {
+                writer.WritePropertyName("failedCount"u8);
+                writer.WriteNumberValue(FailedCount.Value);
+            }
+            if (Optional.IsDefined(SucceededCount))
+            {
+                writer.WritePropertyName("succeededCount"u8);
+                writer.WriteNumberValue(SucceededCount.Value);
+            }
+            if (Optional.IsDefined(RunningCount))
+            {
+                writer.WritePropertyName("runningCount"u8);
+                writer.WriteNumberValue(RunningCount.Value);
+            }
+            if (Optional.IsDefined(PendingCount))
+            {
+                writer.WritePropertyName("pendingCount"u8);
+                writer.WriteNumberValue(PendingCount.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DeviceJobStatistics DeserializeDeviceJobStatistics(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +76,7 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<int> succeededCount = default;
             Optional<int> runningCount = default;
             Optional<int> pendingCount = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceCount"u8))
@@ -70,8 +124,61 @@ namespace Azure.IoT.Hub.Service.Models
                     pendingCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DeviceJobStatistics(Optional.ToNullable(deviceCount), Optional.ToNullable(failedCount), Optional.ToNullable(succeededCount), Optional.ToNullable(runningCount), Optional.ToNullable(pendingCount));
+            return new DeviceJobStatistics(Optional.ToNullable(deviceCount), Optional.ToNullable(failedCount), Optional.ToNullable(succeededCount), Optional.ToNullable(runningCount), Optional.ToNullable(pendingCount), rawData);
+        }
+
+        DeviceJobStatistics IModelJsonSerializable<DeviceJobStatistics>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeviceJobStatistics>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeviceJobStatistics(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DeviceJobStatistics>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeviceJobStatistics>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DeviceJobStatistics IModelSerializable<DeviceJobStatistics>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeviceJobStatistics>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDeviceJobStatistics(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DeviceJobStatistics"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DeviceJobStatistics"/> to convert. </param>
+        public static implicit operator RequestContent(DeviceJobStatistics model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DeviceJobStatistics"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DeviceJobStatistics(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDeviceJobStatistics(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

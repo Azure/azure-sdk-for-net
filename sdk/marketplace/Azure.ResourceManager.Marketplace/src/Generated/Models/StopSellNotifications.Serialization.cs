@@ -8,14 +8,82 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class StopSellNotifications
+    public partial class StopSellNotifications : IUtf8JsonSerializable, IModelJsonSerializable<StopSellNotifications>
     {
-        internal static StopSellNotifications DeserializeStopSellNotifications(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StopSellNotifications>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StopSellNotifications>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StopSellNotifications>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(OfferId))
+            {
+                writer.WritePropertyName("offerId"u8);
+                writer.WriteStringValue(OfferId);
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsDefined(IsEntire))
+            {
+                writer.WritePropertyName("isEntire"u8);
+                writer.WriteBooleanValue(IsEntire.Value);
+            }
+            if (Optional.IsDefined(MessageCode))
+            {
+                writer.WritePropertyName("messageCode"u8);
+                writer.WriteNumberValue(MessageCode.Value);
+            }
+            if (Optional.IsDefined(IconUri))
+            {
+                writer.WritePropertyName("icon"u8);
+                writer.WriteStringValue(IconUri.AbsoluteUri);
+            }
+            if (Optional.IsCollectionDefined(Plans))
+            {
+                writer.WritePropertyName("plans"u8);
+                writer.WriteStartArray();
+                foreach (var item in Plans)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<PlanNotificationDetails>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static StopSellNotifications DeserializeStopSellNotifications(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +94,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<long> messageCode = default;
             Optional<Uri> icon = default;
             Optional<IReadOnlyList<PlanNotificationDetails>> plans = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offerId"u8))
@@ -79,8 +148,61 @@ namespace Azure.ResourceManager.Marketplace.Models
                     plans = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StopSellNotifications(offerId.Value, displayName.Value, Optional.ToNullable(isEntire), Optional.ToNullable(messageCode), icon.Value, Optional.ToList(plans));
+            return new StopSellNotifications(offerId.Value, displayName.Value, Optional.ToNullable(isEntire), Optional.ToNullable(messageCode), icon.Value, Optional.ToList(plans), rawData);
+        }
+
+        StopSellNotifications IModelJsonSerializable<StopSellNotifications>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StopSellNotifications>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStopSellNotifications(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StopSellNotifications>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StopSellNotifications>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StopSellNotifications IModelSerializable<StopSellNotifications>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StopSellNotifications>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStopSellNotifications(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StopSellNotifications"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StopSellNotifications"/> to convert. </param>
+        public static implicit operator RequestContent(StopSellNotifications model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StopSellNotifications"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StopSellNotifications(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStopSellNotifications(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

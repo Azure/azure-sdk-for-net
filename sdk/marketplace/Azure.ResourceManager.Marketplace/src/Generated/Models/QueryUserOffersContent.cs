@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,25 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Query user's offers properties. </summary>
     public partial class QueryUserOffersContent
     {
-        /// <summary> Initializes a new instance of QueryUserOffersContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryUserOffersContent"/>. </summary>
         public QueryUserOffersContent()
         {
             OfferIds = new ChangeTrackingList<string>();
             SubscriptionIds = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryUserOffersContent"/>. </summary>
+        /// <param name="offerIds"> List of offer IDs. </param>
+        /// <param name="subscriptionIds"> List of subscription IDs. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryUserOffersContent(IList<string> offerIds, IList<string> subscriptionIds, Dictionary<string, BinaryData> rawData)
+        {
+            OfferIds = offerIds;
+            SubscriptionIds = subscriptionIds;
+            _rawData = rawData;
         }
 
         /// <summary> List of offer IDs. </summary>

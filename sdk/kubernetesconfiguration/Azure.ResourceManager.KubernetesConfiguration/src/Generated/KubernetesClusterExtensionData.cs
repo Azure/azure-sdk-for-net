@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration
     /// </summary>
     public partial class KubernetesClusterExtensionData : ResourceData
     {
-        /// <summary> Initializes a new instance of KubernetesClusterExtensionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionData"/>. </summary>
         public KubernetesClusterExtensionData()
         {
             ConfigurationSettings = new ChangeTrackingDictionary<string, string>();
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             CustomLocationSettings = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of KubernetesClusterExtensionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -51,7 +54,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="packageUri"> Uri of the Helm package. </param>
         /// <param name="aksAssignedIdentity"> Identity of the Extension resource in an AKS cluster. Current supported identity types: SystemAssigned, UserAssigned. </param>
         /// <param name="isSystemExtension"> Flag to note if this extension is a system extension. </param>
-        internal KubernetesClusterExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, ArmPlan plan, string extensionType, bool? autoUpgradeMinorVersion, string releaseTrain, string version, KubernetesClusterExtensionScope scope, IDictionary<string, string> configurationSettings, IDictionary<string, string> configurationProtectedSettings, string currentVersion, KubernetesConfigurationProvisioningState? provisioningState, IList<KubernetesClusterExtensionStatus> statuses, ResponseError errorInfo, IReadOnlyDictionary<string, string> customLocationSettings, Uri packageUri, ManagedServiceIdentity aksAssignedIdentity, bool? isSystemExtension) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesClusterExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, ArmPlan plan, string extensionType, bool? autoUpgradeMinorVersion, string releaseTrain, string version, KubernetesClusterExtensionScope scope, IDictionary<string, string> configurationSettings, IDictionary<string, string> configurationProtectedSettings, string currentVersion, KubernetesConfigurationProvisioningState? provisioningState, IList<KubernetesClusterExtensionStatus> statuses, ResponseError errorInfo, IReadOnlyDictionary<string, string> customLocationSettings, Uri packageUri, ManagedServiceIdentity aksAssignedIdentity, bool? isSystemExtension, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             Plan = plan;
@@ -70,6 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             PackageUri = packageUri;
             AksAssignedIdentity = aksAssignedIdentity;
             IsSystemExtension = isSystemExtension;
+            _rawData = rawData;
         }
 
         /// <summary> Identity of the Extension resource. Current supported identity types: SystemAssigned. </summary>

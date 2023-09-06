@@ -10,33 +10,66 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class MachineProperties : IUtf8JsonSerializable
+    public partial class MachineProperties : IUtf8JsonSerializable, IModelJsonSerializable<MachineProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LocationData))
             {
                 writer.WritePropertyName("locationData"u8);
-                writer.WriteObjectValue(LocationData);
+                if (LocationData is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LocationData>)LocationData).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ServiceStatuses))
             {
                 writer.WritePropertyName("serviceStatuses"u8);
-                writer.WriteObjectValue(ServiceStatuses);
+                if (ServiceStatuses is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<HybridComputeServiceStatuses>)ServiceStatuses).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(CloudMetadata))
             {
                 writer.WritePropertyName("cloudMetadata"u8);
-                writer.WriteObjectValue(CloudMetadata);
+                if (CloudMetadata is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CloudMetadata>)CloudMetadata).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                if (OSProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<OSProfile>)OSProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(VmId))
             {
@@ -68,11 +101,25 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("mssqlDiscovered"u8);
                 writer.WriteStringValue(MssqlDiscovered);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineProperties DeserializeMachineProperties(JsonElement element)
+        internal static MachineProperties DeserializeMachineProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -103,6 +150,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Optional<string> parentClusterResourceId = default;
             Optional<string> mssqlDiscovered = default;
             Optional<IReadOnlyDictionary<string, string>> detectedProperties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("locationData"u8))
@@ -281,8 +329,61 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     detectedProperties = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineProperties(locationData.Value, agentConfiguration.Value, serviceStatuses.Value, cloudMetadata.Value, osProfile.Value, provisioningState.Value, Optional.ToNullable(status), Optional.ToNullable(lastStatusChange), Optional.ToList(errorDetails), agentVersion.Value, vmId.Value, displayName.Value, machineFqdn.Value, clientPublicKey.Value, osName.Value, osVersion.Value, osType.Value, vmUuid.Value, osSku.Value, domainName.Value, adFqdn.Value, dnsFqdn.Value, privateLinkScopeResourceId.Value, parentClusterResourceId.Value, mssqlDiscovered.Value, Optional.ToDictionary(detectedProperties));
+            return new MachineProperties(locationData.Value, agentConfiguration.Value, serviceStatuses.Value, cloudMetadata.Value, osProfile.Value, provisioningState.Value, Optional.ToNullable(status), Optional.ToNullable(lastStatusChange), Optional.ToList(errorDetails), agentVersion.Value, vmId.Value, displayName.Value, machineFqdn.Value, clientPublicKey.Value, osName.Value, osVersion.Value, osType.Value, vmUuid.Value, osSku.Value, domainName.Value, adFqdn.Value, dnsFqdn.Value, privateLinkScopeResourceId.Value, parentClusterResourceId.Value, mssqlDiscovered.Value, Optional.ToDictionary(detectedProperties), rawData);
+        }
+
+        MachineProperties IModelJsonSerializable<MachineProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineProperties IModelSerializable<MachineProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineProperties"/> to convert. </param>
+        public static implicit operator RequestContent(MachineProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

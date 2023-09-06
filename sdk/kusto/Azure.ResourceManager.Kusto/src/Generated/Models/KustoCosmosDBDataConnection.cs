@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
@@ -15,13 +16,13 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Class representing a CosmosDb data connection. </summary>
     public partial class KustoCosmosDBDataConnection : KustoDataConnectionData
     {
-        /// <summary> Initializes a new instance of KustoCosmosDBDataConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoCosmosDBDataConnection"/>. </summary>
         public KustoCosmosDBDataConnection()
         {
             Kind = DataConnectionKind.CosmosDB;
         }
 
-        /// <summary> Initializes a new instance of KustoCosmosDBDataConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoCosmosDBDataConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="cosmosDBContainer"> The name of an existing container in the Cosmos DB database. </param>
         /// <param name="retrievalStartOn"> Optional. If defined, the data connection retrieves Cosmos DB documents created or updated after the specified retrieval start date. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        internal KustoCosmosDBDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DataConnectionKind kind, string tableName, string mappingRuleName, ResourceIdentifier managedIdentityResourceId, Guid? managedIdentityObjectId, ResourceIdentifier cosmosDBAccountResourceId, string cosmosDBDatabase, string cosmosDBContainer, DateTimeOffset? retrievalStartOn, KustoProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoCosmosDBDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DataConnectionKind kind, string tableName, string mappingRuleName, ResourceIdentifier managedIdentityResourceId, Guid? managedIdentityObjectId, ResourceIdentifier cosmosDBAccountResourceId, string cosmosDBDatabase, string cosmosDBContainer, DateTimeOffset? retrievalStartOn, KustoProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, location, kind, rawData)
         {
             TableName = tableName;
             MappingRuleName = mappingRuleName;

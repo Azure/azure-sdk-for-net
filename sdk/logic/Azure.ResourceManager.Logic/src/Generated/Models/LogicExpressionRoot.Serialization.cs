@@ -8,14 +8,88 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicExpressionRoot
+    public partial class LogicExpressionRoot : IUtf8JsonSerializable, IModelJsonSerializable<LogicExpressionRoot>
     {
-        internal static LogicExpressionRoot DeserializeLogicExpressionRoot(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LogicExpressionRoot>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LogicExpressionRoot>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LogicExpressionRoot>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Path))
+            {
+                writer.WritePropertyName("path"u8);
+                writer.WriteStringValue(Path);
+            }
+            if (Optional.IsDefined(Text))
+            {
+                writer.WritePropertyName("text"u8);
+                writer.WriteStringValue(Text);
+            }
+            if (Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Value.ToString()).RootElement);
+#endif
+            }
+            if (Optional.IsCollectionDefined(Subexpressions))
+            {
+                writer.WritePropertyName("subexpressions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Subexpressions)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<LogicExpression>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                if (Error is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LogicExpressionErrorInfo>)Error).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static LogicExpressionRoot DeserializeLogicExpressionRoot(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +99,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<BinaryData> value = default;
             Optional<IReadOnlyList<LogicExpression>> subexpressions = default;
             Optional<LogicExpressionErrorInfo> error = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"u8))
@@ -69,8 +144,61 @@ namespace Azure.ResourceManager.Logic.Models
                     error = LogicExpressionErrorInfo.DeserializeLogicExpressionErrorInfo(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LogicExpressionRoot(text.Value, value.Value, Optional.ToList(subexpressions), error.Value, path.Value);
+            return new LogicExpressionRoot(text.Value, value.Value, Optional.ToList(subexpressions), error.Value, path.Value, rawData);
+        }
+
+        LogicExpressionRoot IModelJsonSerializable<LogicExpressionRoot>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LogicExpressionRoot>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicExpressionRoot(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LogicExpressionRoot>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LogicExpressionRoot>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LogicExpressionRoot IModelSerializable<LogicExpressionRoot>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LogicExpressionRoot>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLogicExpressionRoot(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LogicExpressionRoot"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LogicExpressionRoot"/> to convert. </param>
+        public static implicit operator RequestContent(LogicExpressionRoot model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LogicExpressionRoot"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LogicExpressionRoot(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLogicExpressionRoot(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

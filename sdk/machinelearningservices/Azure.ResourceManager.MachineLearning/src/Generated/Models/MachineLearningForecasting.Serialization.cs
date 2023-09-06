@@ -5,23 +5,37 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningForecasting : IUtf8JsonSerializable
+    public partial class MachineLearningForecasting : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningForecasting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningForecasting>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningForecasting>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningForecasting>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ForecastingSettings))
             {
                 if (ForecastingSettings != null)
                 {
                     writer.WritePropertyName("forecastingSettings"u8);
-                    writer.WriteObjectValue(ForecastingSettings);
+                    if (ForecastingSettings is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ForecastingSettings>)ForecastingSettings).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -38,7 +52,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (TrainingSettings != null)
                 {
                     writer.WritePropertyName("trainingSettings"u8);
-                    writer.WriteObjectValue(TrainingSettings);
+                    if (TrainingSettings is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ForecastingTrainingSettings>)TrainingSettings).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -67,7 +88,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (FeaturizationSettings != null)
                 {
                     writer.WritePropertyName("featurizationSettings"u8);
-                    writer.WriteObjectValue(FeaturizationSettings);
+                    if (FeaturizationSettings is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<TableVerticalFeaturizationSettings>)FeaturizationSettings).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -79,7 +107,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (LimitSettings != null)
                 {
                     writer.WritePropertyName("limitSettings"u8);
-                    writer.WriteObjectValue(LimitSettings);
+                    if (LimitSettings is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<TableVerticalLimitSettings>)LimitSettings).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -91,7 +126,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (NCrossValidations != null)
                 {
                     writer.WritePropertyName("nCrossValidations"u8);
-                    writer.WriteObjectValue(NCrossValidations);
+                    if (NCrossValidations is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<NCrossValidations>)NCrossValidations).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -103,7 +145,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (TestData != null)
                 {
                     writer.WritePropertyName("testData"u8);
-                    writer.WriteObjectValue(TestData);
+                    if (TestData is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MachineLearningTableJobInput>)TestData).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -127,7 +176,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ValidationData != null)
                 {
                     writer.WritePropertyName("validationData"u8);
-                    writer.WriteObjectValue(ValidationData);
+                    if (ValidationData is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MachineLearningTableJobInput>)ValidationData).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -178,12 +234,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
             writer.WritePropertyName("trainingData"u8);
-            writer.WriteObjectValue(TrainingData);
+            if (TrainingData is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<MachineLearningTableJobInput>)TrainingData).Serialize(writer, options);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningForecasting DeserializeMachineLearningForecasting(JsonElement element)
+        internal static MachineLearningForecasting DeserializeMachineLearningForecasting(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -204,6 +281,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> targetColumnName = default;
             TaskType taskType = default;
             MachineLearningTableJobInput trainingData = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("forecastingSettings"u8))
@@ -359,8 +437,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningForecasting(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, forecastingSettings.Value, Optional.ToNullable(primaryMetric), trainingSettings.Value, Optional.ToList(cvSplitColumnNames), featurizationSettings.Value, limitSettings.Value, nCrossValidations.Value, testData.Value, Optional.ToNullable(testDataSize), validationData.Value, Optional.ToNullable(validationDataSize), weightColumnName.Value);
+            return new MachineLearningForecasting(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, forecastingSettings.Value, Optional.ToNullable(primaryMetric), trainingSettings.Value, Optional.ToList(cvSplitColumnNames), featurizationSettings.Value, limitSettings.Value, nCrossValidations.Value, testData.Value, Optional.ToNullable(testDataSize), validationData.Value, Optional.ToNullable(validationDataSize), weightColumnName.Value, rawData);
+        }
+
+        MachineLearningForecasting IModelJsonSerializable<MachineLearningForecasting>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningForecasting>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningForecasting(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningForecasting>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningForecasting>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningForecasting IModelSerializable<MachineLearningForecasting>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningForecasting>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningForecasting(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningForecasting"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningForecasting"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningForecasting model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningForecasting"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningForecasting(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningForecasting(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

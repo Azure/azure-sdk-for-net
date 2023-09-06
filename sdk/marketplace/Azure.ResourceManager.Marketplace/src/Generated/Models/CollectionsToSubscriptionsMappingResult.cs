@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> A map of collections subscriptions details. </summary>
     public partial class CollectionsToSubscriptionsMappingResult
     {
-        /// <summary> Initializes a new instance of CollectionsToSubscriptionsMappingResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CollectionsToSubscriptionsMappingResult"/>. </summary>
         internal CollectionsToSubscriptionsMappingResult()
         {
             Details = new ChangeTrackingDictionary<string, CollectionsSubscriptionsMappingDetails>();
         }
 
-        /// <summary> Initializes a new instance of CollectionsToSubscriptionsMappingResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CollectionsToSubscriptionsMappingResult"/>. </summary>
         /// <param name="details"> The map of collections subscriptions. </param>
-        internal CollectionsToSubscriptionsMappingResult(IReadOnlyDictionary<string, CollectionsSubscriptionsMappingDetails> details)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CollectionsToSubscriptionsMappingResult(IReadOnlyDictionary<string, CollectionsSubscriptionsMappingDetails> details, Dictionary<string, BinaryData> rawData)
         {
             Details = details;
+            _rawData = rawData;
         }
 
         /// <summary> The map of collections subscriptions. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.Maps.Routing.Models
     /// <summary> This type represents the request body for the Batch service. </summary>
     internal partial class BatchRequest
     {
-        /// <summary> Initializes a new instance of BatchRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchRequest"/>. </summary>
         public BatchRequest()
         {
             BatchItems = new ChangeTrackingList<BatchRequestItem>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchRequest"/>. </summary>
+        /// <param name="batchItems"> The list of queries to process. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchRequest(IList<BatchRequestItem> batchItems, Dictionary<string, BinaryData> rawData)
+        {
+            BatchItems = batchItems;
+            _rawData = rawData;
         }
 
         /// <summary> The list of queries to process. </summary>

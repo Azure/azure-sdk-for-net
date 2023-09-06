@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class Layer3IPPrefixProperties : IUtf8JsonSerializable
+    public partial class Layer3IPPrefixProperties : IUtf8JsonSerializable, IModelJsonSerializable<Layer3IPPrefixProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Layer3IPPrefixProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<Layer3IPPrefixProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<Layer3IPPrefixProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryIPv4Prefix))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("secondaryIpv6Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv6Prefix);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static Layer3IPPrefixProperties DeserializeLayer3IPPrefixProperties(JsonElement element)
+        internal static Layer3IPPrefixProperties DeserializeLayer3IPPrefixProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<string> primaryIPv6Prefix = default;
             Optional<string> secondaryIPv4Prefix = default;
             Optional<string> secondaryIPv6Prefix = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryIpv4Prefix"u8))
@@ -70,8 +93,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     secondaryIPv6Prefix = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new Layer3IPPrefixProperties(primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value);
+            return new Layer3IPPrefixProperties(primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value, rawData);
+        }
+
+        Layer3IPPrefixProperties IModelJsonSerializable<Layer3IPPrefixProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Layer3IPPrefixProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLayer3IPPrefixProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<Layer3IPPrefixProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Layer3IPPrefixProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        Layer3IPPrefixProperties IModelSerializable<Layer3IPPrefixProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Layer3IPPrefixProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLayer3IPPrefixProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="Layer3IPPrefixProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="Layer3IPPrefixProperties"/> to convert. </param>
+        public static implicit operator RequestContent(Layer3IPPrefixProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="Layer3IPPrefixProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator Layer3IPPrefixProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLayer3IPPrefixProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> The VirtualNetworksPropertiesInfraVnetProfile. </summary>
     public partial class VirtualNetworksPropertiesInfraVnetProfile
     {
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesInfraVnetProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksPropertiesInfraVnetProfile"/>. </summary>
         public VirtualNetworksPropertiesInfraVnetProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesInfraVnetProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksPropertiesInfraVnetProfile"/>. </summary>
         /// <param name="hci"> Infra network profile for HCI platform. </param>
         /// <param name="networkCloud"> Infra network profile for the NetworkCloud platform. </param>
         /// <param name="vmware"> Infra network profile for VMware platform. </param>
-        internal VirtualNetworksPropertiesInfraVnetProfile(VirtualNetworksPropertiesInfraVnetProfileHci hci, VirtualNetworksPropertiesInfraVnetProfileNetworkCloud networkCloud, VirtualNetworksPropertiesInfraVnetProfileVmware vmware)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworksPropertiesInfraVnetProfile(VirtualNetworksPropertiesInfraVnetProfileHci hci, VirtualNetworksPropertiesInfraVnetProfileNetworkCloud networkCloud, VirtualNetworksPropertiesInfraVnetProfileVmware vmware, Dictionary<string, BinaryData> rawData)
         {
             Hci = hci;
             NetworkCloud = networkCloud;
             Vmware = vmware;
+            _rawData = rawData;
         }
 
         /// <summary> Infra network profile for HCI platform. </summary>

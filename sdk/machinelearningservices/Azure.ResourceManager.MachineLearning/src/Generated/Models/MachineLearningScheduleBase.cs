@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningScheduleBase. </summary>
     public partial class MachineLearningScheduleBase
     {
-        /// <summary> Initializes a new instance of MachineLearningScheduleBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningScheduleBase"/>. </summary>
         internal MachineLearningScheduleBase()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningScheduleBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningScheduleBase"/>. </summary>
         /// <param name="id"> A system assigned id for the schedule. </param>
         /// <param name="provisioningStatus"> The current deployment state of schedule. </param>
         /// <param name="status"> Is the schedule enabled or disabled?. </param>
-        internal MachineLearningScheduleBase(string id, MachineLearningScheduleProvisioningState? provisioningStatus, MachineLearningScheduleStatus? status)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningScheduleBase(string id, MachineLearningScheduleProvisioningState? provisioningStatus, MachineLearningScheduleStatus? status, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             ProvisioningStatus = provisioningStatus;
             Status = status;
+            _rawData = rawData;
         }
 
         /// <summary> A system assigned id for the schedule. </summary>

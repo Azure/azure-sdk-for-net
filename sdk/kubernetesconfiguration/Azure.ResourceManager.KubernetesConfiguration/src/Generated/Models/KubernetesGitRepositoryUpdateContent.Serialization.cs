@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesGitRepositoryUpdateContent : IUtf8JsonSerializable
+    public partial class KubernetesGitRepositoryUpdateContent : IUtf8JsonSerializable, IModelJsonSerializable<KubernetesGitRepositoryUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KubernetesGitRepositoryUpdateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KubernetesGitRepositoryUpdateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesGitRepositoryUpdateContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Uri))
             {
@@ -56,7 +64,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (RepositoryRef != null)
                 {
                     writer.WritePropertyName("repositoryRef"u8);
-                    writer.WriteObjectValue(RepositoryRef);
+                    if (RepositoryRef is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<KubernetesGitRepositoryRef>)RepositoryRef).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -111,7 +126,175 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("localAuthRef");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static KubernetesGitRepositoryUpdateContent DeserializeKubernetesGitRepositoryUpdateContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<Uri> url = default;
+            Optional<long?> timeoutInSeconds = default;
+            Optional<long?> syncIntervalInSeconds = default;
+            Optional<KubernetesGitRepositoryRef> repositoryRef = default;
+            Optional<string> sshKnownHosts = default;
+            Optional<string> httpsUser = default;
+            Optional<string> httpsCACert = default;
+            Optional<string> localAuthRef = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("url"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        url = null;
+                        continue;
+                    }
+                    url = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("timeoutInSeconds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        timeoutInSeconds = null;
+                        continue;
+                    }
+                    timeoutInSeconds = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("syncIntervalInSeconds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        syncIntervalInSeconds = null;
+                        continue;
+                    }
+                    syncIntervalInSeconds = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("repositoryRef"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        repositoryRef = null;
+                        continue;
+                    }
+                    repositoryRef = KubernetesGitRepositoryRef.DeserializeKubernetesGitRepositoryRef(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("sshKnownHosts"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        sshKnownHosts = null;
+                        continue;
+                    }
+                    sshKnownHosts = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("httpsUser"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        httpsUser = null;
+                        continue;
+                    }
+                    httpsUser = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("httpsCACert"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        httpsCACert = null;
+                        continue;
+                    }
+                    httpsCACert = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("localAuthRef"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        localAuthRef = null;
+                        continue;
+                    }
+                    localAuthRef = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new KubernetesGitRepositoryUpdateContent(url.Value, Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), repositoryRef.Value, sshKnownHosts.Value, httpsUser.Value, httpsCACert.Value, localAuthRef.Value, rawData);
+        }
+
+        KubernetesGitRepositoryUpdateContent IModelJsonSerializable<KubernetesGitRepositoryUpdateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesGitRepositoryUpdateContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesGitRepositoryUpdateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KubernetesGitRepositoryUpdateContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesGitRepositoryUpdateContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KubernetesGitRepositoryUpdateContent IModelSerializable<KubernetesGitRepositoryUpdateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesGitRepositoryUpdateContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKubernetesGitRepositoryUpdateContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KubernetesGitRepositoryUpdateContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KubernetesGitRepositoryUpdateContent"/> to convert. </param>
+        public static implicit operator RequestContent(KubernetesGitRepositoryUpdateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KubernetesGitRepositoryUpdateContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KubernetesGitRepositoryUpdateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKubernetesGitRepositoryUpdateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

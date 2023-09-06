@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The api resource metadata. </summary>
     public partial class LogicApiResourceMetadata
     {
-        /// <summary> Initializes a new instance of LogicApiResourceMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicApiResourceMetadata"/>. </summary>
         internal LogicApiResourceMetadata()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of LogicApiResourceMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiResourceMetadata"/>. </summary>
         /// <param name="source"> The source. </param>
         /// <param name="brandColor"> The brand color. </param>
         /// <param name="hideKey"> The hide key. </param>
@@ -30,7 +34,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="connectionType"> The connection type. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="deploymentParameters"> The connector deployment parameters metadata. </param>
-        internal LogicApiResourceMetadata(string source, string brandColor, string hideKey, IReadOnlyDictionary<string, string> tags, LogicApiType? apiType, LogicWsdlService wsdlService, LogicWsdlImportMethod? wsdlImportMethod, string connectionType, LogicWorkflowProvisioningState? provisioningState, LogicApiDeploymentParameterMetadataSet deploymentParameters)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicApiResourceMetadata(string source, string brandColor, string hideKey, IReadOnlyDictionary<string, string> tags, LogicApiType? apiType, LogicWsdlService wsdlService, LogicWsdlImportMethod? wsdlImportMethod, string connectionType, LogicWorkflowProvisioningState? provisioningState, LogicApiDeploymentParameterMetadataSet deploymentParameters, Dictionary<string, BinaryData> rawData)
         {
             Source = source;
             BrandColor = brandColor;
@@ -42,6 +47,7 @@ namespace Azure.ResourceManager.Logic.Models
             ConnectionType = connectionType;
             ProvisioningState = provisioningState;
             DeploymentParameters = deploymentParameters;
+            _rawData = rawData;
         }
 
         /// <summary> The source. </summary>

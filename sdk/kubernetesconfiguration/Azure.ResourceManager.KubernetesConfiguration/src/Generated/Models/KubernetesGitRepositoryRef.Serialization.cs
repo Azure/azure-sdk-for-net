@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesGitRepositoryRef : IUtf8JsonSerializable
+    public partial class KubernetesGitRepositoryRef : IUtf8JsonSerializable, IModelJsonSerializable<KubernetesGitRepositoryRef>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KubernetesGitRepositoryRef>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KubernetesGitRepositoryRef>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesGitRepositoryRef>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Branch))
             {
@@ -63,11 +71,25 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("commit");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KubernetesGitRepositoryRef DeserializeKubernetesGitRepositoryRef(JsonElement element)
+        internal static KubernetesGitRepositoryRef DeserializeKubernetesGitRepositoryRef(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -76,6 +98,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             Optional<string> tag = default;
             Optional<string> semver = default;
             Optional<string> commit = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("branch"u8))
@@ -118,8 +141,61 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     commit = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KubernetesGitRepositoryRef(branch.Value, tag.Value, semver.Value, commit.Value);
+            return new KubernetesGitRepositoryRef(branch.Value, tag.Value, semver.Value, commit.Value, rawData);
+        }
+
+        KubernetesGitRepositoryRef IModelJsonSerializable<KubernetesGitRepositoryRef>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesGitRepositoryRef>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesGitRepositoryRef(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KubernetesGitRepositoryRef>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesGitRepositoryRef>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KubernetesGitRepositoryRef IModelSerializable<KubernetesGitRepositoryRef>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesGitRepositoryRef>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKubernetesGitRepositoryRef(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KubernetesGitRepositoryRef"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KubernetesGitRepositoryRef"/> to convert. </param>
+        public static implicit operator RequestContent(KubernetesGitRepositoryRef model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KubernetesGitRepositoryRef"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KubernetesGitRepositoryRef(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKubernetesGitRepositoryRef(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class LiveEventPreview : IUtf8JsonSerializable
+    public partial class LiveEventPreview : IUtf8JsonSerializable, IModelJsonSerializable<LiveEventPreview>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LiveEventPreview>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LiveEventPreview>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LiveEventPreview>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Endpoints))
             {
@@ -22,7 +29,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<LiveEventEndpoint>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -31,7 +45,14 @@ namespace Azure.ResourceManager.Media.Models
                 if (AccessControl != null)
                 {
                     writer.WritePropertyName("accessControl"u8);
-                    writer.WriteObjectValue(AccessControl);
+                    if (AccessControl is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<LiveEventPreviewAccessControl>)AccessControl).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -53,11 +74,25 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("alternativeMediaId"u8);
                 writer.WriteStringValue(AlternativeMediaId);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LiveEventPreview DeserializeLiveEventPreview(JsonElement element)
+        internal static LiveEventPreview DeserializeLiveEventPreview(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -67,6 +102,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> previewLocator = default;
             Optional<string> streamingPolicyName = default;
             Optional<string> alternativeMediaId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpoints"u8))
@@ -108,8 +144,61 @@ namespace Azure.ResourceManager.Media.Models
                     alternativeMediaId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LiveEventPreview(Optional.ToList(endpoints), accessControl.Value, previewLocator.Value, streamingPolicyName.Value, alternativeMediaId.Value);
+            return new LiveEventPreview(Optional.ToList(endpoints), accessControl.Value, previewLocator.Value, streamingPolicyName.Value, alternativeMediaId.Value, rawData);
+        }
+
+        LiveEventPreview IModelJsonSerializable<LiveEventPreview>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LiveEventPreview>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLiveEventPreview(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LiveEventPreview>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LiveEventPreview>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LiveEventPreview IModelSerializable<LiveEventPreview>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LiveEventPreview>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLiveEventPreview(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LiveEventPreview"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LiveEventPreview"/> to convert. </param>
+        public static implicit operator RequestContent(LiveEventPreview model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LiveEventPreview"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LiveEventPreview(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLiveEventPreview(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

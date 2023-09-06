@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -14,14 +16,18 @@ namespace Azure.ResourceManager.Media.Models
     /// Please note <see cref="MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownJobOutput))]
     public abstract partial class MediaJobOutput
     {
-        /// <summary> Initializes a new instance of MediaJobOutput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutput"/>. </summary>
         protected MediaJobOutput()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutput"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="error"> If the JobOutput is in the Error state, it contains the details of the error. </param>
         /// <param name="presetOverride">
@@ -34,7 +40,8 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="label"> A label that is assigned to a JobOutput in order to help uniquely identify it. This is useful when your Transform has more than one TransformOutput, whereby your Job has more than one JobOutput. In such cases, when you submit the Job, you will add two or more JobOutputs, in the same order as TransformOutputs in the Transform. Subsequently, when you retrieve the Job, either through events or on a GET request, you can use the label to easily identify the JobOutput. If a label is not provided, a default value of '{presetName}_{outputIndex}' will be used, where the preset name is the name of the preset in the corresponding TransformOutput and the output index is the relative index of the this JobOutput within the Job. Note that this index is the same as the relative index of the corresponding TransformOutput within its Transform. </param>
         /// <param name="startOn"> The UTC date and time at which this Job Output began processing. </param>
         /// <param name="endOn"> The UTC date and time at which this Job Output finished processing. </param>
-        internal MediaJobOutput(string odataType, MediaJobError error, MediaTransformPreset presetOverride, MediaJobState? state, int? progress, string label, DateTimeOffset? startOn, DateTimeOffset? endOn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaJobOutput(string odataType, MediaJobError error, MediaTransformPreset presetOverride, MediaJobState? state, int? progress, string label, DateTimeOffset? startOn, DateTimeOffset? endOn, Dictionary<string, BinaryData> rawData)
         {
             OdataType = odataType;
             Error = error;
@@ -44,6 +51,7 @@ namespace Azure.ResourceManager.Media.Models
             Label = label;
             StartOn = startOn;
             EndOn = endOn;
+            _rawData = rawData;
         }
 
         /// <summary> The discriminator for derived types. </summary>

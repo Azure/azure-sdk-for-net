@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Resource requirements for each container instance within an online deployment. </summary>
     public partial class MachineLearningContainerResourceRequirements
     {
-        /// <summary> Initializes a new instance of MachineLearningContainerResourceRequirements. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningContainerResourceRequirements"/>. </summary>
         public MachineLearningContainerResourceRequirements()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningContainerResourceRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningContainerResourceRequirements"/>. </summary>
         /// <param name="containerResourceLimits"> Container resource limit info:. </param>
         /// <param name="containerResourceRequests"> Container resource request info:. </param>
-        internal MachineLearningContainerResourceRequirements(MachineLearningContainerResourceSettings containerResourceLimits, MachineLearningContainerResourceSettings containerResourceRequests)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningContainerResourceRequirements(MachineLearningContainerResourceSettings containerResourceLimits, MachineLearningContainerResourceSettings containerResourceRequests, Dictionary<string, BinaryData> rawData)
         {
             ContainerResourceLimits = containerResourceLimits;
             ContainerResourceRequests = containerResourceRequests;
+            _rawData = rawData;
         }
 
         /// <summary> Container resource limit info:. </summary>

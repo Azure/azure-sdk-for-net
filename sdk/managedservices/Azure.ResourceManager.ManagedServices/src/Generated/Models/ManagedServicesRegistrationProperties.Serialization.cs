@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
-    public partial class ManagedServicesRegistrationProperties : IUtf8JsonSerializable
+    public partial class ManagedServicesRegistrationProperties : IUtf8JsonSerializable, IModelJsonSerializable<ManagedServicesRegistrationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedServicesRegistrationProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedServicesRegistrationProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedServicesRegistrationProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
@@ -26,7 +32,14 @@ namespace Azure.ResourceManager.ManagedServices.Models
             writer.WriteStartArray();
             foreach (var item in Authorizations)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ManagedServicesAuthorization>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(EligibleAuthorizations))
@@ -35,7 +48,14 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 writer.WriteStartArray();
                 foreach (var item in EligibleAuthorizations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ManagedServicesEligibleAuthorization>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -46,11 +66,25 @@ namespace Azure.ResourceManager.ManagedServices.Models
             }
             writer.WritePropertyName("managedByTenantId"u8);
             writer.WriteStringValue(ManagedByTenantId);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedServicesRegistrationProperties DeserializeManagedServicesRegistrationProperties(JsonElement element)
+        internal static ManagedServicesRegistrationProperties DeserializeManagedServicesRegistrationProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,6 +98,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             Optional<Guid> manageeTenantId = default;
             Optional<string> manageeTenantName = default;
             Optional<string> managedByTenantName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -133,8 +168,61 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     managedByTenantName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedServicesRegistrationProperties(description.Value, authorizations, Optional.ToList(eligibleAuthorizations), registrationDefinitionName.Value, managedByTenantId, Optional.ToNullable(provisioningState), Optional.ToNullable(manageeTenantId), manageeTenantName.Value, managedByTenantName.Value);
+            return new ManagedServicesRegistrationProperties(description.Value, authorizations, Optional.ToList(eligibleAuthorizations), registrationDefinitionName.Value, managedByTenantId, Optional.ToNullable(provisioningState), Optional.ToNullable(manageeTenantId), manageeTenantName.Value, managedByTenantName.Value, rawData);
+        }
+
+        ManagedServicesRegistrationProperties IModelJsonSerializable<ManagedServicesRegistrationProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedServicesRegistrationProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedServicesRegistrationProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedServicesRegistrationProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedServicesRegistrationProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedServicesRegistrationProperties IModelSerializable<ManagedServicesRegistrationProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedServicesRegistrationProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedServicesRegistrationProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagedServicesRegistrationProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagedServicesRegistrationProperties"/> to convert. </param>
+        public static implicit operator RequestContent(ManagedServicesRegistrationProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagedServicesRegistrationProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagedServicesRegistrationProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedServicesRegistrationProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

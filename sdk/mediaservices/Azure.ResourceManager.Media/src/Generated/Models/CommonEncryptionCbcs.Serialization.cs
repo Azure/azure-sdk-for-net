@@ -5,21 +5,35 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class CommonEncryptionCbcs : IUtf8JsonSerializable
+    public partial class CommonEncryptionCbcs : IUtf8JsonSerializable, IModelJsonSerializable<CommonEncryptionCbcs>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CommonEncryptionCbcs>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CommonEncryptionCbcs>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CommonEncryptionCbcs>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EnabledProtocols))
             {
                 writer.WritePropertyName("enabledProtocols"u8);
-                writer.WriteObjectValue(EnabledProtocols);
+                if (EnabledProtocols is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MediaEnabledProtocols>)EnabledProtocols).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(ClearTracks))
             {
@@ -27,30 +41,72 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in ClearTracks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MediaTrackSelection>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ContentKeys))
             {
                 writer.WritePropertyName("contentKeys"u8);
-                writer.WriteObjectValue(ContentKeys);
+                if (ContentKeys is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StreamingPolicyContentKeys>)ContentKeys).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Drm))
             {
                 writer.WritePropertyName("drm"u8);
-                writer.WriteObjectValue(Drm);
+                if (Drm is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CbcsDrmConfiguration>)Drm).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ClearKeyEncryptionConfiguration))
             {
                 writer.WritePropertyName("clearKeyEncryptionConfiguration"u8);
-                writer.WriteObjectValue(ClearKeyEncryptionConfiguration);
+                if (ClearKeyEncryptionConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ClearKeyEncryptionConfiguration>)ClearKeyEncryptionConfiguration).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static CommonEncryptionCbcs DeserializeCommonEncryptionCbcs(JsonElement element)
+        internal static CommonEncryptionCbcs DeserializeCommonEncryptionCbcs(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +116,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<StreamingPolicyContentKeys> contentKeys = default;
             Optional<CbcsDrmConfiguration> drm = default;
             Optional<ClearKeyEncryptionConfiguration> clearKeyEncryptionConfiguration = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabledProtocols"u8))
@@ -112,8 +169,61 @@ namespace Azure.ResourceManager.Media.Models
                     clearKeyEncryptionConfiguration = ClearKeyEncryptionConfiguration.DeserializeClearKeyEncryptionConfiguration(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CommonEncryptionCbcs(enabledProtocols.Value, Optional.ToList(clearTracks), contentKeys.Value, drm.Value, clearKeyEncryptionConfiguration.Value);
+            return new CommonEncryptionCbcs(enabledProtocols.Value, Optional.ToList(clearTracks), contentKeys.Value, drm.Value, clearKeyEncryptionConfiguration.Value, rawData);
+        }
+
+        CommonEncryptionCbcs IModelJsonSerializable<CommonEncryptionCbcs>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CommonEncryptionCbcs>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommonEncryptionCbcs(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CommonEncryptionCbcs>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CommonEncryptionCbcs>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CommonEncryptionCbcs IModelSerializable<CommonEncryptionCbcs>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CommonEncryptionCbcs>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCommonEncryptionCbcs(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CommonEncryptionCbcs"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CommonEncryptionCbcs"/> to convert. </param>
+        public static implicit operator RequestContent(CommonEncryptionCbcs model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CommonEncryptionCbcs"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CommonEncryptionCbcs(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCommonEncryptionCbcs(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -12,19 +14,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningVirtualMachineProperties. </summary>
     public partial class MachineLearningVirtualMachineProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningVirtualMachineProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningVirtualMachineProperties"/>. </summary>
         public MachineLearningVirtualMachineProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningVirtualMachineProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningVirtualMachineProperties"/>. </summary>
         /// <param name="virtualMachineSize"> Virtual Machine size. </param>
         /// <param name="sshPort"> Port open for ssh connections. </param>
         /// <param name="notebookServerPort"> Notebook server port open for ssh connections. </param>
         /// <param name="address"> Public IP address of the virtual machine. </param>
         /// <param name="administratorAccount"> Admin credentials for virtual machine. </param>
         /// <param name="isNotebookInstanceCompute"> Indicates whether this compute will be used for running notebooks. </param>
-        internal MachineLearningVirtualMachineProperties(string virtualMachineSize, int? sshPort, int? notebookServerPort, IPAddress address, MachineLearningVmSshCredentials administratorAccount, bool? isNotebookInstanceCompute)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningVirtualMachineProperties(string virtualMachineSize, int? sshPort, int? notebookServerPort, IPAddress address, MachineLearningVmSshCredentials administratorAccount, bool? isNotebookInstanceCompute, Dictionary<string, BinaryData> rawData)
         {
             VirtualMachineSize = virtualMachineSize;
             SshPort = sshPort;
@@ -32,6 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Address = address;
             AdministratorAccount = administratorAccount;
             IsNotebookInstanceCompute = isNotebookInstanceCompute;
+            _rawData = rawData;
         }
 
         /// <summary> Virtual Machine size. </summary>

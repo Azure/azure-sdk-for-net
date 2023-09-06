@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkFabricInternalNetworkPatch : IUtf8JsonSerializable
+    public partial class NetworkFabricInternalNetworkPatch : IUtf8JsonSerializable, IModelJsonSerializable<NetworkFabricInternalNetworkPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkFabricInternalNetworkPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkFabricInternalNetworkPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkFabricInternalNetworkPatch>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -33,7 +41,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in ConnectedIPv4Subnets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ConnectedSubnet>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -43,7 +58,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in ConnectedIPv6Subnets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ConnectedSubnet>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -60,12 +82,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(ImportRoutePolicy))
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
-                writer.WriteObjectValue(ImportRoutePolicy);
+                if (ImportRoutePolicy is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ImportRoutePolicy>)ImportRoutePolicy).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
-                writer.WriteObjectValue(ExportRoutePolicy);
+                if (ExportRoutePolicy is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ExportRoutePolicy>)ExportRoutePolicy).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(IngressAclId))
             {
@@ -85,15 +121,257 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(BgpConfiguration))
             {
                 writer.WritePropertyName("bgpConfiguration"u8);
-                writer.WriteObjectValue(BgpConfiguration);
+                if (BgpConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BgpConfiguration>)BgpConfiguration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(StaticRouteConfiguration))
             {
                 writer.WritePropertyName("staticRouteConfiguration"u8);
-                writer.WriteObjectValue(StaticRouteConfiguration);
+                if (StaticRouteConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StaticRouteConfiguration>)StaticRouteConfiguration).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static NetworkFabricInternalNetworkPatch DeserializeNetworkFabricInternalNetworkPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> annotation = default;
+            Optional<int> mtu = default;
+            Optional<IList<ConnectedSubnet>> connectedIPv4Subnets = default;
+            Optional<IList<ConnectedSubnet>> connectedIPv6Subnets = default;
+            Optional<ResourceIdentifier> importRoutePolicyId = default;
+            Optional<ResourceIdentifier> exportRoutePolicyId = default;
+            Optional<ImportRoutePolicy> importRoutePolicy = default;
+            Optional<ExportRoutePolicy> exportRoutePolicy = default;
+            Optional<ResourceIdentifier> ingressAclId = default;
+            Optional<ResourceIdentifier> egressAclId = default;
+            Optional<IsMonitoringEnabled> isMonitoringEnabled = default;
+            Optional<BgpConfiguration> bgpConfiguration = default;
+            Optional<StaticRouteConfiguration> staticRouteConfiguration = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("annotation"u8))
+                        {
+                            annotation = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("mtu"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            mtu = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("connectedIPv4Subnets"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ConnectedSubnet> array = new List<ConnectedSubnet>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ConnectedSubnet.DeserializeConnectedSubnet(item));
+                            }
+                            connectedIPv4Subnets = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("connectedIPv6Subnets"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ConnectedSubnet> array = new List<ConnectedSubnet>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ConnectedSubnet.DeserializeConnectedSubnet(item));
+                            }
+                            connectedIPv6Subnets = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("importRoutePolicyId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            importRoutePolicyId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("exportRoutePolicyId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            exportRoutePolicyId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("importRoutePolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            importRoutePolicy = ImportRoutePolicy.DeserializeImportRoutePolicy(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("exportRoutePolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            exportRoutePolicy = ExportRoutePolicy.DeserializeExportRoutePolicy(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("ingressAclId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            ingressAclId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("egressAclId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            egressAclId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("isMonitoringEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isMonitoringEnabled = new IsMonitoringEnabled(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("bgpConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            bgpConfiguration = BgpConfiguration.DeserializeBgpConfiguration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("staticRouteConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            staticRouteConfiguration = StaticRouteConfiguration.DeserializeStaticRouteConfiguration(property0.Value);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new NetworkFabricInternalNetworkPatch(annotation.Value, Optional.ToNullable(mtu), Optional.ToList(connectedIPv4Subnets), Optional.ToList(connectedIPv6Subnets), importRoutePolicyId.Value, exportRoutePolicyId.Value, importRoutePolicy.Value, exportRoutePolicy.Value, ingressAclId.Value, egressAclId.Value, Optional.ToNullable(isMonitoringEnabled), bgpConfiguration.Value, staticRouteConfiguration.Value, rawData);
+        }
+
+        NetworkFabricInternalNetworkPatch IModelJsonSerializable<NetworkFabricInternalNetworkPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkFabricInternalNetworkPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkFabricInternalNetworkPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkFabricInternalNetworkPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkFabricInternalNetworkPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkFabricInternalNetworkPatch IModelSerializable<NetworkFabricInternalNetworkPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkFabricInternalNetworkPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkFabricInternalNetworkPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetworkFabricInternalNetworkPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetworkFabricInternalNetworkPatch"/> to convert. </param>
+        public static implicit operator RequestContent(NetworkFabricInternalNetworkPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetworkFabricInternalNetworkPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetworkFabricInternalNetworkPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkFabricInternalNetworkPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

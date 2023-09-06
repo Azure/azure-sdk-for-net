@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Get private store notifications state. </summary>
     public partial class PrivateStoreNotificationsState
     {
-        /// <summary> Initializes a new instance of PrivateStoreNotificationsState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreNotificationsState"/>. </summary>
         internal PrivateStoreNotificationsState()
         {
             StopSellNotifications = new ChangeTrackingList<StopSellNotifications>();
@@ -21,15 +25,17 @@ namespace Azure.ResourceManager.Marketplace.Models
             ApprovalRequests = new ChangeTrackingList<RequestApprovalsDetails>();
         }
 
-        /// <summary> Initializes a new instance of PrivateStoreNotificationsState. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreNotificationsState"/>. </summary>
         /// <param name="stopSellNotifications"></param>
         /// <param name="newNotifications"></param>
         /// <param name="approvalRequests"></param>
-        internal PrivateStoreNotificationsState(IReadOnlyList<StopSellNotifications> stopSellNotifications, IReadOnlyList<NewPlanNotification> newNotifications, IReadOnlyList<RequestApprovalsDetails> approvalRequests)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateStoreNotificationsState(IReadOnlyList<StopSellNotifications> stopSellNotifications, IReadOnlyList<NewPlanNotification> newNotifications, IReadOnlyList<RequestApprovalsDetails> approvalRequests, Dictionary<string, BinaryData> rawData)
         {
             StopSellNotifications = stopSellNotifications;
             NewNotifications = newNotifications;
             ApprovalRequests = approvalRequests;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the stop sell notifications. </summary>

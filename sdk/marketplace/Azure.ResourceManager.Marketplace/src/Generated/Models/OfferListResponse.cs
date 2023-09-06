@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Marketplace;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> The OfferListResponse. </summary>
     internal partial class OfferListResponse
     {
-        /// <summary> Initializes a new instance of OfferListResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OfferListResponse"/>. </summary>
         internal OfferListResponse()
         {
             Value = new ChangeTrackingList<PrivateStoreOfferData>();
         }
 
-        /// <summary> Initializes a new instance of OfferListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="OfferListResponse"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next set of offer list results if there are any. </param>
-        internal OfferListResponse(IReadOnlyList<PrivateStoreOfferData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OfferListResponse(IReadOnlyList<PrivateStoreOfferData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the value. </summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,12 +17,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class ImageModelSettingsObjectDetection : ImageModelSettings
     {
-        /// <summary> Initializes a new instance of ImageModelSettingsObjectDetection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageModelSettingsObjectDetection"/>. </summary>
         public ImageModelSettingsObjectDetection()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageModelSettingsObjectDetection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageModelSettingsObjectDetection"/>. </summary>
         /// <param name="advancedSettings"> Settings for advanced scenarios. </param>
         /// <param name="amsGradient"> Enable AMSGrad when optimizer is 'adam' or 'adamw'. </param>
         /// <param name="augmentations"> Settings for using Augmentations. </param>
@@ -121,7 +124,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="validationIouThreshold"> IOU threshold to use when computing validation metric. Must be float in the range [0, 1]. </param>
         /// <param name="validationMetricType"> Metric computation method to use for validation metrics. </param>
-        internal ImageModelSettingsObjectDetection(string advancedSettings, bool? amsGradient, string augmentations, float? beta1, float? beta2, int? checkpointFrequency, MachineLearningFlowModelJobInput checkpointModel, string checkpointRunId, bool? distributed, bool? earlyStopping, int? earlyStoppingDelay, int? earlyStoppingPatience, bool? enableOnnxNormalization, int? evaluationFrequency, int? gradientAccumulationStep, int? layersToFreeze, float? learningRate, LearningRateScheduler? learningRateScheduler, string modelName, float? momentum, bool? nesterov, int? numberOfEpochs, int? numberOfWorkers, StochasticOptimizer? optimizer, int? randomSeed, float? stepLRGamma, int? stepLRStepSize, int? trainingBatchSize, int? validationBatchSize, float? warmupCosineLRCycles, int? warmupCosineLRWarmupEpochs, float? weightDecay, int? boxDetectionsPerImage, float? boxScoreThreshold, int? imageSize, int? maxSize, int? minSize, MachineLearningModelSize? modelSize, bool? multiScale, float? nmsIouThreshold, string tileGridSize, float? tileOverlapRatio, float? tilePredictionsNmsThreshold, float? validationIouThreshold, ValidationMetricType? validationMetricType) : base(advancedSettings, amsGradient, augmentations, beta1, beta2, checkpointFrequency, checkpointModel, checkpointRunId, distributed, earlyStopping, earlyStoppingDelay, earlyStoppingPatience, enableOnnxNormalization, evaluationFrequency, gradientAccumulationStep, layersToFreeze, learningRate, learningRateScheduler, modelName, momentum, nesterov, numberOfEpochs, numberOfWorkers, optimizer, randomSeed, stepLRGamma, stepLRStepSize, trainingBatchSize, validationBatchSize, warmupCosineLRCycles, warmupCosineLRWarmupEpochs, weightDecay)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImageModelSettingsObjectDetection(string advancedSettings, bool? amsGradient, string augmentations, float? beta1, float? beta2, int? checkpointFrequency, MachineLearningFlowModelJobInput checkpointModel, string checkpointRunId, bool? distributed, bool? earlyStopping, int? earlyStoppingDelay, int? earlyStoppingPatience, bool? enableOnnxNormalization, int? evaluationFrequency, int? gradientAccumulationStep, int? layersToFreeze, float? learningRate, LearningRateScheduler? learningRateScheduler, string modelName, float? momentum, bool? nesterov, int? numberOfEpochs, int? numberOfWorkers, StochasticOptimizer? optimizer, int? randomSeed, float? stepLRGamma, int? stepLRStepSize, int? trainingBatchSize, int? validationBatchSize, float? warmupCosineLRCycles, int? warmupCosineLRWarmupEpochs, float? weightDecay, int? boxDetectionsPerImage, float? boxScoreThreshold, int? imageSize, int? maxSize, int? minSize, MachineLearningModelSize? modelSize, bool? multiScale, float? nmsIouThreshold, string tileGridSize, float? tileOverlapRatio, float? tilePredictionsNmsThreshold, float? validationIouThreshold, ValidationMetricType? validationMetricType, Dictionary<string, BinaryData> rawData) : base(advancedSettings, amsGradient, augmentations, beta1, beta2, checkpointFrequency, checkpointModel, checkpointRunId, distributed, earlyStopping, earlyStoppingDelay, earlyStoppingPatience, enableOnnxNormalization, evaluationFrequency, gradientAccumulationStep, layersToFreeze, learningRate, learningRateScheduler, modelName, momentum, nesterov, numberOfEpochs, numberOfWorkers, optimizer, randomSeed, stepLRGamma, stepLRStepSize, trainingBatchSize, validationBatchSize, warmupCosineLRCycles, warmupCosineLRWarmupEpochs, weightDecay, rawData)
         {
             BoxDetectionsPerImage = boxDetectionsPerImage;
             BoxScoreThreshold = boxScoreThreshold;

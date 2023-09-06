@@ -5,36 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class IntegrationAccountAgreementContent : IUtf8JsonSerializable
+    public partial class IntegrationAccountAgreementContent : IUtf8JsonSerializable, IModelJsonSerializable<IntegrationAccountAgreementContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IntegrationAccountAgreementContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IntegrationAccountAgreementContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationAccountAgreementContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AS2))
             {
                 writer.WritePropertyName("aS2"u8);
-                writer.WriteObjectValue(AS2);
+                if (AS2 is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AS2AgreementContent>)AS2).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(X12))
             {
                 writer.WritePropertyName("x12"u8);
-                writer.WriteObjectValue(X12);
+                if (X12 is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<X12AgreementContent>)X12).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Edifact))
             {
                 writer.WritePropertyName("edifact"u8);
-                writer.WriteObjectValue(Edifact);
+                if (Edifact is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<EdifactAgreementContent>)Edifact).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static IntegrationAccountAgreementContent DeserializeIntegrationAccountAgreementContent(JsonElement element)
+        internal static IntegrationAccountAgreementContent DeserializeIntegrationAccountAgreementContent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +85,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<AS2AgreementContent> aS2 = default;
             Optional<X12AgreementContent> x12 = default;
             Optional<EdifactAgreementContent> edifact = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aS2"u8))
@@ -71,8 +115,61 @@ namespace Azure.ResourceManager.Logic.Models
                     edifact = EdifactAgreementContent.DeserializeEdifactAgreementContent(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IntegrationAccountAgreementContent(aS2.Value, x12.Value, edifact.Value);
+            return new IntegrationAccountAgreementContent(aS2.Value, x12.Value, edifact.Value, rawData);
+        }
+
+        IntegrationAccountAgreementContent IModelJsonSerializable<IntegrationAccountAgreementContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationAccountAgreementContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationAccountAgreementContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IntegrationAccountAgreementContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationAccountAgreementContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IntegrationAccountAgreementContent IModelSerializable<IntegrationAccountAgreementContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationAccountAgreementContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIntegrationAccountAgreementContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IntegrationAccountAgreementContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IntegrationAccountAgreementContent"/> to convert. </param>
+        public static implicit operator RequestContent(IntegrationAccountAgreementContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IntegrationAccountAgreementContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IntegrationAccountAgreementContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIntegrationAccountAgreementContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

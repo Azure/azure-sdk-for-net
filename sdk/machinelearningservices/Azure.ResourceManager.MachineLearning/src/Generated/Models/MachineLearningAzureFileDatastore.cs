@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Azure File datastore configuration. </summary>
     public partial class MachineLearningAzureFileDatastore : MachineLearningDatastoreProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningAzureFileDatastore. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAzureFileDatastore"/>. </summary>
         /// <param name="credentials">
         /// [Required] Account credentials.
         /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DatastoreType = DatastoreType.AzureFile;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAzureFileDatastore. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAzureFileDatastore"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -50,7 +50,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="fileShareName"> [Required] The name of the Azure file share that the datastore points to. </param>
         /// <param name="protocol"> Protocol used to communicate with the storage account. </param>
         /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
-        internal MachineLearningAzureFileDatastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, string accountName, string endpoint, string fileShareName, string protocol, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity) : base(description, properties, tags, credentials, datastoreType, isDefault)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningAzureFileDatastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, string accountName, string endpoint, string fileShareName, string protocol, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity, Dictionary<string, BinaryData> rawData) : base(description, properties, tags, credentials, datastoreType, isDefault, rawData)
         {
             AccountName = accountName;
             Endpoint = endpoint;
@@ -58,6 +59,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Protocol = protocol;
             ServiceDataAccessAuthIdentity = serviceDataAccessAuthIdentity;
             DatastoreType = datastoreType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAzureFileDatastore"/> for deserialization. </summary>
+        internal MachineLearningAzureFileDatastore()
+        {
         }
 
         /// <summary> [Required] Storage account name. </summary>

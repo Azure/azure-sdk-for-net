@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The properties for update Quota response. </summary>
     public partial class MachineLearningWorkspaceQuotaUpdate
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceQuotaUpdate. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceQuotaUpdate"/>. </summary>
         internal MachineLearningWorkspaceQuotaUpdate()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceQuotaUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceQuotaUpdate"/>. </summary>
         /// <param name="id"> Specifies the resource ID. </param>
         /// <param name="updateWorkspaceQuotasType"> Specifies the resource type. </param>
         /// <param name="limit"> The maximum permitted quota of the resource. </param>
         /// <param name="unit"> An enum describing the unit of quota measurement. </param>
         /// <param name="status"> Status of update workspace quota. </param>
-        internal MachineLearningWorkspaceQuotaUpdate(string id, string updateWorkspaceQuotasType, long? limit, MachineLearningQuotaUnit? unit, MachineLearningWorkspaceQuotaStatus? status)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningWorkspaceQuotaUpdate(string id, string updateWorkspaceQuotasType, long? limit, MachineLearningQuotaUnit? unit, MachineLearningWorkspaceQuotaStatus? status, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             UpdateWorkspaceQuotasType = updateWorkspaceQuotasType;
             Limit = limit;
             Unit = unit;
             Status = status;
+            _rawData = rawData;
         }
 
         /// <summary> Specifies the resource ID. </summary>

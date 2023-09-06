@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.MachineLearning
     /// </summary>
     public partial class MachineLearningWorkspaceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MachineLearningWorkspaceData(AzureLocation location) : base(location)
         {
@@ -27,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning
             SharedPrivateLinkResources = new ChangeTrackingList<MachineLearningSharedPrivateLinkResource>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -61,7 +64,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="isStorageHnsEnabled"> If the storage associated with the workspace has hierarchical namespace(HNS) enabled. </param>
         /// <param name="mlFlowTrackingUri"> The URI associated with this workspace that machine learning flow must point at to set up tracking. </param>
         /// <param name="isV1LegacyMode"> Enabling v1_legacy_mode may prevent you from using features provided by the v2 API. </param>
-        internal MachineLearningWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MachineLearningSku sku, string workspaceId, string description, string friendlyName, string keyVault, string applicationInsights, string containerRegistry, string storageAccount, Uri discoveryUri, MachineLearningProvisioningState? provisioningState, MachineLearningEncryptionSetting encryption, bool? isHbiWorkspace, string serviceProvisionedResourceGroup, int? privateLinkCount, string imageBuildCompute, bool? allowPublicAccessWhenBehindVnet, MachineLearningPublicNetworkAccess? publicNetworkAccess, IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections, IList<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources, MachineLearningNotebookResourceInfo notebookInfo, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string primaryUserAssignedIdentity, Guid? tenantId, bool? isStorageHnsEnabled, Uri mlFlowTrackingUri, bool? isV1LegacyMode) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MachineLearningSku sku, string workspaceId, string description, string friendlyName, string keyVault, string applicationInsights, string containerRegistry, string storageAccount, Uri discoveryUri, MachineLearningProvisioningState? provisioningState, MachineLearningEncryptionSetting encryption, bool? isHbiWorkspace, string serviceProvisionedResourceGroup, int? privateLinkCount, string imageBuildCompute, bool? allowPublicAccessWhenBehindVnet, MachineLearningPublicNetworkAccess? publicNetworkAccess, IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections, IList<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources, MachineLearningNotebookResourceInfo notebookInfo, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string primaryUserAssignedIdentity, Guid? tenantId, bool? isStorageHnsEnabled, Uri mlFlowTrackingUri, bool? isV1LegacyMode, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -90,6 +94,12 @@ namespace Azure.ResourceManager.MachineLearning
             IsStorageHnsEnabled = isStorageHnsEnabled;
             MlFlowTrackingUri = mlFlowTrackingUri;
             IsV1LegacyMode = isV1LegacyMode;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceData"/> for deserialization. </summary>
+        internal MachineLearningWorkspaceData()
+        {
         }
 
         /// <summary> The identity of the resource. </summary>

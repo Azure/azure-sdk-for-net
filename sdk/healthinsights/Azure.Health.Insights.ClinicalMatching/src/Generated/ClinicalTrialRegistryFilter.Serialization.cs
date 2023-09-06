@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Health.Insights.ClinicalMatching
 {
-    public partial class ClinicalTrialRegistryFilter : IUtf8JsonSerializable
+    public partial class ClinicalTrialRegistryFilter : IUtf8JsonSerializable, IModelJsonSerializable<ClinicalTrialRegistryFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ClinicalTrialRegistryFilter>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ClinicalTrialRegistryFilter>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Conditions))
             {
@@ -111,7 +119,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in FacilityLocations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<GeographicLocation>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -121,19 +136,263 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in FacilityAreas)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<GeographicArea>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal static ClinicalTrialRegistryFilter DeserializeClinicalTrialRegistryFilter(JsonElement element, ModelSerializerOptions options = default)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<string>> conditions = default;
+            Optional<IList<ClinicalTrialStudyType>> studyTypes = default;
+            Optional<IList<ClinicalTrialRecruitmentStatus>> recruitmentStatuses = default;
+            Optional<IList<string>> sponsors = default;
+            Optional<IList<ClinicalTrialPhase>> phases = default;
+            Optional<IList<ClinicalTrialPurpose>> purposes = default;
+            Optional<IList<string>> ids = default;
+            Optional<IList<ClinicalTrialSource>> sources = default;
+            Optional<IList<string>> facilityNames = default;
+            Optional<IList<GeographicLocation>> facilityLocations = default;
+            Optional<IList<GeographicArea>> facilityAreas = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("conditions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    conditions = array;
+                    continue;
+                }
+                if (property.NameEquals("studyTypes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ClinicalTrialStudyType> array = new List<ClinicalTrialStudyType>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new ClinicalTrialStudyType(item.GetString()));
+                    }
+                    studyTypes = array;
+                    continue;
+                }
+                if (property.NameEquals("recruitmentStatuses"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ClinicalTrialRecruitmentStatus> array = new List<ClinicalTrialRecruitmentStatus>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new ClinicalTrialRecruitmentStatus(item.GetString()));
+                    }
+                    recruitmentStatuses = array;
+                    continue;
+                }
+                if (property.NameEquals("sponsors"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    sponsors = array;
+                    continue;
+                }
+                if (property.NameEquals("phases"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ClinicalTrialPhase> array = new List<ClinicalTrialPhase>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new ClinicalTrialPhase(item.GetString()));
+                    }
+                    phases = array;
+                    continue;
+                }
+                if (property.NameEquals("purposes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ClinicalTrialPurpose> array = new List<ClinicalTrialPurpose>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new ClinicalTrialPurpose(item.GetString()));
+                    }
+                    purposes = array;
+                    continue;
+                }
+                if (property.NameEquals("ids"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    ids = array;
+                    continue;
+                }
+                if (property.NameEquals("sources"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ClinicalTrialSource> array = new List<ClinicalTrialSource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new ClinicalTrialSource(item.GetString()));
+                    }
+                    sources = array;
+                    continue;
+                }
+                if (property.NameEquals("facilityNames"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    facilityNames = array;
+                    continue;
+                }
+                if (property.NameEquals("facilityLocations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<GeographicLocation> array = new List<GeographicLocation>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(GeographicLocation.DeserializeGeographicLocation(item));
+                    }
+                    facilityLocations = array;
+                    continue;
+                }
+                if (property.NameEquals("facilityAreas"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<GeographicArea> array = new List<GeographicArea>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(GeographicArea.DeserializeGeographicArea(item));
+                    }
+                    facilityAreas = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ClinicalTrialRegistryFilter(Optional.ToList(conditions), Optional.ToList(studyTypes), Optional.ToList(recruitmentStatuses), Optional.ToList(sponsors), Optional.ToList(phases), Optional.ToList(purposes), Optional.ToList(ids), Optional.ToList(sources), Optional.ToList(facilityNames), Optional.ToList(facilityLocations), Optional.ToList(facilityAreas), rawData);
+        }
+
+        ClinicalTrialRegistryFilter IModelJsonSerializable<ClinicalTrialRegistryFilter>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeClinicalTrialRegistryFilter(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ClinicalTrialRegistryFilter>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ClinicalTrialRegistryFilter IModelSerializable<ClinicalTrialRegistryFilter>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeClinicalTrialRegistryFilter(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ClinicalTrialRegistryFilter"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ClinicalTrialRegistryFilter"/> to convert. </param>
+        public static implicit operator RequestContent(ClinicalTrialRegistryFilter model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ClinicalTrialRegistryFilter"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ClinicalTrialRegistryFilter(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeClinicalTrialRegistryFilter(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

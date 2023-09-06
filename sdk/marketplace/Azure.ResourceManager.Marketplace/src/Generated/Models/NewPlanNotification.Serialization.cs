@@ -8,14 +8,82 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class NewPlanNotification
+    public partial class NewPlanNotification : IUtf8JsonSerializable, IModelJsonSerializable<NewPlanNotification>
     {
-        internal static NewPlanNotification DeserializeNewPlanNotification(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NewPlanNotification>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NewPlanNotification>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NewPlanNotification>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(OfferId))
+            {
+                writer.WritePropertyName("offerId"u8);
+                writer.WriteStringValue(OfferId);
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsDefined(IsFuturePlansEnabled))
+            {
+                writer.WritePropertyName("isFuturePlansEnabled"u8);
+                writer.WriteBooleanValue(IsFuturePlansEnabled.Value);
+            }
+            if (Optional.IsDefined(MessageCode))
+            {
+                writer.WritePropertyName("messageCode"u8);
+                writer.WriteNumberValue(MessageCode.Value);
+            }
+            if (Optional.IsDefined(IconUri))
+            {
+                writer.WritePropertyName("icon"u8);
+                writer.WriteStringValue(IconUri.AbsoluteUri);
+            }
+            if (Optional.IsCollectionDefined(Plans))
+            {
+                writer.WritePropertyName("plans"u8);
+                writer.WriteStartArray();
+                foreach (var item in Plans)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<PlanNotificationDetails>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static NewPlanNotification DeserializeNewPlanNotification(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +94,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<long> messageCode = default;
             Optional<Uri> icon = default;
             Optional<IReadOnlyList<PlanNotificationDetails>> plans = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offerId"u8))
@@ -79,8 +148,61 @@ namespace Azure.ResourceManager.Marketplace.Models
                     plans = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NewPlanNotification(offerId.Value, displayName.Value, Optional.ToNullable(isFuturePlansEnabled), Optional.ToNullable(messageCode), icon.Value, Optional.ToList(plans));
+            return new NewPlanNotification(offerId.Value, displayName.Value, Optional.ToNullable(isFuturePlansEnabled), Optional.ToNullable(messageCode), icon.Value, Optional.ToList(plans), rawData);
+        }
+
+        NewPlanNotification IModelJsonSerializable<NewPlanNotification>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NewPlanNotification>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNewPlanNotification(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NewPlanNotification>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NewPlanNotification>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NewPlanNotification IModelSerializable<NewPlanNotification>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NewPlanNotification>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNewPlanNotification(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NewPlanNotification"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NewPlanNotification"/> to convert. </param>
+        public static implicit operator RequestContent(NewPlanNotification model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NewPlanNotification"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NewPlanNotification(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNewPlanNotification(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

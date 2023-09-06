@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The ConfigurationQueriesTestResponse. </summary>
     public partial class ConfigurationQueriesTestResponse
     {
-        /// <summary> Initializes a new instance of ConfigurationQueriesTestResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfigurationQueriesTestResponse"/>. </summary>
         internal ConfigurationQueriesTestResponse()
         {
             CustomMetricQueryErrors = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ConfigurationQueriesTestResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationQueriesTestResponse"/>. </summary>
         /// <param name="targetConditionError"> The errors from running the target condition query. </param>
         /// <param name="customMetricQueryErrors"> The errors from running the custom metric query. </param>
-        internal ConfigurationQueriesTestResponse(string targetConditionError, IReadOnlyDictionary<string, string> customMetricQueryErrors)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfigurationQueriesTestResponse(string targetConditionError, IReadOnlyDictionary<string, string> customMetricQueryErrors, Dictionary<string, BinaryData> rawData)
         {
             TargetConditionError = targetConditionError;
             CustomMetricQueryErrors = customMetricQueryErrors;
+            _rawData = rawData;
         }
 
         /// <summary> The errors from running the target condition query. </summary>

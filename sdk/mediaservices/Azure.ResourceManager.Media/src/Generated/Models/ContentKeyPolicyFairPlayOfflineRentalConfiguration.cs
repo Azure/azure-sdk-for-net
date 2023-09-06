@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The ContentKeyPolicyFairPlayOfflineRentalConfiguration. </summary>
     public partial class ContentKeyPolicyFairPlayOfflineRentalConfiguration
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyFairPlayOfflineRentalConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyFairPlayOfflineRentalConfiguration"/>. </summary>
         /// <param name="playbackDurationInSeconds"> Playback duration. </param>
         /// <param name="storageDurationInSeconds"> Storage duration. </param>
         public ContentKeyPolicyFairPlayOfflineRentalConfiguration(long playbackDurationInSeconds, long storageDurationInSeconds)
         {
             PlaybackDurationInSeconds = playbackDurationInSeconds;
             StorageDurationInSeconds = storageDurationInSeconds;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyFairPlayOfflineRentalConfiguration"/>. </summary>
+        /// <param name="playbackDurationInSeconds"> Playback duration. </param>
+        /// <param name="storageDurationInSeconds"> Storage duration. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContentKeyPolicyFairPlayOfflineRentalConfiguration(long playbackDurationInSeconds, long storageDurationInSeconds, Dictionary<string, BinaryData> rawData)
+        {
+            PlaybackDurationInSeconds = playbackDurationInSeconds;
+            StorageDurationInSeconds = storageDurationInSeconds;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyFairPlayOfflineRentalConfiguration"/> for deserialization. </summary>
+        internal ContentKeyPolicyFairPlayOfflineRentalConfiguration()
+        {
         }
 
         /// <summary> Playback duration. </summary>

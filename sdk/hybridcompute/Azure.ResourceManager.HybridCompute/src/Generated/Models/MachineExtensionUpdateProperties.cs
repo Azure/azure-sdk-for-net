@@ -14,11 +14,37 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Describes the properties of a Machine Extension. </summary>
     public partial class MachineExtensionUpdateProperties
     {
-        /// <summary> Initializes a new instance of MachineExtensionUpdateProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionUpdateProperties"/>. </summary>
         public MachineExtensionUpdateProperties()
         {
             Settings = new ChangeTrackingDictionary<string, BinaryData>();
             ProtectedSettings = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionUpdateProperties"/>. </summary>
+        /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
+        /// <param name="publisher"> The name of the extension handler publisher. </param>
+        /// <param name="machineExtensionUpdatePropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
+        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
+        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </param>
+        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
+        /// <param name="settings"> Json formatted public settings for the extension. </param>
+        /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineExtensionUpdateProperties(string forceUpdateTag, string publisher, string machineExtensionUpdatePropertiesType, string typeHandlerVersion, bool? enableAutomaticUpgrade, bool? autoUpgradeMinorVersion, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> protectedSettings, Dictionary<string, BinaryData> rawData)
+        {
+            ForceUpdateTag = forceUpdateTag;
+            Publisher = publisher;
+            MachineExtensionUpdatePropertiesType = machineExtensionUpdatePropertiesType;
+            TypeHandlerVersion = typeHandlerVersion;
+            EnableAutomaticUpgrade = enableAutomaticUpgrade;
+            AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
+            Settings = settings;
+            ProtectedSettings = protectedSettings;
+            _rawData = rawData;
         }
 
         /// <summary> How the extension handler should be forced to update even if the extension configuration has not changed. </summary>

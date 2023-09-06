@@ -5,16 +5,65 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicWorkflowTriggerCallbackUri
+    public partial class LogicWorkflowTriggerCallbackUri : IUtf8JsonSerializable, IModelJsonSerializable<LogicWorkflowTriggerCallbackUri>
     {
-        internal static LogicWorkflowTriggerCallbackUri DeserializeLogicWorkflowTriggerCallbackUri(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LogicWorkflowTriggerCallbackUri>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LogicWorkflowTriggerCallbackUri>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LogicWorkflowTriggerCallbackUri>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(RelativePathParameters))
+            {
+                writer.WritePropertyName("relativePathParameters"u8);
+                writer.WriteStartArray();
+                foreach (var item in RelativePathParameters)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Queries))
+            {
+                writer.WritePropertyName("queries"u8);
+                if (Queries is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LogicWorkflowTriggerCallbackQueryParameterInfo>)Queries).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static LogicWorkflowTriggerCallbackUri DeserializeLogicWorkflowTriggerCallbackUri(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +74,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> relativePath = default;
             Optional<IReadOnlyList<string>> relativePathParameters = default;
             Optional<LogicWorkflowTriggerCallbackQueryParameterInfo> queries = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -74,8 +124,61 @@ namespace Azure.ResourceManager.Logic.Models
                     queries = LogicWorkflowTriggerCallbackQueryParameterInfo.DeserializeLogicWorkflowTriggerCallbackQueryParameterInfo(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LogicWorkflowTriggerCallbackUri(value.Value, Optional.ToNullable(method), basePath.Value, relativePath.Value, Optional.ToList(relativePathParameters), queries.Value);
+            return new LogicWorkflowTriggerCallbackUri(value.Value, Optional.ToNullable(method), basePath.Value, relativePath.Value, Optional.ToList(relativePathParameters), queries.Value, rawData);
+        }
+
+        LogicWorkflowTriggerCallbackUri IModelJsonSerializable<LogicWorkflowTriggerCallbackUri>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LogicWorkflowTriggerCallbackUri>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicWorkflowTriggerCallbackUri(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LogicWorkflowTriggerCallbackUri>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LogicWorkflowTriggerCallbackUri>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LogicWorkflowTriggerCallbackUri IModelSerializable<LogicWorkflowTriggerCallbackUri>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LogicWorkflowTriggerCallbackUri>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLogicWorkflowTriggerCallbackUri(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LogicWorkflowTriggerCallbackUri"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LogicWorkflowTriggerCallbackUri"/> to convert. </param>
+        public static implicit operator RequestContent(LogicWorkflowTriggerCallbackUri model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LogicWorkflowTriggerCallbackUri"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LogicWorkflowTriggerCallbackUri(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLogicWorkflowTriggerCallbackUri(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

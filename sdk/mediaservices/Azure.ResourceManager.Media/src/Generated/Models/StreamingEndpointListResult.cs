@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Media;
@@ -14,21 +15,26 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The streaming endpoint list result. </summary>
     internal partial class StreamingEndpointListResult
     {
-        /// <summary> Initializes a new instance of StreamingEndpointListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointListResult"/>. </summary>
         internal StreamingEndpointListResult()
         {
             Value = new ChangeTrackingList<StreamingEndpointData>();
         }
 
-        /// <summary> Initializes a new instance of StreamingEndpointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointListResult"/>. </summary>
         /// <param name="value"> The result of the List StreamingEndpoint operation. </param>
         /// <param name="odataCount"> The number of result. </param>
         /// <param name="odataNextLink"> The link to the next set of results. Not empty if value contains incomplete list of streaming endpoints. </param>
-        internal StreamingEndpointListResult(IReadOnlyList<StreamingEndpointData> value, int? odataCount, string odataNextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingEndpointListResult(IReadOnlyList<StreamingEndpointData> value, int? odataCount, string odataNextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             OdataCount = odataCount;
             OdataNextLink = odataNextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The result of the List StreamingEndpoint operation. </summary>

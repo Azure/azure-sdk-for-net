@@ -15,6 +15,9 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> The body of the Trial Matcher request. </summary>
     public partial class TrialMatcherData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of TrialMatcherData. </summary>
         /// <param name="patients"> The list of patients, including their clinical information and data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patients"/> is null. </exception>
@@ -28,10 +31,17 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <summary> Initializes a new instance of TrialMatcherData. </summary>
         /// <param name="patients"> The list of patients, including their clinical information and data. </param>
         /// <param name="configuration"> Configuration affecting the Trial Matcher model's inference. </param>
-        internal TrialMatcherData(IList<PatientRecord> patients, TrialMatcherModelConfiguration configuration)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrialMatcherData(IList<PatientRecord> patients, TrialMatcherModelConfiguration configuration, Dictionary<string, BinaryData> rawData)
         {
             Patients = patients;
             Configuration = configuration;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherData"/> for deserialization. </summary>
+        internal TrialMatcherData()
+        {
         }
 
         /// <summary> The list of patients, including their clinical information and data. </summary>

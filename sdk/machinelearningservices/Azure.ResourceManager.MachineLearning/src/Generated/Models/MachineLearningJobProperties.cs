@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,13 +18,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class MachineLearningJobProperties : MachineLearningResourceBase
     {
-        /// <summary> Initializes a new instance of MachineLearningJobProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobProperties"/>. </summary>
         public MachineLearningJobProperties()
         {
             Services = new ChangeTrackingDictionary<string, MachineLearningJobService>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningJobProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -44,7 +45,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
         /// </param>
         /// <param name="status"> Status of the job. </param>
-        internal MachineLearningJobProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status) : base(description, properties, tags)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningJobProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, Dictionary<string, BinaryData> rawData) : base(description, properties, tags, rawData)
         {
             ComponentId = componentId;
             ComputeId = computeId;

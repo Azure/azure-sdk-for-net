@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Class to specify properties of default content key for each encryption scheme. </summary>
     public partial class EncryptionSchemeDefaultKey
     {
-        /// <summary> Initializes a new instance of EncryptionSchemeDefaultKey. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EncryptionSchemeDefaultKey"/>. </summary>
         public EncryptionSchemeDefaultKey()
         {
         }
 
-        /// <summary> Initializes a new instance of EncryptionSchemeDefaultKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionSchemeDefaultKey"/>. </summary>
         /// <param name="label"> Label can be used to specify Content Key when creating a Streaming Locator. </param>
         /// <param name="policyName"> Policy used by Default Key. </param>
-        internal EncryptionSchemeDefaultKey(string label, string policyName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EncryptionSchemeDefaultKey(string label, string policyName, Dictionary<string, BinaryData> rawData)
         {
             Label = label;
             PolicyName = policyName;
+            _rawData = rawData;
         }
 
         /// <summary> Label can be used to specify Content Key when creating a Streaming Locator. </summary>

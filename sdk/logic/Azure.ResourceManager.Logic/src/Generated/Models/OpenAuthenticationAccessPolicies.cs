@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> AuthenticationPolicy of type Open. </summary>
     internal partial class OpenAuthenticationAccessPolicies
     {
-        /// <summary> Initializes a new instance of OpenAuthenticationAccessPolicies. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OpenAuthenticationAccessPolicies"/>. </summary>
         public OpenAuthenticationAccessPolicies()
         {
             AccessPolicies = new ChangeTrackingDictionary<string, OpenAuthenticationAccessPolicy>();
         }
 
-        /// <summary> Initializes a new instance of OpenAuthenticationAccessPolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAuthenticationAccessPolicies"/>. </summary>
         /// <param name="accessPolicies"> Open authentication policies. </param>
-        internal OpenAuthenticationAccessPolicies(IDictionary<string, OpenAuthenticationAccessPolicy> accessPolicies)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OpenAuthenticationAccessPolicies(IDictionary<string, OpenAuthenticationAccessPolicy> accessPolicies, Dictionary<string, BinaryData> rawData)
         {
             AccessPolicies = accessPolicies;
+            _rawData = rawData;
         }
 
         /// <summary> Open authentication policies. </summary>

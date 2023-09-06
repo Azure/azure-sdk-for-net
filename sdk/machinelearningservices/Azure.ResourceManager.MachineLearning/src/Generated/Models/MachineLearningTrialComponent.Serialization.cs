@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningTrialComponent : IUtf8JsonSerializable
+    public partial class MachineLearningTrialComponent : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningTrialComponent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningTrialComponent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningTrialComponent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningTrialComponent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CodeId))
             {
@@ -35,7 +42,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Distribution != null)
                 {
                     writer.WritePropertyName("distribution"u8);
-                    writer.WriteObjectValue(Distribution);
+                    if (Distribution is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MachineLearningDistributionConfiguration>)Distribution).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -65,13 +79,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue(Resources);
+                if (Resources is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MachineLearningJobResourceConfiguration>)Resources).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningTrialComponent DeserializeMachineLearningTrialComponent(JsonElement element)
+        internal static MachineLearningTrialComponent DeserializeMachineLearningTrialComponent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -82,6 +117,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ResourceIdentifier environmentId = default;
             Optional<IDictionary<string, string>> environmentVariables = default;
             Optional<MachineLearningJobResourceConfiguration> resources = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("codeId"u8))
@@ -138,8 +174,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     resources = MachineLearningJobResourceConfiguration.DeserializeMachineLearningJobResourceConfiguration(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningTrialComponent(codeId.Value, command, distribution.Value, environmentId, Optional.ToDictionary(environmentVariables), resources.Value);
+            return new MachineLearningTrialComponent(codeId.Value, command, distribution.Value, environmentId, Optional.ToDictionary(environmentVariables), resources.Value, rawData);
+        }
+
+        MachineLearningTrialComponent IModelJsonSerializable<MachineLearningTrialComponent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningTrialComponent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningTrialComponent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningTrialComponent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningTrialComponent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningTrialComponent IModelSerializable<MachineLearningTrialComponent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningTrialComponent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningTrialComponent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningTrialComponent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningTrialComponent"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningTrialComponent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningTrialComponent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningTrialComponent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningTrialComponent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> The VirtualNetworksPropertiesStatusProvisioningStatusError. </summary>
     public partial class VirtualNetworksPropertiesStatusProvisioningStatusError
     {
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesStatusProvisioningStatusError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksPropertiesStatusProvisioningStatusError"/>. </summary>
         internal VirtualNetworksPropertiesStatusProvisioningStatusError()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesStatusProvisioningStatusError. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksPropertiesStatusProvisioningStatusError"/>. </summary>
         /// <param name="code"></param>
         /// <param name="message"></param>
-        internal VirtualNetworksPropertiesStatusProvisioningStatusError(string code, string message)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworksPropertiesStatusProvisioningStatusError(string code, string message, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Message = message;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the code. </summary>

@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    internal partial class IntegrationAccountMapPropertiesParametersSchema : IUtf8JsonSerializable
+    internal partial class IntegrationAccountMapPropertiesParametersSchema : IUtf8JsonSerializable, IModelJsonSerializable<IntegrationAccountMapPropertiesParametersSchema>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IntegrationAccountMapPropertiesParametersSchema>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IntegrationAccountMapPropertiesParametersSchema>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationAccountMapPropertiesParametersSchema>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Ref))
             {
                 writer.WritePropertyName("ref"u8);
                 writer.WriteStringValue(Ref);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IntegrationAccountMapPropertiesParametersSchema DeserializeIntegrationAccountMapPropertiesParametersSchema(JsonElement element)
+        internal static IntegrationAccountMapPropertiesParametersSchema DeserializeIntegrationAccountMapPropertiesParametersSchema(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> @ref = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ref"u8))
@@ -37,8 +60,61 @@ namespace Azure.ResourceManager.Logic.Models
                     @ref = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IntegrationAccountMapPropertiesParametersSchema(@ref.Value);
+            return new IntegrationAccountMapPropertiesParametersSchema(@ref.Value, rawData);
+        }
+
+        IntegrationAccountMapPropertiesParametersSchema IModelJsonSerializable<IntegrationAccountMapPropertiesParametersSchema>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationAccountMapPropertiesParametersSchema>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationAccountMapPropertiesParametersSchema(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IntegrationAccountMapPropertiesParametersSchema>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationAccountMapPropertiesParametersSchema>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IntegrationAccountMapPropertiesParametersSchema IModelSerializable<IntegrationAccountMapPropertiesParametersSchema>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationAccountMapPropertiesParametersSchema>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIntegrationAccountMapPropertiesParametersSchema(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IntegrationAccountMapPropertiesParametersSchema"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IntegrationAccountMapPropertiesParametersSchema"/> to convert. </param>
+        public static implicit operator RequestContent(IntegrationAccountMapPropertiesParametersSchema model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IntegrationAccountMapPropertiesParametersSchema"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IntegrationAccountMapPropertiesParametersSchema(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIntegrationAccountMapPropertiesParametersSchema(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

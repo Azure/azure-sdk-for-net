@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Health.Insights.ClinicalMatching
 {
     /// <summary> Demographic criteria for a clinical trial. </summary>
     public partial class ClinicalTrialDemographics
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of ClinicalTrialDemographics. </summary>
         public ClinicalTrialDemographics()
         {
@@ -18,10 +24,12 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <summary> Initializes a new instance of ClinicalTrialDemographics. </summary>
         /// <param name="acceptedSex"> Indication of the sex of people who may participate in the clinical trial. </param>
         /// <param name="acceptedAgeRange"> A definition of the range of ages accepted by a clinical trial. Contains a minimum age and/or a maximum age. </param>
-        internal ClinicalTrialDemographics(ClinicalTrialAcceptedSex? acceptedSex, AcceptedAgeRange acceptedAgeRange)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClinicalTrialDemographics(ClinicalTrialAcceptedSex? acceptedSex, AcceptedAgeRange acceptedAgeRange, Dictionary<string, BinaryData> rawData)
         {
             AcceptedSex = acceptedSex;
             AcceptedAgeRange = acceptedAgeRange;
+            _rawData = rawData;
         }
 
         /// <summary> Indication of the sex of people who may participate in the clinical trial. </summary>

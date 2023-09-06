@@ -5,21 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningComputeInstanceConnectivityEndpoints
+    public partial class MachineLearningComputeInstanceConnectivityEndpoints : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningComputeInstanceConnectivityEndpoints>
     {
-        internal static MachineLearningComputeInstanceConnectivityEndpoints DeserializeMachineLearningComputeInstanceConnectivityEndpoints(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningComputeInstanceConnectivityEndpoints>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningComputeInstanceConnectivityEndpoints>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningComputeInstanceConnectivityEndpoints>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MachineLearningComputeInstanceConnectivityEndpoints DeserializeMachineLearningComputeInstanceConnectivityEndpoints(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> publicIPAddress = default;
             Optional<string> privateIPAddress = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicIpAddress"u8))
@@ -42,8 +71,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     privateIPAddress = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningComputeInstanceConnectivityEndpoints(publicIPAddress.Value, privateIPAddress.Value);
+            return new MachineLearningComputeInstanceConnectivityEndpoints(publicIPAddress.Value, privateIPAddress.Value, rawData);
+        }
+
+        MachineLearningComputeInstanceConnectivityEndpoints IModelJsonSerializable<MachineLearningComputeInstanceConnectivityEndpoints>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningComputeInstanceConnectivityEndpoints>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningComputeInstanceConnectivityEndpoints(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningComputeInstanceConnectivityEndpoints>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningComputeInstanceConnectivityEndpoints>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningComputeInstanceConnectivityEndpoints IModelSerializable<MachineLearningComputeInstanceConnectivityEndpoints>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningComputeInstanceConnectivityEndpoints>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningComputeInstanceConnectivityEndpoints(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningComputeInstanceConnectivityEndpoints"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningComputeInstanceConnectivityEndpoints"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningComputeInstanceConnectivityEndpoints model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningComputeInstanceConnectivityEndpoints"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningComputeInstanceConnectivityEndpoints(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningComputeInstanceConnectivityEndpoints(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
@@ -13,6 +14,9 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> A piece of clinical information, expressed as a code in a clinical coding system, extended by semantic information. </summary>
     public partial class ExtendedClinicalCodedElement
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of ExtendedClinicalCodedElement. </summary>
         /// <param name="system"> The clinical coding system, e.g. ICD-10, SNOMED-CT, UMLS. </param>
         /// <param name="code"> The code within the given clinical coding system. </param>
@@ -33,7 +37,8 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="value"> A value associated with the code within the given clinical coding system. </param>
         /// <param name="semanticType"> The [UMLS semantic type](https://www.nlm.nih.gov/research/umls/META3_current_semantic_types.html) associated with the coded concept. </param>
         /// <param name="category"> The bio-medical category related to the coded concept, e.g. Diagnosis, Symptom, Medication, Examination. </param>
-        internal ExtendedClinicalCodedElement(string system, string code, string name, string value, string semanticType, string category)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExtendedClinicalCodedElement(string system, string code, string name, string value, string semanticType, string category, Dictionary<string, BinaryData> rawData)
         {
             System = system;
             Code = code;
@@ -41,6 +46,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             Value = value;
             SemanticType = semanticType;
             Category = category;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExtendedClinicalCodedElement"/> for deserialization. </summary>
+        internal ExtendedClinicalCodedElement()
+        {
         }
 
         /// <summary> The clinical coding system, e.g. ICD-10, SNOMED-CT, UMLS. </summary>

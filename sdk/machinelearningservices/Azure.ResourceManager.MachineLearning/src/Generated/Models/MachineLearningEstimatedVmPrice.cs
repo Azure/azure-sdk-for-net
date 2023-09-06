@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The estimated price info for using a VM of a particular OS type, tier, etc. </summary>
     public partial class MachineLearningEstimatedVmPrice
     {
-        /// <summary> Initializes a new instance of MachineLearningEstimatedVmPrice. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEstimatedVmPrice"/>. </summary>
         /// <param name="retailPrice"> The price charged for using the VM. </param>
         /// <param name="osType"> Operating system type used by the VM. </param>
         /// <param name="vmTier"> The type of the VM. </param>
@@ -19,6 +25,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
             RetailPrice = retailPrice;
             OSType = osType;
             VmTier = vmTier;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEstimatedVmPrice"/>. </summary>
+        /// <param name="retailPrice"> The price charged for using the VM. </param>
+        /// <param name="osType"> Operating system type used by the VM. </param>
+        /// <param name="vmTier"> The type of the VM. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningEstimatedVmPrice(double retailPrice, MachineLearningVmPriceOSType osType, MachineLearningVmTier vmTier, Dictionary<string, BinaryData> rawData)
+        {
+            RetailPrice = retailPrice;
+            OSType = osType;
+            VmTier = vmTier;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEstimatedVmPrice"/> for deserialization. </summary>
+        internal MachineLearningEstimatedVmPrice()
+        {
         }
 
         /// <summary> The price charged for using the VM. </summary>

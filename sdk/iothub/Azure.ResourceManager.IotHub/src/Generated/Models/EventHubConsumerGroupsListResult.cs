@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.IotHub;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The JSON-serialized array of Event Hub-compatible consumer group names with a next link. </summary>
     internal partial class EventHubConsumerGroupsListResult
     {
-        /// <summary> Initializes a new instance of EventHubConsumerGroupsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubConsumerGroupsListResult"/>. </summary>
         internal EventHubConsumerGroupsListResult()
         {
             Value = new ChangeTrackingList<EventHubConsumerGroupInfoData>();
         }
 
-        /// <summary> Initializes a new instance of EventHubConsumerGroupsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubConsumerGroupsListResult"/>. </summary>
         /// <param name="value"> List of consumer groups objects. </param>
         /// <param name="nextLink"> The next link. </param>
-        internal EventHubConsumerGroupsListResult(IReadOnlyList<EventHubConsumerGroupInfoData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubConsumerGroupsListResult(IReadOnlyList<EventHubConsumerGroupInfoData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of consumer groups objects. </summary>

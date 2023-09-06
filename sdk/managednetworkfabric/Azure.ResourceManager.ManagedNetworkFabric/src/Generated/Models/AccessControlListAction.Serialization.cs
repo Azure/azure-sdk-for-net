@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class AccessControlListAction : IUtf8JsonSerializable
+    public partial class AccessControlListAction : IUtf8JsonSerializable, IModelJsonSerializable<AccessControlListAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AccessControlListAction>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AccessControlListAction>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AccessControlListAction>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AclActionType))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("counterName"u8);
                 writer.WriteStringValue(CounterName);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AccessControlListAction DeserializeAccessControlListAction(JsonElement element)
+        internal static AccessControlListAction DeserializeAccessControlListAction(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AclActionType> type = default;
             Optional<string> counterName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -52,8 +75,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     counterName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AccessControlListAction(Optional.ToNullable(type), counterName.Value);
+            return new AccessControlListAction(Optional.ToNullable(type), counterName.Value, rawData);
+        }
+
+        AccessControlListAction IModelJsonSerializable<AccessControlListAction>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AccessControlListAction>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAccessControlListAction(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AccessControlListAction>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AccessControlListAction>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AccessControlListAction IModelSerializable<AccessControlListAction>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AccessControlListAction>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAccessControlListAction(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AccessControlListAction"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AccessControlListAction"/> to convert. </param>
+        public static implicit operator RequestContent(AccessControlListAction model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AccessControlListAction"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AccessControlListAction(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAccessControlListAction(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class EdifactAcknowledgementSettings : IUtf8JsonSerializable
+    public partial class EdifactAcknowledgementSettings : IUtf8JsonSerializable, IModelJsonSerializable<EdifactAcknowledgementSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EdifactAcknowledgementSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EdifactAcknowledgementSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EdifactAcknowledgementSettings>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("needTechnicalAcknowledgement"u8);
             writer.WriteBooleanValue(NeedTechnicalAcknowledgement);
@@ -43,11 +51,25 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteNumberValue(AcknowledgementControlNumberUpperBound);
             writer.WritePropertyName("rolloverAcknowledgementControlNumber"u8);
             writer.WriteBooleanValue(RolloverAcknowledgementControlNumber);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EdifactAcknowledgementSettings DeserializeEdifactAcknowledgementSettings(JsonElement element)
+        internal static EdifactAcknowledgementSettings DeserializeEdifactAcknowledgementSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -63,6 +85,7 @@ namespace Azure.ResourceManager.Logic.Models
             int acknowledgementControlNumberLowerBound = default;
             int acknowledgementControlNumberUpperBound = default;
             bool rolloverAcknowledgementControlNumber = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("needTechnicalAcknowledgement"u8))
@@ -120,8 +143,61 @@ namespace Azure.ResourceManager.Logic.Models
                     rolloverAcknowledgementControlNumber = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EdifactAcknowledgementSettings(needTechnicalAcknowledgement, batchTechnicalAcknowledgements, needFunctionalAcknowledgement, batchFunctionalAcknowledgements, needLoopForValidMessages, sendSynchronousAcknowledgement, acknowledgementControlNumberPrefix.Value, acknowledgementControlNumberSuffix.Value, acknowledgementControlNumberLowerBound, acknowledgementControlNumberUpperBound, rolloverAcknowledgementControlNumber);
+            return new EdifactAcknowledgementSettings(needTechnicalAcknowledgement, batchTechnicalAcknowledgements, needFunctionalAcknowledgement, batchFunctionalAcknowledgements, needLoopForValidMessages, sendSynchronousAcknowledgement, acknowledgementControlNumberPrefix.Value, acknowledgementControlNumberSuffix.Value, acknowledgementControlNumberLowerBound, acknowledgementControlNumberUpperBound, rolloverAcknowledgementControlNumber, rawData);
+        }
+
+        EdifactAcknowledgementSettings IModelJsonSerializable<EdifactAcknowledgementSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdifactAcknowledgementSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdifactAcknowledgementSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EdifactAcknowledgementSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdifactAcknowledgementSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EdifactAcknowledgementSettings IModelSerializable<EdifactAcknowledgementSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdifactAcknowledgementSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEdifactAcknowledgementSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EdifactAcknowledgementSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EdifactAcknowledgementSettings"/> to convert. </param>
+        public static implicit operator RequestContent(EdifactAcknowledgementSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EdifactAcknowledgementSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EdifactAcknowledgementSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEdifactAcknowledgementSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }
