@@ -447,59 +447,70 @@ while ($pageUrisToCheck.Count -ne 0)
 {
   $pageUri = $pageUrisToCheck.Dequeue();
   Write-Verbose "Processing pageUri $pageUri"
-  if ($checkedPages.ContainsKey($pageUri)) { continue }
-  $checkedPages[$pageUri] = $true;
+  try {
+    if ($checkedPages.ContainsKey($pageUri)) { continue }
+    $checkedPages[$pageUri] = $true;
 
-  $linkUris = GetLinks $pageUri
-  Write-Host "Checking $($linkUris.Count) links found on page $pageUri";
-  $badLinksPerPage = @();
-  foreach ($linkUri in $linkUris) {
-    $isLinkValid = CheckLink $linkUri
-    if (!$isLinkValid -and !$badLinksPerPage.Contains($linkUri)) {
-      if (!$linkUri.ToString().Trim()) {
-        $linkUri = $emptyLinkMessage
+    $linkUris = GetLinks $pageUri
+    Write-Host "Checking $($linkUris.Count) links found on page $pageUri";
+    $badLinksPerPage = @();
+    foreach ($linkUri in $linkUris) {
+      $isLinkValid = CheckLink $linkUri
+      if (!$isLinkValid -and !$badLinksPerPage.Contains($linkUri)) {
+        if (!$linkUri.ToString().Trim()) {
+          $linkUri = $emptyLinkMessage
+        }
+        $badLinksPerPage += $linkUri
       }
-      $badLinksPerPage += $linkUri
-    }
-    if ($recursive -and $isLinkValid) {
-      if ($linkUri.ToString().StartsWith($baseUrl) -and !$checkedPages.ContainsKey($linkUri)) {
-        $pageUrisToCheck.Enqueue($linkUri);
+      if ($recursive -and $isLinkValid) {
+        if ($linkUri.ToString().StartsWith($baseUrl) -and !$checkedPages.ContainsKey($linkUri)) {
+          $pageUrisToCheck.Enqueue($linkUri);
+        }
       }
     }
-  }
-  if ($badLinksPerPage.Count -gt 0) {
-    $badLinks[$pageUri] = $badLinksPerPage
-  }
-}
-if ($devOpsLogging) {
-  Write-Host "##[endgroup]"
-}
-
-if ($badLinks.Count -gt 0) {
-  Write-Host "Summary of broken links:"
-}
-foreach ($pageLink in $badLinks.Keys) {
-  Write-Host "'$pageLink' has $($badLinks[$pageLink].Count) broken link(s):"
-  foreach ($brokenLink in $badLinks[$pageLink]) {
-    Write-Host "  $brokenLink"
+    if ($badLinksPerPage.Count -gt 0) {
+      $badLinks[$pageUri] = $badLinksPerPage
+    }
+  } catch {
+    Write-Host "Exception encountered while processing pageUri $pageUri : $($_.Exception)"
+    throw
   }
 }
 
-$linksChecked = $checkedLinks.Count - $cachedLinksCount
+try {
+  if ($devOpsLogging) {
+    Write-Host "##[endgroup]"
+  }
 
-if ($badLinks.Count -gt 0) {
-  Write-Host "Checked $linksChecked links with $($badLinks.Count) broken link(s) found."
-}
-else {
-  Write-Host "Checked $linksChecked links. No broken links found."
-}
+  if ($badLinks.Count -gt 0) {
+    Write-Host "Summary of broken links:"
+  }
+  foreach ($pageLink in $badLinks.Keys) {
+    Write-Host "'$pageLink' has $($badLinks[$pageLink].Count) broken link(s):"
+    foreach ($brokenLink in $badLinks[$pageLink]) {
+      Write-Host "  $brokenLink"
+    }
+  }
 
-if ($outputCacheFile)
-{
-  $goodLinks = $checkedLinks.Keys.Where({ "True" -eq $checkedLinks[$_].ToString() }) | Sort-Object
+  $linksChecked = $checkedLinks.Count - $cachedLinksCount
 
-  Write-Host "Writing the list of validated links to $outputCacheFile"
-  $goodLinks | Set-Content $outputCacheFile
+  if ($badLinks.Count -gt 0) {
+    Write-Host "Checked $linksChecked links with $($badLinks.Count) broken link(s) found."
+  }
+  else {
+    Write-Host "Checked $linksChecked links. No broken links found."
+  }
+
+  if ($outputCacheFile)
+  {
+    $goodLinks = $checkedLinks.Keys.Where({ "True" -eq $checkedLinks[$_].ToString() }) | Sort-Object
+
+    Write-Host "Writing the list of validated links to $outputCacheFile"
+    $goodLinks | Set-Content $outputCacheFile
+  }
+} catch {
+  Write-Host "Exception encountered after all pageUris have been processed : $($_.Exception)"
+  throw
 }
 
 exit $badLinks.Count
