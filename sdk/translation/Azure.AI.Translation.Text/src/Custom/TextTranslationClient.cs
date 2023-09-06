@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Linq;
 using System.Text.Json;
+using System.Security.Principal;
 
 namespace Azure.AI.Translation.Text
 {
@@ -117,6 +118,173 @@ namespace Azure.AI.Translation.Text
             }
         }
 
+        /// <summary> Client options for TextTranslationClient.Translate </summary>
+        public partial class TextTranslationTranslateOptions : ClientOptions
+        {
+            /// <summary>
+            /// Specifies the language of the output text. The target language must be one of the supported languages included
+            /// in the translation scope. For example, use to=de to translate to German.
+            /// It's possible to translate to multiple languages simultaneously by repeating the parameter in the query string.
+            /// For example, use to=de and to=it to translate to German and Italian.
+            /// </summary>
+            public IEnumerable<string> TargetLanguages { get; set; }
+            /// <summary>
+            /// Array of the text to be translated.
+            /// </summary>
+            public IEnumerable<string> Content { get; set; }
+            /// <summary>
+            /// A client-generated GUID to uniquely identify the request.
+            /// </summary>
+            public string ClientTraceId { get; set; }
+            /// <summary>
+            /// Specifies the language of the input text. Find which languages are available to translate from by
+            /// looking up supported languages using the translation scope. If the from parameter isn't specified,
+            /// automatic language detection is applied to determine the source language.
+            ///
+            /// You must use the from parameter rather than autodetection when using the dynamic dictionary feature.
+            /// Note: the dynamic dictionary feature is case-sensitive.
+            /// </summary>
+            public string SourceLanguage { get; set; }
+            /// <summary>
+            /// Defines whether the text being translated is plain text or HTML text. Any HTML needs to be a well-formed,
+            /// complete element. Possible values are: plain (default) or html.
+            /// </summary>
+            public TextType? TextType { get; set; }
+            /// <summary>
+            /// A string specifying the category (domain) of the translation. This parameter is used to get translations
+            /// from a customized system built with Custom Translator. Add the Category ID from your Custom Translator
+            /// project details to this parameter to use your deployed customized system. Default value is: general.
+            /// </summary>
+            public string Category { get; set; }
+            /// <summary>
+            /// Specifies how profanities should be treated in translations.
+            /// Possible values are: NoAction (default), Marked or Deleted.
+            /// </summary>
+            public ProfanityAction? ProfanityAction { get; set; }
+            /// <summary>
+            /// Specifies how profanities should be marked in translations.
+            /// Possible values are: Asterisk (default) or Tag.
+            /// </summary>
+            public ProfanityMarker? ProfanityMarker { get; set;  }
+            /// <summary>
+            /// Specifies whether to include alignment projection from source text to translated text.
+            /// Possible values are: true or false (default).
+            /// </summary>
+            public bool? IncludeAlignment { get; set; }
+            /// <summary>
+            /// Specifies whether to include sentence boundaries for the input text and the translated text.
+            /// Possible values are: true or false (default).
+            /// </summary>
+            public bool? IncludeSentenceLength { get; set; }
+            /// <summary>
+            /// Specifies a fallback language if the language of the input text can't be identified.
+            /// Language autodetection is applied when the from parameter is omitted. If detection fails,
+            /// the SuggestedFrom language will be assumed.
+            /// </summary>
+            public string SuggestedFrom { get; set; }
+            /// <summary>
+            /// Specifies the script of the input text.
+            /// </summary>
+            public string FromScript { get; set; }
+            /// <summary>
+            /// Specifies the script of the translated text.
+            /// </summary>
+            public string ToScript { get; set; }
+            /// <summary>
+            /// Specifies that the service is allowed to fall back to a general system when a custom system doesn&apos;t exist.
+            /// Possible values are: true (default) or false.
+            ///
+            /// AllowFallback=false specifies that the translation should only use systems trained for the category specified
+            /// by the request. If a translation for language X to language Y requires chaining through a pivot language E,
+            /// then all the systems in the chain (X → E and E → Y) will need to be custom and have the same category.
+            /// If no system is found with the specific category, the request will return a 400 status code. AllowFallback=true
+            /// specifies that the service is allowed to fall back to a general system when a custom system doesn't exist.
+            /// </summary>
+            public bool? AllowFallback { get; set; }
+
+            /// <summary> Initializes new instance of TextTranslationTranslateOptions. </summary>
+            public TextTranslationTranslateOptions()
+            {
+            }
+
+            /// <summary> Initializes new instance of TextTranslationTranslateOptions. </summary>
+            /// <param name="targetLanguages">
+            /// Specifies the language of the output text. The target language must be one of the supported languages included
+            /// in the translation scope. For example, use to=de to translate to German.
+            /// It&apos;s possible to translate to multiple languages simultaneously by repeating the parameter in the query string.
+            /// For example, use to=de&amp;to=it to translate to German and Italian.
+            /// </param>
+            /// <param name="content"> Array of the text to be translated. </param>
+            /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+            /// <param name="sourceLanguage">
+            /// Specifies the language of the input text. Find which languages are available to translate from by
+            /// looking up supported languages using the translation scope. If the from parameter isn&apos;t specified,
+            /// automatic language detection is applied to determine the source language.
+            ///
+            /// You must use the from parameter rather than autodetection when using the dynamic dictionary feature.
+            /// Note: the dynamic dictionary feature is case-sensitive.
+            /// </param>
+            /// <param name="textType">
+            /// Defines whether the text being translated is plain text or HTML text. Any HTML needs to be a well-formed,
+            /// complete element. Possible values are: plain (default) or html.
+            /// </param>
+            /// <param name="category">
+            /// A string specifying the category (domain) of the translation. This parameter is used to get translations
+            /// from a customized system built with Custom Translator. Add the Category ID from your Custom Translator
+            /// project details to this parameter to use your deployed customized system. Default value is: general.
+            /// </param>
+            /// <param name="profanityAction">
+            /// Specifies how profanities should be treated in translations.
+            /// Possible values are: NoAction (default), Marked or Deleted.
+            /// </param>
+            /// <param name="profanityMarker">
+            /// Specifies how profanities should be marked in translations.
+            /// Possible values are: Asterisk (default) or Tag.
+            /// </param>
+            /// <param name="includeAlignment">
+            /// Specifies whether to include alignment projection from source text to translated text.
+            /// Possible values are: true or false (default).
+            /// </param>
+            /// <param name="includeSentenceLength">
+            /// Specifies whether to include sentence boundaries for the input text and the translated text.
+            /// Possible values are: true or false (default).
+            /// </param>
+            /// <param name="suggestedFrom">
+            /// Specifies a fallback language if the language of the input text can&apos;t be identified.
+            /// Language autodetection is applied when the from parameter is omitted. If detection fails,
+            /// the suggestedFrom language will be assumed.
+            /// </param>
+            /// <param name="fromScript"> Specifies the script of the input text. </param>
+            /// <param name="toScript"> Specifies the script of the translated text. </param>
+            /// <param name="allowFallback">
+            /// Specifies that the service is allowed to fall back to a general system when a custom system doesn&apos;t exist.
+            /// Possible values are: true (default) or false.
+            ///
+            /// allowFallback=false specifies that the translation should only use systems trained for the category specified
+            /// by the request. If a translation for language X to language Y requires chaining through a pivot language E,
+            /// then all the systems in the chain (X → E and E → Y) will need to be custom and have the same category.
+            /// If no system is found with the specific category, the request will return a 400 status code. allowFallback=true
+            /// specifies that the service is allowed to fall back to a general system when a custom system doesn't exist.
+            /// </param>
+            public TextTranslationTranslateOptions(IEnumerable<string> targetLanguages, IEnumerable<string> content, string clientTraceId = null, string sourceLanguage = null, TextType? textType = null, string category = null, ProfanityAction? profanityAction = null, ProfanityMarker? profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null)
+            {
+                TargetLanguages = targetLanguages;
+                Content = content;
+                ClientTraceId = clientTraceId;
+                SourceLanguage = sourceLanguage;
+                TextType = textType;
+                Category = category;
+                ProfanityAction = profanityAction;
+                ProfanityMarker = profanityMarker;
+                IncludeAlignment = includeAlignment;
+                IncludeSentenceLength = includeSentenceLength;
+                SuggestedFrom = suggestedFrom;
+                FromScript = fromScript;
+                ToScript = toScript;
+                AllowFallback = allowFallback;
+            }
+        }
+
         /// <summary> Translate Text. </summary>
         /// <param name="targetLanguages">
         /// Specifies the language of the output text. The target language must be one of the supported languages included
@@ -184,6 +352,17 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(content, nameof(content));
 
             return this.TranslateAsync(targetLanguages, content.Select(input => new InputTextItem(input)), clientTraceId, sourceLanguage, textType?.ToString(), category, profanityAction?.ToString(), profanityMarker?.ToString(), includeAlignment, includeSentenceLength, suggestedFrom, fromScript, toScript, allowFallback, cancellationToken);
+        }
+
+        /// <summary> Translate Text. </summary>
+        /// <param name="options">The client translation options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null. </exception>
+        public virtual Task<Response<IReadOnlyList<TranslatedTextItem>>> TranslateAsync(TextTranslationTranslateOptions options, CancellationToken cancellationToken = default)
+       {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return this.TranslateAsync(options.TargetLanguages, options.Content.Select(input => new InputTextItem(input)), options.ClientTraceId, options.SourceLanguage, options.TextType?.ToString(), options.Category, options.ProfanityAction?.ToString(), options.ProfanityMarker?.ToString(), options.IncludeAlignment, options.IncludeSentenceLength, options.SuggestedFrom, options.FromScript, options.ToScript, options.AllowFallback, cancellationToken);
         }
 
         /// <summary> Translate Text. </summary>
@@ -308,6 +487,17 @@ namespace Azure.AI.Translation.Text
         }
 
         /// <summary> Translate Text. </summary>
+        /// <param name="options">The client translation options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null. </exception>
+        public virtual Response<IReadOnlyList<TranslatedTextItem>> Translate(TextTranslationTranslateOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return this.Translate(options.TargetLanguages, options.Content.Select(input => new InputTextItem(input)), options.ClientTraceId, options.SourceLanguage, options.TextType?.ToString(), options.Category, options.ProfanityAction?.ToString(), options.ProfanityMarker?.ToString(), options.IncludeAlignment, options.IncludeSentenceLength, options.SuggestedFrom, options.FromScript, options.ToScript, options.AllowFallback, cancellationToken);
+        }
+
+        /// <summary> Translate Text. </summary>
         /// <param name="targetLanguage">
         /// Specifies the language of the output text. The target language must be one of the supported languages included
         /// in the translation scope. For example, use to=de to translate to German.
@@ -359,6 +549,66 @@ namespace Azure.AI.Translation.Text
             return this.Translate(new[] { targetLanguage }, new[] { new InputTextItem(text) }, from: sourceLanguage, cancellationToken: cancellationToken);
         }
 
+        /// <summary> Client options for TextTranslationClient.Transliterate </summary>
+        public partial class TextTranslationTransliterateOptions : ClientOptions
+        {
+            /// <summary>
+            /// Specifies the language of the text to convert from one script to another.
+            /// Possible languages are listed in the transliteration scope obtained by querying the service
+            /// for its supported languages.
+            /// </summary>
+            public string Language { get; set; }
+            /// <summary>
+            /// Specifies the script used by the input text. Look up supported languages using the transliteration scope,
+            /// to find input scripts available for the selected language.
+            /// </summary>
+            public string FromScript { get; set; }
+            /// <summary>
+            /// Specifies the output script. Look up supported languages using the transliteration scope, to find output
+            /// scripts available for the selected combination of input language and input script.
+            /// </summary>
+            public string ToScript { get; set; }
+            /// <summary>
+            /// Array of the text to be transliterated.
+            /// </summary>
+            public IEnumerable<string> Content { get; set; }
+            /// <summary>
+            /// A client-generated GUID to uniquely identify the request.
+            /// </summary>
+            public string ClientTraceId { get; set; }
+
+            /// <summary> Initializes new instance of TextTranslationTransliterateOptions. </summary>
+            public TextTranslationTransliterateOptions()
+            {
+            }
+
+            /// <summary> Initializes new instance of TextTranslationTransliterateOptions. </summary>
+            /// <param name="language">
+            /// Specifies the language of the text to convert from one script to another.
+            /// Possible languages are listed in the transliteration scope obtained by querying the service
+            /// for its supported languages.
+            /// </param>
+            /// <param name="fromScript">
+            /// Specifies the script used by the input text. Look up supported languages using the transliteration scope,
+            /// to find input scripts available for the selected language.
+            /// </param>
+            /// <param name="toScript">
+            /// Specifies the output script. Look up supported languages using the transliteration scope, to find output
+            /// scripts available for the selected combination of input language and input script.
+            /// </param>
+            /// <param name="content"> Array of the text to be transliterated. </param>
+            /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
+            public TextTranslationTransliterateOptions(string language, string fromScript, string toScript, IEnumerable<string> content, string clientTraceId = null)
+            {
+                Language = language;
+                Content = content;
+                FromScript = fromScript;
+                ToScript = toScript;
+                Content = content;
+                ClientTraceId = clientTraceId;
+            }
+        }
+
         /// <summary> Transliterate Text. </summary>
         /// <param name="language">
         /// Specifies the language of the text to convert from one script to another.
@@ -385,6 +635,19 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(content, nameof(content));
 
             return this.TransliterateAsync(language, fromScript, toScript, content.Select(input => new InputTextItem(input)), clientTraceId, cancellationToken);
+        }
+
+        /// <summary>
+        /// <summary> Transliterate Text. </summary>
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        public virtual Task<Response<IReadOnlyList<TransliteratedText>>> TransliterateAsync(TextTranslationTransliterateOptions options, CancellationToken cancellationToken = default)
+       {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return this.TransliterateAsync(options.Language, options.FromScript, options.ToScript, options.Content.Select(input => new InputTextItem(input)), options.ClientTraceId, cancellationToken);
         }
 
         /// <summary> Transliterate Text. </summary>
@@ -440,6 +703,17 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(content, nameof(content));
 
             return this.Transliterate(language, fromScript, toScript, content.Select(input => new InputTextItem(input)), clientTraceId, cancellationToken);
+        }
+
+        /// <summary> Transliterate Text. </summary>
+        /// <param name="options">The configuration options for the transliterate call. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<IReadOnlyList<TransliteratedText>> Transliterate(TextTranslationTransliterateOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return this.Transliterate(options.Language, options.FromScript, options.ToScript, options.Content.Select(input => new InputTextItem(input)), options.ClientTraceId, cancellationToken);
         }
 
         /// <summary> Transliterate Text. </summary>
