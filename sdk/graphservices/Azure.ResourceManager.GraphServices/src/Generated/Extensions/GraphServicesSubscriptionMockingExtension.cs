@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.GraphServices.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => GraphServicesAccountResourceAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GraphServicesAccountResourceAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GraphServicesAccountResource(Client, GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(e)), GraphServicesAccountResourceAccountsClientDiagnostics, Pipeline, "GraphServicesSubscriptionMockingExtension.GetGraphServicesAccountResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GraphServicesAccountResource(Client, GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(e)), GraphServicesAccountResourceAccountsClientDiagnostics, Pipeline, "GraphServicesSubscriptionMockingExtension.GetGraphServicesAccountResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.GraphServices.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => GraphServicesAccountResourceAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GraphServicesAccountResourceAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GraphServicesAccountResource(Client, GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(e)), GraphServicesAccountResourceAccountsClientDiagnostics, Pipeline, "GraphServicesSubscriptionMockingExtension.GetGraphServicesAccountResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GraphServicesAccountResource(Client, GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(e)), GraphServicesAccountResourceAccountsClientDiagnostics, Pipeline, "GraphServicesSubscriptionMockingExtension.GetGraphServicesAccountResources", "value", "nextLink", cancellationToken);
         }
     }
 }

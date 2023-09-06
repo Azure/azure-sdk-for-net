@@ -25,7 +25,6 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Initializes a new instance of Snapshot. </summary>
         /// <param name="name"> The name of the snapshot. </param>
         /// <param name="status"> The current status of the snapshot. </param>
-        /// <param name="statusCode"> Provides additional information about the status of the snapshot. The status code values are modeled after HTTP status codes. </param>
         /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>
         /// <param name="compositionType"> The composition type describes how the key-values within the snapshot are composed. The 'key' composition type ensures there are no two key-values containing the same key. The 'key_label' composition type ensures there are no two key-values containing the same key and label. </param>
         /// <param name="created"> The time that the snapshot was created. </param>
@@ -34,12 +33,11 @@ namespace Azure.Data.AppConfiguration
         /// <param name="size"> The size in bytes of the snapshot. </param>
         /// <param name="itemCount"> The amount of key-values in the snapshot. </param>
         /// <param name="tags"> The tags of the snapshot. </param>
-        /// <param name="etag"> A value representing the current state of the snapshot. </param>
-        internal ConfigurationSettingsSnapshot(string name, SnapshotStatus? status, int? statusCode, IList<SnapshotSettingFilter> filters, CompositionType? compositionType, DateTimeOffset? created, DateTimeOffset? expires, long? retentionPeriod, long? size, long? itemCount, IDictionary<string, string> tags, ETag etag)
+        /// <param name="eTag"> A value representing the current state of the snapshot. </param>
+        internal ConfigurationSettingsSnapshot(string name, SnapshotStatus? status, IList<SnapshotSettingFilter> filters, CompositionType? compositionType, DateTimeOffset? created, DateTimeOffset? expires, long? retentionPeriod, long? size, long? itemCount, IDictionary<string, string> tags, ETag eTag)
         {
             Name = name;
             Status = status;
-            StatusCode = statusCode;
             Filters = filters;
             CompositionType = compositionType;
             Created = created;
@@ -48,15 +46,13 @@ namespace Azure.Data.AppConfiguration
             Size = size;
             ItemCount = itemCount;
             Tags = tags;
-            Etag = etag;
+            ETag = eTag;
         }
 
         /// <summary> The name of the snapshot. </summary>
         public string Name { get; }
         /// <summary> The current status of the snapshot. </summary>
         public SnapshotStatus? Status { get; }
-        /// <summary> Provides additional information about the status of the snapshot. The status code values are modeled after HTTP status codes. </summary>
-        public int? StatusCode { get; }
         /// <summary> A list of filters used to filter the key-values included in the snapshot. </summary>
         public IList<SnapshotSettingFilter> Filters { get; }
         /// <summary> The composition type describes how the key-values within the snapshot are composed. The 'key' composition type ensures there are no two key-values containing the same key. The 'key_label' composition type ensures there are no two key-values containing the same key and label. </summary>
@@ -95,6 +91,6 @@ namespace Azure.Data.AppConfiguration
         /// <summary> The tags of the snapshot. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> A value representing the current state of the snapshot. </summary>
-        public ETag Etag { get; }
+        public ETag ETag { get; }
     }
 }

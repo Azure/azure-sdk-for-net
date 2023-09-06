@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
+using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -21,8 +24,8 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         private MobileNetworksRestOperations _mobileNetworkRestClient;
         private ClientDiagnostics _packetCoreControlPlaneClientDiagnostics;
         private PacketCoreControlPlanesRestOperations _packetCoreControlPlaneRestClient;
-        private ClientDiagnostics _simGroupClientDiagnostics;
-        private SimGroupsRestOperations _simGroupRestClient;
+        private ClientDiagnostics _mobileNetworkSimGroupSimGroupsClientDiagnostics;
+        private SimGroupsRestOperations _mobileNetworkSimGroupSimGroupsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MobileNetworkSubscriptionMockingExtension"/> class for mocking. </summary>
         protected MobileNetworkSubscriptionMockingExtension()
@@ -40,13 +43,66 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         private MobileNetworksRestOperations MobileNetworkRestClient => _mobileNetworkRestClient ??= new MobileNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MobileNetworkResource.ResourceType));
         private ClientDiagnostics PacketCoreControlPlaneClientDiagnostics => _packetCoreControlPlaneClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MobileNetwork", PacketCoreControlPlaneResource.ResourceType.Namespace, Diagnostics);
         private PacketCoreControlPlanesRestOperations PacketCoreControlPlaneRestClient => _packetCoreControlPlaneRestClient ??= new PacketCoreControlPlanesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PacketCoreControlPlaneResource.ResourceType));
-        private ClientDiagnostics SimGroupClientDiagnostics => _simGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MobileNetwork", SimGroupResource.ResourceType.Namespace, Diagnostics);
-        private SimGroupsRestOperations SimGroupRestClient => _simGroupRestClient ??= new SimGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SimGroupResource.ResourceType));
+        private ClientDiagnostics MobileNetworkSimGroupSimGroupsClientDiagnostics => _mobileNetworkSimGroupSimGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MobileNetwork", MobileNetworkSimGroupResource.ResourceType.Namespace, Diagnostics);
+        private SimGroupsRestOperations MobileNetworkSimGroupSimGroupsRestClient => _mobileNetworkSimGroupSimGroupsRestClient ??= new SimGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MobileNetworkSimGroupResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
+        }
+
+        /// <summary> Gets a collection of SubscriptionPacketCoreControlPlaneVersionResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of SubscriptionPacketCoreControlPlaneVersionResources and their operations over a SubscriptionPacketCoreControlPlaneVersionResource. </returns>
+        public virtual SubscriptionPacketCoreControlPlaneVersionCollection GetSubscriptionPacketCoreControlPlaneVersions()
+        {
+            return GetCachedClient(Client => new SubscriptionPacketCoreControlPlaneVersionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets information about the specified packet core control plane version.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="versionName"> The name of the packet core control plane version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SubscriptionPacketCoreControlPlaneVersionResource>> GetSubscriptionPacketCoreControlPlaneVersionAsync(string versionName, CancellationToken cancellationToken = default)
+        {
+            return await GetSubscriptionPacketCoreControlPlaneVersions().GetAsync(versionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets information about the specified packet core control plane version.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="versionName"> The name of the packet core control plane version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SubscriptionPacketCoreControlPlaneVersionResource> GetSubscriptionPacketCoreControlPlaneVersion(string versionName, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionPacketCoreControlPlaneVersions().Get(versionName, cancellationToken);
         }
 
         /// <summary>
@@ -68,7 +124,7 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MobileNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MobileNetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkResource(Client, MobileNetworkData.DeserializeMobileNetworkData(e)), MobileNetworkClientDiagnostics, Pipeline, "MobileNetworkSubscriptionMockingExtension.GetMobileNetworks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkResource(Client, MobileNetworkData.DeserializeMobileNetworkData(e)), MobileNetworkClientDiagnostics, Pipeline, "MobileNetworkSubscriptionMockingExtension.GetMobileNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -90,7 +146,7 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MobileNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MobileNetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkResource(Client, MobileNetworkData.DeserializeMobileNetworkData(e)), MobileNetworkClientDiagnostics, Pipeline, "MobileNetworkSubscriptionMockingExtension.GetMobileNetworks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkResource(Client, MobileNetworkData.DeserializeMobileNetworkData(e)), MobileNetworkClientDiagnostics, Pipeline, "MobileNetworkSubscriptionMockingExtension.GetMobileNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -112,7 +168,7 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PacketCoreControlPlaneRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PacketCoreControlPlaneRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PacketCoreControlPlaneResource(Client, PacketCoreControlPlaneData.DeserializePacketCoreControlPlaneData(e)), PacketCoreControlPlaneClientDiagnostics, Pipeline, "MobileNetworkSubscriptionMockingExtension.GetPacketCoreControlPlanes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PacketCoreControlPlaneResource(Client, PacketCoreControlPlaneData.DeserializePacketCoreControlPlaneData(e)), PacketCoreControlPlaneClientDiagnostics, Pipeline, "MobileNetworkSubscriptionMockingExtension.GetPacketCoreControlPlanes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -134,7 +190,7 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PacketCoreControlPlaneRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PacketCoreControlPlaneRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PacketCoreControlPlaneResource(Client, PacketCoreControlPlaneData.DeserializePacketCoreControlPlaneData(e)), PacketCoreControlPlaneClientDiagnostics, Pipeline, "MobileNetworkSubscriptionMockingExtension.GetPacketCoreControlPlanes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PacketCoreControlPlaneResource(Client, PacketCoreControlPlaneData.DeserializePacketCoreControlPlaneData(e)), PacketCoreControlPlaneClientDiagnostics, Pipeline, "MobileNetworkSubscriptionMockingExtension.GetPacketCoreControlPlanes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -151,12 +207,12 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SimGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SimGroupResource> GetSimGroupsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MobileNetworkSimGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MobileNetworkSimGroupResource> GetMobileNetworkSimGroupsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SimGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SimGroupRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SimGroupResource(Client, SimGroupData.DeserializeSimGroupData(e)), SimGroupClientDiagnostics, Pipeline, "MobileNetworkSubscriptionMockingExtension.GetSimGroups", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MobileNetworkSimGroupSimGroupsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MobileNetworkSimGroupSimGroupsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimGroupResource(Client, MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(e)), MobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, "MobileNetworkSubscriptionMockingExtension.GetMobileNetworkSimGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -173,12 +229,12 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SimGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SimGroupResource> GetSimGroups(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MobileNetworkSimGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MobileNetworkSimGroupResource> GetMobileNetworkSimGroups(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SimGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SimGroupRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SimGroupResource(Client, SimGroupData.DeserializeSimGroupData(e)), SimGroupClientDiagnostics, Pipeline, "MobileNetworkSubscriptionMockingExtension.GetSimGroups", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MobileNetworkSimGroupSimGroupsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MobileNetworkSimGroupSimGroupsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimGroupResource(Client, MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(e)), MobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, "MobileNetworkSubscriptionMockingExtension.GetMobileNetworkSimGroups", "value", "nextLink", cancellationToken);
         }
     }
 }

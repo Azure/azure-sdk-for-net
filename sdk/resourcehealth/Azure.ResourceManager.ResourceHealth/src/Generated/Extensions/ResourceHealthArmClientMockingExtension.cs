@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailabilityStatusesRestClient.CreateListRequest(scope, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailabilityStatusesRestClient.CreateListNextPageRequest(nextLink, scope, filter, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus, AvailabilityStatusesClientDiagnostics, Pipeline, "ResourceHealthArmClientMockingExtension.GetAvailabilityStatuses", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus, AvailabilityStatusesClientDiagnostics, Pipeline, "ResourceHealthArmClientMockingExtension.GetAvailabilityStatuses", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -173,7 +174,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailabilityStatusesRestClient.CreateListRequest(scope, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailabilityStatusesRestClient.CreateListNextPageRequest(nextLink, scope, filter, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus, AvailabilityStatusesClientDiagnostics, Pipeline, "ResourceHealthArmClientMockingExtension.GetAvailabilityStatuses", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus, AvailabilityStatusesClientDiagnostics, Pipeline, "ResourceHealthArmClientMockingExtension.GetAvailabilityStatuses", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -197,7 +198,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventsRestClient.CreateListBySingleResourceRequest(scope, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventsRestClient.CreateListBySingleResourceNextPageRequest(nextLink, scope, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceHealthEventData.DeserializeResourceHealthEventData, EventsClientDiagnostics, Pipeline, "ResourceHealthArmClientMockingExtension.GetHealthEventsOfSingleResource", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceHealthEventData.DeserializeResourceHealthEventData, EventsClientDiagnostics, Pipeline, "ResourceHealthArmClientMockingExtension.GetHealthEventsOfSingleResource", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -221,7 +222,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventsRestClient.CreateListBySingleResourceRequest(scope, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventsRestClient.CreateListBySingleResourceNextPageRequest(nextLink, scope, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceHealthEventData.DeserializeResourceHealthEventData, EventsClientDiagnostics, Pipeline, "ResourceHealthArmClientMockingExtension.GetHealthEventsOfSingleResource", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceHealthEventData.DeserializeResourceHealthEventData, EventsClientDiagnostics, Pipeline, "ResourceHealthArmClientMockingExtension.GetHealthEventsOfSingleResource", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -312,7 +313,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChildAvailabilityStatusesRestClient.CreateListRequest(scope, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChildAvailabilityStatusesRestClient.CreateListNextPageRequest(nextLink, scope, filter, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus, ChildAvailabilityStatusesClientDiagnostics, Pipeline, "ResourceHealthArmClientMockingExtension.GetHistoricalAvailabilityStatusesOfChildResource", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus, ChildAvailabilityStatusesClientDiagnostics, Pipeline, "ResourceHealthArmClientMockingExtension.GetHistoricalAvailabilityStatusesOfChildResource", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -337,7 +338,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChildAvailabilityStatusesRestClient.CreateListRequest(scope, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChildAvailabilityStatusesRestClient.CreateListNextPageRequest(nextLink, scope, filter, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus, ChildAvailabilityStatusesClientDiagnostics, Pipeline, "ResourceHealthArmClientMockingExtension.GetHistoricalAvailabilityStatusesOfChildResource", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus, ChildAvailabilityStatusesClientDiagnostics, Pipeline, "ResourceHealthArmClientMockingExtension.GetHistoricalAvailabilityStatusesOfChildResource", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -362,7 +363,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChildResourcesRestClient.CreateListRequest(scope, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChildResourcesRestClient.CreateListNextPageRequest(nextLink, scope, filter, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus, ChildResourcesClientDiagnostics, Pipeline, "ResourceHealthArmClientMockingExtension.GetAvailabilityStatusOfChildResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus, ChildResourcesClientDiagnostics, Pipeline, "ResourceHealthArmClientMockingExtension.GetAvailabilityStatusOfChildResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -387,7 +388,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChildResourcesRestClient.CreateListRequest(scope, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChildResourcesRestClient.CreateListNextPageRequest(nextLink, scope, filter, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus, ChildResourcesClientDiagnostics, Pipeline, "ResourceHealthArmClientMockingExtension.GetAvailabilityStatusOfChildResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus, ChildResourcesClientDiagnostics, Pipeline, "ResourceHealthArmClientMockingExtension.GetAvailabilityStatusOfChildResources", "value", "nextLink", cancellationToken);
         }
         /// <summary>
         /// Gets an object representing a <see cref="ResourceHealthMetadataEntityResource" /> along with the instance operations that can be performed on it but with no data.

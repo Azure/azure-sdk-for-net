@@ -10,7 +10,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
 {
     /// <summary>
     /// EventSource for the AzureMonitor AspNetCore Distro.
-    /// EventSource Guid at Runtime: ????.
+    /// EventSource Guid at Runtime: 928cf0a7-3e20-5f5d-a14f-0e62fdc972e6.
+    /// (This guid can be found by debugging this class and inspecting the "Log" singleton and reading the "Guid" property).
     /// </summary>
     /// <remarks>
     /// PerfView Instructions:
@@ -25,7 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
     /// </list>
     /// Logman Instructions:
     /// <list type="number">
-    /// <item>Create a text file containing providers: <code>echo "{????}" > providers.txt</code></item>
+    /// <item>Create a text file containing providers: <code>echo "{928cf0a7-3e20-5f5d-a14f-0e62fdc972e6}" > providers.txt</code></item>
     /// <item>Start collecting: <code>logman -start exporter -pf providers.txt -ets -bs 1024 -nb 100 256</code></item>
     /// <item>Stop collecting: <code>logman -stop exporter -ets</code></item>
     /// </list>

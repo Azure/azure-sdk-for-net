@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of PacketCoreControlPlaneVersionResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of PacketCoreControlPlaneVersionResources and their operations over a PacketCoreControlPlaneVersionResource. </returns>
-        public virtual PacketCoreControlPlaneVersionCollection GetPacketCoreControlPlaneVersions()
+        /// <summary> Gets a collection of TenantPacketCoreControlPlaneVersionResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of TenantPacketCoreControlPlaneVersionResources and their operations over a TenantPacketCoreControlPlaneVersionResource. </returns>
+        public virtual TenantPacketCoreControlPlaneVersionCollection GetTenantPacketCoreControlPlaneVersions()
         {
-            return GetCachedClient(Client => new PacketCoreControlPlaneVersionCollection(Client, Id));
+            return GetCachedClient(Client => new TenantPacketCoreControlPlaneVersionCollection(Client, Id));
         }
 
         /// <summary>
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PacketCoreControlPlaneVersionResource>> GetPacketCoreControlPlaneVersionAsync(string versionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TenantPacketCoreControlPlaneVersionResource>> GetTenantPacketCoreControlPlaneVersionAsync(string versionName, CancellationToken cancellationToken = default)
         {
-            return await GetPacketCoreControlPlaneVersions().GetAsync(versionName, cancellationToken).ConfigureAwait(false);
+            return await GetTenantPacketCoreControlPlaneVersions().GetAsync(versionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PacketCoreControlPlaneVersionResource> GetPacketCoreControlPlaneVersion(string versionName, CancellationToken cancellationToken = default)
+        public virtual Response<TenantPacketCoreControlPlaneVersionResource> GetTenantPacketCoreControlPlaneVersion(string versionName, CancellationToken cancellationToken = default)
         {
-            return GetPacketCoreControlPlaneVersions().Get(versionName, cancellationToken);
+            return GetTenantPacketCoreControlPlaneVersions().Get(versionName, cancellationToken);
         }
     }
 }

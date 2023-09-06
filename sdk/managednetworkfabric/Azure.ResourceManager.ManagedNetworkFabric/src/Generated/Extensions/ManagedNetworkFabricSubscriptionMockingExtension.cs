@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -232,7 +233,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricAccessControlListAccessControlListsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFabricAccessControlListAccessControlListsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricAccessControlListResource(Client, NetworkFabricAccessControlListData.DeserializeNetworkFabricAccessControlListData(e)), NetworkFabricAccessControlListAccessControlListsClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricAccessControlLists", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricAccessControlListResource(Client, NetworkFabricAccessControlListData.DeserializeNetworkFabricAccessControlListData(e)), NetworkFabricAccessControlListAccessControlListsClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricAccessControlLists", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +255,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricAccessControlListAccessControlListsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFabricAccessControlListAccessControlListsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricAccessControlListResource(Client, NetworkFabricAccessControlListData.DeserializeNetworkFabricAccessControlListData(e)), NetworkFabricAccessControlListAccessControlListsClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricAccessControlLists", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricAccessControlListResource(Client, NetworkFabricAccessControlListData.DeserializeNetworkFabricAccessControlListData(e)), NetworkFabricAccessControlListAccessControlListsClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricAccessControlLists", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -276,7 +277,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricInternetGatewayInternetGatewaysRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFabricInternetGatewayInternetGatewaysRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricInternetGatewayResource(Client, NetworkFabricInternetGatewayData.DeserializeNetworkFabricInternetGatewayData(e)), NetworkFabricInternetGatewayInternetGatewaysClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricInternetGateways", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricInternetGatewayResource(Client, NetworkFabricInternetGatewayData.DeserializeNetworkFabricInternetGatewayData(e)), NetworkFabricInternetGatewayInternetGatewaysClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricInternetGateways", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -298,7 +299,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricInternetGatewayInternetGatewaysRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFabricInternetGatewayInternetGatewaysRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricInternetGatewayResource(Client, NetworkFabricInternetGatewayData.DeserializeNetworkFabricInternetGatewayData(e)), NetworkFabricInternetGatewayInternetGatewaysClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricInternetGateways", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricInternetGatewayResource(Client, NetworkFabricInternetGatewayData.DeserializeNetworkFabricInternetGatewayData(e)), NetworkFabricInternetGatewayInternetGatewaysClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricInternetGateways", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -320,7 +321,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricInternetGatewayRuleInternetGatewayRulesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFabricInternetGatewayRuleInternetGatewayRulesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricInternetGatewayRuleResource(Client, NetworkFabricInternetGatewayRuleData.DeserializeNetworkFabricInternetGatewayRuleData(e)), NetworkFabricInternetGatewayRuleInternetGatewayRulesClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricInternetGatewayRules", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricInternetGatewayRuleResource(Client, NetworkFabricInternetGatewayRuleData.DeserializeNetworkFabricInternetGatewayRuleData(e)), NetworkFabricInternetGatewayRuleInternetGatewayRulesClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricInternetGatewayRules", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -342,7 +343,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricInternetGatewayRuleInternetGatewayRulesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFabricInternetGatewayRuleInternetGatewayRulesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricInternetGatewayRuleResource(Client, NetworkFabricInternetGatewayRuleData.DeserializeNetworkFabricInternetGatewayRuleData(e)), NetworkFabricInternetGatewayRuleInternetGatewayRulesClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricInternetGatewayRules", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricInternetGatewayRuleResource(Client, NetworkFabricInternetGatewayRuleData.DeserializeNetworkFabricInternetGatewayRuleData(e)), NetworkFabricInternetGatewayRuleInternetGatewayRulesClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricInternetGatewayRules", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -364,7 +365,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricIPCommunityIpCommunitiesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFabricIPCommunityIpCommunitiesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPCommunityResource(Client, NetworkFabricIPCommunityData.DeserializeNetworkFabricIPCommunityData(e)), NetworkFabricIPCommunityIpCommunitiesClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricIPCommunities", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPCommunityResource(Client, NetworkFabricIPCommunityData.DeserializeNetworkFabricIPCommunityData(e)), NetworkFabricIPCommunityIpCommunitiesClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricIPCommunities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -386,7 +387,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricIPCommunityIpCommunitiesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFabricIPCommunityIpCommunitiesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPCommunityResource(Client, NetworkFabricIPCommunityData.DeserializeNetworkFabricIPCommunityData(e)), NetworkFabricIPCommunityIpCommunitiesClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricIPCommunities", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPCommunityResource(Client, NetworkFabricIPCommunityData.DeserializeNetworkFabricIPCommunityData(e)), NetworkFabricIPCommunityIpCommunitiesClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricIPCommunities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -408,7 +409,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricIPExtendedCommunityIpExtendedCommunitiesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFabricIPExtendedCommunityIpExtendedCommunitiesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPExtendedCommunityResource(Client, NetworkFabricIPExtendedCommunityData.DeserializeNetworkFabricIPExtendedCommunityData(e)), NetworkFabricIPExtendedCommunityIpExtendedCommunitiesClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricIPExtendedCommunities", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPExtendedCommunityResource(Client, NetworkFabricIPExtendedCommunityData.DeserializeNetworkFabricIPExtendedCommunityData(e)), NetworkFabricIPExtendedCommunityIpExtendedCommunitiesClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricIPExtendedCommunities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -430,7 +431,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricIPExtendedCommunityIpExtendedCommunitiesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFabricIPExtendedCommunityIpExtendedCommunitiesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPExtendedCommunityResource(Client, NetworkFabricIPExtendedCommunityData.DeserializeNetworkFabricIPExtendedCommunityData(e)), NetworkFabricIPExtendedCommunityIpExtendedCommunitiesClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricIPExtendedCommunities", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPExtendedCommunityResource(Client, NetworkFabricIPExtendedCommunityData.DeserializeNetworkFabricIPExtendedCommunityData(e)), NetworkFabricIPExtendedCommunityIpExtendedCommunitiesClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricIPExtendedCommunities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -452,7 +453,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricIPPrefixIpPrefixesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFabricIPPrefixIpPrefixesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPPrefixResource(Client, NetworkFabricIPPrefixData.DeserializeNetworkFabricIPPrefixData(e)), NetworkFabricIPPrefixIpPrefixesClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricIPPrefixes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPPrefixResource(Client, NetworkFabricIPPrefixData.DeserializeNetworkFabricIPPrefixData(e)), NetworkFabricIPPrefixIpPrefixesClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricIPPrefixes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -474,7 +475,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricIPPrefixIpPrefixesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFabricIPPrefixIpPrefixesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPPrefixResource(Client, NetworkFabricIPPrefixData.DeserializeNetworkFabricIPPrefixData(e)), NetworkFabricIPPrefixIpPrefixesClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricIPPrefixes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPPrefixResource(Client, NetworkFabricIPPrefixData.DeserializeNetworkFabricIPPrefixData(e)), NetworkFabricIPPrefixIpPrefixesClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricIPPrefixes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -496,7 +497,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricL2IsolationDomainL2IsolationDomainsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFabricL2IsolationDomainL2IsolationDomainsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricL2IsolationDomainResource(Client, NetworkFabricL2IsolationDomainData.DeserializeNetworkFabricL2IsolationDomainData(e)), NetworkFabricL2IsolationDomainL2IsolationDomainsClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricL2IsolationDomains", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricL2IsolationDomainResource(Client, NetworkFabricL2IsolationDomainData.DeserializeNetworkFabricL2IsolationDomainData(e)), NetworkFabricL2IsolationDomainL2IsolationDomainsClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricL2IsolationDomains", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -518,7 +519,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricL2IsolationDomainL2IsolationDomainsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFabricL2IsolationDomainL2IsolationDomainsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricL2IsolationDomainResource(Client, NetworkFabricL2IsolationDomainData.DeserializeNetworkFabricL2IsolationDomainData(e)), NetworkFabricL2IsolationDomainL2IsolationDomainsClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricL2IsolationDomains", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricL2IsolationDomainResource(Client, NetworkFabricL2IsolationDomainData.DeserializeNetworkFabricL2IsolationDomainData(e)), NetworkFabricL2IsolationDomainL2IsolationDomainsClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricL2IsolationDomains", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -540,7 +541,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricL3IsolationDomainL3IsolationDomainsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFabricL3IsolationDomainL3IsolationDomainsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricL3IsolationDomainResource(Client, NetworkFabricL3IsolationDomainData.DeserializeNetworkFabricL3IsolationDomainData(e)), NetworkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricL3IsolationDomains", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricL3IsolationDomainResource(Client, NetworkFabricL3IsolationDomainData.DeserializeNetworkFabricL3IsolationDomainData(e)), NetworkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricL3IsolationDomains", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -562,7 +563,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricL3IsolationDomainL3IsolationDomainsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFabricL3IsolationDomainL3IsolationDomainsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricL3IsolationDomainResource(Client, NetworkFabricL3IsolationDomainData.DeserializeNetworkFabricL3IsolationDomainData(e)), NetworkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricL3IsolationDomains", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricL3IsolationDomainResource(Client, NetworkFabricL3IsolationDomainData.DeserializeNetworkFabricL3IsolationDomainData(e)), NetworkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricL3IsolationDomains", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -584,7 +585,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricNeighborGroupNeighborGroupsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFabricNeighborGroupNeighborGroupsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricNeighborGroupResource(Client, NetworkFabricNeighborGroupData.DeserializeNetworkFabricNeighborGroupData(e)), NetworkFabricNeighborGroupNeighborGroupsClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricNeighborGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricNeighborGroupResource(Client, NetworkFabricNeighborGroupData.DeserializeNetworkFabricNeighborGroupData(e)), NetworkFabricNeighborGroupNeighborGroupsClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricNeighborGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -606,7 +607,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricNeighborGroupNeighborGroupsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFabricNeighborGroupNeighborGroupsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricNeighborGroupResource(Client, NetworkFabricNeighborGroupData.DeserializeNetworkFabricNeighborGroupData(e)), NetworkFabricNeighborGroupNeighborGroupsClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricNeighborGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricNeighborGroupResource(Client, NetworkFabricNeighborGroupData.DeserializeNetworkFabricNeighborGroupData(e)), NetworkFabricNeighborGroupNeighborGroupsClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricNeighborGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -628,7 +629,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkDeviceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkDeviceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkDeviceResource(Client, NetworkDeviceData.DeserializeNetworkDeviceData(e)), NetworkDeviceClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkDevices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkDeviceResource(Client, NetworkDeviceData.DeserializeNetworkDeviceData(e)), NetworkDeviceClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkDevices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -650,7 +651,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkDeviceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkDeviceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkDeviceResource(Client, NetworkDeviceData.DeserializeNetworkDeviceData(e)), NetworkDeviceClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkDevices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkDeviceResource(Client, NetworkDeviceData.DeserializeNetworkDeviceData(e)), NetworkDeviceClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkDevices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -672,7 +673,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricControllerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFabricControllerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricControllerResource(Client, NetworkFabricControllerData.DeserializeNetworkFabricControllerData(e)), NetworkFabricControllerClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricControllers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricControllerResource(Client, NetworkFabricControllerData.DeserializeNetworkFabricControllerData(e)), NetworkFabricControllerClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricControllers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -694,7 +695,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricControllerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFabricControllerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricControllerResource(Client, NetworkFabricControllerData.DeserializeNetworkFabricControllerData(e)), NetworkFabricControllerClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricControllers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricControllerResource(Client, NetworkFabricControllerData.DeserializeNetworkFabricControllerData(e)), NetworkFabricControllerClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricControllers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -716,7 +717,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFabricRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricResource(Client, NetworkFabricData.DeserializeNetworkFabricData(e)), NetworkFabricClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabrics", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricResource(Client, NetworkFabricData.DeserializeNetworkFabricData(e)), NetworkFabricClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabrics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -738,7 +739,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFabricRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricResource(Client, NetworkFabricData.DeserializeNetworkFabricData(e)), NetworkFabricClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabrics", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricResource(Client, NetworkFabricData.DeserializeNetworkFabricData(e)), NetworkFabricClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabrics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -760,7 +761,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkPacketBrokerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkPacketBrokerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkPacketBrokerResource(Client, NetworkPacketBrokerData.DeserializeNetworkPacketBrokerData(e)), NetworkPacketBrokerClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkPacketBrokers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkPacketBrokerResource(Client, NetworkPacketBrokerData.DeserializeNetworkPacketBrokerData(e)), NetworkPacketBrokerClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkPacketBrokers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -782,7 +783,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkPacketBrokerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkPacketBrokerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkPacketBrokerResource(Client, NetworkPacketBrokerData.DeserializeNetworkPacketBrokerData(e)), NetworkPacketBrokerClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkPacketBrokers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkPacketBrokerResource(Client, NetworkPacketBrokerData.DeserializeNetworkPacketBrokerData(e)), NetworkPacketBrokerClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkPacketBrokers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -804,7 +805,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkRackRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkRackRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkRackResource(Client, NetworkRackData.DeserializeNetworkRackData(e)), NetworkRackClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkRacks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkRackResource(Client, NetworkRackData.DeserializeNetworkRackData(e)), NetworkRackClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkRacks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -826,7 +827,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkRackRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkRackRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkRackResource(Client, NetworkRackData.DeserializeNetworkRackData(e)), NetworkRackClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkRacks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkRackResource(Client, NetworkRackData.DeserializeNetworkRackData(e)), NetworkRackClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkRacks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -848,7 +849,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkTapRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkTapRuleRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkTapRuleResource(Client, NetworkTapRuleData.DeserializeNetworkTapRuleData(e)), NetworkTapRuleClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkTapRules", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkTapRuleResource(Client, NetworkTapRuleData.DeserializeNetworkTapRuleData(e)), NetworkTapRuleClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkTapRules", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -870,7 +871,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkTapRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkTapRuleRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkTapRuleResource(Client, NetworkTapRuleData.DeserializeNetworkTapRuleData(e)), NetworkTapRuleClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkTapRules", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkTapRuleResource(Client, NetworkTapRuleData.DeserializeNetworkTapRuleData(e)), NetworkTapRuleClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkTapRules", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -892,7 +893,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkTapRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkTapRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkTapResource(Client, NetworkTapData.DeserializeNetworkTapData(e)), NetworkTapClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkTaps", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkTapResource(Client, NetworkTapData.DeserializeNetworkTapData(e)), NetworkTapClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkTaps", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -914,7 +915,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkTapRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkTapRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkTapResource(Client, NetworkTapData.DeserializeNetworkTapData(e)), NetworkTapClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkTaps", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkTapResource(Client, NetworkTapData.DeserializeNetworkTapData(e)), NetworkTapClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkTaps", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -936,7 +937,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricRoutePolicyRoutePoliciesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFabricRoutePolicyRoutePoliciesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricRoutePolicyResource(Client, NetworkFabricRoutePolicyData.DeserializeNetworkFabricRoutePolicyData(e)), NetworkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricRoutePolicies", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricRoutePolicyResource(Client, NetworkFabricRoutePolicyData.DeserializeNetworkFabricRoutePolicyData(e)), NetworkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricRoutePolicies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -958,7 +959,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricRoutePolicyRoutePoliciesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFabricRoutePolicyRoutePoliciesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricRoutePolicyResource(Client, NetworkFabricRoutePolicyData.DeserializeNetworkFabricRoutePolicyData(e)), NetworkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricRoutePolicies", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricRoutePolicyResource(Client, NetworkFabricRoutePolicyData.DeserializeNetworkFabricRoutePolicyData(e)), NetworkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, "ManagedNetworkFabricSubscriptionMockingExtension.GetNetworkFabricRoutePolicies", "value", "nextLink", cancellationToken);
         }
     }
 }

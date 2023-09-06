@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationInsightsComponentComponentsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApplicationInsightsComponentComponentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApplicationInsightsComponentResource(Client, ApplicationInsightsComponentData.DeserializeApplicationInsightsComponentData(e)), ApplicationInsightsComponentComponentsClientDiagnostics, Pipeline, "ApplicationInsightsSubscriptionMockingExtension.GetApplicationInsightsComponents", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApplicationInsightsComponentResource(Client, ApplicationInsightsComponentData.DeserializeApplicationInsightsComponentData(e)), ApplicationInsightsComponentComponentsClientDiagnostics, Pipeline, "ApplicationInsightsSubscriptionMockingExtension.GetApplicationInsightsComponents", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationInsightsComponentComponentsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApplicationInsightsComponentComponentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApplicationInsightsComponentResource(Client, ApplicationInsightsComponentData.DeserializeApplicationInsightsComponentData(e)), ApplicationInsightsComponentComponentsClientDiagnostics, Pipeline, "ApplicationInsightsSubscriptionMockingExtension.GetApplicationInsightsComponents", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApplicationInsightsComponentResource(Client, ApplicationInsightsComponentData.DeserializeApplicationInsightsComponentData(e)), ApplicationInsightsComponentComponentsClientDiagnostics, Pipeline, "ApplicationInsightsSubscriptionMockingExtension.GetApplicationInsightsComponents", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => WebTestRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WebTestRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebTestResource(Client, WebTestData.DeserializeWebTestData(e)), WebTestClientDiagnostics, Pipeline, "ApplicationInsightsSubscriptionMockingExtension.GetWebTests", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebTestResource(Client, WebTestData.DeserializeWebTestData(e)), WebTestClientDiagnostics, Pipeline, "ApplicationInsightsSubscriptionMockingExtension.GetWebTests", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => WebTestRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WebTestRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebTestResource(Client, WebTestData.DeserializeWebTestData(e)), WebTestClientDiagnostics, Pipeline, "ApplicationInsightsSubscriptionMockingExtension.GetWebTests", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebTestResource(Client, WebTestData.DeserializeWebTestData(e)), WebTestClientDiagnostics, Pipeline, "ApplicationInsightsSubscriptionMockingExtension.GetWebTests", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MyWorkbookRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, category, tags, canFetchContent);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MyWorkbookRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, category, tags, canFetchContent);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MyWorkbookResource(Client, MyWorkbookData.DeserializeMyWorkbookData(e)), MyWorkbookClientDiagnostics, Pipeline, "ApplicationInsightsSubscriptionMockingExtension.GetMyWorkbooks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MyWorkbookResource(Client, MyWorkbookData.DeserializeMyWorkbookData(e)), MyWorkbookClientDiagnostics, Pipeline, "ApplicationInsightsSubscriptionMockingExtension.GetMyWorkbooks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -190,7 +191,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MyWorkbookRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, category, tags, canFetchContent);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MyWorkbookRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, category, tags, canFetchContent);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MyWorkbookResource(Client, MyWorkbookData.DeserializeMyWorkbookData(e)), MyWorkbookClientDiagnostics, Pipeline, "ApplicationInsightsSubscriptionMockingExtension.GetMyWorkbooks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MyWorkbookResource(Client, MyWorkbookData.DeserializeMyWorkbookData(e)), MyWorkbookClientDiagnostics, Pipeline, "ApplicationInsightsSubscriptionMockingExtension.GetMyWorkbooks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -215,7 +216,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => WorkbookRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, category, tags, canFetchContent);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WorkbookRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, category, tags, canFetchContent);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkbookResource(Client, WorkbookData.DeserializeWorkbookData(e)), WorkbookClientDiagnostics, Pipeline, "ApplicationInsightsSubscriptionMockingExtension.GetWorkbooks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkbookResource(Client, WorkbookData.DeserializeWorkbookData(e)), WorkbookClientDiagnostics, Pipeline, "ApplicationInsightsSubscriptionMockingExtension.GetWorkbooks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -240,7 +241,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => WorkbookRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, category, tags, canFetchContent);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WorkbookRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, category, tags, canFetchContent);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkbookResource(Client, WorkbookData.DeserializeWorkbookData(e)), WorkbookClientDiagnostics, Pipeline, "ApplicationInsightsSubscriptionMockingExtension.GetWorkbooks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkbookResource(Client, WorkbookData.DeserializeWorkbookData(e)), WorkbookClientDiagnostics, Pipeline, "ApplicationInsightsSubscriptionMockingExtension.GetWorkbooks", "value", "nextLink", cancellationToken);
         }
     }
 }

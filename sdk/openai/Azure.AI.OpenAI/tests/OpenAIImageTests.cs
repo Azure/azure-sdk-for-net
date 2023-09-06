@@ -52,7 +52,7 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(firstImageLocation, Is.Not.Null);
             Assert.That(firstImageLocation.Url, Is.Not.Null.Or.Empty);
 
-            ImageLocation secondImageLocation = imageGenerations.Data[1] as ImageLocation;
+            ImageLocation secondImageLocation = imageGenerations.Data[1];
             Assert.That(secondImageLocation, Is.Not.Null);
             Assert.That(secondImageLocation.Url, Is.Not.Null.Or.Empty);
             Assert.That(

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotaOperationRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotaOperationRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, QuotaOperationResult.DeserializeQuotaOperationResult, QuotaOperationClientDiagnostics, Pipeline, "QuotaTenantMockingExtension.GetQuotaOperations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, QuotaOperationResult.DeserializeQuotaOperationResult, QuotaOperationClientDiagnostics, Pipeline, "QuotaTenantMockingExtension.GetQuotaOperations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotaOperationRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotaOperationRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, QuotaOperationResult.DeserializeQuotaOperationResult, QuotaOperationClientDiagnostics, Pipeline, "QuotaTenantMockingExtension.GetQuotaOperations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, QuotaOperationResult.DeserializeQuotaOperationResult, QuotaOperationClientDiagnostics, Pipeline, "QuotaTenantMockingExtension.GetQuotaOperations", "value", "nextLink", cancellationToken);
         }
     }
 }

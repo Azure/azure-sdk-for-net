@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.Nginx.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NginxDeploymentDeploymentsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NginxDeploymentDeploymentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NginxDeploymentResource(Client, NginxDeploymentData.DeserializeNginxDeploymentData(e)), NginxDeploymentDeploymentsClientDiagnostics, Pipeline, "NginxSubscriptionMockingExtension.GetNginxDeployments", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NginxDeploymentResource(Client, NginxDeploymentData.DeserializeNginxDeploymentData(e)), NginxDeploymentDeploymentsClientDiagnostics, Pipeline, "NginxSubscriptionMockingExtension.GetNginxDeployments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.Nginx.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NginxDeploymentDeploymentsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NginxDeploymentDeploymentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NginxDeploymentResource(Client, NginxDeploymentData.DeserializeNginxDeploymentData(e)), NginxDeploymentDeploymentsClientDiagnostics, Pipeline, "NginxSubscriptionMockingExtension.GetNginxDeployments", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NginxDeploymentResource(Client, NginxDeploymentData.DeserializeNginxDeploymentData(e)), NginxDeploymentDeploymentsClientDiagnostics, Pipeline, "NginxSubscriptionMockingExtension.GetNginxDeployments", "value", "nextLink", cancellationToken);
         }
     }
 }

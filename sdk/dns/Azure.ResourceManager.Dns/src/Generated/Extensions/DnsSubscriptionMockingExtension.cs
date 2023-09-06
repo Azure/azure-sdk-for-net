@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.Dns.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DnsZoneZonesRestClient.CreateListRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsZoneZonesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsZoneResource(Client, DnsZoneData.DeserializeDnsZoneData(e)), DnsZoneZonesClientDiagnostics, Pipeline, "DnsSubscriptionMockingExtension.GetDnsZones", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsZoneResource(Client, DnsZoneData.DeserializeDnsZoneData(e)), DnsZoneZonesClientDiagnostics, Pipeline, "DnsSubscriptionMockingExtension.GetDnsZones", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.Dns.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DnsZoneZonesRestClient.CreateListRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsZoneZonesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsZoneResource(Client, DnsZoneData.DeserializeDnsZoneData(e)), DnsZoneZonesClientDiagnostics, Pipeline, "DnsSubscriptionMockingExtension.GetDnsZones", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsZoneResource(Client, DnsZoneData.DeserializeDnsZoneData(e)), DnsZoneZonesClientDiagnostics, Pipeline, "DnsSubscriptionMockingExtension.GetDnsZones", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

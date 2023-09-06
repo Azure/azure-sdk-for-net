@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.Orbital.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OrbitalSpacecraftSpacecraftsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrbitalSpacecraftSpacecraftsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skiptoken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OrbitalSpacecraftResource(Client, OrbitalSpacecraftData.DeserializeOrbitalSpacecraftData(e)), OrbitalSpacecraftSpacecraftsClientDiagnostics, Pipeline, "OrbitalSubscriptionMockingExtension.GetOrbitalSpacecrafts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OrbitalSpacecraftResource(Client, OrbitalSpacecraftData.DeserializeOrbitalSpacecraftData(e)), OrbitalSpacecraftSpacecraftsClientDiagnostics, Pipeline, "OrbitalSubscriptionMockingExtension.GetOrbitalSpacecrafts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.Orbital.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OrbitalSpacecraftSpacecraftsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrbitalSpacecraftSpacecraftsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skiptoken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OrbitalSpacecraftResource(Client, OrbitalSpacecraftData.DeserializeOrbitalSpacecraftData(e)), OrbitalSpacecraftSpacecraftsClientDiagnostics, Pipeline, "OrbitalSubscriptionMockingExtension.GetOrbitalSpacecrafts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OrbitalSpacecraftResource(Client, OrbitalSpacecraftData.DeserializeOrbitalSpacecraftData(e)), OrbitalSpacecraftSpacecraftsClientDiagnostics, Pipeline, "OrbitalSubscriptionMockingExtension.GetOrbitalSpacecrafts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.Orbital.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OrbitalContactProfileContactProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrbitalContactProfileContactProfilesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skiptoken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OrbitalContactProfileResource(Client, OrbitalContactProfileData.DeserializeOrbitalContactProfileData(e)), OrbitalContactProfileContactProfilesClientDiagnostics, Pipeline, "OrbitalSubscriptionMockingExtension.GetOrbitalContactProfiles", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OrbitalContactProfileResource(Client, OrbitalContactProfileData.DeserializeOrbitalContactProfileData(e)), OrbitalContactProfileContactProfilesClientDiagnostics, Pipeline, "OrbitalSubscriptionMockingExtension.GetOrbitalContactProfiles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -189,7 +190,7 @@ namespace Azure.ResourceManager.Orbital.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OrbitalContactProfileContactProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrbitalContactProfileContactProfilesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skiptoken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OrbitalContactProfileResource(Client, OrbitalContactProfileData.DeserializeOrbitalContactProfileData(e)), OrbitalContactProfileContactProfilesClientDiagnostics, Pipeline, "OrbitalSubscriptionMockingExtension.GetOrbitalContactProfiles", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OrbitalContactProfileResource(Client, OrbitalContactProfileData.DeserializeOrbitalContactProfileData(e)), OrbitalContactProfileContactProfilesClientDiagnostics, Pipeline, "OrbitalSubscriptionMockingExtension.GetOrbitalContactProfiles", "value", "nextLink", cancellationToken);
         }
     }
 }

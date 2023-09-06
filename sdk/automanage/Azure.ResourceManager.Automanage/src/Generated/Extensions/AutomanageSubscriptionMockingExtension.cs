@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.Automanage.Mocking
         public virtual AsyncPageable<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfilesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AutomanageConfigurationProfileConfigurationProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutomanageConfigurationProfileResource(Client, AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(e)), AutomanageConfigurationProfileConfigurationProfilesClientDiagnostics, Pipeline, "AutomanageSubscriptionMockingExtension.GetAutomanageConfigurationProfiles", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutomanageConfigurationProfileResource(Client, AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(e)), AutomanageConfigurationProfileConfigurationProfilesClientDiagnostics, Pipeline, "AutomanageSubscriptionMockingExtension.GetAutomanageConfigurationProfiles", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Automanage.Mocking
         public virtual Pageable<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfiles(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AutomanageConfigurationProfileConfigurationProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutomanageConfigurationProfileResource(Client, AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(e)), AutomanageConfigurationProfileConfigurationProfilesClientDiagnostics, Pipeline, "AutomanageSubscriptionMockingExtension.GetAutomanageConfigurationProfiles", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutomanageConfigurationProfileResource(Client, AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(e)), AutomanageConfigurationProfileConfigurationProfilesClientDiagnostics, Pipeline, "AutomanageSubscriptionMockingExtension.GetAutomanageConfigurationProfiles", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.Automanage.Mocking
         public virtual AsyncPageable<AutomanageServicePrincipalData> GetServicePrincipalsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServicePrincipalsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AutomanageServicePrincipalData.DeserializeAutomanageServicePrincipalData, ServicePrincipalsClientDiagnostics, Pipeline, "AutomanageSubscriptionMockingExtension.GetServicePrincipals", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AutomanageServicePrincipalData.DeserializeAutomanageServicePrincipalData, ServicePrincipalsClientDiagnostics, Pipeline, "AutomanageSubscriptionMockingExtension.GetServicePrincipals", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.Automanage.Mocking
         public virtual Pageable<AutomanageServicePrincipalData> GetServicePrincipals(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServicePrincipalsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, AutomanageServicePrincipalData.DeserializeAutomanageServicePrincipalData, ServicePrincipalsClientDiagnostics, Pipeline, "AutomanageSubscriptionMockingExtension.GetServicePrincipals", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AutomanageServicePrincipalData.DeserializeAutomanageServicePrincipalData, ServicePrincipalsClientDiagnostics, Pipeline, "AutomanageSubscriptionMockingExtension.GetServicePrincipals", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -56,9 +56,7 @@ namespace Azure.Core.Experimental.Tests
         /// <summary> Get a pet by its Id. </summary>
         /// <param name="id"> Id of pet to return. </param>
         /// <param name="context"> The request context. </param>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetPetAsync(string id, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PetStoreClient.GetPet");
             scope.Start();
@@ -77,9 +75,7 @@ namespace Azure.Core.Experimental.Tests
         /// <summary> Get a pet by its Id. </summary>
         /// <param name="id"> Id of pet to return. </param>
         /// <param name="context"> The request context. </param>
-#pragma warning disable AZC0002
         public virtual Response GetPet(string id, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PetStoreClient.GetPet");
             scope.Start();
@@ -98,9 +94,7 @@ namespace Azure.Core.Experimental.Tests
         /// <summary> Get a pet by its Id. </summary>
         /// <param name="id"> Id of pet to return. </param>
         /// <param name="context"> The request context. </param>
-#pragma warning disable AZC0002
         public virtual async Task<Response> CreatePetAsync(string id, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PetStoreClient.GetPet");
             scope.Start();
@@ -119,9 +113,7 @@ namespace Azure.Core.Experimental.Tests
         /// <summary> Get a pet by its Id. </summary>
         /// <param name="id"> Id of pet to return. </param>
         /// <param name="context"> The request context. </param>
-#pragma warning disable AZC0002
         public virtual Response CreatePet(string id, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = _clientDiagnostics.CreateScope("PetStoreClient.GetPet");
             scope.Start();

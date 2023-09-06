@@ -142,11 +142,11 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
             return GetPacketCoreControlPlanes().Get(packetCoreControlPlaneName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SimGroupResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SimGroupResources and their operations over a SimGroupResource. </returns>
-        public virtual SimGroupCollection GetSimGroups()
+        /// <summary> Gets a collection of MobileNetworkSimGroupResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of MobileNetworkSimGroupResources and their operations over a MobileNetworkSimGroupResource. </returns>
+        public virtual MobileNetworkSimGroupCollection GetMobileNetworkSimGroups()
         {
-            return GetCachedClient(Client => new SimGroupCollection(Client, Id));
+            return GetCachedClient(Client => new MobileNetworkSimGroupCollection(Client, Id));
         }
 
         /// <summary>
@@ -167,9 +167,9 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <exception cref="ArgumentException"> <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="simGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SimGroupResource>> GetSimGroupAsync(string simGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MobileNetworkSimGroupResource>> GetMobileNetworkSimGroupAsync(string simGroupName, CancellationToken cancellationToken = default)
         {
-            return await GetSimGroups().GetAsync(simGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetMobileNetworkSimGroups().GetAsync(simGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <exception cref="ArgumentException"> <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="simGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SimGroupResource> GetSimGroup(string simGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<MobileNetworkSimGroupResource> GetMobileNetworkSimGroup(string simGroupName, CancellationToken cancellationToken = default)
         {
-            return GetSimGroups().Get(simGroupName, cancellationToken);
+            return GetMobileNetworkSimGroups().Get(simGroupName, cancellationToken);
         }
     }
 }

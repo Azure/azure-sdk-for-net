@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> IP Address type. </summary>
+    /// <summary> IP Address type that needs to be matched. </summary>
     public readonly partial struct SourceDestinationType : IEquatable<SourceDestinationType>
     {
         private readonly string _value;

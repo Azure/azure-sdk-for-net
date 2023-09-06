@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedNetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skiptoken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkResource(Client, ManagedNetworkData.DeserializeManagedNetworkData(e)), ManagedNetworkClientDiagnostics, Pipeline, "ManagedNetworkSubscriptionMockingExtension.GetManagedNetworks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkResource(Client, ManagedNetworkData.DeserializeManagedNetworkData(e)), ManagedNetworkClientDiagnostics, Pipeline, "ManagedNetworkSubscriptionMockingExtension.GetManagedNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedNetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skiptoken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkResource(Client, ManagedNetworkData.DeserializeManagedNetworkData(e)), ManagedNetworkClientDiagnostics, Pipeline, "ManagedNetworkSubscriptionMockingExtension.GetManagedNetworks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkResource(Client, ManagedNetworkData.DeserializeManagedNetworkData(e)), ManagedNetworkClientDiagnostics, Pipeline, "ManagedNetworkSubscriptionMockingExtension.GetManagedNetworks", "value", "nextLink", cancellationToken);
         }
     }
 }

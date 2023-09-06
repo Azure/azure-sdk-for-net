@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HealthcareApisServiceServicesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HealthcareApisServiceServicesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisServiceResource(Client, HealthcareApisServiceData.DeserializeHealthcareApisServiceData(e)), HealthcareApisServiceServicesClientDiagnostics, Pipeline, "HealthcareApisSubscriptionMockingExtension.GetHealthcareApisServices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisServiceResource(Client, HealthcareApisServiceData.DeserializeHealthcareApisServiceData(e)), HealthcareApisServiceServicesClientDiagnostics, Pipeline, "HealthcareApisSubscriptionMockingExtension.GetHealthcareApisServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HealthcareApisServiceServicesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HealthcareApisServiceServicesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisServiceResource(Client, HealthcareApisServiceData.DeserializeHealthcareApisServiceData(e)), HealthcareApisServiceServicesClientDiagnostics, Pipeline, "HealthcareApisSubscriptionMockingExtension.GetHealthcareApisServices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisServiceResource(Client, HealthcareApisServiceData.DeserializeHealthcareApisServiceData(e)), HealthcareApisServiceServicesClientDiagnostics, Pipeline, "HealthcareApisSubscriptionMockingExtension.GetHealthcareApisServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -179,7 +180,7 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HealthcareApisWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HealthcareApisWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisWorkspaceResource(Client, HealthcareApisWorkspaceData.DeserializeHealthcareApisWorkspaceData(e)), HealthcareApisWorkspaceWorkspacesClientDiagnostics, Pipeline, "HealthcareApisSubscriptionMockingExtension.GetHealthcareApisWorkspaces", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisWorkspaceResource(Client, HealthcareApisWorkspaceData.DeserializeHealthcareApisWorkspaceData(e)), HealthcareApisWorkspaceWorkspacesClientDiagnostics, Pipeline, "HealthcareApisSubscriptionMockingExtension.GetHealthcareApisWorkspaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +202,7 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HealthcareApisWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HealthcareApisWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisWorkspaceResource(Client, HealthcareApisWorkspaceData.DeserializeHealthcareApisWorkspaceData(e)), HealthcareApisWorkspaceWorkspacesClientDiagnostics, Pipeline, "HealthcareApisSubscriptionMockingExtension.GetHealthcareApisWorkspaces", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisWorkspaceResource(Client, HealthcareApisWorkspaceData.DeserializeHealthcareApisWorkspaceData(e)), HealthcareApisWorkspaceWorkspacesClientDiagnostics, Pipeline, "HealthcareApisSubscriptionMockingExtension.GetHealthcareApisWorkspaces", "value", "nextLink", cancellationToken);
         }
     }
 }
