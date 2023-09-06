@@ -20,7 +20,7 @@ internal class Program
     static async Task Main(string[] args)
     {
         // Use any well formed connection string
-        string connectionString = "<str>";
+        string connectionString = "";
 
         var client = new ConfigurationClient(
             connectionString,
