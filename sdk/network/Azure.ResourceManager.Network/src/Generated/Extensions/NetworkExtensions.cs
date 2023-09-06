@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager.Network.Mocking;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
@@ -20,54 +21,38 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class to add extension methods to Azure.ResourceManager.Network. </summary>
     public static partial class NetworkExtensions
     {
-        private static ManagementGroupResourceExtensionClient GetManagementGroupResourceExtensionClient(ArmResource resource)
+        private static NetworkArmClientMockingExtension GetNetworkArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new NetworkArmClientMockingExtension(client);
+            });
+        }
+
+        private static NetworkManagementGroupMockingExtension GetNetworkManagementGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ManagementGroupResourceExtensionClient(client, resource.Id);
+                return new NetworkManagementGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ManagementGroupResourceExtensionClient GetManagementGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ManagementGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static NetworkResourceGroupMockingExtension GetNetworkResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new NetworkResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static NetworkSubscriptionMockingExtension GetNetworkSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new NetworkSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region ApplicationGatewayResource
         /// <summary>
         /// Gets an object representing an <see cref="ApplicationGatewayResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ApplicationGatewayResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -77,16 +62,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ApplicationGatewayResource" /> object. </returns>
         public static ApplicationGatewayResource GetApplicationGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApplicationGatewayResource.ValidateResourceId(id);
-                return new ApplicationGatewayResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetApplicationGatewayResource(id);
         }
-        #endregion
 
-        #region ApplicationGatewayPrivateEndpointConnectionResource
         /// <summary>
         /// Gets an object representing an <see cref="ApplicationGatewayPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ApplicationGatewayPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationGatewayPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -96,16 +74,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ApplicationGatewayPrivateEndpointConnectionResource" /> object. </returns>
         public static ApplicationGatewayPrivateEndpointConnectionResource GetApplicationGatewayPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApplicationGatewayPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new ApplicationGatewayPrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetApplicationGatewayPrivateEndpointConnectionResource(id);
         }
-        #endregion
 
-        #region ApplicationGatewayWafDynamicManifestResource
         /// <summary>
         /// Gets an object representing an <see cref="ApplicationGatewayWafDynamicManifestResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ApplicationGatewayWafDynamicManifestResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationGatewayWafDynamicManifestResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -115,16 +86,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ApplicationGatewayWafDynamicManifestResource" /> object. </returns>
         public static ApplicationGatewayWafDynamicManifestResource GetApplicationGatewayWafDynamicManifestResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApplicationGatewayWafDynamicManifestResource.ValidateResourceId(id);
-                return new ApplicationGatewayWafDynamicManifestResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetApplicationGatewayWafDynamicManifestResource(id);
         }
-        #endregion
 
-        #region ApplicationSecurityGroupResource
         /// <summary>
         /// Gets an object representing an <see cref="ApplicationSecurityGroupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ApplicationSecurityGroupResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationSecurityGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -134,16 +98,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ApplicationSecurityGroupResource" /> object. </returns>
         public static ApplicationSecurityGroupResource GetApplicationSecurityGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApplicationSecurityGroupResource.ValidateResourceId(id);
-                return new ApplicationSecurityGroupResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetApplicationSecurityGroupResource(id);
         }
-        #endregion
 
-        #region AzureFirewallResource
         /// <summary>
         /// Gets an object representing an <see cref="AzureFirewallResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AzureFirewallResource.CreateResourceIdentifier" /> to create an <see cref="AzureFirewallResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -153,16 +110,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="AzureFirewallResource" /> object. </returns>
         public static AzureFirewallResource GetAzureFirewallResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AzureFirewallResource.ValidateResourceId(id);
-                return new AzureFirewallResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetAzureFirewallResource(id);
         }
-        #endregion
 
-        #region AzureWebCategoryResource
         /// <summary>
         /// Gets an object representing an <see cref="AzureWebCategoryResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AzureWebCategoryResource.CreateResourceIdentifier" /> to create an <see cref="AzureWebCategoryResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -172,16 +122,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="AzureWebCategoryResource" /> object. </returns>
         public static AzureWebCategoryResource GetAzureWebCategoryResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AzureWebCategoryResource.ValidateResourceId(id);
-                return new AzureWebCategoryResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetAzureWebCategoryResource(id);
         }
-        #endregion
 
-        #region BastionHostResource
         /// <summary>
         /// Gets an object representing a <see cref="BastionHostResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="BastionHostResource.CreateResourceIdentifier" /> to create a <see cref="BastionHostResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -191,16 +134,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="BastionHostResource" /> object. </returns>
         public static BastionHostResource GetBastionHostResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BastionHostResource.ValidateResourceId(id);
-                return new BastionHostResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetBastionHostResource(id);
         }
-        #endregion
 
-        #region ExpressRouteProviderPortResource
         /// <summary>
         /// Gets an object representing an <see cref="ExpressRouteProviderPortResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ExpressRouteProviderPortResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteProviderPortResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -210,16 +146,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteProviderPortResource" /> object. </returns>
         public static ExpressRouteProviderPortResource GetExpressRouteProviderPortResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ExpressRouteProviderPortResource.ValidateResourceId(id);
-                return new ExpressRouteProviderPortResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetExpressRouteProviderPortResource(id);
         }
-        #endregion
 
-        #region CloudServiceSwapResource
         /// <summary>
         /// Gets an object representing a <see cref="CloudServiceSwapResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CloudServiceSwapResource.CreateResourceIdentifier" /> to create a <see cref="CloudServiceSwapResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -229,16 +158,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="CloudServiceSwapResource" /> object. </returns>
         public static CloudServiceSwapResource GetCloudServiceSwapResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CloudServiceSwapResource.ValidateResourceId(id);
-                return new CloudServiceSwapResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetCloudServiceSwapResource(id);
         }
-        #endregion
 
-        #region CustomIPPrefixResource
         /// <summary>
         /// Gets an object representing a <see cref="CustomIPPrefixResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CustomIPPrefixResource.CreateResourceIdentifier" /> to create a <see cref="CustomIPPrefixResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -248,16 +170,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="CustomIPPrefixResource" /> object. </returns>
         public static CustomIPPrefixResource GetCustomIPPrefixResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CustomIPPrefixResource.ValidateResourceId(id);
-                return new CustomIPPrefixResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetCustomIPPrefixResource(id);
         }
-        #endregion
 
-        #region DdosCustomPolicyResource
         /// <summary>
         /// Gets an object representing a <see cref="DdosCustomPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DdosCustomPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DdosCustomPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -267,16 +182,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="DdosCustomPolicyResource" /> object. </returns>
         public static DdosCustomPolicyResource GetDdosCustomPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DdosCustomPolicyResource.ValidateResourceId(id);
-                return new DdosCustomPolicyResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetDdosCustomPolicyResource(id);
         }
-        #endregion
 
-        #region DdosProtectionPlanResource
         /// <summary>
         /// Gets an object representing a <see cref="DdosProtectionPlanResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DdosProtectionPlanResource.CreateResourceIdentifier" /> to create a <see cref="DdosProtectionPlanResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -286,16 +194,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="DdosProtectionPlanResource" /> object. </returns>
         public static DdosProtectionPlanResource GetDdosProtectionPlanResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DdosProtectionPlanResource.ValidateResourceId(id);
-                return new DdosProtectionPlanResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetDdosProtectionPlanResource(id);
         }
-        #endregion
 
-        #region DscpConfigurationResource
         /// <summary>
         /// Gets an object representing a <see cref="DscpConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DscpConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="DscpConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -305,16 +206,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="DscpConfigurationResource" /> object. </returns>
         public static DscpConfigurationResource GetDscpConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DscpConfigurationResource.ValidateResourceId(id);
-                return new DscpConfigurationResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetDscpConfigurationResource(id);
         }
-        #endregion
 
-        #region ExpressRouteCircuitAuthorizationResource
         /// <summary>
         /// Gets an object representing an <see cref="ExpressRouteCircuitAuthorizationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ExpressRouteCircuitAuthorizationResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteCircuitAuthorizationResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -324,16 +218,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteCircuitAuthorizationResource" /> object. </returns>
         public static ExpressRouteCircuitAuthorizationResource GetExpressRouteCircuitAuthorizationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ExpressRouteCircuitAuthorizationResource.ValidateResourceId(id);
-                return new ExpressRouteCircuitAuthorizationResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetExpressRouteCircuitAuthorizationResource(id);
         }
-        #endregion
 
-        #region ExpressRouteCircuitPeeringResource
         /// <summary>
         /// Gets an object representing an <see cref="ExpressRouteCircuitPeeringResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ExpressRouteCircuitPeeringResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteCircuitPeeringResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -343,16 +230,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteCircuitPeeringResource" /> object. </returns>
         public static ExpressRouteCircuitPeeringResource GetExpressRouteCircuitPeeringResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ExpressRouteCircuitPeeringResource.ValidateResourceId(id);
-                return new ExpressRouteCircuitPeeringResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetExpressRouteCircuitPeeringResource(id);
         }
-        #endregion
 
-        #region ExpressRouteCircuitConnectionResource
         /// <summary>
         /// Gets an object representing an <see cref="ExpressRouteCircuitConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ExpressRouteCircuitConnectionResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteCircuitConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -362,16 +242,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteCircuitConnectionResource" /> object. </returns>
         public static ExpressRouteCircuitConnectionResource GetExpressRouteCircuitConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ExpressRouteCircuitConnectionResource.ValidateResourceId(id);
-                return new ExpressRouteCircuitConnectionResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetExpressRouteCircuitConnectionResource(id);
         }
-        #endregion
 
-        #region PeerExpressRouteCircuitConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="PeerExpressRouteCircuitConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PeerExpressRouteCircuitConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PeerExpressRouteCircuitConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -381,16 +254,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="PeerExpressRouteCircuitConnectionResource" /> object. </returns>
         public static PeerExpressRouteCircuitConnectionResource GetPeerExpressRouteCircuitConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PeerExpressRouteCircuitConnectionResource.ValidateResourceId(id);
-                return new PeerExpressRouteCircuitConnectionResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetPeerExpressRouteCircuitConnectionResource(id);
         }
-        #endregion
 
-        #region ExpressRouteCircuitResource
         /// <summary>
         /// Gets an object representing an <see cref="ExpressRouteCircuitResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ExpressRouteCircuitResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteCircuitResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -400,16 +266,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteCircuitResource" /> object. </returns>
         public static ExpressRouteCircuitResource GetExpressRouteCircuitResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ExpressRouteCircuitResource.ValidateResourceId(id);
-                return new ExpressRouteCircuitResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetExpressRouteCircuitResource(id);
         }
-        #endregion
 
-        #region ExpressRouteCrossConnectionResource
         /// <summary>
         /// Gets an object representing an <see cref="ExpressRouteCrossConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ExpressRouteCrossConnectionResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteCrossConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -419,16 +278,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteCrossConnectionResource" /> object. </returns>
         public static ExpressRouteCrossConnectionResource GetExpressRouteCrossConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ExpressRouteCrossConnectionResource.ValidateResourceId(id);
-                return new ExpressRouteCrossConnectionResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetExpressRouteCrossConnectionResource(id);
         }
-        #endregion
 
-        #region ExpressRouteCrossConnectionPeeringResource
         /// <summary>
         /// Gets an object representing an <see cref="ExpressRouteCrossConnectionPeeringResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ExpressRouteCrossConnectionPeeringResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteCrossConnectionPeeringResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -438,16 +290,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteCrossConnectionPeeringResource" /> object. </returns>
         public static ExpressRouteCrossConnectionPeeringResource GetExpressRouteCrossConnectionPeeringResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ExpressRouteCrossConnectionPeeringResource.ValidateResourceId(id);
-                return new ExpressRouteCrossConnectionPeeringResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetExpressRouteCrossConnectionPeeringResource(id);
         }
-        #endregion
 
-        #region ExpressRoutePortsLocationResource
         /// <summary>
         /// Gets an object representing an <see cref="ExpressRoutePortsLocationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ExpressRoutePortsLocationResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRoutePortsLocationResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -457,16 +302,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRoutePortsLocationResource" /> object. </returns>
         public static ExpressRoutePortsLocationResource GetExpressRoutePortsLocationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ExpressRoutePortsLocationResource.ValidateResourceId(id);
-                return new ExpressRoutePortsLocationResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetExpressRoutePortsLocationResource(id);
         }
-        #endregion
 
-        #region ExpressRoutePortResource
         /// <summary>
         /// Gets an object representing an <see cref="ExpressRoutePortResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ExpressRoutePortResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRoutePortResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -476,16 +314,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRoutePortResource" /> object. </returns>
         public static ExpressRoutePortResource GetExpressRoutePortResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ExpressRoutePortResource.ValidateResourceId(id);
-                return new ExpressRoutePortResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetExpressRoutePortResource(id);
         }
-        #endregion
 
-        #region ExpressRouteLinkResource
         /// <summary>
         /// Gets an object representing an <see cref="ExpressRouteLinkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ExpressRouteLinkResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -495,16 +326,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteLinkResource" /> object. </returns>
         public static ExpressRouteLinkResource GetExpressRouteLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ExpressRouteLinkResource.ValidateResourceId(id);
-                return new ExpressRouteLinkResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetExpressRouteLinkResource(id);
         }
-        #endregion
 
-        #region ExpressRoutePortAuthorizationResource
         /// <summary>
         /// Gets an object representing an <see cref="ExpressRoutePortAuthorizationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ExpressRoutePortAuthorizationResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRoutePortAuthorizationResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -514,16 +338,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRoutePortAuthorizationResource" /> object. </returns>
         public static ExpressRoutePortAuthorizationResource GetExpressRoutePortAuthorizationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ExpressRoutePortAuthorizationResource.ValidateResourceId(id);
-                return new ExpressRoutePortAuthorizationResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetExpressRoutePortAuthorizationResource(id);
         }
-        #endregion
 
-        #region FirewallPolicyResource
         /// <summary>
         /// Gets an object representing a <see cref="FirewallPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="FirewallPolicyResource.CreateResourceIdentifier" /> to create a <see cref="FirewallPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -533,16 +350,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="FirewallPolicyResource" /> object. </returns>
         public static FirewallPolicyResource GetFirewallPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FirewallPolicyResource.ValidateResourceId(id);
-                return new FirewallPolicyResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetFirewallPolicyResource(id);
         }
-        #endregion
 
-        #region FirewallPolicyRuleCollectionGroupResource
         /// <summary>
         /// Gets an object representing a <see cref="FirewallPolicyRuleCollectionGroupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="FirewallPolicyRuleCollectionGroupResource.CreateResourceIdentifier" /> to create a <see cref="FirewallPolicyRuleCollectionGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -552,16 +362,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="FirewallPolicyRuleCollectionGroupResource" /> object. </returns>
         public static FirewallPolicyRuleCollectionGroupResource GetFirewallPolicyRuleCollectionGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FirewallPolicyRuleCollectionGroupResource.ValidateResourceId(id);
-                return new FirewallPolicyRuleCollectionGroupResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetFirewallPolicyRuleCollectionGroupResource(id);
         }
-        #endregion
 
-        #region PolicySignaturesOverridesForIdpsResource
         /// <summary>
         /// Gets an object representing a <see cref="PolicySignaturesOverridesForIdpsResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PolicySignaturesOverridesForIdpsResource.CreateResourceIdentifier" /> to create a <see cref="PolicySignaturesOverridesForIdpsResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -571,16 +374,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="PolicySignaturesOverridesForIdpsResource" /> object. </returns>
         public static PolicySignaturesOverridesForIdpsResource GetPolicySignaturesOverridesForIdpsResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PolicySignaturesOverridesForIdpsResource.ValidateResourceId(id);
-                return new PolicySignaturesOverridesForIdpsResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetPolicySignaturesOverridesForIdpsResource(id);
         }
-        #endregion
 
-        #region IPAllocationResource
         /// <summary>
         /// Gets an object representing an <see cref="IPAllocationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="IPAllocationResource.CreateResourceIdentifier" /> to create an <see cref="IPAllocationResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -590,16 +386,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="IPAllocationResource" /> object. </returns>
         public static IPAllocationResource GetIPAllocationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                IPAllocationResource.ValidateResourceId(id);
-                return new IPAllocationResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetIPAllocationResource(id);
         }
-        #endregion
 
-        #region IPGroupResource
         /// <summary>
         /// Gets an object representing an <see cref="IPGroupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="IPGroupResource.CreateResourceIdentifier" /> to create an <see cref="IPGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -609,16 +398,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="IPGroupResource" /> object. </returns>
         public static IPGroupResource GetIPGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                IPGroupResource.ValidateResourceId(id);
-                return new IPGroupResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetIPGroupResource(id);
         }
-        #endregion
 
-        #region LoadBalancerResource
         /// <summary>
         /// Gets an object representing a <see cref="LoadBalancerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="LoadBalancerResource.CreateResourceIdentifier" /> to create a <see cref="LoadBalancerResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -628,16 +410,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="LoadBalancerResource" /> object. </returns>
         public static LoadBalancerResource GetLoadBalancerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                LoadBalancerResource.ValidateResourceId(id);
-                return new LoadBalancerResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetLoadBalancerResource(id);
         }
-        #endregion
 
-        #region BackendAddressPoolResource
         /// <summary>
         /// Gets an object representing a <see cref="BackendAddressPoolResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="BackendAddressPoolResource.CreateResourceIdentifier" /> to create a <see cref="BackendAddressPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -647,16 +422,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="BackendAddressPoolResource" /> object. </returns>
         public static BackendAddressPoolResource GetBackendAddressPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BackendAddressPoolResource.ValidateResourceId(id);
-                return new BackendAddressPoolResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetBackendAddressPoolResource(id);
         }
-        #endregion
 
-        #region FrontendIPConfigurationResource
         /// <summary>
         /// Gets an object representing a <see cref="FrontendIPConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="FrontendIPConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="FrontendIPConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -666,16 +434,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="FrontendIPConfigurationResource" /> object. </returns>
         public static FrontendIPConfigurationResource GetFrontendIPConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FrontendIPConfigurationResource.ValidateResourceId(id);
-                return new FrontendIPConfigurationResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetFrontendIPConfigurationResource(id);
         }
-        #endregion
 
-        #region InboundNatRuleResource
         /// <summary>
         /// Gets an object representing an <see cref="InboundNatRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="InboundNatRuleResource.CreateResourceIdentifier" /> to create an <see cref="InboundNatRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -685,16 +446,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="InboundNatRuleResource" /> object. </returns>
         public static InboundNatRuleResource GetInboundNatRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                InboundNatRuleResource.ValidateResourceId(id);
-                return new InboundNatRuleResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetInboundNatRuleResource(id);
         }
-        #endregion
 
-        #region LoadBalancingRuleResource
         /// <summary>
         /// Gets an object representing a <see cref="LoadBalancingRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="LoadBalancingRuleResource.CreateResourceIdentifier" /> to create a <see cref="LoadBalancingRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -704,16 +458,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="LoadBalancingRuleResource" /> object. </returns>
         public static LoadBalancingRuleResource GetLoadBalancingRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                LoadBalancingRuleResource.ValidateResourceId(id);
-                return new LoadBalancingRuleResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetLoadBalancingRuleResource(id);
         }
-        #endregion
 
-        #region OutboundRuleResource
         /// <summary>
         /// Gets an object representing an <see cref="OutboundRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="OutboundRuleResource.CreateResourceIdentifier" /> to create an <see cref="OutboundRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -723,16 +470,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="OutboundRuleResource" /> object. </returns>
         public static OutboundRuleResource GetOutboundRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                OutboundRuleResource.ValidateResourceId(id);
-                return new OutboundRuleResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetOutboundRuleResource(id);
         }
-        #endregion
 
-        #region ProbeResource
         /// <summary>
         /// Gets an object representing a <see cref="ProbeResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ProbeResource.CreateResourceIdentifier" /> to create a <see cref="ProbeResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -742,16 +482,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ProbeResource" /> object. </returns>
         public static ProbeResource GetProbeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ProbeResource.ValidateResourceId(id);
-                return new ProbeResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetProbeResource(id);
         }
-        #endregion
 
-        #region NatGatewayResource
         /// <summary>
         /// Gets an object representing a <see cref="NatGatewayResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NatGatewayResource.CreateResourceIdentifier" /> to create a <see cref="NatGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -761,16 +494,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NatGatewayResource" /> object. </returns>
         public static NatGatewayResource GetNatGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NatGatewayResource.ValidateResourceId(id);
-                return new NatGatewayResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetNatGatewayResource(id);
         }
-        #endregion
 
-        #region NetworkInterfaceResource
         /// <summary>
         /// Gets an object representing a <see cref="NetworkInterfaceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkInterfaceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkInterfaceResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -780,16 +506,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkInterfaceResource" /> object. </returns>
         public static NetworkInterfaceResource GetNetworkInterfaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkInterfaceResource.ValidateResourceId(id);
-                return new NetworkInterfaceResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetNetworkInterfaceResource(id);
         }
-        #endregion
 
-        #region NetworkInterfaceIPConfigurationResource
         /// <summary>
         /// Gets an object representing a <see cref="NetworkInterfaceIPConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkInterfaceIPConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkInterfaceIPConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -799,16 +518,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkInterfaceIPConfigurationResource" /> object. </returns>
         public static NetworkInterfaceIPConfigurationResource GetNetworkInterfaceIPConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkInterfaceIPConfigurationResource.ValidateResourceId(id);
-                return new NetworkInterfaceIPConfigurationResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetNetworkInterfaceIPConfigurationResource(id);
         }
-        #endregion
 
-        #region NetworkInterfaceTapConfigurationResource
         /// <summary>
         /// Gets an object representing a <see cref="NetworkInterfaceTapConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkInterfaceTapConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkInterfaceTapConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -818,16 +530,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkInterfaceTapConfigurationResource" /> object. </returns>
         public static NetworkInterfaceTapConfigurationResource GetNetworkInterfaceTapConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkInterfaceTapConfigurationResource.ValidateResourceId(id);
-                return new NetworkInterfaceTapConfigurationResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetNetworkInterfaceTapConfigurationResource(id);
         }
-        #endregion
 
-        #region NetworkManagerResource
         /// <summary>
         /// Gets an object representing a <see cref="NetworkManagerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkManagerResource.CreateResourceIdentifier" /> to create a <see cref="NetworkManagerResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -837,16 +542,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkManagerResource" /> object. </returns>
         public static NetworkManagerResource GetNetworkManagerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkManagerResource.ValidateResourceId(id);
-                return new NetworkManagerResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetNetworkManagerResource(id);
         }
-        #endregion
 
-        #region SubscriptionNetworkManagerConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="SubscriptionNetworkManagerConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SubscriptionNetworkManagerConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionNetworkManagerConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -856,16 +554,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="SubscriptionNetworkManagerConnectionResource" /> object. </returns>
         public static SubscriptionNetworkManagerConnectionResource GetSubscriptionNetworkManagerConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SubscriptionNetworkManagerConnectionResource.ValidateResourceId(id);
-                return new SubscriptionNetworkManagerConnectionResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetSubscriptionNetworkManagerConnectionResource(id);
         }
-        #endregion
 
-        #region ManagementGroupNetworkManagerConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="ManagementGroupNetworkManagerConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ManagementGroupNetworkManagerConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ManagementGroupNetworkManagerConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -875,16 +566,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ManagementGroupNetworkManagerConnectionResource" /> object. </returns>
         public static ManagementGroupNetworkManagerConnectionResource GetManagementGroupNetworkManagerConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagementGroupNetworkManagerConnectionResource.ValidateResourceId(id);
-                return new ManagementGroupNetworkManagerConnectionResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetManagementGroupNetworkManagerConnectionResource(id);
         }
-        #endregion
 
-        #region ConnectivityConfigurationResource
         /// <summary>
         /// Gets an object representing a <see cref="ConnectivityConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ConnectivityConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="ConnectivityConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -894,16 +578,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ConnectivityConfigurationResource" /> object. </returns>
         public static ConnectivityConfigurationResource GetConnectivityConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ConnectivityConfigurationResource.ValidateResourceId(id);
-                return new ConnectivityConfigurationResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetConnectivityConfigurationResource(id);
         }
-        #endregion
 
-        #region NetworkGroupResource
         /// <summary>
         /// Gets an object representing a <see cref="NetworkGroupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkGroupResource.CreateResourceIdentifier" /> to create a <see cref="NetworkGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -913,16 +590,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkGroupResource" /> object. </returns>
         public static NetworkGroupResource GetNetworkGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkGroupResource.ValidateResourceId(id);
-                return new NetworkGroupResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetNetworkGroupResource(id);
         }
-        #endregion
 
-        #region NetworkGroupStaticMemberResource
         /// <summary>
         /// Gets an object representing a <see cref="NetworkGroupStaticMemberResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkGroupStaticMemberResource.CreateResourceIdentifier" /> to create a <see cref="NetworkGroupStaticMemberResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -932,16 +602,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkGroupStaticMemberResource" /> object. </returns>
         public static NetworkGroupStaticMemberResource GetNetworkGroupStaticMemberResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkGroupStaticMemberResource.ValidateResourceId(id);
-                return new NetworkGroupStaticMemberResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetNetworkGroupStaticMemberResource(id);
         }
-        #endregion
 
-        #region ScopeConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="ScopeConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ScopeConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ScopeConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -951,16 +614,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ScopeConnectionResource" /> object. </returns>
         public static ScopeConnectionResource GetScopeConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ScopeConnectionResource.ValidateResourceId(id);
-                return new ScopeConnectionResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetScopeConnectionResource(id);
         }
-        #endregion
 
-        #region SecurityAdminConfigurationResource
         /// <summary>
         /// Gets an object representing a <see cref="SecurityAdminConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SecurityAdminConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SecurityAdminConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -970,16 +626,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="SecurityAdminConfigurationResource" /> object. </returns>
         public static SecurityAdminConfigurationResource GetSecurityAdminConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SecurityAdminConfigurationResource.ValidateResourceId(id);
-                return new SecurityAdminConfigurationResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetSecurityAdminConfigurationResource(id);
         }
-        #endregion
 
-        #region AdminRuleGroupResource
         /// <summary>
         /// Gets an object representing an <see cref="AdminRuleGroupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AdminRuleGroupResource.CreateResourceIdentifier" /> to create an <see cref="AdminRuleGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -989,16 +638,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="AdminRuleGroupResource" /> object. </returns>
         public static AdminRuleGroupResource GetAdminRuleGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AdminRuleGroupResource.ValidateResourceId(id);
-                return new AdminRuleGroupResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetAdminRuleGroupResource(id);
         }
-        #endregion
 
-        #region BaseAdminRuleResource
         /// <summary>
         /// Gets an object representing a <see cref="BaseAdminRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="BaseAdminRuleResource.CreateResourceIdentifier" /> to create a <see cref="BaseAdminRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1008,16 +650,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="BaseAdminRuleResource" /> object. </returns>
         public static BaseAdminRuleResource GetBaseAdminRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BaseAdminRuleResource.ValidateResourceId(id);
-                return new BaseAdminRuleResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetBaseAdminRuleResource(id);
         }
-        #endregion
 
-        #region NetworkProfileResource
         /// <summary>
         /// Gets an object representing a <see cref="NetworkProfileResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkProfileResource.CreateResourceIdentifier" /> to create a <see cref="NetworkProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1027,16 +662,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkProfileResource" /> object. </returns>
         public static NetworkProfileResource GetNetworkProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkProfileResource.ValidateResourceId(id);
-                return new NetworkProfileResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetNetworkProfileResource(id);
         }
-        #endregion
 
-        #region NetworkSecurityGroupResource
         /// <summary>
         /// Gets an object representing a <see cref="NetworkSecurityGroupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkSecurityGroupResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1046,16 +674,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkSecurityGroupResource" /> object. </returns>
         public static NetworkSecurityGroupResource GetNetworkSecurityGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkSecurityGroupResource.ValidateResourceId(id);
-                return new NetworkSecurityGroupResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetNetworkSecurityGroupResource(id);
         }
-        #endregion
 
-        #region SecurityRuleResource
         /// <summary>
         /// Gets an object representing a <see cref="SecurityRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SecurityRuleResource.CreateResourceIdentifier" /> to create a <see cref="SecurityRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1065,16 +686,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="SecurityRuleResource" /> object. </returns>
         public static SecurityRuleResource GetSecurityRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SecurityRuleResource.ValidateResourceId(id);
-                return new SecurityRuleResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetSecurityRuleResource(id);
         }
-        #endregion
 
-        #region DefaultSecurityRuleResource
         /// <summary>
         /// Gets an object representing a <see cref="DefaultSecurityRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DefaultSecurityRuleResource.CreateResourceIdentifier" /> to create a <see cref="DefaultSecurityRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1084,16 +698,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="DefaultSecurityRuleResource" /> object. </returns>
         public static DefaultSecurityRuleResource GetDefaultSecurityRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DefaultSecurityRuleResource.ValidateResourceId(id);
-                return new DefaultSecurityRuleResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetDefaultSecurityRuleResource(id);
         }
-        #endregion
 
-        #region NetworkVirtualApplianceResource
         /// <summary>
         /// Gets an object representing a <see cref="NetworkVirtualApplianceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkVirtualApplianceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkVirtualApplianceResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1103,16 +710,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkVirtualApplianceResource" /> object. </returns>
         public static NetworkVirtualApplianceResource GetNetworkVirtualApplianceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkVirtualApplianceResource.ValidateResourceId(id);
-                return new NetworkVirtualApplianceResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetNetworkVirtualApplianceResource(id);
         }
-        #endregion
 
-        #region VirtualApplianceSiteResource
         /// <summary>
         /// Gets an object representing a <see cref="VirtualApplianceSiteResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VirtualApplianceSiteResource.CreateResourceIdentifier" /> to create a <see cref="VirtualApplianceSiteResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1122,16 +722,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualApplianceSiteResource" /> object. </returns>
         public static VirtualApplianceSiteResource GetVirtualApplianceSiteResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VirtualApplianceSiteResource.ValidateResourceId(id);
-                return new VirtualApplianceSiteResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetVirtualApplianceSiteResource(id);
         }
-        #endregion
 
-        #region NetworkVirtualApplianceSkuResource
         /// <summary>
         /// Gets an object representing a <see cref="NetworkVirtualApplianceSkuResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkVirtualApplianceSkuResource.CreateResourceIdentifier" /> to create a <see cref="NetworkVirtualApplianceSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1141,16 +734,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkVirtualApplianceSkuResource" /> object. </returns>
         public static NetworkVirtualApplianceSkuResource GetNetworkVirtualApplianceSkuResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkVirtualApplianceSkuResource.ValidateResourceId(id);
-                return new NetworkVirtualApplianceSkuResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetNetworkVirtualApplianceSkuResource(id);
         }
-        #endregion
 
-        #region NetworkWatcherResource
         /// <summary>
         /// Gets an object representing a <see cref="NetworkWatcherResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkWatcherResource.CreateResourceIdentifier" /> to create a <see cref="NetworkWatcherResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1160,16 +746,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkWatcherResource" /> object. </returns>
         public static NetworkWatcherResource GetNetworkWatcherResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkWatcherResource.ValidateResourceId(id);
-                return new NetworkWatcherResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetNetworkWatcherResource(id);
         }
-        #endregion
 
-        #region PacketCaptureResource
         /// <summary>
         /// Gets an object representing a <see cref="PacketCaptureResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PacketCaptureResource.CreateResourceIdentifier" /> to create a <see cref="PacketCaptureResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1179,16 +758,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="PacketCaptureResource" /> object. </returns>
         public static PacketCaptureResource GetPacketCaptureResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PacketCaptureResource.ValidateResourceId(id);
-                return new PacketCaptureResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetPacketCaptureResource(id);
         }
-        #endregion
 
-        #region ConnectionMonitorResource
         /// <summary>
         /// Gets an object representing a <see cref="ConnectionMonitorResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ConnectionMonitorResource.CreateResourceIdentifier" /> to create a <see cref="ConnectionMonitorResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1198,16 +770,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ConnectionMonitorResource" /> object. </returns>
         public static ConnectionMonitorResource GetConnectionMonitorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ConnectionMonitorResource.ValidateResourceId(id);
-                return new ConnectionMonitorResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetConnectionMonitorResource(id);
         }
-        #endregion
 
-        #region FlowLogResource
         /// <summary>
         /// Gets an object representing a <see cref="FlowLogResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="FlowLogResource.CreateResourceIdentifier" /> to create a <see cref="FlowLogResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1217,16 +782,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="FlowLogResource" /> object. </returns>
         public static FlowLogResource GetFlowLogResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FlowLogResource.ValidateResourceId(id);
-                return new FlowLogResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetFlowLogResource(id);
         }
-        #endregion
 
-        #region PrivateEndpointResource
         /// <summary>
         /// Gets an object representing a <see cref="PrivateEndpointResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PrivateEndpointResource.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1236,16 +794,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="PrivateEndpointResource" /> object. </returns>
         public static PrivateEndpointResource GetPrivateEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PrivateEndpointResource.ValidateResourceId(id);
-                return new PrivateEndpointResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetPrivateEndpointResource(id);
         }
-        #endregion
 
-        #region PrivateDnsZoneGroupResource
         /// <summary>
         /// Gets an object representing a <see cref="PrivateDnsZoneGroupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PrivateDnsZoneGroupResource.CreateResourceIdentifier" /> to create a <see cref="PrivateDnsZoneGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1255,16 +806,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="PrivateDnsZoneGroupResource" /> object. </returns>
         public static PrivateDnsZoneGroupResource GetPrivateDnsZoneGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PrivateDnsZoneGroupResource.ValidateResourceId(id);
-                return new PrivateDnsZoneGroupResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetPrivateDnsZoneGroupResource(id);
         }
-        #endregion
 
-        #region PrivateLinkServiceResource
         /// <summary>
         /// Gets an object representing a <see cref="PrivateLinkServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PrivateLinkServiceResource.CreateResourceIdentifier" /> to create a <see cref="PrivateLinkServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1274,16 +818,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="PrivateLinkServiceResource" /> object. </returns>
         public static PrivateLinkServiceResource GetPrivateLinkServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PrivateLinkServiceResource.ValidateResourceId(id);
-                return new PrivateLinkServiceResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetPrivateLinkServiceResource(id);
         }
-        #endregion
 
-        #region NetworkPrivateEndpointConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="NetworkPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="NetworkPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1293,16 +830,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkPrivateEndpointConnectionResource" /> object. </returns>
         public static NetworkPrivateEndpointConnectionResource GetNetworkPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new NetworkPrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetNetworkPrivateEndpointConnectionResource(id);
         }
-        #endregion
 
-        #region PublicIPAddressResource
         /// <summary>
         /// Gets an object representing a <see cref="PublicIPAddressResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PublicIPAddressResource.CreateResourceIdentifier" /> to create a <see cref="PublicIPAddressResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1312,16 +842,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="PublicIPAddressResource" /> object. </returns>
         public static PublicIPAddressResource GetPublicIPAddressResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PublicIPAddressResource.ValidateResourceId(id);
-                return new PublicIPAddressResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetPublicIPAddressResource(id);
         }
-        #endregion
 
-        #region PublicIPPrefixResource
         /// <summary>
         /// Gets an object representing a <see cref="PublicIPPrefixResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PublicIPPrefixResource.CreateResourceIdentifier" /> to create a <see cref="PublicIPPrefixResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1331,16 +854,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="PublicIPPrefixResource" /> object. </returns>
         public static PublicIPPrefixResource GetPublicIPPrefixResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PublicIPPrefixResource.ValidateResourceId(id);
-                return new PublicIPPrefixResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetPublicIPPrefixResource(id);
         }
-        #endregion
 
-        #region RouteFilterResource
         /// <summary>
         /// Gets an object representing a <see cref="RouteFilterResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="RouteFilterResource.CreateResourceIdentifier" /> to create a <see cref="RouteFilterResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1350,16 +866,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="RouteFilterResource" /> object. </returns>
         public static RouteFilterResource GetRouteFilterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                RouteFilterResource.ValidateResourceId(id);
-                return new RouteFilterResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetRouteFilterResource(id);
         }
-        #endregion
 
-        #region RouteFilterRuleResource
         /// <summary>
         /// Gets an object representing a <see cref="RouteFilterRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="RouteFilterRuleResource.CreateResourceIdentifier" /> to create a <see cref="RouteFilterRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1369,16 +878,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="RouteFilterRuleResource" /> object. </returns>
         public static RouteFilterRuleResource GetRouteFilterRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                RouteFilterRuleResource.ValidateResourceId(id);
-                return new RouteFilterRuleResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetRouteFilterRuleResource(id);
         }
-        #endregion
 
-        #region RouteTableResource
         /// <summary>
         /// Gets an object representing a <see cref="RouteTableResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="RouteTableResource.CreateResourceIdentifier" /> to create a <see cref="RouteTableResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1388,16 +890,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="RouteTableResource" /> object. </returns>
         public static RouteTableResource GetRouteTableResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                RouteTableResource.ValidateResourceId(id);
-                return new RouteTableResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetRouteTableResource(id);
         }
-        #endregion
 
-        #region RouteResource
         /// <summary>
         /// Gets an object representing a <see cref="RouteResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="RouteResource.CreateResourceIdentifier" /> to create a <see cref="RouteResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1407,16 +902,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="RouteResource" /> object. </returns>
         public static RouteResource GetRouteResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                RouteResource.ValidateResourceId(id);
-                return new RouteResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetRouteResource(id);
         }
-        #endregion
 
-        #region SecurityPartnerProviderResource
         /// <summary>
         /// Gets an object representing a <see cref="SecurityPartnerProviderResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SecurityPartnerProviderResource.CreateResourceIdentifier" /> to create a <see cref="SecurityPartnerProviderResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1426,16 +914,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="SecurityPartnerProviderResource" /> object. </returns>
         public static SecurityPartnerProviderResource GetSecurityPartnerProviderResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SecurityPartnerProviderResource.ValidateResourceId(id);
-                return new SecurityPartnerProviderResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetSecurityPartnerProviderResource(id);
         }
-        #endregion
 
-        #region ServiceEndpointPolicyResource
         /// <summary>
         /// Gets an object representing a <see cref="ServiceEndpointPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ServiceEndpointPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ServiceEndpointPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1445,16 +926,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ServiceEndpointPolicyResource" /> object. </returns>
         public static ServiceEndpointPolicyResource GetServiceEndpointPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ServiceEndpointPolicyResource.ValidateResourceId(id);
-                return new ServiceEndpointPolicyResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetServiceEndpointPolicyResource(id);
         }
-        #endregion
 
-        #region ServiceEndpointPolicyDefinitionResource
         /// <summary>
         /// Gets an object representing a <see cref="ServiceEndpointPolicyDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ServiceEndpointPolicyDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="ServiceEndpointPolicyDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1464,16 +938,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ServiceEndpointPolicyDefinitionResource" /> object. </returns>
         public static ServiceEndpointPolicyDefinitionResource GetServiceEndpointPolicyDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ServiceEndpointPolicyDefinitionResource.ValidateResourceId(id);
-                return new ServiceEndpointPolicyDefinitionResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetServiceEndpointPolicyDefinitionResource(id);
         }
-        #endregion
 
-        #region VirtualNetworkResource
         /// <summary>
         /// Gets an object representing a <see cref="VirtualNetworkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1483,16 +950,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualNetworkResource" /> object. </returns>
         public static VirtualNetworkResource GetVirtualNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VirtualNetworkResource.ValidateResourceId(id);
-                return new VirtualNetworkResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetVirtualNetworkResource(id);
         }
-        #endregion
 
-        #region SubnetResource
         /// <summary>
         /// Gets an object representing a <see cref="SubnetResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SubnetResource.CreateResourceIdentifier" /> to create a <see cref="SubnetResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1502,16 +962,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="SubnetResource" /> object. </returns>
         public static SubnetResource GetSubnetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SubnetResource.ValidateResourceId(id);
-                return new SubnetResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetSubnetResource(id);
         }
-        #endregion
 
-        #region VirtualNetworkPeeringResource
         /// <summary>
         /// Gets an object representing a <see cref="VirtualNetworkPeeringResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VirtualNetworkPeeringResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkPeeringResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1521,16 +974,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualNetworkPeeringResource" /> object. </returns>
         public static VirtualNetworkPeeringResource GetVirtualNetworkPeeringResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VirtualNetworkPeeringResource.ValidateResourceId(id);
-                return new VirtualNetworkPeeringResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetVirtualNetworkPeeringResource(id);
         }
-        #endregion
 
-        #region VirtualNetworkGatewayResource
         /// <summary>
         /// Gets an object representing a <see cref="VirtualNetworkGatewayResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VirtualNetworkGatewayResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1540,16 +986,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualNetworkGatewayResource" /> object. </returns>
         public static VirtualNetworkGatewayResource GetVirtualNetworkGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VirtualNetworkGatewayResource.ValidateResourceId(id);
-                return new VirtualNetworkGatewayResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetVirtualNetworkGatewayResource(id);
         }
-        #endregion
 
-        #region VirtualNetworkGatewayConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="VirtualNetworkGatewayConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VirtualNetworkGatewayConnectionResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkGatewayConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1559,16 +998,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualNetworkGatewayConnectionResource" /> object. </returns>
         public static VirtualNetworkGatewayConnectionResource GetVirtualNetworkGatewayConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VirtualNetworkGatewayConnectionResource.ValidateResourceId(id);
-                return new VirtualNetworkGatewayConnectionResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetVirtualNetworkGatewayConnectionResource(id);
         }
-        #endregion
 
-        #region LocalNetworkGatewayResource
         /// <summary>
         /// Gets an object representing a <see cref="LocalNetworkGatewayResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="LocalNetworkGatewayResource.CreateResourceIdentifier" /> to create a <see cref="LocalNetworkGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1578,16 +1010,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="LocalNetworkGatewayResource" /> object. </returns>
         public static LocalNetworkGatewayResource GetLocalNetworkGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                LocalNetworkGatewayResource.ValidateResourceId(id);
-                return new LocalNetworkGatewayResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetLocalNetworkGatewayResource(id);
         }
-        #endregion
 
-        #region VirtualNetworkGatewayNatRuleResource
         /// <summary>
         /// Gets an object representing a <see cref="VirtualNetworkGatewayNatRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VirtualNetworkGatewayNatRuleResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkGatewayNatRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1597,16 +1022,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualNetworkGatewayNatRuleResource" /> object. </returns>
         public static VirtualNetworkGatewayNatRuleResource GetVirtualNetworkGatewayNatRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VirtualNetworkGatewayNatRuleResource.ValidateResourceId(id);
-                return new VirtualNetworkGatewayNatRuleResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetVirtualNetworkGatewayNatRuleResource(id);
         }
-        #endregion
 
-        #region VirtualNetworkTapResource
         /// <summary>
         /// Gets an object representing a <see cref="VirtualNetworkTapResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VirtualNetworkTapResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkTapResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1616,16 +1034,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualNetworkTapResource" /> object. </returns>
         public static VirtualNetworkTapResource GetVirtualNetworkTapResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VirtualNetworkTapResource.ValidateResourceId(id);
-                return new VirtualNetworkTapResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetVirtualNetworkTapResource(id);
         }
-        #endregion
 
-        #region VirtualRouterResource
         /// <summary>
         /// Gets an object representing a <see cref="VirtualRouterResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VirtualRouterResource.CreateResourceIdentifier" /> to create a <see cref="VirtualRouterResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1635,16 +1046,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualRouterResource" /> object. </returns>
         public static VirtualRouterResource GetVirtualRouterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VirtualRouterResource.ValidateResourceId(id);
-                return new VirtualRouterResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetVirtualRouterResource(id);
         }
-        #endregion
 
-        #region VirtualRouterPeeringResource
         /// <summary>
         /// Gets an object representing a <see cref="VirtualRouterPeeringResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VirtualRouterPeeringResource.CreateResourceIdentifier" /> to create a <see cref="VirtualRouterPeeringResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1654,16 +1058,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualRouterPeeringResource" /> object. </returns>
         public static VirtualRouterPeeringResource GetVirtualRouterPeeringResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VirtualRouterPeeringResource.ValidateResourceId(id);
-                return new VirtualRouterPeeringResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetVirtualRouterPeeringResource(id);
         }
-        #endregion
 
-        #region VirtualWanResource
         /// <summary>
         /// Gets an object representing a <see cref="VirtualWanResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VirtualWanResource.CreateResourceIdentifier" /> to create a <see cref="VirtualWanResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1673,16 +1070,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualWanResource" /> object. </returns>
         public static VirtualWanResource GetVirtualWanResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VirtualWanResource.ValidateResourceId(id);
-                return new VirtualWanResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetVirtualWanResource(id);
         }
-        #endregion
 
-        #region VpnSiteResource
         /// <summary>
         /// Gets an object representing a <see cref="VpnSiteResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VpnSiteResource.CreateResourceIdentifier" /> to create a <see cref="VpnSiteResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1692,16 +1082,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VpnSiteResource" /> object. </returns>
         public static VpnSiteResource GetVpnSiteResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VpnSiteResource.ValidateResourceId(id);
-                return new VpnSiteResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetVpnSiteResource(id);
         }
-        #endregion
 
-        #region VpnSiteLinkResource
         /// <summary>
         /// Gets an object representing a <see cref="VpnSiteLinkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VpnSiteLinkResource.CreateResourceIdentifier" /> to create a <see cref="VpnSiteLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1711,16 +1094,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VpnSiteLinkResource" /> object. </returns>
         public static VpnSiteLinkResource GetVpnSiteLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VpnSiteLinkResource.ValidateResourceId(id);
-                return new VpnSiteLinkResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetVpnSiteLinkResource(id);
         }
-        #endregion
 
-        #region VpnServerConfigurationResource
         /// <summary>
         /// Gets an object representing a <see cref="VpnServerConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VpnServerConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="VpnServerConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1730,16 +1106,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VpnServerConfigurationResource" /> object. </returns>
         public static VpnServerConfigurationResource GetVpnServerConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VpnServerConfigurationResource.ValidateResourceId(id);
-                return new VpnServerConfigurationResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetVpnServerConfigurationResource(id);
         }
-        #endregion
 
-        #region VpnServerConfigurationPolicyGroupResource
         /// <summary>
         /// Gets an object representing a <see cref="VpnServerConfigurationPolicyGroupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VpnServerConfigurationPolicyGroupResource.CreateResourceIdentifier" /> to create a <see cref="VpnServerConfigurationPolicyGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1749,16 +1118,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VpnServerConfigurationPolicyGroupResource" /> object. </returns>
         public static VpnServerConfigurationPolicyGroupResource GetVpnServerConfigurationPolicyGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VpnServerConfigurationPolicyGroupResource.ValidateResourceId(id);
-                return new VpnServerConfigurationPolicyGroupResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetVpnServerConfigurationPolicyGroupResource(id);
         }
-        #endregion
 
-        #region VirtualHubResource
         /// <summary>
         /// Gets an object representing a <see cref="VirtualHubResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VirtualHubResource.CreateResourceIdentifier" /> to create a <see cref="VirtualHubResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1768,16 +1130,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualHubResource" /> object. </returns>
         public static VirtualHubResource GetVirtualHubResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VirtualHubResource.ValidateResourceId(id);
-                return new VirtualHubResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetVirtualHubResource(id);
         }
-        #endregion
 
-        #region RouteMapResource
         /// <summary>
         /// Gets an object representing a <see cref="RouteMapResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="RouteMapResource.CreateResourceIdentifier" /> to create a <see cref="RouteMapResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1787,16 +1142,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="RouteMapResource" /> object. </returns>
         public static RouteMapResource GetRouteMapResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                RouteMapResource.ValidateResourceId(id);
-                return new RouteMapResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetRouteMapResource(id);
         }
-        #endregion
 
-        #region HubVirtualNetworkConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="HubVirtualNetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HubVirtualNetworkConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HubVirtualNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1806,16 +1154,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="HubVirtualNetworkConnectionResource" /> object. </returns>
         public static HubVirtualNetworkConnectionResource GetHubVirtualNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HubVirtualNetworkConnectionResource.ValidateResourceId(id);
-                return new HubVirtualNetworkConnectionResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetHubVirtualNetworkConnectionResource(id);
         }
-        #endregion
 
-        #region VpnGatewayResource
         /// <summary>
         /// Gets an object representing a <see cref="VpnGatewayResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VpnGatewayResource.CreateResourceIdentifier" /> to create a <see cref="VpnGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1825,16 +1166,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VpnGatewayResource" /> object. </returns>
         public static VpnGatewayResource GetVpnGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VpnGatewayResource.ValidateResourceId(id);
-                return new VpnGatewayResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetVpnGatewayResource(id);
         }
-        #endregion
 
-        #region VpnConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="VpnConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VpnConnectionResource.CreateResourceIdentifier" /> to create a <see cref="VpnConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1844,16 +1178,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VpnConnectionResource" /> object. </returns>
         public static VpnConnectionResource GetVpnConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VpnConnectionResource.ValidateResourceId(id);
-                return new VpnConnectionResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetVpnConnectionResource(id);
         }
-        #endregion
 
-        #region VpnSiteLinkConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="VpnSiteLinkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VpnSiteLinkConnectionResource.CreateResourceIdentifier" /> to create a <see cref="VpnSiteLinkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1863,16 +1190,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VpnSiteLinkConnectionResource" /> object. </returns>
         public static VpnSiteLinkConnectionResource GetVpnSiteLinkConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VpnSiteLinkConnectionResource.ValidateResourceId(id);
-                return new VpnSiteLinkConnectionResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetVpnSiteLinkConnectionResource(id);
         }
-        #endregion
 
-        #region VpnGatewayNatRuleResource
         /// <summary>
         /// Gets an object representing a <see cref="VpnGatewayNatRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VpnGatewayNatRuleResource.CreateResourceIdentifier" /> to create a <see cref="VpnGatewayNatRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1882,16 +1202,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VpnGatewayNatRuleResource" /> object. </returns>
         public static VpnGatewayNatRuleResource GetVpnGatewayNatRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VpnGatewayNatRuleResource.ValidateResourceId(id);
-                return new VpnGatewayNatRuleResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetVpnGatewayNatRuleResource(id);
         }
-        #endregion
 
-        #region P2SVpnGatewayResource
         /// <summary>
         /// Gets an object representing a <see cref="P2SVpnGatewayResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="P2SVpnGatewayResource.CreateResourceIdentifier" /> to create a <see cref="P2SVpnGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1901,16 +1214,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="P2SVpnGatewayResource" /> object. </returns>
         public static P2SVpnGatewayResource GetP2SVpnGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                P2SVpnGatewayResource.ValidateResourceId(id);
-                return new P2SVpnGatewayResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetP2SVpnGatewayResource(id);
         }
-        #endregion
 
-        #region VirtualHubRouteTableV2Resource
         /// <summary>
         /// Gets an object representing a <see cref="VirtualHubRouteTableV2Resource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VirtualHubRouteTableV2Resource.CreateResourceIdentifier" /> to create a <see cref="VirtualHubRouteTableV2Resource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1920,16 +1226,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="VirtualHubRouteTableV2Resource" /> object. </returns>
         public static VirtualHubRouteTableV2Resource GetVirtualHubRouteTableV2Resource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VirtualHubRouteTableV2Resource.ValidateResourceId(id);
-                return new VirtualHubRouteTableV2Resource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetVirtualHubRouteTableV2Resource(id);
         }
-        #endregion
 
-        #region ExpressRouteGatewayResource
         /// <summary>
         /// Gets an object representing an <see cref="ExpressRouteGatewayResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ExpressRouteGatewayResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1939,16 +1238,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteGatewayResource" /> object. </returns>
         public static ExpressRouteGatewayResource GetExpressRouteGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ExpressRouteGatewayResource.ValidateResourceId(id);
-                return new ExpressRouteGatewayResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetExpressRouteGatewayResource(id);
         }
-        #endregion
 
-        #region ExpressRouteConnectionResource
         /// <summary>
         /// Gets an object representing an <see cref="ExpressRouteConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ExpressRouteConnectionResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1958,16 +1250,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="ExpressRouteConnectionResource" /> object. </returns>
         public static ExpressRouteConnectionResource GetExpressRouteConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ExpressRouteConnectionResource.ValidateResourceId(id);
-                return new ExpressRouteConnectionResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetExpressRouteConnectionResource(id);
         }
-        #endregion
 
-        #region NetworkVirtualApplianceConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="NetworkVirtualApplianceConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkVirtualApplianceConnectionResource.CreateResourceIdentifier" /> to create a <see cref="NetworkVirtualApplianceConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1977,16 +1262,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="NetworkVirtualApplianceConnectionResource" /> object. </returns>
         public static NetworkVirtualApplianceConnectionResource GetNetworkVirtualApplianceConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkVirtualApplianceConnectionResource.ValidateResourceId(id);
-                return new NetworkVirtualApplianceConnectionResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetNetworkVirtualApplianceConnectionResource(id);
         }
-        #endregion
 
-        #region BgpConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="BgpConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="BgpConnectionResource.CreateResourceIdentifier" /> to create a <see cref="BgpConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1996,16 +1274,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="BgpConnectionResource" /> object. </returns>
         public static BgpConnectionResource GetBgpConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BgpConnectionResource.ValidateResourceId(id);
-                return new BgpConnectionResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetBgpConnectionResource(id);
         }
-        #endregion
 
-        #region HubIPConfigurationResource
         /// <summary>
         /// Gets an object representing a <see cref="HubIPConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HubIPConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="HubIPConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -2015,16 +1286,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="HubIPConfigurationResource" /> object. </returns>
         public static HubIPConfigurationResource GetHubIPConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HubIPConfigurationResource.ValidateResourceId(id);
-                return new HubIPConfigurationResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetHubIPConfigurationResource(id);
         }
-        #endregion
 
-        #region HubRouteTableResource
         /// <summary>
         /// Gets an object representing a <see cref="HubRouteTableResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HubRouteTableResource.CreateResourceIdentifier" /> to create a <see cref="HubRouteTableResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -2034,16 +1298,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="HubRouteTableResource" /> object. </returns>
         public static HubRouteTableResource GetHubRouteTableResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HubRouteTableResource.ValidateResourceId(id);
-                return new HubRouteTableResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetHubRouteTableResource(id);
         }
-        #endregion
 
-        #region RoutingIntentResource
         /// <summary>
         /// Gets an object representing a <see cref="RoutingIntentResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="RoutingIntentResource.CreateResourceIdentifier" /> to create a <see cref="RoutingIntentResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -2053,16 +1310,9 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="RoutingIntentResource" /> object. </returns>
         public static RoutingIntentResource GetRoutingIntentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                RoutingIntentResource.ValidateResourceId(id);
-                return new RoutingIntentResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetRoutingIntentResource(id);
         }
-        #endregion
 
-        #region WebApplicationFirewallPolicyResource
         /// <summary>
         /// Gets an object representing a <see cref="WebApplicationFirewallPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="WebApplicationFirewallPolicyResource.CreateResourceIdentifier" /> to create a <see cref="WebApplicationFirewallPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -2072,21 +1322,15 @@ namespace Azure.ResourceManager.Network
         /// <returns> Returns a <see cref="WebApplicationFirewallPolicyResource" /> object. </returns>
         public static WebApplicationFirewallPolicyResource GetWebApplicationFirewallPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WebApplicationFirewallPolicyResource.ValidateResourceId(id);
-                return new WebApplicationFirewallPolicyResource(client, id);
-            }
-            );
+            return GetNetworkArmClientMockingExtension(client).GetWebApplicationFirewallPolicyResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of ManagementGroupNetworkManagerConnectionResources in the ManagementGroupResource. </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ManagementGroupNetworkManagerConnectionResources and their operations over a ManagementGroupNetworkManagerConnectionResource. </returns>
         public static ManagementGroupNetworkManagerConnectionCollection GetManagementGroupNetworkManagerConnections(this ManagementGroupResource managementGroupResource)
         {
-            return GetManagementGroupResourceExtensionClient(managementGroupResource).GetManagementGroupNetworkManagerConnections();
+            return GetNetworkManagementGroupMockingExtension(managementGroupResource).GetManagementGroupNetworkManagerConnections();
         }
 
         /// <summary>
@@ -2110,7 +1354,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<ManagementGroupNetworkManagerConnectionResource>> GetManagementGroupNetworkManagerConnectionAsync(this ManagementGroupResource managementGroupResource, string networkManagerConnectionName, CancellationToken cancellationToken = default)
         {
-            return await managementGroupResource.GetManagementGroupNetworkManagerConnections().GetAsync(networkManagerConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkManagementGroupMockingExtension(managementGroupResource).GetManagementGroupNetworkManagerConnectionAsync(networkManagerConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2134,7 +1378,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<ManagementGroupNetworkManagerConnectionResource> GetManagementGroupNetworkManagerConnection(this ManagementGroupResource managementGroupResource, string networkManagerConnectionName, CancellationToken cancellationToken = default)
         {
-            return managementGroupResource.GetManagementGroupNetworkManagerConnections().Get(networkManagerConnectionName, cancellationToken);
+            return GetNetworkManagementGroupMockingExtension(managementGroupResource).GetManagementGroupNetworkManagerConnection(networkManagerConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApplicationGatewayResources in the ResourceGroupResource. </summary>
@@ -2142,7 +1386,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ApplicationGatewayResources and their operations over a ApplicationGatewayResource. </returns>
         public static ApplicationGatewayCollection GetApplicationGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetApplicationGateways();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetApplicationGateways();
         }
 
         /// <summary>
@@ -2166,7 +1410,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<ApplicationGatewayResource>> GetApplicationGatewayAsync(this ResourceGroupResource resourceGroupResource, string applicationGatewayName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetApplicationGateways().GetAsync(applicationGatewayName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetApplicationGatewayAsync(applicationGatewayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2190,7 +1434,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<ApplicationGatewayResource> GetApplicationGateway(this ResourceGroupResource resourceGroupResource, string applicationGatewayName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetApplicationGateways().Get(applicationGatewayName, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetApplicationGateway(applicationGatewayName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApplicationSecurityGroupResources in the ResourceGroupResource. </summary>
@@ -2198,7 +1442,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ApplicationSecurityGroupResources and their operations over a ApplicationSecurityGroupResource. </returns>
         public static ApplicationSecurityGroupCollection GetApplicationSecurityGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetApplicationSecurityGroups();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetApplicationSecurityGroups();
         }
 
         /// <summary>
@@ -2222,7 +1466,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<ApplicationSecurityGroupResource>> GetApplicationSecurityGroupAsync(this ResourceGroupResource resourceGroupResource, string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetApplicationSecurityGroups().GetAsync(applicationSecurityGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetApplicationSecurityGroupAsync(applicationSecurityGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2246,7 +1490,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<ApplicationSecurityGroupResource> GetApplicationSecurityGroup(this ResourceGroupResource resourceGroupResource, string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetApplicationSecurityGroups().Get(applicationSecurityGroupName, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetApplicationSecurityGroup(applicationSecurityGroupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of AzureFirewallResources in the ResourceGroupResource. </summary>
@@ -2254,7 +1498,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of AzureFirewallResources and their operations over a AzureFirewallResource. </returns>
         public static AzureFirewallCollection GetAzureFirewalls(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAzureFirewalls();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetAzureFirewalls();
         }
 
         /// <summary>
@@ -2278,7 +1522,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<AzureFirewallResource>> GetAzureFirewallAsync(this ResourceGroupResource resourceGroupResource, string azureFirewallName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetAzureFirewalls().GetAsync(azureFirewallName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetAzureFirewallAsync(azureFirewallName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2302,7 +1546,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<AzureFirewallResource> GetAzureFirewall(this ResourceGroupResource resourceGroupResource, string azureFirewallName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetAzureFirewalls().Get(azureFirewallName, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetAzureFirewall(azureFirewallName, cancellationToken);
         }
 
         /// <summary> Gets a collection of BastionHostResources in the ResourceGroupResource. </summary>
@@ -2310,7 +1554,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of BastionHostResources and their operations over a BastionHostResource. </returns>
         public static BastionHostCollection GetBastionHosts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetBastionHosts();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetBastionHosts();
         }
 
         /// <summary>
@@ -2334,7 +1578,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<BastionHostResource>> GetBastionHostAsync(this ResourceGroupResource resourceGroupResource, string bastionHostName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetBastionHosts().GetAsync(bastionHostName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetBastionHostAsync(bastionHostName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2358,7 +1602,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<BastionHostResource> GetBastionHost(this ResourceGroupResource resourceGroupResource, string bastionHostName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetBastionHosts().Get(bastionHostName, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetBastionHost(bastionHostName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CloudServiceSwapResources in the ResourceGroupResource. </summary>
@@ -2369,9 +1613,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of CloudServiceSwapResources and their operations over a CloudServiceSwapResource. </returns>
         public static CloudServiceSwapCollection GetCloudServiceSwaps(this ResourceGroupResource resourceGroupResource, string resourceName)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCloudServiceSwaps(resourceName);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetCloudServiceSwaps(resourceName);
         }
 
         /// <summary>
@@ -2395,7 +1637,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<CloudServiceSwapResource>> GetCloudServiceSwapAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetCloudServiceSwaps(resourceName).GetAsync(cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetCloudServiceSwapAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2419,7 +1661,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<CloudServiceSwapResource> GetCloudServiceSwap(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetCloudServiceSwaps(resourceName).Get(cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetCloudServiceSwap(resourceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CustomIPPrefixResources in the ResourceGroupResource. </summary>
@@ -2427,7 +1669,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of CustomIPPrefixResources and their operations over a CustomIPPrefixResource. </returns>
         public static CustomIPPrefixCollection GetCustomIPPrefixes(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCustomIPPrefixes();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetCustomIPPrefixes();
         }
 
         /// <summary>
@@ -2452,7 +1694,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<CustomIPPrefixResource>> GetCustomIPPrefixAsync(this ResourceGroupResource resourceGroupResource, string customIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetCustomIPPrefixes().GetAsync(customIPPrefixName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetCustomIPPrefixAsync(customIPPrefixName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2477,7 +1719,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<CustomIPPrefixResource> GetCustomIPPrefix(this ResourceGroupResource resourceGroupResource, string customIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetCustomIPPrefixes().Get(customIPPrefixName, expand, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetCustomIPPrefix(customIPPrefixName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of DdosCustomPolicyResources in the ResourceGroupResource. </summary>
@@ -2485,7 +1727,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of DdosCustomPolicyResources and their operations over a DdosCustomPolicyResource. </returns>
         public static DdosCustomPolicyCollection GetDdosCustomPolicies(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDdosCustomPolicies();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetDdosCustomPolicies();
         }
 
         /// <summary>
@@ -2509,7 +1751,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<DdosCustomPolicyResource>> GetDdosCustomPolicyAsync(this ResourceGroupResource resourceGroupResource, string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDdosCustomPolicies().GetAsync(ddosCustomPolicyName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetDdosCustomPolicyAsync(ddosCustomPolicyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2533,7 +1775,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<DdosCustomPolicyResource> GetDdosCustomPolicy(this ResourceGroupResource resourceGroupResource, string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDdosCustomPolicies().Get(ddosCustomPolicyName, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetDdosCustomPolicy(ddosCustomPolicyName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DdosProtectionPlanResources in the ResourceGroupResource. </summary>
@@ -2541,7 +1783,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of DdosProtectionPlanResources and their operations over a DdosProtectionPlanResource. </returns>
         public static DdosProtectionPlanCollection GetDdosProtectionPlans(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDdosProtectionPlans();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetDdosProtectionPlans();
         }
 
         /// <summary>
@@ -2565,7 +1807,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<DdosProtectionPlanResource>> GetDdosProtectionPlanAsync(this ResourceGroupResource resourceGroupResource, string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDdosProtectionPlans().GetAsync(ddosProtectionPlanName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetDdosProtectionPlanAsync(ddosProtectionPlanName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2589,7 +1831,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<DdosProtectionPlanResource> GetDdosProtectionPlan(this ResourceGroupResource resourceGroupResource, string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDdosProtectionPlans().Get(ddosProtectionPlanName, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetDdosProtectionPlan(ddosProtectionPlanName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DscpConfigurationResources in the ResourceGroupResource. </summary>
@@ -2597,7 +1839,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of DscpConfigurationResources and their operations over a DscpConfigurationResource. </returns>
         public static DscpConfigurationCollection GetDscpConfigurations(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDscpConfigurations();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetDscpConfigurations();
         }
 
         /// <summary>
@@ -2621,7 +1863,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<DscpConfigurationResource>> GetDscpConfigurationAsync(this ResourceGroupResource resourceGroupResource, string dscpConfigurationName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDscpConfigurations().GetAsync(dscpConfigurationName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetDscpConfigurationAsync(dscpConfigurationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2645,7 +1887,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<DscpConfigurationResource> GetDscpConfiguration(this ResourceGroupResource resourceGroupResource, string dscpConfigurationName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDscpConfigurations().Get(dscpConfigurationName, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetDscpConfiguration(dscpConfigurationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ExpressRouteCircuitResources in the ResourceGroupResource. </summary>
@@ -2653,7 +1895,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ExpressRouteCircuitResources and their operations over a ExpressRouteCircuitResource. </returns>
         public static ExpressRouteCircuitCollection GetExpressRouteCircuits(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetExpressRouteCircuits();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetExpressRouteCircuits();
         }
 
         /// <summary>
@@ -2677,7 +1919,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<ExpressRouteCircuitResource>> GetExpressRouteCircuitAsync(this ResourceGroupResource resourceGroupResource, string circuitName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetExpressRouteCircuits().GetAsync(circuitName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetExpressRouteCircuitAsync(circuitName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2701,7 +1943,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<ExpressRouteCircuitResource> GetExpressRouteCircuit(this ResourceGroupResource resourceGroupResource, string circuitName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetExpressRouteCircuits().Get(circuitName, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetExpressRouteCircuit(circuitName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ExpressRouteCrossConnectionResources in the ResourceGroupResource. </summary>
@@ -2709,7 +1951,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ExpressRouteCrossConnectionResources and their operations over a ExpressRouteCrossConnectionResource. </returns>
         public static ExpressRouteCrossConnectionCollection GetExpressRouteCrossConnections(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetExpressRouteCrossConnections();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetExpressRouteCrossConnections();
         }
 
         /// <summary>
@@ -2733,7 +1975,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<ExpressRouteCrossConnectionResource>> GetExpressRouteCrossConnectionAsync(this ResourceGroupResource resourceGroupResource, string crossConnectionName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetExpressRouteCrossConnections().GetAsync(crossConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetExpressRouteCrossConnectionAsync(crossConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2757,7 +1999,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnection(this ResourceGroupResource resourceGroupResource, string crossConnectionName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetExpressRouteCrossConnections().Get(crossConnectionName, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetExpressRouteCrossConnection(crossConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ExpressRoutePortResources in the ResourceGroupResource. </summary>
@@ -2765,7 +2007,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ExpressRoutePortResources and their operations over a ExpressRoutePortResource. </returns>
         public static ExpressRoutePortCollection GetExpressRoutePorts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetExpressRoutePorts();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetExpressRoutePorts();
         }
 
         /// <summary>
@@ -2789,7 +2031,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<ExpressRoutePortResource>> GetExpressRoutePortAsync(this ResourceGroupResource resourceGroupResource, string expressRoutePortName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetExpressRoutePorts().GetAsync(expressRoutePortName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetExpressRoutePortAsync(expressRoutePortName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2813,7 +2055,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<ExpressRoutePortResource> GetExpressRoutePort(this ResourceGroupResource resourceGroupResource, string expressRoutePortName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetExpressRoutePorts().Get(expressRoutePortName, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetExpressRoutePort(expressRoutePortName, cancellationToken);
         }
 
         /// <summary> Gets a collection of FirewallPolicyResources in the ResourceGroupResource. </summary>
@@ -2821,7 +2063,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of FirewallPolicyResources and their operations over a FirewallPolicyResource. </returns>
         public static FirewallPolicyCollection GetFirewallPolicies(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetFirewallPolicies();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetFirewallPolicies();
         }
 
         /// <summary>
@@ -2846,7 +2088,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<FirewallPolicyResource>> GetFirewallPolicyAsync(this ResourceGroupResource resourceGroupResource, string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetFirewallPolicies().GetAsync(firewallPolicyName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetFirewallPolicyAsync(firewallPolicyName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2871,7 +2113,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<FirewallPolicyResource> GetFirewallPolicy(this ResourceGroupResource resourceGroupResource, string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetFirewallPolicies().Get(firewallPolicyName, expand, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetFirewallPolicy(firewallPolicyName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of IPAllocationResources in the ResourceGroupResource. </summary>
@@ -2879,7 +2121,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of IPAllocationResources and their operations over a IPAllocationResource. </returns>
         public static IPAllocationCollection GetIPAllocations(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIPAllocations();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetIPAllocations();
         }
 
         /// <summary>
@@ -2904,7 +2146,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<IPAllocationResource>> GetIPAllocationAsync(this ResourceGroupResource resourceGroupResource, string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetIPAllocations().GetAsync(ipAllocationName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetIPAllocationAsync(ipAllocationName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2929,7 +2171,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<IPAllocationResource> GetIPAllocation(this ResourceGroupResource resourceGroupResource, string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetIPAllocations().Get(ipAllocationName, expand, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetIPAllocation(ipAllocationName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of IPGroupResources in the ResourceGroupResource. </summary>
@@ -2937,7 +2179,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of IPGroupResources and their operations over a IPGroupResource. </returns>
         public static IPGroupCollection GetIPGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIPGroups();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetIPGroups();
         }
 
         /// <summary>
@@ -2962,7 +2204,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<IPGroupResource>> GetIPGroupAsync(this ResourceGroupResource resourceGroupResource, string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetIPGroups().GetAsync(ipGroupsName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetIPGroupAsync(ipGroupsName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2987,7 +2229,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<IPGroupResource> GetIPGroup(this ResourceGroupResource resourceGroupResource, string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetIPGroups().Get(ipGroupsName, expand, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetIPGroup(ipGroupsName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of LoadBalancerResources in the ResourceGroupResource. </summary>
@@ -2995,7 +2237,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of LoadBalancerResources and their operations over a LoadBalancerResource. </returns>
         public static LoadBalancerCollection GetLoadBalancers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLoadBalancers();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetLoadBalancers();
         }
 
         /// <summary>
@@ -3020,7 +2262,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<LoadBalancerResource>> GetLoadBalancerAsync(this ResourceGroupResource resourceGroupResource, string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetLoadBalancers().GetAsync(loadBalancerName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetLoadBalancerAsync(loadBalancerName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3045,7 +2287,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<LoadBalancerResource> GetLoadBalancer(this ResourceGroupResource resourceGroupResource, string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetLoadBalancers().Get(loadBalancerName, expand, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetLoadBalancer(loadBalancerName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of NatGatewayResources in the ResourceGroupResource. </summary>
@@ -3053,7 +2295,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of NatGatewayResources and their operations over a NatGatewayResource. </returns>
         public static NatGatewayCollection GetNatGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNatGateways();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetNatGateways();
         }
 
         /// <summary>
@@ -3078,7 +2320,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<NatGatewayResource>> GetNatGatewayAsync(this ResourceGroupResource resourceGroupResource, string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNatGateways().GetAsync(natGatewayName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetNatGatewayAsync(natGatewayName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3103,7 +2345,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<NatGatewayResource> GetNatGateway(this ResourceGroupResource resourceGroupResource, string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNatGateways().Get(natGatewayName, expand, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetNatGateway(natGatewayName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkInterfaceResources in the ResourceGroupResource. </summary>
@@ -3111,7 +2353,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of NetworkInterfaceResources and their operations over a NetworkInterfaceResource. </returns>
         public static NetworkInterfaceCollection GetNetworkInterfaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkInterfaces();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetNetworkInterfaces();
         }
 
         /// <summary>
@@ -3136,7 +2378,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<NetworkInterfaceResource>> GetNetworkInterfaceAsync(this ResourceGroupResource resourceGroupResource, string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkInterfaces().GetAsync(networkInterfaceName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetNetworkInterfaceAsync(networkInterfaceName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3161,7 +2403,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<NetworkInterfaceResource> GetNetworkInterface(this ResourceGroupResource resourceGroupResource, string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkInterfaces().Get(networkInterfaceName, expand, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetNetworkInterface(networkInterfaceName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkManagerResources in the ResourceGroupResource. </summary>
@@ -3169,7 +2411,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of NetworkManagerResources and their operations over a NetworkManagerResource. </returns>
         public static NetworkManagerCollection GetNetworkManagers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkManagers();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetNetworkManagers();
         }
 
         /// <summary>
@@ -3193,7 +2435,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<NetworkManagerResource>> GetNetworkManagerAsync(this ResourceGroupResource resourceGroupResource, string networkManagerName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkManagers().GetAsync(networkManagerName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetNetworkManagerAsync(networkManagerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3217,7 +2459,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<NetworkManagerResource> GetNetworkManager(this ResourceGroupResource resourceGroupResource, string networkManagerName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkManagers().Get(networkManagerName, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetNetworkManager(networkManagerName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkProfileResources in the ResourceGroupResource. </summary>
@@ -3225,7 +2467,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of NetworkProfileResources and their operations over a NetworkProfileResource. </returns>
         public static NetworkProfileCollection GetNetworkProfiles(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkProfiles();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetNetworkProfiles();
         }
 
         /// <summary>
@@ -3250,7 +2492,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<NetworkProfileResource>> GetNetworkProfileAsync(this ResourceGroupResource resourceGroupResource, string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkProfiles().GetAsync(networkProfileName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetNetworkProfileAsync(networkProfileName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3275,7 +2517,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<NetworkProfileResource> GetNetworkProfile(this ResourceGroupResource resourceGroupResource, string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkProfiles().Get(networkProfileName, expand, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetNetworkProfile(networkProfileName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkSecurityGroupResources in the ResourceGroupResource. </summary>
@@ -3283,7 +2525,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of NetworkSecurityGroupResources and their operations over a NetworkSecurityGroupResource. </returns>
         public static NetworkSecurityGroupCollection GetNetworkSecurityGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkSecurityGroups();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetNetworkSecurityGroups();
         }
 
         /// <summary>
@@ -3308,7 +2550,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<NetworkSecurityGroupResource>> GetNetworkSecurityGroupAsync(this ResourceGroupResource resourceGroupResource, string networkSecurityGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkSecurityGroups().GetAsync(networkSecurityGroupName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetNetworkSecurityGroupAsync(networkSecurityGroupName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3333,7 +2575,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<NetworkSecurityGroupResource> GetNetworkSecurityGroup(this ResourceGroupResource resourceGroupResource, string networkSecurityGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkSecurityGroups().Get(networkSecurityGroupName, expand, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetNetworkSecurityGroup(networkSecurityGroupName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkVirtualApplianceResources in the ResourceGroupResource. </summary>
@@ -3341,7 +2583,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of NetworkVirtualApplianceResources and their operations over a NetworkVirtualApplianceResource. </returns>
         public static NetworkVirtualApplianceCollection GetNetworkVirtualAppliances(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkVirtualAppliances();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetNetworkVirtualAppliances();
         }
 
         /// <summary>
@@ -3366,7 +2608,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<NetworkVirtualApplianceResource>> GetNetworkVirtualApplianceAsync(this ResourceGroupResource resourceGroupResource, string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkVirtualAppliances().GetAsync(networkVirtualApplianceName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetNetworkVirtualApplianceAsync(networkVirtualApplianceName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3391,7 +2633,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<NetworkVirtualApplianceResource> GetNetworkVirtualAppliance(this ResourceGroupResource resourceGroupResource, string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkVirtualAppliances().Get(networkVirtualApplianceName, expand, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetNetworkVirtualAppliance(networkVirtualApplianceName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkWatcherResources in the ResourceGroupResource. </summary>
@@ -3399,7 +2641,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of NetworkWatcherResources and their operations over a NetworkWatcherResource. </returns>
         public static NetworkWatcherCollection GetNetworkWatchers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkWatchers();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetNetworkWatchers();
         }
 
         /// <summary>
@@ -3423,7 +2665,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<NetworkWatcherResource>> GetNetworkWatcherAsync(this ResourceGroupResource resourceGroupResource, string networkWatcherName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkWatchers().GetAsync(networkWatcherName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetNetworkWatcherAsync(networkWatcherName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3447,7 +2689,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<NetworkWatcherResource> GetNetworkWatcher(this ResourceGroupResource resourceGroupResource, string networkWatcherName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkWatchers().Get(networkWatcherName, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetNetworkWatcher(networkWatcherName, cancellationToken);
         }
 
         /// <summary> Gets a collection of PrivateEndpointResources in the ResourceGroupResource. </summary>
@@ -3455,7 +2697,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of PrivateEndpointResources and their operations over a PrivateEndpointResource. </returns>
         public static PrivateEndpointCollection GetPrivateEndpoints(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPrivateEndpoints();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetPrivateEndpoints();
         }
 
         /// <summary>
@@ -3480,7 +2722,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<PrivateEndpointResource>> GetPrivateEndpointAsync(this ResourceGroupResource resourceGroupResource, string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetPrivateEndpoints().GetAsync(privateEndpointName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetPrivateEndpointAsync(privateEndpointName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3505,7 +2747,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<PrivateEndpointResource> GetPrivateEndpoint(this ResourceGroupResource resourceGroupResource, string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetPrivateEndpoints().Get(privateEndpointName, expand, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetPrivateEndpoint(privateEndpointName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of PrivateLinkServiceResources in the ResourceGroupResource. </summary>
@@ -3513,7 +2755,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of PrivateLinkServiceResources and their operations over a PrivateLinkServiceResource. </returns>
         public static PrivateLinkServiceCollection GetPrivateLinkServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPrivateLinkServices();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetPrivateLinkServices();
         }
 
         /// <summary>
@@ -3538,7 +2780,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<PrivateLinkServiceResource>> GetPrivateLinkServiceAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetPrivateLinkServices().GetAsync(serviceName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetPrivateLinkServiceAsync(serviceName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3563,7 +2805,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<PrivateLinkServiceResource> GetPrivateLinkService(this ResourceGroupResource resourceGroupResource, string serviceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetPrivateLinkServices().Get(serviceName, expand, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetPrivateLinkService(serviceName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of PublicIPAddressResources in the ResourceGroupResource. </summary>
@@ -3571,7 +2813,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of PublicIPAddressResources and their operations over a PublicIPAddressResource. </returns>
         public static PublicIPAddressCollection GetPublicIPAddresses(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPublicIPAddresses();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetPublicIPAddresses();
         }
 
         /// <summary>
@@ -3596,7 +2838,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<PublicIPAddressResource>> GetPublicIPAddressAsync(this ResourceGroupResource resourceGroupResource, string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetPublicIPAddresses().GetAsync(publicIPAddressName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetPublicIPAddressAsync(publicIPAddressName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3621,7 +2863,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<PublicIPAddressResource> GetPublicIPAddress(this ResourceGroupResource resourceGroupResource, string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetPublicIPAddresses().Get(publicIPAddressName, expand, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetPublicIPAddress(publicIPAddressName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of PublicIPPrefixResources in the ResourceGroupResource. </summary>
@@ -3629,7 +2871,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of PublicIPPrefixResources and their operations over a PublicIPPrefixResource. </returns>
         public static PublicIPPrefixCollection GetPublicIPPrefixes(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPublicIPPrefixes();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetPublicIPPrefixes();
         }
 
         /// <summary>
@@ -3654,7 +2896,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<PublicIPPrefixResource>> GetPublicIPPrefixAsync(this ResourceGroupResource resourceGroupResource, string publicIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetPublicIPPrefixes().GetAsync(publicIPPrefixName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetPublicIPPrefixAsync(publicIPPrefixName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3679,7 +2921,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<PublicIPPrefixResource> GetPublicIPPrefix(this ResourceGroupResource resourceGroupResource, string publicIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetPublicIPPrefixes().Get(publicIPPrefixName, expand, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetPublicIPPrefix(publicIPPrefixName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of RouteFilterResources in the ResourceGroupResource. </summary>
@@ -3687,7 +2929,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of RouteFilterResources and their operations over a RouteFilterResource. </returns>
         public static RouteFilterCollection GetRouteFilters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRouteFilters();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetRouteFilters();
         }
 
         /// <summary>
@@ -3712,7 +2954,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<RouteFilterResource>> GetRouteFilterAsync(this ResourceGroupResource resourceGroupResource, string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetRouteFilters().GetAsync(routeFilterName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetRouteFilterAsync(routeFilterName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3737,7 +2979,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<RouteFilterResource> GetRouteFilter(this ResourceGroupResource resourceGroupResource, string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetRouteFilters().Get(routeFilterName, expand, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetRouteFilter(routeFilterName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of RouteTableResources in the ResourceGroupResource. </summary>
@@ -3745,7 +2987,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of RouteTableResources and their operations over a RouteTableResource. </returns>
         public static RouteTableCollection GetRouteTables(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRouteTables();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetRouteTables();
         }
 
         /// <summary>
@@ -3770,7 +3012,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<RouteTableResource>> GetRouteTableAsync(this ResourceGroupResource resourceGroupResource, string routeTableName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetRouteTables().GetAsync(routeTableName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetRouteTableAsync(routeTableName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3795,7 +3037,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<RouteTableResource> GetRouteTable(this ResourceGroupResource resourceGroupResource, string routeTableName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetRouteTables().Get(routeTableName, expand, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetRouteTable(routeTableName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of SecurityPartnerProviderResources in the ResourceGroupResource. </summary>
@@ -3803,7 +3045,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of SecurityPartnerProviderResources and their operations over a SecurityPartnerProviderResource. </returns>
         public static SecurityPartnerProviderCollection GetSecurityPartnerProviders(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSecurityPartnerProviders();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetSecurityPartnerProviders();
         }
 
         /// <summary>
@@ -3827,7 +3069,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<SecurityPartnerProviderResource>> GetSecurityPartnerProviderAsync(this ResourceGroupResource resourceGroupResource, string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetSecurityPartnerProviders().GetAsync(securityPartnerProviderName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetSecurityPartnerProviderAsync(securityPartnerProviderName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3851,7 +3093,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<SecurityPartnerProviderResource> GetSecurityPartnerProvider(this ResourceGroupResource resourceGroupResource, string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSecurityPartnerProviders().Get(securityPartnerProviderName, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetSecurityPartnerProvider(securityPartnerProviderName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServiceEndpointPolicyResources in the ResourceGroupResource. </summary>
@@ -3859,7 +3101,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ServiceEndpointPolicyResources and their operations over a ServiceEndpointPolicyResource. </returns>
         public static ServiceEndpointPolicyCollection GetServiceEndpointPolicies(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetServiceEndpointPolicies();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetServiceEndpointPolicies();
         }
 
         /// <summary>
@@ -3884,7 +3126,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<ServiceEndpointPolicyResource>> GetServiceEndpointPolicyAsync(this ResourceGroupResource resourceGroupResource, string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetServiceEndpointPolicies().GetAsync(serviceEndpointPolicyName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetServiceEndpointPolicyAsync(serviceEndpointPolicyName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3909,7 +3151,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<ServiceEndpointPolicyResource> GetServiceEndpointPolicy(this ResourceGroupResource resourceGroupResource, string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetServiceEndpointPolicies().Get(serviceEndpointPolicyName, expand, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetServiceEndpointPolicy(serviceEndpointPolicyName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualNetworkResources in the ResourceGroupResource. </summary>
@@ -3917,7 +3159,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualNetworkResources and their operations over a VirtualNetworkResource. </returns>
         public static VirtualNetworkCollection GetVirtualNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVirtualNetworks();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVirtualNetworks();
         }
 
         /// <summary>
@@ -3942,7 +3184,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<VirtualNetworkResource>> GetVirtualNetworkAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetVirtualNetworks().GetAsync(virtualNetworkName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVirtualNetworkAsync(virtualNetworkName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3967,7 +3209,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<VirtualNetworkResource> GetVirtualNetwork(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetVirtualNetworks().Get(virtualNetworkName, expand, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVirtualNetwork(virtualNetworkName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualNetworkGatewayResources in the ResourceGroupResource. </summary>
@@ -3975,7 +3217,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualNetworkGatewayResources and their operations over a VirtualNetworkGatewayResource. </returns>
         public static VirtualNetworkGatewayCollection GetVirtualNetworkGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVirtualNetworkGateways();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVirtualNetworkGateways();
         }
 
         /// <summary>
@@ -3999,7 +3241,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<VirtualNetworkGatewayResource>> GetVirtualNetworkGatewayAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetVirtualNetworkGateways().GetAsync(virtualNetworkGatewayName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVirtualNetworkGatewayAsync(virtualNetworkGatewayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4023,7 +3265,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<VirtualNetworkGatewayResource> GetVirtualNetworkGateway(this ResourceGroupResource resourceGroupResource, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetVirtualNetworkGateways().Get(virtualNetworkGatewayName, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVirtualNetworkGateway(virtualNetworkGatewayName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualNetworkGatewayConnectionResources in the ResourceGroupResource. </summary>
@@ -4031,7 +3273,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualNetworkGatewayConnectionResources and their operations over a VirtualNetworkGatewayConnectionResource. </returns>
         public static VirtualNetworkGatewayConnectionCollection GetVirtualNetworkGatewayConnections(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVirtualNetworkGatewayConnections();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVirtualNetworkGatewayConnections();
         }
 
         /// <summary>
@@ -4055,7 +3297,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<VirtualNetworkGatewayConnectionResource>> GetVirtualNetworkGatewayConnectionAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetVirtualNetworkGatewayConnections().GetAsync(virtualNetworkGatewayConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVirtualNetworkGatewayConnectionAsync(virtualNetworkGatewayConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4079,7 +3321,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<VirtualNetworkGatewayConnectionResource> GetVirtualNetworkGatewayConnection(this ResourceGroupResource resourceGroupResource, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetVirtualNetworkGatewayConnections().Get(virtualNetworkGatewayConnectionName, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVirtualNetworkGatewayConnection(virtualNetworkGatewayConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of LocalNetworkGatewayResources in the ResourceGroupResource. </summary>
@@ -4087,7 +3329,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of LocalNetworkGatewayResources and their operations over a LocalNetworkGatewayResource. </returns>
         public static LocalNetworkGatewayCollection GetLocalNetworkGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLocalNetworkGateways();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetLocalNetworkGateways();
         }
 
         /// <summary>
@@ -4111,7 +3353,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<LocalNetworkGatewayResource>> GetLocalNetworkGatewayAsync(this ResourceGroupResource resourceGroupResource, string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetLocalNetworkGateways().GetAsync(localNetworkGatewayName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetLocalNetworkGatewayAsync(localNetworkGatewayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4135,7 +3377,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<LocalNetworkGatewayResource> GetLocalNetworkGateway(this ResourceGroupResource resourceGroupResource, string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetLocalNetworkGateways().Get(localNetworkGatewayName, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetLocalNetworkGateway(localNetworkGatewayName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualNetworkTapResources in the ResourceGroupResource. </summary>
@@ -4143,7 +3385,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualNetworkTapResources and their operations over a VirtualNetworkTapResource. </returns>
         public static VirtualNetworkTapCollection GetVirtualNetworkTaps(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVirtualNetworkTaps();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVirtualNetworkTaps();
         }
 
         /// <summary>
@@ -4167,7 +3409,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<VirtualNetworkTapResource>> GetVirtualNetworkTapAsync(this ResourceGroupResource resourceGroupResource, string tapName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetVirtualNetworkTaps().GetAsync(tapName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVirtualNetworkTapAsync(tapName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4191,7 +3433,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<VirtualNetworkTapResource> GetVirtualNetworkTap(this ResourceGroupResource resourceGroupResource, string tapName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetVirtualNetworkTaps().Get(tapName, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVirtualNetworkTap(tapName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualRouterResources in the ResourceGroupResource. </summary>
@@ -4199,7 +3441,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualRouterResources and their operations over a VirtualRouterResource. </returns>
         public static VirtualRouterCollection GetVirtualRouters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVirtualRouters();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVirtualRouters();
         }
 
         /// <summary>
@@ -4224,7 +3466,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<VirtualRouterResource>> GetVirtualRouterAsync(this ResourceGroupResource resourceGroupResource, string virtualRouterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetVirtualRouters().GetAsync(virtualRouterName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVirtualRouterAsync(virtualRouterName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4249,7 +3491,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<VirtualRouterResource> GetVirtualRouter(this ResourceGroupResource resourceGroupResource, string virtualRouterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetVirtualRouters().Get(virtualRouterName, expand, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVirtualRouter(virtualRouterName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualWanResources in the ResourceGroupResource. </summary>
@@ -4257,7 +3499,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualWanResources and their operations over a VirtualWanResource. </returns>
         public static VirtualWanCollection GetVirtualWans(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVirtualWans();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVirtualWans();
         }
 
         /// <summary>
@@ -4281,7 +3523,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<VirtualWanResource>> GetVirtualWanAsync(this ResourceGroupResource resourceGroupResource, string virtualWanName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetVirtualWans().GetAsync(virtualWanName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVirtualWanAsync(virtualWanName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4305,7 +3547,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<VirtualWanResource> GetVirtualWan(this ResourceGroupResource resourceGroupResource, string virtualWanName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetVirtualWans().Get(virtualWanName, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVirtualWan(virtualWanName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VpnSiteResources in the ResourceGroupResource. </summary>
@@ -4313,7 +3555,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VpnSiteResources and their operations over a VpnSiteResource. </returns>
         public static VpnSiteCollection GetVpnSites(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVpnSites();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVpnSites();
         }
 
         /// <summary>
@@ -4337,7 +3579,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<VpnSiteResource>> GetVpnSiteAsync(this ResourceGroupResource resourceGroupResource, string vpnSiteName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetVpnSites().GetAsync(vpnSiteName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVpnSiteAsync(vpnSiteName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4361,7 +3603,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<VpnSiteResource> GetVpnSite(this ResourceGroupResource resourceGroupResource, string vpnSiteName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetVpnSites().Get(vpnSiteName, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVpnSite(vpnSiteName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VpnServerConfigurationResources in the ResourceGroupResource. </summary>
@@ -4369,7 +3611,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VpnServerConfigurationResources and their operations over a VpnServerConfigurationResource. </returns>
         public static VpnServerConfigurationCollection GetVpnServerConfigurations(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVpnServerConfigurations();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVpnServerConfigurations();
         }
 
         /// <summary>
@@ -4393,7 +3635,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<VpnServerConfigurationResource>> GetVpnServerConfigurationAsync(this ResourceGroupResource resourceGroupResource, string vpnServerConfigurationName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetVpnServerConfigurations().GetAsync(vpnServerConfigurationName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVpnServerConfigurationAsync(vpnServerConfigurationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4417,7 +3659,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<VpnServerConfigurationResource> GetVpnServerConfiguration(this ResourceGroupResource resourceGroupResource, string vpnServerConfigurationName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetVpnServerConfigurations().Get(vpnServerConfigurationName, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVpnServerConfiguration(vpnServerConfigurationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualHubResources in the ResourceGroupResource. </summary>
@@ -4425,7 +3667,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualHubResources and their operations over a VirtualHubResource. </returns>
         public static VirtualHubCollection GetVirtualHubs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVirtualHubs();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVirtualHubs();
         }
 
         /// <summary>
@@ -4449,7 +3691,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<VirtualHubResource>> GetVirtualHubAsync(this ResourceGroupResource resourceGroupResource, string virtualHubName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetVirtualHubs().GetAsync(virtualHubName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVirtualHubAsync(virtualHubName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4473,7 +3715,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<VirtualHubResource> GetVirtualHub(this ResourceGroupResource resourceGroupResource, string virtualHubName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetVirtualHubs().Get(virtualHubName, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVirtualHub(virtualHubName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VpnGatewayResources in the ResourceGroupResource. </summary>
@@ -4481,7 +3723,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VpnGatewayResources and their operations over a VpnGatewayResource. </returns>
         public static VpnGatewayCollection GetVpnGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVpnGateways();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVpnGateways();
         }
 
         /// <summary>
@@ -4505,7 +3747,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<VpnGatewayResource>> GetVpnGatewayAsync(this ResourceGroupResource resourceGroupResource, string gatewayName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetVpnGateways().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVpnGatewayAsync(gatewayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4529,7 +3771,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<VpnGatewayResource> GetVpnGateway(this ResourceGroupResource resourceGroupResource, string gatewayName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetVpnGateways().Get(gatewayName, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetVpnGateway(gatewayName, cancellationToken);
         }
 
         /// <summary> Gets a collection of P2SVpnGatewayResources in the ResourceGroupResource. </summary>
@@ -4537,7 +3779,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of P2SVpnGatewayResources and their operations over a P2SVpnGatewayResource. </returns>
         public static P2SVpnGatewayCollection GetP2SVpnGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetP2SVpnGateways();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetP2SVpnGateways();
         }
 
         /// <summary>
@@ -4561,7 +3803,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<P2SVpnGatewayResource>> GetP2SVpnGatewayAsync(this ResourceGroupResource resourceGroupResource, string gatewayName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetP2SVpnGateways().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetP2SVpnGatewayAsync(gatewayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4585,7 +3827,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<P2SVpnGatewayResource> GetP2SVpnGateway(this ResourceGroupResource resourceGroupResource, string gatewayName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetP2SVpnGateways().Get(gatewayName, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetP2SVpnGateway(gatewayName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ExpressRouteGatewayResources in the ResourceGroupResource. </summary>
@@ -4593,7 +3835,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ExpressRouteGatewayResources and their operations over a ExpressRouteGatewayResource. </returns>
         public static ExpressRouteGatewayCollection GetExpressRouteGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetExpressRouteGateways();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetExpressRouteGateways();
         }
 
         /// <summary>
@@ -4617,7 +3859,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<ExpressRouteGatewayResource>> GetExpressRouteGatewayAsync(this ResourceGroupResource resourceGroupResource, string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetExpressRouteGateways().GetAsync(expressRouteGatewayName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetExpressRouteGatewayAsync(expressRouteGatewayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4641,7 +3883,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<ExpressRouteGatewayResource> GetExpressRouteGateway(this ResourceGroupResource resourceGroupResource, string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetExpressRouteGateways().Get(expressRouteGatewayName, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetExpressRouteGateway(expressRouteGatewayName, cancellationToken);
         }
 
         /// <summary> Gets a collection of WebApplicationFirewallPolicyResources in the ResourceGroupResource. </summary>
@@ -4649,7 +3891,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of WebApplicationFirewallPolicyResources and their operations over a WebApplicationFirewallPolicyResource. </returns>
         public static WebApplicationFirewallPolicyCollection GetWebApplicationFirewallPolicies(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetWebApplicationFirewallPolicies();
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetWebApplicationFirewallPolicies();
         }
 
         /// <summary>
@@ -4673,7 +3915,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<WebApplicationFirewallPolicyResource>> GetWebApplicationFirewallPolicyAsync(this ResourceGroupResource resourceGroupResource, string policyName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetWebApplicationFirewallPolicies().GetAsync(policyName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetWebApplicationFirewallPolicyAsync(policyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4697,7 +3939,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<WebApplicationFirewallPolicyResource> GetWebApplicationFirewallPolicy(this ResourceGroupResource resourceGroupResource, string policyName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetWebApplicationFirewallPolicies().Get(policyName, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetWebApplicationFirewallPolicy(policyName, cancellationToken);
         }
 
         /// <summary>
@@ -4719,7 +3961,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="AvailableDelegation" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableDelegation> GetAvailableResourceGroupDelegationsAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvailableResourceGroupDelegationsAsync(location, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetAvailableResourceGroupDelegationsAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -4741,7 +3983,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="AvailableDelegation" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableDelegation> GetAvailableResourceGroupDelegations(this ResourceGroupResource resourceGroupResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvailableResourceGroupDelegations(location, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetAvailableResourceGroupDelegations(location, cancellationToken);
         }
 
         /// <summary>
@@ -4763,7 +4005,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="AvailableServiceAlias" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvailableServiceAliasesByResourceGroupAsync(location, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetAvailableServiceAliasesByResourceGroupAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -4785,7 +4027,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="AvailableServiceAlias" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroup(this ResourceGroupResource resourceGroupResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvailableServiceAliasesByResourceGroup(location, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetAvailableServiceAliasesByResourceGroup(location, cancellationToken);
         }
 
         /// <summary>
@@ -4807,7 +4049,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="AvailablePrivateEndpointType" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvailablePrivateEndpointTypesByResourceGroupAsync(location, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetAvailablePrivateEndpointTypesByResourceGroupAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -4829,7 +4071,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="AvailablePrivateEndpointType" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroup(this ResourceGroupResource resourceGroupResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvailablePrivateEndpointTypesByResourceGroup(location, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetAvailablePrivateEndpointTypesByResourceGroup(location, cancellationToken);
         }
 
         /// <summary>
@@ -4853,9 +4095,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="checkPrivateLinkServiceVisibilityRequest"/> is null. </exception>
         public static async Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkPrivateLinkServiceVisibilityRequest, nameof(checkPrivateLinkServiceVisibilityRequest));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkResourceGroupMockingExtension(resourceGroupResource).CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4879,9 +4119,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="checkPrivateLinkServiceVisibilityRequest"/> is null. </exception>
         public static ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkPrivateLinkServiceVisibilityRequest, nameof(checkPrivateLinkServiceVisibilityRequest));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
         }
 
         /// <summary>
@@ -4903,7 +4141,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesAsync(location, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -4925,7 +4163,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices(this ResourceGroupResource resourceGroupResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices(location, cancellationToken);
+            return GetNetworkResourceGroupMockingExtension(resourceGroupResource).GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices(location, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApplicationGatewayWafDynamicManifestResources in the SubscriptionResource. </summary>
@@ -4934,7 +4172,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ApplicationGatewayWafDynamicManifestResources and their operations over a ApplicationGatewayWafDynamicManifestResource. </returns>
         public static ApplicationGatewayWafDynamicManifestCollection GetApplicationGatewayWafDynamicManifests(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationGatewayWafDynamicManifests(location);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetApplicationGatewayWafDynamicManifests(location);
         }
 
         /// <summary>
@@ -4956,7 +4194,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<ApplicationGatewayWafDynamicManifestResource>> GetApplicationGatewayWafDynamicManifestAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetApplicationGatewayWafDynamicManifests(location).GetAsync(cancellationToken).ConfigureAwait(false);
+            return await GetNetworkSubscriptionMockingExtension(subscriptionResource).GetApplicationGatewayWafDynamicManifestAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4978,7 +4216,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<ApplicationGatewayWafDynamicManifestResource> GetApplicationGatewayWafDynamicManifest(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetApplicationGatewayWafDynamicManifests(location).Get(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetApplicationGatewayWafDynamicManifest(location, cancellationToken);
         }
 
         /// <summary> Gets a collection of AzureWebCategoryResources in the SubscriptionResource. </summary>
@@ -4986,7 +4224,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of AzureWebCategoryResources and their operations over a AzureWebCategoryResource. </returns>
         public static AzureWebCategoryCollection GetAzureWebCategories(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAzureWebCategories();
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAzureWebCategories();
         }
 
         /// <summary>
@@ -5011,7 +4249,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<AzureWebCategoryResource>> GetAzureWebCategoryAsync(this SubscriptionResource subscriptionResource, string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetAzureWebCategories().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAzureWebCategoryAsync(name, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -5036,7 +4274,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<AzureWebCategoryResource> GetAzureWebCategory(this SubscriptionResource subscriptionResource, string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetAzureWebCategories().Get(name, expand, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAzureWebCategory(name, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of ExpressRouteProviderPortResources in the SubscriptionResource. </summary>
@@ -5044,7 +4282,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ExpressRouteProviderPortResources and their operations over a ExpressRouteProviderPortResource. </returns>
         public static ExpressRouteProviderPortCollection GetExpressRouteProviderPorts(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExpressRouteProviderPorts();
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetExpressRouteProviderPorts();
         }
 
         /// <summary>
@@ -5068,7 +4306,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<ExpressRouteProviderPortResource>> GetExpressRouteProviderPortAsync(this SubscriptionResource subscriptionResource, string providerport, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetExpressRouteProviderPorts().GetAsync(providerport, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkSubscriptionMockingExtension(subscriptionResource).GetExpressRouteProviderPortAsync(providerport, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -5092,7 +4330,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<ExpressRouteProviderPortResource> GetExpressRouteProviderPort(this SubscriptionResource subscriptionResource, string providerport, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetExpressRouteProviderPorts().Get(providerport, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetExpressRouteProviderPort(providerport, cancellationToken);
         }
 
         /// <summary> Gets a collection of ExpressRoutePortsLocationResources in the SubscriptionResource. </summary>
@@ -5100,7 +4338,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ExpressRoutePortsLocationResources and their operations over a ExpressRoutePortsLocationResource. </returns>
         public static ExpressRoutePortsLocationCollection GetExpressRoutePortsLocations(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExpressRoutePortsLocations();
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetExpressRoutePortsLocations();
         }
 
         /// <summary>
@@ -5124,7 +4362,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<ExpressRoutePortsLocationResource>> GetExpressRoutePortsLocationAsync(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetExpressRoutePortsLocations().GetAsync(locationName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkSubscriptionMockingExtension(subscriptionResource).GetExpressRoutePortsLocationAsync(locationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -5148,7 +4386,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<ExpressRoutePortsLocationResource> GetExpressRoutePortsLocation(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetExpressRoutePortsLocations().Get(locationName, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetExpressRoutePortsLocation(locationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SubscriptionNetworkManagerConnectionResources in the SubscriptionResource. </summary>
@@ -5156,7 +4394,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of SubscriptionNetworkManagerConnectionResources and their operations over a SubscriptionNetworkManagerConnectionResource. </returns>
         public static SubscriptionNetworkManagerConnectionCollection GetSubscriptionNetworkManagerConnections(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSubscriptionNetworkManagerConnections();
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetSubscriptionNetworkManagerConnections();
         }
 
         /// <summary>
@@ -5180,7 +4418,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<SubscriptionNetworkManagerConnectionResource>> GetSubscriptionNetworkManagerConnectionAsync(this SubscriptionResource subscriptionResource, string networkManagerConnectionName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetSubscriptionNetworkManagerConnections().GetAsync(networkManagerConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkSubscriptionMockingExtension(subscriptionResource).GetSubscriptionNetworkManagerConnectionAsync(networkManagerConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -5204,7 +4442,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<SubscriptionNetworkManagerConnectionResource> GetSubscriptionNetworkManagerConnection(this SubscriptionResource subscriptionResource, string networkManagerConnectionName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetSubscriptionNetworkManagerConnections().Get(networkManagerConnectionName, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetSubscriptionNetworkManagerConnection(networkManagerConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkVirtualApplianceSkuResources in the SubscriptionResource. </summary>
@@ -5212,7 +4450,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of NetworkVirtualApplianceSkuResources and their operations over a NetworkVirtualApplianceSkuResource. </returns>
         public static NetworkVirtualApplianceSkuCollection GetNetworkVirtualApplianceSkus(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkVirtualApplianceSkus();
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetNetworkVirtualApplianceSkus();
         }
 
         /// <summary>
@@ -5236,7 +4474,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static async Task<Response<NetworkVirtualApplianceSkuResource>> GetNetworkVirtualApplianceSkuAsync(this SubscriptionResource subscriptionResource, string skuName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetNetworkVirtualApplianceSkus().GetAsync(skuName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkSubscriptionMockingExtension(subscriptionResource).GetNetworkVirtualApplianceSkuAsync(skuName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -5260,7 +4498,7 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static Response<NetworkVirtualApplianceSkuResource> GetNetworkVirtualApplianceSku(this SubscriptionResource subscriptionResource, string skuName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetNetworkVirtualApplianceSkus().Get(skuName, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetNetworkVirtualApplianceSku(skuName, cancellationToken);
         }
 
         /// <summary>
@@ -5281,7 +4519,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ApplicationGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApplicationGatewayResource> GetApplicationGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationGatewaysAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetApplicationGatewaysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5302,7 +4540,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ApplicationGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApplicationGatewayResource> GetApplicationGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationGateways(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetApplicationGateways(cancellationToken);
         }
 
         /// <summary>
@@ -5323,7 +4561,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<string> GetAvailableServerVariablesApplicationGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableServerVariablesApplicationGatewaysAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAvailableServerVariablesApplicationGatewaysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5344,7 +4582,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<string> GetAvailableServerVariablesApplicationGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableServerVariablesApplicationGateways(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAvailableServerVariablesApplicationGateways(cancellationToken);
         }
 
         /// <summary>
@@ -5365,7 +4603,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<string> GetAvailableRequestHeadersApplicationGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableRequestHeadersApplicationGatewaysAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAvailableRequestHeadersApplicationGatewaysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5386,7 +4624,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<string> GetAvailableRequestHeadersApplicationGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableRequestHeadersApplicationGateways(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAvailableRequestHeadersApplicationGateways(cancellationToken);
         }
 
         /// <summary>
@@ -5407,7 +4645,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<string> GetAvailableResponseHeadersApplicationGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableResponseHeadersApplicationGatewaysAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAvailableResponseHeadersApplicationGatewaysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5428,7 +4666,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<string> GetAvailableResponseHeadersApplicationGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableResponseHeadersApplicationGateways(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAvailableResponseHeadersApplicationGateways(cancellationToken);
         }
 
         /// <summary>
@@ -5449,7 +4687,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ApplicationGatewayFirewallRuleSet" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApplicationGatewayFirewallRuleSet> GetAppGatewayAvailableWafRuleSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppGatewayAvailableWafRuleSetsAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAppGatewayAvailableWafRuleSetsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5470,7 +4708,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ApplicationGatewayFirewallRuleSet" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApplicationGatewayFirewallRuleSet> GetAppGatewayAvailableWafRuleSets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppGatewayAvailableWafRuleSets(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAppGatewayAvailableWafRuleSets(cancellationToken);
         }
 
         /// <summary>
@@ -5490,7 +4728,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<ApplicationGatewayAvailableSslOptionsInfo>> GetApplicationGatewayAvailableSslOptionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationGatewayAvailableSslOptionsAsync(cancellationToken).ConfigureAwait(false);
+            return await GetNetworkSubscriptionMockingExtension(subscriptionResource).GetApplicationGatewayAvailableSslOptionsAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -5510,7 +4748,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<ApplicationGatewayAvailableSslOptionsInfo> GetApplicationGatewayAvailableSslOptions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationGatewayAvailableSslOptions(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetApplicationGatewayAvailableSslOptions(cancellationToken);
         }
 
         /// <summary>
@@ -5531,7 +4769,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ApplicationGatewaySslPredefinedPolicy" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPoliciesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationGatewayAvailableSslPredefinedPoliciesAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetApplicationGatewayAvailableSslPredefinedPoliciesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5552,7 +4790,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ApplicationGatewaySslPredefinedPolicy" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPolicies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationGatewayAvailableSslPredefinedPolicies(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetApplicationGatewayAvailableSslPredefinedPolicies(cancellationToken);
         }
 
         /// <summary>
@@ -5575,9 +4813,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
         public static async Task<Response<ApplicationGatewaySslPredefinedPolicy>> GetApplicationGatewaySslPredefinedPolicyAsync(this SubscriptionResource subscriptionResource, string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(predefinedPolicyName, nameof(predefinedPolicyName));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationGatewaySslPredefinedPolicyAsync(predefinedPolicyName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkSubscriptionMockingExtension(subscriptionResource).GetApplicationGatewaySslPredefinedPolicyAsync(predefinedPolicyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -5600,9 +4836,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
         public static Response<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewaySslPredefinedPolicy(this SubscriptionResource subscriptionResource, string predefinedPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(predefinedPolicyName, nameof(predefinedPolicyName));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationGatewaySslPredefinedPolicy(predefinedPolicyName, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetApplicationGatewaySslPredefinedPolicy(predefinedPolicyName, cancellationToken);
         }
 
         /// <summary>
@@ -5623,7 +4857,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ApplicationSecurityGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApplicationSecurityGroupResource> GetApplicationSecurityGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationSecurityGroupsAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetApplicationSecurityGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5644,7 +4878,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ApplicationSecurityGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApplicationSecurityGroupResource> GetApplicationSecurityGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApplicationSecurityGroups(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetApplicationSecurityGroups(cancellationToken);
         }
 
         /// <summary>
@@ -5666,7 +4900,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="AvailableDelegation" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableDelegation> GetAvailableDelegationsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableDelegationsAsync(location, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAvailableDelegationsAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -5688,7 +4922,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="AvailableDelegation" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableDelegation> GetAvailableDelegations(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableDelegations(location, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAvailableDelegations(location, cancellationToken);
         }
 
         /// <summary>
@@ -5710,7 +4944,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="AvailableServiceAlias" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableServiceAlias> GetAvailableServiceAliasesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableServiceAliasesAsync(location, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAvailableServiceAliasesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -5732,7 +4966,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="AvailableServiceAlias" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableServiceAlias> GetAvailableServiceAliases(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableServiceAliases(location, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAvailableServiceAliases(location, cancellationToken);
         }
 
         /// <summary>
@@ -5753,7 +4987,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="AzureFirewallResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AzureFirewallResource> GetAzureFirewallsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAzureFirewallsAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAzureFirewallsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5774,7 +5008,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="AzureFirewallResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AzureFirewallResource> GetAzureFirewalls(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAzureFirewalls(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAzureFirewalls(cancellationToken);
         }
 
         /// <summary>
@@ -5795,7 +5029,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="AzureFirewallFqdnTag" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AzureFirewallFqdnTag> GetAzureFirewallFqdnTagsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAzureFirewallFqdnTagsAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAzureFirewallFqdnTagsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5816,7 +5050,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="AzureFirewallFqdnTag" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AzureFirewallFqdnTag> GetAzureFirewallFqdnTags(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAzureFirewallFqdnTags(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAzureFirewallFqdnTags(cancellationToken);
         }
 
         /// <summary>
@@ -5837,7 +5071,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="BastionHostResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BastionHostResource> GetBastionHostsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBastionHostsAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetBastionHostsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5858,7 +5092,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="BastionHostResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BastionHostResource> GetBastionHosts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBastionHosts(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetBastionHosts(cancellationToken);
         }
 
         /// <summary>
@@ -5881,9 +5115,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="domainNameLabel"/> is null. </exception>
         public static async Task<Response<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string domainNameLabel, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(domainNameLabel, nameof(domainNameLabel));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDnsNameAvailabilityAsync(location, domainNameLabel, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkSubscriptionMockingExtension(subscriptionResource).CheckDnsNameAvailabilityAsync(location, domainNameLabel, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -5906,9 +5138,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="domainNameLabel"/> is null. </exception>
         public static Response<DnsNameAvailabilityResult> CheckDnsNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, string domainNameLabel, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(domainNameLabel, nameof(domainNameLabel));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDnsNameAvailability(location, domainNameLabel, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).CheckDnsNameAvailability(location, domainNameLabel, cancellationToken);
         }
 
         /// <summary>
@@ -5929,7 +5159,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="CustomIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CustomIPPrefixResource> GetCustomIPPrefixesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCustomIPPrefixesAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetCustomIPPrefixesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5950,7 +5180,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="CustomIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CustomIPPrefixResource> GetCustomIPPrefixes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCustomIPPrefixes(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetCustomIPPrefixes(cancellationToken);
         }
 
         /// <summary>
@@ -5971,7 +5201,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="DdosProtectionPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DdosProtectionPlanResource> GetDdosProtectionPlansAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDdosProtectionPlansAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetDdosProtectionPlansAsync(cancellationToken);
         }
 
         /// <summary>
@@ -5992,7 +5222,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="DdosProtectionPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DdosProtectionPlanResource> GetDdosProtectionPlans(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDdosProtectionPlans(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetDdosProtectionPlans(cancellationToken);
         }
 
         /// <summary>
@@ -6013,7 +5243,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="DscpConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DscpConfigurationResource> GetDscpConfigurationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDscpConfigurationsAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetDscpConfigurationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6034,7 +5264,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="DscpConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DscpConfigurationResource> GetDscpConfigurations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDscpConfigurations(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetDscpConfigurations(cancellationToken);
         }
 
         /// <summary>
@@ -6056,7 +5286,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="EndpointServiceResult" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EndpointServiceResult> GetAvailableEndpointServicesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableEndpointServicesAsync(location, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAvailableEndpointServicesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -6078,7 +5308,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="EndpointServiceResult" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EndpointServiceResult> GetAvailableEndpointServices(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableEndpointServices(location, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAvailableEndpointServices(location, cancellationToken);
         }
 
         /// <summary>
@@ -6099,7 +5329,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ExpressRouteCircuitResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ExpressRouteCircuitResource> GetExpressRouteCircuitsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExpressRouteCircuitsAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetExpressRouteCircuitsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6120,7 +5350,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ExpressRouteCircuitResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ExpressRouteCircuitResource> GetExpressRouteCircuits(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExpressRouteCircuits(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetExpressRouteCircuits(cancellationToken);
         }
 
         /// <summary>
@@ -6141,7 +5371,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ExpressRouteServiceProvider" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ExpressRouteServiceProvider> GetExpressRouteServiceProvidersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExpressRouteServiceProvidersAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetExpressRouteServiceProvidersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6162,7 +5392,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ExpressRouteServiceProvider" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ExpressRouteServiceProvider> GetExpressRouteServiceProviders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExpressRouteServiceProviders(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetExpressRouteServiceProviders(cancellationToken);
         }
 
         /// <summary>
@@ -6183,7 +5413,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ExpressRouteCrossConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnectionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExpressRouteCrossConnectionsAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetExpressRouteCrossConnectionsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6204,7 +5434,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ExpressRouteCrossConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnections(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExpressRouteCrossConnections(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetExpressRouteCrossConnections(cancellationToken);
         }
 
         /// <summary>
@@ -6225,7 +5455,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ExpressRoutePortResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ExpressRoutePortResource> GetExpressRoutePortsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExpressRoutePortsAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetExpressRoutePortsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6246,7 +5476,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ExpressRoutePortResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ExpressRoutePortResource> GetExpressRoutePorts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExpressRoutePorts(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetExpressRoutePorts(cancellationToken);
         }
 
         /// <summary>
@@ -6267,7 +5497,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="FirewallPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<FirewallPolicyResource> GetFirewallPoliciesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFirewallPoliciesAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetFirewallPoliciesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6288,7 +5518,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="FirewallPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<FirewallPolicyResource> GetFirewallPolicies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFirewallPolicies(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetFirewallPolicies(cancellationToken);
         }
 
         /// <summary>
@@ -6309,7 +5539,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="IPAllocationResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<IPAllocationResource> GetIPAllocationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPAllocationsAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetIPAllocationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6330,7 +5560,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="IPAllocationResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<IPAllocationResource> GetIPAllocations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPAllocations(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetIPAllocations(cancellationToken);
         }
 
         /// <summary>
@@ -6351,7 +5581,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="IPGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<IPGroupResource> GetIPGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPGroupsAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetIPGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6372,7 +5602,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="IPGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<IPGroupResource> GetIPGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPGroups(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetIPGroups(cancellationToken);
         }
 
         /// <summary>
@@ -6393,7 +5623,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="LoadBalancerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LoadBalancerResource> GetLoadBalancersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLoadBalancersAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetLoadBalancersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6414,7 +5644,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="LoadBalancerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LoadBalancerResource> GetLoadBalancers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLoadBalancers(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetLoadBalancers(cancellationToken);
         }
 
         /// <summary>
@@ -6438,9 +5668,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation> SwapPublicIPAddressesLoadBalancerAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).SwapPublicIPAddressesLoadBalancerAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkSubscriptionMockingExtension(subscriptionResource).SwapPublicIPAddressesLoadBalancerAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -6464,9 +5692,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static ArmOperation SwapPublicIPAddressesLoadBalancer(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).SwapPublicIPAddressesLoadBalancer(waitUntil, location, content, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).SwapPublicIPAddressesLoadBalancer(waitUntil, location, content, cancellationToken);
         }
 
         /// <summary>
@@ -6487,7 +5713,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="NatGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NatGatewayResource> GetNatGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNatGatewaysAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetNatGatewaysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6508,7 +5734,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="NatGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NatGatewayResource> GetNatGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNatGateways(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetNatGateways(cancellationToken);
         }
 
         /// <summary>
@@ -6529,7 +5755,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="NetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkInterfaceResource> GetNetworkInterfacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkInterfacesAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetNetworkInterfacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6550,7 +5776,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="NetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkInterfaceResource> GetNetworkInterfaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkInterfaces(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetNetworkInterfaces(cancellationToken);
         }
 
         /// <summary>
@@ -6573,7 +5799,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="NetworkManagerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkManagerResource> GetNetworkManagersAsync(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkManagersAsync(top, skipToken, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetNetworkManagersAsync(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -6596,7 +5822,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="NetworkManagerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkManagerResource> GetNetworkManagers(this SubscriptionResource subscriptionResource, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkManagers(top, skipToken, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetNetworkManagers(top, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -6617,7 +5843,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="NetworkProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkProfileResource> GetNetworkProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkProfilesAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetNetworkProfilesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6638,7 +5864,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="NetworkProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkProfileResource> GetNetworkProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkProfiles(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetNetworkProfiles(cancellationToken);
         }
 
         /// <summary>
@@ -6659,7 +5885,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="NetworkSecurityGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkSecurityGroupResource> GetNetworkSecurityGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkSecurityGroupsAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetNetworkSecurityGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6680,7 +5906,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="NetworkSecurityGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkSecurityGroupResource> GetNetworkSecurityGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkSecurityGroups(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetNetworkSecurityGroups(cancellationToken);
         }
 
         /// <summary>
@@ -6701,7 +5927,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="NetworkVirtualApplianceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkVirtualApplianceResource> GetNetworkVirtualAppliancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkVirtualAppliancesAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetNetworkVirtualAppliancesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6722,7 +5948,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="NetworkVirtualApplianceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkVirtualApplianceResource> GetNetworkVirtualAppliances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkVirtualAppliances(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetNetworkVirtualAppliances(cancellationToken);
         }
 
         /// <summary>
@@ -6743,7 +5969,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="NetworkWatcherResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkWatcherResource> GetNetworkWatchersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkWatchersAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetNetworkWatchersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6764,7 +5990,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="NetworkWatcherResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkWatcherResource> GetNetworkWatchers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkWatchers(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetNetworkWatchers(cancellationToken);
         }
 
         /// <summary>
@@ -6785,7 +6011,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="PrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PrivateEndpointResource> GetPrivateEndpointsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPrivateEndpointsAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetPrivateEndpointsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6806,7 +6032,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="PrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PrivateEndpointResource> GetPrivateEndpoints(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPrivateEndpoints(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetPrivateEndpoints(cancellationToken);
         }
 
         /// <summary>
@@ -6828,7 +6054,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="AvailablePrivateEndpointType" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailablePrivateEndpointTypesAsync(location, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAvailablePrivateEndpointTypesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -6850,7 +6076,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="AvailablePrivateEndpointType" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypes(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailablePrivateEndpointTypes(location, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAvailablePrivateEndpointTypes(location, cancellationToken);
         }
 
         /// <summary>
@@ -6871,7 +6097,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="PrivateLinkServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PrivateLinkServiceResource> GetPrivateLinkServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPrivateLinkServicesAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetPrivateLinkServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -6892,7 +6118,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="PrivateLinkServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PrivateLinkServiceResource> GetPrivateLinkServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPrivateLinkServices(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetPrivateLinkServices(cancellationToken);
         }
 
         /// <summary>
@@ -6916,9 +6142,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="checkPrivateLinkServiceVisibilityRequest"/> is null. </exception>
         public static async Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkPrivateLinkServiceVisibilityRequest, nameof(checkPrivateLinkServiceVisibilityRequest));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkSubscriptionMockingExtension(subscriptionResource).CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -6942,9 +6166,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="checkPrivateLinkServiceVisibilityRequest"/> is null. </exception>
         public static ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityPrivateLinkService(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkPrivateLinkServiceVisibilityRequest, nameof(checkPrivateLinkServiceVisibilityRequest));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckPrivateLinkServiceVisibilityPrivateLinkService(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).CheckPrivateLinkServiceVisibilityPrivateLinkService(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
         }
 
         /// <summary>
@@ -6966,7 +6188,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServicesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAutoApprovedPrivateLinkServicesPrivateLinkServicesAsync(location, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAutoApprovedPrivateLinkServicesPrivateLinkServicesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -6988,7 +6210,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServices(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAutoApprovedPrivateLinkServicesPrivateLinkServices(location, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAutoApprovedPrivateLinkServicesPrivateLinkServices(location, cancellationToken);
         }
 
         /// <summary>
@@ -7009,7 +6231,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="PublicIPAddressResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PublicIPAddressResource> GetPublicIPAddressesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPublicIPAddressesAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetPublicIPAddressesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -7030,7 +6252,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="PublicIPAddressResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PublicIPAddressResource> GetPublicIPAddresses(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPublicIPAddresses(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetPublicIPAddresses(cancellationToken);
         }
 
         /// <summary>
@@ -7051,7 +6273,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="PublicIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PublicIPPrefixResource> GetPublicIPPrefixesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPublicIPPrefixesAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetPublicIPPrefixesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -7072,7 +6294,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="PublicIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PublicIPPrefixResource> GetPublicIPPrefixes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPublicIPPrefixes(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetPublicIPPrefixes(cancellationToken);
         }
 
         /// <summary>
@@ -7093,7 +6315,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="RouteFilterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RouteFilterResource> GetRouteFiltersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRouteFiltersAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetRouteFiltersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -7114,7 +6336,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="RouteFilterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RouteFilterResource> GetRouteFilters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRouteFilters(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetRouteFilters(cancellationToken);
         }
 
         /// <summary>
@@ -7135,7 +6357,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="RouteTableResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RouteTableResource> GetRouteTablesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRouteTablesAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetRouteTablesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -7156,7 +6378,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="RouteTableResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RouteTableResource> GetRouteTables(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRouteTables(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetRouteTables(cancellationToken);
         }
 
         /// <summary>
@@ -7177,7 +6399,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="SecurityPartnerProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SecurityPartnerProviderResource> GetSecurityPartnerProvidersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecurityPartnerProvidersAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetSecurityPartnerProvidersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -7198,7 +6420,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="SecurityPartnerProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SecurityPartnerProviderResource> GetSecurityPartnerProviders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSecurityPartnerProviders(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetSecurityPartnerProviders(cancellationToken);
         }
 
         /// <summary>
@@ -7219,7 +6441,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="BgpServiceCommunity" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BgpServiceCommunity> GetBgpServiceCommunitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBgpServiceCommunitiesAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetBgpServiceCommunitiesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -7240,7 +6462,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="BgpServiceCommunity" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BgpServiceCommunity> GetBgpServiceCommunities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBgpServiceCommunities(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetBgpServiceCommunities(cancellationToken);
         }
 
         /// <summary>
@@ -7261,7 +6483,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ServiceEndpointPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ServiceEndpointPolicyResource> GetServiceEndpointPoliciesByServiceEndpointPolicyAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetServiceEndpointPoliciesByServiceEndpointPolicyAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetServiceEndpointPoliciesByServiceEndpointPolicyAsync(cancellationToken);
         }
 
         /// <summary>
@@ -7282,7 +6504,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ServiceEndpointPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ServiceEndpointPolicyResource> GetServiceEndpointPoliciesByServiceEndpointPolicy(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetServiceEndpointPoliciesByServiceEndpointPolicy(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetServiceEndpointPoliciesByServiceEndpointPolicy(cancellationToken);
         }
 
         /// <summary>
@@ -7303,7 +6525,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<ServiceTagsListResult>> GetServiceTagAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetServiceTagAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkSubscriptionMockingExtension(subscriptionResource).GetServiceTagAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -7324,7 +6546,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<ServiceTagsListResult> GetServiceTag(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetServiceTag(location, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetServiceTag(location, cancellationToken);
         }
 
         /// <summary>
@@ -7348,7 +6570,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ServiceTagInformation" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ServiceTagInformation> GetAllServiceTagInformationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, bool? noAddressPrefixes = null, string tagName = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllServiceTagInformationAsync(location, noAddressPrefixes, tagName, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAllServiceTagInformationAsync(location, noAddressPrefixes, tagName, cancellationToken);
         }
 
         /// <summary>
@@ -7372,7 +6594,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ServiceTagInformation" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ServiceTagInformation> GetAllServiceTagInformation(this SubscriptionResource subscriptionResource, AzureLocation location, bool? noAddressPrefixes = null, string tagName = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllServiceTagInformation(location, noAddressPrefixes, tagName, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetAllServiceTagInformation(location, noAddressPrefixes, tagName, cancellationToken);
         }
 
         /// <summary>
@@ -7394,7 +6616,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="NetworkUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesAsync(location, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetUsagesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -7416,7 +6638,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="NetworkUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsages(location, cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetUsages(location, cancellationToken);
         }
 
         /// <summary>
@@ -7437,7 +6659,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="VirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualNetworkResource> GetVirtualNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualNetworksAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetVirtualNetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -7458,7 +6680,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="VirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualNetworkResource> GetVirtualNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualNetworks(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetVirtualNetworks(cancellationToken);
         }
 
         /// <summary>
@@ -7479,7 +6701,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="VirtualNetworkTapResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualNetworkTapResource> GetVirtualNetworkTapsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualNetworkTapsAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetVirtualNetworkTapsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -7500,7 +6722,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="VirtualNetworkTapResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualNetworkTapResource> GetVirtualNetworkTaps(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualNetworkTaps(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetVirtualNetworkTaps(cancellationToken);
         }
 
         /// <summary>
@@ -7521,7 +6743,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="VirtualRouterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualRouterResource> GetVirtualRoutersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualRoutersAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetVirtualRoutersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -7542,7 +6764,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="VirtualRouterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualRouterResource> GetVirtualRouters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualRouters(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetVirtualRouters(cancellationToken);
         }
 
         /// <summary>
@@ -7563,7 +6785,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="VirtualWanResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualWanResource> GetVirtualWansAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualWansAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetVirtualWansAsync(cancellationToken);
         }
 
         /// <summary>
@@ -7584,7 +6806,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="VirtualWanResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualWanResource> GetVirtualWans(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualWans(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetVirtualWans(cancellationToken);
         }
 
         /// <summary>
@@ -7605,7 +6827,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="VpnSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VpnSiteResource> GetVpnSitesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVpnSitesAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetVpnSitesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -7626,7 +6848,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="VpnSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VpnSiteResource> GetVpnSites(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVpnSites(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetVpnSites(cancellationToken);
         }
 
         /// <summary>
@@ -7647,7 +6869,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="VpnServerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VpnServerConfigurationResource> GetVpnServerConfigurationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVpnServerConfigurationsAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetVpnServerConfigurationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -7668,7 +6890,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="VpnServerConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VpnServerConfigurationResource> GetVpnServerConfigurations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVpnServerConfigurations(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetVpnServerConfigurations(cancellationToken);
         }
 
         /// <summary>
@@ -7689,7 +6911,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="VirtualHubResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualHubResource> GetVirtualHubsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualHubsAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetVirtualHubsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -7710,7 +6932,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="VirtualHubResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualHubResource> GetVirtualHubs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualHubs(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetVirtualHubs(cancellationToken);
         }
 
         /// <summary>
@@ -7731,7 +6953,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="VpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VpnGatewayResource> GetVpnGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVpnGatewaysAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetVpnGatewaysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -7752,7 +6974,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="VpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VpnGatewayResource> GetVpnGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVpnGateways(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetVpnGateways(cancellationToken);
         }
 
         /// <summary>
@@ -7773,7 +6995,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="P2SVpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<P2SVpnGatewayResource> GetP2SVpnGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetP2SVpnGatewaysAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetP2SVpnGatewaysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -7794,7 +7016,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="P2SVpnGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<P2SVpnGatewayResource> GetP2SVpnGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetP2SVpnGateways(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetP2SVpnGateways(cancellationToken);
         }
 
         /// <summary>
@@ -7815,7 +7037,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="ExpressRouteGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ExpressRouteGatewayResource> GetExpressRouteGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExpressRouteGatewaysAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetExpressRouteGatewaysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -7836,7 +7058,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ExpressRouteGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ExpressRouteGatewayResource> GetExpressRouteGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetExpressRouteGateways(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetExpressRouteGateways(cancellationToken);
         }
 
         /// <summary>
@@ -7857,7 +7079,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="WebApplicationFirewallPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<WebApplicationFirewallPolicyResource> GetWebApplicationFirewallPoliciesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetWebApplicationFirewallPoliciesAsync(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetWebApplicationFirewallPoliciesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -7878,7 +7100,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="WebApplicationFirewallPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<WebApplicationFirewallPolicyResource> GetWebApplicationFirewallPolicies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetWebApplicationFirewallPolicies(cancellationToken);
+            return GetNetworkSubscriptionMockingExtension(subscriptionResource).GetWebApplicationFirewallPolicies(cancellationToken);
         }
     }
 }
