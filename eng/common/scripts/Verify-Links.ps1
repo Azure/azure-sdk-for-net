@@ -256,7 +256,17 @@ function CheckLink ([System.Uri]$linkUri, $allowRetry=$true)
 
       if (!$statusCode) {
         # Try to pull the error code from any inner SocketException we might hit
-        $statusCode = $_.Exception.InnerException.ErrorCode
+        
+        $innerExceptionPresent = $_.Exception.psobject.Properties.name -contains "InnerException"
+        
+        $errorCodePresent = $false
+        if ($innerExceptionPresent) {
+          $errorCodePresent = $_.Exception.InnerException.psobject.Properties.name -contains "ErrorCode"
+        }
+
+        if ($errorCodePresent) {
+          $statusCode = $_.Exception.InnerException.ErrorCode
+        }
       }
 
       if ($statusCode -in $errorStatusCodes) {
