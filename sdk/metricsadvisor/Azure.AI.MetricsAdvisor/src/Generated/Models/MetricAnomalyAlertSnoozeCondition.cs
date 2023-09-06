@@ -5,10 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AlertSnoozeCondition. </summary>
     public partial class MetricAnomalyAlertSnoozeCondition
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricAnomalyAlertSnoozeCondition"/>. </summary>
+        /// <param name="autoSnooze"> snooze point count, value range : [0, +∞). </param>
+        /// <param name="snoozeScope"> snooze scope. </param>
+        /// <param name="isOnlyForSuccessive"> only snooze for successive anomalies. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricAnomalyAlertSnoozeCondition(int autoSnooze, SnoozeScope snoozeScope, bool isOnlyForSuccessive, Dictionary<string, BinaryData> rawData)
+        {
+            AutoSnooze = autoSnooze;
+            SnoozeScope = snoozeScope;
+            IsOnlyForSuccessive = isOnlyForSuccessive;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricAnomalyAlertSnoozeCondition"/> for deserialization. </summary>
+        internal MetricAnomalyAlertSnoozeCondition()
+        {
+        }
     }
 }

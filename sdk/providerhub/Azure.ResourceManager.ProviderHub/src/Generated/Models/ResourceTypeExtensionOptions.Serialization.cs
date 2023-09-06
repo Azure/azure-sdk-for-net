@@ -5,31 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    internal partial class ResourceTypeExtensionOptions : IUtf8JsonSerializable
+    internal partial class ResourceTypeExtensionOptions : IUtf8JsonSerializable, IModelJsonSerializable<ResourceTypeExtensionOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceTypeExtensionOptions>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceTypeExtensionOptions>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceTypeExtensionOptions>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceCreationBegin))
             {
                 writer.WritePropertyName("resourceCreationBegin"u8);
-                writer.WriteObjectValue(ResourceCreationBegin);
+                if (ResourceCreationBegin is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ExtensionOptions>)ResourceCreationBegin).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ResourceTypeExtensionOptions DeserializeResourceTypeExtensionOptions(JsonElement element)
+        internal static ResourceTypeExtensionOptions DeserializeResourceTypeExtensionOptions(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ExtensionOptions> resourceCreationBegin = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceCreationBegin"u8))
@@ -41,8 +71,61 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     resourceCreationBegin = ExtensionOptions.DeserializeExtensionOptions(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResourceTypeExtensionOptions(resourceCreationBegin.Value);
+            return new ResourceTypeExtensionOptions(resourceCreationBegin.Value, rawData);
+        }
+
+        ResourceTypeExtensionOptions IModelJsonSerializable<ResourceTypeExtensionOptions>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceTypeExtensionOptions>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceTypeExtensionOptions(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceTypeExtensionOptions>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceTypeExtensionOptions>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceTypeExtensionOptions IModelSerializable<ResourceTypeExtensionOptions>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceTypeExtensionOptions>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceTypeExtensionOptions(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ResourceTypeExtensionOptions"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ResourceTypeExtensionOptions"/> to convert. </param>
+        public static implicit operator RequestContent(ResourceTypeExtensionOptions model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ResourceTypeExtensionOptions"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ResourceTypeExtensionOptions(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourceTypeExtensionOptions(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

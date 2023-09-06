@@ -5,33 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class ManagementEventRuleCondition : IUtf8JsonSerializable
+    public partial class ManagementEventRuleCondition : IUtf8JsonSerializable, IModelJsonSerializable<ManagementEventRuleCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagementEventRuleCondition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagementEventRuleCondition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagementEventRuleCondition>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Aggregation))
             {
                 writer.WritePropertyName("aggregation"u8);
-                writer.WriteObjectValue(Aggregation);
+                if (Aggregation is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ManagementEventAggregationCondition>)Aggregation).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
-                writer.WriteObjectValue(DataSource);
+                if (DataSource is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RuleDataSource>)DataSource).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ManagementEventRuleCondition DeserializeManagementEventRuleCondition(JsonElement element)
+        internal static ManagementEventRuleCondition DeserializeManagementEventRuleCondition(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +75,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<ManagementEventAggregationCondition> aggregation = default;
             string odataType = default;
             Optional<RuleDataSource> dataSource = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aggregation"u8))
@@ -64,8 +101,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     dataSource = RuleDataSource.DeserializeRuleDataSource(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagementEventRuleCondition(odataType, dataSource.Value, aggregation.Value);
+            return new ManagementEventRuleCondition(odataType, dataSource.Value, aggregation.Value, rawData);
+        }
+
+        ManagementEventRuleCondition IModelJsonSerializable<ManagementEventRuleCondition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagementEventRuleCondition>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagementEventRuleCondition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagementEventRuleCondition>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagementEventRuleCondition>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagementEventRuleCondition IModelSerializable<ManagementEventRuleCondition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagementEventRuleCondition>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagementEventRuleCondition(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagementEventRuleCondition"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagementEventRuleCondition"/> to convert. </param>
+        public static implicit operator RequestContent(ManagementEventRuleCondition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagementEventRuleCondition"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagementEventRuleCondition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagementEventRuleCondition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

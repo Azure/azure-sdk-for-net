@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AzureFirewallFqdnTag : IUtf8JsonSerializable
+    public partial class AzureFirewallFqdnTag : IUtf8JsonSerializable, IModelJsonSerializable<AzureFirewallFqdnTag>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzureFirewallFqdnTag>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzureFirewallFqdnTag>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AzureFirewallFqdnTag>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -41,11 +47,25 @@ namespace Azure.ResourceManager.Network.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureFirewallFqdnTag DeserializeAzureFirewallFqdnTag(JsonElement element)
+        internal static AzureFirewallFqdnTag DeserializeAzureFirewallFqdnTag(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +78,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IDictionary<string, string>> tags = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<string> fqdnTagName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -141,8 +162,61 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AzureFirewallFqdnTag(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToNullable(provisioningState), fqdnTagName.Value);
+            return new AzureFirewallFqdnTag(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToNullable(provisioningState), fqdnTagName.Value, rawData);
+        }
+
+        AzureFirewallFqdnTag IModelJsonSerializable<AzureFirewallFqdnTag>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureFirewallFqdnTag>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureFirewallFqdnTag(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureFirewallFqdnTag>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureFirewallFqdnTag>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureFirewallFqdnTag IModelSerializable<AzureFirewallFqdnTag>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureFirewallFqdnTag>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureFirewallFqdnTag(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AzureFirewallFqdnTag"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AzureFirewallFqdnTag"/> to convert. </param>
+        public static implicit operator RequestContent(AzureFirewallFqdnTag model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AzureFirewallFqdnTag"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AzureFirewallFqdnTag(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureFirewallFqdnTag(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

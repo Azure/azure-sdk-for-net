@@ -5,19 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    public partial class LocalRulestackFqdnData : IUtf8JsonSerializable
+    public partial class LocalRulestackFqdnData : IUtf8JsonSerializable, IModelJsonSerializable<LocalRulestackFqdnData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LocalRulestackFqdnData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LocalRulestackFqdnData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LocalRulestackFqdnData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -44,11 +50,25 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WriteStringValue(AuditComment);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LocalRulestackFqdnData DeserializeLocalRulestackFqdnData(JsonElement element)
+        internal static LocalRulestackFqdnData DeserializeLocalRulestackFqdnData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -62,6 +82,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             Optional<ETag> etag = default;
             Optional<string> auditComment = default;
             Optional<FirewallProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -138,8 +159,61 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LocalRulestackFqdnData(id, name, type, systemData.Value, description.Value, fqdnList, Optional.ToNullable(etag), auditComment.Value, Optional.ToNullable(provisioningState));
+            return new LocalRulestackFqdnData(id, name, type, systemData.Value, description.Value, fqdnList, Optional.ToNullable(etag), auditComment.Value, Optional.ToNullable(provisioningState), rawData);
+        }
+
+        LocalRulestackFqdnData IModelJsonSerializable<LocalRulestackFqdnData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LocalRulestackFqdnData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLocalRulestackFqdnData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LocalRulestackFqdnData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LocalRulestackFqdnData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LocalRulestackFqdnData IModelSerializable<LocalRulestackFqdnData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LocalRulestackFqdnData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLocalRulestackFqdnData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LocalRulestackFqdnData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LocalRulestackFqdnData"/> to convert. </param>
+        public static implicit operator RequestContent(LocalRulestackFqdnData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LocalRulestackFqdnData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LocalRulestackFqdnData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLocalRulestackFqdnData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

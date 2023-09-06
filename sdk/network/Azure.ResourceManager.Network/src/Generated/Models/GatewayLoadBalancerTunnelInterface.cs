@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Gateway load balancer tunnel interface of a load balancer backend address pool. </summary>
     public partial class GatewayLoadBalancerTunnelInterface
     {
-        /// <summary> Initializes a new instance of GatewayLoadBalancerTunnelInterface. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GatewayLoadBalancerTunnelInterface"/>. </summary>
         public GatewayLoadBalancerTunnelInterface()
         {
         }
 
-        /// <summary> Initializes a new instance of GatewayLoadBalancerTunnelInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayLoadBalancerTunnelInterface"/>. </summary>
         /// <param name="port"> Port of gateway load balancer tunnel interface. </param>
         /// <param name="identifier"> Identifier of gateway load balancer tunnel interface. </param>
         /// <param name="protocol"> Protocol of gateway load balancer tunnel interface. </param>
         /// <param name="interfaceType"> Traffic type of gateway load balancer tunnel interface. </param>
-        internal GatewayLoadBalancerTunnelInterface(int? port, int? identifier, GatewayLoadBalancerTunnelProtocol? protocol, GatewayLoadBalancerTunnelInterfaceType? interfaceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GatewayLoadBalancerTunnelInterface(int? port, int? identifier, GatewayLoadBalancerTunnelProtocol? protocol, GatewayLoadBalancerTunnelInterfaceType? interfaceType, Dictionary<string, BinaryData> rawData)
         {
             Port = port;
             Identifier = identifier;
             Protocol = protocol;
             InterfaceType = interfaceType;
+            _rawData = rawData;
         }
 
         /// <summary> Port of gateway load balancer tunnel interface. </summary>

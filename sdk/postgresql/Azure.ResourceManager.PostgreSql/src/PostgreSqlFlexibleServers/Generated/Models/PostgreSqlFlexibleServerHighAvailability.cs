@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> High availability properties of a server. </summary>
     public partial class PostgreSqlFlexibleServerHighAvailability
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerHighAvailability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerHighAvailability"/>. </summary>
         public PostgreSqlFlexibleServerHighAvailability()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerHighAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerHighAvailability"/>. </summary>
         /// <param name="mode"> The HA mode for the server. </param>
         /// <param name="state"> A state of a HA server that is visible to user. </param>
         /// <param name="standbyAvailabilityZone"> availability zone information of the standby. </param>
-        internal PostgreSqlFlexibleServerHighAvailability(PostgreSqlFlexibleServerHighAvailabilityMode? mode, PostgreSqlFlexibleServerHAState? state, string standbyAvailabilityZone)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerHighAvailability(PostgreSqlFlexibleServerHighAvailabilityMode? mode, PostgreSqlFlexibleServerHAState? state, string standbyAvailabilityZone, Dictionary<string, BinaryData> rawData)
         {
             Mode = mode;
             State = state;
             StandbyAvailabilityZone = standbyAvailabilityZone;
+            _rawData = rawData;
         }
 
         /// <summary> The HA mode for the server. </summary>

@@ -8,14 +8,85 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectionStateSnapshot
+    public partial class ConnectionStateSnapshot : IUtf8JsonSerializable, IModelJsonSerializable<ConnectionStateSnapshot>
     {
-        internal static ConnectionStateSnapshot DeserializeConnectionStateSnapshot(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConnectionStateSnapshot>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConnectionStateSnapshot>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectionStateSnapshot>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NetworkConnectionState))
+            {
+                writer.WritePropertyName("connectionState"u8);
+                writer.WriteStringValue(NetworkConnectionState.Value.ToString());
+            }
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (Optional.IsDefined(EndOn))
+            {
+                writer.WritePropertyName("endTime"u8);
+                writer.WriteStringValue(EndOn.Value, "O");
+            }
+            if (Optional.IsDefined(EvaluationState))
+            {
+                writer.WritePropertyName("evaluationState"u8);
+                writer.WriteStringValue(EvaluationState.Value.ToString());
+            }
+            if (Optional.IsDefined(AvgLatencyInMs))
+            {
+                writer.WritePropertyName("avgLatencyInMs"u8);
+                writer.WriteNumberValue(AvgLatencyInMs.Value);
+            }
+            if (Optional.IsDefined(MinLatencyInMs))
+            {
+                writer.WritePropertyName("minLatencyInMs"u8);
+                writer.WriteNumberValue(MinLatencyInMs.Value);
+            }
+            if (Optional.IsDefined(MaxLatencyInMs))
+            {
+                writer.WritePropertyName("maxLatencyInMs"u8);
+                writer.WriteNumberValue(MaxLatencyInMs.Value);
+            }
+            if (Optional.IsDefined(ProbesSent))
+            {
+                writer.WritePropertyName("probesSent"u8);
+                writer.WriteNumberValue(ProbesSent.Value);
+            }
+            if (Optional.IsDefined(ProbesFailed))
+            {
+                writer.WritePropertyName("probesFailed"u8);
+                writer.WriteNumberValue(ProbesFailed.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ConnectionStateSnapshot DeserializeConnectionStateSnapshot(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +101,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<long> probesSent = default;
             Optional<long> probesFailed = default;
             Optional<IReadOnlyList<ConnectivityHopInfo>> hops = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionState"u8))
@@ -127,8 +199,61 @@ namespace Azure.ResourceManager.Network.Models
                     hops = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConnectionStateSnapshot(Optional.ToNullable(connectionState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(evaluationState), Optional.ToNullable(avgLatencyInMs), Optional.ToNullable(minLatencyInMs), Optional.ToNullable(maxLatencyInMs), Optional.ToNullable(probesSent), Optional.ToNullable(probesFailed), Optional.ToList(hops));
+            return new ConnectionStateSnapshot(Optional.ToNullable(connectionState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(evaluationState), Optional.ToNullable(avgLatencyInMs), Optional.ToNullable(minLatencyInMs), Optional.ToNullable(maxLatencyInMs), Optional.ToNullable(probesSent), Optional.ToNullable(probesFailed), Optional.ToList(hops), rawData);
+        }
+
+        ConnectionStateSnapshot IModelJsonSerializable<ConnectionStateSnapshot>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectionStateSnapshot>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectionStateSnapshot(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConnectionStateSnapshot>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectionStateSnapshot>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConnectionStateSnapshot IModelSerializable<ConnectionStateSnapshot>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectionStateSnapshot>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConnectionStateSnapshot(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConnectionStateSnapshot"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConnectionStateSnapshot"/> to convert. </param>
+        public static implicit operator RequestContent(ConnectionStateSnapshot model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConnectionStateSnapshot"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConnectionStateSnapshot(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConnectionStateSnapshot(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,22 +5,120 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MixedReality.Models
 {
-    public partial class MixedRealityAccountKeyRegenerateContent : IUtf8JsonSerializable
+    public partial class MixedRealityAccountKeyRegenerateContent : IUtf8JsonSerializable, IModelJsonSerializable<MixedRealityAccountKeyRegenerateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MixedRealityAccountKeyRegenerateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MixedRealityAccountKeyRegenerateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MixedRealityAccountKeyRegenerateContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Serial))
             {
                 writer.WritePropertyName("serial"u8);
                 writer.WriteNumberValue((int)Serial.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static MixedRealityAccountKeyRegenerateContent DeserializeMixedRealityAccountKeyRegenerateContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<MixedRealityAccountKeySerial> serial = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("serial"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serial = property.Value.GetInt32().ToMixedRealityAccountKeySerial();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new MixedRealityAccountKeyRegenerateContent(Optional.ToNullable(serial), rawData);
+        }
+
+        MixedRealityAccountKeyRegenerateContent IModelJsonSerializable<MixedRealityAccountKeyRegenerateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MixedRealityAccountKeyRegenerateContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMixedRealityAccountKeyRegenerateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MixedRealityAccountKeyRegenerateContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MixedRealityAccountKeyRegenerateContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MixedRealityAccountKeyRegenerateContent IModelSerializable<MixedRealityAccountKeyRegenerateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MixedRealityAccountKeyRegenerateContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMixedRealityAccountKeyRegenerateContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MixedRealityAccountKeyRegenerateContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MixedRealityAccountKeyRegenerateContent"/> to convert. </param>
+        public static implicit operator RequestContent(MixedRealityAccountKeyRegenerateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MixedRealityAccountKeyRegenerateContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MixedRealityAccountKeyRegenerateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMixedRealityAccountKeyRegenerateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

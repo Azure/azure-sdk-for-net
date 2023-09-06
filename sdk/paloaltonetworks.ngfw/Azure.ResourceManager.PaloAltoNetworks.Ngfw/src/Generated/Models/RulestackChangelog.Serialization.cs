@@ -8,14 +8,57 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class RulestackChangelog
+    public partial class RulestackChangelog : IUtf8JsonSerializable, IModelJsonSerializable<RulestackChangelog>
     {
-        internal static RulestackChangelog DeserializeRulestackChangelog(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RulestackChangelog>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RulestackChangelog>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RulestackChangelog>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("changes"u8);
+            writer.WriteStartArray();
+            foreach (var item in Changes)
+            {
+                writer.WriteStringValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(LastCommittedOn))
+            {
+                writer.WritePropertyName("lastCommitted"u8);
+                writer.WriteStringValue(LastCommittedOn.Value, "O");
+            }
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                writer.WritePropertyName("lastModified"u8);
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RulestackChangelog DeserializeRulestackChangelog(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +66,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             IReadOnlyList<string> changes = default;
             Optional<DateTimeOffset> lastCommitted = default;
             Optional<DateTimeOffset> lastModified = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("changes"u8))
@@ -53,8 +97,61 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     lastModified = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RulestackChangelog(changes, Optional.ToNullable(lastCommitted), Optional.ToNullable(lastModified));
+            return new RulestackChangelog(changes, Optional.ToNullable(lastCommitted), Optional.ToNullable(lastModified), rawData);
+        }
+
+        RulestackChangelog IModelJsonSerializable<RulestackChangelog>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RulestackChangelog>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRulestackChangelog(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RulestackChangelog>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RulestackChangelog>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RulestackChangelog IModelSerializable<RulestackChangelog>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RulestackChangelog>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRulestackChangelog(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RulestackChangelog"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RulestackChangelog"/> to convert. </param>
+        public static implicit operator RequestContent(RulestackChangelog model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RulestackChangelog"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RulestackChangelog(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRulestackChangelog(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

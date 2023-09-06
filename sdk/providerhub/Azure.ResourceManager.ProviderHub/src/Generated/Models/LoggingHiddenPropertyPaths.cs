@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The LoggingHiddenPropertyPaths. </summary>
     public partial class LoggingHiddenPropertyPaths
     {
-        /// <summary> Initializes a new instance of LoggingHiddenPropertyPaths. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LoggingHiddenPropertyPaths"/>. </summary>
         public LoggingHiddenPropertyPaths()
         {
             HiddenPathsOnRequest = new ChangeTrackingList<string>();
             HiddenPathsOnResponse = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of LoggingHiddenPropertyPaths. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoggingHiddenPropertyPaths"/>. </summary>
         /// <param name="hiddenPathsOnRequest"></param>
         /// <param name="hiddenPathsOnResponse"></param>
-        internal LoggingHiddenPropertyPaths(IList<string> hiddenPathsOnRequest, IList<string> hiddenPathsOnResponse)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LoggingHiddenPropertyPaths(IList<string> hiddenPathsOnRequest, IList<string> hiddenPathsOnResponse, Dictionary<string, BinaryData> rawData)
         {
             HiddenPathsOnRequest = hiddenPathsOnRequest;
             HiddenPathsOnResponse = hiddenPathsOnResponse;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the hidden paths on request. </summary>

@@ -5,15 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class TopologyAssociation
+    public partial class TopologyAssociation : IUtf8JsonSerializable, IModelJsonSerializable<TopologyAssociation>
     {
-        internal static TopologyAssociation DeserializeTopologyAssociation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TopologyAssociation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TopologyAssociation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TopologyAssociation>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
+            }
+            if (Optional.IsDefined(AssociationType))
+            {
+                writer.WritePropertyName("associationType"u8);
+                writer.WriteStringValue(AssociationType.Value.ToString());
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TopologyAssociation DeserializeTopologyAssociation(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<ResourceIdentifier> resourceId = default;
             Optional<AssociationType> associationType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -46,8 +90,61 @@ namespace Azure.ResourceManager.Network.Models
                     associationType = new AssociationType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TopologyAssociation(name.Value, resourceId.Value, Optional.ToNullable(associationType));
+            return new TopologyAssociation(name.Value, resourceId.Value, Optional.ToNullable(associationType), rawData);
+        }
+
+        TopologyAssociation IModelJsonSerializable<TopologyAssociation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TopologyAssociation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTopologyAssociation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TopologyAssociation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TopologyAssociation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TopologyAssociation IModelSerializable<TopologyAssociation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TopologyAssociation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTopologyAssociation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TopologyAssociation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TopologyAssociation"/> to convert. </param>
+        public static implicit operator RequestContent(TopologyAssociation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TopologyAssociation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TopologyAssociation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTopologyAssociation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

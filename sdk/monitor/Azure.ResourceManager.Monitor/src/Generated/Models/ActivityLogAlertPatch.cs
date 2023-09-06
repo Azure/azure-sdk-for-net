@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,24 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> An Activity Log Alert rule object for the body of patch operations. </summary>
     public partial class ActivityLogAlertPatch
     {
-        /// <summary> Initializes a new instance of ActivityLogAlertPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ActivityLogAlertPatch"/>. </summary>
         public ActivityLogAlertPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ActivityLogAlertPatch"/>. </summary>
+        /// <param name="tags"> The resource tags. </param>
+        /// <param name="isEnabled"> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ActivityLogAlertPatch(IDictionary<string, string> tags, bool? isEnabled, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            IsEnabled = isEnabled;
+            _rawData = rawData;
         }
 
         /// <summary> The resource tags. </summary>

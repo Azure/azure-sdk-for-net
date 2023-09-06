@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -12,9 +14,25 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that define destination of connection. </summary>
     public partial class ConnectivityDestination
     {
-        /// <summary> Initializes a new instance of ConnectivityDestination. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectivityDestination"/>. </summary>
         public ConnectivityDestination()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectivityDestination"/>. </summary>
+        /// <param name="resourceId"> The ID of the resource to which a connection attempt will be made. </param>
+        /// <param name="address"> The IP address or URI the resource to which a connection attempt will be made. </param>
+        /// <param name="port"> Port on which check connectivity will be performed. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectivityDestination(ResourceIdentifier resourceId, string address, int? port, Dictionary<string, BinaryData> rawData)
+        {
+            ResourceId = resourceId;
+            Address = address;
+            Port = port;
+            _rawData = rawData;
         }
 
         /// <summary> The ID of the resource to which a connection attempt will be made. </summary>

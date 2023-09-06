@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerStorage : IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerStorage : IUtf8JsonSerializable, IModelJsonSerializable<MySqlFlexibleServerStorage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MySqlFlexibleServerStorage>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MySqlFlexibleServerStorage>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlFlexibleServerStorage>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageSizeInGB))
             {
@@ -40,11 +48,25 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WritePropertyName("autoIoScaling"u8);
                 writer.WriteStringValue(AutoIoScaling.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MySqlFlexibleServerStorage DeserializeMySqlFlexibleServerStorage(JsonElement element)
+        internal static MySqlFlexibleServerStorage DeserializeMySqlFlexibleServerStorage(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +77,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             Optional<MySqlFlexibleServerEnableStatusEnum> logOnDisk = default;
             Optional<string> storageSku = default;
             Optional<MySqlFlexibleServerEnableStatusEnum> autoIoScaling = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageSizeGB"u8))
@@ -107,8 +130,61 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     autoIoScaling = new MySqlFlexibleServerEnableStatusEnum(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MySqlFlexibleServerStorage(Optional.ToNullable(storageSizeGB), Optional.ToNullable(iops), Optional.ToNullable(autoGrow), Optional.ToNullable(logOnDisk), storageSku.Value, Optional.ToNullable(autoIoScaling));
+            return new MySqlFlexibleServerStorage(Optional.ToNullable(storageSizeGB), Optional.ToNullable(iops), Optional.ToNullable(autoGrow), Optional.ToNullable(logOnDisk), storageSku.Value, Optional.ToNullable(autoIoScaling), rawData);
+        }
+
+        MySqlFlexibleServerStorage IModelJsonSerializable<MySqlFlexibleServerStorage>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlFlexibleServerStorage>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlFlexibleServerStorage(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MySqlFlexibleServerStorage>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlFlexibleServerStorage>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MySqlFlexibleServerStorage IModelSerializable<MySqlFlexibleServerStorage>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlFlexibleServerStorage>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMySqlFlexibleServerStorage(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MySqlFlexibleServerStorage"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MySqlFlexibleServerStorage"/> to convert. </param>
+        public static implicit operator RequestContent(MySqlFlexibleServerStorage model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MySqlFlexibleServerStorage"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MySqlFlexibleServerStorage(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMySqlFlexibleServerStorage(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

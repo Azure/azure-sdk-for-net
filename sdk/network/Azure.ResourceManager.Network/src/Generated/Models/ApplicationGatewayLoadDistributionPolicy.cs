@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -14,13 +15,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Load Distribution Policy of an application gateway. </summary>
     public partial class ApplicationGatewayLoadDistributionPolicy : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayLoadDistributionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayLoadDistributionPolicy"/>. </summary>
         public ApplicationGatewayLoadDistributionPolicy()
         {
             LoadDistributionTargets = new ChangeTrackingList<ApplicationGatewayLoadDistributionTarget>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayLoadDistributionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayLoadDistributionPolicy"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -28,7 +29,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="loadDistributionTargets"> Load Distribution Targets resource of an application gateway. </param>
         /// <param name="loadDistributionAlgorithm"> Load Distribution Targets resource of an application gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the Load Distribution Policy resource. </param>
-        internal ApplicationGatewayLoadDistributionPolicy(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<ApplicationGatewayLoadDistributionTarget> loadDistributionTargets, ApplicationGatewayLoadDistributionAlgorithm? loadDistributionAlgorithm, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayLoadDistributionPolicy(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<ApplicationGatewayLoadDistributionTarget> loadDistributionTargets, ApplicationGatewayLoadDistributionAlgorithm? loadDistributionAlgorithm, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, rawData)
         {
             ETag = etag;
             LoadDistributionTargets = loadDistributionTargets;

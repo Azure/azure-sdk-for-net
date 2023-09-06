@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -13,7 +14,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The DimensionGroupConfiguration. </summary>
     public partial class MetricSeriesGroupDetectionCondition : MetricWholeSeriesDetectionCondition
     {
-        /// <summary> Initializes a new instance of MetricSeriesGroupDetectionCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricSeriesGroupDetectionCondition"/>. </summary>
         /// <param name="conditionOperator">
         /// condition operator
         ///
@@ -23,9 +24,15 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="hardThresholdCondition"></param>
         /// <param name="changeThresholdCondition"></param>
         /// <param name="seriesGroupKey"></param>
-        internal MetricSeriesGroupDetectionCondition(DetectionConditionOperator? conditionOperator, SmartDetectionCondition smartDetectionCondition, HardThresholdCondition hardThresholdCondition, ChangeThresholdCondition changeThresholdCondition, DimensionKey seriesGroupKey) : base(conditionOperator, smartDetectionCondition, hardThresholdCondition, changeThresholdCondition)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricSeriesGroupDetectionCondition(DetectionConditionOperator? conditionOperator, SmartDetectionCondition smartDetectionCondition, HardThresholdCondition hardThresholdCondition, ChangeThresholdCondition changeThresholdCondition, DimensionKey seriesGroupKey, Dictionary<string, BinaryData> rawData) : base(conditionOperator, smartDetectionCondition, hardThresholdCondition, changeThresholdCondition, rawData)
         {
             SeriesGroupKey = seriesGroupKey;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricSeriesGroupDetectionCondition"/> for deserialization. </summary>
+        internal MetricSeriesGroupDetectionCondition()
+        {
         }
     }
 }

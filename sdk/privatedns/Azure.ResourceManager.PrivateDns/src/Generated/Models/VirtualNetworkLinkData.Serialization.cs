@@ -5,20 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PrivateDns.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    public partial class VirtualNetworkLinkData : IUtf8JsonSerializable
+    public partial class VirtualNetworkLinkData : IUtf8JsonSerializable, IModelJsonSerializable<VirtualNetworkLinkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualNetworkLinkData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualNetworkLinkData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualNetworkLinkData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
@@ -51,11 +57,25 @@ namespace Azure.ResourceManager.PrivateDns
                 writer.WriteBooleanValue(RegistrationEnabled.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualNetworkLinkData DeserializeVirtualNetworkLinkData(JsonElement element)
+        internal static VirtualNetworkLinkData DeserializeVirtualNetworkLinkData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -71,6 +91,7 @@ namespace Azure.ResourceManager.PrivateDns
             Optional<bool> registrationEnabled = default;
             Optional<VirtualNetworkLinkState> virtualNetworkLinkState = default;
             Optional<PrivateDnsProvisioningState> privateDnsProvisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -173,8 +194,61 @@ namespace Azure.ResourceManager.PrivateDns
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualNetworkLinkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), virtualNetwork, Optional.ToNullable(registrationEnabled), Optional.ToNullable(virtualNetworkLinkState), Optional.ToNullable(privateDnsProvisioningState));
+            return new VirtualNetworkLinkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), virtualNetwork, Optional.ToNullable(registrationEnabled), Optional.ToNullable(virtualNetworkLinkState), Optional.ToNullable(privateDnsProvisioningState), rawData);
+        }
+
+        VirtualNetworkLinkData IModelJsonSerializable<VirtualNetworkLinkData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualNetworkLinkData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualNetworkLinkData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualNetworkLinkData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualNetworkLinkData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualNetworkLinkData IModelSerializable<VirtualNetworkLinkData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualNetworkLinkData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualNetworkLinkData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VirtualNetworkLinkData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VirtualNetworkLinkData"/> to convert. </param>
+        public static implicit operator RequestContent(VirtualNetworkLinkData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualNetworkLinkData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VirtualNetworkLinkData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualNetworkLinkData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

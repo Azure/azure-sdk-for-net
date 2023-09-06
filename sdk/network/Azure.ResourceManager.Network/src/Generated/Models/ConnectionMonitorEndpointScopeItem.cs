@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Describes the connection monitor endpoint scope item. </summary>
     public partial class ConnectionMonitorEndpointScopeItem
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorEndpointScopeItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpointScopeItem"/>. </summary>
         public ConnectionMonitorEndpointScopeItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorEndpointScopeItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpointScopeItem"/>. </summary>
         /// <param name="address"> The address of the endpoint item. Supported types are IPv4/IPv6 subnet mask or IPv4/IPv6 IP address. </param>
-        internal ConnectionMonitorEndpointScopeItem(string address)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionMonitorEndpointScopeItem(string address, Dictionary<string, BinaryData> rawData)
         {
             Address = address;
+            _rawData = rawData;
         }
 
         /// <summary> The address of the endpoint item. Supported types are IPv4/IPv6 subnet mask or IPv4/IPv6 IP address. </summary>

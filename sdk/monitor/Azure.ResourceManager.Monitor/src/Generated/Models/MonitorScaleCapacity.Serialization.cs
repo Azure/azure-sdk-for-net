@@ -5,12 +5,127 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorScaleCapacity : IUtf8JsonSerializable
+    public partial class MonitorScaleCapacity : IUtf8JsonSerializable, IModelJsonSerializable<MonitorScaleCapacity>
     {
+        void IModelJsonSerializable<MonitorScaleCapacity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorScaleCapacity>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("minimum"u8);
+            writer.WriteNumberValue(Minimum);
+            writer.WritePropertyName("maximum"u8);
+            writer.WriteNumberValue(Maximum);
+            writer.WritePropertyName("default"u8);
+            writer.WriteNumberValue(Default);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MonitorScaleCapacity DeserializeMonitorScaleCapacity(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int minimum = default;
+            int maximum = default;
+            int @default = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("minimum"u8))
+                {
+                    minimum = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("maximum"u8))
+                {
+                    maximum = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("default"u8))
+                {
+                    @default = property.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new MonitorScaleCapacity(minimum, maximum, @default, rawData);
+        }
+
+        MonitorScaleCapacity IModelJsonSerializable<MonitorScaleCapacity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorScaleCapacity>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorScaleCapacity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MonitorScaleCapacity>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorScaleCapacity>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MonitorScaleCapacity IModelSerializable<MonitorScaleCapacity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorScaleCapacity>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMonitorScaleCapacity(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MonitorScaleCapacity"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MonitorScaleCapacity"/> to convert. </param>
+        public static implicit operator RequestContent(MonitorScaleCapacity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MonitorScaleCapacity"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MonitorScaleCapacity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMonitorScaleCapacity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
     }
 }

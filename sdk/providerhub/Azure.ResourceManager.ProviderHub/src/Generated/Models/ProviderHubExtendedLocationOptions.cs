@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The ProviderHubExtendedLocationOptions. </summary>
     public partial class ProviderHubExtendedLocationOptions
     {
-        /// <summary> Initializes a new instance of ProviderHubExtendedLocationOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProviderHubExtendedLocationOptions"/>. </summary>
         public ProviderHubExtendedLocationOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of ProviderHubExtendedLocationOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderHubExtendedLocationOptions"/>. </summary>
         /// <param name="extendedLocationOptionsType"></param>
         /// <param name="supportedPolicy"></param>
-        internal ProviderHubExtendedLocationOptions(string extendedLocationOptionsType, string supportedPolicy)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProviderHubExtendedLocationOptions(string extendedLocationOptionsType, string supportedPolicy, Dictionary<string, BinaryData> rawData)
         {
             ExtendedLocationOptionsType = extendedLocationOptionsType;
             SupportedPolicy = supportedPolicy;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the extended location options type. </summary>

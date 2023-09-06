@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network admin rule. </summary>
     public partial class NetworkAdminRule : BaseAdminRuleData
     {
-        /// <summary> Initializes a new instance of NetworkAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkAdminRule"/>. </summary>
         public NetworkAdminRule()
         {
             Sources = new ChangeTrackingList<AddressPrefixItem>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             Kind = AdminRuleKind.Custom;
         }
 
-        /// <summary> Initializes a new instance of NetworkAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkAdminRule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        internal NetworkAdminRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdminRuleKind kind, ETag? etag, string description, SecurityConfigurationRuleProtocol? protocol, IList<AddressPrefixItem> sources, IList<AddressPrefixItem> destinations, IList<string> sourcePortRanges, IList<string> destinationPortRanges, SecurityConfigurationRuleAccess? access, int? priority, SecurityConfigurationRuleDirection? direction, NetworkProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, systemData, kind, etag)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkAdminRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdminRuleKind kind, ETag? etag, string description, SecurityConfigurationRuleProtocol? protocol, IList<AddressPrefixItem> sources, IList<AddressPrefixItem> destinations, IList<string> sourcePortRanges, IList<string> destinationPortRanges, SecurityConfigurationRuleAccess? access, int? priority, SecurityConfigurationRuleDirection? direction, NetworkProvisioningState? provisioningState, Guid? resourceGuid, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, kind, etag, rawData)
         {
             Description = description;
             Protocol = protocol;

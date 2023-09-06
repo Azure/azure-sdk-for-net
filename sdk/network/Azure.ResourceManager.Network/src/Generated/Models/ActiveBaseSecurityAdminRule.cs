@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,16 +17,20 @@ namespace Azure.ResourceManager.Network.Models
     /// Please note <see cref="ActiveBaseSecurityAdminRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ActiveSecurityAdminRule"/> and <see cref="ActiveDefaultSecurityAdminRule"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownActiveBaseSecurityAdminRule))]
     public abstract partial class ActiveBaseSecurityAdminRule
     {
-        /// <summary> Initializes a new instance of ActiveBaseSecurityAdminRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ActiveBaseSecurityAdminRule"/>. </summary>
         protected ActiveBaseSecurityAdminRule()
         {
             RuleCollectionAppliesToGroups = new ChangeTrackingList<NetworkManagerSecurityGroupItem>();
             RuleGroups = new ChangeTrackingList<NetworkConfigurationGroup>();
         }
 
-        /// <summary> Initializes a new instance of ActiveBaseSecurityAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActiveBaseSecurityAdminRule"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="commitOn"> Deployment time string. </param>
         /// <param name="region"> Deployment region. </param>
@@ -34,7 +39,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ruleCollectionAppliesToGroups"> Groups for rule collection. </param>
         /// <param name="ruleGroups"> Effective configuration groups. </param>
         /// <param name="kind"> Whether the rule is custom or default. </param>
-        internal ActiveBaseSecurityAdminRule(string id, DateTimeOffset? commitOn, string region, string configurationDescription, string ruleCollectionDescription, IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups, IReadOnlyList<NetworkConfigurationGroup> ruleGroups, EffectiveAdminRuleKind kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ActiveBaseSecurityAdminRule(string id, DateTimeOffset? commitOn, string region, string configurationDescription, string ruleCollectionDescription, IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups, IReadOnlyList<NetworkConfigurationGroup> ruleGroups, EffectiveAdminRuleKind kind, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             CommitOn = commitOn;
@@ -44,6 +50,7 @@ namespace Azure.ResourceManager.Network.Models
             RuleCollectionAppliesToGroups = ruleCollectionAppliesToGroups;
             RuleGroups = ruleGroups;
             Kind = kind;
+            _rawData = rawData;
         }
 
         /// <summary> Resource ID. </summary>

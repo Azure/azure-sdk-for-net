@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MySql;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> A list of server configurations. </summary>
     public partial class MySqlConfigurations
     {
-        /// <summary> Initializes a new instance of MySqlConfigurations. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlConfigurations"/>. </summary>
         public MySqlConfigurations()
         {
             Values = new ChangeTrackingList<MySqlConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of MySqlConfigurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlConfigurations"/>. </summary>
         /// <param name="values"> The list of server configurations. </param>
-        internal MySqlConfigurations(IList<MySqlConfigurationData> values)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlConfigurations(IList<MySqlConfigurationData> values, Dictionary<string, BinaryData> rawData)
         {
             Values = values;
+            _rawData = rawData;
         }
 
         /// <summary> The list of server configurations. </summary>

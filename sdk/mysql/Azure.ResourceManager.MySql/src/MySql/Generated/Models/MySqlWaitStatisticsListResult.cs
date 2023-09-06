@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MySql;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> A list of wait statistics. </summary>
     internal partial class MySqlWaitStatisticsListResult
     {
-        /// <summary> Initializes a new instance of MySqlWaitStatisticsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlWaitStatisticsListResult"/>. </summary>
         internal MySqlWaitStatisticsListResult()
         {
             Value = new ChangeTrackingList<MySqlWaitStatisticData>();
         }
 
-        /// <summary> Initializes a new instance of MySqlWaitStatisticsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlWaitStatisticsListResult"/>. </summary>
         /// <param name="value"> The list of wait statistics. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal MySqlWaitStatisticsListResult(IReadOnlyList<MySqlWaitStatisticData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlWaitStatisticsListResult(IReadOnlyList<MySqlWaitStatisticData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of wait statistics. </summary>

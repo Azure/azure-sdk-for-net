@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class IdpsQueryOrderBy : IUtf8JsonSerializable
+    public partial class IdpsQueryOrderBy : IUtf8JsonSerializable, IModelJsonSerializable<IdpsQueryOrderBy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IdpsQueryOrderBy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IdpsQueryOrderBy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IdpsQueryOrderBy>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Field))
             {
@@ -25,7 +33,103 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("order"u8);
                 writer.WriteStringValue(Order.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static IdpsQueryOrderBy DeserializeIdpsQueryOrderBy(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> field = default;
+            Optional<FirewallPolicyIdpsQuerySortOrder> order = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("field"u8))
+                {
+                    field = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("order"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    order = new FirewallPolicyIdpsQuerySortOrder(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new IdpsQueryOrderBy(field.Value, Optional.ToNullable(order), rawData);
+        }
+
+        IdpsQueryOrderBy IModelJsonSerializable<IdpsQueryOrderBy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IdpsQueryOrderBy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIdpsQueryOrderBy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IdpsQueryOrderBy>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IdpsQueryOrderBy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IdpsQueryOrderBy IModelSerializable<IdpsQueryOrderBy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IdpsQueryOrderBy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIdpsQueryOrderBy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IdpsQueryOrderBy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IdpsQueryOrderBy"/> to convert. </param>
+        public static implicit operator RequestContent(IdpsQueryOrderBy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IdpsQueryOrderBy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IdpsQueryOrderBy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIdpsQueryOrderBy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The TemplateDeploymentPolicy. </summary>
     public partial class TemplateDeploymentPolicy
     {
-        /// <summary> Initializes a new instance of TemplateDeploymentPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TemplateDeploymentPolicy"/>. </summary>
         /// <param name="capabilities"></param>
         /// <param name="preflightOptions"></param>
         internal TemplateDeploymentPolicy(TemplateDeploymentCapability capabilities, TemplateDeploymentPreflightOption preflightOptions)
         {
             Capabilities = capabilities;
             PreflightOptions = preflightOptions;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TemplateDeploymentPolicy"/>. </summary>
+        /// <param name="capabilities"></param>
+        /// <param name="preflightOptions"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TemplateDeploymentPolicy(TemplateDeploymentCapability capabilities, TemplateDeploymentPreflightOption preflightOptions, Dictionary<string, BinaryData> rawData)
+        {
+            Capabilities = capabilities;
+            PreflightOptions = preflightOptions;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TemplateDeploymentPolicy"/> for deserialization. </summary>
+        internal TemplateDeploymentPolicy()
+        {
         }
 
         /// <summary> Gets the capabilities. </summary>

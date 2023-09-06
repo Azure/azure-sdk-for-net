@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.NetworkFunction.Models
     /// <summary> Ingestion Policy properties. </summary>
     public partial class IngestionPolicyPropertiesFormat
     {
-        /// <summary> Initializes a new instance of IngestionPolicyPropertiesFormat. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IngestionPolicyPropertiesFormat"/>. </summary>
         public IngestionPolicyPropertiesFormat()
         {
             IngestionSources = new ChangeTrackingList<IngestionSourcesPropertiesFormat>();
         }
 
-        /// <summary> Initializes a new instance of IngestionPolicyPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngestionPolicyPropertiesFormat"/>. </summary>
         /// <param name="ingestionType"> The ingestion type. </param>
         /// <param name="ingestionSources"> Ingestion Sources. </param>
-        internal IngestionPolicyPropertiesFormat(IngestionType? ingestionType, IList<IngestionSourcesPropertiesFormat> ingestionSources)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IngestionPolicyPropertiesFormat(IngestionType? ingestionType, IList<IngestionSourcesPropertiesFormat> ingestionSources, Dictionary<string, BinaryData> rawData)
         {
             IngestionType = ingestionType;
             IngestionSources = ingestionSources;
+            _rawData = rawData;
         }
 
         /// <summary> The ingestion type. </summary>

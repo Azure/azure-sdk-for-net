@@ -5,16 +5,59 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class EffectiveNetworkSecurityGroupAssociation
+    public partial class EffectiveNetworkSecurityGroupAssociation : IUtf8JsonSerializable, IModelJsonSerializable<EffectiveNetworkSecurityGroupAssociation>
     {
-        internal static EffectiveNetworkSecurityGroupAssociation DeserializeEffectiveNetworkSecurityGroupAssociation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EffectiveNetworkSecurityGroupAssociation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EffectiveNetworkSecurityGroupAssociation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EffectiveNetworkSecurityGroupAssociation>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NetworkManager))
+            {
+                writer.WritePropertyName("networkManager"u8);
+                JsonSerializer.Serialize(writer, NetworkManager);
+            }
+            if (Optional.IsDefined(Subnet))
+            {
+                writer.WritePropertyName("subnet"u8);
+                JsonSerializer.Serialize(writer, Subnet);
+            }
+            if (Optional.IsDefined(NetworkInterface))
+            {
+                writer.WritePropertyName("networkInterface"u8);
+                JsonSerializer.Serialize(writer, NetworkInterface);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static EffectiveNetworkSecurityGroupAssociation DeserializeEffectiveNetworkSecurityGroupAssociation(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +65,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<WritableSubResource> networkManager = default;
             Optional<WritableSubResource> subnet = default;
             Optional<WritableSubResource> networkInterface = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkManager"u8))
@@ -51,8 +95,61 @@ namespace Azure.ResourceManager.Network.Models
                     networkInterface = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EffectiveNetworkSecurityGroupAssociation(networkManager, subnet, networkInterface);
+            return new EffectiveNetworkSecurityGroupAssociation(networkManager, subnet, networkInterface, rawData);
+        }
+
+        EffectiveNetworkSecurityGroupAssociation IModelJsonSerializable<EffectiveNetworkSecurityGroupAssociation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EffectiveNetworkSecurityGroupAssociation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEffectiveNetworkSecurityGroupAssociation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EffectiveNetworkSecurityGroupAssociation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EffectiveNetworkSecurityGroupAssociation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EffectiveNetworkSecurityGroupAssociation IModelSerializable<EffectiveNetworkSecurityGroupAssociation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EffectiveNetworkSecurityGroupAssociation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEffectiveNetworkSecurityGroupAssociation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EffectiveNetworkSecurityGroupAssociation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EffectiveNetworkSecurityGroupAssociation"/> to convert. </param>
+        public static implicit operator RequestContent(EffectiveNetworkSecurityGroupAssociation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EffectiveNetworkSecurityGroupAssociation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EffectiveNetworkSecurityGroupAssociation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEffectiveNetworkSecurityGroupAssociation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

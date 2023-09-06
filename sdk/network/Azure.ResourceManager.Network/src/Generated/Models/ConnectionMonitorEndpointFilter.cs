@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Describes the connection monitor endpoint filter. </summary>
     public partial class ConnectionMonitorEndpointFilter
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorEndpointFilter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpointFilter"/>. </summary>
         public ConnectionMonitorEndpointFilter()
         {
             Items = new ChangeTrackingList<ConnectionMonitorEndpointFilterItem>();
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorEndpointFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpointFilter"/>. </summary>
         /// <param name="filterType"> The behavior of the endpoint filter. Currently only 'Include' is supported. </param>
         /// <param name="items"> List of items in the filter. </param>
-        internal ConnectionMonitorEndpointFilter(ConnectionMonitorEndpointFilterType? filterType, IList<ConnectionMonitorEndpointFilterItem> items)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionMonitorEndpointFilter(ConnectionMonitorEndpointFilterType? filterType, IList<ConnectionMonitorEndpointFilterItem> items, Dictionary<string, BinaryData> rawData)
         {
             FilterType = filterType;
             Items = items;
+            _rawData = rawData;
         }
 
         /// <summary> The behavior of the endpoint filter. Currently only 'Include' is supported. </summary>

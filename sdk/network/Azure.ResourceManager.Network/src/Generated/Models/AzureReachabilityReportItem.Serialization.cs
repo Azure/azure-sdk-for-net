@@ -5,16 +5,70 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AzureReachabilityReportItem
+    public partial class AzureReachabilityReportItem : IUtf8JsonSerializable, IModelJsonSerializable<AzureReachabilityReportItem>
     {
-        internal static AzureReachabilityReportItem DeserializeAzureReachabilityReportItem(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzureReachabilityReportItem>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzureReachabilityReportItem>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AzureReachabilityReportItem>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Provider))
+            {
+                writer.WritePropertyName("provider"u8);
+                writer.WriteStringValue(Provider);
+            }
+            if (Optional.IsDefined(AzureLocation))
+            {
+                writer.WritePropertyName("azureLocation"u8);
+                writer.WriteStringValue(AzureLocation.Value);
+            }
+            if (Optional.IsCollectionDefined(Latencies))
+            {
+                writer.WritePropertyName("latencies"u8);
+                writer.WriteStartArray();
+                foreach (var item in Latencies)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AzureReachabilityReportLatencyInfo>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AzureReachabilityReportItem DeserializeAzureReachabilityReportItem(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +76,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> provider = default;
             Optional<AzureLocation> azureLocation = default;
             Optional<IReadOnlyList<AzureReachabilityReportLatencyInfo>> latencies = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provider"u8))
@@ -52,8 +107,61 @@ namespace Azure.ResourceManager.Network.Models
                     latencies = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AzureReachabilityReportItem(provider.Value, Optional.ToNullable(azureLocation), Optional.ToList(latencies));
+            return new AzureReachabilityReportItem(provider.Value, Optional.ToNullable(azureLocation), Optional.ToList(latencies), rawData);
+        }
+
+        AzureReachabilityReportItem IModelJsonSerializable<AzureReachabilityReportItem>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureReachabilityReportItem>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureReachabilityReportItem(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureReachabilityReportItem>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureReachabilityReportItem>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureReachabilityReportItem IModelSerializable<AzureReachabilityReportItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureReachabilityReportItem>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureReachabilityReportItem(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AzureReachabilityReportItem"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AzureReachabilityReportItem"/> to convert. </param>
+        public static implicit operator RequestContent(AzureReachabilityReportItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AzureReachabilityReportItem"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AzureReachabilityReportItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureReachabilityReportItem(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

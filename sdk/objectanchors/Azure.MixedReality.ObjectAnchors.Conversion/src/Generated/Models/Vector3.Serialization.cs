@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
 {
-    internal partial class Vector3 : IUtf8JsonSerializable
+    internal partial class Vector3 : IUtf8JsonSerializable, IModelJsonSerializable<Vector3>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Vector3>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<Vector3>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<Vector3>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("x"u8);
             writer.WriteNumberValue(X);
@@ -21,11 +29,25 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
             writer.WriteNumberValue(Y);
             writer.WritePropertyName("z"u8);
             writer.WriteNumberValue(Z);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static Vector3 DeserializeVector3(JsonElement element)
+        internal static Vector3 DeserializeVector3(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +55,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
             float x = default;
             float y = default;
             float z = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("x"u8))
@@ -50,8 +73,61 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
                     z = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new Vector3(x, y, z);
+            return new Vector3(x, y, z, rawData);
+        }
+
+        Vector3 IModelJsonSerializable<Vector3>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Vector3>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVector3(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<Vector3>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Vector3>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        Vector3 IModelSerializable<Vector3>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Vector3>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVector3(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="Vector3"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="Vector3"/> to convert. </param>
+        public static implicit operator RequestContent(Vector3 model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="Vector3"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator Vector3(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVector3(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

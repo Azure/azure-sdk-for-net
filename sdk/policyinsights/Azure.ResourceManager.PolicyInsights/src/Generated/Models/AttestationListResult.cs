@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.PolicyInsights;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> List of attestations. </summary>
     internal partial class AttestationListResult
     {
-        /// <summary> Initializes a new instance of AttestationListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AttestationListResult"/>. </summary>
         internal AttestationListResult()
         {
             Value = new ChangeTrackingList<PolicyAttestationData>();
         }
 
-        /// <summary> Initializes a new instance of AttestationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationListResult"/>. </summary>
         /// <param name="value"> Array of attestation definitions. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal AttestationListResult(IReadOnlyList<PolicyAttestationData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AttestationListResult(IReadOnlyList<PolicyAttestationData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Array of attestation definitions. </summary>

@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class KubernetesClusterNode
+    public partial class KubernetesClusterNode : IUtf8JsonSerializable, IModelJsonSerializable<KubernetesClusterNode>
     {
-        internal static KubernetesClusterNode DeserializeKubernetesClusterNode(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KubernetesClusterNode>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KubernetesClusterNode>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesClusterNode>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static KubernetesClusterNode DeserializeKubernetesClusterNode(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +64,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<KubernetesNodeRole> role = default;
             Optional<IReadOnlyList<KubernetesLabel>> taints = default;
             Optional<string> vmSkuName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("agentPoolId"u8))
@@ -184,8 +212,61 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     vmSkuName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KubernetesClusterNode(agentPoolId.Value, availabilityZone.Value, bareMetalMachineId.Value, Optional.ToNullable(cpuCores), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(diskSizeGB), image.Value, kubernetesVersion.Value, Optional.ToList(labels), Optional.ToNullable(memorySizeGB), Optional.ToNullable(mode), name.Value, Optional.ToList(networkAttachments), Optional.ToNullable(powerState), Optional.ToNullable(role), Optional.ToList(taints), vmSkuName.Value);
+            return new KubernetesClusterNode(agentPoolId.Value, availabilityZone.Value, bareMetalMachineId.Value, Optional.ToNullable(cpuCores), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(diskSizeGB), image.Value, kubernetesVersion.Value, Optional.ToList(labels), Optional.ToNullable(memorySizeGB), Optional.ToNullable(mode), name.Value, Optional.ToList(networkAttachments), Optional.ToNullable(powerState), Optional.ToNullable(role), Optional.ToList(taints), vmSkuName.Value, rawData);
+        }
+
+        KubernetesClusterNode IModelJsonSerializable<KubernetesClusterNode>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesClusterNode>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesClusterNode(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KubernetesClusterNode>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesClusterNode>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KubernetesClusterNode IModelSerializable<KubernetesClusterNode>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesClusterNode>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKubernetesClusterNode(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KubernetesClusterNode"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KubernetesClusterNode"/> to convert. </param>
+        public static implicit operator RequestContent(KubernetesClusterNode model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KubernetesClusterNode"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KubernetesClusterNode(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKubernetesClusterNode(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

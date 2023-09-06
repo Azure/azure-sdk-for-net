@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class SnapshotPolicyDailySchedule : IUtf8JsonSerializable
+    public partial class SnapshotPolicyDailySchedule : IUtf8JsonSerializable, IModelJsonSerializable<SnapshotPolicyDailySchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SnapshotPolicyDailySchedule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SnapshotPolicyDailySchedule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SnapshotPolicyDailySchedule>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SnapshotsToKeep))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("usedBytes"u8);
                 writer.WriteNumberValue(UsedBytes.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SnapshotPolicyDailySchedule DeserializeSnapshotPolicyDailySchedule(JsonElement element)
+        internal static SnapshotPolicyDailySchedule DeserializeSnapshotPolicyDailySchedule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<int> hour = default;
             Optional<int> minute = default;
             Optional<long> usedBytes = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("snapshotsToKeep"u8))
@@ -86,8 +109,61 @@ namespace Azure.ResourceManager.NetApp.Models
                     usedBytes = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SnapshotPolicyDailySchedule(Optional.ToNullable(snapshotsToKeep), Optional.ToNullable(hour), Optional.ToNullable(minute), Optional.ToNullable(usedBytes));
+            return new SnapshotPolicyDailySchedule(Optional.ToNullable(snapshotsToKeep), Optional.ToNullable(hour), Optional.ToNullable(minute), Optional.ToNullable(usedBytes), rawData);
+        }
+
+        SnapshotPolicyDailySchedule IModelJsonSerializable<SnapshotPolicyDailySchedule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SnapshotPolicyDailySchedule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSnapshotPolicyDailySchedule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SnapshotPolicyDailySchedule>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SnapshotPolicyDailySchedule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SnapshotPolicyDailySchedule IModelSerializable<SnapshotPolicyDailySchedule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SnapshotPolicyDailySchedule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSnapshotPolicyDailySchedule(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SnapshotPolicyDailySchedule"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SnapshotPolicyDailySchedule"/> to convert. </param>
+        public static implicit operator RequestContent(SnapshotPolicyDailySchedule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SnapshotPolicyDailySchedule"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SnapshotPolicyDailySchedule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSnapshotPolicyDailySchedule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

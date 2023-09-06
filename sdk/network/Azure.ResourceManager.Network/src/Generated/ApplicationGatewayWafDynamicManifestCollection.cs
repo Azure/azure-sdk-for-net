@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayWafDynamicManifestRestClient.CreateGetRequest(Id.SubscriptionId, new AzureLocation(_location));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationGatewayWafDynamicManifestRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApplicationGatewayWafDynamicManifestResource(Client, ApplicationGatewayWafDynamicManifestData.DeserializeApplicationGatewayWafDynamicManifestData(e)), _applicationGatewayWafDynamicManifestClientDiagnostics, Pipeline, "ApplicationGatewayWafDynamicManifestCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ApplicationGatewayWafDynamicManifestResource(Client, ApplicationGatewayWafDynamicManifestData.DeserializeApplicationGatewayWafDynamicManifestData(e)), _applicationGatewayWafDynamicManifestClientDiagnostics, Pipeline, "ApplicationGatewayWafDynamicManifestCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayWafDynamicManifestRestClient.CreateGetRequest(Id.SubscriptionId, new AzureLocation(_location));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationGatewayWafDynamicManifestRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApplicationGatewayWafDynamicManifestResource(Client, ApplicationGatewayWafDynamicManifestData.DeserializeApplicationGatewayWafDynamicManifestData(e)), _applicationGatewayWafDynamicManifestClientDiagnostics, Pipeline, "ApplicationGatewayWafDynamicManifestCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ApplicationGatewayWafDynamicManifestResource(Client, ApplicationGatewayWafDynamicManifestData.DeserializeApplicationGatewayWafDynamicManifestData(e)), _applicationGatewayWafDynamicManifestClientDiagnostics, Pipeline, "ApplicationGatewayWafDynamicManifestCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Monitor;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A list of scoped resources in a private link scope. </summary>
     internal partial class ScopedResourceListResult
     {
-        /// <summary> Initializes a new instance of ScopedResourceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScopedResourceListResult"/>. </summary>
         internal ScopedResourceListResult()
         {
             Value = new ChangeTrackingList<MonitorPrivateLinkScopedResourceData>();
         }
 
-        /// <summary> Initializes a new instance of ScopedResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScopedResourceListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal ScopedResourceListResult(IReadOnlyList<MonitorPrivateLinkScopedResourceData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScopedResourceListResult(IReadOnlyList<MonitorPrivateLinkScopedResourceData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Array of results. </summary>

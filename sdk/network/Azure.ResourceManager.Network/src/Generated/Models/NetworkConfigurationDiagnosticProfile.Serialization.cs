@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkConfigurationDiagnosticProfile : IUtf8JsonSerializable
+    public partial class NetworkConfigurationDiagnosticProfile : IUtf8JsonSerializable, IModelJsonSerializable<NetworkConfigurationDiagnosticProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkConfigurationDiagnosticProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkConfigurationDiagnosticProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkConfigurationDiagnosticProfile>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("direction"u8);
             writer.WriteStringValue(Direction.ToString());
@@ -25,11 +33,25 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(Destination);
             writer.WritePropertyName("destinationPort"u8);
             writer.WriteStringValue(DestinationPort);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkConfigurationDiagnosticProfile DeserializeNetworkConfigurationDiagnosticProfile(JsonElement element)
+        internal static NetworkConfigurationDiagnosticProfile DeserializeNetworkConfigurationDiagnosticProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
             string source = default;
             string destination = default;
             string destinationPort = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("direction"u8))
@@ -66,8 +89,61 @@ namespace Azure.ResourceManager.Network.Models
                     destinationPort = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkConfigurationDiagnosticProfile(direction, protocol, source, destination, destinationPort);
+            return new NetworkConfigurationDiagnosticProfile(direction, protocol, source, destination, destinationPort, rawData);
+        }
+
+        NetworkConfigurationDiagnosticProfile IModelJsonSerializable<NetworkConfigurationDiagnosticProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkConfigurationDiagnosticProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkConfigurationDiagnosticProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkConfigurationDiagnosticProfile>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkConfigurationDiagnosticProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkConfigurationDiagnosticProfile IModelSerializable<NetworkConfigurationDiagnosticProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkConfigurationDiagnosticProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkConfigurationDiagnosticProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetworkConfigurationDiagnosticProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetworkConfigurationDiagnosticProfile"/> to convert. </param>
+        public static implicit operator RequestContent(NetworkConfigurationDiagnosticProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetworkConfigurationDiagnosticProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetworkConfigurationDiagnosticProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkConfigurationDiagnosticProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

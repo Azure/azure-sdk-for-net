@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class DimensionKey : IUtf8JsonSerializable
+    public partial class DimensionKey : IUtf8JsonSerializable, IModelJsonSerializable<DimensionKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DimensionKey>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DimensionKey>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DimensionKey>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("dimension"u8);
             writer.WriteStartObject();
@@ -24,16 +31,31 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WriteStringValue(item.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DimensionKey DeserializeDimensionKey(JsonElement element)
+        internal static DimensionKey DeserializeDimensionKey(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IDictionary<string, string> dimension = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dimension"u8))
@@ -46,8 +68,61 @@ namespace Azure.AI.MetricsAdvisor.Models
                     dimension = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DimensionKey(dimension);
+            return new DimensionKey(dimension, rawData);
+        }
+
+        DimensionKey IModelJsonSerializable<DimensionKey>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DimensionKey>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDimensionKey(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DimensionKey>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DimensionKey>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DimensionKey IModelSerializable<DimensionKey>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DimensionKey>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDimensionKey(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DimensionKey"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DimensionKey"/> to convert. </param>
+        public static implicit operator RequestContent(DimensionKey model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DimensionKey"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DimensionKey(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDimensionKey(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

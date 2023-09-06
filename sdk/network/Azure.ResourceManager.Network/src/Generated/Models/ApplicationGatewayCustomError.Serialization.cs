@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayCustomError : IUtf8JsonSerializable
+    public partial class ApplicationGatewayCustomError : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationGatewayCustomError>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationGatewayCustomError>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationGatewayCustomError>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayCustomError>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(StatusCode))
             {
@@ -26,17 +33,32 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("customErrorPageUrl"u8);
                 writer.WriteStringValue(CustomErrorPageUri.AbsoluteUri);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewayCustomError DeserializeApplicationGatewayCustomError(JsonElement element)
+        internal static ApplicationGatewayCustomError DeserializeApplicationGatewayCustomError(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ApplicationGatewayCustomErrorStatusCode> statusCode = default;
             Optional<Uri> customErrorPageUrl = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("statusCode"u8))
@@ -57,8 +79,61 @@ namespace Azure.ResourceManager.Network.Models
                     customErrorPageUrl = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationGatewayCustomError(Optional.ToNullable(statusCode), customErrorPageUrl.Value);
+            return new ApplicationGatewayCustomError(Optional.ToNullable(statusCode), customErrorPageUrl.Value, rawData);
+        }
+
+        ApplicationGatewayCustomError IModelJsonSerializable<ApplicationGatewayCustomError>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayCustomError>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayCustomError(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationGatewayCustomError>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayCustomError>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationGatewayCustomError IModelSerializable<ApplicationGatewayCustomError>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayCustomError>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationGatewayCustomError(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApplicationGatewayCustomError"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApplicationGatewayCustomError"/> to convert. </param>
+        public static implicit operator RequestContent(ApplicationGatewayCustomError model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApplicationGatewayCustomError"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApplicationGatewayCustomError(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationGatewayCustomError(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

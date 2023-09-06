@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorScaleAction : IUtf8JsonSerializable
+    public partial class MonitorScaleAction : IUtf8JsonSerializable, IModelJsonSerializable<MonitorScaleAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MonitorScaleAction>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MonitorScaleAction>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorScaleAction>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("direction"u8);
             writer.WriteStringValue(Direction.ToSerialString());
@@ -27,11 +34,25 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("cooldown"u8);
             writer.WriteStringValue(Cooldown, "P");
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MonitorScaleAction DeserializeMonitorScaleAction(JsonElement element)
+        internal static MonitorScaleAction DeserializeMonitorScaleAction(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +61,7 @@ namespace Azure.ResourceManager.Monitor.Models
             MonitorScaleType type = default;
             Optional<string> value = default;
             TimeSpan cooldown = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("direction"u8))
@@ -62,8 +84,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     cooldown = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MonitorScaleAction(direction, type, value.Value, cooldown);
+            return new MonitorScaleAction(direction, type, value.Value, cooldown, rawData);
+        }
+
+        MonitorScaleAction IModelJsonSerializable<MonitorScaleAction>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorScaleAction>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorScaleAction(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MonitorScaleAction>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorScaleAction>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MonitorScaleAction IModelSerializable<MonitorScaleAction>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorScaleAction>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMonitorScaleAction(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MonitorScaleAction"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MonitorScaleAction"/> to convert. </param>
+        public static implicit operator RequestContent(MonitorScaleAction model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MonitorScaleAction"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MonitorScaleAction(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMonitorScaleAction(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

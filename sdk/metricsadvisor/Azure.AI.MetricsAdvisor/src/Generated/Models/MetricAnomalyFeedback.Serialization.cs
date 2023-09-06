@@ -6,23 +6,37 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor
 {
-    public partial class MetricAnomalyFeedback : IUtf8JsonSerializable
+    public partial class MetricAnomalyFeedback : IUtf8JsonSerializable, IModelJsonSerializable<MetricAnomalyFeedback>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MetricAnomalyFeedback>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MetricAnomalyFeedback>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MetricAnomalyFeedback>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartsOn, "O");
             writer.WritePropertyName("endTime"u8);
             writer.WriteStringValue(EndsOn, "O");
             writer.WritePropertyName("value"u8);
-            writer.WriteObjectValue(ValueInternal);
+            if (ValueInternal is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<AnomalyFeedbackValue>)ValueInternal).Serialize(writer, options);
+            }
             if (Optional.IsDefined(DetectionConfigurationId))
             {
                 if (DetectionConfigurationId != null)
@@ -40,7 +54,14 @@ namespace Azure.AI.MetricsAdvisor
                 if (DetectionConfigurationSnapshot != null)
                 {
                     writer.WritePropertyName("anomalyDetectionConfigurationSnapshot"u8);
-                    writer.WriteObjectValue(DetectionConfigurationSnapshot);
+                    if (DetectionConfigurationSnapshot is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AnomalyDetectionConfiguration>)DetectionConfigurationSnapshot).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -52,12 +73,33 @@ namespace Azure.AI.MetricsAdvisor
             writer.WritePropertyName("metricId"u8);
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("dimensionFilter"u8);
-            writer.WriteObjectValue(DimensionFilter);
+            if (DimensionFilter is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<FeedbackFilter>)DimensionFilter).Serialize(writer, options);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MetricAnomalyFeedback DeserializeMetricAnomalyFeedback(JsonElement element)
+        internal static MetricAnomalyFeedback DeserializeMetricAnomalyFeedback(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -73,6 +115,7 @@ namespace Azure.AI.MetricsAdvisor
             Optional<string> userPrincipal = default;
             string metricId = default;
             FeedbackFilter dimensionFilter = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"u8))
@@ -144,8 +187,61 @@ namespace Azure.AI.MetricsAdvisor
                     dimensionFilter = FeedbackFilter.DeserializeFeedbackFilter(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MetricAnomalyFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, startTime, endTime, value, anomalyDetectionConfigurationId.Value, anomalyDetectionConfigurationSnapshot.Value);
+            return new MetricAnomalyFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, startTime, endTime, value, anomalyDetectionConfigurationId.Value, anomalyDetectionConfigurationSnapshot.Value, rawData);
+        }
+
+        MetricAnomalyFeedback IModelJsonSerializable<MetricAnomalyFeedback>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricAnomalyFeedback>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricAnomalyFeedback(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MetricAnomalyFeedback>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricAnomalyFeedback>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MetricAnomalyFeedback IModelSerializable<MetricAnomalyFeedback>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricAnomalyFeedback>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMetricAnomalyFeedback(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MetricAnomalyFeedback"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MetricAnomalyFeedback"/> to convert. </param>
+        public static implicit operator RequestContent(MetricAnomalyFeedback model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MetricAnomalyFeedback"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MetricAnomalyFeedback(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMetricAnomalyFeedback(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

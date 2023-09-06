@@ -19,6 +19,9 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class Completions
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of Completions. </summary>
         /// <param name="id"> A unique identifier associated with this completions response. </param>
         /// <param name="created">
@@ -61,13 +64,20 @@ namespace Azure.AI.OpenAI
         /// Token limits and other settings may limit the number of choices generated.
         /// </param>
         /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
-        internal Completions(string id, DateTimeOffset created, IReadOnlyList<PromptFilterResult> promptFilterResults, IReadOnlyList<Choice> choices, CompletionsUsage usage)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal Completions(string id, DateTimeOffset created, IReadOnlyList<PromptFilterResult> promptFilterResults, IReadOnlyList<Choice> choices, CompletionsUsage usage, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Created = created;
             PromptFilterResults = promptFilterResults;
             Choices = choices;
             Usage = usage;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Completions"/> for deserialization. </summary>
+        internal Completions()
+        {
         }
 
         /// <summary> A unique identifier associated with this completions response. </summary>

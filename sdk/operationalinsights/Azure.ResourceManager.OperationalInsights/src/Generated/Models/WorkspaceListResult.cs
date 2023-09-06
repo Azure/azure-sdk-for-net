@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.OperationalInsights;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The list workspaces operation response. </summary>
     internal partial class WorkspaceListResult
     {
-        /// <summary> Initializes a new instance of WorkspaceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkspaceListResult"/>. </summary>
         internal WorkspaceListResult()
         {
             Value = new ChangeTrackingList<OperationalInsightsWorkspaceData>();
         }
 
-        /// <summary> Initializes a new instance of WorkspaceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceListResult"/>. </summary>
         /// <param name="value"> A list of workspaces. </param>
-        internal WorkspaceListResult(IReadOnlyList<OperationalInsightsWorkspaceData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkspaceListResult(IReadOnlyList<OperationalInsightsWorkspaceData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> A list of workspaces. </summary>

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of the AzureFirewallRCAction. </summary>
     public partial class AzureFirewallPacketCaptureFlags
     {
-        /// <summary> Initializes a new instance of AzureFirewallPacketCaptureFlags. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallPacketCaptureFlags"/>. </summary>
         public AzureFirewallPacketCaptureFlags()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallPacketCaptureFlags. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallPacketCaptureFlags"/>. </summary>
         /// <param name="flagsType"> Flags to capture. </param>
-        internal AzureFirewallPacketCaptureFlags(AzureFirewallPacketCaptureFlagsType? flagsType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureFirewallPacketCaptureFlags(AzureFirewallPacketCaptureFlagsType? flagsType, Dictionary<string, BinaryData> rawData)
         {
             FlagsType = flagsType;
+            _rawData = rawData;
         }
 
         /// <summary> Flags to capture. </summary>

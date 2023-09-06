@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class HubRouteTableData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of HubRouteTableData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubRouteTableData"/>. </summary>
         public HubRouteTableData()
         {
             Routes = new ChangeTrackingList<HubRoute>();
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Network
             PropagatingConnections = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of HubRouteTableData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubRouteTableData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="associatedConnections"> List of all connections associated with this route table. </param>
         /// <param name="propagatingConnections"> List of all connections that advertise to this route table. </param>
         /// <param name="provisioningState"> The provisioning state of the RouteTable resource. </param>
-        internal HubRouteTableData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<HubRoute> routes, IList<string> labels, IReadOnlyList<string> associatedConnections, IReadOnlyList<string> propagatingConnections, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HubRouteTableData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<HubRoute> routes, IList<string> labels, IReadOnlyList<string> associatedConnections, IReadOnlyList<string> propagatingConnections, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, rawData)
         {
             ETag = etag;
             Routes = routes;

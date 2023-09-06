@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
-    public partial class OrbitalContactProfileLinkChannel : IUtf8JsonSerializable
+    public partial class OrbitalContactProfileLinkChannel : IUtf8JsonSerializable, IModelJsonSerializable<OrbitalContactProfileLinkChannel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OrbitalContactProfileLinkChannel>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OrbitalContactProfileLinkChannel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<OrbitalContactProfileLinkChannel>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -22,7 +30,14 @@ namespace Azure.ResourceManager.Orbital.Models
             writer.WritePropertyName("bandwidthMHz"u8);
             writer.WriteNumberValue(BandwidthMHz);
             writer.WritePropertyName("endPoint"u8);
-            writer.WriteObjectValue(EndPoint);
+            if (EndPoint is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<OrbitalContactEndpoint>)EndPoint).Serialize(writer, options);
+            }
             if (Optional.IsDefined(ModulationConfiguration))
             {
                 writer.WritePropertyName("modulationConfiguration"u8);
@@ -43,11 +58,25 @@ namespace Azure.ResourceManager.Orbital.Models
                 writer.WritePropertyName("decodingConfiguration"u8);
                 writer.WriteStringValue(DecodingConfiguration);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OrbitalContactProfileLinkChannel DeserializeOrbitalContactProfileLinkChannel(JsonElement element)
+        internal static OrbitalContactProfileLinkChannel DeserializeOrbitalContactProfileLinkChannel(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +89,7 @@ namespace Azure.ResourceManager.Orbital.Models
             Optional<string> demodulationConfiguration = default;
             Optional<string> encodingConfiguration = default;
             Optional<string> decodingConfiguration = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -102,8 +132,61 @@ namespace Azure.ResourceManager.Orbital.Models
                     decodingConfiguration = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OrbitalContactProfileLinkChannel(name, centerFrequencyMHz, bandwidthMHz, endPoint, modulationConfiguration.Value, demodulationConfiguration.Value, encodingConfiguration.Value, decodingConfiguration.Value);
+            return new OrbitalContactProfileLinkChannel(name, centerFrequencyMHz, bandwidthMHz, endPoint, modulationConfiguration.Value, demodulationConfiguration.Value, encodingConfiguration.Value, decodingConfiguration.Value, rawData);
+        }
+
+        OrbitalContactProfileLinkChannel IModelJsonSerializable<OrbitalContactProfileLinkChannel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OrbitalContactProfileLinkChannel>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOrbitalContactProfileLinkChannel(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OrbitalContactProfileLinkChannel>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OrbitalContactProfileLinkChannel>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OrbitalContactProfileLinkChannel IModelSerializable<OrbitalContactProfileLinkChannel>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OrbitalContactProfileLinkChannel>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOrbitalContactProfileLinkChannel(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OrbitalContactProfileLinkChannel"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OrbitalContactProfileLinkChannel"/> to convert. </param>
+        public static implicit operator RequestContent(OrbitalContactProfileLinkChannel model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OrbitalContactProfileLinkChannel"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OrbitalContactProfileLinkChannel(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOrbitalContactProfileLinkChannel(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

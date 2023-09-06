@@ -14,19 +14,24 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The SwaggerSpecification. </summary>
     public partial class SwaggerSpecification
     {
-        /// <summary> Initializes a new instance of SwaggerSpecification. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SwaggerSpecification"/>. </summary>
         public SwaggerSpecification()
         {
             ApiVersions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SwaggerSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerSpecification"/>. </summary>
         /// <param name="apiVersions"></param>
         /// <param name="swaggerSpecFolderUri"></param>
-        internal SwaggerSpecification(IList<string> apiVersions, Uri swaggerSpecFolderUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SwaggerSpecification(IList<string> apiVersions, Uri swaggerSpecFolderUri, Dictionary<string, BinaryData> rawData)
         {
             ApiVersions = apiVersions;
             SwaggerSpecFolderUri = swaggerSpecFolderUri;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the api versions. </summary>

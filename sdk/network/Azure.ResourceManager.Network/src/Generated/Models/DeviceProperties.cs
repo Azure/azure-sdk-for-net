@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> List of properties of the device. </summary>
     public partial class DeviceProperties
     {
-        /// <summary> Initializes a new instance of DeviceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeviceProperties"/>. </summary>
         public DeviceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProperties"/>. </summary>
         /// <param name="deviceVendor"> Name of the device Vendor. </param>
         /// <param name="deviceModel"> Model of the device. </param>
         /// <param name="linkSpeedInMbps"> Link speed. </param>
-        internal DeviceProperties(string deviceVendor, string deviceModel, int? linkSpeedInMbps)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceProperties(string deviceVendor, string deviceModel, int? linkSpeedInMbps, Dictionary<string, BinaryData> rawData)
         {
             DeviceVendor = deviceVendor;
             DeviceModel = deviceModel;
             LinkSpeedInMbps = linkSpeedInMbps;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the device Vendor. </summary>

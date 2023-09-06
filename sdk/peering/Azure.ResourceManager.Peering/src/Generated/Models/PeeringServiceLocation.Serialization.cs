@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class PeeringServiceLocation : IUtf8JsonSerializable
+    public partial class PeeringServiceLocation : IUtf8JsonSerializable, IModelJsonSerializable<PeeringServiceLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PeeringServiceLocation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PeeringServiceLocation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PeeringServiceLocation>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -34,11 +42,25 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WriteStringValue(AzureRegion.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PeeringServiceLocation DeserializePeeringServiceLocation(JsonElement element)
+        internal static PeeringServiceLocation DeserializePeeringServiceLocation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -50,6 +72,7 @@ namespace Azure.ResourceManager.Peering.Models
             Optional<string> country = default;
             Optional<string> state = default;
             Optional<AzureLocation> azureRegion = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -107,8 +130,61 @@ namespace Azure.ResourceManager.Peering.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PeeringServiceLocation(id, name, type, systemData.Value, country.Value, state.Value, Optional.ToNullable(azureRegion));
+            return new PeeringServiceLocation(id, name, type, systemData.Value, country.Value, state.Value, Optional.ToNullable(azureRegion), rawData);
+        }
+
+        PeeringServiceLocation IModelJsonSerializable<PeeringServiceLocation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PeeringServiceLocation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePeeringServiceLocation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PeeringServiceLocation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PeeringServiceLocation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PeeringServiceLocation IModelSerializable<PeeringServiceLocation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PeeringServiceLocation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePeeringServiceLocation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PeeringServiceLocation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PeeringServiceLocation"/> to convert. </param>
+        public static implicit operator RequestContent(PeeringServiceLocation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PeeringServiceLocation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PeeringServiceLocation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePeeringServiceLocation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

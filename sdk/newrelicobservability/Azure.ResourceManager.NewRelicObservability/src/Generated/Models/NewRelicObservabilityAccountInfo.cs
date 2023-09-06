@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Account Info of the NewRelic account. </summary>
     public partial class NewRelicObservabilityAccountInfo
     {
-        /// <summary> Initializes a new instance of NewRelicObservabilityAccountInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityAccountInfo"/>. </summary>
         public NewRelicObservabilityAccountInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of NewRelicObservabilityAccountInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityAccountInfo"/>. </summary>
         /// <param name="accountId"> Account id. </param>
         /// <param name="ingestionKey"> ingestion key of account. </param>
         /// <param name="region"> NewRelic account region. </param>
-        internal NewRelicObservabilityAccountInfo(string accountId, string ingestionKey, AzureLocation? region)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NewRelicObservabilityAccountInfo(string accountId, string ingestionKey, AzureLocation? region, Dictionary<string, BinaryData> rawData)
         {
             AccountId = accountId;
             IngestionKey = ingestionKey;
             Region = region;
+            _rawData = rawData;
         }
 
         /// <summary> Account id. </summary>

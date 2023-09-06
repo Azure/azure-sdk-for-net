@@ -8,14 +8,123 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class MetricEnrichedSeriesData
+    public partial class MetricEnrichedSeriesData : IUtf8JsonSerializable, IModelJsonSerializable<MetricEnrichedSeriesData>
     {
-        internal static MetricEnrichedSeriesData DeserializeMetricEnrichedSeriesData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MetricEnrichedSeriesData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MetricEnrichedSeriesData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MetricEnrichedSeriesData>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("series"u8);
+            if (Series is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<SeriesIdentity>)Series).Serialize(writer, options);
+            }
+            writer.WritePropertyName("timestampList"u8);
+            writer.WriteStartArray();
+            foreach (var item in Timestamps)
+            {
+                writer.WriteStringValue(item, "O");
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("valueList"u8);
+            writer.WriteStartArray();
+            foreach (var item in MetricValues)
+            {
+                writer.WriteNumberValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("isAnomalyList"u8);
+            writer.WriteStartArray();
+            foreach (var item in IsAnomaly)
+            {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteBooleanValue(item.Value);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("periodList"u8);
+            writer.WriteStartArray();
+            foreach (var item in Periods)
+            {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteNumberValue(item.Value);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("expectedValueList"u8);
+            writer.WriteStartArray();
+            foreach (var item in ExpectedMetricValues)
+            {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteNumberValue(item.Value);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("lowerBoundaryList"u8);
+            writer.WriteStartArray();
+            foreach (var item in LowerBoundaryValues)
+            {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteNumberValue(item.Value);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("upperBoundaryList"u8);
+            writer.WriteStartArray();
+            foreach (var item in UpperBoundaryValues)
+            {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteNumberValue(item.Value);
+            }
+            writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MetricEnrichedSeriesData DeserializeMetricEnrichedSeriesData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +137,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             IReadOnlyList<double?> expectedValueList = default;
             IReadOnlyList<double?> lowerBoundaryList = default;
             IReadOnlyList<double?> upperBoundaryList = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("series"u8))
@@ -140,8 +250,61 @@ namespace Azure.AI.MetricsAdvisor.Models
                     upperBoundaryList = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MetricEnrichedSeriesData(series, timestampList, valueList, isAnomalyList, periodList, expectedValueList, lowerBoundaryList, upperBoundaryList);
+            return new MetricEnrichedSeriesData(series, timestampList, valueList, isAnomalyList, periodList, expectedValueList, lowerBoundaryList, upperBoundaryList, rawData);
+        }
+
+        MetricEnrichedSeriesData IModelJsonSerializable<MetricEnrichedSeriesData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricEnrichedSeriesData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricEnrichedSeriesData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MetricEnrichedSeriesData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricEnrichedSeriesData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MetricEnrichedSeriesData IModelSerializable<MetricEnrichedSeriesData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricEnrichedSeriesData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMetricEnrichedSeriesData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MetricEnrichedSeriesData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MetricEnrichedSeriesData"/> to convert. </param>
+        public static implicit operator RequestContent(MetricEnrichedSeriesData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MetricEnrichedSeriesData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MetricEnrichedSeriesData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMetricEnrichedSeriesData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

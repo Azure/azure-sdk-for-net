@@ -5,16 +5,144 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class MetricDefinition
+    public partial class MetricDefinition : IUtf8JsonSerializable, IModelJsonSerializable<MetricDefinition>
     {
-        internal static MetricDefinition DeserializeMetricDefinition(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MetricDefinition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MetricDefinition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MetricDefinition>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IsDimensionRequired))
+            {
+                writer.WritePropertyName("isDimensionRequired"u8);
+                writer.WriteBooleanValue(IsDimensionRequired.Value);
+            }
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
+            }
+            if (Optional.IsDefined(Namespace))
+            {
+                writer.WritePropertyName("namespace"u8);
+                writer.WriteStringValue(Namespace);
+            }
+            if (Optional.IsDefined(LocalizedName))
+            {
+                writer.WritePropertyName("name"u8);
+                if (LocalizedName is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LocalizableString>)LocalizedName).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(DisplayDescription))
+            {
+                writer.WritePropertyName("displayDescription"u8);
+                writer.WriteStringValue(DisplayDescription);
+            }
+            if (Optional.IsDefined(Category))
+            {
+                writer.WritePropertyName("category"u8);
+                writer.WriteStringValue(Category);
+            }
+            if (Optional.IsDefined(MetricClass))
+            {
+                writer.WritePropertyName("metricClass"u8);
+                writer.WriteStringValue(MetricClass.Value.ToString());
+            }
+            if (Optional.IsDefined(Unit))
+            {
+                writer.WritePropertyName("unit"u8);
+                writer.WriteStringValue(Unit.Value.ToString());
+            }
+            if (Optional.IsDefined(PrimaryAggregationType))
+            {
+                writer.WritePropertyName("primaryAggregationType"u8);
+                writer.WriteStringValue(PrimaryAggregationType.Value.ToSerialString());
+            }
+            if (Optional.IsCollectionDefined(SupportedAggregationTypes))
+            {
+                writer.WritePropertyName("supportedAggregationTypes"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedAggregationTypes)
+                {
+                    writer.WriteStringValue(item.ToSerialString());
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(MetricAvailabilities))
+            {
+                writer.WritePropertyName("metricAvailabilities"u8);
+                writer.WriteStartArray();
+                foreach (var item in MetricAvailabilities)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MetricAvailability>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsCollectionDefined(LocalizedDimensions))
+            {
+                writer.WritePropertyName("dimensions"u8);
+                writer.WriteStartArray();
+                foreach (var item in LocalizedDimensions)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<LocalizableString>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MetricDefinition DeserializeMetricDefinition(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +160,7 @@ namespace Azure.Monitor.Query.Models
             Optional<IReadOnlyList<MetricAvailability>> metricAvailabilities = default;
             Optional<string> id = default;
             Optional<IReadOnlyList<LocalizableString>> dimensions = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isDimensionRequired"u8))
@@ -146,8 +275,61 @@ namespace Azure.Monitor.Query.Models
                     dimensions = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MetricDefinition(Optional.ToNullable(isDimensionRequired), resourceId.Value, @namespace.Value, name.Value, displayDescription.Value, category.Value, Optional.ToNullable(metricClass), Optional.ToNullable(unit), Optional.ToNullable(primaryAggregationType), Optional.ToList(supportedAggregationTypes), Optional.ToList(metricAvailabilities), id.Value, Optional.ToList(dimensions));
+            return new MetricDefinition(Optional.ToNullable(isDimensionRequired), resourceId.Value, @namespace.Value, name.Value, displayDescription.Value, category.Value, Optional.ToNullable(metricClass), Optional.ToNullable(unit), Optional.ToNullable(primaryAggregationType), Optional.ToList(supportedAggregationTypes), Optional.ToList(metricAvailabilities), id.Value, Optional.ToList(dimensions), rawData);
+        }
+
+        MetricDefinition IModelJsonSerializable<MetricDefinition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricDefinition>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricDefinition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MetricDefinition>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricDefinition>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MetricDefinition IModelSerializable<MetricDefinition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricDefinition>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMetricDefinition(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MetricDefinition"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MetricDefinition"/> to convert. </param>
+        public static implicit operator RequestContent(MetricDefinition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MetricDefinition"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MetricDefinition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMetricDefinition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

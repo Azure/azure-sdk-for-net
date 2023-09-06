@@ -5,28 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class GroupByVariable : IUtf8JsonSerializable
+    public partial class GroupByVariable : IUtf8JsonSerializable, IModelJsonSerializable<GroupByVariable>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GroupByVariable>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GroupByVariable>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<GroupByVariable>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("variableName"u8);
             writer.WriteStringValue(VariableName.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GroupByVariable DeserializeGroupByVariable(JsonElement element)
+        internal static GroupByVariable DeserializeGroupByVariable(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ApplicationGatewayFirewallUserSessionVariable variableName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("variableName"u8))
@@ -34,8 +57,61 @@ namespace Azure.ResourceManager.Network.Models
                     variableName = new ApplicationGatewayFirewallUserSessionVariable(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GroupByVariable(variableName);
+            return new GroupByVariable(variableName, rawData);
+        }
+
+        GroupByVariable IModelJsonSerializable<GroupByVariable>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GroupByVariable>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGroupByVariable(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GroupByVariable>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GroupByVariable>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GroupByVariable IModelSerializable<GroupByVariable>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GroupByVariable>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGroupByVariable(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GroupByVariable"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GroupByVariable"/> to convert. </param>
+        public static implicit operator RequestContent(GroupByVariable model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GroupByVariable"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GroupByVariable(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGroupByVariable(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

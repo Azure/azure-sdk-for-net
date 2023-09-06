@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for the CheckDnsNameAvailability API service call. </summary>
     public partial class DnsNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of DnsNameAvailabilityResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DnsNameAvailabilityResult"/>. </summary>
         internal DnsNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DnsNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsNameAvailabilityResult"/>. </summary>
         /// <param name="available"> Domain availability (True/False). </param>
-        internal DnsNameAvailabilityResult(bool? available)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DnsNameAvailabilityResult(bool? available, Dictionary<string, BinaryData> rawData)
         {
             Available = available;
+            _rawData = rawData;
         }
 
         /// <summary> Domain availability (True/False). </summary>

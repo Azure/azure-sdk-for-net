@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Organization Info of the NewRelic account. </summary>
     internal partial class NewRelicObservabilityOrganizationInfo
     {
-        /// <summary> Initializes a new instance of NewRelicObservabilityOrganizationInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityOrganizationInfo"/>. </summary>
         public NewRelicObservabilityOrganizationInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of NewRelicObservabilityOrganizationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityOrganizationInfo"/>. </summary>
         /// <param name="organizationId"> Organization id. </param>
-        internal NewRelicObservabilityOrganizationInfo(string organizationId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NewRelicObservabilityOrganizationInfo(string organizationId, Dictionary<string, BinaryData> rawData)
         {
             OrganizationId = organizationId;
+            _rawData = rawData;
         }
 
         /// <summary> Organization id. </summary>

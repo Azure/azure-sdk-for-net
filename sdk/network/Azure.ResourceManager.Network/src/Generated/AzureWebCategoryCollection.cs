@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureWebCategoryWebCategoriesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureWebCategoryWebCategoriesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureWebCategoryResource(Client, AzureWebCategoryData.DeserializeAzureWebCategoryData(e)), _azureWebCategoryWebCategoriesClientDiagnostics, Pipeline, "AzureWebCategoryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AzureWebCategoryResource(Client, AzureWebCategoryData.DeserializeAzureWebCategoryData(e)), _azureWebCategoryWebCategoriesClientDiagnostics, Pipeline, "AzureWebCategoryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureWebCategoryWebCategoriesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureWebCategoryWebCategoriesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureWebCategoryResource(Client, AzureWebCategoryData.DeserializeAzureWebCategoryData(e)), _azureWebCategoryWebCategoriesClientDiagnostics, Pipeline, "AzureWebCategoryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AzureWebCategoryResource(Client, AzureWebCategoryData.DeserializeAzureWebCategoryData(e)), _azureWebCategoryWebCategoriesClientDiagnostics, Pipeline, "AzureWebCategoryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

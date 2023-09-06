@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Application gateway web application firewall configuration. </summary>
     public partial class ApplicationGatewayWebApplicationFirewallConfiguration
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayWebApplicationFirewallConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayWebApplicationFirewallConfiguration"/>. </summary>
         /// <param name="enabled"> Whether the web application firewall is enabled or not. </param>
         /// <param name="firewallMode"> Web application firewall mode. </param>
         /// <param name="ruleSetType"> The type of the web application firewall rule set. Possible values are: 'OWASP'. </param>
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
             Exclusions = new ChangeTrackingList<ApplicationGatewayFirewallExclusion>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayWebApplicationFirewallConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayWebApplicationFirewallConfiguration"/>. </summary>
         /// <param name="enabled"> Whether the web application firewall is enabled or not. </param>
         /// <param name="firewallMode"> Web application firewall mode. </param>
         /// <param name="ruleSetType"> The type of the web application firewall rule set. Possible values are: 'OWASP'. </param>
@@ -44,7 +47,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="maxRequestBodySizeInKb"> Maximum request body size in Kb for WAF. </param>
         /// <param name="fileUploadLimitInMb"> Maximum file upload size in Mb for WAF. </param>
         /// <param name="exclusions"> The exclusion list. </param>
-        internal ApplicationGatewayWebApplicationFirewallConfiguration(bool enabled, ApplicationGatewayFirewallMode firewallMode, string ruleSetType, string ruleSetVersion, IList<ApplicationGatewayFirewallDisabledRuleGroup> disabledRuleGroups, bool? requestBodyCheck, int? maxRequestBodySize, int? maxRequestBodySizeInKb, int? fileUploadLimitInMb, IList<ApplicationGatewayFirewallExclusion> exclusions)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayWebApplicationFirewallConfiguration(bool enabled, ApplicationGatewayFirewallMode firewallMode, string ruleSetType, string ruleSetVersion, IList<ApplicationGatewayFirewallDisabledRuleGroup> disabledRuleGroups, bool? requestBodyCheck, int? maxRequestBodySize, int? maxRequestBodySizeInKb, int? fileUploadLimitInMb, IList<ApplicationGatewayFirewallExclusion> exclusions, Dictionary<string, BinaryData> rawData)
         {
             Enabled = enabled;
             FirewallMode = firewallMode;
@@ -56,6 +60,12 @@ namespace Azure.ResourceManager.Network.Models
             MaxRequestBodySizeInKb = maxRequestBodySizeInKb;
             FileUploadLimitInMb = fileUploadLimitInMb;
             Exclusions = exclusions;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayWebApplicationFirewallConfiguration"/> for deserialization. </summary>
+        internal ApplicationGatewayWebApplicationFirewallConfiguration()
+        {
         }
 
         /// <summary> Whether the web application firewall is enabled or not. </summary>

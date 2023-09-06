@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkManagerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkManagerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkManagerResource(Client, NetworkManagerData.DeserializeNetworkManagerData(e)), _networkManagerClientDiagnostics, Pipeline, "NetworkManagerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkManagerResource(Client, NetworkManagerData.DeserializeNetworkManagerData(e)), _networkManagerClientDiagnostics, Pipeline, "NetworkManagerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkManagerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkManagerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkManagerResource(Client, NetworkManagerData.DeserializeNetworkManagerData(e)), _networkManagerClientDiagnostics, Pipeline, "NetworkManagerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkManagerResource(Client, NetworkManagerData.DeserializeNetworkManagerData(e)), _networkManagerClientDiagnostics, Pipeline, "NetworkManagerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

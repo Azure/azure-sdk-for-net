@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,26 +14,31 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Policy assignment summary. </summary>
     public partial class PolicyAssignmentSummary
     {
-        /// <summary> Initializes a new instance of PolicyAssignmentSummary. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicyAssignmentSummary"/>. </summary>
         internal PolicyAssignmentSummary()
         {
             PolicyDefinitions = new ChangeTrackingList<PolicyDefinitionSummary>();
             PolicyGroups = new ChangeTrackingList<PolicyGroupSummary>();
         }
 
-        /// <summary> Initializes a new instance of PolicyAssignmentSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAssignmentSummary"/>. </summary>
         /// <param name="policyAssignmentId"> Policy assignment ID. </param>
         /// <param name="policySetDefinitionId"> Policy set definition ID, if the policy assignment is for a policy set. </param>
         /// <param name="results"> Compliance summary for the policy assignment. </param>
         /// <param name="policyDefinitions"> Policy definitions summary. </param>
         /// <param name="policyGroups"> Policy definition group summary. </param>
-        internal PolicyAssignmentSummary(ResourceIdentifier policyAssignmentId, ResourceIdentifier policySetDefinitionId, PolicySummaryResults results, IReadOnlyList<PolicyDefinitionSummary> policyDefinitions, IReadOnlyList<PolicyGroupSummary> policyGroups)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyAssignmentSummary(ResourceIdentifier policyAssignmentId, ResourceIdentifier policySetDefinitionId, PolicySummaryResults results, IReadOnlyList<PolicyDefinitionSummary> policyDefinitions, IReadOnlyList<PolicyGroupSummary> policyGroups, Dictionary<string, BinaryData> rawData)
         {
             PolicyAssignmentId = policyAssignmentId;
             PolicySetDefinitionId = policySetDefinitionId;
             Results = results;
             PolicyDefinitions = policyDefinitions;
             PolicyGroups = policyGroups;
+            _rawData = rawData;
         }
 
         /// <summary> Policy assignment ID. </summary>

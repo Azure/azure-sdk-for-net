@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ProviderHubMetadata. </summary>
     public partial class ProviderHubMetadata
     {
-        /// <summary> Initializes a new instance of ProviderHubMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProviderHubMetadata"/>. </summary>
         public ProviderHubMetadata()
         {
             ProviderAuthorizations = new ChangeTrackingList<ResourceProviderAuthorization>();
         }
 
-        /// <summary> Initializes a new instance of ProviderHubMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderHubMetadata"/>. </summary>
         /// <param name="providerAuthorizations"></param>
         /// <param name="providerAuthentication"></param>
         /// <param name="thirdPartyProviderAuthorization"></param>
-        internal ProviderHubMetadata(IList<ResourceProviderAuthorization> providerAuthorizations, ResourceProviderAuthentication providerAuthentication, ThirdPartyProviderAuthorization thirdPartyProviderAuthorization)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProviderHubMetadata(IList<ResourceProviderAuthorization> providerAuthorizations, ResourceProviderAuthentication providerAuthentication, ThirdPartyProviderAuthorization thirdPartyProviderAuthorization, Dictionary<string, BinaryData> rawData)
         {
             ProviderAuthorizations = providerAuthorizations;
             ProviderAuthentication = providerAuthentication;
             ThirdPartyProviderAuthorization = thirdPartyProviderAuthorization;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the provider authorizations. </summary>

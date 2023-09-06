@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The private IP addresses/IP ranges to which traffic will not be SNAT. </summary>
     public partial class FirewallPolicySnat
     {
-        /// <summary> Initializes a new instance of FirewallPolicySnat. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicySnat"/>. </summary>
         public FirewallPolicySnat()
         {
             PrivateRanges = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicySnat. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicySnat"/>. </summary>
         /// <param name="privateRanges"> List of private IP addresses/IP address ranges to not be SNAT. </param>
         /// <param name="autoLearnPrivateRanges"> The operation mode for automatically learning private ranges to not be SNAT. </param>
-        internal FirewallPolicySnat(IList<string> privateRanges, AutoLearnPrivateRangesMode? autoLearnPrivateRanges)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallPolicySnat(IList<string> privateRanges, AutoLearnPrivateRangesMode? autoLearnPrivateRanges, Dictionary<string, BinaryData> rawData)
         {
             PrivateRanges = privateRanges;
             AutoLearnPrivateRanges = autoLearnPrivateRanges;
+            _rawData = rawData;
         }
 
         /// <summary> List of private IP addresses/IP address ranges to not be SNAT. </summary>

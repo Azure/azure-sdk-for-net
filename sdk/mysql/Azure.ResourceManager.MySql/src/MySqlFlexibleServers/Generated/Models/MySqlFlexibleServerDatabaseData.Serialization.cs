@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    public partial class MySqlFlexibleServerDatabaseData : IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerDatabaseData : IUtf8JsonSerializable, IModelJsonSerializable<MySqlFlexibleServerDatabaseData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MySqlFlexibleServerDatabaseData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MySqlFlexibleServerDatabaseData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlFlexibleServerDatabaseData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -29,11 +37,25 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 writer.WriteStringValue(Collation);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MySqlFlexibleServerDatabaseData DeserializeMySqlFlexibleServerDatabaseData(JsonElement element)
+        internal static MySqlFlexibleServerDatabaseData DeserializeMySqlFlexibleServerDatabaseData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -44,6 +66,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             Optional<SystemData> systemData = default;
             Optional<string> charset = default;
             Optional<string> collation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -92,8 +115,61 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MySqlFlexibleServerDatabaseData(id, name, type, systemData.Value, charset.Value, collation.Value);
+            return new MySqlFlexibleServerDatabaseData(id, name, type, systemData.Value, charset.Value, collation.Value, rawData);
+        }
+
+        MySqlFlexibleServerDatabaseData IModelJsonSerializable<MySqlFlexibleServerDatabaseData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlFlexibleServerDatabaseData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlFlexibleServerDatabaseData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MySqlFlexibleServerDatabaseData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlFlexibleServerDatabaseData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MySqlFlexibleServerDatabaseData IModelSerializable<MySqlFlexibleServerDatabaseData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlFlexibleServerDatabaseData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMySqlFlexibleServerDatabaseData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MySqlFlexibleServerDatabaseData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MySqlFlexibleServerDatabaseData"/> to convert. </param>
+        public static implicit operator RequestContent(MySqlFlexibleServerDatabaseData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MySqlFlexibleServerDatabaseData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MySqlFlexibleServerDatabaseData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMySqlFlexibleServerDatabaseData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

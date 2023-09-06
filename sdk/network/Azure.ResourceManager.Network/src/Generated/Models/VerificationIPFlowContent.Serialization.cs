@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VerificationIPFlowContent : IUtf8JsonSerializable
+    public partial class VerificationIPFlowContent : IUtf8JsonSerializable, IModelJsonSerializable<VerificationIPFlowContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VerificationIPFlowContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VerificationIPFlowContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VerificationIPFlowContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("targetResourceId"u8);
             writer.WriteStringValue(TargetResourceId);
@@ -34,7 +42,139 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("targetNicResourceId"u8);
                 writer.WriteStringValue(TargetNicResourceId);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static VerificationIPFlowContent DeserializeVerificationIPFlowContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier targetResourceId = default;
+            NetworkTrafficDirection direction = default;
+            IPFlowProtocol protocol = default;
+            string localPort = default;
+            string remotePort = default;
+            string localIPAddress = default;
+            string remoteIPAddress = default;
+            Optional<ResourceIdentifier> targetNicResourceId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("targetResourceId"u8))
+                {
+                    targetResourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("direction"u8))
+                {
+                    direction = new NetworkTrafficDirection(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("protocol"u8))
+                {
+                    protocol = new IPFlowProtocol(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("localPort"u8))
+                {
+                    localPort = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("remotePort"u8))
+                {
+                    remotePort = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("localIPAddress"u8))
+                {
+                    localIPAddress = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("remoteIPAddress"u8))
+                {
+                    remoteIPAddress = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("targetNicResourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetNicResourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new VerificationIPFlowContent(targetResourceId, direction, protocol, localPort, remotePort, localIPAddress, remoteIPAddress, targetNicResourceId.Value, rawData);
+        }
+
+        VerificationIPFlowContent IModelJsonSerializable<VerificationIPFlowContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VerificationIPFlowContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVerificationIPFlowContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VerificationIPFlowContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VerificationIPFlowContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VerificationIPFlowContent IModelSerializable<VerificationIPFlowContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VerificationIPFlowContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVerificationIPFlowContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VerificationIPFlowContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VerificationIPFlowContent"/> to convert. </param>
+        public static implicit operator RequestContent(VerificationIPFlowContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VerificationIPFlowContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VerificationIPFlowContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVerificationIPFlowContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

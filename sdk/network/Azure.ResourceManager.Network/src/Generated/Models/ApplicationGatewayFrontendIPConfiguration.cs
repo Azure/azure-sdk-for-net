@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,12 +16,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Frontend IP configuration of an application gateway. </summary>
     public partial class ApplicationGatewayFrontendIPConfiguration : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayFrontendIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFrontendIPConfiguration"/>. </summary>
         public ApplicationGatewayFrontendIPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayFrontendIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFrontendIPConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -30,7 +32,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="publicIPAddress"> Reference to the PublicIP resource. </param>
         /// <param name="privateLinkConfiguration"> Reference to the application gateway private link configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the frontend IP configuration resource. </param>
-        internal ApplicationGatewayFrontendIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet, WritableSubResource publicIPAddress, WritableSubResource privateLinkConfiguration, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayFrontendIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet, WritableSubResource publicIPAddress, WritableSubResource privateLinkConfiguration, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, rawData)
         {
             ETag = etag;
             PrivateIPAddress = privateIPAddress;

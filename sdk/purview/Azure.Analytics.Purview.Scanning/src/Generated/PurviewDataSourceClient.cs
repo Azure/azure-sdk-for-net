@@ -268,7 +268,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScansRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScansNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewDataSourceClient.GetScans", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewDataSourceClient.GetScans", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScansRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScansNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewDataSourceClient.GetScans", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewDataSourceClient.GetScans", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(RequestContent content, RequestContext context)

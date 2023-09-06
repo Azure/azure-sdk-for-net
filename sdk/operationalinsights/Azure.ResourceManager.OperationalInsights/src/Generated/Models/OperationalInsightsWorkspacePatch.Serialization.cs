@@ -10,14 +10,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsWorkspacePatch : IUtf8JsonSerializable
+    public partial class OperationalInsightsWorkspacePatch : IUtf8JsonSerializable, IModelJsonSerializable<OperationalInsightsWorkspacePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OperationalInsightsWorkspacePatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OperationalInsightsWorkspacePatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsWorkspacePatch>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -40,7 +45,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<OperationalInsightsWorkspaceSku>)Sku).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(RetentionInDays))
             {
@@ -57,7 +69,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(WorkspaceCapping))
             {
                 writer.WritePropertyName("workspaceCapping"u8);
-                writer.WriteObjectValue(WorkspaceCapping);
+                if (WorkspaceCapping is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<OperationalInsightsWorkspaceCapping>)WorkspaceCapping).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(PublicNetworkAccessForIngestion))
             {
@@ -77,7 +96,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(Features))
             {
                 writer.WritePropertyName("features"u8);
-                writer.WriteObjectValue(Features);
+                if (Features is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<OperationalInsightsWorkspaceFeatures>)Features).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DefaultDataCollectionRuleResourceId))
             {
@@ -85,11 +111,25 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WriteStringValue(DefaultDataCollectionRuleResourceId);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OperationalInsightsWorkspacePatch DeserializeOperationalInsightsWorkspacePatch(JsonElement element)
+        internal static OperationalInsightsWorkspacePatch DeserializeOperationalInsightsWorkspacePatch(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -114,6 +154,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo>> privateLinkScopedResources = default;
             Optional<OperationalInsightsWorkspaceFeatures> features = default;
             Optional<ResourceIdentifier> defaultDataCollectionRuleResourceId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -307,8 +348,61 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OperationalInsightsWorkspacePatch(id, name, type, systemData.Value, identity, Optional.ToDictionary(tags), Optional.ToNullable(provisioningState), Optional.ToNullable(customerId), sku.Value, Optional.ToNullable(retentionInDays), workspaceCapping.Value, Optional.ToNullable(createdDate), Optional.ToNullable(modifiedDate), Optional.ToNullable(publicNetworkAccessForIngestion), Optional.ToNullable(publicNetworkAccessForQuery), Optional.ToNullable(forceCmkForQuery), Optional.ToList(privateLinkScopedResources), features.Value, defaultDataCollectionRuleResourceId.Value, Optional.ToNullable(etag));
+            return new OperationalInsightsWorkspacePatch(id, name, type, systemData.Value, identity, Optional.ToDictionary(tags), Optional.ToNullable(provisioningState), Optional.ToNullable(customerId), sku.Value, Optional.ToNullable(retentionInDays), workspaceCapping.Value, Optional.ToNullable(createdDate), Optional.ToNullable(modifiedDate), Optional.ToNullable(publicNetworkAccessForIngestion), Optional.ToNullable(publicNetworkAccessForQuery), Optional.ToNullable(forceCmkForQuery), Optional.ToList(privateLinkScopedResources), features.Value, defaultDataCollectionRuleResourceId.Value, Optional.ToNullable(etag), rawData);
+        }
+
+        OperationalInsightsWorkspacePatch IModelJsonSerializable<OperationalInsightsWorkspacePatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsWorkspacePatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsWorkspacePatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OperationalInsightsWorkspacePatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsWorkspacePatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OperationalInsightsWorkspacePatch IModelSerializable<OperationalInsightsWorkspacePatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsWorkspacePatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOperationalInsightsWorkspacePatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OperationalInsightsWorkspacePatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OperationalInsightsWorkspacePatch"/> to convert. </param>
+        public static implicit operator RequestContent(OperationalInsightsWorkspacePatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OperationalInsightsWorkspacePatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OperationalInsightsWorkspacePatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOperationalInsightsWorkspacePatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

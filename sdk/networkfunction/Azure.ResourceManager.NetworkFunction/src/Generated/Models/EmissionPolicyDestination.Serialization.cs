@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
-    public partial class EmissionPolicyDestination : IUtf8JsonSerializable
+    public partial class EmissionPolicyDestination : IUtf8JsonSerializable, IModelJsonSerializable<EmissionPolicyDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EmissionPolicyDestination>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EmissionPolicyDestination>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EmissionPolicyDestination>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DestinationType))
             {
                 writer.WritePropertyName("destinationType"u8);
                 writer.WriteStringValue(DestinationType.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EmissionPolicyDestination DeserializeEmissionPolicyDestination(JsonElement element)
+        internal static EmissionPolicyDestination DeserializeEmissionPolicyDestination(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<EmissionDestinationType> destinationType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("destinationType"u8))
@@ -41,8 +64,61 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     destinationType = new EmissionDestinationType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EmissionPolicyDestination(Optional.ToNullable(destinationType));
+            return new EmissionPolicyDestination(Optional.ToNullable(destinationType), rawData);
+        }
+
+        EmissionPolicyDestination IModelJsonSerializable<EmissionPolicyDestination>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EmissionPolicyDestination>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEmissionPolicyDestination(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EmissionPolicyDestination>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EmissionPolicyDestination>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EmissionPolicyDestination IModelSerializable<EmissionPolicyDestination>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EmissionPolicyDestination>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEmissionPolicyDestination(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EmissionPolicyDestination"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EmissionPolicyDestination"/> to convert. </param>
+        public static implicit operator RequestContent(EmissionPolicyDestination model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EmissionPolicyDestination"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EmissionPolicyDestination(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEmissionPolicyDestination(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

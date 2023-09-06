@@ -5,18 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ExpressRouteProviderPortData : IUtf8JsonSerializable
+    public partial class ExpressRouteProviderPortData : IUtf8JsonSerializable, IModelJsonSerializable<ExpressRouteProviderPortData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExpressRouteProviderPortData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExpressRouteProviderPortData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressRouteProviderPortData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -59,11 +65,25 @@ namespace Azure.ResourceManager.Network
                 writer.WriteNumberValue(RemainingBandwidthInMbps.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExpressRouteProviderPortData DeserializeExpressRouteProviderPortData(JsonElement element)
+        internal static ExpressRouteProviderPortData DeserializeExpressRouteProviderPortData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -83,6 +103,7 @@ namespace Azure.ResourceManager.Network
             Optional<int> portBandwidthInMbps = default;
             Optional<int> usedBandwidthInMbps = default;
             Optional<int> remainingBandwidthInMbps = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -205,8 +226,61 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExpressRouteProviderPortData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), portPairDescriptor.Value, primaryAzurePort.Value, secondaryAzurePort.Value, peeringLocation.Value, Optional.ToNullable(overprovisionFactor), Optional.ToNullable(portBandwidthInMbps), Optional.ToNullable(usedBandwidthInMbps), Optional.ToNullable(remainingBandwidthInMbps));
+            return new ExpressRouteProviderPortData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), portPairDescriptor.Value, primaryAzurePort.Value, secondaryAzurePort.Value, peeringLocation.Value, Optional.ToNullable(overprovisionFactor), Optional.ToNullable(portBandwidthInMbps), Optional.ToNullable(usedBandwidthInMbps), Optional.ToNullable(remainingBandwidthInMbps), rawData);
+        }
+
+        ExpressRouteProviderPortData IModelJsonSerializable<ExpressRouteProviderPortData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressRouteProviderPortData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExpressRouteProviderPortData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExpressRouteProviderPortData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressRouteProviderPortData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExpressRouteProviderPortData IModelSerializable<ExpressRouteProviderPortData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressRouteProviderPortData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExpressRouteProviderPortData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExpressRouteProviderPortData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExpressRouteProviderPortData"/> to convert. </param>
+        public static implicit operator RequestContent(ExpressRouteProviderPortData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExpressRouteProviderPortData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExpressRouteProviderPortData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExpressRouteProviderPortData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

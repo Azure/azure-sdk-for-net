@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> NetworkVirtualApplianceConnection list. </summary>
     internal partial class NetworkVirtualApplianceConnectionList
     {
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceConnectionList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceConnectionList"/>. </summary>
         internal NetworkVirtualApplianceConnectionList()
         {
             Value = new ChangeTrackingList<NetworkVirtualApplianceConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceConnectionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceConnectionList"/>. </summary>
         /// <param name="value"> The list of NetworkVirtualAppliance connections. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal NetworkVirtualApplianceConnectionList(IReadOnlyList<NetworkVirtualApplianceConnectionData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkVirtualApplianceConnectionList(IReadOnlyList<NetworkVirtualApplianceConnectionData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of NetworkVirtualAppliance connections. </summary>

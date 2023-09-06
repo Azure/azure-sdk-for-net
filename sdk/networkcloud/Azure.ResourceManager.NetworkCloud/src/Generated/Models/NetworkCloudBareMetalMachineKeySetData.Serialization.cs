@@ -9,19 +9,32 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudBareMetalMachineKeySetData : IUtf8JsonSerializable
+    public partial class NetworkCloudBareMetalMachineKeySetData : IUtf8JsonSerializable, IModelJsonSerializable<NetworkCloudBareMetalMachineKeySetData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkCloudBareMetalMachineKeySetData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkCloudBareMetalMachineKeySetData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkCloudBareMetalMachineKeySetData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation);
+            if (ExtendedLocation is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<ExtendedLocation>)ExtendedLocation).Serialize(writer, options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -64,15 +77,36 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartArray();
             foreach (var item in UserList)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<KeySetUser>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkCloudBareMetalMachineKeySetData DeserializeNetworkCloudBareMetalMachineKeySetData(JsonElement element)
+        internal static NetworkCloudBareMetalMachineKeySetData DeserializeNetworkCloudBareMetalMachineKeySetData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,6 +129,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Optional<BareMetalMachineKeySetProvisioningState> provisioningState = default;
             IList<KeySetUser> userList = default;
             Optional<IReadOnlyList<KeySetUserStatus>> userListStatus = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -250,8 +285,61 @@ namespace Azure.ResourceManager.NetworkCloud
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkCloudBareMetalMachineKeySetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, azureGroupId, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, expiration, jumpHostsAllowed, Optional.ToNullable(lastValidation), osGroupName.Value, privilegeLevel, Optional.ToNullable(provisioningState), userList, Optional.ToList(userListStatus));
+            return new NetworkCloudBareMetalMachineKeySetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, azureGroupId, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, expiration, jumpHostsAllowed, Optional.ToNullable(lastValidation), osGroupName.Value, privilegeLevel, Optional.ToNullable(provisioningState), userList, Optional.ToList(userListStatus), rawData);
+        }
+
+        NetworkCloudBareMetalMachineKeySetData IModelJsonSerializable<NetworkCloudBareMetalMachineKeySetData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkCloudBareMetalMachineKeySetData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkCloudBareMetalMachineKeySetData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkCloudBareMetalMachineKeySetData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkCloudBareMetalMachineKeySetData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkCloudBareMetalMachineKeySetData IModelSerializable<NetworkCloudBareMetalMachineKeySetData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkCloudBareMetalMachineKeySetData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkCloudBareMetalMachineKeySetData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetworkCloudBareMetalMachineKeySetData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetworkCloudBareMetalMachineKeySetData"/> to convert. </param>
+        public static implicit operator RequestContent(NetworkCloudBareMetalMachineKeySetData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetworkCloudBareMetalMachineKeySetData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetworkCloudBareMetalMachineKeySetData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkCloudBareMetalMachineKeySetData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

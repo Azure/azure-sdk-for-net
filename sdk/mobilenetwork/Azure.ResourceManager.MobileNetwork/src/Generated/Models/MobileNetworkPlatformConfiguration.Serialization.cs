@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class MobileNetworkPlatformConfiguration : IUtf8JsonSerializable
+    public partial class MobileNetworkPlatformConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<MobileNetworkPlatformConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MobileNetworkPlatformConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MobileNetworkPlatformConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MobileNetworkPlatformConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(PlatformType.ToString());
@@ -39,11 +46,25 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WritePropertyName("customLocation"u8);
                 JsonSerializer.Serialize(writer, CustomLocation);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MobileNetworkPlatformConfiguration DeserializeMobileNetworkPlatformConfiguration(JsonElement element)
+        internal static MobileNetworkPlatformConfiguration DeserializeMobileNetworkPlatformConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +75,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Optional<WritableSubResource> azureStackHciCluster = default;
             Optional<WritableSubResource> connectedCluster = default;
             Optional<WritableSubResource> customLocation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -111,8 +133,61 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     customLocation = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MobileNetworkPlatformConfiguration(type, azureStackEdgeDevice, Optional.ToList(azureStackEdgeDevices), azureStackHciCluster, connectedCluster, customLocation);
+            return new MobileNetworkPlatformConfiguration(type, azureStackEdgeDevice, Optional.ToList(azureStackEdgeDevices), azureStackHciCluster, connectedCluster, customLocation, rawData);
+        }
+
+        MobileNetworkPlatformConfiguration IModelJsonSerializable<MobileNetworkPlatformConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MobileNetworkPlatformConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMobileNetworkPlatformConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MobileNetworkPlatformConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MobileNetworkPlatformConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MobileNetworkPlatformConfiguration IModelSerializable<MobileNetworkPlatformConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MobileNetworkPlatformConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMobileNetworkPlatformConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MobileNetworkPlatformConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MobileNetworkPlatformConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(MobileNetworkPlatformConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MobileNetworkPlatformConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MobileNetworkPlatformConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMobileNetworkPlatformConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

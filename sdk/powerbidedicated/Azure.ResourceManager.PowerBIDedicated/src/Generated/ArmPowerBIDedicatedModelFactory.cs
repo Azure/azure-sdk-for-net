@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmPowerBIDedicatedModelFactory
     {
-        /// <summary> Initializes a new instance of DedicatedCapacityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedCapacityData"/>. </summary>
         /// <param name="id"> An identifier that represents the PowerBI Dedicated resource. </param>
         /// <param name="name"> The name of the PowerBI Dedicated resource. </param>
         /// <param name="resourceType"> The type of the PowerBI Dedicated resource. </param>
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             tags ??= new Dictionary<string, string>();
             administrationMembers ??= new List<string>();
 
-            return new DedicatedCapacityData(id, name, resourceType, location, tags, systemData, sku, administrationMembers != null ? new DedicatedCapacityAdministrators(administrationMembers?.ToList()) : null, mode, tenantId, friendlyName, state, provisioningState);
+            return new DedicatedCapacityData(id, name, resourceType, location, tags, systemData, sku, administrationMembers != null ? new DedicatedCapacityAdministrators(administrationMembers?.ToList(), new Dictionary<string, BinaryData>()) : null, mode, tenantId, friendlyName, state, provisioningState, default);
         }
 
-        /// <summary> Initializes a new instance of PowerBIDedicatedResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PowerBIDedicatedResourceData"/>. </summary>
         /// <param name="id"> An identifier that represents the PowerBI Dedicated resource. </param>
         /// <param name="name"> The name of the PowerBI Dedicated resource. </param>
         /// <param name="resourceType"> The type of the PowerBI Dedicated resource. </param>
@@ -51,29 +51,45 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new PowerBIDedicatedResourceData(id, name, resourceType, location, tags, systemData);
+            return new PowerBIDedicatedResourceData(id, name, resourceType, location, tags, systemData, default);
         }
 
-        /// <summary> Initializes a new instance of SkuDetailsForExistingResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedCapacityPatch"/>. </summary>
+        /// <param name="sku"> The SKU of the Dedicated capacity resource. </param>
+        /// <param name="tags"> Key-value pairs of additional provisioning properties. </param>
+        /// <param name="administrationMembers"> A collection of Dedicated capacity administrators. </param>
+        /// <param name="mode"> Specifies the generation of the Power BI Embedded capacity. If no value is specified, the default value 'Gen2' is used. [Learn More](https://docs.microsoft.com/power-bi/developer/embedded/power-bi-embedded-generation-2). </param>
+        /// <param name="tenantId"> Tenant ID for the capacity. Used for creating Pro Plus capacity. </param>
+        /// <param name="friendlyName"> Capacity name. </param>
+        /// <returns> A new <see cref="Models.DedicatedCapacityPatch"/> instance for mocking. </returns>
+        public static DedicatedCapacityPatch DedicatedCapacityPatch(CapacitySku sku = null, IDictionary<string, string> tags = null, IEnumerable<string> administrationMembers = null, Mode? mode = null, Guid? tenantId = null, string friendlyName = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            administrationMembers ??= new List<string>();
+
+            return new DedicatedCapacityPatch(sku, tags, administrationMembers != null ? new DedicatedCapacityAdministrators(administrationMembers?.ToList(), new Dictionary<string, BinaryData>()) : null, mode, tenantId, friendlyName, default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SkuDetailsForExistingResource"/>. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="sku"> The SKU in SKU details for existing resources. </param>
         /// <returns> A new <see cref="Models.SkuDetailsForExistingResource"/> instance for mocking. </returns>
         public static SkuDetailsForExistingResource SkuDetailsForExistingResource(string resourceType = null, CapacitySku sku = null)
         {
-            return new SkuDetailsForExistingResource(resourceType, sku);
+            return new SkuDetailsForExistingResource(resourceType, sku, default);
         }
 
-        /// <summary> Initializes a new instance of CheckCapacityNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckCapacityNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailable"> Indicator of availability of the capacity name. </param>
         /// <param name="reason"> The reason of unavailability. </param>
         /// <param name="message"> The detailed message of the request unavailability. </param>
         /// <returns> A new <see cref="Models.CheckCapacityNameAvailabilityResult"/> instance for mocking. </returns>
         public static CheckCapacityNameAvailabilityResult CheckCapacityNameAvailabilityResult(bool? nameAvailable = null, string reason = null, string message = null)
         {
-            return new CheckCapacityNameAvailabilityResult(nameAvailable, reason, message);
+            return new CheckCapacityNameAvailabilityResult(nameAvailable, reason, message, default);
         }
 
-        /// <summary> Initializes a new instance of AutoScaleVCoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoScaleVCoreData"/>. </summary>
         /// <param name="id"> An identifier that represents the PowerBI Dedicated resource. </param>
         /// <param name="name"> The name of the PowerBI Dedicated resource. </param>
         /// <param name="resourceType"> The type of the PowerBI Dedicated resource. </param>
@@ -89,7 +105,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new AutoScaleVCoreData(id, name, resourceType, location, tags, systemData, sku, capacityLimit, capacityObjectId, provisioningState);
+            return new AutoScaleVCoreData(id, name, resourceType, location, tags, systemData, sku, capacityLimit, capacityObjectId, provisioningState, default);
         }
     }
 }

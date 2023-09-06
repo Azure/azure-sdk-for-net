@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayLoadDistributionPolicy : IUtf8JsonSerializable
+    public partial class ApplicationGatewayLoadDistributionPolicy : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationGatewayLoadDistributionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationGatewayLoadDistributionPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationGatewayLoadDistributionPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayLoadDistributionPolicy>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -35,7 +41,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in LoadDistributionTargets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ApplicationGatewayLoadDistributionTarget>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -45,11 +58,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(LoadDistributionAlgorithm.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewayLoadDistributionPolicy DeserializeApplicationGatewayLoadDistributionPolicy(JsonElement element)
+        internal static ApplicationGatewayLoadDistributionPolicy DeserializeApplicationGatewayLoadDistributionPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -61,6 +88,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<ApplicationGatewayLoadDistributionTarget>> loadDistributionTargets = default;
             Optional<ApplicationGatewayLoadDistributionAlgorithm> loadDistributionAlgorithm = default;
             Optional<NetworkProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -139,8 +167,61 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationGatewayLoadDistributionPolicy(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToList(loadDistributionTargets), Optional.ToNullable(loadDistributionAlgorithm), Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayLoadDistributionPolicy(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToList(loadDistributionTargets), Optional.ToNullable(loadDistributionAlgorithm), Optional.ToNullable(provisioningState), rawData);
+        }
+
+        ApplicationGatewayLoadDistributionPolicy IModelJsonSerializable<ApplicationGatewayLoadDistributionPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayLoadDistributionPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayLoadDistributionPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationGatewayLoadDistributionPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayLoadDistributionPolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationGatewayLoadDistributionPolicy IModelSerializable<ApplicationGatewayLoadDistributionPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayLoadDistributionPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationGatewayLoadDistributionPolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApplicationGatewayLoadDistributionPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApplicationGatewayLoadDistributionPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(ApplicationGatewayLoadDistributionPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApplicationGatewayLoadDistributionPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApplicationGatewayLoadDistributionPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationGatewayLoadDistributionPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

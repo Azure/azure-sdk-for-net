@@ -5,21 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VerificationIPFlowResult
+    public partial class VerificationIPFlowResult : IUtf8JsonSerializable, IModelJsonSerializable<VerificationIPFlowResult>
     {
-        internal static VerificationIPFlowResult DeserializeVerificationIPFlowResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VerificationIPFlowResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VerificationIPFlowResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VerificationIPFlowResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Access))
+            {
+                writer.WritePropertyName("access"u8);
+                writer.WriteStringValue(Access.Value.ToString());
+            }
+            if (Optional.IsDefined(RuleName))
+            {
+                writer.WritePropertyName("ruleName"u8);
+                writer.WriteStringValue(RuleName);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static VerificationIPFlowResult DeserializeVerificationIPFlowResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<NetworkAccess> access = default;
             Optional<string> ruleName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("access"u8))
@@ -36,8 +75,61 @@ namespace Azure.ResourceManager.Network.Models
                     ruleName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VerificationIPFlowResult(Optional.ToNullable(access), ruleName.Value);
+            return new VerificationIPFlowResult(Optional.ToNullable(access), ruleName.Value, rawData);
+        }
+
+        VerificationIPFlowResult IModelJsonSerializable<VerificationIPFlowResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VerificationIPFlowResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVerificationIPFlowResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VerificationIPFlowResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VerificationIPFlowResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VerificationIPFlowResult IModelSerializable<VerificationIPFlowResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VerificationIPFlowResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVerificationIPFlowResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VerificationIPFlowResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VerificationIPFlowResult"/> to convert. </param>
+        public static implicit operator RequestContent(VerificationIPFlowResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VerificationIPFlowResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VerificationIPFlowResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVerificationIPFlowResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

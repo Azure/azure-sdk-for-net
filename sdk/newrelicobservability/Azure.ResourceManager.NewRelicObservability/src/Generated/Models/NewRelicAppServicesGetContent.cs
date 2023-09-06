@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Request of a app services get Operation. </summary>
     public partial class NewRelicAppServicesGetContent
     {
-        /// <summary> Initializes a new instance of NewRelicAppServicesGetContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicAppServicesGetContent"/>. </summary>
         /// <param name="userEmail"> User Email. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         public NewRelicAppServicesGetContent(string userEmail)
@@ -23,6 +26,22 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
             AzureResourceIds = new ChangeTrackingList<ResourceIdentifier>();
             UserEmail = userEmail;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicAppServicesGetContent"/>. </summary>
+        /// <param name="azureResourceIds"> Azure resource IDs. </param>
+        /// <param name="userEmail"> User Email. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NewRelicAppServicesGetContent(IList<ResourceIdentifier> azureResourceIds, string userEmail, Dictionary<string, BinaryData> rawData)
+        {
+            AzureResourceIds = azureResourceIds;
+            UserEmail = userEmail;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicAppServicesGetContent"/> for deserialization. </summary>
+        internal NewRelicAppServicesGetContent()
+        {
         }
 
         /// <summary> Azure resource IDs. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Qos Traffic Profiler Port range properties. </summary>
     public partial class QosPortRange
     {
-        /// <summary> Initializes a new instance of QosPortRange. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="QosPortRange"/>. </summary>
         public QosPortRange()
         {
         }
 
-        /// <summary> Initializes a new instance of QosPortRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="QosPortRange"/>. </summary>
         /// <param name="start"> Qos Port Range start. </param>
         /// <param name="end"> Qos Port Range end. </param>
-        internal QosPortRange(int? start, int? end)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal QosPortRange(int? start, int? end, Dictionary<string, BinaryData> rawData)
         {
             Start = start;
             End = end;
+            _rawData = rawData;
         }
 
         /// <summary> Qos Port Range start. </summary>

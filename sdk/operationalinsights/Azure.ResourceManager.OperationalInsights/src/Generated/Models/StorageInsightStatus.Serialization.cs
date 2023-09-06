@@ -5,21 +5,57 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class StorageInsightStatus
+    public partial class StorageInsightStatus : IUtf8JsonSerializable, IModelJsonSerializable<StorageInsightStatus>
     {
-        internal static StorageInsightStatus DeserializeStorageInsightStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageInsightStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageInsightStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StorageInsightStatus>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("state"u8);
+            writer.WriteStringValue(State.ToString());
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static StorageInsightStatus DeserializeStorageInsightStatus(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             StorageInsightState state = default;
             Optional<string> description = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -32,8 +68,61 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageInsightStatus(state, description.Value);
+            return new StorageInsightStatus(state, description.Value, rawData);
+        }
+
+        StorageInsightStatus IModelJsonSerializable<StorageInsightStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageInsightStatus>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageInsightStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageInsightStatus>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageInsightStatus>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageInsightStatus IModelSerializable<StorageInsightStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageInsightStatus>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageInsightStatus(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageInsightStatus"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageInsightStatus"/> to convert. </param>
+        public static implicit operator RequestContent(StorageInsightStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageInsightStatus"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageInsightStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageInsightStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

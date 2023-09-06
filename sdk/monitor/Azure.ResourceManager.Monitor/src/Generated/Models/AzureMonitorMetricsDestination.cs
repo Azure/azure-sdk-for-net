@@ -5,24 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Azure Monitor Metrics destination. </summary>
     internal partial class AzureMonitorMetricsDestination
     {
-        /// <summary> Initializes a new instance of AzureMonitorMetricsDestination. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureMonitorMetricsDestination"/>. </summary>
         public AzureMonitorMetricsDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureMonitorMetricsDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMonitorMetricsDestination"/>. </summary>
         /// <param name="name">
         /// A friendly name for the destination.
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
         /// </param>
-        internal AzureMonitorMetricsDestination(string name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureMonitorMetricsDestination(string name, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
+            _rawData = rawData;
         }
 
         /// <summary>

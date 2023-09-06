@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postRulestackRulePostRulesRestClient.CreateListRequest(Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postRulestackRulePostRulesRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostRulestackRuleResource(Client, PostRulestackRuleData.DeserializePostRulestackRuleData(e)), _postRulestackRulePostRulesClientDiagnostics, Pipeline, "PostRulestackRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new PostRulestackRuleResource(Client, PostRulestackRuleData.DeserializePostRulestackRuleData(e)), _postRulestackRulePostRulesClientDiagnostics, Pipeline, "PostRulestackRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postRulestackRulePostRulesRestClient.CreateListRequest(Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postRulestackRulePostRulesRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostRulestackRuleResource(Client, PostRulestackRuleData.DeserializePostRulestackRuleData(e)), _postRulestackRulePostRulesClientDiagnostics, Pipeline, "PostRulestackRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new PostRulestackRuleResource(Client, PostRulestackRuleData.DeserializePostRulestackRuleData(e)), _postRulestackRulePostRulesClientDiagnostics, Pipeline, "PostRulestackRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -5,15 +5,103 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class FirewallSupportInfo
+    public partial class FirewallSupportInfo : IUtf8JsonSerializable, IModelJsonSerializable<FirewallSupportInfo>
     {
-        internal static FirewallSupportInfo DeserializeFirewallSupportInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FirewallSupportInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FirewallSupportInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallSupportInfo>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ProductSku))
+            {
+                writer.WritePropertyName("productSku"u8);
+                writer.WriteStringValue(ProductSku);
+            }
+            if (Optional.IsDefined(ProductSerial))
+            {
+                writer.WritePropertyName("productSerial"u8);
+                writer.WriteStringValue(ProductSerial);
+            }
+            if (Optional.IsDefined(AccountRegistered))
+            {
+                writer.WritePropertyName("accountRegistered"u8);
+                writer.WriteStringValue(AccountRegistered.Value.ToString());
+            }
+            if (Optional.IsDefined(AccountId))
+            {
+                writer.WritePropertyName("accountId"u8);
+                writer.WriteStringValue(AccountId);
+            }
+            if (Optional.IsDefined(UserDomainSupported))
+            {
+                writer.WritePropertyName("userDomainSupported"u8);
+                writer.WriteStringValue(UserDomainSupported.Value.ToString());
+            }
+            if (Optional.IsDefined(UserRegistered))
+            {
+                writer.WritePropertyName("userRegistered"u8);
+                writer.WriteStringValue(UserRegistered.Value.ToString());
+            }
+            if (Optional.IsDefined(FreeTrial))
+            {
+                writer.WritePropertyName("freeTrial"u8);
+                writer.WriteStringValue(FreeTrial.Value.ToString());
+            }
+            if (Optional.IsDefined(FreeTrialDaysLeft))
+            {
+                writer.WritePropertyName("freeTrialDaysLeft"u8);
+                writer.WriteNumberValue(FreeTrialDaysLeft.Value);
+            }
+            if (Optional.IsDefined(FreeTrialCreditLeft))
+            {
+                writer.WritePropertyName("freeTrialCreditLeft"u8);
+                writer.WriteNumberValue(FreeTrialCreditLeft.Value);
+            }
+            if (Optional.IsDefined(HelpURL))
+            {
+                writer.WritePropertyName("helpURL"u8);
+                writer.WriteStringValue(HelpURL);
+            }
+            if (Optional.IsDefined(SupportURL))
+            {
+                writer.WritePropertyName("supportURL"u8);
+                writer.WriteStringValue(SupportURL);
+            }
+            if (Optional.IsDefined(RegisterURL))
+            {
+                writer.WritePropertyName("registerURL"u8);
+                writer.WriteStringValue(RegisterURL);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static FirewallSupportInfo DeserializeFirewallSupportInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +118,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Optional<string> helpURL = default;
             Optional<string> supportURL = default;
             Optional<string> registerURL = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("productSku"u8))
@@ -116,8 +205,61 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     registerURL = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FirewallSupportInfo(productSku.Value, productSerial.Value, Optional.ToNullable(accountRegistered), accountId.Value, Optional.ToNullable(userDomainSupported), Optional.ToNullable(userRegistered), Optional.ToNullable(freeTrial), Optional.ToNullable(freeTrialDaysLeft), Optional.ToNullable(freeTrialCreditLeft), helpURL.Value, supportURL.Value, registerURL.Value);
+            return new FirewallSupportInfo(productSku.Value, productSerial.Value, Optional.ToNullable(accountRegistered), accountId.Value, Optional.ToNullable(userDomainSupported), Optional.ToNullable(userRegistered), Optional.ToNullable(freeTrial), Optional.ToNullable(freeTrialDaysLeft), Optional.ToNullable(freeTrialCreditLeft), helpURL.Value, supportURL.Value, registerURL.Value, rawData);
+        }
+
+        FirewallSupportInfo IModelJsonSerializable<FirewallSupportInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallSupportInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFirewallSupportInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FirewallSupportInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallSupportInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FirewallSupportInfo IModelSerializable<FirewallSupportInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallSupportInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFirewallSupportInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FirewallSupportInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FirewallSupportInfo"/> to convert. </param>
+        public static implicit operator RequestContent(FirewallSupportInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FirewallSupportInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FirewallSupportInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFirewallSupportInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

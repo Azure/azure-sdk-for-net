@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MySql.Models
 {
     /// <summary> The MySqlServerUpgradeContent. </summary>
     public partial class MySqlServerUpgradeContent
     {
-        /// <summary> Initializes a new instance of MySqlServerUpgradeContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlServerUpgradeContent"/>. </summary>
         public MySqlServerUpgradeContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlServerUpgradeContent"/>. </summary>
+        /// <param name="targetServerVersion"> Represents an server storage profile. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlServerUpgradeContent(string targetServerVersion, Dictionary<string, BinaryData> rawData)
+        {
+            TargetServerVersion = targetServerVersion;
+            _rawData = rawData;
         }
 
         /// <summary> Represents an server storage profile. </summary>

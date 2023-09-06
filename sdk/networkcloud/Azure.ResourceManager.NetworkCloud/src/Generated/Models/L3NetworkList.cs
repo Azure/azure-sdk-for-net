@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> L3NetworkList represents a list of L3 networks. </summary>
     internal partial class L3NetworkList
     {
-        /// <summary> Initializes a new instance of L3NetworkList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="L3NetworkList"/>. </summary>
         internal L3NetworkList()
         {
             Value = new ChangeTrackingList<NetworkCloudL3NetworkData>();
         }
 
-        /// <summary> Initializes a new instance of L3NetworkList. </summary>
+        /// <summary> Initializes a new instance of <see cref="L3NetworkList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="value"> The list of L3 networks. </param>
-        internal L3NetworkList(string nextLink, IReadOnlyList<NetworkCloudL3NetworkData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal L3NetworkList(string nextLink, IReadOnlyList<NetworkCloudL3NetworkData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The link used to get the next page of operations. </summary>

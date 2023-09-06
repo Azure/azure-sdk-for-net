@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Volume relocation properties. </summary>
     public partial class NetAppVolumeRelocationProperties
     {
-        /// <summary> Initializes a new instance of NetAppVolumeRelocationProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeRelocationProperties"/>. </summary>
         public NetAppVolumeRelocationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeRelocationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeRelocationProperties"/>. </summary>
         /// <param name="isRelocationRequested"> Has relocation been requested for this volume. </param>
         /// <param name="isReadyToBeFinalized"> Has relocation finished and is ready to be cleaned up. </param>
-        internal NetAppVolumeRelocationProperties(bool? isRelocationRequested, bool? isReadyToBeFinalized)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeRelocationProperties(bool? isRelocationRequested, bool? isReadyToBeFinalized, Dictionary<string, BinaryData> rawData)
         {
             IsRelocationRequested = isRelocationRequested;
             IsReadyToBeFinalized = isReadyToBeFinalized;
+            _rawData = rawData;
         }
 
         /// <summary> Has relocation been requested for this volume. </summary>

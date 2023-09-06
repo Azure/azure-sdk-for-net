@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> The AvailabilityZoneMapping. </summary>
     public partial class AvailabilityZoneMapping
     {
-        /// <summary> Initializes a new instance of AvailabilityZoneMapping. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailabilityZoneMapping"/>. </summary>
         internal AvailabilityZoneMapping()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailabilityZoneMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailabilityZoneMapping"/>. </summary>
         /// <param name="availabilityZone"> Logical availability zone. </param>
         /// <param name="isAvailable"> Available availability zone. </param>
-        internal AvailabilityZoneMapping(string availabilityZone, bool? isAvailable)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailabilityZoneMapping(string availabilityZone, bool? isAvailable, Dictionary<string, BinaryData> rawData)
         {
             AvailabilityZone = availabilityZone;
             IsAvailable = isAvailable;
+            _rawData = rawData;
         }
 
         /// <summary> Logical availability zone. </summary>

@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ThrottlingMetric : IUtf8JsonSerializable
+    public partial class ThrottlingMetric : IUtf8JsonSerializable, IModelJsonSerializable<ThrottlingMetric>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ThrottlingMetric>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ThrottlingMetric>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ThrottlingMetric>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(MetricType.ToString());
@@ -25,11 +32,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("interval"u8);
                 writer.WriteStringValue(Interval.Value, "P");
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ThrottlingMetric DeserializeThrottlingMetric(JsonElement element)
+        internal static ThrottlingMetric DeserializeThrottlingMetric(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +58,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ThrottlingMetricType type = default;
             long limit = default;
             Optional<TimeSpan> interval = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -58,8 +80,61 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     interval = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ThrottlingMetric(type, limit, Optional.ToNullable(interval));
+            return new ThrottlingMetric(type, limit, Optional.ToNullable(interval), rawData);
+        }
+
+        ThrottlingMetric IModelJsonSerializable<ThrottlingMetric>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ThrottlingMetric>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeThrottlingMetric(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ThrottlingMetric>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ThrottlingMetric>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ThrottlingMetric IModelSerializable<ThrottlingMetric>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ThrottlingMetric>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeThrottlingMetric(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ThrottlingMetric"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ThrottlingMetric"/> to convert. </param>
+        public static implicit operator RequestContent(ThrottlingMetric model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ThrottlingMetric"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ThrottlingMetric(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeThrottlingMetric(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

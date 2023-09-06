@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -15,14 +16,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters for VirtualNetworkGatewayPolicyGroup. </summary>
     public partial class VirtualNetworkGatewayPolicyGroup : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayPolicyGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayPolicyGroup"/>. </summary>
         public VirtualNetworkGatewayPolicyGroup()
         {
             PolicyMembers = new ChangeTrackingList<VirtualNetworkGatewayPolicyGroupMember>();
             VngClientConnectionConfigurations = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayPolicyGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayPolicyGroup"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -32,7 +33,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="policyMembers"> Multiple PolicyMembers for VirtualNetworkGatewayPolicyGroup. </param>
         /// <param name="vngClientConnectionConfigurations"> List of references to vngClientConnectionConfigurations. </param>
         /// <param name="provisioningState"> The provisioning state of the VirtualNetworkGatewayPolicyGroup resource. </param>
-        internal VirtualNetworkGatewayPolicyGroup(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, bool? isDefault, int? priority, IList<VirtualNetworkGatewayPolicyGroupMember> policyMembers, IReadOnlyList<WritableSubResource> vngClientConnectionConfigurations, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkGatewayPolicyGroup(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, bool? isDefault, int? priority, IList<VirtualNetworkGatewayPolicyGroupMember> policyMembers, IReadOnlyList<WritableSubResource> vngClientConnectionConfigurations, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, rawData)
         {
             ETag = etag;
             IsDefault = isDefault;

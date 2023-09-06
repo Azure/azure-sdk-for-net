@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Vpn device configuration script generation parameters. </summary>
     public partial class VpnDeviceScriptContent
     {
-        /// <summary> Initializes a new instance of VpnDeviceScriptContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VpnDeviceScriptContent"/>. </summary>
         public VpnDeviceScriptContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VpnDeviceScriptContent"/>. </summary>
+        /// <param name="vendor"> The vendor for the vpn device. </param>
+        /// <param name="deviceFamily"> The device family for the vpn device. </param>
+        /// <param name="firmwareVersion"> The firmware version for the vpn device. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VpnDeviceScriptContent(string vendor, string deviceFamily, string firmwareVersion, Dictionary<string, BinaryData> rawData)
+        {
+            Vendor = vendor;
+            DeviceFamily = deviceFamily;
+            FirmwareVersion = firmwareVersion;
+            _rawData = rawData;
         }
 
         /// <summary> The vendor for the vpn device. </summary>

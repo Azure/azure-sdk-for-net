@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Rule of type application. </summary>
     public partial class ApplicationRule : FirewallPolicyRule
     {
-        /// <summary> Initializes a new instance of ApplicationRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationRule"/>. </summary>
         public ApplicationRule()
         {
             SourceAddresses = new ChangeTrackingList<string>();
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             RuleType = FirewallPolicyRuleType.ApplicationRule;
         }
 
-        /// <summary> Initializes a new instance of ApplicationRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationRule"/>. </summary>
         /// <param name="name"> Name of the rule. </param>
         /// <param name="description"> Description of the rule. </param>
         /// <param name="ruleType"> Rule Type. </param>
@@ -42,7 +43,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="terminateTLS"> Terminate TLS connections for this rule. </param>
         /// <param name="webCategories"> List of destination azure web categories. </param>
         /// <param name="httpHeadersToInsert"> List of HTTP/S headers to insert. </param>
-        internal ApplicationRule(string name, string description, FirewallPolicyRuleType ruleType, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<FirewallPolicyRuleApplicationProtocol> protocols, IList<string> targetFqdns, IList<string> targetUrls, IList<string> fqdnTags, IList<string> sourceIPGroups, bool? terminateTLS, IList<string> webCategories, IList<FirewallPolicyHttpHeaderToInsert> httpHeadersToInsert) : base(name, description, ruleType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationRule(string name, string description, FirewallPolicyRuleType ruleType, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<FirewallPolicyRuleApplicationProtocol> protocols, IList<string> targetFqdns, IList<string> targetUrls, IList<string> fqdnTags, IList<string> sourceIPGroups, bool? terminateTLS, IList<string> webCategories, IList<FirewallPolicyHttpHeaderToInsert> httpHeadersToInsert, Dictionary<string, BinaryData> rawData) : base(name, description, ruleType, rawData)
         {
             SourceAddresses = sourceAddresses;
             DestinationAddresses = destinationAddresses;

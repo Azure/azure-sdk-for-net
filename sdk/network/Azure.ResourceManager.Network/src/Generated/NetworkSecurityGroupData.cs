@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkSecurityGroupData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkSecurityGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityGroupData"/>. </summary>
         public NetworkSecurityGroupData()
         {
             SecurityRules = new ChangeTrackingList<SecurityRuleData>();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
             FlowLogs = new ChangeTrackingList<FlowLogData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkSecurityGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityGroupData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="flowLogs"> A collection of references to flow log resources. </param>
         /// <param name="resourceGuid"> The resource GUID property of the network security group resource. </param>
         /// <param name="provisioningState"> The provisioning state of the network security group resource. </param>
-        internal NetworkSecurityGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, bool? flushConnection, IList<SecurityRuleData> securityRules, IReadOnlyList<SecurityRuleData> defaultSecurityRules, IReadOnlyList<NetworkInterfaceData> networkInterfaces, IReadOnlyList<SubnetData> subnets, IReadOnlyList<FlowLogData> flowLogs, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkSecurityGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, bool? flushConnection, IList<SecurityRuleData> securityRules, IReadOnlyList<SecurityRuleData> defaultSecurityRules, IReadOnlyList<NetworkInterfaceData> networkInterfaces, IReadOnlyList<SubnetData> subnets, IReadOnlyList<FlowLogData> flowLogs, Guid? resourceGuid, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, location, tags, rawData)
         {
             ETag = etag;
             FlushConnection = flushConnection;

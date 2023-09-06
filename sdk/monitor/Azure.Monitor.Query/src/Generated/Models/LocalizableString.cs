@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
@@ -13,7 +14,10 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The localizable string class. </summary>
     internal partial class LocalizableString
     {
-        /// <summary> Initializes a new instance of LocalizableString. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LocalizableString"/>. </summary>
         /// <param name="value"> the invariant value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal LocalizableString(string value)
@@ -23,13 +27,20 @@ namespace Azure.Monitor.Query.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of LocalizableString. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalizableString"/>. </summary>
         /// <param name="value"> the invariant value. </param>
         /// <param name="localizedValue"> the locale specific value. </param>
-        internal LocalizableString(string value, string localizedValue)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LocalizableString(string value, string localizedValue, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             LocalizedValue = localizedValue;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LocalizableString"/> for deserialization. </summary>
+        internal LocalizableString()
+        {
         }
 
         /// <summary> the invariant value. </summary>

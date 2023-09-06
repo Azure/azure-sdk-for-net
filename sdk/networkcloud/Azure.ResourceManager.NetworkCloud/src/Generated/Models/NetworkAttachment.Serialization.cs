@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class NetworkAttachment : IUtf8JsonSerializable
+    public partial class NetworkAttachment : IUtf8JsonSerializable, IModelJsonSerializable<NetworkAttachment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkAttachment>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkAttachment>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkAttachment>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("attachedNetworkId"u8);
             writer.WriteStringValue(AttachedNetworkId);
@@ -39,11 +47,25 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("networkAttachmentName"u8);
                 writer.WriteStringValue(NetworkAttachmentName);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkAttachment DeserializeNetworkAttachment(JsonElement element)
+        internal static NetworkAttachment DeserializeNetworkAttachment(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +77,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<string> ipv6Address = default;
             Optional<string> macAddress = default;
             Optional<string> networkAttachmentName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("attachedNetworkId"u8))
@@ -96,8 +119,61 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     networkAttachmentName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkAttachment(attachedNetworkId, Optional.ToNullable(defaultGateway), ipAllocationMethod, ipv4Address.Value, ipv6Address.Value, macAddress.Value, networkAttachmentName.Value);
+            return new NetworkAttachment(attachedNetworkId, Optional.ToNullable(defaultGateway), ipAllocationMethod, ipv4Address.Value, ipv6Address.Value, macAddress.Value, networkAttachmentName.Value, rawData);
+        }
+
+        NetworkAttachment IModelJsonSerializable<NetworkAttachment>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkAttachment>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkAttachment(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkAttachment>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkAttachment>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkAttachment IModelSerializable<NetworkAttachment>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkAttachment>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkAttachment(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetworkAttachment"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetworkAttachment"/> to convert. </param>
+        public static implicit operator RequestContent(NetworkAttachment model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetworkAttachment"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetworkAttachment(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkAttachment(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class LoadBalancerBackendAddress : IUtf8JsonSerializable
+    public partial class LoadBalancerBackendAddress : IUtf8JsonSerializable, IModelJsonSerializable<LoadBalancerBackendAddress>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LoadBalancerBackendAddress>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LoadBalancerBackendAddress>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LoadBalancerBackendAddress>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -50,11 +57,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(AdminState.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LoadBalancerBackendAddress DeserializeLoadBalancerBackendAddress(JsonElement element)
+        internal static LoadBalancerBackendAddress DeserializeLoadBalancerBackendAddress(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -67,6 +88,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<WritableSubResource> loadBalancerFrontendIPConfiguration = default;
             Optional<IReadOnlyList<NatRulePortMapping>> inboundNatRulesPortMapping = default;
             Optional<LoadBalancerBackendAddressAdminState> adminState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -150,8 +172,61 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LoadBalancerBackendAddress(name.Value, virtualNetwork, subnet, ipAddress.Value, networkInterfaceIPConfiguration, loadBalancerFrontendIPConfiguration, Optional.ToList(inboundNatRulesPortMapping), Optional.ToNullable(adminState));
+            return new LoadBalancerBackendAddress(name.Value, virtualNetwork, subnet, ipAddress.Value, networkInterfaceIPConfiguration, loadBalancerFrontendIPConfiguration, Optional.ToList(inboundNatRulesPortMapping), Optional.ToNullable(adminState), rawData);
+        }
+
+        LoadBalancerBackendAddress IModelJsonSerializable<LoadBalancerBackendAddress>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LoadBalancerBackendAddress>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLoadBalancerBackendAddress(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LoadBalancerBackendAddress>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LoadBalancerBackendAddress>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LoadBalancerBackendAddress IModelSerializable<LoadBalancerBackendAddress>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LoadBalancerBackendAddress>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLoadBalancerBackendAddress(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LoadBalancerBackendAddress"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LoadBalancerBackendAddress"/> to convert. </param>
+        public static implicit operator RequestContent(LoadBalancerBackendAddress model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LoadBalancerBackendAddress"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LoadBalancerBackendAddress(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLoadBalancerBackendAddress(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

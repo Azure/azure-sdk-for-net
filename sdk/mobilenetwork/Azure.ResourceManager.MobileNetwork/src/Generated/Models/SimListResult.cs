@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MobileNetwork;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Response for list SIMs API service call. </summary>
     internal partial class SimListResult
     {
-        /// <summary> Initializes a new instance of SimListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SimListResult"/>. </summary>
         internal SimListResult()
         {
             Value = new ChangeTrackingList<MobileNetworkSimData>();
         }
 
-        /// <summary> Initializes a new instance of SimListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SimListResult"/>. </summary>
         /// <param name="value"> A list of SIMs in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal SimListResult(IReadOnlyList<MobileNetworkSimData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SimListResult(IReadOnlyList<MobileNetworkSimData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> A list of SIMs in a resource group. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.PostgreSql;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> A list of firewall rules. </summary>
     internal partial class PostgreSqlFirewallRuleListResult
     {
-        /// <summary> Initializes a new instance of PostgreSqlFirewallRuleListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFirewallRuleListResult"/>. </summary>
         internal PostgreSqlFirewallRuleListResult()
         {
             Value = new ChangeTrackingList<PostgreSqlFirewallRuleData>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFirewallRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFirewallRuleListResult"/>. </summary>
         /// <param name="value"> The list of firewall rules in a server. </param>
-        internal PostgreSqlFirewallRuleListResult(IReadOnlyList<PostgreSqlFirewallRuleData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFirewallRuleListResult(IReadOnlyList<PostgreSqlFirewallRuleData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The list of firewall rules in a server. </summary>

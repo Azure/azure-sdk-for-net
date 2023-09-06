@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Weekly Schedule properties, make a snapshot every week at a specific day or days. </summary>
     public partial class SnapshotPolicyWeeklySchedule
     {
-        /// <summary> Initializes a new instance of SnapshotPolicyWeeklySchedule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyWeeklySchedule"/>. </summary>
         public SnapshotPolicyWeeklySchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of SnapshotPolicyWeeklySchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyWeeklySchedule"/>. </summary>
         /// <param name="snapshotsToKeep"> Weekly snapshot count to keep. </param>
         /// <param name="day"> Indicates which weekdays snapshot should be taken, accepts a comma separated list of week day names in english. </param>
         /// <param name="hour"> Indicates which hour in UTC timezone a snapshot should be taken. </param>
         /// <param name="minute"> Indicates which minute snapshot should be taken. </param>
         /// <param name="usedBytes"> Resource size in bytes, current storage usage for the volume in bytes. </param>
-        internal SnapshotPolicyWeeklySchedule(int? snapshotsToKeep, string day, int? hour, int? minute, long? usedBytes)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SnapshotPolicyWeeklySchedule(int? snapshotsToKeep, string day, int? hour, int? minute, long? usedBytes, Dictionary<string, BinaryData> rawData)
         {
             SnapshotsToKeep = snapshotsToKeep;
             Day = day;
             Hour = hour;
             Minute = minute;
             UsedBytes = usedBytes;
+            _rawData = rawData;
         }
 
         /// <summary> Weekly snapshot count to keep. </summary>

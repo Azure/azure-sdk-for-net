@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     /// </summary>
     public partial class MySqlFlexibleServerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MySqlFlexibleServerData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -51,7 +54,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="highAvailability"> High availability related properties of a server. </param>
         /// <param name="network"> Network related properties of a server. </param>
         /// <param name="maintenanceWindow"> Maintenance window of a server. </param>
-        internal MySqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MySqlFlexibleServerSku sku, string administratorLogin, string administratorLoginPassword, MySqlFlexibleServerVersion? version, string availabilityZone, MySqlFlexibleServerCreateMode? createMode, ResourceIdentifier sourceServerResourceId, DateTimeOffset? restorePointInTime, MySqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, MySqlFlexibleServerDataEncryption dataEncryption, MySqlFlexibleServerState? state, string fullyQualifiedDomainName, MySqlFlexibleServerStorage storage, MySqlFlexibleServerBackupProperties backup, MySqlFlexibleServerHighAvailability highAvailability, MySqlFlexibleServerNetwork network, MySqlFlexibleServerMaintenanceWindow maintenanceWindow) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MySqlFlexibleServerSku sku, string administratorLogin, string administratorLoginPassword, MySqlFlexibleServerVersion? version, string availabilityZone, MySqlFlexibleServerCreateMode? createMode, ResourceIdentifier sourceServerResourceId, DateTimeOffset? restorePointInTime, MySqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, MySqlFlexibleServerDataEncryption dataEncryption, MySqlFlexibleServerState? state, string fullyQualifiedDomainName, MySqlFlexibleServerStorage storage, MySqlFlexibleServerBackupProperties backup, MySqlFlexibleServerHighAvailability highAvailability, MySqlFlexibleServerNetwork network, MySqlFlexibleServerMaintenanceWindow maintenanceWindow, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -72,6 +76,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             HighAvailability = highAvailability;
             Network = network;
             MaintenanceWindow = maintenanceWindow;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerData"/> for deserialization. </summary>
+        internal MySqlFlexibleServerData()
+        {
         }
 
         /// <summary> The cmk identity for the server. Current supported identity types: UserAssigned. </summary>

@@ -5,15 +5,75 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class MetricNamespace
+    public partial class MetricNamespace : IUtf8JsonSerializable, IModelJsonSerializable<MetricNamespace>
     {
-        internal static MetricNamespace DeserializeMetricNamespace(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MetricNamespace>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MetricNamespace>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MetricNamespace>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Classification))
+            {
+                writer.WritePropertyName("classification"u8);
+                writer.WriteStringValue(Classification.Value.ToString());
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                if (Properties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MetricNamespaceName>)Properties).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MetricNamespace DeserializeMetricNamespace(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +83,7 @@ namespace Azure.Monitor.Query.Models
             Optional<string> name = default;
             Optional<MetricNamespaceClassification> classification = default;
             Optional<MetricNamespaceName> properties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -58,8 +119,61 @@ namespace Azure.Monitor.Query.Models
                     properties = MetricNamespaceName.DeserializeMetricNamespaceName(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MetricNamespace(id.Value, type.Value, name.Value, Optional.ToNullable(classification), properties.Value);
+            return new MetricNamespace(id.Value, type.Value, name.Value, Optional.ToNullable(classification), properties.Value, rawData);
+        }
+
+        MetricNamespace IModelJsonSerializable<MetricNamespace>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricNamespace>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricNamespace(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MetricNamespace>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricNamespace>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MetricNamespace IModelSerializable<MetricNamespace>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricNamespace>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMetricNamespace(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MetricNamespace"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MetricNamespace"/> to convert. </param>
+        public static implicit operator RequestContent(MetricNamespace model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MetricNamespace"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MetricNamespace(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMetricNamespace(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

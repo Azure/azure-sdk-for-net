@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Packet core control plane collect diagnostics package options. </summary>
     public partial class PacketCoreControlPlaneCollectDiagnosticsPackage
     {
-        /// <summary> Initializes a new instance of PacketCoreControlPlaneCollectDiagnosticsPackage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PacketCoreControlPlaneCollectDiagnosticsPackage"/>. </summary>
         /// <param name="storageAccountBlobUri"> The Storage Account Blob URL to upload the diagnostics package to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountBlobUri"/> is null. </exception>
         public PacketCoreControlPlaneCollectDiagnosticsPackage(Uri storageAccountBlobUri)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Argument.AssertNotNull(storageAccountBlobUri, nameof(storageAccountBlobUri));
 
             StorageAccountBlobUri = storageAccountBlobUri;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PacketCoreControlPlaneCollectDiagnosticsPackage"/>. </summary>
+        /// <param name="storageAccountBlobUri"> The Storage Account Blob URL to upload the diagnostics package to. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PacketCoreControlPlaneCollectDiagnosticsPackage(Uri storageAccountBlobUri, Dictionary<string, BinaryData> rawData)
+        {
+            StorageAccountBlobUri = storageAccountBlobUri;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PacketCoreControlPlaneCollectDiagnosticsPackage"/> for deserialization. </summary>
+        internal PacketCoreControlPlaneCollectDiagnosticsPackage()
+        {
         }
 
         /// <summary> The Storage Account Blob URL to upload the diagnostics package to. </summary>

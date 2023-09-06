@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.PrivateDns.Models
 {
     /// <summary> A CNAME record. </summary>
     internal partial class PrivateDnsCnameRecordInfo
     {
-        /// <summary> Initializes a new instance of PrivateDnsCnameRecordInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsCnameRecordInfo"/>. </summary>
         public PrivateDnsCnameRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateDnsCnameRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsCnameRecordInfo"/>. </summary>
         /// <param name="cname"> The canonical name for this CNAME record. </param>
-        internal PrivateDnsCnameRecordInfo(string cname)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateDnsCnameRecordInfo(string cname, Dictionary<string, BinaryData> rawData)
         {
             Cname = cname;
+            _rawData = rawData;
         }
 
         /// <summary> The canonical name for this CNAME record. </summary>

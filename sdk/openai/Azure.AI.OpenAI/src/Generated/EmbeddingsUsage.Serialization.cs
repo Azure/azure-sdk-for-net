@@ -5,22 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class EmbeddingsUsage
+    public partial class EmbeddingsUsage : IUtf8JsonSerializable, IModelJsonSerializable<EmbeddingsUsage>
     {
-        internal static EmbeddingsUsage DeserializeEmbeddingsUsage(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EmbeddingsUsage>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EmbeddingsUsage>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("prompt_tokens"u8);
+            writer.WriteNumberValue(PromptTokens);
+            writer.WritePropertyName("total_tokens"u8);
+            writer.WriteNumberValue(TotalTokens);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static EmbeddingsUsage DeserializeEmbeddingsUsage(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int promptTokens = default;
             int totalTokens = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prompt_tokens"u8))
@@ -33,16 +65,61 @@ namespace Azure.AI.OpenAI
                     totalTokens = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EmbeddingsUsage(promptTokens, totalTokens);
+            return new EmbeddingsUsage(promptTokens, totalTokens, rawData);
         }
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static EmbeddingsUsage FromResponse(Response response)
+        EmbeddingsUsage IModelJsonSerializable<EmbeddingsUsage>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeEmbeddingsUsage(document.RootElement);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEmbeddingsUsage(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EmbeddingsUsage>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EmbeddingsUsage IModelSerializable<EmbeddingsUsage>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEmbeddingsUsage(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EmbeddingsUsage"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EmbeddingsUsage"/> to convert. </param>
+        public static implicit operator RequestContent(EmbeddingsUsage model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EmbeddingsUsage"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EmbeddingsUsage(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEmbeddingsUsage(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

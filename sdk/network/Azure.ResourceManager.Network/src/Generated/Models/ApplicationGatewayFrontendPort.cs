@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -13,19 +15,20 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Frontend port of an application gateway. </summary>
     public partial class ApplicationGatewayFrontendPort : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayFrontendPort. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFrontendPort"/>. </summary>
         public ApplicationGatewayFrontendPort()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayFrontendPort. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFrontendPort"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="port"> Frontend port. </param>
         /// <param name="provisioningState"> The provisioning state of the frontend port resource. </param>
-        internal ApplicationGatewayFrontendPort(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? port, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayFrontendPort(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? port, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, rawData)
         {
             ETag = etag;
             Port = port;

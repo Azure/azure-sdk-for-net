@@ -8,21 +8,34 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DynamicMetricCriteria : IUtf8JsonSerializable
+    public partial class DynamicMetricCriteria : IUtf8JsonSerializable, IModelJsonSerializable<DynamicMetricCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DynamicMetricCriteria>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DynamicMetricCriteria>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DynamicMetricCriteria>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(Operator.ToString());
             writer.WritePropertyName("alertSensitivity"u8);
             writer.WriteStringValue(AlertSensitivity.ToString());
             writer.WritePropertyName("failingPeriods"u8);
-            writer.WriteObjectValue(FailingPeriods);
+            if (FailingPeriods is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<DynamicThresholdFailingPeriods>)FailingPeriods).Serialize(writer, options);
+            }
             if (Optional.IsDefined(IgnoreDataBefore))
             {
                 writer.WritePropertyName("ignoreDataBefore"u8);
@@ -47,7 +60,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MetricDimension>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -68,8 +88,10 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static DynamicMetricCriteria DeserializeDynamicMetricCriteria(JsonElement element)
+        internal static DynamicMetricCriteria DeserializeDynamicMetricCriteria(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -165,6 +187,54 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DynamicMetricCriteria(criterionType, name, metricName, metricNamespace.Value, timeAggregation, Optional.ToList(dimensions), Optional.ToNullable(skipMetricValidation), additionalProperties, @operator, alertSensitivity, failingPeriods, Optional.ToNullable(ignoreDataBefore));
+        }
+
+        DynamicMetricCriteria IModelJsonSerializable<DynamicMetricCriteria>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DynamicMetricCriteria>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDynamicMetricCriteria(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DynamicMetricCriteria>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DynamicMetricCriteria>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DynamicMetricCriteria IModelSerializable<DynamicMetricCriteria>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DynamicMetricCriteria>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDynamicMetricCriteria(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DynamicMetricCriteria"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DynamicMetricCriteria"/> to convert. </param>
+        public static implicit operator RequestContent(DynamicMetricCriteria model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DynamicMetricCriteria"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DynamicMetricCriteria(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDynamicMetricCriteria(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

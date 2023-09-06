@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    public partial class PostgreSqlServerPropertiesForCreate : IUtf8JsonSerializable
+    public partial class PostgreSqlServerPropertiesForCreate : IUtf8JsonSerializable, IModelJsonSerializable<PostgreSqlServerPropertiesForCreate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PostgreSqlServerPropertiesForCreate>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PostgreSqlServerPropertiesForCreate>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlServerPropertiesForCreate>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Version))
             {
@@ -43,11 +51,176 @@ namespace Azure.ResourceManager.PostgreSql.Models
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                if (StorageProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PostgreSqlStorageProfile>)StorageProfile).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("createMode"u8);
             writer.WriteStringValue(CreateMode.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static PostgreSqlServerPropertiesForCreate DeserializePostgreSqlServerPropertiesForCreate(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("createMode", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "Default": return PostgreSqlServerPropertiesForDefaultCreate.DeserializePostgreSqlServerPropertiesForDefaultCreate(element);
+                    case "GeoRestore": return PostgreSqlServerPropertiesForGeoRestore.DeserializePostgreSqlServerPropertiesForGeoRestore(element);
+                    case "PointInTimeRestore": return PostgreSqlServerPropertiesForRestore.DeserializePostgreSqlServerPropertiesForRestore(element);
+                    case "Replica": return PostgreSqlServerPropertiesForReplica.DeserializePostgreSqlServerPropertiesForReplica(element);
+                }
+            }
+
+            // Unknown type found so we will deserialize the base properties only
+            Optional<PostgreSqlServerVersion> version = default;
+            Optional<PostgreSqlSslEnforcementEnum> sslEnforcement = default;
+            Optional<PostgreSqlMinimalTlsVersionEnum> minimalTlsVersion = default;
+            Optional<PostgreSqlInfrastructureEncryption> infrastructureEncryption = default;
+            Optional<PostgreSqlPublicNetworkAccessEnum> publicNetworkAccess = default;
+            Optional<PostgreSqlStorageProfile> storageProfile = default;
+            PostgreSqlCreateMode createMode = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("version"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    version = new PostgreSqlServerVersion(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sslEnforcement"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sslEnforcement = property.Value.GetString().ToPostgreSqlSslEnforcementEnum();
+                    continue;
+                }
+                if (property.NameEquals("minimalTlsVersion"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minimalTlsVersion = new PostgreSqlMinimalTlsVersionEnum(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("infrastructureEncryption"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    infrastructureEncryption = new PostgreSqlInfrastructureEncryption(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("publicNetworkAccess"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publicNetworkAccess = new PostgreSqlPublicNetworkAccessEnum(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("storageProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageProfile = PostgreSqlStorageProfile.DeserializePostgreSqlStorageProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("createMode"u8))
+                {
+                    createMode = new PostgreSqlCreateMode(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new Models.PostgreSqlServerPropertiesForCreate(Optional.ToNullable(version), Optional.ToNullable(sslEnforcement), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(infrastructureEncryption), Optional.ToNullable(publicNetworkAccess), storageProfile.Value, createMode, rawData);
+        }
+
+        PostgreSqlServerPropertiesForCreate IModelJsonSerializable<PostgreSqlServerPropertiesForCreate>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlServerPropertiesForCreate>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlServerPropertiesForCreate(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PostgreSqlServerPropertiesForCreate>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlServerPropertiesForCreate>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PostgreSqlServerPropertiesForCreate IModelSerializable<PostgreSqlServerPropertiesForCreate>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlServerPropertiesForCreate>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePostgreSqlServerPropertiesForCreate(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PostgreSqlServerPropertiesForCreate"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PostgreSqlServerPropertiesForCreate"/> to convert. </param>
+        public static implicit operator RequestContent(PostgreSqlServerPropertiesForCreate model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PostgreSqlServerPropertiesForCreate"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PostgreSqlServerPropertiesForCreate(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePostgreSqlServerPropertiesForCreate(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

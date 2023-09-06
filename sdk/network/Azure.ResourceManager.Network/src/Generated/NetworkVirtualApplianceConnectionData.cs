@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -17,13 +18,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkVirtualApplianceConnectionData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceConnectionData"/>. </summary>
         public NetworkVirtualApplianceConnectionData()
         {
             BgpPeerAddress = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -34,7 +35,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="bgpPeerAddress"> List of bgpPeerAddresses for the NVA instances. </param>
         /// <param name="enableInternetSecurity"> Enable internet security. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
-        internal NetworkVirtualApplianceConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, string namePropertiesName, NetworkProvisioningState? provisioningState, long? asn, long? tunnelIdentifier, IList<string> bgpPeerAddress, bool? enableInternetSecurity, RoutingConfigurationNfv routingConfiguration) : base(id, name, resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkVirtualApplianceConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, string namePropertiesName, NetworkProvisioningState? provisioningState, long? asn, long? tunnelIdentifier, IList<string> bgpPeerAddress, bool? enableInternetSecurity, RoutingConfigurationNfv routingConfiguration, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, rawData)
         {
             NamePropertiesName = namePropertiesName;
             ProvisioningState = provisioningState;

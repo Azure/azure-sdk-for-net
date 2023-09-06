@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AzureEventHubsParameterPatch. </summary>
     internal partial class AzureEventHubsParameterPatch
     {
-        /// <summary> Initializes a new instance of AzureEventHubsParameterPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureEventHubsParameterPatch"/>. </summary>
         public AzureEventHubsParameterPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureEventHubsParameterPatch"/>. </summary>
+        /// <param name="connectionString"> The connection string of this Azure Event Hubs. </param>
+        /// <param name="consumerGroup"> The consumer group to be used in this data feed. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureEventHubsParameterPatch(string connectionString, string consumerGroup, Dictionary<string, BinaryData> rawData)
+        {
+            ConnectionString = connectionString;
+            ConsumerGroup = consumerGroup;
+            _rawData = rawData;
         }
 
         /// <summary> The connection string of this Azure Event Hubs. </summary>

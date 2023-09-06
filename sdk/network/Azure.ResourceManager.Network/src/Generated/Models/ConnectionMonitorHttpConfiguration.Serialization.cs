@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectionMonitorHttpConfiguration : IUtf8JsonSerializable
+    public partial class ConnectionMonitorHttpConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<ConnectionMonitorHttpConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConnectionMonitorHttpConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConnectionMonitorHttpConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectionMonitorHttpConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Port))
             {
@@ -37,7 +44,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RequestHeaders)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<NetworkWatcherHttpHeader>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -56,11 +70,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("preferHTTPS"u8);
                 writer.WriteBooleanValue(PreferHttps.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConnectionMonitorHttpConfiguration DeserializeConnectionMonitorHttpConfiguration(JsonElement element)
+        internal static ConnectionMonitorHttpConfiguration DeserializeConnectionMonitorHttpConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -71,6 +99,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<NetworkWatcherHttpHeader>> requestHeaders = default;
             Optional<IList<string>> validStatusCodeRanges = default;
             Optional<bool> preferHTTPS = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("port"u8))
@@ -133,8 +162,61 @@ namespace Azure.ResourceManager.Network.Models
                     preferHTTPS = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConnectionMonitorHttpConfiguration(Optional.ToNullable(port), Optional.ToNullable(method), path.Value, Optional.ToList(requestHeaders), Optional.ToList(validStatusCodeRanges), Optional.ToNullable(preferHTTPS));
+            return new ConnectionMonitorHttpConfiguration(Optional.ToNullable(port), Optional.ToNullable(method), path.Value, Optional.ToList(requestHeaders), Optional.ToList(validStatusCodeRanges), Optional.ToNullable(preferHTTPS), rawData);
+        }
+
+        ConnectionMonitorHttpConfiguration IModelJsonSerializable<ConnectionMonitorHttpConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectionMonitorHttpConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectionMonitorHttpConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConnectionMonitorHttpConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectionMonitorHttpConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConnectionMonitorHttpConfiguration IModelSerializable<ConnectionMonitorHttpConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectionMonitorHttpConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConnectionMonitorHttpConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConnectionMonitorHttpConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConnectionMonitorHttpConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(ConnectionMonitorHttpConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConnectionMonitorHttpConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConnectionMonitorHttpConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConnectionMonitorHttpConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DestinationsSpec : IUtf8JsonSerializable
+    public partial class DestinationsSpec : IUtf8JsonSerializable, IModelJsonSerializable<DestinationsSpec>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DestinationsSpec>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DestinationsSpec>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DestinationsSpec>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(LogAnalytics))
             {
@@ -22,7 +29,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in LogAnalytics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<LogAnalyticsDestination>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -32,14 +46,28 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in MonitoringAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MonitoringAccountDestination>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AzureMonitorMetrics))
             {
                 writer.WritePropertyName("azureMonitorMetrics"u8);
-                writer.WriteObjectValue(AzureMonitorMetrics);
+                if (AzureMonitorMetrics is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DestinationsSpecAzureMonitorMetrics>)AzureMonitorMetrics).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(EventHubs))
             {
@@ -47,7 +75,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in EventHubs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DataCollectionRuleEventHubDestination>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +92,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in EventHubsDirect)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DataCollectionRuleEventHubDirectDestination>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +109,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageBlobsDirect)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DataCollectionRuleStorageBlobDestination>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +126,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageTablesDirect)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DataCollectionRuleStorageTableDestination>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -87,15 +143,36 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DataCollectionRuleStorageBlobDestination>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static DestinationsSpec DeserializeDestinationsSpec(JsonElement element)
+        internal static DestinationsSpec DeserializeDestinationsSpec(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -108,6 +185,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<IList<DataCollectionRuleStorageBlobDestination>> storageBlobsDirect = default;
             Optional<IList<DataCollectionRuleStorageTableDestination>> storageTablesDirect = default;
             Optional<IList<DataCollectionRuleStorageBlobDestination>> storageAccounts = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logAnalytics"u8))
@@ -217,8 +295,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     storageAccounts = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DestinationsSpec(Optional.ToList(logAnalytics), Optional.ToList(monitoringAccounts), azureMonitorMetrics.Value, Optional.ToList(eventHubs), Optional.ToList(eventHubsDirect), Optional.ToList(storageBlobsDirect), Optional.ToList(storageTablesDirect), Optional.ToList(storageAccounts));
+            return new DestinationsSpec(Optional.ToList(logAnalytics), Optional.ToList(monitoringAccounts), azureMonitorMetrics.Value, Optional.ToList(eventHubs), Optional.ToList(eventHubsDirect), Optional.ToList(storageBlobsDirect), Optional.ToList(storageTablesDirect), Optional.ToList(storageAccounts), rawData);
+        }
+
+        DestinationsSpec IModelJsonSerializable<DestinationsSpec>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DestinationsSpec>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDestinationsSpec(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DestinationsSpec>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DestinationsSpec>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DestinationsSpec IModelSerializable<DestinationsSpec>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DestinationsSpec>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDestinationsSpec(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DestinationsSpec"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DestinationsSpec"/> to convert. </param>
+        public static implicit operator RequestContent(DestinationsSpec model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DestinationsSpec"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DestinationsSpec(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDestinationsSpec(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

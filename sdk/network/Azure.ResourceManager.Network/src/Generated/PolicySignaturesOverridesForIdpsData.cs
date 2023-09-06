@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -17,22 +18,27 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class PolicySignaturesOverridesForIdpsData
     {
-        /// <summary> Initializes a new instance of PolicySignaturesOverridesForIdpsData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicySignaturesOverridesForIdpsData"/>. </summary>
         public PolicySignaturesOverridesForIdpsData()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicySignaturesOverridesForIdpsData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySignaturesOverridesForIdpsData"/>. </summary>
         /// <param name="name"> Contains the name of the resource (default). </param>
         /// <param name="id"> Will contain the resource id of the signature override resource. </param>
         /// <param name="resourceType"> Will contain the type of the resource: Microsoft.Network/firewallPolicies/intrusionDetectionSignaturesOverrides. </param>
         /// <param name="properties"> Will contain the properties of the resource (the actual signature overrides). </param>
-        internal PolicySignaturesOverridesForIdpsData(string name, ResourceIdentifier id, ResourceType? resourceType, PolicySignaturesOverridesForIdpsProperties properties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicySignaturesOverridesForIdpsData(string name, ResourceIdentifier id, ResourceType? resourceType, PolicySignaturesOverridesForIdpsProperties properties, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Id = id;
             ResourceType = resourceType;
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Contains the name of the resource (default). </summary>

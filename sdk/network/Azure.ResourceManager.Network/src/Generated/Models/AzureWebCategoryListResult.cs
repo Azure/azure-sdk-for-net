@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListAzureWebCategories API service call. </summary>
     internal partial class AzureWebCategoryListResult
     {
-        /// <summary> Initializes a new instance of AzureWebCategoryListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureWebCategoryListResult"/>. </summary>
         internal AzureWebCategoryListResult()
         {
             Value = new ChangeTrackingList<AzureWebCategoryData>();
         }
 
-        /// <summary> Initializes a new instance of AzureWebCategoryListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureWebCategoryListResult"/>. </summary>
         /// <param name="value"> List of Azure Web Categories for a given Subscription. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal AzureWebCategoryListResult(IReadOnlyList<AzureWebCategoryData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureWebCategoryListResult(IReadOnlyList<AzureWebCategoryData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of Azure Web Categories for a given Subscription. </summary>

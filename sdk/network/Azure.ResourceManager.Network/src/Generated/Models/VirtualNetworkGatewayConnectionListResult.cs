@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for the ListVirtualNetworkGatewayConnections API service call. </summary>
     internal partial class VirtualNetworkGatewayConnectionListResult
     {
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionListResult"/>. </summary>
         internal VirtualNetworkGatewayConnectionListResult()
         {
             Value = new ChangeTrackingList<VirtualNetworkGatewayConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionListResult"/>. </summary>
         /// <param name="value"> A list of VirtualNetworkGatewayConnection resources that exists in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal VirtualNetworkGatewayConnectionListResult(IReadOnlyList<VirtualNetworkGatewayConnectionData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkGatewayConnectionListResult(IReadOnlyList<VirtualNetworkGatewayConnectionData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> A list of VirtualNetworkGatewayConnection resources that exists in a resource group. </summary>

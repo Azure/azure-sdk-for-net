@@ -5,16 +5,49 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AvailableServiceAlias
+    public partial class AvailableServiceAlias : IUtf8JsonSerializable, IModelJsonSerializable<AvailableServiceAlias>
     {
-        internal static AvailableServiceAlias DeserializeAvailableServiceAlias(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AvailableServiceAlias>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AvailableServiceAlias>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AvailableServiceAlias>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ResourceName))
+            {
+                writer.WritePropertyName("resourceName"u8);
+                writer.WriteStringValue(ResourceName);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AvailableServiceAlias DeserializeAvailableServiceAlias(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +57,7 @@ namespace Azure.ResourceManager.Network.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceName"u8))
@@ -55,8 +89,61 @@ namespace Azure.ResourceManager.Network.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AvailableServiceAlias(id, name, type, systemData.Value, resourceName.Value);
+            return new AvailableServiceAlias(id, name, type, systemData.Value, resourceName.Value, rawData);
+        }
+
+        AvailableServiceAlias IModelJsonSerializable<AvailableServiceAlias>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AvailableServiceAlias>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAvailableServiceAlias(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AvailableServiceAlias>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AvailableServiceAlias>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AvailableServiceAlias IModelSerializable<AvailableServiceAlias>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AvailableServiceAlias>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAvailableServiceAlias(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AvailableServiceAlias"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AvailableServiceAlias"/> to convert. </param>
+        public static implicit operator RequestContent(AvailableServiceAlias model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AvailableServiceAlias"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AvailableServiceAlias(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAvailableServiceAlias(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

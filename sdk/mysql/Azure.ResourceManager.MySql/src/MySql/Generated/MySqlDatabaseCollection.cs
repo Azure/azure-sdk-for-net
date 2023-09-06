@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.MySql
         public virtual AsyncPageable<MySqlDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlDatabaseDatabasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MySqlDatabaseResource(Client, MySqlDatabaseData.DeserializeMySqlDatabaseData(e)), _mySqlDatabaseDatabasesClientDiagnostics, Pipeline, "MySqlDatabaseCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new MySqlDatabaseResource(Client, MySqlDatabaseData.DeserializeMySqlDatabaseData(e)), _mySqlDatabaseDatabasesClientDiagnostics, Pipeline, "MySqlDatabaseCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.MySql
         public virtual Pageable<MySqlDatabaseResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlDatabaseDatabasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MySqlDatabaseResource(Client, MySqlDatabaseData.DeserializeMySqlDatabaseData(e)), _mySqlDatabaseDatabasesClientDiagnostics, Pipeline, "MySqlDatabaseCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new MySqlDatabaseResource(Client, MySqlDatabaseData.DeserializeMySqlDatabaseData(e)), _mySqlDatabaseDatabasesClientDiagnostics, Pipeline, "MySqlDatabaseCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

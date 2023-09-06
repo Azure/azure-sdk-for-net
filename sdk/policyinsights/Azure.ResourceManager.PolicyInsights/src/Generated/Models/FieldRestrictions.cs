@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> The restrictions that will be placed on a field in the resource by policy. </summary>
     public partial class FieldRestrictions
     {
-        /// <summary> Initializes a new instance of FieldRestrictions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FieldRestrictions"/>. </summary>
         internal FieldRestrictions()
         {
             Restrictions = new ChangeTrackingList<FieldRestriction>();
         }
 
-        /// <summary> Initializes a new instance of FieldRestrictions. </summary>
+        /// <summary> Initializes a new instance of <see cref="FieldRestrictions"/>. </summary>
         /// <param name="field"> The name of the field. This can be a top-level property like 'name' or 'type' or an Azure Policy field alias. </param>
         /// <param name="restrictions"> The restrictions placed on that field by policy. </param>
-        internal FieldRestrictions(string field, IReadOnlyList<FieldRestriction> restrictions)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FieldRestrictions(string field, IReadOnlyList<FieldRestriction> restrictions, Dictionary<string, BinaryData> rawData)
         {
             Field = field;
             Restrictions = restrictions;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the field. This can be a top-level property like 'name' or 'type' or an Azure Policy field alias. </summary>

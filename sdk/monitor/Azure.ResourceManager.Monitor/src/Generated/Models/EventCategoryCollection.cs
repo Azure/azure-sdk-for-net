@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A collection of event categories. Currently possible values are: Administrative, Security, ServiceHealth, Alert, Recommendation, Policy. </summary>
     internal partial class EventCategoryCollection
     {
-        /// <summary> Initializes a new instance of EventCategoryCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventCategoryCollection"/>. </summary>
         /// <param name="value"> the list that includes the Azure event categories. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal EventCategoryCollection(IEnumerable<MonitorLocalizableString> value)
@@ -25,11 +28,18 @@ namespace Azure.ResourceManager.Monitor.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of EventCategoryCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventCategoryCollection"/>. </summary>
         /// <param name="value"> the list that includes the Azure event categories. </param>
-        internal EventCategoryCollection(IReadOnlyList<MonitorLocalizableString> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventCategoryCollection(IReadOnlyList<MonitorLocalizableString> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EventCategoryCollection"/> for deserialization. </summary>
+        internal EventCategoryCollection()
+        {
         }
 
         /// <summary> the list that includes the Azure event categories. </summary>

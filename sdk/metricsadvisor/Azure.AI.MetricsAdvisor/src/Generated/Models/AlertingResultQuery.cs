@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.AI.MetricsAdvisor;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -13,7 +14,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AlertingResultQuery. </summary>
     internal partial class AlertingResultQuery
     {
-        /// <summary> Initializes a new instance of AlertingResultQuery. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AlertingResultQuery"/>. </summary>
         /// <param name="startTime"> start time. </param>
         /// <param name="endTime"> end time. </param>
         /// <param name="timeMode"> time mode. </param>
@@ -22,6 +26,24 @@ namespace Azure.AI.MetricsAdvisor.Models
             StartTime = startTime;
             EndTime = endTime;
             TimeMode = timeMode;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AlertingResultQuery"/>. </summary>
+        /// <param name="startTime"> start time. </param>
+        /// <param name="endTime"> end time. </param>
+        /// <param name="timeMode"> time mode. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AlertingResultQuery(DateTimeOffset startTime, DateTimeOffset endTime, AlertQueryTimeMode timeMode, Dictionary<string, BinaryData> rawData)
+        {
+            StartTime = startTime;
+            EndTime = endTime;
+            TimeMode = timeMode;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AlertingResultQuery"/> for deserialization. </summary>
+        internal AlertingResultQuery()
+        {
         }
 
         /// <summary> start time. </summary>

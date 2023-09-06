@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> L2NetworkPatchParameters represents the body of the request to patch the L2 network. </summary>
     public partial class NetworkCloudL2NetworkPatch
     {
-        /// <summary> Initializes a new instance of NetworkCloudL2NetworkPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudL2NetworkPatch"/>. </summary>
         public NetworkCloudL2NetworkPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudL2NetworkPatch"/>. </summary>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudL2NetworkPatch(IDictionary<string, string> tags, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>

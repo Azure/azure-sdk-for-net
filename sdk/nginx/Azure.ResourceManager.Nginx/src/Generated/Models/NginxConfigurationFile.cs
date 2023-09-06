@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> The NginxConfigurationFile. </summary>
     public partial class NginxConfigurationFile
     {
-        /// <summary> Initializes a new instance of NginxConfigurationFile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NginxConfigurationFile"/>. </summary>
         public NginxConfigurationFile()
         {
         }
 
-        /// <summary> Initializes a new instance of NginxConfigurationFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxConfigurationFile"/>. </summary>
         /// <param name="content"></param>
         /// <param name="virtualPath"></param>
-        internal NginxConfigurationFile(string content, string virtualPath)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NginxConfigurationFile(string content, string virtualPath, Dictionary<string, BinaryData> rawData)
         {
             Content = content;
             VirtualPath = virtualPath;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the content. </summary>
