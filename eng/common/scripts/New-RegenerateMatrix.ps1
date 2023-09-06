@@ -38,20 +38,15 @@ function Split-Items([array]$Items) {
 # ensure the output directory exists
 New-Item -ItemType Directory -Path $OutputDirectory -Force | Out-Null
 
-$pattern = "^$($RepoRoot.Path.Replace("\", "/"))/sdk/((.*?)/.*)"
-Push-Location "$RepoRoot/sdk"
-[array]$packageFolders = Get-ChildItem -Directory -Recurse
-| ForEach-Object {
-  $_.FullName.Replace("\" , "/")
-}
-| Where-Object { $_ -match $pattern }
+[array]$packageFolders = Get-ChildItem "$RepoRoot/sdk" -Directory
+| Get-ChildItem -Directory
+| Sort-Object -Property FullName
 | ForEach-Object {
   [ordered]@{
-    "PackageFolder"   = $Matches[1]
-    "ServiceArea" = $Matches[2]
+    "PackageFolder"   = "$($_.Parent.Name)/$($_.Name)"
+    "ServiceArea" = $_.Parent.Name
   }
 }
-Pop-Location
 
 $batches = Split-Items -Items $packageFolders
 
