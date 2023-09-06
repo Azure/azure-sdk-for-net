@@ -12,7 +12,6 @@ namespace Azure.ResourceManager
 {
     public partial class ArmClient
     {
-        #region ManagementGroupResource
         /// <summary>
         /// Gets an object representing a <see cref="ManagementGroupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ManagementGroupResource.CreateResourceIdentifier" /> to create a <see cref="ManagementGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -24,6 +23,5 @@ namespace Azure.ResourceManager
             ManagementGroupResource.ValidateResourceId(id);
             return new ManagementGroupResource(this, id);
         }
-        #endregion
     }
 }

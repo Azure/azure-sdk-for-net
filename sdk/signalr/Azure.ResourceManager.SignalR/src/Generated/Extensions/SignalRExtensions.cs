@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SignalR.Mocking;
 using Azure.ResourceManager.SignalR.Models;
 
 namespace Azure.ResourceManager.SignalR
@@ -19,38 +20,30 @@ namespace Azure.ResourceManager.SignalR
     /// <summary> A class to add extension methods to Azure.ResourceManager.SignalR. </summary>
     public static partial class SignalRExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static SignalRArmClientMockingExtension GetSignalRArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new SignalRArmClientMockingExtension(client);
+            });
+        }
+
+        private static SignalRResourceGroupMockingExtension GetSignalRResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new SignalRResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static SignalRSubscriptionMockingExtension GetSignalRSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new SignalRSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region SignalRResource
         /// <summary>
         /// Gets an object representing a <see cref="SignalRResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SignalRResource.CreateResourceIdentifier" /> to create a <see cref="SignalRResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -60,16 +53,9 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> Returns a <see cref="SignalRResource" /> object. </returns>
         public static SignalRResource GetSignalRResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SignalRResource.ValidateResourceId(id);
-                return new SignalRResource(client, id);
-            }
-            );
+            return GetSignalRArmClientMockingExtension(client).GetSignalRResource(id);
         }
-        #endregion
 
-        #region SignalRCustomCertificateResource
         /// <summary>
         /// Gets an object representing a <see cref="SignalRCustomCertificateResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SignalRCustomCertificateResource.CreateResourceIdentifier" /> to create a <see cref="SignalRCustomCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -79,16 +65,9 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> Returns a <see cref="SignalRCustomCertificateResource" /> object. </returns>
         public static SignalRCustomCertificateResource GetSignalRCustomCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SignalRCustomCertificateResource.ValidateResourceId(id);
-                return new SignalRCustomCertificateResource(client, id);
-            }
-            );
+            return GetSignalRArmClientMockingExtension(client).GetSignalRCustomCertificateResource(id);
         }
-        #endregion
 
-        #region SignalRCustomDomainResource
         /// <summary>
         /// Gets an object representing a <see cref="SignalRCustomDomainResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SignalRCustomDomainResource.CreateResourceIdentifier" /> to create a <see cref="SignalRCustomDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -98,16 +77,9 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> Returns a <see cref="SignalRCustomDomainResource" /> object. </returns>
         public static SignalRCustomDomainResource GetSignalRCustomDomainResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SignalRCustomDomainResource.ValidateResourceId(id);
-                return new SignalRCustomDomainResource(client, id);
-            }
-            );
+            return GetSignalRArmClientMockingExtension(client).GetSignalRCustomDomainResource(id);
         }
-        #endregion
 
-        #region SignalRPrivateEndpointConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="SignalRPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SignalRPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SignalRPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -117,16 +89,9 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> Returns a <see cref="SignalRPrivateEndpointConnectionResource" /> object. </returns>
         public static SignalRPrivateEndpointConnectionResource GetSignalRPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SignalRPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new SignalRPrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetSignalRArmClientMockingExtension(client).GetSignalRPrivateEndpointConnectionResource(id);
         }
-        #endregion
 
-        #region SignalRSharedPrivateLinkResource
         /// <summary>
         /// Gets an object representing a <see cref="SignalRSharedPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SignalRSharedPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SignalRSharedPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -136,21 +101,15 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> Returns a <see cref="SignalRSharedPrivateLinkResource" /> object. </returns>
         public static SignalRSharedPrivateLinkResource GetSignalRSharedPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SignalRSharedPrivateLinkResource.ValidateResourceId(id);
-                return new SignalRSharedPrivateLinkResource(client, id);
-            }
-            );
+            return GetSignalRArmClientMockingExtension(client).GetSignalRSharedPrivateLinkResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of SignalRResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SignalRResources and their operations over a SignalRResource. </returns>
         public static SignalRCollection GetSignalRs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSignalRs();
+            return GetSignalRResourceGroupMockingExtension(resourceGroupResource).GetSignalRs();
         }
 
         /// <summary>
@@ -174,7 +133,7 @@ namespace Azure.ResourceManager.SignalR
         [ForwardsClientCalls]
         public static async Task<Response<SignalRResource>> GetSignalRAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetSignalRs().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetSignalRResourceGroupMockingExtension(resourceGroupResource).GetSignalRAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -198,7 +157,7 @@ namespace Azure.ResourceManager.SignalR
         [ForwardsClientCalls]
         public static Response<SignalRResource> GetSignalR(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSignalRs().Get(resourceName, cancellationToken);
+            return GetSignalRResourceGroupMockingExtension(resourceGroupResource).GetSignalR(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -221,9 +180,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<SignalRNameAvailabilityResult>> CheckSignalRNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SignalRNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckSignalRNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetSignalRSubscriptionMockingExtension(subscriptionResource).CheckSignalRNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -246,9 +203,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<SignalRNameAvailabilityResult> CheckSignalRNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, SignalRNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckSignalRNameAvailability(location, content, cancellationToken);
+            return GetSignalRSubscriptionMockingExtension(subscriptionResource).CheckSignalRNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -269,7 +224,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> An async collection of <see cref="SignalRResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SignalRResource> GetSignalRsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSignalRsAsync(cancellationToken);
+            return GetSignalRSubscriptionMockingExtension(subscriptionResource).GetSignalRsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -290,7 +245,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> A collection of <see cref="SignalRResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SignalRResource> GetSignalRs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSignalRs(cancellationToken);
+            return GetSignalRSubscriptionMockingExtension(subscriptionResource).GetSignalRs(cancellationToken);
         }
 
         /// <summary>
@@ -312,7 +267,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> An async collection of <see cref="SignalRUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SignalRUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesAsync(location, cancellationToken);
+            return GetSignalRSubscriptionMockingExtension(subscriptionResource).GetUsagesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -334,7 +289,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> A collection of <see cref="SignalRUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SignalRUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsages(location, cancellationToken);
+            return GetSignalRSubscriptionMockingExtension(subscriptionResource).GetUsages(location, cancellationToken);
         }
     }
 }
