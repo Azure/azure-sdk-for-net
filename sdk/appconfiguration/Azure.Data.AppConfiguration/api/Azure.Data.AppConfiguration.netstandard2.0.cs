@@ -100,7 +100,6 @@ namespace Azure.Data.AppConfiguration
     public partial class ConfigurationSetting
     {
         public ConfigurationSetting(string key, string value, string label = null) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public ConfigurationSetting(string key, string value, string label, Azure.ETag etag) { }
         public string ContentType { get { throw null; } set { } }
         public Azure.ETag ETag { get { throw null; } }
@@ -148,6 +147,7 @@ namespace Azure.Data.AppConfiguration
     public partial class FeatureFlagConfigurationSetting : Azure.Data.AppConfiguration.ConfigurationSetting
     {
         public FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label = null) : base (default(string), default(string), default(string)) { }
+        public FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label, Azure.ETag etag) : base (default(string), default(string), default(string)) { }
         public System.Collections.Generic.IList<Azure.Data.AppConfiguration.FeatureFlagFilter> ClientFilters { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
@@ -165,6 +165,7 @@ namespace Azure.Data.AppConfiguration
     public partial class SecretReferenceConfigurationSetting : Azure.Data.AppConfiguration.ConfigurationSetting
     {
         public SecretReferenceConfigurationSetting(string key, System.Uri secretId, string label = null) : base (default(string), default(string), default(string)) { }
+        public SecretReferenceConfigurationSetting(string key, System.Uri secretId, string label, Azure.ETag etag) : base (default(string), default(string), default(string)) { }
         public System.Uri SecretId { get { throw null; } set { } }
     }
     [System.FlagsAttribute]
