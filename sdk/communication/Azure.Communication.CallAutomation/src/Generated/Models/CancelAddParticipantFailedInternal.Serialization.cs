@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class CanceladdParticipantFailedInternal
+    internal partial class CancelAddParticipantFailedInternal
     {
-        internal static CanceladdParticipantFailedInternal DeserializeCanceladdParticipantFailedInternal(JsonElement element)
+        internal static CancelAddParticipantFailedInternal DeserializeCancelAddParticipantFailedInternal(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -61,7 +61,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new CanceladdParticipantFailedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, invitiationId.Value);
+            return new CancelAddParticipantFailedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, invitiationId.Value);
         }
     }
 }

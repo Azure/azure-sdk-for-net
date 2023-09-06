@@ -8,7 +8,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The remove participant failed event internal.
     /// </summary>
-    [CodeGenModel("CanceladdParticipantFailed", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
+    [CodeGenModel("CancelAddParticipantFailed", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     internal partial class CanceladdParticipantFailedInternal
     {
     }
