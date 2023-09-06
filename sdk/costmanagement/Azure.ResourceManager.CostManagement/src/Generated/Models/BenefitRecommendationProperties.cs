@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -14,14 +16,18 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// Please note <see cref="BenefitRecommendationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SharedScopeBenefitRecommendationProperties"/> and <see cref="SingleScopeBenefitRecommendationProperties"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownBenefitRecommendationProperties))]
     public abstract partial class BenefitRecommendationProperties
     {
-        /// <summary> Initializes a new instance of BenefitRecommendationProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BenefitRecommendationProperties"/>. </summary>
         protected BenefitRecommendationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of BenefitRecommendationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BenefitRecommendationProperties"/>. </summary>
         /// <param name="firstConsumptionOn"> The first usage date used for looking back for computing the recommendations. </param>
         /// <param name="lastConsumptionOn"> The last usage date used for looking back for computing the recommendations. </param>
         /// <param name="lookBackPeriod"> The number of days of usage evaluated for computing the recommendations. </param>
@@ -35,7 +41,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="recommendationDetails"> The details of the proposed recommendation. </param>
         /// <param name="allRecommendationDetails"> The list of all benefit recommendations with the recommendation details. </param>
         /// <param name="scope"> Benefit scope. For example, Single or Shared. </param>
-        internal BenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn, DateTimeOffset? lastConsumptionOn, LookBackPeriod? lookBackPeriod, int? totalHours, RecommendationUsageDetails usage, string armSkuName, BenefitRecommendationPeriodTerm? term, BenefitRecommendationUsageGrain? commitmentGranularity, string currencyCode, decimal? costWithoutBenefit, AllSavingsBenefitDetails recommendationDetails, AllSavingsList allRecommendationDetails, BenefitRecommendationScope scope)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn, DateTimeOffset? lastConsumptionOn, LookBackPeriod? lookBackPeriod, int? totalHours, RecommendationUsageDetails usage, string armSkuName, BenefitRecommendationPeriodTerm? term, BenefitRecommendationUsageGrain? commitmentGranularity, string currencyCode, decimal? costWithoutBenefit, AllSavingsBenefitDetails recommendationDetails, AllSavingsList allRecommendationDetails, BenefitRecommendationScope scope, Dictionary<string, BinaryData> rawData)
         {
             FirstConsumptionOn = firstConsumptionOn;
             LastConsumptionOn = lastConsumptionOn;
@@ -50,6 +57,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             RecommendationDetails = recommendationDetails;
             AllRecommendationDetails = allRecommendationDetails;
             Scope = scope;
+            _rawData = rawData;
         }
 
         /// <summary> The first usage date used for looking back for computing the recommendations. </summary>

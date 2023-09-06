@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter.Models
@@ -13,7 +14,10 @@ namespace Azure.Communication.JobRouter.Models
     /// <summary> Assignment details of a job to a worker. </summary>
     public partial class RouterJobAssignment
     {
-        /// <summary> Initializes a new instance of RouterJobAssignment. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouterJobAssignment"/>. </summary>
         /// <param name="assignmentId"> The Id of the job assignment. </param>
         /// <param name="assignedAt"> The assignment time of the job in UTC. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> is null. </exception>
@@ -25,19 +29,26 @@ namespace Azure.Communication.JobRouter.Models
             AssignedAt = assignedAt;
         }
 
-        /// <summary> Initializes a new instance of RouterJobAssignment. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterJobAssignment"/>. </summary>
         /// <param name="assignmentId"> The Id of the job assignment. </param>
         /// <param name="workerId"> The Id of the Worker assigned to the job. </param>
         /// <param name="assignedAt"> The assignment time of the job in UTC. </param>
         /// <param name="completedAt"> The time the job was marked as completed after being assigned in UTC. </param>
         /// <param name="closedAt"> The time the job was marked as closed after being completed in UTC. </param>
-        internal RouterJobAssignment(string assignmentId, string workerId, DateTimeOffset assignedAt, DateTimeOffset? completedAt, DateTimeOffset? closedAt)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouterJobAssignment(string assignmentId, string workerId, DateTimeOffset assignedAt, DateTimeOffset? completedAt, DateTimeOffset? closedAt, Dictionary<string, BinaryData> rawData)
         {
             AssignmentId = assignmentId;
             WorkerId = workerId;
             AssignedAt = assignedAt;
             CompletedAt = completedAt;
             ClosedAt = closedAt;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouterJobAssignment"/> for deserialization. </summary>
+        internal RouterJobAssignment()
+        {
         }
 
         /// <summary> The Id of the job assignment. </summary>

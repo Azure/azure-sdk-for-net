@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentResourceFormatRoleAssignmentsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleAssignmentResourceFormatRoleAssignmentsRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentResourceFormatResource(Client, RoleAssignmentResourceFormatData.DeserializeRoleAssignmentResourceFormatData(e)), _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics, Pipeline, "RoleAssignmentResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new RoleAssignmentResourceFormatResource(Client, RoleAssignmentResourceFormatData.DeserializeRoleAssignmentResourceFormatData(e)), _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics, Pipeline, "RoleAssignmentResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentResourceFormatRoleAssignmentsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleAssignmentResourceFormatRoleAssignmentsRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentResourceFormatResource(Client, RoleAssignmentResourceFormatData.DeserializeRoleAssignmentResourceFormatData(e)), _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics, Pipeline, "RoleAssignmentResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new RoleAssignmentResourceFormatResource(Client, RoleAssignmentResourceFormatData.DeserializeRoleAssignmentResourceFormatData(e)), _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics, Pipeline, "RoleAssignmentResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

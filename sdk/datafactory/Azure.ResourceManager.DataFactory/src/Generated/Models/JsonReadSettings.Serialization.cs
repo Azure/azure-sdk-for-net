@@ -8,19 +8,32 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class JsonReadSettings : IUtf8JsonSerializable
+    public partial class JsonReadSettings : IUtf8JsonSerializable, IModelJsonSerializable<JsonReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JsonReadSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<JsonReadSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<JsonReadSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CompressionProperties))
             {
                 writer.WritePropertyName("compressionProperties"u8);
-                writer.WriteObjectValue(CompressionProperties);
+                if (CompressionProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CompressionReadSettings>)CompressionProperties).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FormatReadSettingsType);
@@ -36,8 +49,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static JsonReadSettings DeserializeJsonReadSettings(JsonElement element)
+        internal static JsonReadSettings DeserializeJsonReadSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,6 +81,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new JsonReadSettings(type, additionalProperties, compressionProperties.Value);
+        }
+
+        JsonReadSettings IModelJsonSerializable<JsonReadSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JsonReadSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJsonReadSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<JsonReadSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JsonReadSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        JsonReadSettings IModelSerializable<JsonReadSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JsonReadSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeJsonReadSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="JsonReadSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="JsonReadSettings"/> to convert. </param>
+        public static implicit operator RequestContent(JsonReadSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="JsonReadSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator JsonReadSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeJsonReadSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

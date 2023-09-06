@@ -187,9 +187,7 @@ namespace Azure.Communication.PhoneNumbers
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
+            request.Content = body;
             return message;
         }
 
@@ -334,9 +332,7 @@ namespace Azure.Communication.PhoneNumbers
             {
                 SearchId = searchId
             };
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
+            request.Content = model;
             return message;
         }
 
@@ -393,9 +389,7 @@ namespace Azure.Communication.PhoneNumbers
                 Calling = calling,
                 Sms = sms
             };
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
+            request.Content = model;
             return message;
         }
 

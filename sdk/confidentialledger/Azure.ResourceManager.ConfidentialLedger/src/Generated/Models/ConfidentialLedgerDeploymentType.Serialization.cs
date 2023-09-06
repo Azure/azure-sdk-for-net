@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    public partial class ConfidentialLedgerDeploymentType : IUtf8JsonSerializable
+    public partial class ConfidentialLedgerDeploymentType : IUtf8JsonSerializable, IModelJsonSerializable<ConfidentialLedgerDeploymentType>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConfidentialLedgerDeploymentType>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConfidentialLedgerDeploymentType>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ConfidentialLedgerDeploymentType>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LanguageRuntime))
             {
@@ -26,17 +33,32 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 writer.WritePropertyName("appSourceUri"u8);
                 writer.WriteStringValue(AppSourceUri.AbsoluteUri);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConfidentialLedgerDeploymentType DeserializeConfidentialLedgerDeploymentType(JsonElement element)
+        internal static ConfidentialLedgerDeploymentType DeserializeConfidentialLedgerDeploymentType(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ConfidentialLedgerLanguageRuntime> languageRuntime = default;
             Optional<Uri> appSourceUri = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("languageRuntime"u8))
@@ -57,8 +79,61 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     appSourceUri = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConfidentialLedgerDeploymentType(Optional.ToNullable(languageRuntime), appSourceUri.Value);
+            return new ConfidentialLedgerDeploymentType(Optional.ToNullable(languageRuntime), appSourceUri.Value, rawData);
+        }
+
+        ConfidentialLedgerDeploymentType IModelJsonSerializable<ConfidentialLedgerDeploymentType>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConfidentialLedgerDeploymentType>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConfidentialLedgerDeploymentType(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConfidentialLedgerDeploymentType>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConfidentialLedgerDeploymentType>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConfidentialLedgerDeploymentType IModelSerializable<ConfidentialLedgerDeploymentType>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConfidentialLedgerDeploymentType>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConfidentialLedgerDeploymentType(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConfidentialLedgerDeploymentType"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConfidentialLedgerDeploymentType"/> to convert. </param>
+        public static implicit operator RequestContent(ConfidentialLedgerDeploymentType model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConfidentialLedgerDeploymentType"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConfidentialLedgerDeploymentType(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConfidentialLedgerDeploymentType(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -8,14 +8,40 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineInstallPatchesResult
+    public partial class VirtualMachineInstallPatchesResult : IUtf8JsonSerializable, IModelJsonSerializable<VirtualMachineInstallPatchesResult>
     {
-        internal static VirtualMachineInstallPatchesResult DeserializeVirtualMachineInstallPatchesResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualMachineInstallPatchesResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualMachineInstallPatchesResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualMachineInstallPatchesResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static VirtualMachineInstallPatchesResult DeserializeVirtualMachineInstallPatchesResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IReadOnlyList<PatchInstallationDetail>> patches = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<ComputeApiError> error = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -143,8 +170,61 @@ namespace Azure.ResourceManager.Compute.Models
                     error = ComputeApiError.DeserializeComputeApiError(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualMachineInstallPatchesResult(Optional.ToNullable(status), installationActivityId.Value, Optional.ToNullable(rebootStatus), Optional.ToNullable(maintenanceWindowExceeded), Optional.ToNullable(excludedPatchCount), Optional.ToNullable(notSelectedPatchCount), Optional.ToNullable(pendingPatchCount), Optional.ToNullable(installedPatchCount), Optional.ToNullable(failedPatchCount), Optional.ToList(patches), Optional.ToNullable(startDateTime), error.Value);
+            return new VirtualMachineInstallPatchesResult(Optional.ToNullable(status), installationActivityId.Value, Optional.ToNullable(rebootStatus), Optional.ToNullable(maintenanceWindowExceeded), Optional.ToNullable(excludedPatchCount), Optional.ToNullable(notSelectedPatchCount), Optional.ToNullable(pendingPatchCount), Optional.ToNullable(installedPatchCount), Optional.ToNullable(failedPatchCount), Optional.ToList(patches), Optional.ToNullable(startDateTime), error.Value, rawData);
+        }
+
+        VirtualMachineInstallPatchesResult IModelJsonSerializable<VirtualMachineInstallPatchesResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualMachineInstallPatchesResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineInstallPatchesResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualMachineInstallPatchesResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualMachineInstallPatchesResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualMachineInstallPatchesResult IModelSerializable<VirtualMachineInstallPatchesResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualMachineInstallPatchesResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualMachineInstallPatchesResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VirtualMachineInstallPatchesResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VirtualMachineInstallPatchesResult"/> to convert. </param>
+        public static implicit operator RequestContent(VirtualMachineInstallPatchesResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualMachineInstallPatchesResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VirtualMachineInstallPatchesResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualMachineInstallPatchesResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

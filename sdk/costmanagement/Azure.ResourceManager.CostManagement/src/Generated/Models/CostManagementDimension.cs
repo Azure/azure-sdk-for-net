@@ -16,14 +16,17 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> List of Dimension. </summary>
     public partial class CostManagementDimension : ResourceData
     {
-        /// <summary> Initializes a new instance of CostManagementDimension. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CostManagementDimension"/>. </summary>
         internal CostManagementDimension()
         {
             Data = new ChangeTrackingList<string>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of CostManagementDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagementDimension"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +44,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="sku"> SKU of the resource. </param>
         /// <param name="eTag"> ETag of the resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal CostManagementDimension(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, bool? isFilterEnabled, bool? isGroupingEnabled, IReadOnlyList<string> data, int? total, string category, DateTimeOffset? usageStart, DateTimeOffset? usageEnd, string nextLink, AzureLocation? location, string sku, ETag? eTag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CostManagementDimension(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, bool? isFilterEnabled, bool? isGroupingEnabled, IReadOnlyList<string> data, int? total, string category, DateTimeOffset? usageStart, DateTimeOffset? usageEnd, string nextLink, AzureLocation? location, string sku, ETag? eTag, IReadOnlyDictionary<string, string> tags, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             IsFilterEnabled = isFilterEnabled;
@@ -56,6 +60,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             Sku = sku;
             ETag = eTag;
             Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary> Dimension description. </summary>

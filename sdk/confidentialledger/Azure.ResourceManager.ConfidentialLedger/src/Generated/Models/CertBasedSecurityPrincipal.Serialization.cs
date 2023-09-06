@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    public partial class CertBasedSecurityPrincipal : IUtf8JsonSerializable
+    public partial class CertBasedSecurityPrincipal : IUtf8JsonSerializable, IModelJsonSerializable<CertBasedSecurityPrincipal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CertBasedSecurityPrincipal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CertBasedSecurityPrincipal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CertBasedSecurityPrincipal>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Cert))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 writer.WritePropertyName("ledgerRoleName"u8);
                 writer.WriteStringValue(LedgerRoleName.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CertBasedSecurityPrincipal DeserializeCertBasedSecurityPrincipal(JsonElement element)
+        internal static CertBasedSecurityPrincipal DeserializeCertBasedSecurityPrincipal(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> cert = default;
             Optional<ConfidentialLedgerRoleName> ledgerRoleName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cert"u8))
@@ -52,8 +75,61 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     ledgerRoleName = new ConfidentialLedgerRoleName(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CertBasedSecurityPrincipal(cert.Value, Optional.ToNullable(ledgerRoleName));
+            return new CertBasedSecurityPrincipal(cert.Value, Optional.ToNullable(ledgerRoleName), rawData);
+        }
+
+        CertBasedSecurityPrincipal IModelJsonSerializable<CertBasedSecurityPrincipal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CertBasedSecurityPrincipal>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCertBasedSecurityPrincipal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CertBasedSecurityPrincipal>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CertBasedSecurityPrincipal>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CertBasedSecurityPrincipal IModelSerializable<CertBasedSecurityPrincipal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CertBasedSecurityPrincipal>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCertBasedSecurityPrincipal(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CertBasedSecurityPrincipal"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CertBasedSecurityPrincipal"/> to convert. </param>
+        public static implicit operator RequestContent(CertBasedSecurityPrincipal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CertBasedSecurityPrincipal"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CertBasedSecurityPrincipal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCertBasedSecurityPrincipal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

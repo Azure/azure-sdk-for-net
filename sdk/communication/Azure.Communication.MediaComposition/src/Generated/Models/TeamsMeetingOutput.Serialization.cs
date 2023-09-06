@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class TeamsMeetingOutput : IUtf8JsonSerializable
+    public partial class TeamsMeetingOutput : IUtf8JsonSerializable, IModelJsonSerializable<TeamsMeetingOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TeamsMeetingOutput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TeamsMeetingOutput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TeamsMeetingOutput>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("teamsJoinUrl"u8);
             writer.WriteStringValue(TeamsJoinUrl);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TeamsMeetingOutput DeserializeTeamsMeetingOutput(JsonElement element)
+        internal static TeamsMeetingOutput DeserializeTeamsMeetingOutput(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string teamsJoinUrl = default;
             MediaOutputType kind = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("teamsJoinUrl"u8))
@@ -42,8 +65,61 @@ namespace Azure.Communication.MediaComposition
                     kind = new MediaOutputType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TeamsMeetingOutput(kind, teamsJoinUrl);
+            return new TeamsMeetingOutput(kind, teamsJoinUrl, rawData);
+        }
+
+        TeamsMeetingOutput IModelJsonSerializable<TeamsMeetingOutput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TeamsMeetingOutput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTeamsMeetingOutput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TeamsMeetingOutput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TeamsMeetingOutput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TeamsMeetingOutput IModelSerializable<TeamsMeetingOutput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TeamsMeetingOutput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTeamsMeetingOutput(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TeamsMeetingOutput"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TeamsMeetingOutput"/> to convert. </param>
+        public static implicit operator RequestContent(TeamsMeetingOutput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TeamsMeetingOutput"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TeamsMeetingOutput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTeamsMeetingOutput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

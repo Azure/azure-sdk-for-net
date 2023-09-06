@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class AvailableDataBoxEdgeSku
+    public partial class AvailableDataBoxEdgeSku : IUtf8JsonSerializable, IModelJsonSerializable<AvailableDataBoxEdgeSku>
     {
-        internal static AvailableDataBoxEdgeSku DeserializeAvailableDataBoxEdgeSku(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AvailableDataBoxEdgeSku>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AvailableDataBoxEdgeSku>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AvailableDataBoxEdgeSku>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AvailableDataBoxEdgeSku DeserializeAvailableDataBoxEdgeSku(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +61,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<DataBoxEdgeSkuAvailability> availability = default;
             Optional<IReadOnlyList<DataBoxEdgeShipmentType>> shipmentTypes = default;
             Optional<IReadOnlyList<DataBoxEdgeSkuCapability>> capabilities = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -185,8 +213,61 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     capabilities = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AvailableDataBoxEdgeSku(resourceType.Value, Optional.ToNullable(name), kind.Value, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToList(locations), Optional.ToList(apiVersions), Optional.ToList(locationInfo), Optional.ToList(costs), Optional.ToNullable(signupOption), Optional.ToNullable(version), Optional.ToNullable(availability), Optional.ToList(shipmentTypes), Optional.ToList(capabilities));
+            return new AvailableDataBoxEdgeSku(resourceType.Value, Optional.ToNullable(name), kind.Value, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToList(locations), Optional.ToList(apiVersions), Optional.ToList(locationInfo), Optional.ToList(costs), Optional.ToNullable(signupOption), Optional.ToNullable(version), Optional.ToNullable(availability), Optional.ToList(shipmentTypes), Optional.ToList(capabilities), rawData);
+        }
+
+        AvailableDataBoxEdgeSku IModelJsonSerializable<AvailableDataBoxEdgeSku>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AvailableDataBoxEdgeSku>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAvailableDataBoxEdgeSku(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AvailableDataBoxEdgeSku>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AvailableDataBoxEdgeSku>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AvailableDataBoxEdgeSku IModelSerializable<AvailableDataBoxEdgeSku>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AvailableDataBoxEdgeSku>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAvailableDataBoxEdgeSku(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AvailableDataBoxEdgeSku"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AvailableDataBoxEdgeSku"/> to convert. </param>
+        public static implicit operator RequestContent(AvailableDataBoxEdgeSku model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AvailableDataBoxEdgeSku"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AvailableDataBoxEdgeSku(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAvailableDataBoxEdgeSku(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

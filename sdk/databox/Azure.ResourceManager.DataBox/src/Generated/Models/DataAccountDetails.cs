@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary>
@@ -12,20 +16,26 @@ namespace Azure.ResourceManager.DataBox.Models
     /// Please note <see cref="DataAccountDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ManagedDiskDetails"/> and <see cref="DataBoxStorageAccountDetails"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownDataAccountDetails))]
     public abstract partial class DataAccountDetails
     {
-        /// <summary> Initializes a new instance of DataAccountDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataAccountDetails"/>. </summary>
         protected DataAccountDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of DataAccountDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataAccountDetails"/>. </summary>
         /// <param name="dataAccountType"> Account Type of the data to be transferred. </param>
         /// <param name="sharePassword"> Password for all the shares to be created on the device. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
-        internal DataAccountDetails(DataAccountType dataAccountType, string sharePassword)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataAccountDetails(DataAccountType dataAccountType, string sharePassword, Dictionary<string, BinaryData> rawData)
         {
             DataAccountType = dataAccountType;
             SharePassword = sharePassword;
+            _rawData = rawData;
         }
 
         /// <summary> Account Type of the data to be transferred. </summary>

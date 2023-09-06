@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CustomerInsights;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Response of list hub operation. </summary>
     internal partial class HubListResult
     {
-        /// <summary> Initializes a new instance of HubListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HubListResult"/>. </summary>
         internal HubListResult()
         {
             Value = new ChangeTrackingList<HubData>();
         }
 
-        /// <summary> Initializes a new instance of HubListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubListResult"/>. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
-        internal HubListResult(IReadOnlyList<HubData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HubListResult(IReadOnlyList<HubData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Results of the list operation. </summary>

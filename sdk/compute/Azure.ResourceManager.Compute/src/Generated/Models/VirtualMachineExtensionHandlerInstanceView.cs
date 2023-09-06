@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The instance view of a virtual machine extension handler. </summary>
     public partial class VirtualMachineExtensionHandlerInstanceView
     {
-        /// <summary> Initializes a new instance of VirtualMachineExtensionHandlerInstanceView. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineExtensionHandlerInstanceView"/>. </summary>
         internal VirtualMachineExtensionHandlerInstanceView()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineExtensionHandlerInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineExtensionHandlerInstanceView"/>. </summary>
         /// <param name="virtualMachineExtensionHandlerInstanceViewType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="status"> The extension handler status. </param>
-        internal VirtualMachineExtensionHandlerInstanceView(string virtualMachineExtensionHandlerInstanceViewType, string typeHandlerVersion, InstanceViewStatus status)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineExtensionHandlerInstanceView(string virtualMachineExtensionHandlerInstanceViewType, string typeHandlerVersion, InstanceViewStatus status, Dictionary<string, BinaryData> rawData)
         {
             VirtualMachineExtensionHandlerInstanceViewType = virtualMachineExtensionHandlerInstanceViewType;
             TypeHandlerVersion = typeHandlerVersion;
             Status = status;
+            _rawData = rawData;
         }
 
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>

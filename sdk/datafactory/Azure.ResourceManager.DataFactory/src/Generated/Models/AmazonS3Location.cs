@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The location of amazon S3 dataset. </summary>
     public partial class AmazonS3Location : DatasetLocation
     {
-        /// <summary> Initializes a new instance of AmazonS3Location. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonS3Location"/>. </summary>
         public AmazonS3Location()
         {
             DatasetLocationType = "AmazonS3Location";
         }
 
-        /// <summary> Initializes a new instance of AmazonS3Location. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonS3Location"/>. </summary>
         /// <param name="datasetLocationType"> Type of dataset storage location. </param>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>

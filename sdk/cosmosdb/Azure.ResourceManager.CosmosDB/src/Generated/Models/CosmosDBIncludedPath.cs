@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The paths that are included in indexing. </summary>
     public partial class CosmosDBIncludedPath
     {
-        /// <summary> Initializes a new instance of CosmosDBIncludedPath. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBIncludedPath"/>. </summary>
         public CosmosDBIncludedPath()
         {
             Indexes = new ChangeTrackingList<CosmosDBPathIndexes>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBIncludedPath. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBIncludedPath"/>. </summary>
         /// <param name="path"> The path for which the indexing behavior applies to. Index paths typically start with root and end with wildcard (/path/*). </param>
         /// <param name="indexes"> List of indexes for this path. </param>
-        internal CosmosDBIncludedPath(string path, IList<CosmosDBPathIndexes> indexes)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBIncludedPath(string path, IList<CosmosDBPathIndexes> indexes, Dictionary<string, BinaryData> rawData)
         {
             Path = path;
             Indexes = indexes;
+            _rawData = rawData;
         }
 
         /// <summary> The path for which the indexing behavior applies to. Index paths typically start with root and end with wildcard (/path/*). </summary>

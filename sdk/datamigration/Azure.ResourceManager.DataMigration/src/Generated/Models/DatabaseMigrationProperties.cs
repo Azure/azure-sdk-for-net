@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,14 +16,18 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// Please note <see cref="DatabaseMigrationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DatabaseMigrationSqlDBProperties"/>, <see cref="DatabaseMigrationSqlVmProperties"/> and <see cref="DatabaseMigrationSqlMIProperties"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownDatabaseMigrationProperties))]
     public abstract partial class DatabaseMigrationProperties
     {
-        /// <summary> Initializes a new instance of DatabaseMigrationProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationProperties"/>. </summary>
         protected DatabaseMigrationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseMigrationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationProperties"/>. </summary>
         /// <param name="kind"></param>
         /// <param name="scope"> Resource Id of the target resource (SQL VM or SQL Managed Instance). </param>
         /// <param name="provisioningState"> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </param>
@@ -36,7 +42,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
         /// <param name="targetDatabaseCollation"> Database collation to be used for the target database. </param>
         /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
-        internal DatabaseMigrationProperties(ResourceType kind, string scope, string provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, SqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string migrationService, string migrationOperationId, ErrorInfo migrationFailureError, string targetDatabaseCollation, string provisioningError)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatabaseMigrationProperties(ResourceType kind, string scope, string provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, SqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string migrationService, string migrationOperationId, ErrorInfo migrationFailureError, string targetDatabaseCollation, string provisioningError, Dictionary<string, BinaryData> rawData)
         {
             Kind = kind;
             Scope = scope;
@@ -52,6 +59,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             MigrationFailureError = migrationFailureError;
             TargetDatabaseCollation = targetDatabaseCollation;
             ProvisioningError = provisioningError;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the kind. </summary>

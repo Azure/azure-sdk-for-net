@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -13,7 +14,10 @@ namespace Azure.Communication.JobRouter
     /// <summary> Request payload for completing jobs. </summary>
     internal partial class CompleteJobRequest
     {
-        /// <summary> Initializes a new instance of CompleteJobRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CompleteJobRequest"/>. </summary>
         /// <param name="assignmentId"> The assignment within the job to complete. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> is null. </exception>
         public CompleteJobRequest(string assignmentId)
@@ -21,6 +25,22 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNull(assignmentId, nameof(assignmentId));
 
             AssignmentId = assignmentId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CompleteJobRequest"/>. </summary>
+        /// <param name="assignmentId"> The assignment within the job to complete. </param>
+        /// <param name="note"> (Optional) A note that will be appended to the jobs' Notes collection with the current timestamp. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CompleteJobRequest(string assignmentId, string note, Dictionary<string, BinaryData> rawData)
+        {
+            AssignmentId = assignmentId;
+            Note = note;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CompleteJobRequest"/> for deserialization. </summary>
+        internal CompleteJobRequest()
+        {
         }
 
         /// <summary> The assignment within the job to complete. </summary>

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Workload Identity settings for the security profile. </summary>
     internal partial class ManagedClusterSecurityProfileWorkloadIdentity
     {
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileWorkloadIdentity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileWorkloadIdentity"/>. </summary>
         public ManagedClusterSecurityProfileWorkloadIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileWorkloadIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileWorkloadIdentity"/>. </summary>
         /// <param name="enabled"> Whether to enable Workload Identity. </param>
-        internal ManagedClusterSecurityProfileWorkloadIdentity(bool? enabled)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterSecurityProfileWorkloadIdentity(bool? enabled, Dictionary<string, BinaryData> rawData)
         {
             Enabled = enabled;
+            _rawData = rawData;
         }
 
         /// <summary> Whether to enable Workload Identity. </summary>

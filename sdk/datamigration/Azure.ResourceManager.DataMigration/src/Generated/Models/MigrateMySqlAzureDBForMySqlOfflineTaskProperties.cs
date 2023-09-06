@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that migrates MySQL databases to Azure Database for MySQL for offline migrations. </summary>
     public partial class MigrateMySqlAzureDBForMySqlOfflineTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlOfflineTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskProperties"/>. </summary>
         public MigrateMySqlAzureDBForMySqlOfflineTaskProperties()
         {
             Output = new ChangeTrackingList<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>();
             TaskType = TaskType.MigrateMySqlAzureDBForMySql;
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlOfflineTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
@@ -38,7 +39,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// </param>
         /// <param name="isCloneable"> whether the task can be cloned or not. </param>
         /// <param name="taskId"> Task id. </param>
-        internal MigrateMySqlAzureDBForMySqlOfflineTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, MigrateMySqlAzureDBForMySqlOfflineTaskInput input, IReadOnlyList<MigrateMySqlAzureDBForMySqlOfflineTaskOutput> output, bool? isCloneable, string taskId) : base(taskType, errors, state, commands, clientData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateMySqlAzureDBForMySqlOfflineTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, MigrateMySqlAzureDBForMySqlOfflineTaskInput input, IReadOnlyList<MigrateMySqlAzureDBForMySqlOfflineTaskOutput> output, bool? isCloneable, string taskId, Dictionary<string, BinaryData> rawData) : base(taskType, errors, state, commands, clientData, rawData)
         {
             Input = input;
             Output = output;

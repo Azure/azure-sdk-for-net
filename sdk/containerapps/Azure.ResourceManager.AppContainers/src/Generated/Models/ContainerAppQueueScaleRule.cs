@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Container App container Azure Queue based scaling rule. </summary>
     public partial class ContainerAppQueueScaleRule
     {
-        /// <summary> Initializes a new instance of ContainerAppQueueScaleRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppQueueScaleRule"/>. </summary>
         public ContainerAppQueueScaleRule()
         {
             Auth = new ChangeTrackingList<ContainerAppScaleRuleAuth>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppQueueScaleRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppQueueScaleRule"/>. </summary>
         /// <param name="queueName"> Queue name. </param>
         /// <param name="queueLength"> Queue length. </param>
         /// <param name="auth"> Authentication secrets for the queue scale rule. </param>
-        internal ContainerAppQueueScaleRule(string queueName, int? queueLength, IList<ContainerAppScaleRuleAuth> auth)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppQueueScaleRule(string queueName, int? queueLength, IList<ContainerAppScaleRuleAuth> auth, Dictionary<string, BinaryData> rawData)
         {
             QueueName = queueName;
             QueueLength = queueLength;
             Auth = auth;
+            _rawData = rawData;
         }
 
         /// <summary> Queue name. </summary>

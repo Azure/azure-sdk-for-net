@@ -5,16 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxSkuInformation
+    public partial class DataBoxSkuInformation : IUtf8JsonSerializable, IModelJsonSerializable<DataBoxSkuInformation>
     {
-        internal static DataBoxSkuInformation DeserializeDataBoxSkuInformation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataBoxSkuInformation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataBoxSkuInformation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxSkuInformation>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DataBoxSkuInformation DeserializeDataBoxSkuInformation(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +59,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<string> disabledReasonMessage = default;
             Optional<string> requiredFeature = default;
             Optional<IReadOnlyList<string>> countriesWithinCommerceBoundary = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -145,8 +176,61 @@ namespace Azure.ResourceManager.DataBox.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataBoxSkuInformation(sku.Value, Optional.ToNullable(enabled), Optional.ToList(dataLocationToServiceLocationMap), capacity.Value, Optional.ToList(costs), Optional.ToList(apiVersions), Optional.ToNullable(disabledReason), disabledReasonMessage.Value, requiredFeature.Value, Optional.ToList(countriesWithinCommerceBoundary));
+            return new DataBoxSkuInformation(sku.Value, Optional.ToNullable(enabled), Optional.ToList(dataLocationToServiceLocationMap), capacity.Value, Optional.ToList(costs), Optional.ToList(apiVersions), Optional.ToNullable(disabledReason), disabledReasonMessage.Value, requiredFeature.Value, Optional.ToList(countriesWithinCommerceBoundary), rawData);
+        }
+
+        DataBoxSkuInformation IModelJsonSerializable<DataBoxSkuInformation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxSkuInformation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxSkuInformation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataBoxSkuInformation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxSkuInformation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataBoxSkuInformation IModelSerializable<DataBoxSkuInformation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxSkuInformation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataBoxSkuInformation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataBoxSkuInformation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataBoxSkuInformation"/> to convert. </param>
+        public static implicit operator RequestContent(DataBoxSkuInformation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataBoxSkuInformation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataBoxSkuInformation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataBoxSkuInformation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

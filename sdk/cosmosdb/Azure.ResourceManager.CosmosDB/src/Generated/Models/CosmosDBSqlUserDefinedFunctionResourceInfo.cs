@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB SQL userDefinedFunction resource object. </summary>
     public partial class CosmosDBSqlUserDefinedFunctionResourceInfo
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlUserDefinedFunctionResourceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlUserDefinedFunctionResourceInfo"/>. </summary>
         /// <param name="functionName"> Name of the Cosmos DB SQL userDefinedFunction. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
         public CosmosDBSqlUserDefinedFunctionResourceInfo(string functionName)
@@ -23,13 +27,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
             FunctionName = functionName;
         }
 
-        /// <summary> Initializes a new instance of CosmosDBSqlUserDefinedFunctionResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlUserDefinedFunctionResourceInfo"/>. </summary>
         /// <param name="functionName"> Name of the Cosmos DB SQL userDefinedFunction. </param>
         /// <param name="body"> Body of the User Defined Function. </param>
-        internal CosmosDBSqlUserDefinedFunctionResourceInfo(string functionName, string body)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBSqlUserDefinedFunctionResourceInfo(string functionName, string body, Dictionary<string, BinaryData> rawData)
         {
             FunctionName = functionName;
             Body = body;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlUserDefinedFunctionResourceInfo"/> for deserialization. </summary>
+        internal CosmosDBSqlUserDefinedFunctionResourceInfo()
+        {
         }
 
         /// <summary> Name of the Cosmos DB SQL userDefinedFunction. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -19,13 +20,16 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class CloudServiceRoleInstanceData : ResourceData
     {
-        /// <summary> Initializes a new instance of CloudServiceRoleInstanceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudServiceRoleInstanceData"/>. </summary>
         internal CloudServiceRoleInstanceData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of CloudServiceRoleInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceRoleInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,13 +39,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sku"> The role instance SKU. </param>
         /// <param name="networkProfile"> Describes the network profile for the role instance. </param>
         /// <param name="instanceView"> The instance view of the role instance. </param>
-        internal CloudServiceRoleInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IReadOnlyDictionary<string, string> tags, InstanceSku sku, RoleInstanceNetworkProfile networkProfile, RoleInstanceView instanceView) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudServiceRoleInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IReadOnlyDictionary<string, string> tags, InstanceSku sku, RoleInstanceNetworkProfile networkProfile, RoleInstanceView instanceView, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Tags = tags;
             Sku = sku;
             NetworkProfile = networkProfile;
             InstanceView = instanceView;
+            _rawData = rawData;
         }
 
         /// <summary> Resource Location. </summary>

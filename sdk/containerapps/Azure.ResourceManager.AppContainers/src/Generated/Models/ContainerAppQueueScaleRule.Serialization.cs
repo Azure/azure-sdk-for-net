@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppQueueScaleRule : IUtf8JsonSerializable
+    public partial class ContainerAppQueueScaleRule : IUtf8JsonSerializable, IModelJsonSerializable<ContainerAppQueueScaleRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerAppQueueScaleRule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerAppQueueScaleRule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppQueueScaleRule>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(QueueName))
             {
@@ -32,15 +39,36 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Auth)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ContainerAppScaleRuleAuth>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppQueueScaleRule DeserializeContainerAppQueueScaleRule(JsonElement element)
+        internal static ContainerAppQueueScaleRule DeserializeContainerAppQueueScaleRule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +76,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> queueName = default;
             Optional<int> queueLength = default;
             Optional<IList<ContainerAppScaleRuleAuth>> auth = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queueName"u8))
@@ -78,8 +107,61 @@ namespace Azure.ResourceManager.AppContainers.Models
                     auth = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerAppQueueScaleRule(queueName.Value, Optional.ToNullable(queueLength), Optional.ToList(auth));
+            return new ContainerAppQueueScaleRule(queueName.Value, Optional.ToNullable(queueLength), Optional.ToList(auth), rawData);
+        }
+
+        ContainerAppQueueScaleRule IModelJsonSerializable<ContainerAppQueueScaleRule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppQueueScaleRule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppQueueScaleRule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerAppQueueScaleRule>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppQueueScaleRule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerAppQueueScaleRule IModelSerializable<ContainerAppQueueScaleRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppQueueScaleRule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerAppQueueScaleRule(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerAppQueueScaleRule"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerAppQueueScaleRule"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerAppQueueScaleRule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerAppQueueScaleRule"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerAppQueueScaleRule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerAppQueueScaleRule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

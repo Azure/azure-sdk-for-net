@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
@@ -18,22 +20,27 @@ namespace Azure.ResourceManager.DataFactory
     /// </summary>
     public partial class DataFactoryPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataFactoryPrivateEndpointConnectionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointConnectionData"/>. </summary>
         public DataFactoryPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFactoryPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Core resource properties. </param>
         /// <param name="eTag"> Etag identifies change in the resource. </param>
-        internal DataFactoryPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFactoryPrivateEndpointConnectionProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFactoryPrivateEndpointConnectionProperties properties, ETag? eTag, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
+            _rawData = rawData;
         }
 
         /// <summary> Core resource properties. </summary>

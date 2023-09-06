@@ -5,17 +5,51 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class AddressValidationOutput
+    public partial class AddressValidationOutput : IUtf8JsonSerializable, IModelJsonSerializable<AddressValidationOutput>
     {
-        internal static AddressValidationOutput DeserializeAddressValidationOutput(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AddressValidationOutput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AddressValidationOutput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AddressValidationOutput>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ValidationType))
+            {
+                writer.WritePropertyName("validationType"u8);
+                writer.WriteStringValue(ValidationType.Value.ToSerialString());
+            }
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AddressValidationOutput DeserializeAddressValidationOutput(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +58,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<ResponseError> error = default;
             Optional<AddressValidationStatus> validationStatus = default;
             Optional<IReadOnlyList<DataBoxShippingAddress>> alternateAddresses = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -79,8 +114,61 @@ namespace Azure.ResourceManager.DataBox.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AddressValidationOutput(Optional.ToNullable(validationType), error.Value, Optional.ToNullable(validationStatus), Optional.ToList(alternateAddresses));
+            return new AddressValidationOutput(Optional.ToNullable(validationType), error.Value, Optional.ToNullable(validationStatus), Optional.ToList(alternateAddresses), rawData);
+        }
+
+        AddressValidationOutput IModelJsonSerializable<AddressValidationOutput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AddressValidationOutput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAddressValidationOutput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AddressValidationOutput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AddressValidationOutput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AddressValidationOutput IModelSerializable<AddressValidationOutput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AddressValidationOutput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAddressValidationOutput(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AddressValidationOutput"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AddressValidationOutput"/> to convert. </param>
+        public static implicit operator RequestContent(AddressValidationOutput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AddressValidationOutput"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AddressValidationOutput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAddressValidationOutput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

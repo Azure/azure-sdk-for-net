@@ -5,16 +5,91 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ExecutionStatistics
+    public partial class ExecutionStatistics : IUtf8JsonSerializable, IModelJsonSerializable<ExecutionStatistics>
     {
-        internal static ExecutionStatistics DeserializeExecutionStatistics(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExecutionStatistics>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExecutionStatistics>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ExecutionStatistics>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ExecutionCount))
+            {
+                writer.WritePropertyName("executionCount"u8);
+                writer.WriteNumberValue(ExecutionCount.Value);
+            }
+            if (Optional.IsDefined(CpuTimeMs))
+            {
+                writer.WritePropertyName("cpuTimeMs"u8);
+                writer.WriteNumberValue(CpuTimeMs.Value);
+            }
+            if (Optional.IsDefined(ElapsedTimeMs))
+            {
+                writer.WritePropertyName("elapsedTimeMs"u8);
+                writer.WriteNumberValue(ElapsedTimeMs.Value);
+            }
+            if (Optional.IsCollectionDefined(WaitStats))
+            {
+                writer.WritePropertyName("waitStats"u8);
+                writer.WriteStartObject();
+                foreach (var item in WaitStats)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<WaitStatistics>)item.Value).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(HasErrors))
+            {
+                writer.WritePropertyName("hasErrors"u8);
+                writer.WriteBooleanValue(HasErrors.Value);
+            }
+            if (Optional.IsCollectionDefined(SqlErrors))
+            {
+                writer.WritePropertyName("sqlErrors"u8);
+                writer.WriteStartArray();
+                foreach (var item in SqlErrors)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ExecutionStatistics DeserializeExecutionStatistics(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +100,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IReadOnlyDictionary<string, WaitStatistics>> waitStats = default;
             Optional<bool> hasErrors = default;
             Optional<IReadOnlyList<string>> sqlErrors = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("executionCount"u8))
@@ -91,8 +167,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     sqlErrors = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExecutionStatistics(Optional.ToNullable(executionCount), Optional.ToNullable(cpuTimeMs), Optional.ToNullable(elapsedTimeMs), Optional.ToDictionary(waitStats), Optional.ToNullable(hasErrors), Optional.ToList(sqlErrors));
+            return new ExecutionStatistics(Optional.ToNullable(executionCount), Optional.ToNullable(cpuTimeMs), Optional.ToNullable(elapsedTimeMs), Optional.ToDictionary(waitStats), Optional.ToNullable(hasErrors), Optional.ToList(sqlErrors), rawData);
+        }
+
+        ExecutionStatistics IModelJsonSerializable<ExecutionStatistics>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExecutionStatistics>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExecutionStatistics(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExecutionStatistics>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExecutionStatistics>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExecutionStatistics IModelSerializable<ExecutionStatistics>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExecutionStatistics>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExecutionStatistics(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExecutionStatistics"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExecutionStatistics"/> to convert. </param>
+        public static implicit operator RequestContent(ExecutionStatistics model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExecutionStatistics"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExecutionStatistics(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExecutionStatistics(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

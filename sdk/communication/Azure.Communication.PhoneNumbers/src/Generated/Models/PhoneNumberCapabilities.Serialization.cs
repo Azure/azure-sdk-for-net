@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    public partial class PhoneNumberCapabilities : IUtf8JsonSerializable
+    public partial class PhoneNumberCapabilities : IUtf8JsonSerializable, IModelJsonSerializable<PhoneNumberCapabilities>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PhoneNumberCapabilities>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PhoneNumberCapabilities>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PhoneNumberCapabilities>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("calling"u8);
             writer.WriteStringValue(Calling.ToString());
             writer.WritePropertyName("sms"u8);
             writer.WriteStringValue(Sms.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PhoneNumberCapabilities DeserializePhoneNumberCapabilities(JsonElement element)
+        internal static PhoneNumberCapabilities DeserializePhoneNumberCapabilities(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             PhoneNumberCapabilityType calling = default;
             PhoneNumberCapabilityType sms = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("calling"u8))
@@ -42,8 +65,61 @@ namespace Azure.Communication.PhoneNumbers
                     sms = new PhoneNumberCapabilityType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PhoneNumberCapabilities(calling, sms);
+            return new PhoneNumberCapabilities(calling, sms, rawData);
+        }
+
+        PhoneNumberCapabilities IModelJsonSerializable<PhoneNumberCapabilities>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PhoneNumberCapabilities>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePhoneNumberCapabilities(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PhoneNumberCapabilities>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PhoneNumberCapabilities>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PhoneNumberCapabilities IModelSerializable<PhoneNumberCapabilities>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PhoneNumberCapabilities>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePhoneNumberCapabilities(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PhoneNumberCapabilities"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PhoneNumberCapabilities"/> to convert. </param>
+        public static implicit operator RequestContent(PhoneNumberCapabilities model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PhoneNumberCapabilities"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PhoneNumberCapabilities(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePhoneNumberCapabilities(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

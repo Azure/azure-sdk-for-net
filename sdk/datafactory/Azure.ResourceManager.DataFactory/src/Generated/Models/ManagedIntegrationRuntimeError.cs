@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Error definition for managed integration runtime. </summary>
     public partial class ManagedIntegrationRuntimeError
     {
-        /// <summary> Initializes a new instance of ManagedIntegrationRuntimeError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIntegrationRuntimeError"/>. </summary>
         internal ManagedIntegrationRuntimeError()
         {
             Parameters = new ChangeTrackingList<string>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedIntegrationRuntimeError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIntegrationRuntimeError"/>. </summary>
         /// <param name="time"> The time when the error occurred. </param>
         /// <param name="code"> Error code. </param>
         /// <param name="parameters"> Managed integration runtime error parameters. </param>

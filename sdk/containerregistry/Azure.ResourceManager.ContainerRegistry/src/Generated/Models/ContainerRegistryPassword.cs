@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The login password for the container registry. </summary>
     public partial class ContainerRegistryPassword
     {
-        /// <summary> Initializes a new instance of ContainerRegistryPassword. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPassword"/>. </summary>
         internal ContainerRegistryPassword()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryPassword. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPassword"/>. </summary>
         /// <param name="name"> The password name. </param>
         /// <param name="value"> The password value. </param>
-        internal ContainerRegistryPassword(ContainerRegistryPasswordName? name, string value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryPassword(ContainerRegistryPasswordName? name, string value, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The password name. </summary>

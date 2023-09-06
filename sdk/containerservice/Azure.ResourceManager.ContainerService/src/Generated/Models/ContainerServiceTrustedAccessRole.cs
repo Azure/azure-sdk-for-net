@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Trusted access role definition. </summary>
     public partial class ContainerServiceTrustedAccessRole
     {
-        /// <summary> Initializes a new instance of ContainerServiceTrustedAccessRole. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceTrustedAccessRole"/>. </summary>
         internal ContainerServiceTrustedAccessRole()
         {
             Rules = new ChangeTrackingList<ContainerServiceTrustedAccessRoleRule>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceTrustedAccessRole. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceTrustedAccessRole"/>. </summary>
         /// <param name="sourceResourceType"> Resource type of Azure resource. </param>
         /// <param name="name"> Name of role, name is unique under a source resource type. </param>
         /// <param name="rules"> List of rules for the role. This maps to 'rules' property of [Kubernetes Cluster Role](https://kubernetes.io/docs/reference/kubernetes-api/authorization-resources/cluster-role-v1/#ClusterRole). </param>
-        internal ContainerServiceTrustedAccessRole(string sourceResourceType, string name, IReadOnlyList<ContainerServiceTrustedAccessRoleRule> rules)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceTrustedAccessRole(string sourceResourceType, string name, IReadOnlyList<ContainerServiceTrustedAccessRoleRule> rules, Dictionary<string, BinaryData> rawData)
         {
             SourceResourceType = sourceResourceType;
             Name = name;
             Rules = rules;
+            _rawData = rawData;
         }
 
         /// <summary> Resource type of Azure resource. </summary>

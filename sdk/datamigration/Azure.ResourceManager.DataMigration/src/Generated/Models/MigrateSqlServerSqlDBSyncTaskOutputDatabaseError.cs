@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,20 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The MigrateSqlServerSqlDBSyncTaskOutputDatabaseError. </summary>
     public partial class MigrateSqlServerSqlDBSyncTaskOutputDatabaseError : MigrateSqlServerSqlDBSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBSyncTaskOutputDatabaseError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBSyncTaskOutputDatabaseError"/>. </summary>
         internal MigrateSqlServerSqlDBSyncTaskOutputDatabaseError()
         {
             Events = new ChangeTrackingList<SyncMigrationDatabaseErrorEvent>();
             ResultType = "DatabaseLevelErrorOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBSyncTaskOutputDatabaseError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBSyncTaskOutputDatabaseError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="errorMessage"> Error message. </param>
         /// <param name="events"> List of error events. </param>
-        internal MigrateSqlServerSqlDBSyncTaskOutputDatabaseError(string id, string resultType, string errorMessage, IReadOnlyList<SyncMigrationDatabaseErrorEvent> events) : base(id, resultType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateSqlServerSqlDBSyncTaskOutputDatabaseError(string id, string resultType, string errorMessage, IReadOnlyList<SyncMigrationDatabaseErrorEvent> events, Dictionary<string, BinaryData> rawData) : base(id, resultType, rawData)
         {
             ErrorMessage = errorMessage;
             Events = events;

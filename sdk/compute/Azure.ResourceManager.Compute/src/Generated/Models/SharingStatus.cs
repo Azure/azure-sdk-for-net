@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Sharing status of current gallery. </summary>
     public partial class SharingStatus
     {
-        /// <summary> Initializes a new instance of SharingStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SharingStatus"/>. </summary>
         internal SharingStatus()
         {
             Summary = new ChangeTrackingList<RegionalSharingStatus>();
         }
 
-        /// <summary> Initializes a new instance of SharingStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharingStatus"/>. </summary>
         /// <param name="aggregatedState"> Aggregated sharing state of current gallery. </param>
         /// <param name="summary"> Summary of all regional sharing status. </param>
-        internal SharingStatus(SharingState? aggregatedState, IReadOnlyList<RegionalSharingStatus> summary)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SharingStatus(SharingState? aggregatedState, IReadOnlyList<RegionalSharingStatus> summary, Dictionary<string, BinaryData> rawData)
         {
             AggregatedState = aggregatedState;
             Summary = summary;
+            _rawData = rawData;
         }
 
         /// <summary> Aggregated sharing state of current gallery. </summary>

@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class GalleryApplicationData : IUtf8JsonSerializable
+    public partial class GalleryApplicationData : IUtf8JsonSerializable, IModelJsonSerializable<GalleryApplicationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GalleryApplicationData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GalleryApplicationData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<GalleryApplicationData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -70,16 +76,37 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in CustomActions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<GalleryApplicationCustomAction>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GalleryApplicationData DeserializeGalleryApplicationData(JsonElement element)
+        internal static GalleryApplicationData DeserializeGalleryApplicationData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -97,6 +124,7 @@ namespace Azure.ResourceManager.Compute
             Optional<DateTimeOffset> endOfLifeDate = default;
             Optional<SupportedOperatingSystemType> supportedOSType = default;
             Optional<IList<GalleryApplicationCustomAction>> customActions = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -214,8 +242,61 @@ namespace Azure.ResourceManager.Compute
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GalleryApplicationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(endOfLifeDate), Optional.ToNullable(supportedOSType), Optional.ToList(customActions));
+            return new GalleryApplicationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(endOfLifeDate), Optional.ToNullable(supportedOSType), Optional.ToList(customActions), rawData);
+        }
+
+        GalleryApplicationData IModelJsonSerializable<GalleryApplicationData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GalleryApplicationData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGalleryApplicationData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GalleryApplicationData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GalleryApplicationData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GalleryApplicationData IModelSerializable<GalleryApplicationData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GalleryApplicationData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGalleryApplicationData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GalleryApplicationData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GalleryApplicationData"/> to convert. </param>
+        public static implicit operator RequestContent(GalleryApplicationData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GalleryApplicationData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GalleryApplicationData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGalleryApplicationData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

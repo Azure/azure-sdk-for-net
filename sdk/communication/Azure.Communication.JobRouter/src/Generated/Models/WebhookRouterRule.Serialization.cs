@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class WebhookRouterRule : IUtf8JsonSerializable
+    public partial class WebhookRouterRule : IUtf8JsonSerializable, IModelJsonSerializable<WebhookRouterRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WebhookRouterRule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WebhookRouterRule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<WebhookRouterRule>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AuthorizationServerUri))
             {
@@ -24,7 +31,14 @@ namespace Azure.Communication.JobRouter
             if (Optional.IsDefined(ClientCredential))
             {
                 writer.WritePropertyName("clientCredential"u8);
-                writer.WriteObjectValue(ClientCredential);
+                if (ClientCredential is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<Oauth2ClientCredential>)ClientCredential).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(WebhookUri))
             {
@@ -33,11 +47,25 @@ namespace Azure.Communication.JobRouter
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WebhookRouterRule DeserializeWebhookRouterRule(JsonElement element)
+        internal static WebhookRouterRule DeserializeWebhookRouterRule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +74,7 @@ namespace Azure.Communication.JobRouter
             Optional<Oauth2ClientCredential> clientCredential = default;
             Optional<Uri> webhookUri = default;
             string kind = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorizationServerUri"u8))
@@ -80,8 +109,61 @@ namespace Azure.Communication.JobRouter
                     kind = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WebhookRouterRule(kind, authorizationServerUri.Value, clientCredential.Value, webhookUri.Value);
+            return new WebhookRouterRule(kind, authorizationServerUri.Value, clientCredential.Value, webhookUri.Value, rawData);
+        }
+
+        WebhookRouterRule IModelJsonSerializable<WebhookRouterRule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebhookRouterRule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebhookRouterRule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WebhookRouterRule>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebhookRouterRule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WebhookRouterRule IModelSerializable<WebhookRouterRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebhookRouterRule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWebhookRouterRule(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WebhookRouterRule"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WebhookRouterRule"/> to convert. </param>
+        public static implicit operator RequestContent(WebhookRouterRule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WebhookRouterRule"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WebhookRouterRule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWebhookRouterRule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

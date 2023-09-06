@@ -5,35 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class UnknownConnectToSourceSqlServerTaskOutput
+    internal partial class UnknownConnectToSourceSqlServerTaskOutput : IUtf8JsonSerializable, IModelJsonSerializable<ConnectToSourceSqlServerTaskOutput>
     {
-        internal static UnknownConnectToSourceSqlServerTaskOutput DeserializeUnknownConnectToSourceSqlServerTaskOutput(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConnectToSourceSqlServerTaskOutput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConnectToSourceSqlServerTaskOutput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            Core.ModelSerializerHelper.ValidateFormat<ConnectToSourceSqlServerTaskOutput>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
             {
-                return null;
-            }
-            Optional<string> id = default;
-            string resultType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("id"u8))
+                foreach (var property in _rawData)
                 {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultType"u8))
-                {
-                    resultType = property.Value.GetString();
-                    continue;
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
                 }
             }
-            return new UnknownConnectToSourceSqlServerTaskOutput(id.Value, resultType);
+            writer.WriteEndObject();
+        }
+
+        internal static ConnectToSourceSqlServerTaskOutput DeserializeUnknownConnectToSourceSqlServerTaskOutput(JsonElement element, ModelSerializerOptions options = default) => DeserializeConnectToSourceSqlServerTaskOutput(element, options);
+
+        ConnectToSourceSqlServerTaskOutput IModelJsonSerializable<ConnectToSourceSqlServerTaskOutput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectToSourceSqlServerTaskOutput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownConnectToSourceSqlServerTaskOutput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConnectToSourceSqlServerTaskOutput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectToSourceSqlServerTaskOutput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConnectToSourceSqlServerTaskOutput IModelSerializable<ConnectToSourceSqlServerTaskOutput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectToSourceSqlServerTaskOutput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConnectToSourceSqlServerTaskOutput(doc.RootElement, options);
         }
     }
 }

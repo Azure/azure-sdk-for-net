@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The resource requests. </summary>
     public partial class ContainerResourceRequestsContent
     {
-        /// <summary> Initializes a new instance of ContainerResourceRequestsContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerResourceRequestsContent"/>. </summary>
         /// <param name="memoryInGB"> The memory request in GB of this container instance. </param>
         /// <param name="cpu"> The CPU request of this container instance. </param>
         public ContainerResourceRequestsContent(double memoryInGB, double cpu)
@@ -19,15 +25,22 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Cpu = cpu;
         }
 
-        /// <summary> Initializes a new instance of ContainerResourceRequestsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerResourceRequestsContent"/>. </summary>
         /// <param name="memoryInGB"> The memory request in GB of this container instance. </param>
         /// <param name="cpu"> The CPU request of this container instance. </param>
         /// <param name="gpu"> The GPU request of this container instance. </param>
-        internal ContainerResourceRequestsContent(double memoryInGB, double cpu, ContainerGpuResourceInfo gpu)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerResourceRequestsContent(double memoryInGB, double cpu, ContainerGpuResourceInfo gpu, Dictionary<string, BinaryData> rawData)
         {
             MemoryInGB = memoryInGB;
             Cpu = cpu;
             Gpu = gpu;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerResourceRequestsContent"/> for deserialization. </summary>
+        internal ContainerResourceRequestsContent()
+        {
         }
 
         /// <summary> The memory request in GB of this container instance. </summary>

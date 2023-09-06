@@ -6,30 +6,36 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
     /// <summary> Subscription-level properties and limits for Data Lake Store. </summary>
     public partial class DataLakeStoreCapabilityInformation
     {
-        /// <summary> Initializes a new instance of DataLakeStoreCapabilityInformation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreCapabilityInformation"/>. </summary>
         internal DataLakeStoreCapabilityInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreCapabilityInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreCapabilityInformation"/>. </summary>
         /// <param name="subscriptionId"> The subscription credentials that uniquely identifies the subscription. </param>
         /// <param name="state"> The subscription state. </param>
         /// <param name="maxAccountCount"> The maximum supported number of accounts under this subscription. </param>
         /// <param name="accountCount"> The current number of accounts under this subscription. </param>
         /// <param name="isUnderMigrationState"> The Boolean value of true or false to indicate the maintenance state. </param>
-        internal DataLakeStoreCapabilityInformation(Guid? subscriptionId, DataLakeStoreSubscriptionState? state, int? maxAccountCount, int? accountCount, bool? isUnderMigrationState)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeStoreCapabilityInformation(Guid? subscriptionId, DataLakeStoreSubscriptionState? state, int? maxAccountCount, int? accountCount, bool? isUnderMigrationState, Dictionary<string, BinaryData> rawData)
         {
             SubscriptionId = subscriptionId;
             State = state;
             MaxAccountCount = maxAccountCount;
             AccountCount = accountCount;
             IsUnderMigrationState = isUnderMigrationState;
+            _rawData = rawData;
         }
 
         /// <summary> The subscription credentials that uniquely identifies the subscription. </summary>

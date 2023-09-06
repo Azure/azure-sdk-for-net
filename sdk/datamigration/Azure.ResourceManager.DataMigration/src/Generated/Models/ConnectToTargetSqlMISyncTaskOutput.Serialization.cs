@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToTargetSqlMISyncTaskOutput
+    public partial class ConnectToTargetSqlMISyncTaskOutput : IUtf8JsonSerializable, IModelJsonSerializable<ConnectToTargetSqlMISyncTaskOutput>
     {
-        internal static ConnectToTargetSqlMISyncTaskOutput DeserializeConnectToTargetSqlMISyncTaskOutput(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConnectToTargetSqlMISyncTaskOutput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConnectToTargetSqlMISyncTaskOutput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectToTargetSqlMISyncTaskOutput>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ConnectToTargetSqlMISyncTaskOutput DeserializeConnectToTargetSqlMISyncTaskOutput(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> targetServerVersion = default;
             Optional<string> targetServerBrandVersion = default;
             Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetServerVersion"u8))
@@ -48,8 +76,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     validationErrors = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConnectToTargetSqlMISyncTaskOutput(targetServerVersion.Value, targetServerBrandVersion.Value, Optional.ToList(validationErrors));
+            return new ConnectToTargetSqlMISyncTaskOutput(targetServerVersion.Value, targetServerBrandVersion.Value, Optional.ToList(validationErrors), rawData);
+        }
+
+        ConnectToTargetSqlMISyncTaskOutput IModelJsonSerializable<ConnectToTargetSqlMISyncTaskOutput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectToTargetSqlMISyncTaskOutput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectToTargetSqlMISyncTaskOutput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConnectToTargetSqlMISyncTaskOutput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectToTargetSqlMISyncTaskOutput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConnectToTargetSqlMISyncTaskOutput IModelSerializable<ConnectToTargetSqlMISyncTaskOutput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectToTargetSqlMISyncTaskOutput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConnectToTargetSqlMISyncTaskOutput(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConnectToTargetSqlMISyncTaskOutput"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConnectToTargetSqlMISyncTaskOutput"/> to convert. </param>
+        public static implicit operator RequestContent(ConnectToTargetSqlMISyncTaskOutput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConnectToTargetSqlMISyncTaskOutput"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConnectToTargetSqlMISyncTaskOutput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConnectToTargetSqlMISyncTaskOutput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

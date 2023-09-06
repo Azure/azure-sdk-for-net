@@ -1466,7 +1466,7 @@ namespace Azure.ResourceManager.DataFactory
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryTriggerTriggersRestClient.CreateQueryByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DataFactoryTriggerResource(Client, DataFactoryTriggerData.DeserializeDataFactoryTriggerData(e)), _dataFactoryTriggerTriggersClientDiagnostics, Pipeline, "DataFactoryResource.GetTriggers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new DataFactoryTriggerResource(Client, DataFactoryTriggerData.DeserializeDataFactoryTriggerData(e)), _dataFactoryTriggerTriggersClientDiagnostics, Pipeline, "DataFactoryResource.GetTriggers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1491,7 +1491,7 @@ namespace Azure.ResourceManager.DataFactory
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryTriggerTriggersRestClient.CreateQueryByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new DataFactoryTriggerResource(Client, DataFactoryTriggerData.DeserializeDataFactoryTriggerData(e)), _dataFactoryTriggerTriggersClientDiagnostics, Pipeline, "DataFactoryResource.GetTriggers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new DataFactoryTriggerResource(Client, DataFactoryTriggerData.DeserializeDataFactoryTriggerData(e)), _dataFactoryTriggerTriggersClientDiagnostics, Pipeline, "DataFactoryResource.GetTriggers", "value", null, cancellationToken);
         }
 
         /// <summary>

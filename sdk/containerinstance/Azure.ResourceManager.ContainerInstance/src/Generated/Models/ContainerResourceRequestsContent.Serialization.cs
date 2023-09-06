@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerResourceRequestsContent : IUtf8JsonSerializable
+    public partial class ContainerResourceRequestsContent : IUtf8JsonSerializable, IModelJsonSerializable<ContainerResourceRequestsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerResourceRequestsContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerResourceRequestsContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerResourceRequestsContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("memoryInGB"u8);
             writer.WriteNumberValue(MemoryInGB);
@@ -22,13 +30,34 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(Gpu))
             {
                 writer.WritePropertyName("gpu"u8);
-                writer.WriteObjectValue(Gpu);
+                if (Gpu is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerGpuResourceInfo>)Gpu).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ContainerResourceRequestsContent DeserializeContainerResourceRequestsContent(JsonElement element)
+        internal static ContainerResourceRequestsContent DeserializeContainerResourceRequestsContent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +65,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             double memoryInGB = default;
             double cpu = default;
             Optional<ContainerGpuResourceInfo> gpu = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("memoryInGB"u8))
@@ -57,8 +87,61 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     gpu = ContainerGpuResourceInfo.DeserializeContainerGpuResourceInfo(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerResourceRequestsContent(memoryInGB, cpu, gpu.Value);
+            return new ContainerResourceRequestsContent(memoryInGB, cpu, gpu.Value, rawData);
+        }
+
+        ContainerResourceRequestsContent IModelJsonSerializable<ContainerResourceRequestsContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerResourceRequestsContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerResourceRequestsContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerResourceRequestsContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerResourceRequestsContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerResourceRequestsContent IModelSerializable<ContainerResourceRequestsContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerResourceRequestsContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerResourceRequestsContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerResourceRequestsContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerResourceRequestsContent"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerResourceRequestsContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerResourceRequestsContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerResourceRequestsContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerResourceRequestsContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

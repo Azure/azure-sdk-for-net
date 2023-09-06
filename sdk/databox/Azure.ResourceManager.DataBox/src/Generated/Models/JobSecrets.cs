@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -14,22 +17,28 @@ namespace Azure.ResourceManager.DataBox.Models
     /// Please note <see cref="JobSecrets"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DataboxJobSecrets"/>, <see cref="CustomerDiskJobSecrets"/>, <see cref="DataBoxDiskJobSecrets"/> and <see cref="DataBoxHeavyJobSecrets"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownJobSecrets))]
     public abstract partial class JobSecrets
     {
-        /// <summary> Initializes a new instance of JobSecrets. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobSecrets"/>. </summary>
         protected JobSecrets()
         {
         }
 
-        /// <summary> Initializes a new instance of JobSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobSecrets"/>. </summary>
         /// <param name="jobSecretsType"> Used to indicate what type of job secrets object. </param>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
-        internal JobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dataCenterAccessSecurityCode, ResponseError error)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dataCenterAccessSecurityCode, ResponseError error, Dictionary<string, BinaryData> rawData)
         {
             JobSecretsType = jobSecretsType;
             DataCenterAccessSecurityCode = dataCenterAccessSecurityCode;
             Error = error;
+            _rawData = rawData;
         }
 
         /// <summary> Used to indicate what type of job secrets object. </summary>

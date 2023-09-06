@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> A CosmosDB Cassandra API data source/sink. </summary>
     public partial class CosmosCassandraDataTransferDataSourceSink : DataTransferDataSourceSink
     {
-        /// <summary> Initializes a new instance of CosmosCassandraDataTransferDataSourceSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosCassandraDataTransferDataSourceSink"/>. </summary>
         /// <param name="keyspaceName"></param>
         /// <param name="tableName"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> or <paramref name="tableName"/> is null. </exception>
@@ -27,15 +28,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Component = DataTransferComponent.CosmosDBCassandra;
         }
 
-        /// <summary> Initializes a new instance of CosmosCassandraDataTransferDataSourceSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosCassandraDataTransferDataSourceSink"/>. </summary>
         /// <param name="component"></param>
         /// <param name="keyspaceName"></param>
         /// <param name="tableName"></param>
-        internal CosmosCassandraDataTransferDataSourceSink(DataTransferComponent component, string keyspaceName, string tableName) : base(component)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosCassandraDataTransferDataSourceSink(DataTransferComponent component, string keyspaceName, string tableName, Dictionary<string, BinaryData> rawData) : base(component, rawData)
         {
             KeyspaceName = keyspaceName;
             TableName = tableName;
             Component = component;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosCassandraDataTransferDataSourceSink"/> for deserialization. </summary>
+        internal CosmosCassandraDataTransferDataSourceSink()
+        {
         }
 
         /// <summary> Gets or sets the keyspace name. </summary>

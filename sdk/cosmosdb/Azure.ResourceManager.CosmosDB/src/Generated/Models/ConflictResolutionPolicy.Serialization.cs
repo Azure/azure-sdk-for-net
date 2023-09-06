@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ConflictResolutionPolicy : IUtf8JsonSerializable
+    public partial class ConflictResolutionPolicy : IUtf8JsonSerializable, IModelJsonSerializable<ConflictResolutionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConflictResolutionPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConflictResolutionPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ConflictResolutionPolicy>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Mode))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("conflictResolutionProcedure"u8);
                 writer.WriteStringValue(ConflictResolutionProcedure);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConflictResolutionPolicy DeserializeConflictResolutionPolicy(JsonElement element)
+        internal static ConflictResolutionPolicy DeserializeConflictResolutionPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<ConflictResolutionMode> mode = default;
             Optional<string> conflictResolutionPath = default;
             Optional<string> conflictResolutionProcedure = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"u8))
@@ -63,8 +86,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     conflictResolutionProcedure = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConflictResolutionPolicy(Optional.ToNullable(mode), conflictResolutionPath.Value, conflictResolutionProcedure.Value);
+            return new ConflictResolutionPolicy(Optional.ToNullable(mode), conflictResolutionPath.Value, conflictResolutionProcedure.Value, rawData);
+        }
+
+        ConflictResolutionPolicy IModelJsonSerializable<ConflictResolutionPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConflictResolutionPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConflictResolutionPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConflictResolutionPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConflictResolutionPolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConflictResolutionPolicy IModelSerializable<ConflictResolutionPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConflictResolutionPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConflictResolutionPolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConflictResolutionPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConflictResolutionPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(ConflictResolutionPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConflictResolutionPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConflictResolutionPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConflictResolutionPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

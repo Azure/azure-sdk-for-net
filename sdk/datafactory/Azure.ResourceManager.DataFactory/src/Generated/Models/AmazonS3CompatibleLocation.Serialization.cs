@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AmazonS3CompatibleLocation : IUtf8JsonSerializable
+    public partial class AmazonS3CompatibleLocation : IUtf8JsonSerializable, IModelJsonSerializable<AmazonS3CompatibleLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AmazonS3CompatibleLocation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AmazonS3CompatibleLocation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AmazonS3CompatibleLocation>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BucketName))
             {
@@ -52,8 +58,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static AmazonS3CompatibleLocation DeserializeAmazonS3CompatibleLocation(JsonElement element)
+        internal static AmazonS3CompatibleLocation DeserializeAmazonS3CompatibleLocation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -112,6 +120,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AmazonS3CompatibleLocation(type, folderPath.Value, fileName.Value, additionalProperties, bucketName.Value, version.Value);
+        }
+
+        AmazonS3CompatibleLocation IModelJsonSerializable<AmazonS3CompatibleLocation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AmazonS3CompatibleLocation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAmazonS3CompatibleLocation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AmazonS3CompatibleLocation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AmazonS3CompatibleLocation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AmazonS3CompatibleLocation IModelSerializable<AmazonS3CompatibleLocation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AmazonS3CompatibleLocation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAmazonS3CompatibleLocation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AmazonS3CompatibleLocation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AmazonS3CompatibleLocation"/> to convert. </param>
+        public static implicit operator RequestContent(AmazonS3CompatibleLocation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AmazonS3CompatibleLocation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AmazonS3CompatibleLocation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAmazonS3CompatibleLocation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryImageUpdateTrigger : IUtf8JsonSerializable
+    public partial class ContainerRegistryImageUpdateTrigger : IUtf8JsonSerializable, IModelJsonSerializable<ContainerRegistryImageUpdateTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerRegistryImageUpdateTrigger>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerRegistryImageUpdateTrigger>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryImageUpdateTrigger>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -33,15 +39,36 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Images)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ContainerRegistryImageDescriptor>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ContainerRegistryImageUpdateTrigger DeserializeContainerRegistryImageUpdateTrigger(JsonElement element)
+        internal static ContainerRegistryImageUpdateTrigger DeserializeContainerRegistryImageUpdateTrigger(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +76,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<Guid> id = default;
             Optional<DateTimeOffset> timestamp = default;
             Optional<IList<ContainerRegistryImageDescriptor>> images = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -83,8 +111,61 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     images = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerRegistryImageUpdateTrigger(Optional.ToNullable(id), Optional.ToNullable(timestamp), Optional.ToList(images));
+            return new ContainerRegistryImageUpdateTrigger(Optional.ToNullable(id), Optional.ToNullable(timestamp), Optional.ToList(images), rawData);
+        }
+
+        ContainerRegistryImageUpdateTrigger IModelJsonSerializable<ContainerRegistryImageUpdateTrigger>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryImageUpdateTrigger>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryImageUpdateTrigger(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerRegistryImageUpdateTrigger>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryImageUpdateTrigger>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerRegistryImageUpdateTrigger IModelSerializable<ContainerRegistryImageUpdateTrigger>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryImageUpdateTrigger>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerRegistryImageUpdateTrigger(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerRegistryImageUpdateTrigger"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerRegistryImageUpdateTrigger"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerRegistryImageUpdateTrigger model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerRegistryImageUpdateTrigger"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerRegistryImageUpdateTrigger(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerRegistryImageUpdateTrigger(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

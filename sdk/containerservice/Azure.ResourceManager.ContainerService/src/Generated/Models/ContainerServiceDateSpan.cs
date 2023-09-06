@@ -6,19 +6,39 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> For example, between '2022-12-23' and '2023-01-05'. </summary>
     public partial class ContainerServiceDateSpan
     {
-        /// <summary> Initializes a new instance of ContainerServiceDateSpan. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceDateSpan"/>. </summary>
         /// <param name="start"> The start date of the date span. </param>
         /// <param name="end"> The end date of the date span. </param>
         public ContainerServiceDateSpan(DateTimeOffset start, DateTimeOffset end)
         {
             Start = start;
             End = end;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceDateSpan"/>. </summary>
+        /// <param name="start"> The start date of the date span. </param>
+        /// <param name="end"> The end date of the date span. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceDateSpan(DateTimeOffset start, DateTimeOffset end, Dictionary<string, BinaryData> rawData)
+        {
+            Start = start;
+            End = end;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceDateSpan"/> for deserialization. </summary>
+        internal ContainerServiceDateSpan()
+        {
         }
 
         /// <summary> The start date of the date span. </summary>

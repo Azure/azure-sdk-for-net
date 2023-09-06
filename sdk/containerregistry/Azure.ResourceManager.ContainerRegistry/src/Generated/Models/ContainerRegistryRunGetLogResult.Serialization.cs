@@ -5,21 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryRunGetLogResult
+    public partial class ContainerRegistryRunGetLogResult : IUtf8JsonSerializable, IModelJsonSerializable<ContainerRegistryRunGetLogResult>
     {
-        internal static ContainerRegistryRunGetLogResult DeserializeContainerRegistryRunGetLogResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerRegistryRunGetLogResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerRegistryRunGetLogResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryRunGetLogResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(LogLink))
+            {
+                writer.WritePropertyName("logLink"u8);
+                writer.WriteStringValue(LogLink);
+            }
+            if (Optional.IsDefined(LogArtifactLink))
+            {
+                writer.WritePropertyName("logArtifactLink"u8);
+                writer.WriteStringValue(LogArtifactLink);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ContainerRegistryRunGetLogResult DeserializeContainerRegistryRunGetLogResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> logLink = default;
             Optional<string> logArtifactLink = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logLink"u8))
@@ -32,8 +71,61 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     logArtifactLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerRegistryRunGetLogResult(logLink.Value, logArtifactLink.Value);
+            return new ContainerRegistryRunGetLogResult(logLink.Value, logArtifactLink.Value, rawData);
+        }
+
+        ContainerRegistryRunGetLogResult IModelJsonSerializable<ContainerRegistryRunGetLogResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryRunGetLogResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryRunGetLogResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerRegistryRunGetLogResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryRunGetLogResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerRegistryRunGetLogResult IModelSerializable<ContainerRegistryRunGetLogResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryRunGetLogResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerRegistryRunGetLogResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerRegistryRunGetLogResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerRegistryRunGetLogResult"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerRegistryRunGetLogResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerRegistryRunGetLogResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerRegistryRunGetLogResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerRegistryRunGetLogResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

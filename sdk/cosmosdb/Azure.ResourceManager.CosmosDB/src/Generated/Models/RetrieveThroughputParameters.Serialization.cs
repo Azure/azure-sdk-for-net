@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class RetrieveThroughputParameters : IUtf8JsonSerializable
+    public partial class RetrieveThroughputParameters : IUtf8JsonSerializable, IModelJsonSerializable<RetrieveThroughputParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RetrieveThroughputParameters>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RetrieveThroughputParameters>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RetrieveThroughputParameters>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -39,13 +46,34 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("resource"u8);
-            writer.WriteObjectValue(Resource);
+            if (Resource is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<RetrieveThroughputPropertiesResource>)Resource).Serialize(writer, options);
+            }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RetrieveThroughputParameters DeserializeRetrieveThroughputParameters(JsonElement element)
+        internal static RetrieveThroughputParameters DeserializeRetrieveThroughputParameters(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             RetrieveThroughputPropertiesResource resource = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -130,8 +159,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RetrieveThroughputParameters(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource, identity);
+            return new RetrieveThroughputParameters(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource, identity, rawData);
+        }
+
+        RetrieveThroughputParameters IModelJsonSerializable<RetrieveThroughputParameters>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RetrieveThroughputParameters>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRetrieveThroughputParameters(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RetrieveThroughputParameters>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RetrieveThroughputParameters>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RetrieveThroughputParameters IModelSerializable<RetrieveThroughputParameters>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RetrieveThroughputParameters>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRetrieveThroughputParameters(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RetrieveThroughputParameters"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RetrieveThroughputParameters"/> to convert. </param>
+        public static implicit operator RequestContent(RetrieveThroughputParameters model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RetrieveThroughputParameters"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RetrieveThroughputParameters(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRetrieveThroughputParameters(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

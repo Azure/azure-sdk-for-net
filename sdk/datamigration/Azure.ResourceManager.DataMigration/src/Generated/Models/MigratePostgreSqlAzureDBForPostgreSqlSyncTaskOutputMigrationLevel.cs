@@ -6,19 +6,20 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel. </summary>
     public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel : MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel"/>. </summary>
         internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel()
         {
             ResultType = "MigrationLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="startedOn"> Migration start time. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetServerType"> Target server type. </param>
         /// <param name="state"> Migration status. </param>
         /// <param name="databaseCount"> Number of databases to include. </param>
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel(string id, string resultType, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string sourceServerVersion, string sourceServer, string targetServerVersion, string targetServer, ScenarioSource? sourceServerType, ScenarioTarget? targetServerType, ReplicateMigrationState? state, float? databaseCount) : base(id, resultType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel(string id, string resultType, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string sourceServerVersion, string sourceServer, string targetServerVersion, string targetServer, ScenarioSource? sourceServerType, ScenarioTarget? targetServerType, ReplicateMigrationState? state, float? databaseCount, Dictionary<string, BinaryData> rawData) : base(id, resultType, rawData)
         {
             StartedOn = startedOn;
             EndedOn = endedOn;

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Square Service linked service. </summary>
     public partial class SquareLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of SquareLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SquareLinkedService"/>. </summary>
         public SquareLinkedService()
         {
             LinkedServiceType = "Square";
         }
 
-        /// <summary> Initializes a new instance of SquareLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SquareLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

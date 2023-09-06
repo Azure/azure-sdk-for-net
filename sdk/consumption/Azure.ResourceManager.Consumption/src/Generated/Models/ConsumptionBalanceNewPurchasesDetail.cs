@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Consumption.Models
 {
     /// <summary> The ConsumptionBalanceNewPurchasesDetail. </summary>
     public partial class ConsumptionBalanceNewPurchasesDetail
     {
-        /// <summary> Initializes a new instance of ConsumptionBalanceNewPurchasesDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionBalanceNewPurchasesDetail"/>. </summary>
         internal ConsumptionBalanceNewPurchasesDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumptionBalanceNewPurchasesDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionBalanceNewPurchasesDetail"/>. </summary>
         /// <param name="name"> the name of new purchase. </param>
         /// <param name="value"> the value of new purchase. </param>
-        internal ConsumptionBalanceNewPurchasesDetail(string name, decimal? value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionBalanceNewPurchasesDetail(string name, decimal? value, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> the name of new purchase. </summary>

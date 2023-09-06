@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for the service task to install an OCI driver. </summary>
     public partial class InstallOciDriverTaskOutput
     {
-        /// <summary> Initializes a new instance of InstallOciDriverTaskOutput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InstallOciDriverTaskOutput"/>. </summary>
         internal InstallOciDriverTaskOutput()
         {
             ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of InstallOciDriverTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstallOciDriverTaskOutput"/>. </summary>
         /// <param name="validationErrors"> Validation errors. </param>
-        internal InstallOciDriverTaskOutput(IReadOnlyList<ReportableException> validationErrors)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InstallOciDriverTaskOutput(IReadOnlyList<ReportableException> validationErrors, Dictionary<string, BinaryData> rawData)
         {
             ValidationErrors = validationErrors;
+            _rawData = rawData;
         }
 
         /// <summary> Validation errors. </summary>

@@ -8,26 +8,53 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryApplicationVersionPublishingProfile : IUtf8JsonSerializable
+    public partial class GalleryApplicationVersionPublishingProfile : IUtf8JsonSerializable, IModelJsonSerializable<GalleryApplicationVersionPublishingProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GalleryApplicationVersionPublishingProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GalleryApplicationVersionPublishingProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<GalleryApplicationVersionPublishingProfile>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            if (Source is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<UserArtifactSource>)Source).Serialize(writer, options);
+            }
             if (Optional.IsDefined(ManageActions))
             {
                 writer.WritePropertyName("manageActions"u8);
-                writer.WriteObjectValue(ManageActions);
+                if (ManageActions is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<UserArtifactManagement>)ManageActions).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings);
+                if (Settings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<UserArtifactSettings>)Settings).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(AdvancedSettings))
             {
@@ -51,7 +78,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomActions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<GalleryApplicationCustomAction>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -61,7 +95,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetRegions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<TargetRegion>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -96,15 +137,36 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetExtendedLocations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<GalleryTargetExtendedLocation>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static GalleryApplicationVersionPublishingProfile DeserializeGalleryApplicationVersionPublishingProfile(JsonElement element)
+        internal static GalleryApplicationVersionPublishingProfile DeserializeGalleryApplicationVersionPublishingProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -123,6 +185,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<ImageStorageAccountType> storageAccountType = default;
             Optional<GalleryReplicationMode> replicationMode = default;
             Optional<IList<GalleryTargetExtendedLocation>> targetExtendedLocations = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"u8))
@@ -267,8 +330,61 @@ namespace Azure.ResourceManager.Compute.Models
                     targetExtendedLocations = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GalleryApplicationVersionPublishingProfile(Optional.ToList(targetRegions), Optional.ToNullable(replicaCount), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(storageAccountType), Optional.ToNullable(replicationMode), Optional.ToList(targetExtendedLocations), source, manageActions.Value, settings.Value, Optional.ToDictionary(advancedSettings), Optional.ToNullable(enableHealthCheck), Optional.ToList(customActions));
+            return new GalleryApplicationVersionPublishingProfile(Optional.ToList(targetRegions), Optional.ToNullable(replicaCount), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(storageAccountType), Optional.ToNullable(replicationMode), Optional.ToList(targetExtendedLocations), source, manageActions.Value, settings.Value, Optional.ToDictionary(advancedSettings), Optional.ToNullable(enableHealthCheck), Optional.ToList(customActions), rawData);
+        }
+
+        GalleryApplicationVersionPublishingProfile IModelJsonSerializable<GalleryApplicationVersionPublishingProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GalleryApplicationVersionPublishingProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGalleryApplicationVersionPublishingProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GalleryApplicationVersionPublishingProfile>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GalleryApplicationVersionPublishingProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GalleryApplicationVersionPublishingProfile IModelSerializable<GalleryApplicationVersionPublishingProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GalleryApplicationVersionPublishingProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGalleryApplicationVersionPublishingProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GalleryApplicationVersionPublishingProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GalleryApplicationVersionPublishingProfile"/> to convert. </param>
+        public static implicit operator RequestContent(GalleryApplicationVersionPublishingProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GalleryApplicationVersionPublishingProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GalleryApplicationVersionPublishingProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGalleryApplicationVersionPublishingProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

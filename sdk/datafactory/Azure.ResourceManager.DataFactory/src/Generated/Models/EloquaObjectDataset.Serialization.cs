@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class EloquaObjectDataset : IUtf8JsonSerializable
+    public partial class EloquaObjectDataset : IUtf8JsonSerializable, IModelJsonSerializable<EloquaObjectDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EloquaObjectDataset>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EloquaObjectDataset>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EloquaObjectDataset>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
@@ -43,7 +49,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<EntityParameterSpecification>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -69,7 +82,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                if (Folder is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DatasetFolder>)Folder).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
@@ -91,8 +111,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static EloquaObjectDataset DeserializeEloquaObjectDataset(JsonElement element)
+        internal static EloquaObjectDataset DeserializeEloquaObjectDataset(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -212,6 +234,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new EloquaObjectDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, tableName.Value);
+        }
+
+        EloquaObjectDataset IModelJsonSerializable<EloquaObjectDataset>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EloquaObjectDataset>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEloquaObjectDataset(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EloquaObjectDataset>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EloquaObjectDataset>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EloquaObjectDataset IModelSerializable<EloquaObjectDataset>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EloquaObjectDataset>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEloquaObjectDataset(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EloquaObjectDataset"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EloquaObjectDataset"/> to convert. </param>
+        public static implicit operator RequestContent(EloquaObjectDataset model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EloquaObjectDataset"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EloquaObjectDataset(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEloquaObjectDataset(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

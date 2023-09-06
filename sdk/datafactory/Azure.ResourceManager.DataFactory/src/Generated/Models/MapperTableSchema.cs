@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Schema of a CDC table in terms of column names and their corresponding data types. </summary>
     public partial class MapperTableSchema
     {
-        /// <summary> Initializes a new instance of MapperTableSchema. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MapperTableSchema"/>. </summary>
         public MapperTableSchema()
         {
         }
 
-        /// <summary> Initializes a new instance of MapperTableSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapperTableSchema"/>. </summary>
         /// <param name="name"> Name of the column. </param>
         /// <param name="dataType"> Data type of the column. </param>
-        internal MapperTableSchema(string name, string dataType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MapperTableSchema(string name, string dataType, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             DataType = dataType;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the column. </summary>

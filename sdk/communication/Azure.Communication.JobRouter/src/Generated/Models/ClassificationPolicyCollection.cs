@@ -15,7 +15,10 @@ namespace Azure.Communication.JobRouter.Models
     /// <summary> A paged collection of classification policies. </summary>
     internal partial class ClassificationPolicyCollection
     {
-        /// <summary> Initializes a new instance of ClassificationPolicyCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClassificationPolicyCollection"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ClassificationPolicyCollection(IEnumerable<ClassificationPolicyItem> value)
@@ -25,13 +28,20 @@ namespace Azure.Communication.JobRouter.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ClassificationPolicyCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClassificationPolicyCollection"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal ClassificationPolicyCollection(IReadOnlyList<ClassificationPolicyItem> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClassificationPolicyCollection(IReadOnlyList<ClassificationPolicyItem> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClassificationPolicyCollection"/> for deserialization. </summary>
+        internal ClassificationPolicyCollection()
+        {
         }
 
         /// <summary> Gets the value. </summary>

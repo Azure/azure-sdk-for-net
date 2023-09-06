@@ -8,14 +8,105 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeProfileSubscription
+    public partial class EdgeProfileSubscription : IUtf8JsonSerializable, IModelJsonSerializable<EdgeProfileSubscription>
     {
-        internal static EdgeProfileSubscription DeserializeEdgeProfileSubscription(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EdgeProfileSubscription>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EdgeProfileSubscription>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeProfileSubscription>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RegistrationId))
+            {
+                writer.WritePropertyName("registrationId"u8);
+                writer.WriteStringValue(RegistrationId.Value);
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsDefined(RegistrationDate))
+            {
+                writer.WritePropertyName("registrationDate"u8);
+                writer.WriteStringValue(RegistrationDate);
+            }
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                writer.WritePropertyName("subscriptionId"u8);
+                writer.WriteStringValue(SubscriptionId);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId.Value);
+            }
+            if (Optional.IsDefined(LocationPlacementId))
+            {
+                writer.WritePropertyName("locationPlacementId"u8);
+                writer.WriteStringValue(LocationPlacementId);
+            }
+            if (Optional.IsDefined(QuotaId))
+            {
+                writer.WritePropertyName("quotaId"u8);
+                writer.WriteStringValue(QuotaId);
+            }
+            if (Optional.IsDefined(SerializedDetails))
+            {
+                writer.WritePropertyName("serializedDetails"u8);
+                writer.WriteStringValue(SerializedDetails);
+            }
+            if (Optional.IsCollectionDefined(RegisteredFeatures))
+            {
+                writer.WritePropertyName("registeredFeatures"u8);
+                writer.WriteStartArray();
+                foreach (var item in RegisteredFeatures)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SubscriptionRegisteredFeatures>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static EdgeProfileSubscription DeserializeEdgeProfileSubscription(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +121,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<string> quotaId = default;
             Optional<string> serializedDetails = default;
             Optional<IReadOnlyList<SubscriptionRegisteredFeatures>> registeredFeatures = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registrationId"u8))
@@ -119,8 +211,61 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EdgeProfileSubscription(Optional.ToNullable(registrationId), id.Value, Optional.ToNullable(state), registrationDate.Value, subscriptionId.Value, Optional.ToNullable(tenantId), locationPlacementId.Value, quotaId.Value, serializedDetails.Value, Optional.ToList(registeredFeatures));
+            return new EdgeProfileSubscription(Optional.ToNullable(registrationId), id.Value, Optional.ToNullable(state), registrationDate.Value, subscriptionId.Value, Optional.ToNullable(tenantId), locationPlacementId.Value, quotaId.Value, serializedDetails.Value, Optional.ToList(registeredFeatures), rawData);
+        }
+
+        EdgeProfileSubscription IModelJsonSerializable<EdgeProfileSubscription>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeProfileSubscription>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeProfileSubscription(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EdgeProfileSubscription>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeProfileSubscription>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EdgeProfileSubscription IModelSerializable<EdgeProfileSubscription>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeProfileSubscription>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEdgeProfileSubscription(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EdgeProfileSubscription"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EdgeProfileSubscription"/> to convert. </param>
+        public static implicit operator RequestContent(EdgeProfileSubscription model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EdgeProfileSubscription"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EdgeProfileSubscription(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEdgeProfileSubscription(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

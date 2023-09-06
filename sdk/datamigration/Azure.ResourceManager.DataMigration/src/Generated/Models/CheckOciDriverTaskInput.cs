@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Input for the service task to check for OCI drivers. </summary>
     internal partial class CheckOciDriverTaskInput
     {
-        /// <summary> Initializes a new instance of CheckOciDriverTaskInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CheckOciDriverTaskInput"/>. </summary>
         public CheckOciDriverTaskInput()
         {
         }
 
-        /// <summary> Initializes a new instance of CheckOciDriverTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckOciDriverTaskInput"/>. </summary>
         /// <param name="serverVersion"> Version of the source server to check against.  Optional. </param>
-        internal CheckOciDriverTaskInput(string serverVersion)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CheckOciDriverTaskInput(string serverVersion, Dictionary<string, BinaryData> rawData)
         {
             ServerVersion = serverVersion;
+            _rawData = rawData;
         }
 
         /// <summary> Version of the source server to check against.  Optional. </summary>

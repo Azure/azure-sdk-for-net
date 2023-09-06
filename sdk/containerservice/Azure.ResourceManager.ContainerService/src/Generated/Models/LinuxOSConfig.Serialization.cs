@@ -5,20 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class LinuxOSConfig : IUtf8JsonSerializable
+    public partial class LinuxOSConfig : IUtf8JsonSerializable, IModelJsonSerializable<LinuxOSConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LinuxOSConfig>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LinuxOSConfig>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LinuxOSConfig>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sysctls))
             {
                 writer.WritePropertyName("sysctls"u8);
-                writer.WriteObjectValue(Sysctls);
+                if (Sysctls is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SysctlConfig>)Sysctls).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(TransparentHugePageEnabled))
             {
@@ -35,11 +50,25 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("swapFileSizeMB"u8);
                 writer.WriteNumberValue(SwapFileSizeInMB.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LinuxOSConfig DeserializeLinuxOSConfig(JsonElement element)
+        internal static LinuxOSConfig DeserializeLinuxOSConfig(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +77,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<string> transparentHugePageEnabled = default;
             Optional<string> transparentHugePageDefrag = default;
             Optional<int> swapFileSizeMB = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sysctls"u8))
@@ -78,8 +108,61 @@ namespace Azure.ResourceManager.ContainerService.Models
                     swapFileSizeMB = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LinuxOSConfig(sysctls.Value, transparentHugePageEnabled.Value, transparentHugePageDefrag.Value, Optional.ToNullable(swapFileSizeMB));
+            return new LinuxOSConfig(sysctls.Value, transparentHugePageEnabled.Value, transparentHugePageDefrag.Value, Optional.ToNullable(swapFileSizeMB), rawData);
+        }
+
+        LinuxOSConfig IModelJsonSerializable<LinuxOSConfig>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinuxOSConfig>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinuxOSConfig(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LinuxOSConfig>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinuxOSConfig>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LinuxOSConfig IModelSerializable<LinuxOSConfig>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinuxOSConfig>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLinuxOSConfig(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LinuxOSConfig"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LinuxOSConfig"/> to convert. </param>
+        public static implicit operator RequestContent(LinuxOSConfig model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LinuxOSConfig"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LinuxOSConfig(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLinuxOSConfig(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

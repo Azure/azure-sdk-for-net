@@ -5,21 +5,49 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class CapacityReservationGroupInstanceView
+    internal partial class CapacityReservationGroupInstanceView : IUtf8JsonSerializable, IModelJsonSerializable<CapacityReservationGroupInstanceView>
     {
-        internal static CapacityReservationGroupInstanceView DeserializeCapacityReservationGroupInstanceView(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CapacityReservationGroupInstanceView>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CapacityReservationGroupInstanceView>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CapacityReservationGroupInstanceView>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CapacityReservationGroupInstanceView DeserializeCapacityReservationGroupInstanceView(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<CapacityReservationInstanceViewWithName>> capacityReservations = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("capacityReservations"u8))
@@ -36,8 +64,61 @@ namespace Azure.ResourceManager.Compute.Models
                     capacityReservations = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CapacityReservationGroupInstanceView(Optional.ToList(capacityReservations));
+            return new CapacityReservationGroupInstanceView(Optional.ToList(capacityReservations), rawData);
+        }
+
+        CapacityReservationGroupInstanceView IModelJsonSerializable<CapacityReservationGroupInstanceView>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CapacityReservationGroupInstanceView>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCapacityReservationGroupInstanceView(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CapacityReservationGroupInstanceView>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CapacityReservationGroupInstanceView>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CapacityReservationGroupInstanceView IModelSerializable<CapacityReservationGroupInstanceView>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CapacityReservationGroupInstanceView>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCapacityReservationGroupInstanceView(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CapacityReservationGroupInstanceView"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CapacityReservationGroupInstanceView"/> to convert. </param>
+        public static implicit operator RequestContent(CapacityReservationGroupInstanceView model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CapacityReservationGroupInstanceView"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CapacityReservationGroupInstanceView(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCapacityReservationGroupInstanceView(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

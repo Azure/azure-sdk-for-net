@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,28 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machine scale set OS profile. </summary>
     public partial class VirtualMachineScaleSetUpdateOSProfile
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateOSProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateOSProfile"/>. </summary>
         public VirtualMachineScaleSetUpdateOSProfile()
         {
             Secrets = new ChangeTrackingList<VaultSecretGroup>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateOSProfile"/>. </summary>
+        /// <param name="customData"> A base-64 encoded string of custom data. </param>
+        /// <param name="windowsConfiguration"> The Windows Configuration of the OS profile. </param>
+        /// <param name="linuxConfiguration"> The Linux Configuration of the OS profile. </param>
+        /// <param name="secrets"> The List of certificates for addition to the VM. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetUpdateOSProfile(string customData, WindowsConfiguration windowsConfiguration, LinuxConfiguration linuxConfiguration, IList<VaultSecretGroup> secrets, Dictionary<string, BinaryData> rawData)
+        {
+            CustomData = customData;
+            WindowsConfiguration = windowsConfiguration;
+            LinuxConfiguration = linuxConfiguration;
+            Secrets = secrets;
+            _rawData = rawData;
         }
 
         /// <summary> A base-64 encoded string of custom data. </summary>

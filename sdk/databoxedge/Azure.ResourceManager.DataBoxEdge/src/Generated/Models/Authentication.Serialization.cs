@@ -5,31 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    internal partial class Authentication : IUtf8JsonSerializable
+    internal partial class Authentication : IUtf8JsonSerializable, IModelJsonSerializable<Authentication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Authentication>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<Authentication>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<Authentication>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SymmetricKey))
             {
                 writer.WritePropertyName("symmetricKey"u8);
-                writer.WriteObjectValue(SymmetricKey);
+                if (SymmetricKey is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DataBoxEdgeSymmetricKey>)SymmetricKey).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static Authentication DeserializeAuthentication(JsonElement element)
+        internal static Authentication DeserializeAuthentication(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DataBoxEdgeSymmetricKey> symmetricKey = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("symmetricKey"u8))
@@ -41,8 +71,61 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     symmetricKey = DataBoxEdgeSymmetricKey.DeserializeDataBoxEdgeSymmetricKey(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new Authentication(symmetricKey.Value);
+            return new Authentication(symmetricKey.Value, rawData);
+        }
+
+        Authentication IModelJsonSerializable<Authentication>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Authentication>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAuthentication(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<Authentication>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Authentication>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        Authentication IModelSerializable<Authentication>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Authentication>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAuthentication(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="Authentication"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="Authentication"/> to convert. </param>
+        public static implicit operator RequestContent(Authentication model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="Authentication"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator Authentication(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAuthentication(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Used for updating a disk access resource. </summary>
     public partial class DiskAccessPatch
     {
-        /// <summary> Initializes a new instance of DiskAccessPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiskAccessPatch"/>. </summary>
         public DiskAccessPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiskAccessPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiskAccessPatch(IDictionary<string, string> tags, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary> Resource tags. </summary>

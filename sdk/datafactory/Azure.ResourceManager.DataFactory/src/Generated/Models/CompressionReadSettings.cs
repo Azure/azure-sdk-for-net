@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// </summary>
     public partial class CompressionReadSettings
     {
-        /// <summary> Initializes a new instance of CompressionReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompressionReadSettings"/>. </summary>
         public CompressionReadSettings()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of CompressionReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompressionReadSettings"/>. </summary>
         /// <param name="compressionReadSettingsType"> The Compression setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal CompressionReadSettings(string compressionReadSettingsType, IDictionary<string, BinaryData> additionalProperties)

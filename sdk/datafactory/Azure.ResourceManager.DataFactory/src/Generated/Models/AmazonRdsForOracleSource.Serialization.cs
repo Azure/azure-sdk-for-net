@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AmazonRdsForOracleSource : IUtf8JsonSerializable
+    public partial class AmazonRdsForOracleSource : IUtf8JsonSerializable, IModelJsonSerializable<AmazonRdsForOracleSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AmazonRdsForOracleSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AmazonRdsForOracleSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AmazonRdsForOracleSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(OracleReaderQuery))
             {
@@ -36,7 +42,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
-                writer.WriteObjectValue(PartitionSettings);
+                if (PartitionSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AmazonRdsForOraclePartitionSettings>)PartitionSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
@@ -81,8 +94,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static AmazonRdsForOracleSource DeserializeAmazonRdsForOracleSource(JsonElement element)
+        internal static AmazonRdsForOracleSource DeserializeAmazonRdsForOracleSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -191,6 +206,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AmazonRdsForOracleSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, oracleReaderQuery.Value, queryTimeout.Value, partitionOption.Value, partitionSettings.Value, additionalColumns.Value);
+        }
+
+        AmazonRdsForOracleSource IModelJsonSerializable<AmazonRdsForOracleSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AmazonRdsForOracleSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAmazonRdsForOracleSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AmazonRdsForOracleSource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AmazonRdsForOracleSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AmazonRdsForOracleSource IModelSerializable<AmazonRdsForOracleSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AmazonRdsForOracleSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAmazonRdsForOracleSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AmazonRdsForOracleSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AmazonRdsForOracleSource"/> to convert. </param>
+        public static implicit operator RequestContent(AmazonRdsForOracleSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AmazonRdsForOracleSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AmazonRdsForOracleSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAmazonRdsForOracleSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

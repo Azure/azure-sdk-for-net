@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the role properties. </summary>
     public partial class CloudServiceRoleProfileProperties
     {
-        /// <summary> Initializes a new instance of CloudServiceRoleProfileProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudServiceRoleProfileProperties"/>. </summary>
         public CloudServiceRoleProfileProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudServiceRoleProfileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceRoleProfileProperties"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="sku"> Describes the cloud service role sku. </param>
-        internal CloudServiceRoleProfileProperties(string name, CloudServiceRoleSku sku)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudServiceRoleProfileProperties(string name, CloudServiceRoleSku sku, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Sku = sku;
+            _rawData = rawData;
         }
 
         /// <summary> Resource name. </summary>

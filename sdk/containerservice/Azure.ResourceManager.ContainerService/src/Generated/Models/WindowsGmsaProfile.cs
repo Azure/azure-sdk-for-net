@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Windows gMSA Profile in the managed cluster. </summary>
     public partial class WindowsGmsaProfile
     {
-        /// <summary> Initializes a new instance of WindowsGmsaProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WindowsGmsaProfile"/>. </summary>
         public WindowsGmsaProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of WindowsGmsaProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsGmsaProfile"/>. </summary>
         /// <param name="isEnabled"> Specifies whether to enable Windows gMSA in the managed cluster. </param>
         /// <param name="dnsServer"> Specifies the DNS server for Windows gMSA. &lt;br&gt;&lt;br&gt; Set it to empty if you have configured the DNS server in the vnet which is used to create the managed cluster. </param>
         /// <param name="rootDomainName"> Specifies the root domain name for Windows gMSA. &lt;br&gt;&lt;br&gt; Set it to empty if you have configured the DNS server in the vnet which is used to create the managed cluster. </param>
-        internal WindowsGmsaProfile(bool? isEnabled, string dnsServer, string rootDomainName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WindowsGmsaProfile(bool? isEnabled, string dnsServer, string rootDomainName, Dictionary<string, BinaryData> rawData)
         {
             IsEnabled = isEnabled;
             DnsServer = dnsServer;
             RootDomainName = rootDomainName;
+            _rawData = rawData;
         }
 
         /// <summary> Specifies whether to enable Windows gMSA in the managed cluster. </summary>

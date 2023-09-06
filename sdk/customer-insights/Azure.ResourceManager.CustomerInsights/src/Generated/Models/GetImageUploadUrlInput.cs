@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
     /// <summary> Input type for getting image upload url. </summary>
     public partial class GetImageUploadUrlInput
     {
-        /// <summary> Initializes a new instance of GetImageUploadUrlInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GetImageUploadUrlInput"/>. </summary>
         public GetImageUploadUrlInput()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GetImageUploadUrlInput"/>. </summary>
+        /// <param name="entityType"> Type of entity. Can be Profile or Interaction. </param>
+        /// <param name="entityTypeName"> Name of the entity type. </param>
+        /// <param name="relativePath"> Relative path of the image. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetImageUploadUrlInput(string entityType, string entityTypeName, string relativePath, Dictionary<string, BinaryData> rawData)
+        {
+            EntityType = entityType;
+            EntityTypeName = entityTypeName;
+            RelativePath = relativePath;
+            _rawData = rawData;
         }
 
         /// <summary> Type of entity. Can be Profile or Interaction. </summary>

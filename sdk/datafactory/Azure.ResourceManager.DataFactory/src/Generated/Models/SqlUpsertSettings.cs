@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Sql upsert option settings. </summary>
     public partial class SqlUpsertSettings
     {
-        /// <summary> Initializes a new instance of SqlUpsertSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlUpsertSettings"/>. </summary>
         public SqlUpsertSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlUpsertSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlUpsertSettings"/>. </summary>
         /// <param name="useTempDB"> Specifies whether to use temp db for upsert interim table. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="interimSchemaName"> Schema name for interim table. Type: string (or Expression with resultType string). </param>
         /// <param name="keys"> Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings). </param>
-        internal SqlUpsertSettings(DataFactoryElement<bool> useTempDB, DataFactoryElement<string> interimSchemaName, DataFactoryElement<IList<string>> keys)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlUpsertSettings(DataFactoryElement<bool> useTempDB, DataFactoryElement<string> interimSchemaName, DataFactoryElement<IList<string>> keys, Dictionary<string, BinaryData> rawData)
         {
             UseTempDB = useTempDB;
             InterimSchemaName = interimSchemaName;
             Keys = keys;
+            _rawData = rawData;
         }
 
         /// <summary> Specifies whether to use temp db for upsert interim table. Type: boolean (or Expression with resultType boolean). </summary>

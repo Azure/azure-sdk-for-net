@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeIotRole : IUtf8JsonSerializable
+    public partial class EdgeIotRole : IUtf8JsonSerializable, IModelJsonSerializable<EdgeIotRole>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EdgeIotRole>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EdgeIotRole>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeIotRole>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -29,12 +36,26 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(IotDeviceDetails))
             {
                 writer.WritePropertyName("ioTDeviceDetails"u8);
-                writer.WriteObjectValue(IotDeviceDetails);
+                if (IotDeviceDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<EdgeIotDeviceInfo>)IotDeviceDetails).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(IotEdgeDeviceDetails))
             {
                 writer.WritePropertyName("ioTEdgeDeviceDetails"u8);
-                writer.WriteObjectValue(IotEdgeDeviceDetails);
+                if (IotEdgeDeviceDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<EdgeIotDeviceInfo>)IotEdgeDeviceDetails).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(ShareMappings))
             {
@@ -42,19 +63,40 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in ShareMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DataBoxEdgeMountPointMap>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(IotEdgeAgentInfo))
             {
                 writer.WritePropertyName("ioTEdgeAgentInfo"u8);
-                writer.WriteObjectValue(IotEdgeAgentInfo);
+                if (IotEdgeAgentInfo is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<IotEdgeAgentInfo>)IotEdgeAgentInfo).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ComputeResource))
             {
                 writer.WritePropertyName("computeResource"u8);
-                writer.WriteObjectValue(ComputeResource);
+                if (ComputeResource is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<EdgeComputeResourceInfo>)ComputeResource).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(RoleStatus))
             {
@@ -62,11 +104,25 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStringValue(RoleStatus.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EdgeIotRole DeserializeEdgeIotRole(JsonElement element)
+        internal static EdgeIotRole DeserializeEdgeIotRole(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -84,6 +140,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<HostPlatformType> hostPlatformType = default;
             Optional<EdgeComputeResourceInfo> computeResource = default;
             Optional<DataBoxEdgeRoleStatus> roleStatus = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -204,8 +261,61 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EdgeIotRole(id, name, type, systemData.Value, kind, Optional.ToNullable(hostPlatform), iotDeviceDetails.Value, iotEdgeDeviceDetails.Value, Optional.ToList(shareMappings), iotEdgeAgentInfo.Value, Optional.ToNullable(hostPlatformType), computeResource.Value, Optional.ToNullable(roleStatus));
+            return new EdgeIotRole(id, name, type, systemData.Value, kind, Optional.ToNullable(hostPlatform), iotDeviceDetails.Value, iotEdgeDeviceDetails.Value, Optional.ToList(shareMappings), iotEdgeAgentInfo.Value, Optional.ToNullable(hostPlatformType), computeResource.Value, Optional.ToNullable(roleStatus), rawData);
+        }
+
+        EdgeIotRole IModelJsonSerializable<EdgeIotRole>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeIotRole>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeIotRole(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EdgeIotRole>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeIotRole>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EdgeIotRole IModelSerializable<EdgeIotRole>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeIotRole>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEdgeIotRole(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EdgeIotRole"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EdgeIotRole"/> to convert. </param>
+        public static implicit operator RequestContent(EdgeIotRole model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EdgeIotRole"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EdgeIotRole(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEdgeIotRole(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

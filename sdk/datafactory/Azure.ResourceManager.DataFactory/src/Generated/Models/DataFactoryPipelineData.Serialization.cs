@@ -10,15 +10,20 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    public partial class DataFactoryPipelineData : IUtf8JsonSerializable
+    public partial class DataFactoryPipelineData : IUtf8JsonSerializable, IModelJsonSerializable<DataFactoryPipelineData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataFactoryPipelineData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataFactoryPipelineData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataFactoryPipelineData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -33,7 +38,14 @@ namespace Azure.ResourceManager.DataFactory
                 writer.WriteStartArray();
                 foreach (var item in Activities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<PipelineActivity>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -44,7 +56,14 @@ namespace Azure.ResourceManager.DataFactory
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<EntityParameterSpecification>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -55,7 +74,14 @@ namespace Azure.ResourceManager.DataFactory
                 foreach (var item in Variables)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<PipelineVariableSpecification>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -106,12 +132,26 @@ namespace Azure.ResourceManager.DataFactory
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                if (Folder is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PipelineFolder>)Folder).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                if (Policy is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DataFactoryPipelinePolicy>)Policy).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -126,8 +166,10 @@ namespace Azure.ResourceManager.DataFactory
             writer.WriteEndObject();
         }
 
-        internal static DataFactoryPipelineData DeserializeDataFactoryPipelineData(JsonElement element)
+        internal static DataFactoryPipelineData DeserializeDataFactoryPipelineData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -315,6 +357,54 @@ namespace Azure.ResourceManager.DataFactory
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DataFactoryPipelineData(id, name, type, systemData.Value, description.Value, Optional.ToList(activities), Optional.ToDictionary(parameters), Optional.ToDictionary(variables), Optional.ToNullable(concurrency), Optional.ToList(annotations), Optional.ToDictionary(runDimensions), folder.Value, policy.Value, Optional.ToNullable(etag), additionalProperties);
+        }
+
+        DataFactoryPipelineData IModelJsonSerializable<DataFactoryPipelineData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataFactoryPipelineData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryPipelineData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataFactoryPipelineData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataFactoryPipelineData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataFactoryPipelineData IModelSerializable<DataFactoryPipelineData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataFactoryPipelineData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataFactoryPipelineData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataFactoryPipelineData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataFactoryPipelineData"/> to convert. </param>
+        public static implicit operator RequestContent(DataFactoryPipelineData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataFactoryPipelineData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataFactoryPipelineData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataFactoryPipelineData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

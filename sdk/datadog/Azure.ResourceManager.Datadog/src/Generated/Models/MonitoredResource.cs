@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> The properties of a resource currently being monitored by the Datadog monitor resource. </summary>
     public partial class MonitoredResource
     {
-        /// <summary> Initializes a new instance of MonitoredResource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitoredResource"/>. </summary>
         internal MonitoredResource()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitoredResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoredResource"/>. </summary>
         /// <param name="id"> The ARM id of the resource. </param>
         /// <param name="sendingMetrics"> Flag indicating if resource is sending metrics to Datadog. </param>
         /// <param name="reasonForMetricsStatus"> Reason for why the resource is sending metrics (or why it is not sending). </param>
         /// <param name="sendingLogs"> Flag indicating if resource is sending logs to Datadog. </param>
         /// <param name="reasonForLogsStatus"> Reason for why the resource is sending logs (or why it is not sending). </param>
-        internal MonitoredResource(string id, bool? sendingMetrics, string reasonForMetricsStatus, bool? sendingLogs, string reasonForLogsStatus)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitoredResource(string id, bool? sendingMetrics, string reasonForMetricsStatus, bool? sendingLogs, string reasonForLogsStatus, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             SendingMetrics = sendingMetrics;
             ReasonForMetricsStatus = reasonForMetricsStatus;
             SendingLogs = sendingLogs;
             ReasonForLogsStatus = reasonForLogsStatus;
+            _rawData = rawData;
         }
 
         /// <summary> The ARM id of the resource. </summary>

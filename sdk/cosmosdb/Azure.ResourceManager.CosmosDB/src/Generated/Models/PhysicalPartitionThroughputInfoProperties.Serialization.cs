@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class PhysicalPartitionThroughputInfoProperties : IUtf8JsonSerializable
+    internal partial class PhysicalPartitionThroughputInfoProperties : IUtf8JsonSerializable, IModelJsonSerializable<PhysicalPartitionThroughputInfoProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PhysicalPartitionThroughputInfoProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PhysicalPartitionThroughputInfoProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PhysicalPartitionThroughputInfoProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PhysicalPartitionThroughputInfo))
             {
@@ -22,20 +29,42 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in PhysicalPartitionThroughputInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<PhysicalPartitionThroughputInfoResource>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static PhysicalPartitionThroughputInfoProperties DeserializePhysicalPartitionThroughputInfoProperties(JsonElement element)
+        internal static PhysicalPartitionThroughputInfoProperties DeserializePhysicalPartitionThroughputInfoProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<PhysicalPartitionThroughputInfoResource>> physicalPartitionThroughputInfo = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("physicalPartitionThroughputInfo"u8))
@@ -52,8 +81,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     physicalPartitionThroughputInfo = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PhysicalPartitionThroughputInfoProperties(Optional.ToList(physicalPartitionThroughputInfo));
+            return new PhysicalPartitionThroughputInfoProperties(Optional.ToList(physicalPartitionThroughputInfo), rawData);
+        }
+
+        PhysicalPartitionThroughputInfoProperties IModelJsonSerializable<PhysicalPartitionThroughputInfoProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PhysicalPartitionThroughputInfoProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePhysicalPartitionThroughputInfoProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PhysicalPartitionThroughputInfoProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PhysicalPartitionThroughputInfoProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PhysicalPartitionThroughputInfoProperties IModelSerializable<PhysicalPartitionThroughputInfoProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PhysicalPartitionThroughputInfoProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePhysicalPartitionThroughputInfoProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PhysicalPartitionThroughputInfoProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PhysicalPartitionThroughputInfoProperties"/> to convert. </param>
+        public static implicit operator RequestContent(PhysicalPartitionThroughputInfoProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PhysicalPartitionThroughputInfoProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PhysicalPartitionThroughputInfoProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePhysicalPartitionThroughputInfoProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

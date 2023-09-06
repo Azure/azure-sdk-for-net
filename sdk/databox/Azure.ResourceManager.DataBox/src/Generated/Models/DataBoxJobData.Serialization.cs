@@ -10,18 +10,30 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DataBox.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBox
 {
-    public partial class DataBoxJobData : IUtf8JsonSerializable
+    public partial class DataBoxJobData : IUtf8JsonSerializable, IModelJsonSerializable<DataBoxJobData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataBoxJobData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataBoxJobData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxJobData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            if (Sku is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<DataBoxSku>)Sku).Serialize(writer, options);
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -47,7 +59,14 @@ namespace Azure.ResourceManager.DataBox
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details);
+                if (Details is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DataBoxBasicJobDetails>)Details).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DeliveryType))
             {
@@ -57,14 +76,35 @@ namespace Azure.ResourceManager.DataBox
             if (Optional.IsDefined(DeliveryInfo))
             {
                 writer.WritePropertyName("deliveryInfo"u8);
-                writer.WriteObjectValue(DeliveryInfo);
+                if (DeliveryInfo is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<JobDeliveryInfo>)DeliveryInfo).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataBoxJobData DeserializeDataBoxJobData(JsonElement element)
+        internal static DataBoxJobData DeserializeDataBoxJobData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -92,6 +132,7 @@ namespace Azure.ResourceManager.DataBox
             Optional<JobDeliveryType> deliveryType = default;
             Optional<JobDeliveryInfo> deliveryInfo = default;
             Optional<bool> isCancellableWithoutFee = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -290,8 +331,61 @@ namespace Azure.ResourceManager.DataBox
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataBoxJobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, transferType, Optional.ToNullable(isCancellable), Optional.ToNullable(isDeletable), Optional.ToNullable(isShippingAddressEditable), Optional.ToNullable(reverseShippingDetailsUpdate), Optional.ToNullable(reverseTransportPreferenceUpdate), Optional.ToNullable(isPrepareToShipEnabled), Optional.ToNullable(status), Optional.ToNullable(startTime), error.Value, details.Value, cancellationReason.Value, Optional.ToNullable(deliveryType), deliveryInfo.Value, Optional.ToNullable(isCancellableWithoutFee), sku, identity);
+            return new DataBoxJobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, transferType, Optional.ToNullable(isCancellable), Optional.ToNullable(isDeletable), Optional.ToNullable(isShippingAddressEditable), Optional.ToNullable(reverseShippingDetailsUpdate), Optional.ToNullable(reverseTransportPreferenceUpdate), Optional.ToNullable(isPrepareToShipEnabled), Optional.ToNullable(status), Optional.ToNullable(startTime), error.Value, details.Value, cancellationReason.Value, Optional.ToNullable(deliveryType), deliveryInfo.Value, Optional.ToNullable(isCancellableWithoutFee), sku, identity, rawData);
+        }
+
+        DataBoxJobData IModelJsonSerializable<DataBoxJobData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxJobData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxJobData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataBoxJobData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxJobData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataBoxJobData IModelSerializable<DataBoxJobData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxJobData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataBoxJobData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataBoxJobData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataBoxJobData"/> to convert. </param>
+        public static implicit operator RequestContent(DataBoxJobData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataBoxJobData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataBoxJobData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataBoxJobData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

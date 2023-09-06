@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Information about rollback on failed VM instances after a OS Upgrade operation. </summary>
     public partial class RollbackStatusInfo
     {
-        /// <summary> Initializes a new instance of RollbackStatusInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RollbackStatusInfo"/>. </summary>
         internal RollbackStatusInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of RollbackStatusInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RollbackStatusInfo"/>. </summary>
         /// <param name="successfullyRolledbackInstanceCount"> The number of instances which have been successfully rolled back. </param>
         /// <param name="failedRolledbackInstanceCount"> The number of instances which failed to rollback. </param>
         /// <param name="rollbackError"> Error details if OS rollback failed. </param>
-        internal RollbackStatusInfo(int? successfullyRolledbackInstanceCount, int? failedRolledbackInstanceCount, ComputeApiError rollbackError)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RollbackStatusInfo(int? successfullyRolledbackInstanceCount, int? failedRolledbackInstanceCount, ComputeApiError rollbackError, Dictionary<string, BinaryData> rawData)
         {
             SuccessfullyRolledbackInstanceCount = successfullyRolledbackInstanceCount;
             FailedRolledbackInstanceCount = failedRolledbackInstanceCount;
             RollbackError = rollbackError;
+            _rawData = rawData;
         }
 
         /// <summary> The number of instances which have been successfully rolled back. </summary>

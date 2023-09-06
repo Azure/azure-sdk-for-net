@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> ServiceNow server dataset. </summary>
     public partial class ServiceNowObjectDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of ServiceNowObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNowObjectDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public ServiceNowObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "ServiceNowObject";
         }
 
-        /// <summary> Initializes a new instance of ServiceNowObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNowObjectDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             TableName = tableName;
             DatasetType = datasetType ?? "ServiceNowObject";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceNowObjectDataset"/> for deserialization. </summary>
+        internal ServiceNowObjectDataset()
+        {
         }
 
         /// <summary> The table name. Type: string (or Expression with resultType string). </summary>

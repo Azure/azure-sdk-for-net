@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Configuration of application logs. </summary>
     public partial class ContainerAppLogsConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppLogsConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppLogsConfiguration"/>. </summary>
         public ContainerAppLogsConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppLogsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppLogsConfiguration"/>. </summary>
         /// <param name="destination"> Logs destination, can be 'log-analytics', 'azure-monitor' or 'none'. </param>
         /// <param name="logAnalyticsConfiguration"> Log Analytics configuration, must only be provided when destination is configured as 'log-analytics'. </param>
-        internal ContainerAppLogsConfiguration(string destination, ContainerAppLogAnalyticsConfiguration logAnalyticsConfiguration)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppLogsConfiguration(string destination, ContainerAppLogAnalyticsConfiguration logAnalyticsConfiguration, Dictionary<string, BinaryData> rawData)
         {
             Destination = destination;
             LogAnalyticsConfiguration = logAnalyticsConfiguration;
+            _rawData = rawData;
         }
 
         /// <summary> Logs destination, can be 'log-analytics', 'azure-monitor' or 'none'. </summary>

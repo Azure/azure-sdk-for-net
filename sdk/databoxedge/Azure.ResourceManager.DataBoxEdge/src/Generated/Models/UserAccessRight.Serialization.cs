@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class UserAccessRight : IUtf8JsonSerializable
+    public partial class UserAccessRight : IUtf8JsonSerializable, IModelJsonSerializable<UserAccessRight>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<UserAccessRight>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<UserAccessRight>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<UserAccessRight>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("userId"u8);
             writer.WriteStringValue(UserId);
             writer.WritePropertyName("accessType"u8);
             writer.WriteStringValue(AccessType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UserAccessRight DeserializeUserAccessRight(JsonElement element)
+        internal static UserAccessRight DeserializeUserAccessRight(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier userId = default;
             ShareAccessType accessType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userId"u8))
@@ -42,8 +65,61 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     accessType = new ShareAccessType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new UserAccessRight(userId, accessType);
+            return new UserAccessRight(userId, accessType, rawData);
+        }
+
+        UserAccessRight IModelJsonSerializable<UserAccessRight>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<UserAccessRight>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUserAccessRight(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<UserAccessRight>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<UserAccessRight>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        UserAccessRight IModelSerializable<UserAccessRight>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<UserAccessRight>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeUserAccessRight(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="UserAccessRight"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="UserAccessRight"/> to convert. </param>
+        public static implicit operator RequestContent(UserAccessRight model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="UserAccessRight"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator UserAccessRight(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeUserAccessRight(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

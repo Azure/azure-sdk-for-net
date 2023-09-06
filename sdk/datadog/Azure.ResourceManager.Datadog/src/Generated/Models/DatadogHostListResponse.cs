@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> Response of a list operation. </summary>
     internal partial class DatadogHostListResponse
     {
-        /// <summary> Initializes a new instance of DatadogHostListResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatadogHostListResponse"/>. </summary>
         internal DatadogHostListResponse()
         {
             Value = new ChangeTrackingList<DatadogHost>();
         }
 
-        /// <summary> Initializes a new instance of DatadogHostListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogHostListResponse"/>. </summary>
         /// <param name="value"> Results of a list operation. </param>
         /// <param name="nextLink"> Link to the next set of results, if any. </param>
-        internal DatadogHostListResponse(IReadOnlyList<DatadogHost> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatadogHostListResponse(IReadOnlyList<DatadogHost> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Results of a list operation. </summary>

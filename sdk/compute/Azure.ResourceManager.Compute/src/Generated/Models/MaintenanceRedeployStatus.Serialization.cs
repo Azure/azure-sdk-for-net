@@ -6,15 +6,77 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class MaintenanceRedeployStatus
+    public partial class MaintenanceRedeployStatus : IUtf8JsonSerializable, IModelJsonSerializable<MaintenanceRedeployStatus>
     {
-        internal static MaintenanceRedeployStatus DeserializeMaintenanceRedeployStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MaintenanceRedeployStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MaintenanceRedeployStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MaintenanceRedeployStatus>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IsCustomerInitiatedMaintenanceAllowed))
+            {
+                writer.WritePropertyName("isCustomerInitiatedMaintenanceAllowed"u8);
+                writer.WriteBooleanValue(IsCustomerInitiatedMaintenanceAllowed.Value);
+            }
+            if (Optional.IsDefined(PreMaintenanceWindowStartOn))
+            {
+                writer.WritePropertyName("preMaintenanceWindowStartTime"u8);
+                writer.WriteStringValue(PreMaintenanceWindowStartOn.Value, "O");
+            }
+            if (Optional.IsDefined(PreMaintenanceWindowEndOn))
+            {
+                writer.WritePropertyName("preMaintenanceWindowEndTime"u8);
+                writer.WriteStringValue(PreMaintenanceWindowEndOn.Value, "O");
+            }
+            if (Optional.IsDefined(MaintenanceWindowStartOn))
+            {
+                writer.WritePropertyName("maintenanceWindowStartTime"u8);
+                writer.WriteStringValue(MaintenanceWindowStartOn.Value, "O");
+            }
+            if (Optional.IsDefined(MaintenanceWindowEndOn))
+            {
+                writer.WritePropertyName("maintenanceWindowEndTime"u8);
+                writer.WriteStringValue(MaintenanceWindowEndOn.Value, "O");
+            }
+            if (Optional.IsDefined(LastOperationResultCode))
+            {
+                writer.WritePropertyName("lastOperationResultCode"u8);
+                writer.WriteStringValue(LastOperationResultCode.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(LastOperationMessage))
+            {
+                writer.WritePropertyName("lastOperationMessage"u8);
+                writer.WriteStringValue(LastOperationMessage);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MaintenanceRedeployStatus DeserializeMaintenanceRedeployStatus(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<DateTimeOffset> maintenanceWindowEndTime = default;
             Optional<MaintenanceOperationResultCodeType> lastOperationResultCode = default;
             Optional<string> lastOperationMessage = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isCustomerInitiatedMaintenanceAllowed"u8))
@@ -87,8 +150,61 @@ namespace Azure.ResourceManager.Compute.Models
                     lastOperationMessage = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MaintenanceRedeployStatus(Optional.ToNullable(isCustomerInitiatedMaintenanceAllowed), Optional.ToNullable(preMaintenanceWindowStartTime), Optional.ToNullable(preMaintenanceWindowEndTime), Optional.ToNullable(maintenanceWindowStartTime), Optional.ToNullable(maintenanceWindowEndTime), Optional.ToNullable(lastOperationResultCode), lastOperationMessage.Value);
+            return new MaintenanceRedeployStatus(Optional.ToNullable(isCustomerInitiatedMaintenanceAllowed), Optional.ToNullable(preMaintenanceWindowStartTime), Optional.ToNullable(preMaintenanceWindowEndTime), Optional.ToNullable(maintenanceWindowStartTime), Optional.ToNullable(maintenanceWindowEndTime), Optional.ToNullable(lastOperationResultCode), lastOperationMessage.Value, rawData);
+        }
+
+        MaintenanceRedeployStatus IModelJsonSerializable<MaintenanceRedeployStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MaintenanceRedeployStatus>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMaintenanceRedeployStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MaintenanceRedeployStatus>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MaintenanceRedeployStatus>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MaintenanceRedeployStatus IModelSerializable<MaintenanceRedeployStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MaintenanceRedeployStatus>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMaintenanceRedeployStatus(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MaintenanceRedeployStatus"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MaintenanceRedeployStatus"/> to convert. </param>
+        public static implicit operator RequestContent(MaintenanceRedeployStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MaintenanceRedeployStatus"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MaintenanceRedeployStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMaintenanceRedeployStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

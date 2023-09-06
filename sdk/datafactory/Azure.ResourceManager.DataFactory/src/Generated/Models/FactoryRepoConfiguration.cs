@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -15,9 +17,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Please note <see cref="FactoryRepoConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="FactoryGitHubConfiguration"/> and <see cref="FactoryVstsConfiguration"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownFactoryRepoConfiguration))]
     public abstract partial class FactoryRepoConfiguration
     {
-        /// <summary> Initializes a new instance of FactoryRepoConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FactoryRepoConfiguration"/>. </summary>
         /// <param name="accountName"> Account name. </param>
         /// <param name="repositoryName"> Repository name. </param>
         /// <param name="collaborationBranch"> Collaboration branch. </param>
@@ -36,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             RootFolder = rootFolder;
         }
 
-        /// <summary> Initializes a new instance of FactoryRepoConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FactoryRepoConfiguration"/>. </summary>
         /// <param name="factoryRepoConfigurationType"> Type of repo configuration. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="repositoryName"> Repository name. </param>
@@ -44,7 +50,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="rootFolder"> Root folder. </param>
         /// <param name="lastCommitId"> Last commit id. </param>
         /// <param name="disablePublish"> Disable manual publish operation in ADF studio to favor automated publish. </param>
-        internal FactoryRepoConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, bool? disablePublish)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FactoryRepoConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, bool? disablePublish, Dictionary<string, BinaryData> rawData)
         {
             FactoryRepoConfigurationType = factoryRepoConfigurationType;
             AccountName = accountName;
@@ -53,6 +60,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             RootFolder = rootFolder;
             LastCommitId = lastCommitId;
             DisablePublish = disablePublish;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FactoryRepoConfiguration"/> for deserialization. </summary>
+        internal FactoryRepoConfiguration()
+        {
         }
 
         /// <summary> Type of repo configuration. </summary>

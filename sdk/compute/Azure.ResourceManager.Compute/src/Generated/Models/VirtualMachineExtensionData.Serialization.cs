@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class VirtualMachineExtensionData : IUtf8JsonSerializable
+    public partial class VirtualMachineExtensionData : IUtf8JsonSerializable, IModelJsonSerializable<VirtualMachineExtensionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualMachineExtensionData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualMachineExtensionData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualMachineExtensionData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -85,7 +91,14 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                if (InstanceView is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<VirtualMachineExtensionInstanceView>)InstanceView).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(SuppressFailures))
             {
@@ -95,7 +108,14 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(KeyVaultProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettingsFromKeyVault"u8);
-                writer.WriteObjectValue(KeyVaultProtectedSettings);
+                if (KeyVaultProtectedSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<KeyVaultSecretReference>)KeyVaultProtectedSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(ProvisionAfterExtensions))
             {
@@ -108,11 +128,25 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachineExtensionData DeserializeVirtualMachineExtensionData(JsonElement element)
+        internal static VirtualMachineExtensionData DeserializeVirtualMachineExtensionData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -136,6 +170,7 @@ namespace Azure.ResourceManager.Compute
             Optional<bool> suppressFailures = default;
             Optional<KeyVaultSecretReference> protectedSettingsFromKeyVault = default;
             Optional<IList<string>> provisionAfterExtensions = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -295,8 +330,61 @@ namespace Azure.ResourceManager.Compute
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualMachineExtensionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, provisioningState.Value, instanceView.Value, Optional.ToNullable(suppressFailures), protectedSettingsFromKeyVault.Value, Optional.ToList(provisionAfterExtensions));
+            return new VirtualMachineExtensionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, provisioningState.Value, instanceView.Value, Optional.ToNullable(suppressFailures), protectedSettingsFromKeyVault.Value, Optional.ToList(provisionAfterExtensions), rawData);
+        }
+
+        VirtualMachineExtensionData IModelJsonSerializable<VirtualMachineExtensionData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualMachineExtensionData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineExtensionData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualMachineExtensionData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualMachineExtensionData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualMachineExtensionData IModelSerializable<VirtualMachineExtensionData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualMachineExtensionData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualMachineExtensionData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VirtualMachineExtensionData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VirtualMachineExtensionData"/> to convert. </param>
+        public static implicit operator RequestContent(VirtualMachineExtensionData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualMachineExtensionData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VirtualMachineExtensionData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualMachineExtensionData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

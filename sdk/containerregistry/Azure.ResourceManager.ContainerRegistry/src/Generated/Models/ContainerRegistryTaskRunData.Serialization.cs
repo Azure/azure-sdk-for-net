@@ -5,17 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ContainerRegistry.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    public partial class ContainerRegistryTaskRunData : IUtf8JsonSerializable
+    public partial class ContainerRegistryTaskRunData : IUtf8JsonSerializable, IModelJsonSerializable<ContainerRegistryTaskRunData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerRegistryTaskRunData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerRegistryTaskRunData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryTaskRunData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -32,7 +40,14 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(RunRequest))
             {
                 writer.WritePropertyName("runRequest"u8);
-                writer.WriteObjectValue(RunRequest);
+                if (RunRequest is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerRegistryRunContent>)RunRequest).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ForceUpdateTag))
             {
@@ -40,11 +55,25 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WriteStringValue(ForceUpdateTag);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerRegistryTaskRunData DeserializeContainerRegistryTaskRunData(JsonElement element)
+        internal static ContainerRegistryTaskRunData DeserializeContainerRegistryTaskRunData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -59,6 +88,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             Optional<ContainerRegistryRunContent> runRequest = default;
             Optional<ContainerRegistryRunData> runResult = default;
             Optional<string> forceUpdateTag = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -147,8 +177,61 @@ namespace Azure.ResourceManager.ContainerRegistry
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerRegistryTaskRunData(id, name, type, systemData.Value, identity, Optional.ToNullable(location), Optional.ToNullable(provisioningState), runRequest.Value, runResult.Value, forceUpdateTag.Value);
+            return new ContainerRegistryTaskRunData(id, name, type, systemData.Value, identity, Optional.ToNullable(location), Optional.ToNullable(provisioningState), runRequest.Value, runResult.Value, forceUpdateTag.Value, rawData);
+        }
+
+        ContainerRegistryTaskRunData IModelJsonSerializable<ContainerRegistryTaskRunData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryTaskRunData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryTaskRunData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerRegistryTaskRunData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryTaskRunData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerRegistryTaskRunData IModelSerializable<ContainerRegistryTaskRunData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryTaskRunData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerRegistryTaskRunData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerRegistryTaskRunData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerRegistryTaskRunData"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerRegistryTaskRunData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerRegistryTaskRunData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerRegistryTaskRunData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerRegistryTaskRunData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

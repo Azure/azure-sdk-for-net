@@ -5,15 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SsisEnvironmentReference
+    public partial class SsisEnvironmentReference : IUtf8JsonSerializable, IModelJsonSerializable<SsisEnvironmentReference>
     {
-        internal static SsisEnvironmentReference DeserializeSsisEnvironmentReference(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SsisEnvironmentReference>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SsisEnvironmentReference>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SsisEnvironmentReference>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteNumberValue(Id.Value);
+            }
+            if (Optional.IsDefined(EnvironmentFolderName))
+            {
+                writer.WritePropertyName("environmentFolderName"u8);
+                writer.WriteStringValue(EnvironmentFolderName);
+            }
+            if (Optional.IsDefined(EnvironmentName))
+            {
+                writer.WritePropertyName("environmentName"u8);
+                writer.WriteStringValue(EnvironmentName);
+            }
+            if (Optional.IsDefined(ReferenceType))
+            {
+                writer.WritePropertyName("referenceType"u8);
+                writer.WriteStringValue(ReferenceType);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SsisEnvironmentReference DeserializeSsisEnvironmentReference(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> environmentFolderName = default;
             Optional<string> environmentName = default;
             Optional<string> referenceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -48,8 +97,61 @@ namespace Azure.ResourceManager.DataFactory.Models
                     referenceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SsisEnvironmentReference(Optional.ToNullable(id), environmentFolderName.Value, environmentName.Value, referenceType.Value);
+            return new SsisEnvironmentReference(Optional.ToNullable(id), environmentFolderName.Value, environmentName.Value, referenceType.Value, rawData);
+        }
+
+        SsisEnvironmentReference IModelJsonSerializable<SsisEnvironmentReference>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SsisEnvironmentReference>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSsisEnvironmentReference(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SsisEnvironmentReference>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SsisEnvironmentReference>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SsisEnvironmentReference IModelSerializable<SsisEnvironmentReference>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SsisEnvironmentReference>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSsisEnvironmentReference(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SsisEnvironmentReference"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SsisEnvironmentReference"/> to convert. </param>
+        public static implicit operator RequestContent(SsisEnvironmentReference model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SsisEnvironmentReference"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SsisEnvironmentReference(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSsisEnvironmentReference(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

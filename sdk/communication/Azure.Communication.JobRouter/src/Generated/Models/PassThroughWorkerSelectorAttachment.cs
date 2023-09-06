@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -13,7 +14,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> Attaches a worker selector where the value is passed through from the job label with the same key. </summary>
     public partial class PassThroughWorkerSelectorAttachment : WorkerSelectorAttachment
     {
-        /// <summary> Initializes a new instance of PassThroughWorkerSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="PassThroughWorkerSelectorAttachment"/>. </summary>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -26,17 +27,23 @@ namespace Azure.Communication.JobRouter
             Kind = "pass-through";
         }
 
-        /// <summary> Initializes a new instance of PassThroughWorkerSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="PassThroughWorkerSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing the type of worker selector attachment. </param>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>
         /// <param name="expiresAfterSeconds"> Describes how long the attached label selector is valid in seconds. </param>
-        internal PassThroughWorkerSelectorAttachment(string kind, string key, LabelOperator labelOperator, double? expiresAfterSeconds) : base(kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PassThroughWorkerSelectorAttachment(string kind, string key, LabelOperator labelOperator, double? expiresAfterSeconds, Dictionary<string, BinaryData> rawData) : base(kind, rawData)
         {
             Key = key;
             LabelOperator = labelOperator;
             _expiresAfterSeconds = expiresAfterSeconds;
             Kind = kind ?? "pass-through";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PassThroughWorkerSelectorAttachment"/> for deserialization. </summary>
+        internal PassThroughWorkerSelectorAttachment()
+        {
         }
 
         /// <summary> The label key to query against. </summary>

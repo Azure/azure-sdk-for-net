@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDBForPostgreSql;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     /// <summary> A list of clusters. </summary>
     internal partial class CosmosDBForPostgreSqlClusterListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterListResult"/>. </summary>
         internal CosmosDBForPostgreSqlClusterListResult()
         {
             Value = new ChangeTrackingList<CosmosDBForPostgreSqlClusterData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterListResult"/>. </summary>
         /// <param name="value"> The list of clusters. </param>
         /// <param name="nextLink"> The link used to get the next page of cluster list. </param>
-        internal CosmosDBForPostgreSqlClusterListResult(IReadOnlyList<CosmosDBForPostgreSqlClusterData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBForPostgreSqlClusterListResult(IReadOnlyList<CosmosDBForPostgreSqlClusterData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of clusters. </summary>

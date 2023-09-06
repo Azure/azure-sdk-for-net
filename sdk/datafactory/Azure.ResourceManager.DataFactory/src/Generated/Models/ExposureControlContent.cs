@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The exposure control request. </summary>
     public partial class ExposureControlContent
     {
-        /// <summary> Initializes a new instance of ExposureControlContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExposureControlContent"/>. </summary>
         public ExposureControlContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExposureControlContent"/>. </summary>
+        /// <param name="featureName"> The feature name. </param>
+        /// <param name="featureType"> The feature type. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExposureControlContent(string featureName, string featureType, Dictionary<string, BinaryData> rawData)
+        {
+            FeatureName = featureName;
+            FeatureType = featureType;
+            _rawData = rawData;
         }
 
         /// <summary> The feature name. </summary>

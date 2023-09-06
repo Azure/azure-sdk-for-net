@@ -5,15 +5,49 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    public partial class PhoneNumberCost
+    public partial class PhoneNumberCost : IUtf8JsonSerializable, IModelJsonSerializable<PhoneNumberCost>
     {
-        internal static PhoneNumberCost DeserializePhoneNumberCost(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PhoneNumberCost>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PhoneNumberCost>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PhoneNumberCost>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("amount"u8);
+            writer.WriteNumberValue(Amount);
+            writer.WritePropertyName("currencyCode"u8);
+            writer.WriteStringValue(IsoCurrencySymbol);
+            writer.WritePropertyName("billingFrequency"u8);
+            writer.WriteStringValue(BillingFrequency.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PhoneNumberCost DeserializePhoneNumberCost(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +55,7 @@ namespace Azure.Communication.PhoneNumbers
             double amount = default;
             string currencyCode = default;
             BillingFrequency billingFrequency = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("amount"u8))
@@ -38,8 +73,61 @@ namespace Azure.Communication.PhoneNumbers
                     billingFrequency = new BillingFrequency(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PhoneNumberCost(amount, currencyCode, billingFrequency);
+            return new PhoneNumberCost(amount, currencyCode, billingFrequency, rawData);
+        }
+
+        PhoneNumberCost IModelJsonSerializable<PhoneNumberCost>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PhoneNumberCost>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePhoneNumberCost(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PhoneNumberCost>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PhoneNumberCost>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PhoneNumberCost IModelSerializable<PhoneNumberCost>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PhoneNumberCost>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePhoneNumberCost(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PhoneNumberCost"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PhoneNumberCost"/> to convert. </param>
+        public static implicit operator RequestContent(PhoneNumberCost model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PhoneNumberCost"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PhoneNumberCost(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePhoneNumberCost(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

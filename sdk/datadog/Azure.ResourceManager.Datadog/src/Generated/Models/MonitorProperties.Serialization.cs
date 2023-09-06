@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class MonitorProperties : IUtf8JsonSerializable
+    public partial class MonitorProperties : IUtf8JsonSerializable, IModelJsonSerializable<MonitorProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MonitorProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MonitorProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MonitoringStatus))
             {
@@ -23,18 +31,46 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(DatadogOrganizationProperties))
             {
                 writer.WritePropertyName("datadogOrganizationProperties"u8);
-                writer.WriteObjectValue(DatadogOrganizationProperties);
+                if (DatadogOrganizationProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DatadogOrganizationProperties>)DatadogOrganizationProperties).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
-                writer.WriteObjectValue(UserInfo);
+                if (UserInfo is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<UserInfo>)UserInfo).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static MonitorProperties DeserializeMonitorProperties(JsonElement element)
+        internal static MonitorProperties DeserializeMonitorProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +82,7 @@ namespace Azure.ResourceManager.Datadog.Models
             Optional<UserInfo> userInfo = default;
             Optional<LiftrResourceCategory> liftrResourceCategory = default;
             Optional<int> liftrResourcePreference = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -111,8 +148,61 @@ namespace Azure.ResourceManager.Datadog.Models
                     liftrResourcePreference = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MonitorProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(monitoringStatus), Optional.ToNullable(marketplaceSubscriptionStatus), datadogOrganizationProperties.Value, userInfo.Value, Optional.ToNullable(liftrResourceCategory), Optional.ToNullable(liftrResourcePreference));
+            return new MonitorProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(monitoringStatus), Optional.ToNullable(marketplaceSubscriptionStatus), datadogOrganizationProperties.Value, userInfo.Value, Optional.ToNullable(liftrResourceCategory), Optional.ToNullable(liftrResourcePreference), rawData);
+        }
+
+        MonitorProperties IModelJsonSerializable<MonitorProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MonitorProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MonitorProperties IModelSerializable<MonitorProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMonitorProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MonitorProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MonitorProperties"/> to convert. </param>
+        public static implicit operator RequestContent(MonitorProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MonitorProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MonitorProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMonitorProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

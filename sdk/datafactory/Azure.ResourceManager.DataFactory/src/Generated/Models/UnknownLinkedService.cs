@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The UnknownLinkedService. </summary>
     internal partial class UnknownLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of UnknownLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -23,6 +23,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal UnknownLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             LinkedServiceType = linkedServiceType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownLinkedService"/> for deserialization. </summary>
+        internal UnknownLinkedService()
+        {
         }
     }
 }

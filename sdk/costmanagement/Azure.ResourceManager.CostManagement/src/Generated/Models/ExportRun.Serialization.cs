@@ -6,17 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class ExportRun : IUtf8JsonSerializable
+    public partial class ExportRun : IUtf8JsonSerializable, IModelJsonSerializable<ExportRun>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExportRun>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExportRun>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ExportRun>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
@@ -63,19 +69,47 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(RunSettings))
             {
                 writer.WritePropertyName("runSettings"u8);
-                writer.WriteObjectValue(RunSettings);
+                if (RunSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CommonExportProperties>)RunSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                if (Error is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ExportRunErrorDetails>)Error).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExportRun DeserializeExportRun(JsonElement element)
+        internal static ExportRun DeserializeExportRun(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -94,6 +128,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             Optional<string> fileName = default;
             Optional<CommonExportProperties> runSettings = default;
             Optional<ExportRunErrorDetails> error = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -214,8 +249,61 @@ namespace Azure.ResourceManager.CostManagement.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExportRun(id, name, type, systemData.Value, Optional.ToNullable(executionType), Optional.ToNullable(status), submittedBy.Value, Optional.ToNullable(submittedTime), Optional.ToNullable(processingStartTime), Optional.ToNullable(processingEndTime), fileName.Value, runSettings.Value, error.Value, Optional.ToNullable(eTag));
+            return new ExportRun(id, name, type, systemData.Value, Optional.ToNullable(executionType), Optional.ToNullable(status), submittedBy.Value, Optional.ToNullable(submittedTime), Optional.ToNullable(processingStartTime), Optional.ToNullable(processingEndTime), fileName.Value, runSettings.Value, error.Value, Optional.ToNullable(eTag), rawData);
+        }
+
+        ExportRun IModelJsonSerializable<ExportRun>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExportRun>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExportRun(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExportRun>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExportRun>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExportRun IModelSerializable<ExportRun>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExportRun>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExportRun(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExportRun"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExportRun"/> to convert. </param>
+        public static implicit operator RequestContent(ExportRun model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExportRun"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExportRun(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExportRun(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

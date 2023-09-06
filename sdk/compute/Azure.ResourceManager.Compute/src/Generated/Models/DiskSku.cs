@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS, or PremiumV2_LRS. </summary>
     public partial class DiskSku
     {
-        /// <summary> Initializes a new instance of DiskSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiskSku"/>. </summary>
         public DiskSku()
         {
         }
 
-        /// <summary> Initializes a new instance of DiskSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskSku"/>. </summary>
         /// <param name="name"> The sku name. </param>
         /// <param name="tier"> The sku tier. </param>
-        internal DiskSku(DiskStorageAccountType? name, string tier)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiskSku(DiskStorageAccountType? name, string tier, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Tier = tier;
+            _rawData = rawData;
         }
 
         /// <summary> The sku name. </summary>

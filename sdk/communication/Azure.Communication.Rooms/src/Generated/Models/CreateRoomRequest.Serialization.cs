@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.Rooms
 {
-    internal partial class CreateRoomRequest : IUtf8JsonSerializable
+    internal partial class CreateRoomRequest : IUtf8JsonSerializable, IModelJsonSerializable<CreateRoomRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CreateRoomRequest>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CreateRoomRequest>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CreateRoomRequest>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ValidFrom))
             {
@@ -32,11 +40,133 @@ namespace Azure.Communication.Rooms
                 foreach (var item in Participants)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ParticipantProperties>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static CreateRoomRequest DeserializeCreateRoomRequest(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DateTimeOffset> validFrom = default;
+            Optional<DateTimeOffset> validUntil = default;
+            Optional<IDictionary<string, ParticipantProperties>> participants = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("validFrom"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    validFrom = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("validUntil"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    validUntil = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("participants"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, ParticipantProperties> dictionary = new Dictionary<string, ParticipantProperties>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, ParticipantProperties.DeserializeParticipantProperties(property0.Value));
+                    }
+                    participants = dictionary;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new CreateRoomRequest(Optional.ToNullable(validFrom), Optional.ToNullable(validUntil), Optional.ToDictionary(participants), rawData);
+        }
+
+        CreateRoomRequest IModelJsonSerializable<CreateRoomRequest>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CreateRoomRequest>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCreateRoomRequest(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CreateRoomRequest>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CreateRoomRequest>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CreateRoomRequest IModelSerializable<CreateRoomRequest>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CreateRoomRequest>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCreateRoomRequest(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CreateRoomRequest"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CreateRoomRequest"/> to convert. </param>
+        public static implicit operator RequestContent(CreateRoomRequest model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CreateRoomRequest"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CreateRoomRequest(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCreateRoomRequest(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

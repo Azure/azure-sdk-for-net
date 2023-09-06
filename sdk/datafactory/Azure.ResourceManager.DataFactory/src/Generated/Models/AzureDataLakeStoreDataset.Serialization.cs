@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureDataLakeStoreDataset : IUtf8JsonSerializable
+    public partial class AzureDataLakeStoreDataset : IUtf8JsonSerializable, IModelJsonSerializable<AzureDataLakeStoreDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzureDataLakeStoreDataset>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzureDataLakeStoreDataset>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AzureDataLakeStoreDataset>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
@@ -43,7 +49,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<EntityParameterSpecification>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -69,7 +82,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                if (Folder is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DatasetFolder>)Folder).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
@@ -86,12 +106,26 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
-                writer.WriteObjectValue(Format);
+                if (Format is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DatasetStorageFormat>)Format).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Compression))
             {
                 writer.WritePropertyName("compression"u8);
-                writer.WriteObjectValue(Compression);
+                if (Compression is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DatasetCompression>)Compression).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -106,8 +140,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureDataLakeStoreDataset DeserializeAzureDataLakeStoreDataset(JsonElement element)
+        internal static AzureDataLakeStoreDataset DeserializeAzureDataLakeStoreDataset(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -257,6 +293,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureDataLakeStoreDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, folderPath.Value, fileName.Value, format.Value, compression.Value);
+        }
+
+        AzureDataLakeStoreDataset IModelJsonSerializable<AzureDataLakeStoreDataset>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureDataLakeStoreDataset>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureDataLakeStoreDataset(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureDataLakeStoreDataset>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureDataLakeStoreDataset>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureDataLakeStoreDataset IModelSerializable<AzureDataLakeStoreDataset>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureDataLakeStoreDataset>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureDataLakeStoreDataset(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AzureDataLakeStoreDataset"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AzureDataLakeStoreDataset"/> to convert. </param>
+        public static implicit operator RequestContent(AzureDataLakeStoreDataset model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AzureDataLakeStoreDataset"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AzureDataLakeStoreDataset(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureDataLakeStoreDataset(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

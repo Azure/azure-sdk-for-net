@@ -5,17 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.CosmosDBForPostgreSql.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
-    public partial class ServerConfigurationData : IUtf8JsonSerializable
+    public partial class ServerConfigurationData : IUtf8JsonSerializable, IModelJsonSerializable<ServerConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServerConfigurationData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServerConfigurationData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ServerConfigurationData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -25,11 +33,25 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 writer.WriteStringValue(Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServerConfigurationData DeserializeServerConfigurationData(JsonElement element)
+        internal static ServerConfigurationData DeserializeServerConfigurationData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +68,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             Optional<string> allowedValues = default;
             Optional<bool> requiresRestart = default;
             Optional<ProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -136,8 +159,61 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServerConfigurationData(id, name, type, systemData.Value, value.Value, source.Value, description.Value, defaultValue.Value, Optional.ToNullable(dataType), allowedValues.Value, Optional.ToNullable(requiresRestart), Optional.ToNullable(provisioningState));
+            return new ServerConfigurationData(id, name, type, systemData.Value, value.Value, source.Value, description.Value, defaultValue.Value, Optional.ToNullable(dataType), allowedValues.Value, Optional.ToNullable(requiresRestart), Optional.ToNullable(provisioningState), rawData);
+        }
+
+        ServerConfigurationData IModelJsonSerializable<ServerConfigurationData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServerConfigurationData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServerConfigurationData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServerConfigurationData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServerConfigurationData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServerConfigurationData IModelSerializable<ServerConfigurationData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServerConfigurationData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServerConfigurationData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ServerConfigurationData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ServerConfigurationData"/> to convert. </param>
+        public static implicit operator RequestContent(ServerConfigurationData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ServerConfigurationData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ServerConfigurationData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServerConfigurationData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

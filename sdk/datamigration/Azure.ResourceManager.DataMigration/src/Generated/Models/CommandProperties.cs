@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -15,23 +17,29 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownCommandProperties))]
     public abstract partial class CommandProperties
     {
-        /// <summary> Initializes a new instance of CommandProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommandProperties"/>. </summary>
         protected CommandProperties()
         {
             Errors = new ChangeTrackingList<ODataError>();
         }
 
-        /// <summary> Initializes a new instance of CommandProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommandProperties"/>. </summary>
         /// <param name="commandType"> Command type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>
-        internal CommandProperties(CommandType commandType, IReadOnlyList<ODataError> errors, CommandState? state)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommandProperties(CommandType commandType, IReadOnlyList<ODataError> errors, CommandState? state, Dictionary<string, BinaryData> rawData)
         {
             CommandType = commandType;
             Errors = errors;
             State = state;
+            _rawData = rawData;
         }
 
         /// <summary> Command type. </summary>

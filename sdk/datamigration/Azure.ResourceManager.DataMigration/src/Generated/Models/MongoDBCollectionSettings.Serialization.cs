@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBCollectionSettings : IUtf8JsonSerializable
+    public partial class MongoDBCollectionSettings : IUtf8JsonSerializable, IModelJsonSerializable<MongoDBCollectionSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MongoDBCollectionSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MongoDBCollectionSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBCollectionSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CanDelete))
             {
@@ -23,18 +31,39 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(ShardKey))
             {
                 writer.WritePropertyName("shardKey"u8);
-                writer.WriteObjectValue(ShardKey);
+                if (ShardKey is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MongoDBShardKeySetting>)ShardKey).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(TargetRUs))
             {
                 writer.WritePropertyName("targetRUs"u8);
                 writer.WriteNumberValue(TargetRUs.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MongoDBCollectionSettings DeserializeMongoDBCollectionSettings(JsonElement element)
+        internal static MongoDBCollectionSettings DeserializeMongoDBCollectionSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +71,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<bool> canDelete = default;
             Optional<MongoDBShardKeySetting> shardKey = default;
             Optional<int> targetRUs = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("canDelete"u8))
@@ -71,8 +101,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     targetRUs = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MongoDBCollectionSettings(Optional.ToNullable(canDelete), shardKey.Value, Optional.ToNullable(targetRUs));
+            return new MongoDBCollectionSettings(Optional.ToNullable(canDelete), shardKey.Value, Optional.ToNullable(targetRUs), rawData);
+        }
+
+        MongoDBCollectionSettings IModelJsonSerializable<MongoDBCollectionSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBCollectionSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMongoDBCollectionSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MongoDBCollectionSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBCollectionSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MongoDBCollectionSettings IModelSerializable<MongoDBCollectionSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBCollectionSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMongoDBCollectionSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MongoDBCollectionSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MongoDBCollectionSettings"/> to convert. </param>
+        public static implicit operator RequestContent(MongoDBCollectionSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MongoDBCollectionSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MongoDBCollectionSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMongoDBCollectionSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class CosmosDBAccountData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBAccountData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountData"/>. </summary>
         /// <param name="location"> The location. </param>
         public CosmosDBAccountData(AzureLocation location) : base(location)
         {
@@ -35,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB
             NetworkAclBypassResourceIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -88,7 +91,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="enableBurstCapacity"> Flag to indicate enabling/disabling of Burst Capacity Preview feature on the account. </param>
         /// <param name="minimalTlsVersion"> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API's, which only work with Tls 1.2. </param>
         /// <param name="identity"> Identity for the resource. </param>
-        internal CosmosDBAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountKind? kind, string provisioningState, string documentEndpoint, CosmosDBAccountOfferType? databaseAccountOfferType, IList<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, ConsistencyPolicy consistencyPolicy, IList<CosmosDBAccountCapability> capabilities, IReadOnlyList<CosmosDBAccountLocation> writeLocations, IReadOnlyList<CosmosDBAccountLocation> readLocations, IReadOnlyList<CosmosDBAccountLocation> locations, IReadOnlyList<CosmosDBFailoverPolicy> failoverPolicies, IList<CosmosDBVirtualNetworkRule> virtualNetworkRules, IReadOnlyList<CosmosDBPrivateEndpointConnectionData> privateEndpointConnections, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, ApiProperties apiProperties, bool? isAnalyticalStorageEnabled, AnalyticalStorageConfiguration analyticalStorageConfiguration, Guid? instanceId, CosmosDBAccountCreateMode? createMode, CosmosDBAccountRestoreParameters restoreParameters, CosmosDBAccountBackupPolicy backupPolicy, IList<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<ResourceIdentifier> networkAclBypassResourceIds, DiagnosticLogSettings diagnosticLogSettings, bool? disableLocalAuth, CosmosDBAccountCapacity capacity, bool? enableMaterializedViews, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, bool? enableBurstCapacity, CosmosDBMinimalTlsVersion? minimalTlsVersion, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountKind? kind, string provisioningState, string documentEndpoint, CosmosDBAccountOfferType? databaseAccountOfferType, IList<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, ConsistencyPolicy consistencyPolicy, IList<CosmosDBAccountCapability> capabilities, IReadOnlyList<CosmosDBAccountLocation> writeLocations, IReadOnlyList<CosmosDBAccountLocation> readLocations, IReadOnlyList<CosmosDBAccountLocation> locations, IReadOnlyList<CosmosDBFailoverPolicy> failoverPolicies, IList<CosmosDBVirtualNetworkRule> virtualNetworkRules, IReadOnlyList<CosmosDBPrivateEndpointConnectionData> privateEndpointConnections, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, ApiProperties apiProperties, bool? isAnalyticalStorageEnabled, AnalyticalStorageConfiguration analyticalStorageConfiguration, Guid? instanceId, CosmosDBAccountCreateMode? createMode, CosmosDBAccountRestoreParameters restoreParameters, CosmosDBAccountBackupPolicy backupPolicy, IList<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<ResourceIdentifier> networkAclBypassResourceIds, DiagnosticLogSettings diagnosticLogSettings, bool? disableLocalAuth, CosmosDBAccountCapacity capacity, bool? enableMaterializedViews, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, bool? enableBurstCapacity, CosmosDBMinimalTlsVersion? minimalTlsVersion, ManagedServiceIdentity identity, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             ProvisioningState = provisioningState;
@@ -132,6 +136,12 @@ namespace Azure.ResourceManager.CosmosDB
             EnableBurstCapacity = enableBurstCapacity;
             MinimalTlsVersion = minimalTlsVersion;
             Identity = identity;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountData"/> for deserialization. </summary>
+        internal CosmosDBAccountData()
+        {
         }
 
         /// <summary> Indicates the type of database account. This can only be set at database account creation. </summary>

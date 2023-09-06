@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary>
@@ -12,20 +16,26 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// Please note <see cref="MigrateSsisTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MigrateSsisTaskOutputMigrationLevel"/> and <see cref="MigrateSsisTaskOutputProjectLevel"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownMigrateSsisTaskOutput))]
     public abstract partial class MigrateSsisTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSsisTaskOutput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigrateSsisTaskOutput"/>. </summary>
         protected MigrateSsisTaskOutput()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrateSsisTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSsisTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
-        internal MigrateSsisTaskOutput(string id, string resultType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateSsisTaskOutput(string id, string resultType, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             ResultType = resultType;
+            _rawData = rawData;
         }
 
         /// <summary> Result identifier. </summary>

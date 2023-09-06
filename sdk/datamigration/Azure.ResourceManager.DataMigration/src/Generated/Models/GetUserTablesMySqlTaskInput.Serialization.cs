@@ -5,19 +5,33 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class GetUserTablesMySqlTaskInput : IUtf8JsonSerializable
+    public partial class GetUserTablesMySqlTaskInput : IUtf8JsonSerializable, IModelJsonSerializable<GetUserTablesMySqlTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GetUserTablesMySqlTaskInput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GetUserTablesMySqlTaskInput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<GetUserTablesMySqlTaskInput>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("connectionInfo"u8);
-            writer.WriteObjectValue(ConnectionInfo);
+            if (ConnectionInfo is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<MySqlConnectionInfo>)ConnectionInfo).Serialize(writer, options);
+            }
             writer.WritePropertyName("selectedDatabases"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
@@ -25,17 +39,32 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GetUserTablesMySqlTaskInput DeserializeGetUserTablesMySqlTaskInput(JsonElement element)
+        internal static GetUserTablesMySqlTaskInput DeserializeGetUserTablesMySqlTaskInput(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             MySqlConnectionInfo connectionInfo = default;
             IList<string> selectedDatabases = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionInfo"u8))
@@ -53,8 +82,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     selectedDatabases = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GetUserTablesMySqlTaskInput(connectionInfo, selectedDatabases);
+            return new GetUserTablesMySqlTaskInput(connectionInfo, selectedDatabases, rawData);
+        }
+
+        GetUserTablesMySqlTaskInput IModelJsonSerializable<GetUserTablesMySqlTaskInput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GetUserTablesMySqlTaskInput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGetUserTablesMySqlTaskInput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GetUserTablesMySqlTaskInput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GetUserTablesMySqlTaskInput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GetUserTablesMySqlTaskInput IModelSerializable<GetUserTablesMySqlTaskInput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GetUserTablesMySqlTaskInput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGetUserTablesMySqlTaskInput(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GetUserTablesMySqlTaskInput"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GetUserTablesMySqlTaskInput"/> to convert. </param>
+        public static implicit operator RequestContent(GetUserTablesMySqlTaskInput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GetUserTablesMySqlTaskInput"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GetUserTablesMySqlTaskInput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGetUserTablesMySqlTaskInput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,15 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Request payload for declining offers. </summary>
     public partial class DeclineJobOfferRequest
     {
-        /// <summary> Initializes a new instance of DeclineJobOfferRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeclineJobOfferRequest"/>. </summary>
         public DeclineJobOfferRequest()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeclineJobOfferRequest"/>. </summary>
+        /// <param name="retryOfferAt">
+        /// If the RetryOfferAt is not provided, then this job will not be offered again to the worker who declined this job unless
+        /// the worker is de-registered and re-registered.  If a RetryOfferAt time is provided, then the job will be re-matched to
+        /// eligible workers at the retry time in UTC.  The worker that declined the job will also be eligible for the job at that time.
+        /// </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeclineJobOfferRequest(DateTimeOffset? retryOfferAt, Dictionary<string, BinaryData> rawData)
+        {
+            RetryOfferAt = retryOfferAt;
+            _rawData = rawData;
         }
 
         /// <summary>

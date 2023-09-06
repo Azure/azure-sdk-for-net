@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> List of managed Cassandra data centers and their properties. </summary>
     internal partial class CassandraDataCenterListResult
     {
-        /// <summary> Initializes a new instance of CassandraDataCenterListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CassandraDataCenterListResult"/>. </summary>
         internal CassandraDataCenterListResult()
         {
             Value = new ChangeTrackingList<CassandraDataCenterData>();
         }
 
-        /// <summary> Initializes a new instance of CassandraDataCenterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraDataCenterListResult"/>. </summary>
         /// <param name="value"> Container for array of data centers. </param>
-        internal CassandraDataCenterListResult(IReadOnlyList<CassandraDataCenterData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CassandraDataCenterListResult(IReadOnlyList<CassandraDataCenterData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Container for array of data centers. </summary>

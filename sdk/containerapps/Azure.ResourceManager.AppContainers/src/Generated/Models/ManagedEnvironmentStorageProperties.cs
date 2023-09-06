@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Storage properties. </summary>
     internal partial class ManagedEnvironmentStorageProperties
     {
-        /// <summary> Initializes a new instance of ManagedEnvironmentStorageProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentStorageProperties"/>. </summary>
         public ManagedEnvironmentStorageProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedEnvironmentStorageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentStorageProperties"/>. </summary>
         /// <param name="azureFile"> Azure file properties. </param>
-        internal ManagedEnvironmentStorageProperties(ContainerAppAzureFileProperties azureFile)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedEnvironmentStorageProperties(ContainerAppAzureFileProperties azureFile, Dictionary<string, BinaryData> rawData)
         {
             AzureFile = azureFile;
+            _rawData = rawData;
         }
 
         /// <summary> Azure file properties. </summary>

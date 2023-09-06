@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -12,16 +14,21 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Purview configuration. </summary>
     internal partial class DataFactoryPurviewConfiguration
     {
-        /// <summary> Initializes a new instance of DataFactoryPurviewConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPurviewConfiguration"/>. </summary>
         public DataFactoryPurviewConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFactoryPurviewConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPurviewConfiguration"/>. </summary>
         /// <param name="purviewResourceId"> Purview resource id. </param>
-        internal DataFactoryPurviewConfiguration(ResourceIdentifier purviewResourceId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryPurviewConfiguration(ResourceIdentifier purviewResourceId, Dictionary<string, BinaryData> rawData)
         {
             PurviewResourceId = purviewResourceId;
+            _rawData = rawData;
         }
 
         /// <summary> Purview resource id. </summary>

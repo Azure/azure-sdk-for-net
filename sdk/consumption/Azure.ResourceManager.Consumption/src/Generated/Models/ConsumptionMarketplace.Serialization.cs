@@ -10,14 +10,42 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionMarketplace
+    public partial class ConsumptionMarketplace : IUtf8JsonSerializable, IModelJsonSerializable<ConsumptionMarketplace>
     {
-        internal static ConsumptionMarketplace DeserializeConsumptionMarketplace(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConsumptionMarketplace>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConsumptionMarketplace>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ConsumptionMarketplace>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ConsumptionMarketplace DeserializeConsumptionMarketplace(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +82,7 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<string> publisherName = default;
             Optional<string> planName = default;
             Optional<bool> isRecurringCharge = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -281,8 +310,61 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConsumptionMarketplace(id, name, type, systemData.Value, billingPeriodId.Value, Optional.ToNullable(usageStart), Optional.ToNullable(usageEnd), Optional.ToNullable(resourceRate), offerName.Value, resourceGroup.Value, additionalInfo.Value, orderNumber.Value, instanceName.Value, instanceId.Value, currency.Value, Optional.ToNullable(consumedQuantity), unitOfMeasure.Value, Optional.ToNullable(pretaxCost), Optional.ToNullable(isEstimated), Optional.ToNullable(meterId), Optional.ToNullable(subscriptionGuid), subscriptionName.Value, accountName.Value, departmentName.Value, consumedService.Value, costCenter.Value, additionalProperties.Value, publisherName.Value, planName.Value, Optional.ToNullable(isRecurringCharge), Optional.ToNullable(etag), Optional.ToDictionary(tags));
+            return new ConsumptionMarketplace(id, name, type, systemData.Value, billingPeriodId.Value, Optional.ToNullable(usageStart), Optional.ToNullable(usageEnd), Optional.ToNullable(resourceRate), offerName.Value, resourceGroup.Value, additionalInfo.Value, orderNumber.Value, instanceName.Value, instanceId.Value, currency.Value, Optional.ToNullable(consumedQuantity), unitOfMeasure.Value, Optional.ToNullable(pretaxCost), Optional.ToNullable(isEstimated), Optional.ToNullable(meterId), Optional.ToNullable(subscriptionGuid), subscriptionName.Value, accountName.Value, departmentName.Value, consumedService.Value, costCenter.Value, additionalProperties.Value, publisherName.Value, planName.Value, Optional.ToNullable(isRecurringCharge), Optional.ToNullable(etag), Optional.ToDictionary(tags), rawData);
+        }
+
+        ConsumptionMarketplace IModelJsonSerializable<ConsumptionMarketplace>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConsumptionMarketplace>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionMarketplace(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConsumptionMarketplace>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConsumptionMarketplace>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConsumptionMarketplace IModelSerializable<ConsumptionMarketplace>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConsumptionMarketplace>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConsumptionMarketplace(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConsumptionMarketplace"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConsumptionMarketplace"/> to convert. </param>
+        public static implicit operator RequestContent(ConsumptionMarketplace model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConsumptionMarketplace"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConsumptionMarketplace(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConsumptionMarketplace(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeJobErrorDetails
+    public partial class DataBoxEdgeJobErrorDetails : IUtf8JsonSerializable, IModelJsonSerializable<DataBoxEdgeJobErrorDetails>
     {
-        internal static DataBoxEdgeJobErrorDetails DeserializeDataBoxEdgeJobErrorDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataBoxEdgeJobErrorDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataBoxEdgeJobErrorDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeJobErrorDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DataBoxEdgeJobErrorDetails DeserializeDataBoxEdgeJobErrorDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +49,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<IReadOnlyList<DataBoxEdgeJobErrorItem>> errorDetails = default;
             Optional<string> code = default;
             Optional<string> message = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorDetails"u8))
@@ -48,8 +76,61 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     message = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataBoxEdgeJobErrorDetails(Optional.ToList(errorDetails), code.Value, message.Value);
+            return new DataBoxEdgeJobErrorDetails(Optional.ToList(errorDetails), code.Value, message.Value, rawData);
+        }
+
+        DataBoxEdgeJobErrorDetails IModelJsonSerializable<DataBoxEdgeJobErrorDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeJobErrorDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeJobErrorDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataBoxEdgeJobErrorDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeJobErrorDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataBoxEdgeJobErrorDetails IModelSerializable<DataBoxEdgeJobErrorDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeJobErrorDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataBoxEdgeJobErrorDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataBoxEdgeJobErrorDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataBoxEdgeJobErrorDetails"/> to convert. </param>
+        public static implicit operator RequestContent(DataBoxEdgeJobErrorDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataBoxEdgeJobErrorDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataBoxEdgeJobErrorDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataBoxEdgeJobErrorDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

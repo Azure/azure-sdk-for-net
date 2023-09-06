@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureSearchIndexSink : IUtf8JsonSerializable
+    public partial class AzureSearchIndexSink : IUtf8JsonSerializable, IModelJsonSerializable<AzureSearchIndexSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzureSearchIndexSink>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzureSearchIndexSink>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AzureSearchIndexSink>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(WriteBehavior))
             {
@@ -67,8 +73,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureSearchIndexSink DeserializeAzureSearchIndexSink(JsonElement element)
+        internal static AzureSearchIndexSink DeserializeAzureSearchIndexSink(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -157,6 +165,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureSearchIndexSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, Optional.ToNullable(writeBehavior));
+        }
+
+        AzureSearchIndexSink IModelJsonSerializable<AzureSearchIndexSink>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureSearchIndexSink>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureSearchIndexSink(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureSearchIndexSink>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureSearchIndexSink>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureSearchIndexSink IModelSerializable<AzureSearchIndexSink>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureSearchIndexSink>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureSearchIndexSink(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AzureSearchIndexSink"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AzureSearchIndexSink"/> to convert. </param>
+        public static implicit operator RequestContent(AzureSearchIndexSink model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AzureSearchIndexSink"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AzureSearchIndexSink(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureSearchIndexSink(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

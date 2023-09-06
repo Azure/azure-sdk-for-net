@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.CustomerInsights.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    public partial class PredictionResourceFormatData : IUtf8JsonSerializable
+    public partial class PredictionResourceFormatData : IUtf8JsonSerializable, IModelJsonSerializable<PredictionResourceFormatData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PredictionResourceFormatData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PredictionResourceFormatData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PredictionResourceFormatData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -106,7 +112,14 @@ namespace Azure.ResourceManager.CustomerInsights
             if (Optional.IsDefined(Mappings))
             {
                 writer.WritePropertyName("mappings"u8);
-                writer.WriteObjectValue(Mappings);
+                if (Mappings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PredictionMappings>)Mappings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ScoreLabel))
             {
@@ -119,16 +132,37 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in Grades)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<PredictionGradesItem>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PredictionResourceFormatData DeserializePredictionResourceFormatData(JsonElement element)
+        internal static PredictionResourceFormatData DeserializePredictionResourceFormatData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -154,6 +188,7 @@ namespace Azure.ResourceManager.CustomerInsights
             Optional<string> scoreLabel = default;
             Optional<IList<PredictionGradesItem>> grades = default;
             Optional<PredictionSystemGeneratedEntities> systemGeneratedEntities = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -351,8 +386,61 @@ namespace Azure.ResourceManager.CustomerInsights
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PredictionResourceFormatData(id, name, type, systemData.Value, Optional.ToDictionary(description), Optional.ToDictionary(displayName), Optional.ToList(involvedInteractionTypes), Optional.ToList(involvedKpiTypes), Optional.ToList(involvedRelationships), negativeOutcomeExpression.Value, positiveOutcomeExpression.Value, primaryProfileType.Value, Optional.ToNullable(provisioningState), predictionName.Value, scopeExpression.Value, Optional.ToNullable(tenantId), Optional.ToNullable(autoAnalyze), mappings.Value, scoreLabel.Value, Optional.ToList(grades), systemGeneratedEntities.Value);
+            return new PredictionResourceFormatData(id, name, type, systemData.Value, Optional.ToDictionary(description), Optional.ToDictionary(displayName), Optional.ToList(involvedInteractionTypes), Optional.ToList(involvedKpiTypes), Optional.ToList(involvedRelationships), negativeOutcomeExpression.Value, positiveOutcomeExpression.Value, primaryProfileType.Value, Optional.ToNullable(provisioningState), predictionName.Value, scopeExpression.Value, Optional.ToNullable(tenantId), Optional.ToNullable(autoAnalyze), mappings.Value, scoreLabel.Value, Optional.ToList(grades), systemGeneratedEntities.Value, rawData);
+        }
+
+        PredictionResourceFormatData IModelJsonSerializable<PredictionResourceFormatData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PredictionResourceFormatData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePredictionResourceFormatData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PredictionResourceFormatData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PredictionResourceFormatData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PredictionResourceFormatData IModelSerializable<PredictionResourceFormatData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PredictionResourceFormatData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePredictionResourceFormatData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PredictionResourceFormatData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PredictionResourceFormatData"/> to convert. </param>
+        public static implicit operator RequestContent(PredictionResourceFormatData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PredictionResourceFormatData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PredictionResourceFormatData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePredictionResourceFormatData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

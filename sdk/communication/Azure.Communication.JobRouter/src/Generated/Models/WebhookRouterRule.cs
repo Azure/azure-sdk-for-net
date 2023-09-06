@@ -6,19 +6,20 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.JobRouter
 {
     /// <summary> A rule providing a binding to an external web server. </summary>
     public partial class WebhookRouterRule : RouterRule
     {
-        /// <summary> Initializes a new instance of WebhookRouterRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebhookRouterRule"/>. </summary>
         public WebhookRouterRule()
         {
             Kind = "webhook-rule";
         }
 
-        /// <summary> Initializes a new instance of WebhookRouterRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebhookRouterRule"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of Rule. </param>
         /// <param name="authorizationServerUri"> Uri for Authorization Server. </param>
         /// <param name="clientCredential">
@@ -26,7 +27,8 @@ namespace Azure.Communication.JobRouter
         /// Reference: https://www.oauth.com/oauth2-servers/access-tokens/client-credentials/
         /// </param>
         /// <param name="webhookUri"> Uri for Contoso's Web Server. </param>
-        internal WebhookRouterRule(string kind, Uri authorizationServerUri, Oauth2ClientCredential clientCredential, Uri webhookUri) : base(kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebhookRouterRule(string kind, Uri authorizationServerUri, Oauth2ClientCredential clientCredential, Uri webhookUri, Dictionary<string, BinaryData> rawData) : base(kind, rawData)
         {
             AuthorizationServerUri = authorizationServerUri;
             ClientCredential = clientCredential;

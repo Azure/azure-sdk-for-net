@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryTokenTokensRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryTokenTokensRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryTokenResource(Client, ContainerRegistryTokenData.DeserializeContainerRegistryTokenData(e)), _containerRegistryTokenTokensClientDiagnostics, Pipeline, "ContainerRegistryTokenCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ContainerRegistryTokenResource(Client, ContainerRegistryTokenData.DeserializeContainerRegistryTokenData(e)), _containerRegistryTokenTokensClientDiagnostics, Pipeline, "ContainerRegistryTokenCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryTokenTokensRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryTokenTokensRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryTokenResource(Client, ContainerRegistryTokenData.DeserializeContainerRegistryTokenData(e)), _containerRegistryTokenTokensClientDiagnostics, Pipeline, "ContainerRegistryTokenCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ContainerRegistryTokenResource(Client, ContainerRegistryTokenData.DeserializeContainerRegistryTokenData(e)), _containerRegistryTokenTokensClientDiagnostics, Pipeline, "ContainerRegistryTokenCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

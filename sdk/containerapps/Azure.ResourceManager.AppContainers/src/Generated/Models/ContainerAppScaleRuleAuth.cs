@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Auth Secrets for Scale Rule. </summary>
     public partial class ContainerAppScaleRuleAuth
     {
-        /// <summary> Initializes a new instance of ContainerAppScaleRuleAuth. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppScaleRuleAuth"/>. </summary>
         public ContainerAppScaleRuleAuth()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppScaleRuleAuth. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppScaleRuleAuth"/>. </summary>
         /// <param name="secretRef"> Name of the secret from which to pull the auth params. </param>
         /// <param name="triggerParameter"> Trigger Parameter that uses the secret. </param>
-        internal ContainerAppScaleRuleAuth(string secretRef, string triggerParameter)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppScaleRuleAuth(string secretRef, string triggerParameter, Dictionary<string, BinaryData> rawData)
         {
             SecretRef = secretRef;
             TriggerParameter = triggerParameter;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the secret from which to pull the auth params. </summary>

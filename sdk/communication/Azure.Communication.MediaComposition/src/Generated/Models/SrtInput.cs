@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
 
@@ -14,7 +15,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> Srt stream to be used as an input. </summary>
     public partial class SrtInput : MediaInput
     {
-        /// <summary> Initializes a new instance of SrtInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="SrtInput"/>. </summary>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="streamUrl"> The url of the stream. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resolution"/> or <paramref name="streamUrl"/> is null. </exception>
@@ -28,16 +29,22 @@ namespace Azure.Communication.MediaComposition
             Kind = MediaInputType.Srt;
         }
 
-        /// <summary> Initializes a new instance of SrtInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="SrtInput"/>. </summary>
         /// <param name="kind"> Kind of media input. </param>
         /// <param name="placeholderImageUri"> Image url to be used if participant has no video stream. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="streamUrl"> The url of the stream. </param>
-        internal SrtInput(MediaInputType kind, string placeholderImageUri, LayoutResolution resolution, string streamUrl) : base(kind, placeholderImageUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SrtInput(MediaInputType kind, string placeholderImageUri, LayoutResolution resolution, string streamUrl, Dictionary<string, BinaryData> rawData) : base(kind, placeholderImageUri, rawData)
         {
             Resolution = resolution;
             StreamUrl = streamUrl;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SrtInput"/> for deserialization. </summary>
+        internal SrtInput()
+        {
         }
 
         /// <summary> The dimensions of the scene or objects in the scene. </summary>

@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Describes the available service SKU. </summary>
     public partial class AvailableServiceSku
     {
-        /// <summary> Initializes a new instance of AvailableServiceSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableServiceSku"/>. </summary>
         internal AvailableServiceSku()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailableServiceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableServiceSku"/>. </summary>
         /// <param name="resourceType"> The resource type, including the provider namespace. </param>
         /// <param name="sku"> SKU name, tier, etc. </param>
         /// <param name="capacity"> A description of the scaling capacities of the SKU. </param>
-        internal AvailableServiceSku(string resourceType, AvailableServiceSkuSku sku, AvailableServiceSkuCapacity capacity)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableServiceSku(string resourceType, AvailableServiceSkuSku sku, AvailableServiceSkuCapacity capacity, Dictionary<string, BinaryData> rawData)
         {
             ResourceType = resourceType;
             Sku = sku;
             Capacity = capacity;
+            _rawData = rawData;
         }
 
         /// <summary> The resource type, including the provider namespace. </summary>

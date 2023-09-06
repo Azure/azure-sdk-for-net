@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ContainerRegistry;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The collection of tasks. </summary>
     internal partial class ContainerRegistryTaskListResult
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTaskListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskListResult"/>. </summary>
         internal ContainerRegistryTaskListResult()
         {
             Value = new ChangeTrackingList<ContainerRegistryTaskData>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTaskListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskListResult"/>. </summary>
         /// <param name="value"> The collection value. </param>
         /// <param name="nextLink"> The URI that can be used to request the next set of paged results. </param>
-        internal ContainerRegistryTaskListResult(IReadOnlyList<ContainerRegistryTaskData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryTaskListResult(IReadOnlyList<ContainerRegistryTaskData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The collection value. </summary>

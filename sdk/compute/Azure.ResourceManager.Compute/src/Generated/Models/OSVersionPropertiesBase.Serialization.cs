@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class OSVersionPropertiesBase
+    public partial class OSVersionPropertiesBase : IUtf8JsonSerializable, IModelJsonSerializable<OSVersionPropertiesBase>
     {
-        internal static OSVersionPropertiesBase DeserializeOSVersionPropertiesBase(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OSVersionPropertiesBase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OSVersionPropertiesBase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<OSVersionPropertiesBase>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static OSVersionPropertiesBase DeserializeOSVersionPropertiesBase(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> label = default;
             Optional<bool> isDefault = default;
             Optional<bool> isActive = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("version"u8))
@@ -52,8 +81,61 @@ namespace Azure.ResourceManager.Compute.Models
                     isActive = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OSVersionPropertiesBase(version.Value, label.Value, Optional.ToNullable(isDefault), Optional.ToNullable(isActive));
+            return new OSVersionPropertiesBase(version.Value, label.Value, Optional.ToNullable(isDefault), Optional.ToNullable(isActive), rawData);
+        }
+
+        OSVersionPropertiesBase IModelJsonSerializable<OSVersionPropertiesBase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OSVersionPropertiesBase>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOSVersionPropertiesBase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OSVersionPropertiesBase>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OSVersionPropertiesBase>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OSVersionPropertiesBase IModelSerializable<OSVersionPropertiesBase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OSVersionPropertiesBase>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOSVersionPropertiesBase(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OSVersionPropertiesBase"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OSVersionPropertiesBase"/> to convert. </param>
+        public static implicit operator RequestContent(OSVersionPropertiesBase model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OSVersionPropertiesBase"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OSVersionPropertiesBase(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOSVersionPropertiesBase(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

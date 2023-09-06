@@ -5,55 +5,62 @@
 
 #nullable disable
 
-using System.Collections.Generic;
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownDataCenterAddressResponse
+    internal partial class UnknownDataCenterAddressResponse : IUtf8JsonSerializable, IModelJsonSerializable<DataCenterAddressResult>
     {
-        internal static UnknownDataCenterAddressResponse DeserializeUnknownDataCenterAddressResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataCenterAddressResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataCenterAddressResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            Core.ModelSerializerHelper.ValidateFormat<DataCenterAddressResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("datacenterAddressType"u8);
+            writer.WriteStringValue(DataCenterAddressType.ToSerialString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
             {
-                return null;
-            }
-            DataCenterAddressType dataCenterAddressType = default;
-            Optional<IReadOnlyList<string>> supportedCarriersForReturnShipment = default;
-            Optional<AzureLocation> dataCenterAzureLocation = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("datacenterAddressType"u8))
+                foreach (var property in _rawData)
                 {
-                    dataCenterAddressType = property.Value.GetString().ToDataCenterAddressType();
-                    continue;
-                }
-                if (property.NameEquals("supportedCarriersForReturnShipment"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    supportedCarriersForReturnShipment = array;
-                    continue;
-                }
-                if (property.NameEquals("dataCenterAzureLocation"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dataCenterAzureLocation = new AzureLocation(property.Value.GetString());
-                    continue;
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
                 }
             }
-            return new UnknownDataCenterAddressResponse(dataCenterAddressType, Optional.ToList(supportedCarriersForReturnShipment), Optional.ToNullable(dataCenterAzureLocation));
+            writer.WriteEndObject();
+        }
+
+        internal static DataCenterAddressResult DeserializeUnknownDataCenterAddressResponse(JsonElement element, ModelSerializerOptions options = default) => DeserializeDataCenterAddressResult(element, options);
+
+        DataCenterAddressResult IModelJsonSerializable<DataCenterAddressResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataCenterAddressResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownDataCenterAddressResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataCenterAddressResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataCenterAddressResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataCenterAddressResult IModelSerializable<DataCenterAddressResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataCenterAddressResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataCenterAddressResult(doc.RootElement, options);
         }
     }
 }

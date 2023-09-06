@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The ExtendedCosmosDBSqlDatabaseResourceInfo. </summary>
     public partial class ExtendedCosmosDBSqlDatabaseResourceInfo : CosmosDBSqlDatabaseResourceInfo
     {
-        /// <summary> Initializes a new instance of ExtendedCosmosDBSqlDatabaseResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlDatabaseResourceInfo"/>. </summary>
         /// <param name="databaseName"> Name of the Cosmos DB SQL database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public ExtendedCosmosDBSqlDatabaseResourceInfo(string databaseName) : base(databaseName)
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Argument.AssertNotNull(databaseName, nameof(databaseName));
         }
 
-        /// <summary> Initializes a new instance of ExtendedCosmosDBSqlDatabaseResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlDatabaseResourceInfo"/>. </summary>
         /// <param name="databaseName"> Name of the Cosmos DB SQL database. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
         /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
@@ -31,13 +32,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal ExtendedCosmosDBSqlDatabaseResourceInfo(string databaseName, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, string colls, string users, string rid, float? timestamp, ETag? etag) : base(databaseName, restoreParameters, createMode)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExtendedCosmosDBSqlDatabaseResourceInfo(string databaseName, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, string colls, string users, string rid, float? timestamp, ETag? etag, Dictionary<string, BinaryData> rawData) : base(databaseName, restoreParameters, createMode, rawData)
         {
             Colls = colls;
             Users = users;
             Rid = rid;
             Timestamp = timestamp;
             ETag = etag;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlDatabaseResourceInfo"/> for deserialization. </summary>
+        internal ExtendedCosmosDBSqlDatabaseResourceInfo()
+        {
         }
 
         /// <summary> A system generated property that specified the addressable path of the collections resource. </summary>

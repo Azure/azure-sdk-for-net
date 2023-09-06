@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class MicrosoftAccessSource : IUtf8JsonSerializable
+    public partial class MicrosoftAccessSource : IUtf8JsonSerializable, IModelJsonSerializable<MicrosoftAccessSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MicrosoftAccessSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MicrosoftAccessSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MicrosoftAccessSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
@@ -66,8 +72,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static MicrosoftAccessSource DeserializeMicrosoftAccessSource(JsonElement element)
+        internal static MicrosoftAccessSource DeserializeMicrosoftAccessSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -146,6 +154,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new MicrosoftAccessSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, query.Value, additionalColumns.Value);
+        }
+
+        MicrosoftAccessSource IModelJsonSerializable<MicrosoftAccessSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MicrosoftAccessSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMicrosoftAccessSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MicrosoftAccessSource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MicrosoftAccessSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MicrosoftAccessSource IModelSerializable<MicrosoftAccessSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MicrosoftAccessSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMicrosoftAccessSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MicrosoftAccessSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MicrosoftAccessSource"/> to convert. </param>
+        public static implicit operator RequestContent(MicrosoftAccessSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MicrosoftAccessSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MicrosoftAccessSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMicrosoftAccessSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

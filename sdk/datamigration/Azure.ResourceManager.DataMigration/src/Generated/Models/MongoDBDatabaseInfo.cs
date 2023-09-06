@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Describes a database within a MongoDB data source. </summary>
     public partial class MongoDBDatabaseInfo : MongoDBObjectInfo
     {
-        /// <summary> Initializes a new instance of MongoDBDatabaseInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBDatabaseInfo"/>. </summary>
         /// <param name="averageDocumentSize"> The average document size, or -1 if the average size is unknown. </param>
         /// <param name="dataSize"> The estimated total data size, in bytes, or -1 if the size is unknown. </param>
         /// <param name="documentCount"> The estimated total number of documents, or -1 if the document count is unknown. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SupportsSharding = supportsSharding;
         }
 
-        /// <summary> Initializes a new instance of MongoDBDatabaseInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBDatabaseInfo"/>. </summary>
         /// <param name="averageDocumentSize"> The average document size, or -1 if the average size is unknown. </param>
         /// <param name="dataSize"> The estimated total data size, in bytes, or -1 if the size is unknown. </param>
         /// <param name="documentCount"> The estimated total number of documents, or -1 if the document count is unknown. </param>
@@ -42,14 +42,16 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="qualifiedName"> The qualified name of the database or collection. For a collection, this is the database-qualified name. </param>
         /// <param name="collections"> A list of supported collections in a MongoDB database. </param>
         /// <param name="supportsSharding"> Whether the database has sharding enabled. Note that the migration task will enable sharding on the target if necessary. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="qualifiedName"/> is null. </exception>
-        internal MongoDBDatabaseInfo(long averageDocumentSize, long dataSize, long documentCount, string name, string qualifiedName, IReadOnlyList<MongoDBCollectionInfo> collections, bool supportsSharding) : base(averageDocumentSize, dataSize, documentCount, name, qualifiedName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBDatabaseInfo(long averageDocumentSize, long dataSize, long documentCount, string name, string qualifiedName, IReadOnlyList<MongoDBCollectionInfo> collections, bool supportsSharding, Dictionary<string, BinaryData> rawData) : base(averageDocumentSize, dataSize, documentCount, name, qualifiedName, rawData)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(qualifiedName, nameof(qualifiedName));
-
             Collections = collections;
             SupportsSharding = supportsSharding;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBDatabaseInfo"/> for deserialization. </summary>
+        internal MongoDBDatabaseInfo()
+        {
         }
 
         /// <summary> A list of supported collections in a MongoDB database. </summary>

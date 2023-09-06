@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryOverrideTaskStepProperties : IUtf8JsonSerializable
+    public partial class ContainerRegistryOverrideTaskStepProperties : IUtf8JsonSerializable, IModelJsonSerializable<ContainerRegistryOverrideTaskStepProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerRegistryOverrideTaskStepProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerRegistryOverrideTaskStepProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryOverrideTaskStepProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ContextPath))
             {
@@ -32,7 +39,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Arguments)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ContainerRegistryRunArgument>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +61,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ContainerRegistryTaskOverridableValue>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -56,11 +77,25 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("updateTriggerToken"u8);
                 writer.WriteStringValue(UpdateTriggerToken);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerRegistryOverrideTaskStepProperties DeserializeContainerRegistryOverrideTaskStepProperties(JsonElement element)
+        internal static ContainerRegistryOverrideTaskStepProperties DeserializeContainerRegistryOverrideTaskStepProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -71,6 +106,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<string> target = default;
             Optional<IList<ContainerRegistryTaskOverridableValue>> values = default;
             Optional<string> updateTriggerToken = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contextPath"u8))
@@ -121,8 +157,61 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     updateTriggerToken = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerRegistryOverrideTaskStepProperties(contextPath.Value, file.Value, Optional.ToList(arguments), target.Value, Optional.ToList(values), updateTriggerToken.Value);
+            return new ContainerRegistryOverrideTaskStepProperties(contextPath.Value, file.Value, Optional.ToList(arguments), target.Value, Optional.ToList(values), updateTriggerToken.Value, rawData);
+        }
+
+        ContainerRegistryOverrideTaskStepProperties IModelJsonSerializable<ContainerRegistryOverrideTaskStepProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryOverrideTaskStepProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryOverrideTaskStepProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerRegistryOverrideTaskStepProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryOverrideTaskStepProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerRegistryOverrideTaskStepProperties IModelSerializable<ContainerRegistryOverrideTaskStepProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryOverrideTaskStepProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerRegistryOverrideTaskStepProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerRegistryOverrideTaskStepProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerRegistryOverrideTaskStepProperties"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerRegistryOverrideTaskStepProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerRegistryOverrideTaskStepProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerRegistryOverrideTaskStepProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerRegistryOverrideTaskStepProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

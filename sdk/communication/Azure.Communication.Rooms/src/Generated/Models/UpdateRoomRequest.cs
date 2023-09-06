@@ -6,15 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.Rooms
 {
     /// <summary> Request payload for updating a room. </summary>
     internal partial class UpdateRoomRequest
     {
-        /// <summary> Initializes a new instance of UpdateRoomRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateRoomRequest"/>. </summary>
         public UpdateRoomRequest()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateRoomRequest"/>. </summary>
+        /// <param name="validFrom"> (Optional) The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="validUntil"> (Optional) The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateRoomRequest(DateTimeOffset? validFrom, DateTimeOffset? validUntil, Dictionary<string, BinaryData> rawData)
+        {
+            ValidFrom = validFrom;
+            ValidUntil = validUntil;
+            _rawData = rawData;
         }
 
         /// <summary> (Optional) The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>

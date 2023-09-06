@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The fields mapping for Relationships. </summary>
     public partial class RelationshipLinkFieldMapping
     {
-        /// <summary> Initializes a new instance of RelationshipLinkFieldMapping. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RelationshipLinkFieldMapping"/>. </summary>
         /// <param name="interactionFieldName"> The field name on the Interaction Type. </param>
         /// <param name="relationshipFieldName"> The field name on the Relationship metadata. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="interactionFieldName"/> or <paramref name="relationshipFieldName"/> is null. </exception>
@@ -26,15 +30,22 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             RelationshipFieldName = relationshipFieldName;
         }
 
-        /// <summary> Initializes a new instance of RelationshipLinkFieldMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelationshipLinkFieldMapping"/>. </summary>
         /// <param name="interactionFieldName"> The field name on the Interaction Type. </param>
         /// <param name="linkType"> Link type. </param>
         /// <param name="relationshipFieldName"> The field name on the Relationship metadata. </param>
-        internal RelationshipLinkFieldMapping(string interactionFieldName, LinkType? linkType, string relationshipFieldName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RelationshipLinkFieldMapping(string interactionFieldName, LinkType? linkType, string relationshipFieldName, Dictionary<string, BinaryData> rawData)
         {
             InteractionFieldName = interactionFieldName;
             LinkType = linkType;
             RelationshipFieldName = relationshipFieldName;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RelationshipLinkFieldMapping"/> for deserialization. </summary>
+        internal RelationshipLinkFieldMapping()
+        {
         }
 
         /// <summary> The field name on the Interaction Type. </summary>

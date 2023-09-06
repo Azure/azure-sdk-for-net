@@ -5,52 +5,74 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class UnknownBackupPolicy : IUtf8JsonSerializable
+    internal partial class UnknownBackupPolicy : IUtf8JsonSerializable, IModelJsonSerializable<CosmosDBAccountBackupPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CosmosDBAccountBackupPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CosmosDBAccountBackupPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBAccountBackupPolicy>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(BackupPolicyType.ToString());
             if (Optional.IsDefined(MigrationState))
             {
                 writer.WritePropertyName("migrationState"u8);
-                writer.WriteObjectValue(MigrationState);
+                if (MigrationState is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BackupPolicyMigrationState>)MigrationState).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static UnknownBackupPolicy DeserializeUnknownBackupPolicy(JsonElement element)
+        internal static CosmosDBAccountBackupPolicy DeserializeUnknownBackupPolicy(JsonElement element, ModelSerializerOptions options = default) => DeserializeCosmosDBAccountBackupPolicy(element, options);
+
+        CosmosDBAccountBackupPolicy IModelJsonSerializable<CosmosDBAccountBackupPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            BackupPolicyType type = "Unknown";
-            Optional<BackupPolicyMigrationState> migrationState = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"u8))
-                {
-                    type = new BackupPolicyType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("migrationState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    migrationState = BackupPolicyMigrationState.DeserializeBackupPolicyMigrationState(property.Value);
-                    continue;
-                }
-            }
-            return new UnknownBackupPolicy(type, migrationState.Value);
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBAccountBackupPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownBackupPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CosmosDBAccountBackupPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBAccountBackupPolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CosmosDBAccountBackupPolicy IModelSerializable<CosmosDBAccountBackupPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBAccountBackupPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCosmosDBAccountBackupPolicy(doc.RootElement, options);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Specific Gremlin Databases to restore. </summary>
     public partial class GremlinDatabaseRestoreResourceInfo
     {
-        /// <summary> Initializes a new instance of GremlinDatabaseRestoreResourceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GremlinDatabaseRestoreResourceInfo"/>. </summary>
         public GremlinDatabaseRestoreResourceInfo()
         {
             GraphNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of GremlinDatabaseRestoreResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GremlinDatabaseRestoreResourceInfo"/>. </summary>
         /// <param name="databaseName"> The name of the gremlin database available for restore. </param>
         /// <param name="graphNames"> The names of the graphs available for restore. </param>
-        internal GremlinDatabaseRestoreResourceInfo(string databaseName, IList<string> graphNames)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GremlinDatabaseRestoreResourceInfo(string databaseName, IList<string> graphNames, Dictionary<string, BinaryData> rawData)
         {
             DatabaseName = databaseName;
             GraphNames = graphNames;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the gremlin database available for restore. </summary>

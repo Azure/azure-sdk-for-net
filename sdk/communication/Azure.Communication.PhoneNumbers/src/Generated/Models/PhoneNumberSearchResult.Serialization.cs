@@ -8,14 +8,78 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    public partial class PhoneNumberSearchResult
+    public partial class PhoneNumberSearchResult : IUtf8JsonSerializable, IModelJsonSerializable<PhoneNumberSearchResult>
     {
-        internal static PhoneNumberSearchResult DeserializePhoneNumberSearchResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PhoneNumberSearchResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PhoneNumberSearchResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PhoneNumberSearchResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("searchId"u8);
+            writer.WriteStringValue(SearchId);
+            writer.WritePropertyName("phoneNumbers"u8);
+            writer.WriteStartArray();
+            foreach (var item in PhoneNumbers)
+            {
+                writer.WriteStringValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("phoneNumberType"u8);
+            writer.WriteStringValue(PhoneNumberType.ToString());
+            writer.WritePropertyName("assignmentType"u8);
+            writer.WriteStringValue(AssignmentType.ToString());
+            writer.WritePropertyName("capabilities"u8);
+            if (Capabilities is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<PhoneNumberCapabilities>)Capabilities).Serialize(writer, options);
+            }
+            writer.WritePropertyName("cost"u8);
+            if (Cost is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<PhoneNumberCost>)Cost).Serialize(writer, options);
+            }
+            writer.WritePropertyName("searchExpiresBy"u8);
+            writer.WriteStringValue(SearchExpiresOn, "O");
+            if (Optional.IsDefined(ErrorCode))
+            {
+                writer.WritePropertyName("errorCode"u8);
+                writer.WriteNumberValue(ErrorCode.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PhoneNumberSearchResult DeserializePhoneNumberSearchResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +93,7 @@ namespace Azure.Communication.PhoneNumbers
             DateTimeOffset searchExpiresBy = default;
             Optional<int> errorCode = default;
             Optional<PhoneNumberSearchResultError> error = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("searchId"u8))
@@ -89,8 +154,61 @@ namespace Azure.Communication.PhoneNumbers
                     error = new PhoneNumberSearchResultError(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PhoneNumberSearchResult(searchId, phoneNumbers, phoneNumberType, assignmentType, capabilities, cost, searchExpiresBy, Optional.ToNullable(errorCode), Optional.ToNullable(error));
+            return new PhoneNumberSearchResult(searchId, phoneNumbers, phoneNumberType, assignmentType, capabilities, cost, searchExpiresBy, Optional.ToNullable(errorCode), Optional.ToNullable(error), rawData);
+        }
+
+        PhoneNumberSearchResult IModelJsonSerializable<PhoneNumberSearchResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PhoneNumberSearchResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePhoneNumberSearchResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PhoneNumberSearchResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PhoneNumberSearchResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PhoneNumberSearchResult IModelSerializable<PhoneNumberSearchResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PhoneNumberSearchResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePhoneNumberSearchResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PhoneNumberSearchResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PhoneNumberSearchResult"/> to convert. </param>
+        public static implicit operator RequestContent(PhoneNumberSearchResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PhoneNumberSearchResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PhoneNumberSearchResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePhoneNumberSearchResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

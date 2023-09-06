@@ -5,27 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The platform properties against which the run has to happen. </summary>
     public partial class ContainerRegistryPlatformProperties
     {
-        /// <summary> Initializes a new instance of ContainerRegistryPlatformProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPlatformProperties"/>. </summary>
         /// <param name="os"> The operating system type required for the run. </param>
         public ContainerRegistryPlatformProperties(ContainerRegistryOS os)
         {
             OS = os;
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryPlatformProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPlatformProperties"/>. </summary>
         /// <param name="os"> The operating system type required for the run. </param>
         /// <param name="architecture"> The OS architecture. </param>
         /// <param name="variant"> Variant of the CPU. </param>
-        internal ContainerRegistryPlatformProperties(ContainerRegistryOS os, ContainerRegistryOSArchitecture? architecture, ContainerRegistryCpuVariant? variant)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryPlatformProperties(ContainerRegistryOS os, ContainerRegistryOSArchitecture? architecture, ContainerRegistryCpuVariant? variant, Dictionary<string, BinaryData> rawData)
         {
             OS = os;
             Architecture = architecture;
             Variant = variant;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPlatformProperties"/> for deserialization. </summary>
+        internal ContainerRegistryPlatformProperties()
+        {
         }
 
         /// <summary> The operating system type required for the run. </summary>

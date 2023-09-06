@@ -5,22 +5,36 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlMITaskInput : IUtf8JsonSerializable
+    public partial class MigrateSqlServerSqlMITaskInput : IUtf8JsonSerializable, IModelJsonSerializable<MigrateSqlServerSqlMITaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MigrateSqlServerSqlMITaskInput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MigrateSqlServerSqlMITaskInput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateSqlServerSqlMITaskInput>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("selectedDatabases"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MigrateSqlServerSqlMIDatabaseInput>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(StartedOn))
@@ -51,10 +65,24 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(BackupFileShare))
             {
                 writer.WritePropertyName("backupFileShare"u8);
-                writer.WriteObjectValue(BackupFileShare);
+                if (BackupFileShare is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<FileShare>)BackupFileShare).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("backupBlobShare"u8);
-            writer.WriteObjectValue(BackupBlobShare);
+            if (BackupBlobShare is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<BlobShare>)BackupBlobShare).Serialize(writer, options);
+            }
             if (Optional.IsDefined(BackupMode))
             {
                 writer.WritePropertyName("backupMode"u8);
@@ -71,14 +99,42 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
             }
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo);
+            if (SourceConnectionInfo is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<SqlConnectionInfo>)SourceConnectionInfo).Serialize(writer, options);
+            }
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue(TargetConnectionInfo);
+            if (TargetConnectionInfo is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<SqlConnectionInfo>)TargetConnectionInfo).Serialize(writer, options);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MigrateSqlServerSqlMITaskInput DeserializeMigrateSqlServerSqlMITaskInput(JsonElement element)
+        internal static MigrateSqlServerSqlMITaskInput DeserializeMigrateSqlServerSqlMITaskInput(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -94,6 +150,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> encryptedKeyForSecureFields = default;
             SqlConnectionInfo sourceConnectionInfo = default;
             SqlConnectionInfo targetConnectionInfo = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("selectedDatabases"u8))
@@ -182,8 +239,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MigrateSqlServerSqlMITaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases, startedOn.Value, Optional.ToList(selectedLogins), Optional.ToList(selectedAgentJobs), backupFileShare.Value, backupBlobShare, Optional.ToNullable(backupMode), aadDomainName.Value, encryptedKeyForSecureFields.Value);
+            return new MigrateSqlServerSqlMITaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases, startedOn.Value, Optional.ToList(selectedLogins), Optional.ToList(selectedAgentJobs), backupFileShare.Value, backupBlobShare, Optional.ToNullable(backupMode), aadDomainName.Value, encryptedKeyForSecureFields.Value, rawData);
+        }
+
+        MigrateSqlServerSqlMITaskInput IModelJsonSerializable<MigrateSqlServerSqlMITaskInput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateSqlServerSqlMITaskInput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateSqlServerSqlMITaskInput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MigrateSqlServerSqlMITaskInput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateSqlServerSqlMITaskInput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MigrateSqlServerSqlMITaskInput IModelSerializable<MigrateSqlServerSqlMITaskInput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateSqlServerSqlMITaskInput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMigrateSqlServerSqlMITaskInput(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MigrateSqlServerSqlMITaskInput"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MigrateSqlServerSqlMITaskInput"/> to convert. </param>
+        public static implicit operator RequestContent(MigrateSqlServerSqlMITaskInput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MigrateSqlServerSqlMITaskInput"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MigrateSqlServerSqlMITaskInput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMigrateSqlServerSqlMITaskInput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

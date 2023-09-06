@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ExtendedCosmosDBSqlStoredProcedureResourceInfo : IUtf8JsonSerializable
+    public partial class ExtendedCosmosDBSqlStoredProcedureResourceInfo : IUtf8JsonSerializable, IModelJsonSerializable<ExtendedCosmosDBSqlStoredProcedureResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExtendedCosmosDBSqlStoredProcedureResourceInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExtendedCosmosDBSqlStoredProcedureResourceInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ExtendedCosmosDBSqlStoredProcedureResourceInfo>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(StoredProcedureName);
@@ -23,11 +30,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("body"u8);
                 writer.WriteStringValue(Body);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExtendedCosmosDBSqlStoredProcedureResourceInfo DeserializeExtendedCosmosDBSqlStoredProcedureResourceInfo(JsonElement element)
+        internal static ExtendedCosmosDBSqlStoredProcedureResourceInfo DeserializeExtendedCosmosDBSqlStoredProcedureResourceInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +58,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<ETag> etag = default;
             string id = default;
             Optional<string> body = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_rid"u8))
@@ -72,8 +94,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     body = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExtendedCosmosDBSqlStoredProcedureResourceInfo(id, body.Value, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new ExtendedCosmosDBSqlStoredProcedureResourceInfo(id, body.Value, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag), rawData);
+        }
+
+        ExtendedCosmosDBSqlStoredProcedureResourceInfo IModelJsonSerializable<ExtendedCosmosDBSqlStoredProcedureResourceInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExtendedCosmosDBSqlStoredProcedureResourceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExtendedCosmosDBSqlStoredProcedureResourceInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExtendedCosmosDBSqlStoredProcedureResourceInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExtendedCosmosDBSqlStoredProcedureResourceInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExtendedCosmosDBSqlStoredProcedureResourceInfo IModelSerializable<ExtendedCosmosDBSqlStoredProcedureResourceInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExtendedCosmosDBSqlStoredProcedureResourceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExtendedCosmosDBSqlStoredProcedureResourceInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExtendedCosmosDBSqlStoredProcedureResourceInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExtendedCosmosDBSqlStoredProcedureResourceInfo"/> to convert. </param>
+        public static implicit operator RequestContent(ExtendedCosmosDBSqlStoredProcedureResourceInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExtendedCosmosDBSqlStoredProcedureResourceInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExtendedCosmosDBSqlStoredProcedureResourceInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExtendedCosmosDBSqlStoredProcedureResourceInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

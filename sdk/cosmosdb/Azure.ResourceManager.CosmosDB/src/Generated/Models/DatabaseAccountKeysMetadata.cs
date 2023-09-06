@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The metadata related to each access key for the given Cosmos DB database account. </summary>
     public partial class DatabaseAccountKeysMetadata
     {
-        /// <summary> Initializes a new instance of DatabaseAccountKeysMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatabaseAccountKeysMetadata"/>. </summary>
         internal DatabaseAccountKeysMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseAccountKeysMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseAccountKeysMetadata"/>. </summary>
         /// <param name="primaryMasterKey"> The metadata related to the Primary Read-Write Key for the given Cosmos DB database account. </param>
         /// <param name="secondaryMasterKey"> The metadata related to the Secondary Read-Write Key for the given Cosmos DB database account. </param>
         /// <param name="primaryReadonlyMasterKey"> The metadata related to the Primary Read-Only Key for the given Cosmos DB database account. </param>
         /// <param name="secondaryReadonlyMasterKey"> The metadata related to the Secondary Read-Only Key for the given Cosmos DB database account. </param>
-        internal DatabaseAccountKeysMetadata(AccountKeyMetadata primaryMasterKey, AccountKeyMetadata secondaryMasterKey, AccountKeyMetadata primaryReadonlyMasterKey, AccountKeyMetadata secondaryReadonlyMasterKey)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatabaseAccountKeysMetadata(AccountKeyMetadata primaryMasterKey, AccountKeyMetadata secondaryMasterKey, AccountKeyMetadata primaryReadonlyMasterKey, AccountKeyMetadata secondaryReadonlyMasterKey, Dictionary<string, BinaryData> rawData)
         {
             PrimaryMasterKey = primaryMasterKey;
             SecondaryMasterKey = secondaryMasterKey;
             PrimaryReadonlyMasterKey = primaryReadonlyMasterKey;
             SecondaryReadonlyMasterKey = secondaryReadonlyMasterKey;
+            _rawData = rawData;
         }
 
         /// <summary> The metadata related to the Primary Read-Write Key for the given Cosmos DB database account. </summary>

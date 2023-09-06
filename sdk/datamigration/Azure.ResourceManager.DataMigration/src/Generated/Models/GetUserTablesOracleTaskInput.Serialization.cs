@@ -5,19 +5,33 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class GetUserTablesOracleTaskInput : IUtf8JsonSerializable
+    public partial class GetUserTablesOracleTaskInput : IUtf8JsonSerializable, IModelJsonSerializable<GetUserTablesOracleTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GetUserTablesOracleTaskInput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GetUserTablesOracleTaskInput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<GetUserTablesOracleTaskInput>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("connectionInfo"u8);
-            writer.WriteObjectValue(ConnectionInfo);
+            if (ConnectionInfo is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<OracleConnectionInfo>)ConnectionInfo).Serialize(writer, options);
+            }
             writer.WritePropertyName("selectedSchemas"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedSchemas)
@@ -25,17 +39,32 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GetUserTablesOracleTaskInput DeserializeGetUserTablesOracleTaskInput(JsonElement element)
+        internal static GetUserTablesOracleTaskInput DeserializeGetUserTablesOracleTaskInput(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             OracleConnectionInfo connectionInfo = default;
             IList<string> selectedSchemas = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionInfo"u8))
@@ -53,8 +82,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     selectedSchemas = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GetUserTablesOracleTaskInput(connectionInfo, selectedSchemas);
+            return new GetUserTablesOracleTaskInput(connectionInfo, selectedSchemas, rawData);
+        }
+
+        GetUserTablesOracleTaskInput IModelJsonSerializable<GetUserTablesOracleTaskInput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GetUserTablesOracleTaskInput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGetUserTablesOracleTaskInput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GetUserTablesOracleTaskInput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GetUserTablesOracleTaskInput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GetUserTablesOracleTaskInput IModelSerializable<GetUserTablesOracleTaskInput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GetUserTablesOracleTaskInput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGetUserTablesOracleTaskInput(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GetUserTablesOracleTaskInput"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GetUserTablesOracleTaskInput"/> to convert. </param>
+        public static implicit operator RequestContent(GetUserTablesOracleTaskInput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GetUserTablesOracleTaskInput"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GetUserTablesOracleTaskInput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGetUserTablesOracleTaskInput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> LogAnalytics output properties. </summary>
     internal partial class LogAnalyticsOutput
     {
-        /// <summary> Initializes a new instance of LogAnalyticsOutput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsOutput"/>. </summary>
         internal LogAnalyticsOutput()
         {
         }
 
-        /// <summary> Initializes a new instance of LogAnalyticsOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsOutput"/>. </summary>
         /// <param name="output"> Output file Uri path to blob container. </param>
-        internal LogAnalyticsOutput(string output)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogAnalyticsOutput(string output, Dictionary<string, BinaryData> rawData)
         {
             Output = output;
+            _rawData = rawData;
         }
 
         /// <summary> Output file Uri path to blob container. </summary>

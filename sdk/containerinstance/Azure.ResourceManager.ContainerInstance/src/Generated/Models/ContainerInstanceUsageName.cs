@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The name object of the resource. </summary>
     public partial class ContainerInstanceUsageName
     {
-        /// <summary> Initializes a new instance of ContainerInstanceUsageName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerInstanceUsageName"/>. </summary>
         internal ContainerInstanceUsageName()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerInstanceUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerInstanceUsageName"/>. </summary>
         /// <param name="value"> The name of the resource. </param>
         /// <param name="localizedValue"> The localized name of the resource. </param>
-        internal ContainerInstanceUsageName(string value, string localizedValue)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerInstanceUsageName(string value, string localizedValue, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             LocalizedValue = localizedValue;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the resource. </summary>

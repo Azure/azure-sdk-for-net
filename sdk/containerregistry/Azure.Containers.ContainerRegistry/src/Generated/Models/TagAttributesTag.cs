@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Tag. </summary>
     internal partial class TagAttributesTag
     {
-        /// <summary> Initializes a new instance of TagAttributesTag. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TagAttributesTag"/>. </summary>
         internal TagAttributesTag()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TagAttributesTag"/>. </summary>
+        /// <param name="signatureRecord"> SignatureRecord value. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TagAttributesTag(string signatureRecord, Dictionary<string, BinaryData> rawData)
+        {
+            SignatureRecord = signatureRecord;
+            _rawData = rawData;
         }
 
         /// <summary> SignatureRecord value. </summary>

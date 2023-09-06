@@ -5,35 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class UnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput
+    internal partial class UnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput : IUtf8JsonSerializable, IModelJsonSerializable<MigrateMySqlAzureDBForMySqlSyncTaskOutput>
     {
-        internal static UnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput DeserializeUnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MigrateMySqlAzureDBForMySqlSyncTaskOutput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MigrateMySqlAzureDBForMySqlSyncTaskOutput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            Core.ModelSerializerHelper.ValidateFormat<MigrateMySqlAzureDBForMySqlSyncTaskOutput>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
             {
-                return null;
-            }
-            Optional<string> id = default;
-            string resultType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("id"u8))
+                foreach (var property in _rawData)
                 {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultType"u8))
-                {
-                    resultType = property.Value.GetString();
-                    continue;
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
                 }
             }
-            return new UnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput(id.Value, resultType);
+            writer.WriteEndObject();
+        }
+
+        internal static MigrateMySqlAzureDBForMySqlSyncTaskOutput DeserializeUnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput(JsonElement element, ModelSerializerOptions options = default) => DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutput(element, options);
+
+        MigrateMySqlAzureDBForMySqlSyncTaskOutput IModelJsonSerializable<MigrateMySqlAzureDBForMySqlSyncTaskOutput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateMySqlAzureDBForMySqlSyncTaskOutput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MigrateMySqlAzureDBForMySqlSyncTaskOutput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateMySqlAzureDBForMySqlSyncTaskOutput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MigrateMySqlAzureDBForMySqlSyncTaskOutput IModelSerializable<MigrateMySqlAzureDBForMySqlSyncTaskOutput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateMySqlAzureDBForMySqlSyncTaskOutput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutput(doc.RootElement, options);
         }
     }
 }

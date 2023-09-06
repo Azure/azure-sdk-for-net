@@ -6,30 +6,65 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class DataTransferJobProperties : IUtf8JsonSerializable
+    public partial class DataTransferJobProperties : IUtf8JsonSerializable, IModelJsonSerializable<DataTransferJobProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataTransferJobProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataTransferJobProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataTransferJobProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            if (Source is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<DataTransferDataSourceSink>)Source).Serialize(writer, options);
+            }
             writer.WritePropertyName("destination"u8);
-            writer.WriteObjectValue(Destination);
+            if (Destination is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<DataTransferDataSourceSink>)Destination).Serialize(writer, options);
+            }
             if (Optional.IsDefined(WorkerCount))
             {
                 writer.WritePropertyName("workerCount"u8);
                 writer.WriteNumberValue(WorkerCount.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataTransferJobProperties DeserializeDataTransferJobProperties(JsonElement element)
+        internal static DataTransferJobProperties DeserializeDataTransferJobProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +78,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<DateTimeOffset> lastUpdatedUtcTime = default;
             Optional<int> workerCount = default;
             Optional<ErrorResponse> error = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobName"u8))
@@ -110,8 +146,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     error = ErrorResponse.DeserializeErrorResponse(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataTransferJobProperties(jobName.Value, source, destination, status.Value, Optional.ToNullable(processedCount), Optional.ToNullable(totalCount), Optional.ToNullable(lastUpdatedUtcTime), Optional.ToNullable(workerCount), error.Value);
+            return new DataTransferJobProperties(jobName.Value, source, destination, status.Value, Optional.ToNullable(processedCount), Optional.ToNullable(totalCount), Optional.ToNullable(lastUpdatedUtcTime), Optional.ToNullable(workerCount), error.Value, rawData);
+        }
+
+        DataTransferJobProperties IModelJsonSerializable<DataTransferJobProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataTransferJobProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataTransferJobProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataTransferJobProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataTransferJobProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataTransferJobProperties IModelSerializable<DataTransferJobProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataTransferJobProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataTransferJobProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataTransferJobProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataTransferJobProperties"/> to convert. </param>
+        public static implicit operator RequestContent(DataTransferJobProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataTransferJobProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataTransferJobProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataTransferJobProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

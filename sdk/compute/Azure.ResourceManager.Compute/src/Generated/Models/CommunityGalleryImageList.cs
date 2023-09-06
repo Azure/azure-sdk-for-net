@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Community Gallery Images operation response. </summary>
     internal partial class CommunityGalleryImageList
     {
-        /// <summary> Initializes a new instance of CommunityGalleryImageList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageList"/>. </summary>
         /// <param name="value"> A list of community gallery images. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal CommunityGalleryImageList(IEnumerable<CommunityGalleryImageData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of CommunityGalleryImageList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageList"/>. </summary>
         /// <param name="value"> A list of community gallery images. </param>
         /// <param name="nextLink"> The uri to fetch the next page of community gallery images. Call ListNext() with this to fetch the next page of community gallery images. </param>
-        internal CommunityGalleryImageList(IReadOnlyList<CommunityGalleryImageData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunityGalleryImageList(IReadOnlyList<CommunityGalleryImageData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageList"/> for deserialization. </summary>
+        internal CommunityGalleryImageList()
+        {
         }
 
         /// <summary> A list of community gallery images. </summary>

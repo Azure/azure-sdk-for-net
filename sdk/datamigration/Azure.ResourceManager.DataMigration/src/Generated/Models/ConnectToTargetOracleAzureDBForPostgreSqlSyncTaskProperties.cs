@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that validates connection to Azure Database For PostgreSQL server and target server requirements for online migration for Oracle source. </summary>
     public partial class ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties"/>. </summary>
         public ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties()
         {
             Output = new ChangeTrackingList<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput>();
             TaskType = TaskType.ConnectToTargetOracleAzureDBForPostgreSqlSync;
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
@@ -32,7 +33,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
-        internal ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput input, IReadOnlyList<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput> output) : base(taskType, errors, state, commands, clientData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput input, IReadOnlyList<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput> output, Dictionary<string, BinaryData> rawData) : base(taskType, errors, state, commands, clientData, rawData)
         {
             Input = input;
             Output = output;

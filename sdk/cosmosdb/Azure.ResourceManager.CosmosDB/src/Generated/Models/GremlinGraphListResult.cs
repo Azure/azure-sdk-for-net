@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the graphs and their properties. </summary>
     internal partial class GremlinGraphListResult
     {
-        /// <summary> Initializes a new instance of GremlinGraphListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GremlinGraphListResult"/>. </summary>
         internal GremlinGraphListResult()
         {
             Value = new ChangeTrackingList<GremlinGraphData>();
         }
 
-        /// <summary> Initializes a new instance of GremlinGraphListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GremlinGraphListResult"/>. </summary>
         /// <param name="value"> List of graphs and their properties. </param>
-        internal GremlinGraphListResult(IReadOnlyList<GremlinGraphData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GremlinGraphListResult(IReadOnlyList<GremlinGraphData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> List of graphs and their properties. </summary>

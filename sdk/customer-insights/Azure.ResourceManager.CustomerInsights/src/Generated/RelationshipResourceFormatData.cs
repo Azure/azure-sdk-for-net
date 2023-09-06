@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.CustomerInsights
     /// </summary>
     public partial class RelationshipResourceFormatData : ResourceData
     {
-        /// <summary> Initializes a new instance of RelationshipResourceFormatData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RelationshipResourceFormatData"/>. </summary>
         public RelationshipResourceFormatData()
         {
             DisplayName = new ChangeTrackingDictionary<string, string>();
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.CustomerInsights
             LookupMappings = new ChangeTrackingList<RelationshipTypeMapping>();
         }
 
-        /// <summary> Initializes a new instance of RelationshipResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelationshipResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,7 +48,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="relatedProfileType"> Related profile being referenced. </param>
         /// <param name="relationshipGuidId"> The relationship guid id. </param>
         /// <param name="tenantId"> The hub name. </param>
-        internal RelationshipResourceFormatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CardinalityType? cardinality, IDictionary<string, string> displayName, IDictionary<string, string> description, DateTimeOffset? expiryDateTimeUtc, IList<PropertyDefinition> fields, IList<RelationshipTypeMapping> lookupMappings, string profileType, ProvisioningState? provisioningState, string relationshipName, string relatedProfileType, string relationshipGuidId, Guid? tenantId) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RelationshipResourceFormatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CardinalityType? cardinality, IDictionary<string, string> displayName, IDictionary<string, string> description, DateTimeOffset? expiryDateTimeUtc, IList<PropertyDefinition> fields, IList<RelationshipTypeMapping> lookupMappings, string profileType, ProvisioningState? provisioningState, string relationshipName, string relatedProfileType, string relationshipGuidId, Guid? tenantId, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Cardinality = cardinality;
             DisplayName = displayName;
@@ -59,6 +63,7 @@ namespace Azure.ResourceManager.CustomerInsights
             RelatedProfileType = relatedProfileType;
             RelationshipGuidId = relationshipGuidId;
             TenantId = tenantId;
+            _rawData = rawData;
         }
 
         /// <summary> The Relationship Cardinality. </summary>

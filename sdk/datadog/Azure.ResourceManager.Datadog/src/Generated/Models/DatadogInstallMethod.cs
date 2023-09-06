@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> The DatadogInstallMethod. </summary>
     public partial class DatadogInstallMethod
     {
-        /// <summary> Initializes a new instance of DatadogInstallMethod. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatadogInstallMethod"/>. </summary>
         internal DatadogInstallMethod()
         {
         }
 
-        /// <summary> Initializes a new instance of DatadogInstallMethod. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogInstallMethod"/>. </summary>
         /// <param name="tool"> The tool. </param>
         /// <param name="toolVersion"> The tool version. </param>
         /// <param name="installerVersion"> The installer version. </param>
-        internal DatadogInstallMethod(string tool, string toolVersion, string installerVersion)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatadogInstallMethod(string tool, string toolVersion, string installerVersion, Dictionary<string, BinaryData> rawData)
         {
             Tool = tool;
             ToolVersion = toolVersion;
             InstallerVersion = installerVersion;
+            _rawData = rawData;
         }
 
         /// <summary> The tool. </summary>

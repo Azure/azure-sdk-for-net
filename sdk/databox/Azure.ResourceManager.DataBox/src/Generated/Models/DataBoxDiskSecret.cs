@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Contains all the secrets of a Disk. </summary>
     public partial class DataBoxDiskSecret
     {
-        /// <summary> Initializes a new instance of DataBoxDiskSecret. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxDiskSecret"/>. </summary>
         internal DataBoxDiskSecret()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxDiskSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxDiskSecret"/>. </summary>
         /// <param name="diskSerialNumber"> Serial number of the assigned disk. </param>
         /// <param name="bitLockerKey"> Bit Locker key of the disk which can be used to unlock the disk to copy data. </param>
-        internal DataBoxDiskSecret(string diskSerialNumber, string bitLockerKey)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxDiskSecret(string diskSerialNumber, string bitLockerKey, Dictionary<string, BinaryData> rawData)
         {
             DiskSerialNumber = diskSerialNumber;
             BitLockerKey = bitLockerKey;
+            _rawData = rawData;
         }
 
         /// <summary> Serial number of the assigned disk. </summary>

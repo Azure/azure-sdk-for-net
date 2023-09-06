@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureDataExplorerSource : IUtf8JsonSerializable
+    public partial class AzureDataExplorerSource : IUtf8JsonSerializable, IModelJsonSerializable<AzureDataExplorerSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzureDataExplorerSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzureDataExplorerSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AzureDataExplorerSource>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("query"u8);
             JsonSerializer.Serialize(writer, Query);
@@ -77,8 +83,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureDataExplorerSource DeserializeAzureDataExplorerSource(JsonElement element)
+        internal static AzureDataExplorerSource DeserializeAzureDataExplorerSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -173,6 +181,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureDataExplorerSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, query, noTruncation.Value, queryTimeout.Value, additionalColumns.Value);
+        }
+
+        AzureDataExplorerSource IModelJsonSerializable<AzureDataExplorerSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureDataExplorerSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureDataExplorerSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureDataExplorerSource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureDataExplorerSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureDataExplorerSource IModelSerializable<AzureDataExplorerSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureDataExplorerSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureDataExplorerSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AzureDataExplorerSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AzureDataExplorerSource"/> to convert. </param>
+        public static implicit operator RequestContent(AzureDataExplorerSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AzureDataExplorerSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AzureDataExplorerSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureDataExplorerSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> SAP ODP Linked Service. </summary>
     public partial class SapOdpLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of SapOdpLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapOdpLinkedService"/>. </summary>
         public SapOdpLinkedService()
         {
             LinkedServiceType = "SapOdp";
         }
 
-        /// <summary> Initializes a new instance of SapOdpLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapOdpLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

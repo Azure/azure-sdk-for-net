@@ -5,15 +5,88 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeUpdateDetails
+    public partial class DataBoxEdgeUpdateDetails : IUtf8JsonSerializable, IModelJsonSerializable<DataBoxEdgeUpdateDetails>
     {
-        internal static DataBoxEdgeUpdateDetails DeserializeDataBoxEdgeUpdateDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataBoxEdgeUpdateDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataBoxEdgeUpdateDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeUpdateDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(UpdateTitle))
+            {
+                writer.WritePropertyName("updateTitle"u8);
+                writer.WriteStringValue(UpdateTitle);
+            }
+            if (Optional.IsDefined(UpdateSizeInBytes))
+            {
+                writer.WritePropertyName("updateSize"u8);
+                writer.WriteNumberValue(UpdateSizeInBytes.Value);
+            }
+            if (Optional.IsDefined(UpdateType))
+            {
+                writer.WritePropertyName("updateType"u8);
+                writer.WriteStringValue(UpdateType.Value.ToString());
+            }
+            if (Optional.IsDefined(TargetVersion))
+            {
+                writer.WritePropertyName("targetVersion"u8);
+                writer.WriteStringValue(TargetVersion);
+            }
+            if (Optional.IsDefined(FriendlyVersionNumber))
+            {
+                writer.WritePropertyName("friendlyVersionNumber"u8);
+                writer.WriteStringValue(FriendlyVersionNumber);
+            }
+            if (Optional.IsDefined(EstimatedInstallTimeInMins))
+            {
+                writer.WritePropertyName("estimatedInstallTimeInMins"u8);
+                writer.WriteNumberValue(EstimatedInstallTimeInMins.Value);
+            }
+            if (Optional.IsDefined(RebootBehavior))
+            {
+                writer.WritePropertyName("rebootBehavior"u8);
+                writer.WriteStringValue(RebootBehavior.Value.ToString());
+            }
+            if (Optional.IsDefined(InstallationImpact))
+            {
+                writer.WritePropertyName("installationImpact"u8);
+                writer.WriteStringValue(InstallationImpact.Value.ToString());
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DataBoxEdgeUpdateDetails DeserializeDataBoxEdgeUpdateDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +100,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<InstallRebootBehavior> rebootBehavior = default;
             Optional<InstallationImpact> installationImpact = default;
             Optional<DataBoxEdgeUpdateStatus> status = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("updateTitle"u8))
@@ -98,8 +172,61 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     status = new DataBoxEdgeUpdateStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataBoxEdgeUpdateDetails(updateTitle.Value, Optional.ToNullable(updateSize), Optional.ToNullable(updateType), targetVersion.Value, friendlyVersionNumber.Value, Optional.ToNullable(estimatedInstallTimeInMins), Optional.ToNullable(rebootBehavior), Optional.ToNullable(installationImpact), Optional.ToNullable(status));
+            return new DataBoxEdgeUpdateDetails(updateTitle.Value, Optional.ToNullable(updateSize), Optional.ToNullable(updateType), targetVersion.Value, friendlyVersionNumber.Value, Optional.ToNullable(estimatedInstallTimeInMins), Optional.ToNullable(rebootBehavior), Optional.ToNullable(installationImpact), Optional.ToNullable(status), rawData);
+        }
+
+        DataBoxEdgeUpdateDetails IModelJsonSerializable<DataBoxEdgeUpdateDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeUpdateDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeUpdateDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataBoxEdgeUpdateDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeUpdateDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataBoxEdgeUpdateDetails IModelSerializable<DataBoxEdgeUpdateDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeUpdateDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataBoxEdgeUpdateDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataBoxEdgeUpdateDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataBoxEdgeUpdateDetails"/> to convert. </param>
+        public static implicit operator RequestContent(DataBoxEdgeUpdateDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataBoxEdgeUpdateDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataBoxEdgeUpdateDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataBoxEdgeUpdateDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -15,6 +15,9 @@ namespace Azure.AI.ContentSafety
     /// <summary> The request of adding blockItems to text blocklist. </summary>
     public partial class AddBlockItemsOptions
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of AddBlockItemsOptions. </summary>
         /// <param name="blockItems"> Array of blockItemInfo to add. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blockItems"/> is null. </exception>
@@ -27,9 +30,16 @@ namespace Azure.AI.ContentSafety
 
         /// <summary> Initializes a new instance of AddBlockItemsOptions. </summary>
         /// <param name="blockItems"> Array of blockItemInfo to add. </param>
-        internal AddBlockItemsOptions(IList<TextBlockItemInfo> blockItems)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AddBlockItemsOptions(IList<TextBlockItemInfo> blockItems, Dictionary<string, BinaryData> rawData)
         {
             BlockItems = blockItems;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AddBlockItemsOptions"/> for deserialization. </summary>
+        internal AddBlockItemsOptions()
+        {
         }
 
         /// <summary> Array of blockItemInfo to add. </summary>

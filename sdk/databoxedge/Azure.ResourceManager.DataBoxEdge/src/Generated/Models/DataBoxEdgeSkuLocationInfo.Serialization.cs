@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeSkuLocationInfo
+    public partial class DataBoxEdgeSkuLocationInfo : IUtf8JsonSerializable, IModelJsonSerializable<DataBoxEdgeSkuLocationInfo>
     {
-        internal static DataBoxEdgeSkuLocationInfo DeserializeDataBoxEdgeSkuLocationInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataBoxEdgeSkuLocationInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataBoxEdgeSkuLocationInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeSkuLocationInfo>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DataBoxEdgeSkuLocationInfo DeserializeDataBoxEdgeSkuLocationInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +49,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<AzureLocation> location = default;
             Optional<IReadOnlyList<string>> zones = default;
             Optional<IReadOnlyList<string>> sites = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -61,8 +89,61 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     sites = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataBoxEdgeSkuLocationInfo(Optional.ToNullable(location), Optional.ToList(zones), Optional.ToList(sites));
+            return new DataBoxEdgeSkuLocationInfo(Optional.ToNullable(location), Optional.ToList(zones), Optional.ToList(sites), rawData);
+        }
+
+        DataBoxEdgeSkuLocationInfo IModelJsonSerializable<DataBoxEdgeSkuLocationInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeSkuLocationInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeSkuLocationInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataBoxEdgeSkuLocationInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeSkuLocationInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataBoxEdgeSkuLocationInfo IModelSerializable<DataBoxEdgeSkuLocationInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeSkuLocationInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataBoxEdgeSkuLocationInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataBoxEdgeSkuLocationInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataBoxEdgeSkuLocationInfo"/> to convert. </param>
+        public static implicit operator RequestContent(DataBoxEdgeSkuLocationInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataBoxEdgeSkuLocationInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataBoxEdgeSkuLocationInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataBoxEdgeSkuLocationInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

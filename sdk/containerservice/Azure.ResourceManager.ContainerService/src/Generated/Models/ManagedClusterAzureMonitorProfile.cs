@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Prometheus addon profile for the container service cluster. </summary>
     internal partial class ManagedClusterAzureMonitorProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterAzureMonitorProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAzureMonitorProfile"/>. </summary>
         public ManagedClusterAzureMonitorProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterAzureMonitorProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAzureMonitorProfile"/>. </summary>
         /// <param name="metrics"> Metrics profile for the prometheus service addon. </param>
-        internal ManagedClusterAzureMonitorProfile(ManagedClusterMonitorProfileMetrics metrics)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterAzureMonitorProfile(ManagedClusterMonitorProfileMetrics metrics, Dictionary<string, BinaryData> rawData)
         {
             Metrics = metrics;
+            _rawData = rawData;
         }
 
         /// <summary> Metrics profile for the prometheus service addon. </summary>

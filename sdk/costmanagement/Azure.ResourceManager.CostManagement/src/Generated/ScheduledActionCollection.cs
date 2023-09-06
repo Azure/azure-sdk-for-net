@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scheduledActionRestClient.CreateListByScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scheduledActionRestClient.CreateListByScopeNextPageRequest(nextLink, Id, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScheduledActionResource(Client, ScheduledActionData.DeserializeScheduledActionData(e)), _scheduledActionClientDiagnostics, Pipeline, "ScheduledActionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ScheduledActionResource(Client, ScheduledActionData.DeserializeScheduledActionData(e)), _scheduledActionClientDiagnostics, Pipeline, "ScheduledActionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scheduledActionRestClient.CreateListByScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scheduledActionRestClient.CreateListByScopeNextPageRequest(nextLink, Id, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScheduledActionResource(Client, ScheduledActionData.DeserializeScheduledActionData(e)), _scheduledActionClientDiagnostics, Pipeline, "ScheduledActionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ScheduledActionResource(Client, ScheduledActionData.DeserializeScheduledActionData(e)), _scheduledActionClientDiagnostics, Pipeline, "ScheduledActionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

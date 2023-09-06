@@ -5,31 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class RuleEngineQueueSelectorAttachment : IUtf8JsonSerializable
+    public partial class RuleEngineQueueSelectorAttachment : IUtf8JsonSerializable, IModelJsonSerializable<RuleEngineQueueSelectorAttachment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RuleEngineQueueSelectorAttachment>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RuleEngineQueueSelectorAttachment>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RuleEngineQueueSelectorAttachment>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("rule"u8);
-            writer.WriteObjectValue(Rule);
+            if (Rule is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<RouterRule>)Rule).Serialize(writer, options);
+            }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RuleEngineQueueSelectorAttachment DeserializeRuleEngineQueueSelectorAttachment(JsonElement element)
+        internal static RuleEngineQueueSelectorAttachment DeserializeRuleEngineQueueSelectorAttachment(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             RouterRule rule = default;
             string kind = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rule"u8))
@@ -42,8 +72,61 @@ namespace Azure.Communication.JobRouter
                     kind = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RuleEngineQueueSelectorAttachment(kind, rule);
+            return new RuleEngineQueueSelectorAttachment(kind, rule, rawData);
+        }
+
+        RuleEngineQueueSelectorAttachment IModelJsonSerializable<RuleEngineQueueSelectorAttachment>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RuleEngineQueueSelectorAttachment>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRuleEngineQueueSelectorAttachment(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RuleEngineQueueSelectorAttachment>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RuleEngineQueueSelectorAttachment>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RuleEngineQueueSelectorAttachment IModelSerializable<RuleEngineQueueSelectorAttachment>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RuleEngineQueueSelectorAttachment>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRuleEngineQueueSelectorAttachment(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RuleEngineQueueSelectorAttachment"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RuleEngineQueueSelectorAttachment"/> to convert. </param>
+        public static implicit operator RequestContent(RuleEngineQueueSelectorAttachment model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RuleEngineQueueSelectorAttachment"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RuleEngineQueueSelectorAttachment(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRuleEngineQueueSelectorAttachment(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,28 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class OSDiskImage : IUtf8JsonSerializable
+    internal partial class OSDiskImage : IUtf8JsonSerializable, IModelJsonSerializable<OSDiskImage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OSDiskImage>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OSDiskImage>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<OSDiskImage>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("operatingSystem"u8);
             writer.WriteStringValue(OperatingSystem.ToSerialString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OSDiskImage DeserializeOSDiskImage(JsonElement element)
+        internal static OSDiskImage DeserializeOSDiskImage(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             SupportedOperatingSystemType operatingSystem = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operatingSystem"u8))
@@ -34,8 +57,61 @@ namespace Azure.ResourceManager.Compute.Models
                     operatingSystem = property.Value.GetString().ToSupportedOperatingSystemType();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OSDiskImage(operatingSystem);
+            return new OSDiskImage(operatingSystem, rawData);
+        }
+
+        OSDiskImage IModelJsonSerializable<OSDiskImage>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OSDiskImage>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOSDiskImage(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OSDiskImage>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OSDiskImage>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OSDiskImage IModelSerializable<OSDiskImage>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OSDiskImage>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOSDiskImage(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OSDiskImage"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OSDiskImage"/> to convert. </param>
+        public static implicit operator RequestContent(OSDiskImage model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OSDiskImage"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OSDiskImage(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOSDiskImage(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

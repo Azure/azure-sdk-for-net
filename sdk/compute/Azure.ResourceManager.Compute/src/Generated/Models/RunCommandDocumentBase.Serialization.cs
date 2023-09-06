@@ -5,15 +5,53 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RunCommandDocumentBase
+    public partial class RunCommandDocumentBase : IUtf8JsonSerializable, IModelJsonSerializable<RunCommandDocumentBase>
     {
-        internal static RunCommandDocumentBase DeserializeRunCommandDocumentBase(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RunCommandDocumentBase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RunCommandDocumentBase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RunCommandDocumentBase>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("$schema"u8);
+            writer.WriteStringValue(Schema);
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("osType"u8);
+            writer.WriteStringValue(OSType.ToSerialString());
+            writer.WritePropertyName("label"u8);
+            writer.WriteStringValue(Label);
+            writer.WritePropertyName("description"u8);
+            writer.WriteStringValue(Description);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RunCommandDocumentBase DeserializeRunCommandDocumentBase(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
             SupportedOperatingSystemType osType = default;
             string label = default;
             string description = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("$schema"u8))
@@ -50,8 +89,61 @@ namespace Azure.ResourceManager.Compute.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RunCommandDocumentBase(schema, id, osType, label, description);
+            return new RunCommandDocumentBase(schema, id, osType, label, description, rawData);
+        }
+
+        RunCommandDocumentBase IModelJsonSerializable<RunCommandDocumentBase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RunCommandDocumentBase>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRunCommandDocumentBase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RunCommandDocumentBase>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RunCommandDocumentBase>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RunCommandDocumentBase IModelSerializable<RunCommandDocumentBase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RunCommandDocumentBase>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRunCommandDocumentBase(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RunCommandDocumentBase"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RunCommandDocumentBase"/> to convert. </param>
+        public static implicit operator RequestContent(RunCommandDocumentBase model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RunCommandDocumentBase"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RunCommandDocumentBase(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRunCommandDocumentBase(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

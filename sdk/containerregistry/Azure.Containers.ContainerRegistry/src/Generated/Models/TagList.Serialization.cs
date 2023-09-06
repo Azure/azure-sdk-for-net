@@ -5,16 +5,66 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class TagList
+    internal partial class TagList : IUtf8JsonSerializable, IModelJsonSerializable<TagList>
     {
-        internal static TagList DeserializeTagList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TagList>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TagList>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TagList>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("registry"u8);
+            writer.WriteStringValue(RegistryLoginServer);
+            writer.WritePropertyName("imageName"u8);
+            writer.WriteStringValue(Repository);
+            writer.WritePropertyName("tags"u8);
+            writer.WriteStartArray();
+            foreach (var item in TagAttributeBases)
+            {
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TagAttributesBase>)item).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(Link))
+            {
+                writer.WritePropertyName("link"u8);
+                writer.WriteStringValue(Link);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TagList DeserializeTagList(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +73,7 @@ namespace Azure.Containers.ContainerRegistry
             string imageName = default;
             IReadOnlyList<TagAttributesBase> tags = default;
             Optional<string> link = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registry"u8))
@@ -50,8 +101,61 @@ namespace Azure.Containers.ContainerRegistry
                     link = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TagList(registry, imageName, tags, link.Value);
+            return new TagList(registry, imageName, tags, link.Value, rawData);
+        }
+
+        TagList IModelJsonSerializable<TagList>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TagList>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTagList(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TagList>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TagList>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TagList IModelSerializable<TagList>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TagList>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTagList(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TagList"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TagList"/> to convert. </param>
+        public static implicit operator RequestContent(TagList model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TagList"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TagList(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTagList(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

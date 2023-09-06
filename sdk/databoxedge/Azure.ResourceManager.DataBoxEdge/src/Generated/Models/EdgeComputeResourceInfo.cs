@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Compute infrastructure Resource. </summary>
     public partial class EdgeComputeResourceInfo
     {
-        /// <summary> Initializes a new instance of EdgeComputeResourceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeComputeResourceInfo"/>. </summary>
         /// <param name="processorCount"> Processor count. </param>
         /// <param name="memoryInGB"> Memory in GB. </param>
         public EdgeComputeResourceInfo(int processorCount, long memoryInGB)
         {
             ProcessorCount = processorCount;
             MemoryInGB = memoryInGB;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdgeComputeResourceInfo"/>. </summary>
+        /// <param name="processorCount"> Processor count. </param>
+        /// <param name="memoryInGB"> Memory in GB. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeComputeResourceInfo(int processorCount, long memoryInGB, Dictionary<string, BinaryData> rawData)
+        {
+            ProcessorCount = processorCount;
+            MemoryInGB = memoryInGB;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdgeComputeResourceInfo"/> for deserialization. </summary>
+        internal EdgeComputeResourceInfo()
+        {
         }
 
         /// <summary> Processor count. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class MongoDBUserDefinitionCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class MongoDBUserDefinitionCreateOrUpdateContent : IUtf8JsonSerializable, IModelJsonSerializable<MongoDBUserDefinitionCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MongoDBUserDefinitionCreateOrUpdateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MongoDBUserDefinitionCreateOrUpdateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBUserDefinitionCreateOrUpdateContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -43,7 +51,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Roles)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MongoDBRole>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -53,7 +68,144 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStringValue(Mechanisms);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static MongoDBUserDefinitionCreateOrUpdateContent DeserializeMongoDBUserDefinitionCreateOrUpdateContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> userName = default;
+            Optional<string> password = default;
+            Optional<string> databaseName = default;
+            Optional<string> customData = default;
+            Optional<IList<MongoDBRole>> roles = default;
+            Optional<string> mechanisms = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("userName"u8))
+                        {
+                            userName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("password"u8))
+                        {
+                            password = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("databaseName"u8))
+                        {
+                            databaseName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("customData"u8))
+                        {
+                            customData = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("roles"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<MongoDBRole> array = new List<MongoDBRole>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(MongoDBRole.DeserializeMongoDBRole(item));
+                            }
+                            roles = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("mechanisms"u8))
+                        {
+                            mechanisms = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new MongoDBUserDefinitionCreateOrUpdateContent(userName.Value, password.Value, databaseName.Value, customData.Value, Optional.ToList(roles), mechanisms.Value, rawData);
+        }
+
+        MongoDBUserDefinitionCreateOrUpdateContent IModelJsonSerializable<MongoDBUserDefinitionCreateOrUpdateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBUserDefinitionCreateOrUpdateContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMongoDBUserDefinitionCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MongoDBUserDefinitionCreateOrUpdateContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBUserDefinitionCreateOrUpdateContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MongoDBUserDefinitionCreateOrUpdateContent IModelSerializable<MongoDBUserDefinitionCreateOrUpdateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBUserDefinitionCreateOrUpdateContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMongoDBUserDefinitionCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MongoDBUserDefinitionCreateOrUpdateContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MongoDBUserDefinitionCreateOrUpdateContent"/> to convert. </param>
+        public static implicit operator RequestContent(MongoDBUserDefinitionCreateOrUpdateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MongoDBUserDefinitionCreateOrUpdateContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MongoDBUserDefinitionCreateOrUpdateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMongoDBUserDefinitionCreateOrUpdateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

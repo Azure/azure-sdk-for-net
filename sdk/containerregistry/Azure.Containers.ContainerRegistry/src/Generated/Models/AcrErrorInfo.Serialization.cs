@@ -5,15 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class AcrErrorInfo
+    internal partial class AcrErrorInfo : IUtf8JsonSerializable, IModelJsonSerializable<AcrErrorInfo>
     {
-        internal static AcrErrorInfo DeserializeAcrErrorInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AcrErrorInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AcrErrorInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AcrErrorInfo>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Code))
+            {
+                writer.WritePropertyName("code"u8);
+                writer.WriteStringValue(Code);
+            }
+            if (Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (Optional.IsDefined(Detail))
+            {
+                writer.WritePropertyName("detail"u8);
+                writer.WriteObjectValue(Detail);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AcrErrorInfo DeserializeAcrErrorInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +64,7 @@ namespace Azure.Containers.ContainerRegistry
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<object> detail = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -42,8 +86,61 @@ namespace Azure.Containers.ContainerRegistry
                     detail = property.Value.GetObject();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AcrErrorInfo(code.Value, message.Value, detail.Value);
+            return new AcrErrorInfo(code.Value, message.Value, detail.Value, rawData);
+        }
+
+        AcrErrorInfo IModelJsonSerializable<AcrErrorInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AcrErrorInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcrErrorInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AcrErrorInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AcrErrorInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AcrErrorInfo IModelSerializable<AcrErrorInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AcrErrorInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAcrErrorInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AcrErrorInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AcrErrorInfo"/> to convert. </param>
+        public static implicit operator RequestContent(AcrErrorInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AcrErrorInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AcrErrorInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAcrErrorInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The properties for updating the platform configuration. </summary>
     public partial class ContainerRegistryPlatformUpdateContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryPlatformUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPlatformUpdateContent"/>. </summary>
         public ContainerRegistryPlatformUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPlatformUpdateContent"/>. </summary>
+        /// <param name="os"> The operating system type required for the run. </param>
+        /// <param name="architecture"> The OS architecture. </param>
+        /// <param name="variant"> Variant of the CPU. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryPlatformUpdateContent(ContainerRegistryOS? os, ContainerRegistryOSArchitecture? architecture, ContainerRegistryCpuVariant? variant, Dictionary<string, BinaryData> rawData)
+        {
+            OS = os;
+            Architecture = architecture;
+            Variant = variant;
+            _rawData = rawData;
         }
 
         /// <summary> The operating system type required for the run. </summary>

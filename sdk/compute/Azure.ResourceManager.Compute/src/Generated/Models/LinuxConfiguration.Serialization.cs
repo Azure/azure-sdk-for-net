@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class LinuxConfiguration : IUtf8JsonSerializable
+    public partial class LinuxConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<LinuxConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LinuxConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LinuxConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LinuxConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsPasswordAuthenticationDisabled))
             {
@@ -23,7 +31,14 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Ssh))
             {
                 writer.WritePropertyName("ssh"u8);
-                writer.WriteObjectValue(Ssh);
+                if (Ssh is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SshConfiguration>)Ssh).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ProvisionVmAgent))
             {
@@ -33,18 +48,39 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PatchSettings))
             {
                 writer.WritePropertyName("patchSettings"u8);
-                writer.WriteObjectValue(PatchSettings);
+                if (PatchSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LinuxPatchSettings>)PatchSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(IsVmAgentPlatformUpdatesEnabled))
             {
                 writer.WritePropertyName("enableVMAgentPlatformUpdates"u8);
                 writer.WriteBooleanValue(IsVmAgentPlatformUpdatesEnabled.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LinuxConfiguration DeserializeLinuxConfiguration(JsonElement element)
+        internal static LinuxConfiguration DeserializeLinuxConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +90,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<bool> provisionVmAgent = default;
             Optional<LinuxPatchSettings> patchSettings = default;
             Optional<bool> enableVmAgentPlatformUpdates = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("disablePasswordAuthentication"u8))
@@ -101,8 +138,61 @@ namespace Azure.ResourceManager.Compute.Models
                     enableVmAgentPlatformUpdates = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LinuxConfiguration(Optional.ToNullable(disablePasswordAuthentication), ssh.Value, Optional.ToNullable(provisionVmAgent), patchSettings.Value, Optional.ToNullable(enableVmAgentPlatformUpdates));
+            return new LinuxConfiguration(Optional.ToNullable(disablePasswordAuthentication), ssh.Value, Optional.ToNullable(provisionVmAgent), patchSettings.Value, Optional.ToNullable(enableVmAgentPlatformUpdates), rawData);
+        }
+
+        LinuxConfiguration IModelJsonSerializable<LinuxConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinuxConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinuxConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LinuxConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinuxConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LinuxConfiguration IModelSerializable<LinuxConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinuxConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLinuxConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LinuxConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LinuxConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(LinuxConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LinuxConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LinuxConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLinuxConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

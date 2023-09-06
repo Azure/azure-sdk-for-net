@@ -5,15 +5,22 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.MediaComposition
 {
-    internal partial class UnknownMediaInput : IUtf8JsonSerializable
+    internal partial class UnknownMediaInput : IUtf8JsonSerializable, IModelJsonSerializable<MediaInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MediaInput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MediaInput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MediaInput>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -22,31 +29,44 @@ namespace Azure.Communication.MediaComposition
                 writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownMediaInput DeserializeUnknownMediaInput(JsonElement element)
+        internal static MediaInput DeserializeUnknownMediaInput(JsonElement element, ModelSerializerOptions options = default) => DeserializeMediaInput(element, options);
+
+        MediaInput IModelJsonSerializable<MediaInput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            MediaInputType kind = "Unknown";
-            Optional<string> placeholderImageUri = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new MediaInputType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("placeholderImageUri"u8))
-                {
-                    placeholderImageUri = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownMediaInput(kind, placeholderImageUri.Value);
+            Core.ModelSerializerHelper.ValidateFormat<MediaInput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownMediaInput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MediaInput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaInput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MediaInput IModelSerializable<MediaInput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaInput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMediaInput(doc.RootElement, options);
         }
     }
 }

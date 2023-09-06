@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Symmetric key for authentication. </summary>
     internal partial class DataBoxEdgeSymmetricKey
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeSymmetricKey. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSymmetricKey"/>. </summary>
         public DataBoxEdgeSymmetricKey()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeSymmetricKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSymmetricKey"/>. </summary>
         /// <param name="connectionString"> Connection string based on the symmetric key. </param>
-        internal DataBoxEdgeSymmetricKey(AsymmetricEncryptedSecret connectionString)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeSymmetricKey(AsymmetricEncryptedSecret connectionString, Dictionary<string, BinaryData> rawData)
         {
             ConnectionString = connectionString;
+            _rawData = rawData;
         }
 
         /// <summary> Connection string based on the symmetric key. </summary>

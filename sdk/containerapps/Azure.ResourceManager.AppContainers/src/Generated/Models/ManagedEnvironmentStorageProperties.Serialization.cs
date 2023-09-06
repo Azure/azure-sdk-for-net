@@ -5,31 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    internal partial class ManagedEnvironmentStorageProperties : IUtf8JsonSerializable
+    internal partial class ManagedEnvironmentStorageProperties : IUtf8JsonSerializable, IModelJsonSerializable<ManagedEnvironmentStorageProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedEnvironmentStorageProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedEnvironmentStorageProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedEnvironmentStorageProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AzureFile))
             {
                 writer.WritePropertyName("azureFile"u8);
-                writer.WriteObjectValue(AzureFile);
+                if (AzureFile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerAppAzureFileProperties>)AzureFile).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ManagedEnvironmentStorageProperties DeserializeManagedEnvironmentStorageProperties(JsonElement element)
+        internal static ManagedEnvironmentStorageProperties DeserializeManagedEnvironmentStorageProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ContainerAppAzureFileProperties> azureFile = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureFile"u8))
@@ -41,8 +71,61 @@ namespace Azure.ResourceManager.AppContainers.Models
                     azureFile = ContainerAppAzureFileProperties.DeserializeContainerAppAzureFileProperties(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedEnvironmentStorageProperties(azureFile.Value);
+            return new ManagedEnvironmentStorageProperties(azureFile.Value, rawData);
+        }
+
+        ManagedEnvironmentStorageProperties IModelJsonSerializable<ManagedEnvironmentStorageProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedEnvironmentStorageProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedEnvironmentStorageProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedEnvironmentStorageProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedEnvironmentStorageProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedEnvironmentStorageProperties IModelSerializable<ManagedEnvironmentStorageProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedEnvironmentStorageProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedEnvironmentStorageProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagedEnvironmentStorageProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagedEnvironmentStorageProperties"/> to convert. </param>
+        public static implicit operator RequestContent(ManagedEnvironmentStorageProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagedEnvironmentStorageProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagedEnvironmentStorageProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedEnvironmentStorageProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

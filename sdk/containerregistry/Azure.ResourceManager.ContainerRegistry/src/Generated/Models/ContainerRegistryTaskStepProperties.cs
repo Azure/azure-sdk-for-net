@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -15,25 +17,31 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// Please note <see cref="ContainerRegistryTaskStepProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ContainerRegistryDockerBuildStep"/>, <see cref="ContainerRegistryEncodedTaskStep"/> and <see cref="ContainerRegistryFileTaskStep"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownTaskStepProperties))]
     public abstract partial class ContainerRegistryTaskStepProperties
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTaskStepProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskStepProperties"/>. </summary>
         protected ContainerRegistryTaskStepProperties()
         {
             BaseImageDependencies = new ChangeTrackingList<ContainerRegistryBaseImageDependency>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTaskStepProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskStepProperties"/>. </summary>
         /// <param name="containerRegistryTaskStepType"> The type of the step. </param>
         /// <param name="baseImageDependencies"> List of base image dependencies for a step. </param>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
         /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
-        internal ContainerRegistryTaskStepProperties(ContainerRegistryTaskStepType containerRegistryTaskStepType, IReadOnlyList<ContainerRegistryBaseImageDependency> baseImageDependencies, string contextPath, string contextAccessToken)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryTaskStepProperties(ContainerRegistryTaskStepType containerRegistryTaskStepType, IReadOnlyList<ContainerRegistryBaseImageDependency> baseImageDependencies, string contextPath, string contextAccessToken, Dictionary<string, BinaryData> rawData)
         {
             ContainerRegistryTaskStepType = containerRegistryTaskStepType;
             BaseImageDependencies = baseImageDependencies;
             ContextPath = contextPath;
             ContextAccessToken = contextAccessToken;
+            _rawData = rawData;
         }
 
         /// <summary> The type of the step. </summary>

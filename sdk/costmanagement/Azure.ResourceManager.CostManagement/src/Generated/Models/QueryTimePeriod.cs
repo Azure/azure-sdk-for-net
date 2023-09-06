@@ -6,19 +6,39 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The start and end date for pulling data for the query. </summary>
     public partial class QueryTimePeriod
     {
-        /// <summary> Initializes a new instance of QueryTimePeriod. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryTimePeriod"/>. </summary>
         /// <param name="from"> The start date to pull data from. </param>
         /// <param name="to"> The end date to pull data to. </param>
         public QueryTimePeriod(DateTimeOffset @from, DateTimeOffset to)
         {
             From = @from;
             To = to;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryTimePeriod"/>. </summary>
+        /// <param name="from"> The start date to pull data from. </param>
+        /// <param name="to"> The end date to pull data to. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryTimePeriod(DateTimeOffset @from, DateTimeOffset to, Dictionary<string, BinaryData> rawData)
+        {
+            From = @from;
+            To = to;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryTimePeriod"/> for deserialization. </summary>
+        internal QueryTimePeriod()
+        {
         }
 
         /// <summary> The start date to pull data from. </summary>

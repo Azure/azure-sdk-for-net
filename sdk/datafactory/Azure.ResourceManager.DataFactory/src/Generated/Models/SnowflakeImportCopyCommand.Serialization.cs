@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SnowflakeImportCopyCommand : IUtf8JsonSerializable
+    public partial class SnowflakeImportCopyCommand : IUtf8JsonSerializable, IModelJsonSerializable<SnowflakeImportCopyCommand>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SnowflakeImportCopyCommand>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SnowflakeImportCopyCommand>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SnowflakeImportCopyCommand>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AdditionalCopyOptions))
             {
@@ -71,8 +77,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static SnowflakeImportCopyCommand DeserializeSnowflakeImportCopyCommand(JsonElement element)
+        internal static SnowflakeImportCopyCommand DeserializeSnowflakeImportCopyCommand(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -135,6 +143,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SnowflakeImportCopyCommand(type, additionalProperties, Optional.ToDictionary(additionalCopyOptions), Optional.ToDictionary(additionalFormatOptions));
+        }
+
+        SnowflakeImportCopyCommand IModelJsonSerializable<SnowflakeImportCopyCommand>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SnowflakeImportCopyCommand>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSnowflakeImportCopyCommand(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SnowflakeImportCopyCommand>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SnowflakeImportCopyCommand>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SnowflakeImportCopyCommand IModelSerializable<SnowflakeImportCopyCommand>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SnowflakeImportCopyCommand>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSnowflakeImportCopyCommand(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SnowflakeImportCopyCommand"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SnowflakeImportCopyCommand"/> to convert. </param>
+        public static implicit operator RequestContent(SnowflakeImportCopyCommand model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SnowflakeImportCopyCommand"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SnowflakeImportCopyCommand(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSnowflakeImportCopyCommand(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

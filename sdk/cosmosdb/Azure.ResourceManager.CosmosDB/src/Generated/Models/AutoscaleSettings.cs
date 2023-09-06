@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The AutoscaleSettings. </summary>
     internal partial class AutoscaleSettings
     {
-        /// <summary> Initializes a new instance of AutoscaleSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutoscaleSettings"/>. </summary>
         public AutoscaleSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of AutoscaleSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoscaleSettings"/>. </summary>
         /// <param name="maxThroughput"> Represents maximum throughput, the resource can scale up to. </param>
-        internal AutoscaleSettings(int? maxThroughput)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoscaleSettings(int? maxThroughput, Dictionary<string, BinaryData> rawData)
         {
             MaxThroughput = maxThroughput;
+            _rawData = rawData;
         }
 
         /// <summary> Represents maximum throughput, the resource can scale up to. </summary>

@@ -8,14 +8,40 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class PredictionTrainingResults
+    public partial class PredictionTrainingResults : IUtf8JsonSerializable, IModelJsonSerializable<PredictionTrainingResults>
     {
-        internal static PredictionTrainingResults DeserializePredictionTrainingResults(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PredictionTrainingResults>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PredictionTrainingResults>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PredictionTrainingResults>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PredictionTrainingResults DeserializePredictionTrainingResults(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +51,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<PredictionDistributionDefinition> predictionDistribution = default;
             Optional<IReadOnlyList<CanonicalProfileDefinition>> canonicalProfiles = default;
             Optional<long> primaryProfileInstanceCount = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -73,8 +100,61 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     primaryProfileInstanceCount = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PredictionTrainingResults(Optional.ToNullable(tenantId), scoreName.Value, predictionDistribution.Value, Optional.ToList(canonicalProfiles), Optional.ToNullable(primaryProfileInstanceCount));
+            return new PredictionTrainingResults(Optional.ToNullable(tenantId), scoreName.Value, predictionDistribution.Value, Optional.ToList(canonicalProfiles), Optional.ToNullable(primaryProfileInstanceCount), rawData);
+        }
+
+        PredictionTrainingResults IModelJsonSerializable<PredictionTrainingResults>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PredictionTrainingResults>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePredictionTrainingResults(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PredictionTrainingResults>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PredictionTrainingResults>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PredictionTrainingResults IModelSerializable<PredictionTrainingResults>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PredictionTrainingResults>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePredictionTrainingResults(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PredictionTrainingResults"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PredictionTrainingResults"/> to convert. </param>
+        public static implicit operator RequestContent(PredictionTrainingResults model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PredictionTrainingResults"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PredictionTrainingResults(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePredictionTrainingResults(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

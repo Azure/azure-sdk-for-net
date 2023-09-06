@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryWranglingDataFlowProperties : IUtf8JsonSerializable
+    public partial class DataFactoryWranglingDataFlowProperties : IUtf8JsonSerializable, IModelJsonSerializable<DataFactoryWranglingDataFlowProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataFactoryWranglingDataFlowProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataFactoryWranglingDataFlowProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataFactoryWranglingDataFlowProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DataFlowType);
@@ -46,7 +52,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                if (Folder is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DataFlowFolder>)Folder).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
@@ -56,7 +69,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<PowerQuerySource>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -71,11 +91,25 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStringValue(DocumentLocale);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataFactoryWranglingDataFlowProperties DeserializeDataFactoryWranglingDataFlowProperties(JsonElement element)
+        internal static DataFactoryWranglingDataFlowProperties DeserializeDataFactoryWranglingDataFlowProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -87,6 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<PowerQuerySource>> sources = default;
             Optional<string> script = default;
             Optional<string> documentLocale = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -165,8 +200,61 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataFactoryWranglingDataFlowProperties(type, description.Value, Optional.ToList(annotations), folder.Value, Optional.ToList(sources), script.Value, documentLocale.Value);
+            return new DataFactoryWranglingDataFlowProperties(type, description.Value, Optional.ToList(annotations), folder.Value, Optional.ToList(sources), script.Value, documentLocale.Value, rawData);
+        }
+
+        DataFactoryWranglingDataFlowProperties IModelJsonSerializable<DataFactoryWranglingDataFlowProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataFactoryWranglingDataFlowProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryWranglingDataFlowProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataFactoryWranglingDataFlowProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataFactoryWranglingDataFlowProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataFactoryWranglingDataFlowProperties IModelSerializable<DataFactoryWranglingDataFlowProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataFactoryWranglingDataFlowProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataFactoryWranglingDataFlowProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataFactoryWranglingDataFlowProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataFactoryWranglingDataFlowProperties"/> to convert. </param>
+        public static implicit operator RequestContent(DataFactoryWranglingDataFlowProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataFactoryWranglingDataFlowProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataFactoryWranglingDataFlowProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataFactoryWranglingDataFlowProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

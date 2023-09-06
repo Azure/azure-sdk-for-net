@@ -15,7 +15,10 @@ namespace Azure.Communication.JobRouter
     /// <summary> Contains the weight percentage and queue selectors to be applied if selected for weighted distributions. </summary>
     public partial class QueueWeightedAllocation
     {
-        /// <summary> Initializes a new instance of QueueWeightedAllocation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueueWeightedAllocation"/>. </summary>
         /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
         /// <param name="queueSelectors"> A collection of queue selectors that will be applied if this allocation is selected. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueSelectors"/> is null. </exception>
@@ -27,13 +30,20 @@ namespace Azure.Communication.JobRouter
             QueueSelectors = queueSelectors.ToList();
         }
 
-        /// <summary> Initializes a new instance of QueueWeightedAllocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueueWeightedAllocation"/>. </summary>
         /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
         /// <param name="queueSelectors"> A collection of queue selectors that will be applied if this allocation is selected. </param>
-        internal QueueWeightedAllocation(double weight, IList<RouterQueueSelector> queueSelectors)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueueWeightedAllocation(double weight, IList<RouterQueueSelector> queueSelectors, Dictionary<string, BinaryData> rawData)
         {
             Weight = weight;
             QueueSelectors = queueSelectors;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueueWeightedAllocation"/> for deserialization. </summary>
+        internal QueueWeightedAllocation()
+        {
         }
 
         /// <summary> The percentage of this weight, expressed as a fraction of 1. </summary>

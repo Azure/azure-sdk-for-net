@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.JobRouter.Models
 {
     /// <summary> Paged instance of RouterJob. </summary>
     public partial class RouterJobItem
     {
-        /// <summary> Initializes a new instance of RouterJobItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouterJobItem"/>. </summary>
         internal RouterJobItem()
         {
         }
 
-        /// <summary> Initializes a new instance of RouterJobItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterJobItem"/>. </summary>
         /// <param name="job"> A unit of work to be routed. </param>
         /// <param name="etag"> (Optional) The Concurrency Token. </param>
-        internal RouterJobItem(RouterJob job, string etag)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouterJobItem(RouterJob job, string etag, Dictionary<string, BinaryData> rawData)
         {
             Job = job;
             _etag = etag;
+            _rawData = rawData;
         }
 
         /// <summary> A unit of work to be routed. </summary>

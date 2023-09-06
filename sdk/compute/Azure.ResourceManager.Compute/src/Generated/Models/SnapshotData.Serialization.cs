@@ -8,22 +8,35 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class SnapshotData : IUtf8JsonSerializable
+    public partial class SnapshotData : IUtf8JsonSerializable, IModelJsonSerializable<SnapshotData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SnapshotData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SnapshotData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SnapshotData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SnapshotSku>)Sku).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
@@ -58,17 +71,38 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
-                writer.WriteObjectValue(PurchasePlan);
+                if (PurchasePlan is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DiskPurchasePlan>)PurchasePlan).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(SupportedCapabilities))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
-                writer.WriteObjectValue(SupportedCapabilities);
+                if (SupportedCapabilities is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SupportedCapabilities>)SupportedCapabilities).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
-                writer.WriteObjectValue(CreationData);
+                if (CreationData is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DiskCreationData>)CreationData).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DiskSizeGB))
             {
@@ -78,7 +112,14 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
-                writer.WriteObjectValue(EncryptionSettingsGroup);
+                if (EncryptionSettingsGroup is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<EncryptionSettingsGroup>)EncryptionSettingsGroup).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Incremental))
             {
@@ -88,7 +129,14 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                if (Encryption is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DiskEncryption>)Encryption).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(NetworkAccessPolicy))
             {
@@ -103,7 +151,14 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                if (SecurityProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DiskSecurityProfile>)SecurityProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(SupportsHibernation))
             {
@@ -123,7 +178,14 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(CopyCompletionError))
             {
                 writer.WritePropertyName("copyCompletionError"u8);
-                writer.WriteObjectValue(CopyCompletionError);
+                if (CopyCompletionError is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CopyCompletionError>)CopyCompletionError).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DataAccessAuthMode))
             {
@@ -131,11 +193,25 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStringValue(DataAccessAuthMode.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SnapshotData DeserializeSnapshotData(JsonElement element)
+        internal static SnapshotData DeserializeSnapshotData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -172,6 +248,7 @@ namespace Azure.ResourceManager.Compute
             Optional<float> completionPercent = default;
             Optional<CopyCompletionError> copyCompletionError = default;
             Optional<DataAccessAuthMode> dataAccessAuthMode = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"u8))
@@ -447,8 +524,61 @@ namespace Azure.ResourceManager.Compute
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SnapshotData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, sku.Value, extendedLocation, Optional.ToNullable(timeCreated), Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, creationData.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(diskSizeBytes), Optional.ToNullable(diskState), uniqueId.Value, encryptionSettingsGroup.Value, provisioningState.Value, Optional.ToNullable(incremental), incrementalSnapshotFamilyId.Value, encryption.Value, Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, securityProfile.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(completionPercent), copyCompletionError.Value, Optional.ToNullable(dataAccessAuthMode));
+            return new SnapshotData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, sku.Value, extendedLocation, Optional.ToNullable(timeCreated), Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, creationData.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(diskSizeBytes), Optional.ToNullable(diskState), uniqueId.Value, encryptionSettingsGroup.Value, provisioningState.Value, Optional.ToNullable(incremental), incrementalSnapshotFamilyId.Value, encryption.Value, Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, securityProfile.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(completionPercent), copyCompletionError.Value, Optional.ToNullable(dataAccessAuthMode), rawData);
+        }
+
+        SnapshotData IModelJsonSerializable<SnapshotData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SnapshotData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSnapshotData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SnapshotData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SnapshotData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SnapshotData IModelSerializable<SnapshotData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SnapshotData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSnapshotData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SnapshotData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SnapshotData"/> to convert. </param>
+        public static implicit operator RequestContent(SnapshotData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SnapshotData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SnapshotData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSnapshotData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

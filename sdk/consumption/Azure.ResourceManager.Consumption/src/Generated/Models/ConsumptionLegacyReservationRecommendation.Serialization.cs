@@ -10,14 +10,46 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionLegacyReservationRecommendation
+    public partial class ConsumptionLegacyReservationRecommendation : IUtf8JsonSerializable, IModelJsonSerializable<ConsumptionLegacyReservationRecommendation>
     {
-        internal static ConsumptionLegacyReservationRecommendation DeserializeConsumptionLegacyReservationRecommendation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConsumptionLegacyReservationRecommendation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConsumptionLegacyReservationRecommendation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ConsumptionLegacyReservationRecommendation>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            writer.WritePropertyName("scope"u8);
+            writer.WriteStringValue(Scope);
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ConsumptionLegacyReservationRecommendation DeserializeConsumptionLegacyReservationRecommendation(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +77,7 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<DateTimeOffset> firstUsageDate = default;
             string scope = default;
             Optional<IReadOnlyList<ConsumptionSkuProperty>> skuProperties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -236,8 +269,61 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConsumptionLegacyReservationRecommendation(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(tags), Optional.ToNullable(location), sku.Value, lookBackPeriod.Value, Optional.ToNullable(instanceFlexibilityRatio), instanceFlexibilityGroup.Value, normalizedSize.Value, Optional.ToNullable(recommendedQuantityNormalized), Optional.ToNullable(meterId), term.Value, Optional.ToNullable(costWithNoReservedInstances), Optional.ToNullable(recommendedQuantity), Optional.ToNullable(totalCostWithReservedInstances), Optional.ToNullable(netSavings), Optional.ToNullable(firstUsageDate), scope, Optional.ToList(skuProperties));
+            return new ConsumptionLegacyReservationRecommendation(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(tags), Optional.ToNullable(location), sku.Value, lookBackPeriod.Value, Optional.ToNullable(instanceFlexibilityRatio), instanceFlexibilityGroup.Value, normalizedSize.Value, Optional.ToNullable(recommendedQuantityNormalized), Optional.ToNullable(meterId), term.Value, Optional.ToNullable(costWithNoReservedInstances), Optional.ToNullable(recommendedQuantity), Optional.ToNullable(totalCostWithReservedInstances), Optional.ToNullable(netSavings), Optional.ToNullable(firstUsageDate), scope, Optional.ToList(skuProperties), rawData);
+        }
+
+        ConsumptionLegacyReservationRecommendation IModelJsonSerializable<ConsumptionLegacyReservationRecommendation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConsumptionLegacyReservationRecommendation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionLegacyReservationRecommendation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConsumptionLegacyReservationRecommendation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConsumptionLegacyReservationRecommendation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConsumptionLegacyReservationRecommendation IModelSerializable<ConsumptionLegacyReservationRecommendation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConsumptionLegacyReservationRecommendation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConsumptionLegacyReservationRecommendation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConsumptionLegacyReservationRecommendation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConsumptionLegacyReservationRecommendation"/> to convert. </param>
+        public static implicit operator RequestContent(ConsumptionLegacyReservationRecommendation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConsumptionLegacyReservationRecommendation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConsumptionLegacyReservationRecommendation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConsumptionLegacyReservationRecommendation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

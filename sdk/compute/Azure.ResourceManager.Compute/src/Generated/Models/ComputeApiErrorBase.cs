@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Api error base. </summary>
     public partial class ComputeApiErrorBase
     {
-        /// <summary> Initializes a new instance of ComputeApiErrorBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComputeApiErrorBase"/>. </summary>
         internal ComputeApiErrorBase()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeApiErrorBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeApiErrorBase"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="target"> The target of the particular error. </param>
         /// <param name="message"> The error message. </param>
-        internal ComputeApiErrorBase(string code, string target, string message)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeApiErrorBase(string code, string target, string message, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Target = target;
             Message = message;
+            _rawData = rawData;
         }
 
         /// <summary> The error code. </summary>

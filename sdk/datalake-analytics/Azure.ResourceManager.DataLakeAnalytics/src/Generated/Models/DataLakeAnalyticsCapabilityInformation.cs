@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
@@ -15,12 +16,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsCapabilityInformation
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsCapabilityInformation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsCapabilityInformation"/>. </summary>
         internal DataLakeAnalyticsCapabilityInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsCapabilityInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsCapabilityInformation"/>. </summary>
         /// <param name="subscriptionId">
         /// The subscription credentials that uniquely identifies the subscription.
         /// Serialized Name: CapabilityInformation.subscriptionId
@@ -41,13 +45,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// The Boolean value of true or false to indicate the maintenance state.
         /// Serialized Name: CapabilityInformation.migrationState
         /// </param>
-        internal DataLakeAnalyticsCapabilityInformation(Guid? subscriptionId, DataLakeAnalyticsSubscriptionState? state, int? maxAccountCount, int? accountCount, bool? isUnderMigrationState)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeAnalyticsCapabilityInformation(Guid? subscriptionId, DataLakeAnalyticsSubscriptionState? state, int? maxAccountCount, int? accountCount, bool? isUnderMigrationState, Dictionary<string, BinaryData> rawData)
         {
             SubscriptionId = subscriptionId;
             State = state;
             MaxAccountCount = maxAccountCount;
             AccountCount = accountCount;
             IsUnderMigrationState = isUnderMigrationState;
+            _rawData = rawData;
         }
 
         /// <summary>

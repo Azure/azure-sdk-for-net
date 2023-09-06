@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> An ARM resource with that can accept tags. </summary>
     public partial class CommunicationAcceptTags
     {
-        /// <summary> Initializes a new instance of CommunicationAcceptTags. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationAcceptTags"/>. </summary>
         public CommunicationAcceptTags()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationAcceptTags"/>. </summary>
+        /// <param name="tags"> Tags of the service which is a list of key value pairs that describe the resource. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationAcceptTags(IDictionary<string, string> tags, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary> Tags of the service which is a list of key value pairs that describe the resource. </summary>

@@ -5,21 +5,35 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppLogin : IUtf8JsonSerializable
+    public partial class ContainerAppLogin : IUtf8JsonSerializable, IModelJsonSerializable<ContainerAppLogin>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerAppLogin>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerAppLogin>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppLogin>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
-                writer.WriteObjectValue(Routes);
+                if (Routes is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LoginRoutes>)Routes).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(PreserveUrlFragmentsForLogins))
             {
@@ -39,18 +53,46 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(CookieExpiration))
             {
                 writer.WritePropertyName("cookieExpiration"u8);
-                writer.WriteObjectValue(CookieExpiration);
+                if (CookieExpiration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerAppCookieExpiration>)CookieExpiration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Nonce))
             {
                 writer.WritePropertyName("nonce"u8);
-                writer.WriteObjectValue(Nonce);
+                if (Nonce is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerAppLoginNonce>)Nonce).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppLogin DeserializeContainerAppLogin(JsonElement element)
+        internal static ContainerAppLogin DeserializeContainerAppLogin(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +102,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<IList<string>> allowedExternalRedirectUrls = default;
             Optional<ContainerAppCookieExpiration> cookieExpiration = default;
             Optional<ContainerAppLoginNonce> nonce = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routes"u8))
@@ -112,8 +155,61 @@ namespace Azure.ResourceManager.AppContainers.Models
                     nonce = ContainerAppLoginNonce.DeserializeContainerAppLoginNonce(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerAppLogin(routes.Value, Optional.ToNullable(preserveUrlFragmentsForLogins), Optional.ToList(allowedExternalRedirectUrls), cookieExpiration.Value, nonce.Value);
+            return new ContainerAppLogin(routes.Value, Optional.ToNullable(preserveUrlFragmentsForLogins), Optional.ToList(allowedExternalRedirectUrls), cookieExpiration.Value, nonce.Value, rawData);
+        }
+
+        ContainerAppLogin IModelJsonSerializable<ContainerAppLogin>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppLogin>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppLogin(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerAppLogin>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppLogin>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerAppLogin IModelSerializable<ContainerAppLogin>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppLogin>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerAppLogin(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerAppLogin"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerAppLogin"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerAppLogin model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerAppLogin"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerAppLogin(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerAppLogin(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

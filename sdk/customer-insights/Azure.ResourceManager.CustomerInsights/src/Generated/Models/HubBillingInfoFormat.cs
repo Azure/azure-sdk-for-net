@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
     /// <summary> Hub billing info. </summary>
     public partial class HubBillingInfoFormat
     {
-        /// <summary> Initializes a new instance of HubBillingInfoFormat. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HubBillingInfoFormat"/>. </summary>
         public HubBillingInfoFormat()
         {
         }
 
-        /// <summary> Initializes a new instance of HubBillingInfoFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubBillingInfoFormat"/>. </summary>
         /// <param name="skuName"> The sku name. </param>
         /// <param name="minUnits"> The minimum number of units will be billed. One unit is 10,000 Profiles and 100,000 Interactions. </param>
         /// <param name="maxUnits"> The maximum number of units can be used.  One unit is 10,000 Profiles and 100,000 Interactions. </param>
-        internal HubBillingInfoFormat(string skuName, int? minUnits, int? maxUnits)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HubBillingInfoFormat(string skuName, int? minUnits, int? maxUnits, Dictionary<string, BinaryData> rawData)
         {
             SkuName = skuName;
             MinUnits = minUnits;
             MaxUnits = maxUnits;
+            _rawData = rawData;
         }
 
         /// <summary> The sku name. </summary>

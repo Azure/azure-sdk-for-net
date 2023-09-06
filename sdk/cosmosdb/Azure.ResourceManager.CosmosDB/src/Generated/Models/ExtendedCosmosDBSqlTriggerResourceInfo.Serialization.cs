@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ExtendedCosmosDBSqlTriggerResourceInfo : IUtf8JsonSerializable
+    public partial class ExtendedCosmosDBSqlTriggerResourceInfo : IUtf8JsonSerializable, IModelJsonSerializable<ExtendedCosmosDBSqlTriggerResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExtendedCosmosDBSqlTriggerResourceInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExtendedCosmosDBSqlTriggerResourceInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ExtendedCosmosDBSqlTriggerResourceInfo>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(TriggerName);
@@ -33,11 +40,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("triggerOperation"u8);
                 writer.WriteStringValue(TriggerOperation.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExtendedCosmosDBSqlTriggerResourceInfo DeserializeExtendedCosmosDBSqlTriggerResourceInfo(JsonElement element)
+        internal static ExtendedCosmosDBSqlTriggerResourceInfo DeserializeExtendedCosmosDBSqlTriggerResourceInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> body = default;
             Optional<CosmosDBSqlTriggerType> triggerType = default;
             Optional<CosmosDBSqlTriggerOperation> triggerOperation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_rid"u8))
@@ -102,8 +124,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     triggerOperation = new CosmosDBSqlTriggerOperation(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExtendedCosmosDBSqlTriggerResourceInfo(id, body.Value, Optional.ToNullable(triggerType), Optional.ToNullable(triggerOperation), rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new ExtendedCosmosDBSqlTriggerResourceInfo(id, body.Value, Optional.ToNullable(triggerType), Optional.ToNullable(triggerOperation), rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag), rawData);
+        }
+
+        ExtendedCosmosDBSqlTriggerResourceInfo IModelJsonSerializable<ExtendedCosmosDBSqlTriggerResourceInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExtendedCosmosDBSqlTriggerResourceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExtendedCosmosDBSqlTriggerResourceInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExtendedCosmosDBSqlTriggerResourceInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExtendedCosmosDBSqlTriggerResourceInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExtendedCosmosDBSqlTriggerResourceInfo IModelSerializable<ExtendedCosmosDBSqlTriggerResourceInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExtendedCosmosDBSqlTriggerResourceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExtendedCosmosDBSqlTriggerResourceInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExtendedCosmosDBSqlTriggerResourceInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExtendedCosmosDBSqlTriggerResourceInfo"/> to convert. </param>
+        public static implicit operator RequestContent(ExtendedCosmosDBSqlTriggerResourceInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExtendedCosmosDBSqlTriggerResourceInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExtendedCosmosDBSqlTriggerResourceInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExtendedCosmosDBSqlTriggerResourceInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

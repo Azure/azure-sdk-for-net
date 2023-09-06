@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that validates connection to SQL Server and source server requirements for online migration. </summary>
     public partial class ConnectToSourceSqlServerSyncTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerSyncTaskProperties"/>. </summary>
         public ConnectToSourceSqlServerSyncTaskProperties()
         {
             Output = new ChangeTrackingList<ConnectToSourceSqlServerTaskOutput>();
             TaskType = TaskType.ConnectToSourceSqlServerSync;
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerSyncTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
@@ -36,7 +37,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// Please note <see cref="ConnectToSourceSqlServerTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ConnectToSourceSqlServerTaskOutputAgentJobLevel"/>, <see cref="ConnectToSourceSqlServerTaskOutputDatabaseLevel"/>, <see cref="ConnectToSourceSqlServerTaskOutputLoginLevel"/> and <see cref="ConnectToSourceSqlServerTaskOutputTaskLevel"/>.
         /// </param>
-        internal ConnectToSourceSqlServerSyncTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, ConnectToSourceSqlServerTaskInput input, IReadOnlyList<ConnectToSourceSqlServerTaskOutput> output) : base(taskType, errors, state, commands, clientData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectToSourceSqlServerSyncTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, ConnectToSourceSqlServerTaskInput input, IReadOnlyList<ConnectToSourceSqlServerTaskOutput> output, Dictionary<string, BinaryData> rawData) : base(taskType, errors, state, commands, clientData, rawData)
         {
             Input = input;
             Output = output;

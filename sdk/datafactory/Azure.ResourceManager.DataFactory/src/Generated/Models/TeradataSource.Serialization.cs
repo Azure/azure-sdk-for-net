@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class TeradataSource : IUtf8JsonSerializable
+    public partial class TeradataSource : IUtf8JsonSerializable, IModelJsonSerializable<TeradataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TeradataSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TeradataSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TeradataSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
@@ -35,7 +41,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
-                writer.WriteObjectValue(PartitionSettings);
+                if (PartitionSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TeradataPartitionSettings>)PartitionSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(QueryTimeout))
             {
@@ -85,8 +98,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static TeradataSource DeserializeTeradataSource(JsonElement element)
+        internal static TeradataSource DeserializeTeradataSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -195,6 +210,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new TeradataSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, query.Value, partitionOption.Value, partitionSettings.Value);
+        }
+
+        TeradataSource IModelJsonSerializable<TeradataSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TeradataSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTeradataSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TeradataSource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TeradataSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TeradataSource IModelSerializable<TeradataSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TeradataSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTeradataSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TeradataSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TeradataSource"/> to convert. </param>
+        public static implicit operator RequestContent(TeradataSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TeradataSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TeradataSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTeradataSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

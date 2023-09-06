@@ -5,17 +5,59 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class RestorableGremlinResourceData
+    public partial class RestorableGremlinResourceData : IUtf8JsonSerializable, IModelJsonSerializable<RestorableGremlinResourceData>
     {
-        internal static RestorableGremlinResourceData DeserializeRestorableGremlinResourceData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RestorableGremlinResourceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RestorableGremlinResourceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RestorableGremlinResourceData>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DatabaseName))
+            {
+                writer.WritePropertyName("databaseName"u8);
+                writer.WriteStringValue(DatabaseName);
+            }
+            if (Optional.IsCollectionDefined(GraphNames))
+            {
+                writer.WritePropertyName("graphNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in GraphNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RestorableGremlinResourceData DeserializeRestorableGremlinResourceData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +68,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -71,8 +114,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RestorableGremlinResourceData(id, name, type, systemData.Value, databaseName.Value, Optional.ToList(graphNames));
+            return new RestorableGremlinResourceData(id, name, type, systemData.Value, databaseName.Value, Optional.ToList(graphNames), rawData);
+        }
+
+        RestorableGremlinResourceData IModelJsonSerializable<RestorableGremlinResourceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RestorableGremlinResourceData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRestorableGremlinResourceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RestorableGremlinResourceData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RestorableGremlinResourceData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RestorableGremlinResourceData IModelSerializable<RestorableGremlinResourceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RestorableGremlinResourceData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRestorableGremlinResourceData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RestorableGremlinResourceData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RestorableGremlinResourceData"/> to convert. </param>
+        public static implicit operator RequestContent(RestorableGremlinResourceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RestorableGremlinResourceData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RestorableGremlinResourceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRestorableGremlinResourceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

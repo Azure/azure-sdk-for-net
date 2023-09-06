@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
@@ -12,16 +14,21 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> A notification hub that has been linked to the communication service. </summary>
     public partial class LinkedNotificationHub
     {
-        /// <summary> Initializes a new instance of LinkedNotificationHub. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkedNotificationHub"/>. </summary>
         internal LinkedNotificationHub()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkedNotificationHub. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedNotificationHub"/>. </summary>
         /// <param name="resourceId"> The resource ID of the notification hub. </param>
-        internal LinkedNotificationHub(ResourceIdentifier resourceId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkedNotificationHub(ResourceIdentifier resourceId, Dictionary<string, BinaryData> rawData)
         {
             ResourceId = resourceId;
+            _rawData = rawData;
         }
 
         /// <summary> The resource ID of the notification hub. </summary>

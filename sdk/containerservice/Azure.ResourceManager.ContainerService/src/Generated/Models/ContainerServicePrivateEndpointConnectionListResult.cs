@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ContainerService;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> A list of private endpoint connections. </summary>
     internal partial class ContainerServicePrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of ContainerServicePrivateEndpointConnectionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateEndpointConnectionListResult"/>. </summary>
         internal ContainerServicePrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<ContainerServicePrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServicePrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> The collection value. </param>
-        internal ContainerServicePrivateEndpointConnectionListResult(IReadOnlyList<ContainerServicePrivateEndpointConnectionData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServicePrivateEndpointConnectionListResult(IReadOnlyList<ContainerServicePrivateEndpointConnectionData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The collection value. </summary>

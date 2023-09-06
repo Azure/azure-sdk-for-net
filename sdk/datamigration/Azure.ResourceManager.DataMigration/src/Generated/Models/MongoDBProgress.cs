@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -16,9 +17,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// Please note <see cref="MongoDBProgress"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MongoDBDatabaseProgress"/>, <see cref="MongoDBMigrationProgress"/> and <see cref="MongoDBCollectionProgress"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownMongoDBProgress))]
     public abstract partial class MongoDBProgress
     {
-        /// <summary> Initializes a new instance of MongoDBProgress. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBProgress"/>. </summary>
         /// <param name="bytesCopied"> The number of document bytes copied during the Copying stage. </param>
         /// <param name="documentsCopied"> The number of documents copied during the Copying stage. </param>
         /// <param name="elapsedTime"> The elapsed time in the format [ddd.]hh:mm:ss[.fffffff] (i.e. TimeSpan format). </param>
@@ -45,7 +50,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             TotalDocuments = totalDocuments;
         }
 
-        /// <summary> Initializes a new instance of MongoDBProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBProgress"/>. </summary>
         /// <param name="bytesCopied"> The number of document bytes copied during the Copying stage. </param>
         /// <param name="documentsCopied"> The number of documents copied during the Copying stage. </param>
         /// <param name="elapsedTime"> The elapsed time in the format [ddd.]hh:mm:ss[.fffffff] (i.e. TimeSpan format). </param>
@@ -60,7 +65,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"></param>
         /// <param name="totalBytes"> The total number of document bytes on the source at the beginning of the Copying stage, or -1 if the total size was unknown. </param>
         /// <param name="totalDocuments"> The total number of documents on the source at the beginning of the Copying stage, or -1 if the total count was unknown. </param>
-        internal MongoDBProgress(long bytesCopied, long documentsCopied, string elapsedTime, IReadOnlyDictionary<string, MongoDBError> errors, long eventsPending, long eventsReplayed, DateTimeOffset? lastEventOn, DateTimeOffset? lastReplayOn, string name, string qualifiedName, MongoDBProgressResultType resultType, MongoDBMigrationState state, long totalBytes, long totalDocuments)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBProgress(long bytesCopied, long documentsCopied, string elapsedTime, IReadOnlyDictionary<string, MongoDBError> errors, long eventsPending, long eventsReplayed, DateTimeOffset? lastEventOn, DateTimeOffset? lastReplayOn, string name, string qualifiedName, MongoDBProgressResultType resultType, MongoDBMigrationState state, long totalBytes, long totalDocuments, Dictionary<string, BinaryData> rawData)
         {
             BytesCopied = bytesCopied;
             DocumentsCopied = documentsCopied;
@@ -76,6 +82,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             State = state;
             TotalBytes = totalBytes;
             TotalDocuments = totalDocuments;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBProgress"/> for deserialization. </summary>
+        internal MongoDBProgress()
+        {
         }
 
         /// <summary> The number of document bytes copied during the Copying stage. </summary>

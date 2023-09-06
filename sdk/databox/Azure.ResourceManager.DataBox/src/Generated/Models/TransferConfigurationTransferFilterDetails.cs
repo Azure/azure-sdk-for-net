@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Map of filter type and the details to filter. This field is required only if the TransferConfigurationType is given as TransferUsingFilter. </summary>
     internal partial class TransferConfigurationTransferFilterDetails
     {
-        /// <summary> Initializes a new instance of TransferConfigurationTransferFilterDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TransferConfigurationTransferFilterDetails"/>. </summary>
         public TransferConfigurationTransferFilterDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of TransferConfigurationTransferFilterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransferConfigurationTransferFilterDetails"/>. </summary>
         /// <param name="include"> Details of the filtering the transfer of data. </param>
-        internal TransferConfigurationTransferFilterDetails(TransferFilterDetails include)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TransferConfigurationTransferFilterDetails(TransferFilterDetails include, Dictionary<string, BinaryData> rawData)
         {
             Include = include;
+            _rawData = rawData;
         }
 
         /// <summary> Details of the filtering the transfer of data. </summary>

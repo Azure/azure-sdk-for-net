@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SapBWSource : IUtf8JsonSerializable
+    public partial class SapBWSource : IUtf8JsonSerializable, IModelJsonSerializable<SapBWSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SapBWSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SapBWSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SapBWSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
@@ -71,8 +77,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static SapBWSource DeserializeSapBWSource(JsonElement element)
+        internal static SapBWSource DeserializeSapBWSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -161,6 +169,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SapBWSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, query.Value);
+        }
+
+        SapBWSource IModelJsonSerializable<SapBWSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SapBWSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSapBWSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SapBWSource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SapBWSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SapBWSource IModelSerializable<SapBWSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SapBWSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSapBWSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SapBWSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SapBWSource"/> to convert. </param>
+        public static implicit operator RequestContent(SapBWSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SapBWSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SapBWSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSapBWSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

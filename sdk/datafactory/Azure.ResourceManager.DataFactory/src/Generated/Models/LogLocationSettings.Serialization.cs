@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class LogLocationSettings : IUtf8JsonSerializable
+    public partial class LogLocationSettings : IUtf8JsonSerializable, IModelJsonSerializable<LogLocationSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LogLocationSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LogLocationSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LogLocationSettings>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("linkedServiceName"u8);
             JsonSerializer.Serialize(writer, LinkedServiceName); if (Optional.IsDefined(Path))
@@ -22,17 +30,32 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("path"u8);
                 JsonSerializer.Serialize(writer, Path);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LogLocationSettings DeserializeLogLocationSettings(JsonElement element)
+        internal static LogLocationSettings DeserializeLogLocationSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DataFactoryLinkedServiceReference linkedServiceName = default;
             Optional<DataFactoryElement<string>> path = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"u8))
@@ -49,8 +72,61 @@ namespace Azure.ResourceManager.DataFactory.Models
                     path = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LogLocationSettings(linkedServiceName, path.Value);
+            return new LogLocationSettings(linkedServiceName, path.Value, rawData);
+        }
+
+        LogLocationSettings IModelJsonSerializable<LogLocationSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LogLocationSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogLocationSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LogLocationSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LogLocationSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LogLocationSettings IModelSerializable<LogLocationSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LogLocationSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLogLocationSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LogLocationSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LogLocationSettings"/> to convert. </param>
+        public static implicit operator RequestContent(LogLocationSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LogLocationSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LogLocationSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLogLocationSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

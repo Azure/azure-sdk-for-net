@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -15,9 +17,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// Please note <see cref="ProjectTaskProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ConnectToMongoDBTaskProperties"/>, <see cref="ConnectToSourceMySqlTaskProperties"/>, <see cref="ConnectToSourceOracleSyncTaskProperties"/>, <see cref="ConnectToSourcePostgreSqlSyncTaskProperties"/>, <see cref="ConnectToSourceSqlServerTaskProperties"/>, <see cref="ConnectToSourceSqlServerSyncTaskProperties"/>, <see cref="ConnectToTargetAzureDBForMySqlTaskProperties"/>, <see cref="ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="ConnectToTargetSqlMITaskProperties"/>, <see cref="ConnectToTargetSqlMISyncTaskProperties"/>, <see cref="ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="ConnectToTargetSqlDBTaskProperties"/>, <see cref="ConnectToTargetSqlDBSyncTaskProperties"/>, <see cref="GetTdeCertificatesSqlTaskProperties"/>, <see cref="GetUserTablesSqlSyncTaskProperties"/>, <see cref="GetUserTablesSqlTaskProperties"/>, <see cref="GetUserTablesMySqlTaskProperties"/>, <see cref="GetUserTablesOracleTaskProperties"/>, <see cref="GetUserTablesPostgreSqlTaskProperties"/>, <see cref="MigrateMongoDBTaskProperties"/>, <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskProperties"/>, <see cref="MigrateMySqlAzureDBForMySqlSyncTaskProperties"/>, <see cref="MigrateOracleAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="MigrateSqlServerSqlDBSyncTaskProperties"/>, <see cref="MigrateSqlServerSqlMITaskProperties"/>, <see cref="MigrateSqlServerSqlMISyncTaskProperties"/>, <see cref="MigrateSqlServerSqlDBTaskProperties"/>, <see cref="MigrateSsisTaskProperties"/>, <see cref="MigrateSchemaSqlServerSqlDBTaskProperties"/>, <see cref="CheckOciDriverTaskProperties"/>, <see cref="InstallOciDriverTaskProperties"/>, <see cref="UploadOciDriverTaskProperties"/>, <see cref="ValidateMongoDBTaskProperties"/>, <see cref="ValidateOracleAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="ValidateMigrationInputSqlServerSqlMITaskProperties"/>, <see cref="ValidateMigrationInputSqlServerSqlMISyncTaskProperties"/> and <see cref="ValidateMigrationInputSqlServerSqlDBSyncTaskProperties"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownProjectTaskProperties))]
     public abstract partial class ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of ProjectTaskProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProjectTaskProperties"/>. </summary>
         protected ProjectTaskProperties()
         {
             Errors = new ChangeTrackingList<ODataError>();
@@ -25,7 +31,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             ClientData = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ProjectTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
@@ -35,13 +41,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
-        internal ProjectTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProjectTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, Dictionary<string, BinaryData> rawData)
         {
             TaskType = taskType;
             Errors = errors;
             State = state;
             Commands = commands;
             ClientData = clientData;
+            _rawData = rawData;
         }
 
         /// <summary> Task type. </summary>

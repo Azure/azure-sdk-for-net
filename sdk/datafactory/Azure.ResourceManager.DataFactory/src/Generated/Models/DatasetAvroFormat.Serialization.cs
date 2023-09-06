@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DatasetAvroFormat : IUtf8JsonSerializable
+    public partial class DatasetAvroFormat : IUtf8JsonSerializable, IModelJsonSerializable<DatasetAvroFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DatasetAvroFormat>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DatasetAvroFormat>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DatasetAvroFormat>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetStorageFormatType);
@@ -42,8 +48,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static DatasetAvroFormat DeserializeDatasetAvroFormat(JsonElement element)
+        internal static DatasetAvroFormat DeserializeDatasetAvroFormat(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -82,6 +90,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DatasetAvroFormat(type, serializer.Value, deserializer.Value, additionalProperties);
+        }
+
+        DatasetAvroFormat IModelJsonSerializable<DatasetAvroFormat>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DatasetAvroFormat>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatasetAvroFormat(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DatasetAvroFormat>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DatasetAvroFormat>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DatasetAvroFormat IModelSerializable<DatasetAvroFormat>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DatasetAvroFormat>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDatasetAvroFormat(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DatasetAvroFormat"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DatasetAvroFormat"/> to convert. </param>
+        public static implicit operator RequestContent(DatasetAvroFormat model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DatasetAvroFormat"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DatasetAvroFormat(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDatasetAvroFormat(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

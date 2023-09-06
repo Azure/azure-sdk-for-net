@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class FactoryGitHubConfiguration : IUtf8JsonSerializable
+    public partial class FactoryGitHubConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<FactoryGitHubConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FactoryGitHubConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FactoryGitHubConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FactoryGitHubConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(HostName))
             {
@@ -28,7 +36,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
-                writer.WriteObjectValue(ClientSecret);
+                if (ClientSecret is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<FactoryGitHubClientSecret>)ClientSecret).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FactoryRepoConfigurationType);
@@ -50,11 +65,25 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("disablePublish"u8);
                 writer.WriteBooleanValue(DisablePublish.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FactoryGitHubConfiguration DeserializeFactoryGitHubConfiguration(JsonElement element)
+        internal static FactoryGitHubConfiguration DeserializeFactoryGitHubConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -69,6 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string rootFolder = default;
             Optional<string> lastCommitId = default;
             Optional<bool> disablePublish = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostName"u8))
@@ -129,8 +159,61 @@ namespace Azure.ResourceManager.DataFactory.Models
                     disablePublish = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FactoryGitHubConfiguration(type, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId.Value, Optional.ToNullable(disablePublish), hostName.Value, clientId.Value, clientSecret.Value);
+            return new FactoryGitHubConfiguration(type, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId.Value, Optional.ToNullable(disablePublish), hostName.Value, clientId.Value, clientSecret.Value, rawData);
+        }
+
+        FactoryGitHubConfiguration IModelJsonSerializable<FactoryGitHubConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FactoryGitHubConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFactoryGitHubConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FactoryGitHubConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FactoryGitHubConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FactoryGitHubConfiguration IModelSerializable<FactoryGitHubConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FactoryGitHubConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFactoryGitHubConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FactoryGitHubConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FactoryGitHubConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(FactoryGitHubConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FactoryGitHubConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FactoryGitHubConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFactoryGitHubConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

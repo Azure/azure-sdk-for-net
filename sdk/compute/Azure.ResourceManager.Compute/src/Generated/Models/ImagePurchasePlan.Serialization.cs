@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ImagePurchasePlan : IUtf8JsonSerializable
+    public partial class ImagePurchasePlan : IUtf8JsonSerializable, IModelJsonSerializable<ImagePurchasePlan>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ImagePurchasePlan>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ImagePurchasePlan>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ImagePurchasePlan>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ImagePurchasePlan DeserializeImagePurchasePlan(JsonElement element)
+        internal static ImagePurchasePlan DeserializeImagePurchasePlan(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> name = default;
             Optional<string> publisher = default;
             Optional<string> product = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -59,8 +82,61 @@ namespace Azure.ResourceManager.Compute.Models
                     product = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ImagePurchasePlan(name.Value, publisher.Value, product.Value);
+            return new ImagePurchasePlan(name.Value, publisher.Value, product.Value, rawData);
+        }
+
+        ImagePurchasePlan IModelJsonSerializable<ImagePurchasePlan>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ImagePurchasePlan>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeImagePurchasePlan(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ImagePurchasePlan>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ImagePurchasePlan>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ImagePurchasePlan IModelSerializable<ImagePurchasePlan>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ImagePurchasePlan>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeImagePurchasePlan(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ImagePurchasePlan"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ImagePurchasePlan"/> to convert. </param>
+        public static implicit operator RequestContent(ImagePurchasePlan model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ImagePurchasePlan"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ImagePurchasePlan(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeImagePurchasePlan(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

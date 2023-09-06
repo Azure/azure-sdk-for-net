@@ -5,15 +5,78 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class DatabaseFileInfo
+    public partial class DatabaseFileInfo : IUtf8JsonSerializable, IModelJsonSerializable<DatabaseFileInfo>
     {
-        internal static DatabaseFileInfo DeserializeDatabaseFileInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DatabaseFileInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DatabaseFileInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DatabaseFileInfo>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DatabaseName))
+            {
+                writer.WritePropertyName("databaseName"u8);
+                writer.WriteStringValue(DatabaseName);
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(LogicalName))
+            {
+                writer.WritePropertyName("logicalName"u8);
+                writer.WriteStringValue(LogicalName);
+            }
+            if (Optional.IsDefined(PhysicalFullName))
+            {
+                writer.WritePropertyName("physicalFullName"u8);
+                writer.WriteStringValue(PhysicalFullName);
+            }
+            if (Optional.IsDefined(RestoreFullName))
+            {
+                writer.WritePropertyName("restoreFullName"u8);
+                writer.WriteStringValue(RestoreFullName);
+            }
+            if (Optional.IsDefined(FileType))
+            {
+                writer.WritePropertyName("fileType"u8);
+                writer.WriteStringValue(FileType.Value.ToString());
+            }
+            if (Optional.IsDefined(SizeMB))
+            {
+                writer.WritePropertyName("sizeMB"u8);
+                writer.WriteNumberValue(SizeMB.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DatabaseFileInfo DeserializeDatabaseFileInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +88,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> restoreFullName = default;
             Optional<DatabaseFileType> fileType = default;
             Optional<double> sizeMB = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -70,8 +134,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     sizeMB = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DatabaseFileInfo(databaseName.Value, id.Value, logicalName.Value, physicalFullName.Value, restoreFullName.Value, Optional.ToNullable(fileType), Optional.ToNullable(sizeMB));
+            return new DatabaseFileInfo(databaseName.Value, id.Value, logicalName.Value, physicalFullName.Value, restoreFullName.Value, Optional.ToNullable(fileType), Optional.ToNullable(sizeMB), rawData);
+        }
+
+        DatabaseFileInfo IModelJsonSerializable<DatabaseFileInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DatabaseFileInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatabaseFileInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DatabaseFileInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DatabaseFileInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DatabaseFileInfo IModelSerializable<DatabaseFileInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DatabaseFileInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDatabaseFileInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DatabaseFileInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DatabaseFileInfo"/> to convert. </param>
+        public static implicit operator RequestContent(DatabaseFileInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DatabaseFileInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DatabaseFileInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDatabaseFileInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }
