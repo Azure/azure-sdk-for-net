@@ -2,18 +2,12 @@
 
 ## 1.2.0 (2023-09-15)
 
+### Features Added
+
 - Compute RP to `2023-03-01` (AvailabilitySets, VirtualMachines, VirtualMachineScaleSets, etc)
   - Added new parameter `DomainNameLabelScope` to VM and VMSS Public IP Dns Settings.
   - Added new parameter `TimeCreated` to VMSS VM properties.
   - Added new parameters `AuxiliaryMode` and `AuxiliarySku` to VM and VMSS Network Configuration Properties.
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.2.0-beta.2 (2023-07-28)
 
