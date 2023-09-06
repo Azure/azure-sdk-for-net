@@ -5,45 +5,65 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
+using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class UnknownVectorSearchAlgorithmConfiguration : IUtf8JsonSerializable
+    internal partial class UnknownVectorSearchAlgorithmConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<VectorSearchAlgorithmConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VectorSearchAlgorithmConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VectorSearchAlgorithmConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VectorSearchAlgorithmConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownVectorSearchAlgorithmConfiguration DeserializeUnknownVectorSearchAlgorithmConfiguration(JsonElement element)
+        internal static VectorSearchAlgorithmConfiguration DeserializeUnknownVectorSearchAlgorithmConfiguration(JsonElement element, ModelSerializerOptions options = default) => DeserializeVectorSearchAlgorithmConfiguration(element, options);
+
+        VectorSearchAlgorithmConfiguration IModelJsonSerializable<VectorSearchAlgorithmConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string name = default;
-            string kind = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownVectorSearchAlgorithmConfiguration(name, kind);
+            Core.ModelSerializerHelper.ValidateFormat<VectorSearchAlgorithmConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownVectorSearchAlgorithmConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VectorSearchAlgorithmConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VectorSearchAlgorithmConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VectorSearchAlgorithmConfiguration IModelSerializable<VectorSearchAlgorithmConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VectorSearchAlgorithmConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVectorSearchAlgorithmConfiguration(doc.RootElement, options);
         }
     }
 }

@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> List of available columns for sorting. </summary>
     public partial class ThreatIntelligenceSortingCriteria
     {
-        /// <summary> Initializes a new instance of ThreatIntelligenceSortingCriteria. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceSortingCriteria"/>. </summary>
         public ThreatIntelligenceSortingCriteria()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceSortingCriteria"/>. </summary>
+        /// <param name="itemKey"> Column name. </param>
+        /// <param name="sortOrder"> Sorting order (ascending/descending/unsorted). </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ThreatIntelligenceSortingCriteria(string itemKey, ThreatIntelligenceSortingOrder? sortOrder, Dictionary<string, BinaryData> rawData)
+        {
+            ItemKey = itemKey;
+            SortOrder = sortOrder;
+            _rawData = rawData;
         }
 
         /// <summary> Column name. </summary>

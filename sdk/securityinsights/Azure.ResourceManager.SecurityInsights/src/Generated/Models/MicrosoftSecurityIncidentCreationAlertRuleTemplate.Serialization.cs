@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class MicrosoftSecurityIncidentCreationAlertRuleTemplate : IUtf8JsonSerializable
+    public partial class MicrosoftSecurityIncidentCreationAlertRuleTemplate : IUtf8JsonSerializable, IModelJsonSerializable<MicrosoftSecurityIncidentCreationAlertRuleTemplate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MicrosoftSecurityIncidentCreationAlertRuleTemplate>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MicrosoftSecurityIncidentCreationAlertRuleTemplate>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MicrosoftSecurityIncidentCreationAlertRuleTemplate>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -43,7 +49,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in RequiredDataConnectors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AlertRuleTemplateDataSource>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,11 +101,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MicrosoftSecurityIncidentCreationAlertRuleTemplate DeserializeMicrosoftSecurityIncidentCreationAlertRuleTemplate(JsonElement element)
+        internal static MicrosoftSecurityIncidentCreationAlertRuleTemplate DeserializeMicrosoftSecurityIncidentCreationAlertRuleTemplate(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -113,6 +140,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<IList<string>> displayNamesExcludeFilter = default;
             Optional<MicrosoftSecurityProductName> productFilter = default;
             Optional<IList<SecurityInsightsAlertSeverity>> severitiesFilter = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -267,8 +295,61 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MicrosoftSecurityIncidentCreationAlertRuleTemplate(id, name, type, systemData.Value, kind, Optional.ToNullable(alertRulesCreatedByTemplateCount), Optional.ToNullable(createdDateUTC), Optional.ToNullable(lastUpdatedDateUTC), description.Value, displayName.Value, Optional.ToList(requiredDataConnectors), Optional.ToNullable(status), Optional.ToList(displayNamesFilter), Optional.ToList(displayNamesExcludeFilter), Optional.ToNullable(productFilter), Optional.ToList(severitiesFilter));
+            return new MicrosoftSecurityIncidentCreationAlertRuleTemplate(id, name, type, systemData.Value, kind, Optional.ToNullable(alertRulesCreatedByTemplateCount), Optional.ToNullable(createdDateUTC), Optional.ToNullable(lastUpdatedDateUTC), description.Value, displayName.Value, Optional.ToList(requiredDataConnectors), Optional.ToNullable(status), Optional.ToList(displayNamesFilter), Optional.ToList(displayNamesExcludeFilter), Optional.ToNullable(productFilter), Optional.ToList(severitiesFilter), rawData);
+        }
+
+        MicrosoftSecurityIncidentCreationAlertRuleTemplate IModelJsonSerializable<MicrosoftSecurityIncidentCreationAlertRuleTemplate>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MicrosoftSecurityIncidentCreationAlertRuleTemplate>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMicrosoftSecurityIncidentCreationAlertRuleTemplate(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MicrosoftSecurityIncidentCreationAlertRuleTemplate>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MicrosoftSecurityIncidentCreationAlertRuleTemplate>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MicrosoftSecurityIncidentCreationAlertRuleTemplate IModelSerializable<MicrosoftSecurityIncidentCreationAlertRuleTemplate>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MicrosoftSecurityIncidentCreationAlertRuleTemplate>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMicrosoftSecurityIncidentCreationAlertRuleTemplate(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MicrosoftSecurityIncidentCreationAlertRuleTemplate"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MicrosoftSecurityIncidentCreationAlertRuleTemplate"/> to convert. </param>
+        public static implicit operator RequestContent(MicrosoftSecurityIncidentCreationAlertRuleTemplate model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MicrosoftSecurityIncidentCreationAlertRuleTemplate"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MicrosoftSecurityIncidentCreationAlertRuleTemplate(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMicrosoftSecurityIncidentCreationAlertRuleTemplate(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

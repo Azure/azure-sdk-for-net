@@ -6,15 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Exchange request. </summary>
     public partial class ExchangeContent
     {
-        /// <summary> Initializes a new instance of ExchangeContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExchangeContent"/>. </summary>
         public ExchangeContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExchangeContent"/>. </summary>
+        /// <param name="properties"> Exchange request properties. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExchangeContent(ExchangeRequestProperties properties, Dictionary<string, BinaryData> rawData)
+        {
+            Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Exchange request properties. </summary>

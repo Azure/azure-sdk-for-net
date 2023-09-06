@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Vault setting properties. </summary>
     public partial class SiteRecoveryVaultSettingProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryVaultSettingProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVaultSettingProperties"/>. </summary>
         internal SiteRecoveryVaultSettingProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryVaultSettingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVaultSettingProperties"/>. </summary>
         /// <param name="migrationSolutionId"> The migration solution ARM Id. </param>
         /// <param name="vmwareToAzureProviderType"> VMware to Azure provider type. </param>
-        internal SiteRecoveryVaultSettingProperties(ResourceIdentifier migrationSolutionId, string vmwareToAzureProviderType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryVaultSettingProperties(ResourceIdentifier migrationSolutionId, string vmwareToAzureProviderType, Dictionary<string, BinaryData> rawData)
         {
             MigrationSolutionId = migrationSolutionId;
             VMwareToAzureProviderType = vmwareToAzureProviderType;
+            _rawData = rawData;
         }
 
         /// <summary> The migration solution ARM Id. </summary>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> General metadata for the parameter. </summary>
     public partial class ParameterDefinitionsValueMetadata
     {
-        /// <summary> Initializes a new instance of ParameterDefinitionsValueMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParameterDefinitionsValueMetadata"/>. </summary>
         public ParameterDefinitionsValueMetadata()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ParameterDefinitionsValueMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParameterDefinitionsValueMetadata"/>. </summary>
         /// <param name="displayName"> The display name for the parameter. </param>
         /// <param name="description"> The description of the parameter. </param>
         /// <param name="strongType"> Used when assigning the policy definition through the portal. Provides a context aware list of values for the user to choose from. </param>

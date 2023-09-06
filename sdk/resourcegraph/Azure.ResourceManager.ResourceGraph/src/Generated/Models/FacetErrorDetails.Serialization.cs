@@ -8,14 +8,41 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
-    public partial class FacetErrorDetails
+    public partial class FacetErrorDetails : IUtf8JsonSerializable, IModelJsonSerializable<FacetErrorDetails>
     {
-        internal static FacetErrorDetails DeserializeFacetErrorDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FacetErrorDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FacetErrorDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FacetErrorDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("code"u8);
+            writer.WriteStringValue(Code);
+            writer.WritePropertyName("message"u8);
+            writer.WriteStringValue(Message);
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static FacetErrorDetails DeserializeFacetErrorDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +67,54 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new FacetErrorDetails(code, message, additionalProperties);
+        }
+
+        FacetErrorDetails IModelJsonSerializable<FacetErrorDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FacetErrorDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFacetErrorDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FacetErrorDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FacetErrorDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FacetErrorDetails IModelSerializable<FacetErrorDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FacetErrorDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFacetErrorDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FacetErrorDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FacetErrorDetails"/> to convert. </param>
+        public static implicit operator RequestContent(FacetErrorDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FacetErrorDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FacetErrorDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFacetErrorDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

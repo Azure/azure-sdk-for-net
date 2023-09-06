@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Properties needed for calculate refund including the scope and the reservation to be returned. </summary>
     public partial class ReservationCalculateRefundRequestProperties
     {
-        /// <summary> Initializes a new instance of ReservationCalculateRefundRequestProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationCalculateRefundRequestProperties"/>. </summary>
         public ReservationCalculateRefundRequestProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReservationCalculateRefundRequestProperties"/>. </summary>
+        /// <param name="scope"> The scope of the refund, e.g. Reservation. </param>
+        /// <param name="reservationToReturn"> Reservation to return. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationCalculateRefundRequestProperties(string scope, ReservationToReturn reservationToReturn, Dictionary<string, BinaryData> rawData)
+        {
+            Scope = scope;
+            ReservationToReturn = reservationToReturn;
+            _rawData = rawData;
         }
 
         /// <summary> The scope of the refund, e.g. Reservation. </summary>

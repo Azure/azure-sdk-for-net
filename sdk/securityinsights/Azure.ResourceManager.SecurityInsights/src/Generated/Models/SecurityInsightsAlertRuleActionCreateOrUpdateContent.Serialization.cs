@@ -6,17 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsAlertRuleActionCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class SecurityInsightsAlertRuleActionCreateOrUpdateContent : IUtf8JsonSerializable, IModelJsonSerializable<SecurityInsightsAlertRuleActionCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityInsightsAlertRuleActionCreateOrUpdateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityInsightsAlertRuleActionCreateOrUpdateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAlertRuleActionCreateOrUpdateContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
@@ -36,11 +42,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStringValue(TriggerUri.AbsoluteUri);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsAlertRuleActionCreateOrUpdateContent DeserializeSecurityInsightsAlertRuleActionCreateOrUpdateContent(JsonElement element)
+        internal static SecurityInsightsAlertRuleActionCreateOrUpdateContent DeserializeSecurityInsightsAlertRuleActionCreateOrUpdateContent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,6 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<SystemData> systemData = default;
             Optional<ResourceIdentifier> logicAppResourceId = default;
             Optional<Uri> triggerUri = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -117,8 +138,61 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityInsightsAlertRuleActionCreateOrUpdateContent(id, name, type, systemData.Value, logicAppResourceId.Value, triggerUri.Value, Optional.ToNullable(etag));
+            return new SecurityInsightsAlertRuleActionCreateOrUpdateContent(id, name, type, systemData.Value, logicAppResourceId.Value, triggerUri.Value, Optional.ToNullable(etag), rawData);
+        }
+
+        SecurityInsightsAlertRuleActionCreateOrUpdateContent IModelJsonSerializable<SecurityInsightsAlertRuleActionCreateOrUpdateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAlertRuleActionCreateOrUpdateContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsAlertRuleActionCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityInsightsAlertRuleActionCreateOrUpdateContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAlertRuleActionCreateOrUpdateContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityInsightsAlertRuleActionCreateOrUpdateContent IModelSerializable<SecurityInsightsAlertRuleActionCreateOrUpdateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAlertRuleActionCreateOrUpdateContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityInsightsAlertRuleActionCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SecurityInsightsAlertRuleActionCreateOrUpdateContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SecurityInsightsAlertRuleActionCreateOrUpdateContent"/> to convert. </param>
+        public static implicit operator RequestContent(SecurityInsightsAlertRuleActionCreateOrUpdateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SecurityInsightsAlertRuleActionCreateOrUpdateContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SecurityInsightsAlertRuleActionCreateOrUpdateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityInsightsAlertRuleActionCreateOrUpdateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

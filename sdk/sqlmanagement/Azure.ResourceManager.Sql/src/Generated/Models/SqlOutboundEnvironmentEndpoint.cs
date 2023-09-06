@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> An endpoint that the managed instance service requires outbound network access to. </summary>
     public partial class SqlOutboundEnvironmentEndpoint
     {
-        /// <summary> Initializes a new instance of SqlOutboundEnvironmentEndpoint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlOutboundEnvironmentEndpoint"/>. </summary>
         internal SqlOutboundEnvironmentEndpoint()
         {
             Endpoints = new ChangeTrackingList<ManagedInstanceEndpointDependency>();
         }
 
-        /// <summary> Initializes a new instance of SqlOutboundEnvironmentEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlOutboundEnvironmentEndpoint"/>. </summary>
         /// <param name="category"> The type of service accessed by the managed instance service, e.g., Azure Storage, Azure Active Directory, etc. </param>
         /// <param name="endpoints"> The endpoints that the managed instance service communicates with in order to function correctly. </param>
-        internal SqlOutboundEnvironmentEndpoint(string category, IReadOnlyList<ManagedInstanceEndpointDependency> endpoints)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlOutboundEnvironmentEndpoint(string category, IReadOnlyList<ManagedInstanceEndpointDependency> endpoints, Dictionary<string, BinaryData> rawData)
         {
             Category = category;
             Endpoints = endpoints;
+            _rawData = rawData;
         }
 
         /// <summary> The type of service accessed by the managed instance service, e.g., Azure Storage, Azure Active Directory, etc. </summary>

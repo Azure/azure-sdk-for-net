@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Describes a parameter in fabric settings of the cluster. </summary>
     public partial class ClusterFabricSettingsParameterDescription
     {
-        /// <summary> Initializes a new instance of ClusterFabricSettingsParameterDescription. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterFabricSettingsParameterDescription"/>. </summary>
         /// <param name="name"> The parameter name of fabric setting. </param>
         /// <param name="value"> The parameter value of fabric setting. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
             Name = name;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterFabricSettingsParameterDescription"/>. </summary>
+        /// <param name="name"> The parameter name of fabric setting. </param>
+        /// <param name="value"> The parameter value of fabric setting. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterFabricSettingsParameterDescription(string name, string value, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterFabricSettingsParameterDescription"/> for deserialization. </summary>
+        internal ClusterFabricSettingsParameterDescription()
+        {
         }
 
         /// <summary> The parameter name of fabric setting. </summary>

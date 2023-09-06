@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> List of resource providers. </summary>
     internal partial class ResourceProviderListResult
     {
-        /// <summary> Initializes a new instance of ResourceProviderListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderListResult"/>. </summary>
         internal ResourceProviderListResult()
         {
             Value = new ChangeTrackingList<ResourceProviderData>();
         }
 
-        /// <summary> Initializes a new instance of ResourceProviderListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderListResult"/>. </summary>
         /// <param name="value"> An array of resource providers. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal ResourceProviderListResult(IReadOnlyList<ResourceProviderData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceProviderListResult(IReadOnlyList<ResourceProviderData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> An array of resource providers. </summary>

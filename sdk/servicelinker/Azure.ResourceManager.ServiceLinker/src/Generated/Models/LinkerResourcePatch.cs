@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
@@ -12,9 +14,41 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> A linker to be updated. </summary>
     public partial class LinkerResourcePatch
     {
-        /// <summary> Initializes a new instance of LinkerResourcePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkerResourcePatch"/>. </summary>
         public LinkerResourcePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LinkerResourcePatch"/>. </summary>
+        /// <param name="targetService">
+        /// The target service properties
+        /// Please note <see cref="TargetServiceBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/> and <see cref="ConfluentSchemaRegistryInfo"/>.
+        /// </param>
+        /// <param name="authInfo">
+        /// The authentication type.
+        /// Please note <see cref="AuthBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
+        /// </param>
+        /// <param name="clientType"> The application client type. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="vnetSolution"> The VNet solution. </param>
+        /// <param name="secretStore"> An option to store secret value in secure place. </param>
+        /// <param name="scope"> connection scope in source service. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkerResourcePatch(TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, VnetSolution vnetSolution, LinkerSecretStore secretStore, string scope, Dictionary<string, BinaryData> rawData)
+        {
+            TargetService = targetService;
+            AuthInfo = authInfo;
+            ClientType = clientType;
+            ProvisioningState = provisioningState;
+            VnetSolution = vnetSolution;
+            SecretStore = secretStore;
+            Scope = scope;
+            _rawData = rawData;
         }
 
         /// <summary>

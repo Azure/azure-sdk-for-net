@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A field that is used as part of the semantic configuration. </summary>
     public partial class SemanticField
     {
-        /// <summary> Initializes a new instance of SemanticField. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SemanticField"/>. </summary>
         public SemanticField()
         {
         }
 
-        /// <summary> Initializes a new instance of SemanticField. </summary>
+        /// <summary> Initializes a new instance of <see cref="SemanticField"/>. </summary>
         /// <param name="fieldName"></param>
-        internal SemanticField(string fieldName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SemanticField(string fieldName, Dictionary<string, BinaryData> rawData)
         {
             FieldName = fieldName;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the field name. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Redis.Models
 {
     /// <summary> Redis cache access keys. </summary>
     public partial class RedisAccessKeys
     {
-        /// <summary> Initializes a new instance of RedisAccessKeys. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RedisAccessKeys"/>. </summary>
         internal RedisAccessKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of RedisAccessKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisAccessKeys"/>. </summary>
         /// <param name="primaryKey"> The current primary key that clients can use to authenticate with Redis cache. </param>
         /// <param name="secondaryKey"> The current secondary key that clients can use to authenticate with Redis cache. </param>
-        internal RedisAccessKeys(string primaryKey, string secondaryKey)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisAccessKeys(string primaryKey, string secondaryKey, Dictionary<string, BinaryData> rawData)
         {
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
+            _rawData = rawData;
         }
 
         /// <summary> The current primary key that clients can use to authenticate with Redis cache. </summary>

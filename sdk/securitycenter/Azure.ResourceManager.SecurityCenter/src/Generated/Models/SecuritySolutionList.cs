@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The SecuritySolutionList. </summary>
     internal partial class SecuritySolutionList
     {
-        /// <summary> Initializes a new instance of SecuritySolutionList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecuritySolutionList"/>. </summary>
         internal SecuritySolutionList()
         {
             Value = new ChangeTrackingList<SecuritySolution>();
         }
 
-        /// <summary> Initializes a new instance of SecuritySolutionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecuritySolutionList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal SecuritySolutionList(IReadOnlyList<SecuritySolution> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecuritySolutionList(IReadOnlyList<SecuritySolution> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the value. </summary>

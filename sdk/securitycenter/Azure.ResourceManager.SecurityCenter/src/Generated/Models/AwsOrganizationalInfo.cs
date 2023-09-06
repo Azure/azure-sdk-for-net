@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Please note <see cref="AwsOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AwsOrganizationalDataMember"/> and <see cref="AwsOrganizationalDataMaster"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownAwsOrganizationalData))]
     public abstract partial class AwsOrganizationalInfo
     {
-        /// <summary> Initializes a new instance of AwsOrganizationalInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AwsOrganizationalInfo"/>. </summary>
         protected AwsOrganizationalInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AwsOrganizationalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AwsOrganizationalInfo"/>. </summary>
         /// <param name="organizationMembershipType"> The multi cloud account's membership type in the organization. </param>
-        internal AwsOrganizationalInfo(OrganizationMembershipType organizationMembershipType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AwsOrganizationalInfo(OrganizationMembershipType organizationMembershipType, Dictionary<string, BinaryData> rawData)
         {
             OrganizationMembershipType = organizationMembershipType;
+            _rawData = rawData;
         }
 
         /// <summary> The multi cloud account's membership type in the organization. </summary>

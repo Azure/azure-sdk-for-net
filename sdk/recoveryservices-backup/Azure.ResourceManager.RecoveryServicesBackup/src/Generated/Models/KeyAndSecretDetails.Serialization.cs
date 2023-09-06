@@ -5,36 +5,72 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class KeyAndSecretDetails : IUtf8JsonSerializable
+    public partial class KeyAndSecretDetails : IUtf8JsonSerializable, IModelJsonSerializable<KeyAndSecretDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KeyAndSecretDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KeyAndSecretDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KeyAndSecretDetails>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(KekDetails))
             {
                 writer.WritePropertyName("kekDetails"u8);
-                writer.WriteObjectValue(KekDetails);
+                if (KekDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<KekDetails>)KekDetails).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(BekDetails))
             {
                 writer.WritePropertyName("bekDetails"u8);
-                writer.WriteObjectValue(BekDetails);
+                if (BekDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BekDetails>)BekDetails).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(EncryptionMechanism))
             {
                 writer.WritePropertyName("encryptionMechanism"u8);
                 writer.WriteStringValue(EncryptionMechanism);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KeyAndSecretDetails DeserializeKeyAndSecretDetails(JsonElement element)
+        internal static KeyAndSecretDetails DeserializeKeyAndSecretDetails(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<KekDetails> kekDetails = default;
             Optional<BekDetails> bekDetails = default;
             Optional<string> encryptionMechanism = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kekDetails"u8))
@@ -67,8 +104,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     encryptionMechanism = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KeyAndSecretDetails(kekDetails.Value, bekDetails.Value, encryptionMechanism.Value);
+            return new KeyAndSecretDetails(kekDetails.Value, bekDetails.Value, encryptionMechanism.Value, rawData);
+        }
+
+        KeyAndSecretDetails IModelJsonSerializable<KeyAndSecretDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KeyAndSecretDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKeyAndSecretDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KeyAndSecretDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KeyAndSecretDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KeyAndSecretDetails IModelSerializable<KeyAndSecretDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KeyAndSecretDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKeyAndSecretDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KeyAndSecretDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KeyAndSecretDetails"/> to convert. </param>
+        public static implicit operator RequestContent(KeyAndSecretDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KeyAndSecretDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KeyAndSecretDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKeyAndSecretDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

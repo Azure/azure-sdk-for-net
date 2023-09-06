@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Request body of unlock delete API. </summary>
     public partial class UnlockDeleteContent
     {
-        /// <summary> Initializes a new instance of UnlockDeleteContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="UnlockDeleteContent"/>. </summary>
         public UnlockDeleteContent()
         {
             ResourceGuardOperationRequests = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnlockDeleteContent"/>. </summary>
+        /// <param name="resourceGuardOperationRequests"></param>
+        /// <param name="resourceToBeDeleted"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnlockDeleteContent(IList<string> resourceGuardOperationRequests, string resourceToBeDeleted, Dictionary<string, BinaryData> rawData)
+        {
+            ResourceGuardOperationRequests = resourceGuardOperationRequests;
+            ResourceToBeDeleted = resourceToBeDeleted;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the resource guard operation requests. </summary>

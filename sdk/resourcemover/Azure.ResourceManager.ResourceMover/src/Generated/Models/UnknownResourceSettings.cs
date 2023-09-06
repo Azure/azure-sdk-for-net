@@ -5,17 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary> The UnknownResourceSettings. </summary>
     internal partial class UnknownResourceSettings : MoverResourceSettings
     {
-        /// <summary> Initializes a new instance of UnknownResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownResourceSettings"/>. </summary>
         /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
-        internal UnknownResourceSettings(string resourceType, string targetResourceName) : base(resourceType, targetResourceName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownResourceSettings(string resourceType, string targetResourceName, Dictionary<string, BinaryData> rawData) : base(resourceType, targetResourceName, rawData)
         {
             ResourceType = resourceType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownResourceSettings"/> for deserialization. </summary>
+        internal UnknownResourceSettings()
+        {
         }
     }
 }

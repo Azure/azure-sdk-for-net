@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The maximum size capability. </summary>
     public partial class MaxSizeCapability
     {
-        /// <summary> Initializes a new instance of MaxSizeCapability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MaxSizeCapability"/>. </summary>
         internal MaxSizeCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of MaxSizeCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaxSizeCapability"/>. </summary>
         /// <param name="limit"> The maximum size limit (see 'unit' for the units). </param>
         /// <param name="unit"> The units that the limit is expressed in. </param>
-        internal MaxSizeCapability(int? limit, MaxSizeUnit? unit)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MaxSizeCapability(int? limit, MaxSizeUnit? unit, Dictionary<string, BinaryData> rawData)
         {
             Limit = limit;
             Unit = unit;
+            _rawData = rawData;
         }
 
         /// <summary> The maximum size limit (see 'unit' for the units). </summary>

@@ -5,21 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Describes an automation rule condition that evaluates an array property's value change. </summary>
     public partial class SecurityInsightsPropertyArrayChangedConditionProperties : SecurityInsightsAutomationRuleCondition
     {
-        /// <summary> Initializes a new instance of SecurityInsightsPropertyArrayChangedConditionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsPropertyArrayChangedConditionProperties"/>. </summary>
         public SecurityInsightsPropertyArrayChangedConditionProperties()
         {
             ConditionType = ConditionType.PropertyArrayChanged;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsPropertyArrayChangedConditionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsPropertyArrayChangedConditionProperties"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="conditionProperties"></param>
-        internal SecurityInsightsPropertyArrayChangedConditionProperties(ConditionType conditionType, AutomationRulePropertyArrayChangedValuesCondition conditionProperties) : base(conditionType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsPropertyArrayChangedConditionProperties(ConditionType conditionType, AutomationRulePropertyArrayChangedValuesCondition conditionProperties, Dictionary<string, BinaryData> rawData) : base(conditionType, rawData)
         {
             ConditionProperties = conditionProperties;
             ConditionType = conditionType;

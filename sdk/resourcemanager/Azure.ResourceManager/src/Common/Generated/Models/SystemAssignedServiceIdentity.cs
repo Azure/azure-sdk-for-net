@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Models
@@ -14,5 +15,25 @@ namespace Azure.ResourceManager.Models
     [PropertyReferenceType]
     public partial class SystemAssignedServiceIdentity
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SystemAssignedServiceIdentity"/>. </summary>
+        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="systemAssignedServiceIdentityType"> Type of managed service identity (either system assigned, or none). </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SystemAssignedServiceIdentity(Guid? principalId, Guid? tenantId, SystemAssignedServiceIdentityType systemAssignedServiceIdentityType, Dictionary<string, BinaryData> rawData)
+        {
+            PrincipalId = principalId;
+            TenantId = tenantId;
+            SystemAssignedServiceIdentityType = systemAssignedServiceIdentityType;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemAssignedServiceIdentity"/> for deserialization. </summary>
+        internal SystemAssignedServiceIdentity()
+        {
+        }
     }
 }

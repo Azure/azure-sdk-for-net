@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Please note <see cref="RecoveryPlanActionDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="RecoveryPlanAutomationRunbookActionDetails"/>, <see cref="RecoveryPlanManualActionDetails"/> and <see cref="RecoveryPlanScriptActionDetails"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownRecoveryPlanActionDetails))]
     public abstract partial class RecoveryPlanActionDetails
     {
-        /// <summary> Initializes a new instance of RecoveryPlanActionDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanActionDetails"/>. </summary>
         protected RecoveryPlanActionDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryPlanActionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanActionDetails"/>. </summary>
         /// <param name="instanceType"> Gets the type of action details (see RecoveryPlanActionDetailsTypes enum for possible values). </param>
-        internal RecoveryPlanActionDetails(string instanceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryPlanActionDetails(string instanceType, Dictionary<string, BinaryData> rawData)
         {
             InstanceType = instanceType;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the type of action details (see RecoveryPlanActionDetailsTypes enum for possible values). </summary>

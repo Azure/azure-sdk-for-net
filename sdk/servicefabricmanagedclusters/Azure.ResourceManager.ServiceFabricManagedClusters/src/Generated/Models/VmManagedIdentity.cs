@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Identities for the virtual machine scale set under the node type. </summary>
     internal partial class VmManagedIdentity
     {
-        /// <summary> Initializes a new instance of VmManagedIdentity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VmManagedIdentity"/>. </summary>
         public VmManagedIdentity()
         {
             UserAssignedIdentities = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of VmManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmManagedIdentity"/>. </summary>
         /// <param name="userAssignedIdentities"> The list of user identities associated with the virtual machine scale set under the node type. Each entry will be an ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
-        internal VmManagedIdentity(IList<ResourceIdentifier> userAssignedIdentities)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmManagedIdentity(IList<ResourceIdentifier> userAssignedIdentities, Dictionary<string, BinaryData> rawData)
         {
             UserAssignedIdentities = userAssignedIdentities;
+            _rawData = rawData;
         }
 
         /// <summary> The list of user identities associated with the virtual machine scale set under the node type. Each entry will be an ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </summary>

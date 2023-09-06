@@ -6,15 +6,87 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class FailoverReplicationProtectedItemDetails
+    public partial class FailoverReplicationProtectedItemDetails : IUtf8JsonSerializable, IModelJsonSerializable<FailoverReplicationProtectedItemDetails>
     {
-        internal static FailoverReplicationProtectedItemDetails DeserializeFailoverReplicationProtectedItemDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FailoverReplicationProtectedItemDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FailoverReplicationProtectedItemDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FailoverReplicationProtectedItemDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(FriendlyName))
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
+            if (Optional.IsDefined(TestVmName))
+            {
+                writer.WritePropertyName("testVmName"u8);
+                writer.WriteStringValue(TestVmName);
+            }
+            if (Optional.IsDefined(TestVmFriendlyName))
+            {
+                writer.WritePropertyName("testVmFriendlyName"u8);
+                writer.WriteStringValue(TestVmFriendlyName);
+            }
+            if (Optional.IsDefined(NetworkConnectionStatus))
+            {
+                writer.WritePropertyName("networkConnectionStatus"u8);
+                writer.WriteStringValue(NetworkConnectionStatus);
+            }
+            if (Optional.IsDefined(NetworkFriendlyName))
+            {
+                writer.WritePropertyName("networkFriendlyName"u8);
+                writer.WriteStringValue(NetworkFriendlyName);
+            }
+            if (Optional.IsDefined(Subnet))
+            {
+                writer.WritePropertyName("subnet"u8);
+                writer.WriteStringValue(Subnet);
+            }
+            if (Optional.IsDefined(RecoveryPointId))
+            {
+                writer.WritePropertyName("recoveryPointId"u8);
+                writer.WriteStringValue(RecoveryPointId);
+            }
+            if (Optional.IsDefined(RecoveryPointOn))
+            {
+                writer.WritePropertyName("recoveryPointTime"u8);
+                writer.WriteStringValue(RecoveryPointOn.Value, "O");
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static FailoverReplicationProtectedItemDetails DeserializeFailoverReplicationProtectedItemDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> subnet = default;
             Optional<ResourceIdentifier> recoveryPointId = default;
             Optional<DateTimeOffset> recoveryPointTime = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -83,8 +156,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     recoveryPointTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FailoverReplicationProtectedItemDetails(name.Value, friendlyName.Value, testVmName.Value, testVmFriendlyName.Value, networkConnectionStatus.Value, networkFriendlyName.Value, subnet.Value, recoveryPointId.Value, Optional.ToNullable(recoveryPointTime));
+            return new FailoverReplicationProtectedItemDetails(name.Value, friendlyName.Value, testVmName.Value, testVmFriendlyName.Value, networkConnectionStatus.Value, networkFriendlyName.Value, subnet.Value, recoveryPointId.Value, Optional.ToNullable(recoveryPointTime), rawData);
+        }
+
+        FailoverReplicationProtectedItemDetails IModelJsonSerializable<FailoverReplicationProtectedItemDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FailoverReplicationProtectedItemDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFailoverReplicationProtectedItemDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FailoverReplicationProtectedItemDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FailoverReplicationProtectedItemDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FailoverReplicationProtectedItemDetails IModelSerializable<FailoverReplicationProtectedItemDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FailoverReplicationProtectedItemDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFailoverReplicationProtectedItemDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FailoverReplicationProtectedItemDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FailoverReplicationProtectedItemDetails"/> to convert. </param>
+        public static implicit operator RequestContent(FailoverReplicationProtectedItemDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FailoverReplicationProtectedItemDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FailoverReplicationProtectedItemDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFailoverReplicationProtectedItemDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

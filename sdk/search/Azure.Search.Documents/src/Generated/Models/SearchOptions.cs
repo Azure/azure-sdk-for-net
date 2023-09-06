@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Search.Documents.Models;
@@ -14,7 +15,10 @@ namespace Azure.Search.Documents
     /// <summary> Parameters for filtering, sorting, faceting, paging, and other search query behaviors. </summary>
     public partial class SearchOptions
     {
-        /// <summary> Initializes a new instance of SearchOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchOptions"/>. </summary>
         public SearchOptions()
         {
             Facets = new ChangeTrackingList<string>();
@@ -22,7 +26,7 @@ namespace Azure.Search.Documents
             Vectors = new ChangeTrackingList<SearchQueryVector>();
         }
 
-        /// <summary> Initializes a new instance of SearchOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchOptions"/>. </summary>
         /// <param name="includeTotalCount"> A value that specifies whether to fetch the total count of results. Default is false. Setting this value to true may have a performance impact. Note that the count returned is an approximation. </param>
         /// <param name="facets"> The list of facet expressions to apply to the search query. Each facet expression contains a field name, optionally followed by a comma-separated list of name:value pairs. </param>
         /// <param name="filter"> The OData $filter expression to apply to the search query. </param>
@@ -52,7 +56,8 @@ namespace Azure.Search.Documents
         /// <param name="queryCaptionRaw"> A value that specifies whether captions should be returned as part of the search response. </param>
         /// <param name="semanticFieldsRaw"> The comma-separated list of field names used for semantic search. </param>
         /// <param name="vectors"> The query parameters for multi-vector search queries. </param>
-        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string semanticConfigurationName, SemanticErrorHandling? semanticErrorHandling, int? semanticMaxWaitInMilliseconds, QueryDebugMode? debug, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, string queryAnswerRaw, string selectRaw, int? skip, int? size, string queryCaptionRaw, string semanticFieldsRaw, IList<SearchQueryVector> vectors)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string semanticConfigurationName, SemanticErrorHandling? semanticErrorHandling, int? semanticMaxWaitInMilliseconds, QueryDebugMode? debug, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, string queryAnswerRaw, string selectRaw, int? skip, int? size, string queryCaptionRaw, string semanticFieldsRaw, IList<SearchQueryVector> vectors, Dictionary<string, BinaryData> rawData)
         {
             IncludeTotalCount = includeTotalCount;
             Facets = facets;
@@ -83,6 +88,7 @@ namespace Azure.Search.Documents
             QueryCaptionRaw = queryCaptionRaw;
             SemanticFieldsRaw = semanticFieldsRaw;
             Vectors = vectors;
+            _rawData = rawData;
         }
         /// <summary> A string tag that is appended to hit highlights. Must be set with highlightPreTag. Default is &lt;/em&gt;. </summary>
         public string HighlightPostTag { get; set; }

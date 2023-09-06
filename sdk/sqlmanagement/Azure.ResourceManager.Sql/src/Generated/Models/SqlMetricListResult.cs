@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The response to a list database metrics request. </summary>
     internal partial class SqlMetricListResult
     {
-        /// <summary> Initializes a new instance of SqlMetricListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlMetricListResult"/>. </summary>
         /// <param name="value"> The list of metrics for the database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SqlMetricListResult(IEnumerable<SqlMetric> value)
@@ -25,11 +28,18 @@ namespace Azure.ResourceManager.Sql.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SqlMetricListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlMetricListResult"/>. </summary>
         /// <param name="value"> The list of metrics for the database. </param>
-        internal SqlMetricListResult(IReadOnlyList<SqlMetric> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlMetricListResult(IReadOnlyList<SqlMetric> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlMetricListResult"/> for deserialization. </summary>
+        internal SqlMetricListResult()
+        {
         }
 
         /// <summary> The list of metrics for the database. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags. </summary>
     public partial class SecurityCenterTagsResourceInfo
     {
-        /// <summary> Initializes a new instance of SecurityCenterTagsResourceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterTagsResourceInfo"/>. </summary>
         public SecurityCenterTagsResourceInfo()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SecurityCenterTagsResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterTagsResourceInfo"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        internal SecurityCenterTagsResourceInfo(IDictionary<string, string> tags)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityCenterTagsResourceInfo(IDictionary<string, string> tags, Dictionary<string, BinaryData> rawData)
         {
             Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary> Resource tags. </summary>

@@ -123,9 +123,7 @@ namespace Azure.Search.Documents
             if (keysOrIds != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(keysOrIds);
-                request.Content = content;
+                request.Content = keysOrIds;
             }
             return message;
         }
@@ -269,9 +267,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Prefer", "return=representation");
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(indexer);
-            request.Content = content;
+            request.Content = indexer;
             return message;
         }
 
@@ -565,9 +561,7 @@ namespace Azure.Search.Documents
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(indexer);
-            request.Content = content;
+            request.Content = indexer;
             return message;
         }
 

@@ -5,16 +5,45 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VMwareV2FabricSpecificDetails
+    public partial class VMwareV2FabricSpecificDetails : IUtf8JsonSerializable, IModelJsonSerializable<VMwareV2FabricSpecificDetails>
     {
-        internal static VMwareV2FabricSpecificDetails DeserializeVMwareV2FabricSpecificDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VMwareV2FabricSpecificDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VMwareV2FabricSpecificDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VMwareV2FabricSpecificDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static VMwareV2FabricSpecificDetails DeserializeVMwareV2FabricSpecificDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> serviceContainerId = default;
             Optional<IReadOnlyList<SiteRecoveryProcessServerDetails>> processServers = default;
             string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmwareSiteId"u8))
@@ -94,8 +124,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VMwareV2FabricSpecificDetails(instanceType, vmwareSiteId.Value, physicalSiteId.Value, migrationSolutionId.Value, serviceEndpoint.Value, serviceResourceId.Value, serviceContainerId.Value, Optional.ToList(processServers));
+            return new VMwareV2FabricSpecificDetails(instanceType, vmwareSiteId.Value, physicalSiteId.Value, migrationSolutionId.Value, serviceEndpoint.Value, serviceResourceId.Value, serviceContainerId.Value, Optional.ToList(processServers), rawData);
+        }
+
+        VMwareV2FabricSpecificDetails IModelJsonSerializable<VMwareV2FabricSpecificDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VMwareV2FabricSpecificDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVMwareV2FabricSpecificDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VMwareV2FabricSpecificDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VMwareV2FabricSpecificDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VMwareV2FabricSpecificDetails IModelSerializable<VMwareV2FabricSpecificDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VMwareV2FabricSpecificDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVMwareV2FabricSpecificDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VMwareV2FabricSpecificDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VMwareV2FabricSpecificDetails"/> to convert. </param>
+        public static implicit operator RequestContent(VMwareV2FabricSpecificDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VMwareV2FabricSpecificDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VMwareV2FabricSpecificDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVMwareV2FabricSpecificDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Models
@@ -14,21 +15,24 @@ namespace Azure.ResourceManager.Models
     [PropertyReferenceType]
     public partial class SystemData
     {
-        /// <summary> Initializes a new instance of SystemData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SystemData"/>. </summary>
         [InitializationConstructor]
         public SystemData()
         {
         }
 
-        /// <summary> Initializes a new instance of SystemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemData"/>. </summary>
         /// <param name="createdBy"> The identity that created the resource. </param>
         /// <param name="createdByType"> The type of identity that created the resource. </param>
         /// <param name="createdOn"> The timestamp of resource creation (UTC). </param>
         /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
         /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
         /// <param name="lastModifiedOn"> The timestamp of resource last modification (UTC). </param>
-        [SerializationConstructor]
-        internal SystemData(string createdBy, CreatedByType? createdByType, DateTimeOffset? createdOn, string lastModifiedBy, CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedOn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SystemData(string createdBy, CreatedByType? createdByType, DateTimeOffset? createdOn, string lastModifiedBy, CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedOn, Dictionary<string, BinaryData> rawData)
         {
             CreatedBy = createdBy;
             CreatedByType = createdByType;
@@ -36,6 +40,7 @@ namespace Azure.ResourceManager.Models
             LastModifiedBy = lastModifiedBy;
             LastModifiedByType = lastModifiedByType;
             LastModifiedOn = lastModifiedOn;
+            _rawData = rawData;
         }
 
         /// <summary> The identity that created the resource. </summary>

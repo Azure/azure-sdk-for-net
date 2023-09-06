@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    internal partial class UnknownAzureResourcePropertiesBase : IUtf8JsonSerializable
+    internal partial class UnknownAzureResourcePropertiesBase : IUtf8JsonSerializable, IModelJsonSerializable<AzureResourceBaseProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzureResourceBaseProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzureResourceBaseProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AzureResourceBaseProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(AzureResourceType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownAzureResourcePropertiesBase DeserializeUnknownAzureResourcePropertiesBase(JsonElement element)
+        internal static AzureResourceBaseProperties DeserializeUnknownAzureResourcePropertiesBase(JsonElement element, ModelSerializerOptions options = default) => DeserializeAzureResourceBaseProperties(element, options);
+
+        AzureResourceBaseProperties IModelJsonSerializable<AzureResourceBaseProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            AzureResourceType type = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"u8))
-                {
-                    type = new AzureResourceType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownAzureResourcePropertiesBase(type);
+            Core.ModelSerializerHelper.ValidateFormat<AzureResourceBaseProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownAzureResourcePropertiesBase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureResourceBaseProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureResourceBaseProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureResourceBaseProperties IModelSerializable<AzureResourceBaseProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureResourceBaseProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureResourceBaseProperties(doc.RootElement, options);
         }
     }
 }

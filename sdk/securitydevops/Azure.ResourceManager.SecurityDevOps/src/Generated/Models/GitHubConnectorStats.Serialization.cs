@@ -5,27 +5,56 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
-    public partial class GitHubConnectorStats : IUtf8JsonSerializable
+    public partial class GitHubConnectorStats : IUtf8JsonSerializable, IModelJsonSerializable<GitHubConnectorStats>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GitHubConnectorStats>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GitHubConnectorStats>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<GitHubConnectorStats>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                if (Properties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<GitHubConnectorStatsProperties>)Properties).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static GitHubConnectorStats DeserializeGitHubConnectorStats(JsonElement element)
+        internal static GitHubConnectorStats DeserializeGitHubConnectorStats(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,6 +64,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -70,8 +100,61 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GitHubConnectorStats(id, name, type, systemData.Value, properties.Value);
+            return new GitHubConnectorStats(id, name, type, systemData.Value, properties.Value, rawData);
+        }
+
+        GitHubConnectorStats IModelJsonSerializable<GitHubConnectorStats>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GitHubConnectorStats>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGitHubConnectorStats(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GitHubConnectorStats>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GitHubConnectorStats>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GitHubConnectorStats IModelSerializable<GitHubConnectorStats>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GitHubConnectorStats>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGitHubConnectorStats(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GitHubConnectorStats"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GitHubConnectorStats"/> to convert. </param>
+        public static implicit operator RequestContent(GitHubConnectorStats model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GitHubConnectorStats"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GitHubConnectorStats(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGitHubConnectorStats(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

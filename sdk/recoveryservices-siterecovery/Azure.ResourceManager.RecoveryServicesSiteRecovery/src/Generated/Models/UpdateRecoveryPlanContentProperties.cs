@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery plan update properties. </summary>
     internal partial class UpdateRecoveryPlanContentProperties
     {
-        /// <summary> Initializes a new instance of UpdateRecoveryPlanContentProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateRecoveryPlanContentProperties"/>. </summary>
         public UpdateRecoveryPlanContentProperties()
         {
             Groups = new ChangeTrackingList<SiteRecoveryPlanGroup>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateRecoveryPlanContentProperties"/>. </summary>
+        /// <param name="groups"> The recovery plan groups. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateRecoveryPlanContentProperties(IList<SiteRecoveryPlanGroup> groups, Dictionary<string, BinaryData> rawData)
+        {
+            Groups = groups;
+            _rawData = rawData;
         }
 
         /// <summary> The recovery plan groups. </summary>

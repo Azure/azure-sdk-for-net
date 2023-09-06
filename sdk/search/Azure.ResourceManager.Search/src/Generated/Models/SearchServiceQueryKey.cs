@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> Describes an API key for a given Azure Cognitive Search service that has permissions for query operations only. </summary>
     public partial class SearchServiceQueryKey
     {
-        /// <summary> Initializes a new instance of SearchServiceQueryKey. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchServiceQueryKey"/>. </summary>
         internal SearchServiceQueryKey()
         {
         }
 
-        /// <summary> Initializes a new instance of SearchServiceQueryKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceQueryKey"/>. </summary>
         /// <param name="name"> The name of the query API key; may be empty. </param>
         /// <param name="key"> The value of the query API key. </param>
-        internal SearchServiceQueryKey(string name, string key)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchServiceQueryKey(string name, string key, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Key = key;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the query API key; may be empty. </summary>

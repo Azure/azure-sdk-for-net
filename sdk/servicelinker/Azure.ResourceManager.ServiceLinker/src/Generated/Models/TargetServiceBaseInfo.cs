@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// Please note <see cref="TargetServiceBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/> and <see cref="ConfluentSchemaRegistryInfo"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownTargetServiceBase))]
     public abstract partial class TargetServiceBaseInfo
     {
-        /// <summary> Initializes a new instance of TargetServiceBaseInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TargetServiceBaseInfo"/>. </summary>
         protected TargetServiceBaseInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of TargetServiceBaseInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetServiceBaseInfo"/>. </summary>
         /// <param name="targetServiceType"> The target service type. </param>
-        internal TargetServiceBaseInfo(TargetServiceType targetServiceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TargetServiceBaseInfo(TargetServiceType targetServiceType, Dictionary<string, BinaryData> rawData)
         {
             TargetServiceType = targetServiceType;
+            _rawData = rawData;
         }
 
         /// <summary> The target service type. </summary>

@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionSecurityTaskTasksRestClient.CreateListByHomeRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name), filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionSecurityTaskTasksRestClient.CreateListByHomeRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionSecurityTaskResource(Client, SecurityTaskData.DeserializeSecurityTaskData(e)), _subscriptionSecurityTaskTasksClientDiagnostics, Pipeline, "SubscriptionSecurityTaskCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SubscriptionSecurityTaskResource(Client, SecurityTaskData.DeserializeSecurityTaskData(e)), _subscriptionSecurityTaskTasksClientDiagnostics, Pipeline, "SubscriptionSecurityTaskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionSecurityTaskTasksRestClient.CreateListByHomeRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name), filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionSecurityTaskTasksRestClient.CreateListByHomeRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionSecurityTaskResource(Client, SecurityTaskData.DeserializeSecurityTaskData(e)), _subscriptionSecurityTaskTasksClientDiagnostics, Pipeline, "SubscriptionSecurityTaskCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SubscriptionSecurityTaskResource(Client, SecurityTaskData.DeserializeSecurityTaskData(e)), _subscriptionSecurityTaskTasksClientDiagnostics, Pipeline, "SubscriptionSecurityTaskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

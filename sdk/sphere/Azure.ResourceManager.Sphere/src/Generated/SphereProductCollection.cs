@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereProductProductsRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereProductProductsRestClient.CreateListByCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereProductResource(Client, SphereProductData.DeserializeSphereProductData(e)), _sphereProductProductsClientDiagnostics, Pipeline, "SphereProductCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SphereProductResource(Client, SphereProductData.DeserializeSphereProductData(e)), _sphereProductProductsClientDiagnostics, Pipeline, "SphereProductCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereProductProductsRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereProductProductsRestClient.CreateListByCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereProductResource(Client, SphereProductData.DeserializeSphereProductData(e)), _sphereProductProductsClientDiagnostics, Pipeline, "SphereProductCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SphereProductResource(Client, SphereProductData.DeserializeSphereProductData(e)), _sphereProductProductsClientDiagnostics, Pipeline, "SphereProductCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

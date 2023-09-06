@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    internal partial class UnknownScalingMechanism : IUtf8JsonSerializable
+    internal partial class UnknownScalingMechanism : IUtf8JsonSerializable, IModelJsonSerializable<ManagedServiceScalingMechanism>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedServiceScalingMechanism>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedServiceScalingMechanism>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedServiceScalingMechanism>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownScalingMechanism DeserializeUnknownScalingMechanism(JsonElement element)
+        internal static ManagedServiceScalingMechanism DeserializeUnknownScalingMechanism(JsonElement element, ModelSerializerOptions options = default) => DeserializeManagedServiceScalingMechanism(element, options);
+
+        ManagedServiceScalingMechanism IModelJsonSerializable<ManagedServiceScalingMechanism>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            ServiceScalingMechanismKind kind = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new ServiceScalingMechanismKind(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownScalingMechanism(kind);
+            Core.ModelSerializerHelper.ValidateFormat<ManagedServiceScalingMechanism>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownScalingMechanism(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedServiceScalingMechanism>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedServiceScalingMechanism>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedServiceScalingMechanism IModelSerializable<ManagedServiceScalingMechanism>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedServiceScalingMechanism>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedServiceScalingMechanism(doc.RootElement, options);
         }
     }
 }

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> The scope and whether it is valid. </summary>
     public partial class ScopeProperties
     {
-        /// <summary> Initializes a new instance of ScopeProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScopeProperties"/>. </summary>
         internal ScopeProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ScopeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScopeProperties"/>. </summary>
         /// <param name="scope"></param>
         /// <param name="isValid"></param>
-        internal ScopeProperties(string scope, bool? isValid)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScopeProperties(string scope, bool? isValid, Dictionary<string, BinaryData> rawData)
         {
             Scope = scope;
             IsValid = isValid;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the scope. </summary>

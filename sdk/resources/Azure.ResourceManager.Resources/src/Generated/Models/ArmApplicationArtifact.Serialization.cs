@@ -6,15 +6,48 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmApplicationArtifact
+    public partial class ArmApplicationArtifact : IUtf8JsonSerializable, IModelJsonSerializable<ArmApplicationArtifact>
     {
-        internal static ArmApplicationArtifact DeserializeArmApplicationArtifact(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ArmApplicationArtifact>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ArmApplicationArtifact>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ArmApplicationArtifact>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name.ToString());
+            writer.WritePropertyName("uri"u8);
+            writer.WriteStringValue(Uri.AbsoluteUri);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(ArtifactType.ToSerialString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ArmApplicationArtifact DeserializeArmApplicationArtifact(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +55,7 @@ namespace Azure.ResourceManager.Resources.Models
             ArmApplicationArtifactName name = default;
             Uri uri = default;
             ArmApplicationArtifactType type = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -39,8 +73,61 @@ namespace Azure.ResourceManager.Resources.Models
                     type = property.Value.GetString().ToArmApplicationArtifactType();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ArmApplicationArtifact(name, uri, type);
+            return new ArmApplicationArtifact(name, uri, type, rawData);
+        }
+
+        ArmApplicationArtifact IModelJsonSerializable<ArmApplicationArtifact>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArmApplicationArtifact>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeArmApplicationArtifact(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ArmApplicationArtifact>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArmApplicationArtifact>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ArmApplicationArtifact IModelSerializable<ArmApplicationArtifact>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArmApplicationArtifact>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeArmApplicationArtifact(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ArmApplicationArtifact"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ArmApplicationArtifact"/> to convert. </param>
+        public static implicit operator RequestContent(ArmApplicationArtifact model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ArmApplicationArtifact"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ArmApplicationArtifact(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeArmApplicationArtifact(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

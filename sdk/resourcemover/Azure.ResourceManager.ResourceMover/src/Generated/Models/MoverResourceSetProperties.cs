@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -13,7 +15,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the move collection properties. </summary>
     public partial class MoverResourceSetProperties
     {
-        /// <summary> Initializes a new instance of MoverResourceSetProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MoverResourceSetProperties"/>. </summary>
         /// <param name="sourceRegion"> Gets or sets the source region. </param>
         /// <param name="targetRegion"> Gets or sets the target region. </param>
         public MoverResourceSetProperties(AzureLocation sourceRegion, AzureLocation targetRegion)
@@ -22,17 +27,24 @@ namespace Azure.ResourceManager.ResourceMover.Models
             TargetRegion = targetRegion;
         }
 
-        /// <summary> Initializes a new instance of MoverResourceSetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourceSetProperties"/>. </summary>
         /// <param name="sourceRegion"> Gets or sets the source region. </param>
         /// <param name="targetRegion"> Gets or sets the target region. </param>
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="errors"> Defines the move collection errors. </param>
-        internal MoverResourceSetProperties(AzureLocation sourceRegion, AzureLocation targetRegion, MoverProvisioningState? provisioningState, MoveCollectionPropertiesErrors errors)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MoverResourceSetProperties(AzureLocation sourceRegion, AzureLocation targetRegion, MoverProvisioningState? provisioningState, MoveCollectionPropertiesErrors errors, Dictionary<string, BinaryData> rawData)
         {
             SourceRegion = sourceRegion;
             TargetRegion = targetRegion;
             ProvisioningState = provisioningState;
             Errors = errors;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MoverResourceSetProperties"/> for deserialization. </summary>
+        internal MoverResourceSetProperties()
+        {
         }
 
         /// <summary> Gets or sets the source region. </summary>

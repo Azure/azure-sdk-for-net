@@ -15,7 +15,10 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Represents the result of an individual indexer execution. </summary>
     public partial class IndexerExecutionResult
     {
-        /// <summary> Initializes a new instance of IndexerExecutionResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IndexerExecutionResult"/>. </summary>
         /// <param name="status"> The outcome of this indexer execution. </param>
         /// <param name="errors"> The item-level indexing errors. </param>
         /// <param name="warnings"> The item-level indexing warnings. </param>
@@ -34,7 +37,7 @@ namespace Azure.Search.Documents.Indexes.Models
             FailedItemCount = failedItemCount;
         }
 
-        /// <summary> Initializes a new instance of IndexerExecutionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IndexerExecutionResult"/>. </summary>
         /// <param name="status"> The outcome of this indexer execution. </param>
         /// <param name="statusDetail"> The outcome of this indexer execution. </param>
         /// <param name="currentState"> All of the state that defines and dictates the indexer's current execution. </param>
@@ -47,7 +50,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="failedItemCount"> The number of items that failed to be indexed during this indexer execution. </param>
         /// <param name="initialTrackingState"> Change tracking state with which an indexer execution started. </param>
         /// <param name="finalTrackingState"> Change tracking state with which an indexer execution finished. </param>
-        internal IndexerExecutionResult(IndexerExecutionStatus status, IndexerExecutionStatusDetail? statusDetail, IndexerState currentState, string errorMessage, DateTimeOffset? startTime, DateTimeOffset? endTime, IReadOnlyList<SearchIndexerError> errors, IReadOnlyList<SearchIndexerWarning> warnings, int itemCount, int failedItemCount, string initialTrackingState, string finalTrackingState)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IndexerExecutionResult(IndexerExecutionStatus status, IndexerExecutionStatusDetail? statusDetail, IndexerState currentState, string errorMessage, DateTimeOffset? startTime, DateTimeOffset? endTime, IReadOnlyList<SearchIndexerError> errors, IReadOnlyList<SearchIndexerWarning> warnings, int itemCount, int failedItemCount, string initialTrackingState, string finalTrackingState, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             StatusDetail = statusDetail;
@@ -61,6 +65,12 @@ namespace Azure.Search.Documents.Indexes.Models
             FailedItemCount = failedItemCount;
             InitialTrackingState = initialTrackingState;
             FinalTrackingState = finalTrackingState;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IndexerExecutionResult"/> for deserialization. </summary>
+        internal IndexerExecutionResult()
+        {
         }
 
         /// <summary> The outcome of this indexer execution. </summary>

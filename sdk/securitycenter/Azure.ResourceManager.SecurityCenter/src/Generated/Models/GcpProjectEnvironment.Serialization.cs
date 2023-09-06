@@ -5,33 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class GcpProjectEnvironment : IUtf8JsonSerializable
+    public partial class GcpProjectEnvironment : IUtf8JsonSerializable, IModelJsonSerializable<GcpProjectEnvironment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GcpProjectEnvironment>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GcpProjectEnvironment>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<GcpProjectEnvironment>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(OrganizationalData))
             {
                 writer.WritePropertyName("organizationalData"u8);
-                writer.WriteObjectValue(OrganizationalData);
+                if (OrganizationalData is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<GcpOrganizationalInfo>)OrganizationalData).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ProjectDetails))
             {
                 writer.WritePropertyName("projectDetails"u8);
-                writer.WriteObjectValue(ProjectDetails);
+                if (ProjectDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<GcpProjectDetails>)ProjectDetails).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("environmentType"u8);
             writer.WriteStringValue(EnvironmentType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GcpProjectEnvironment DeserializeGcpProjectEnvironment(JsonElement element)
+        internal static GcpProjectEnvironment DeserializeGcpProjectEnvironment(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<GcpOrganizationalInfo> organizationalData = default;
             Optional<GcpProjectDetails> projectDetails = default;
             EnvironmentType environmentType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("organizationalData"u8))
@@ -64,8 +101,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     environmentType = new EnvironmentType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GcpProjectEnvironment(environmentType, organizationalData.Value, projectDetails.Value);
+            return new GcpProjectEnvironment(environmentType, organizationalData.Value, projectDetails.Value, rawData);
+        }
+
+        GcpProjectEnvironment IModelJsonSerializable<GcpProjectEnvironment>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GcpProjectEnvironment>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGcpProjectEnvironment(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GcpProjectEnvironment>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GcpProjectEnvironment>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GcpProjectEnvironment IModelSerializable<GcpProjectEnvironment>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GcpProjectEnvironment>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGcpProjectEnvironment(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GcpProjectEnvironment"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GcpProjectEnvironment"/> to convert. </param>
+        public static implicit operator RequestContent(GcpProjectEnvironment model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GcpProjectEnvironment"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GcpProjectEnvironment(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGcpProjectEnvironment(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

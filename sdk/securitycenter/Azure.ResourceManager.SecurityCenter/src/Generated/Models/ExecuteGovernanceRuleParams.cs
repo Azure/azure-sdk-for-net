@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Governance rule execution parameters. </summary>
     public partial class ExecuteGovernanceRuleParams
     {
-        /// <summary> Initializes a new instance of ExecuteGovernanceRuleParams. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExecuteGovernanceRuleParams"/>. </summary>
         public ExecuteGovernanceRuleParams()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExecuteGovernanceRuleParams"/>. </summary>
+        /// <param name="override"> Describe if governance rule should be override. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExecuteGovernanceRuleParams(bool? @override, Dictionary<string, BinaryData> rawData)
+        {
+            Override = @override;
+            _rawData = rawData;
         }
 
         /// <summary> Describe if governance rule should be override. </summary>

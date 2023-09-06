@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.SignalR
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRCustomDomainRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _signalRCustomDomainRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SignalRCustomDomainResource(Client, SignalRCustomDomainData.DeserializeSignalRCustomDomainData(e)), _signalRCustomDomainClientDiagnostics, Pipeline, "SignalRCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SignalRCustomDomainResource(Client, SignalRCustomDomainData.DeserializeSignalRCustomDomainData(e)), _signalRCustomDomainClientDiagnostics, Pipeline, "SignalRCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.SignalR
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRCustomDomainRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _signalRCustomDomainRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SignalRCustomDomainResource(Client, SignalRCustomDomainData.DeserializeSignalRCustomDomainData(e)), _signalRCustomDomainClientDiagnostics, Pipeline, "SignalRCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SignalRCustomDomainResource(Client, SignalRCustomDomainData.DeserializeSignalRCustomDomainData(e)), _signalRCustomDomainClientDiagnostics, Pipeline, "SignalRCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

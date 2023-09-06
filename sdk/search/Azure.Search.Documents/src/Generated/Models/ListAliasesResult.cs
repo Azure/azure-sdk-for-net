@@ -15,7 +15,10 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Response from a List Aliases request. If successful, it includes the associated index mappings for all aliases. </summary>
     internal partial class ListAliasesResult
     {
-        /// <summary> Initializes a new instance of ListAliasesResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListAliasesResult"/>. </summary>
         /// <param name="aliases"> The aliases in the Search service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aliases"/> is null. </exception>
         internal ListAliasesResult(IEnumerable<SearchAlias> aliases)
@@ -25,11 +28,18 @@ namespace Azure.Search.Documents.Indexes.Models
             Aliases = aliases.ToList();
         }
 
-        /// <summary> Initializes a new instance of ListAliasesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListAliasesResult"/>. </summary>
         /// <param name="aliases"> The aliases in the Search service. </param>
-        internal ListAliasesResult(IReadOnlyList<SearchAlias> aliases)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListAliasesResult(IReadOnlyList<SearchAlias> aliases, Dictionary<string, BinaryData> rawData)
         {
             Aliases = aliases;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ListAliasesResult"/> for deserialization. </summary>
+        internal ListAliasesResult()
+        {
         }
 
         /// <summary> The aliases in the Search service. </summary>

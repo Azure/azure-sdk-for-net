@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -13,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Contains configuration options specific to the hnsw approximate nearest neighbors algorithm used during indexing time. </summary>
     public partial class HnswVectorSearchAlgorithmConfiguration : VectorSearchAlgorithmConfiguration
     {
-        /// <summary> Initializes a new instance of HnswVectorSearchAlgorithmConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HnswVectorSearchAlgorithmConfiguration"/>. </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public HnswVectorSearchAlgorithmConfiguration(string name) : base(name)
@@ -23,14 +24,20 @@ namespace Azure.Search.Documents.Indexes.Models
             Kind = "hnsw";
         }
 
-        /// <summary> Initializes a new instance of HnswVectorSearchAlgorithmConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HnswVectorSearchAlgorithmConfiguration"/>. </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
         /// <param name="kind"> The name of the kind of algorithm being configured for use with vector search. Only `hnsw` is supported in the current preview. </param>
         /// <param name="parameters"> Contains the parameters specific to hnsw algorithm. </param>
-        internal HnswVectorSearchAlgorithmConfiguration(string name, string kind, HnswParameters parameters) : base(name, kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HnswVectorSearchAlgorithmConfiguration(string name, string kind, HnswParameters parameters, Dictionary<string, BinaryData> rawData) : base(name, kind, rawData)
         {
             Parameters = parameters;
             Kind = kind ?? "hnsw";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HnswVectorSearchAlgorithmConfiguration"/> for deserialization. </summary>
+        internal HnswVectorSearchAlgorithmConfiguration()
+        {
         }
 
         /// <summary> Contains the parameters specific to hnsw algorithm. </summary>

@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupHourlySchedule : IUtf8JsonSerializable
+    public partial class BackupHourlySchedule : IUtf8JsonSerializable, IModelJsonSerializable<BackupHourlySchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BackupHourlySchedule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BackupHourlySchedule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BackupHourlySchedule>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Interval))
             {
@@ -31,11 +38,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("scheduleWindowDuration"u8);
                 writer.WriteNumberValue(ScheduleWindowDuration.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BackupHourlySchedule DeserializeBackupHourlySchedule(JsonElement element)
+        internal static BackupHourlySchedule DeserializeBackupHourlySchedule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<int> interval = default;
             Optional<DateTimeOffset> scheduleWindowStartTime = default;
             Optional<int> scheduleWindowDuration = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("interval"u8))
@@ -72,8 +94,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     scheduleWindowDuration = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BackupHourlySchedule(Optional.ToNullable(interval), Optional.ToNullable(scheduleWindowStartTime), Optional.ToNullable(scheduleWindowDuration));
+            return new BackupHourlySchedule(Optional.ToNullable(interval), Optional.ToNullable(scheduleWindowStartTime), Optional.ToNullable(scheduleWindowDuration), rawData);
+        }
+
+        BackupHourlySchedule IModelJsonSerializable<BackupHourlySchedule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackupHourlySchedule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupHourlySchedule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BackupHourlySchedule>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackupHourlySchedule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BackupHourlySchedule IModelSerializable<BackupHourlySchedule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackupHourlySchedule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBackupHourlySchedule(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BackupHourlySchedule"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BackupHourlySchedule"/> to convert. </param>
+        public static implicit operator RequestContent(BackupHourlySchedule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BackupHourlySchedule"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BackupHourlySchedule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBackupHourlySchedule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

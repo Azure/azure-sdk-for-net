@@ -5,15 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class SavingsPlanToPurchaseExchange
+    public partial class SavingsPlanToPurchaseExchange : IUtf8JsonSerializable, IModelJsonSerializable<SavingsPlanToPurchaseExchange>
     {
-        internal static SavingsPlanToPurchaseExchange DeserializeSavingsPlanToPurchaseExchange(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SavingsPlanToPurchaseExchange>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SavingsPlanToPurchaseExchange>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SavingsPlanToPurchaseExchange>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SavingsPlanOrderId))
+            {
+                writer.WritePropertyName("savingsPlanOrderId"u8);
+                writer.WriteStringValue(SavingsPlanOrderId);
+            }
+            if (Optional.IsDefined(SavingsPlanId))
+            {
+                writer.WritePropertyName("savingsPlanId"u8);
+                writer.WriteStringValue(SavingsPlanId);
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                if (Properties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SavingsPlanPurchase>)Properties).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(BillingCurrencyTotal))
+            {
+                writer.WritePropertyName("billingCurrencyTotal"u8);
+                if (BillingCurrencyTotal is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PurchasePrice>)BillingCurrencyTotal).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SavingsPlanToPurchaseExchange DeserializeSavingsPlanToPurchaseExchange(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +90,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<SavingsPlanPurchase> properties = default;
             Optional<PurchasePrice> billingCurrencyTotal = default;
             Optional<ReservationOperationStatus> status = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("savingsPlanOrderId"u8))
@@ -62,8 +130,61 @@ namespace Azure.ResourceManager.Reservations.Models
                     status = new ReservationOperationStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SavingsPlanToPurchaseExchange(savingsPlanOrderId.Value, savingsPlanId.Value, properties.Value, billingCurrencyTotal.Value, Optional.ToNullable(status));
+            return new SavingsPlanToPurchaseExchange(savingsPlanOrderId.Value, savingsPlanId.Value, properties.Value, billingCurrencyTotal.Value, Optional.ToNullable(status), rawData);
+        }
+
+        SavingsPlanToPurchaseExchange IModelJsonSerializable<SavingsPlanToPurchaseExchange>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SavingsPlanToPurchaseExchange>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSavingsPlanToPurchaseExchange(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SavingsPlanToPurchaseExchange>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SavingsPlanToPurchaseExchange>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SavingsPlanToPurchaseExchange IModelSerializable<SavingsPlanToPurchaseExchange>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SavingsPlanToPurchaseExchange>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSavingsPlanToPurchaseExchange(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SavingsPlanToPurchaseExchange"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SavingsPlanToPurchaseExchange"/> to convert. </param>
+        public static implicit operator RequestContent(SavingsPlanToPurchaseExchange model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SavingsPlanToPurchaseExchange"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SavingsPlanToPurchaseExchange(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSavingsPlanToPurchaseExchange(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

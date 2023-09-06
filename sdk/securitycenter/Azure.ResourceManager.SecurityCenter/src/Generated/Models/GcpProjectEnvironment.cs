@@ -5,18 +5,21 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The GCP project connector environment data. </summary>
     public partial class GcpProjectEnvironment : SecurityConnectorEnvironment
     {
-        /// <summary> Initializes a new instance of GcpProjectEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="GcpProjectEnvironment"/>. </summary>
         public GcpProjectEnvironment()
         {
             EnvironmentType = EnvironmentType.GcpProject;
         }
 
-        /// <summary> Initializes a new instance of GcpProjectEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="GcpProjectEnvironment"/>. </summary>
         /// <param name="environmentType"> The type of the environment data. </param>
         /// <param name="organizationalData">
         /// The Gcp project's organizational data
@@ -24,7 +27,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// The available derived classes include <see cref="GcpMemberOrganizationalInfo"/> and <see cref="GcpParentOrganizationalInfo"/>.
         /// </param>
         /// <param name="projectDetails"> The Gcp project's details. </param>
-        internal GcpProjectEnvironment(EnvironmentType environmentType, GcpOrganizationalInfo organizationalData, GcpProjectDetails projectDetails) : base(environmentType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GcpProjectEnvironment(EnvironmentType environmentType, GcpOrganizationalInfo organizationalData, GcpProjectDetails projectDetails, Dictionary<string, BinaryData> rawData) : base(environmentType, rawData)
         {
             OrganizationalData = organizationalData;
             ProjectDetails = projectDetails;

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Sql;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of managed instance keys. </summary>
     internal partial class ManagedInstanceKeyListResult
     {
-        /// <summary> Initializes a new instance of ManagedInstanceKeyListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceKeyListResult"/>. </summary>
         internal ManagedInstanceKeyListResult()
         {
             Value = new ChangeTrackingList<ManagedInstanceKeyData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceKeyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceKeyListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal ManagedInstanceKeyListResult(IReadOnlyList<ManagedInstanceKeyData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedInstanceKeyListResult(IReadOnlyList<ManagedInstanceKeyData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Array of results. </summary>

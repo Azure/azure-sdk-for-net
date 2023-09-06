@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _templateSpecVersionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _templateSpecVersionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TemplateSpecVersionResource(Client, TemplateSpecVersionData.DeserializeTemplateSpecVersionData(e)), _templateSpecVersionClientDiagnostics, Pipeline, "TemplateSpecVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new TemplateSpecVersionResource(Client, TemplateSpecVersionData.DeserializeTemplateSpecVersionData(e)), _templateSpecVersionClientDiagnostics, Pipeline, "TemplateSpecVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _templateSpecVersionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _templateSpecVersionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TemplateSpecVersionResource(Client, TemplateSpecVersionData.DeserializeTemplateSpecVersionData(e)), _templateSpecVersionClientDiagnostics, Pipeline, "TemplateSpecVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new TemplateSpecVersionResource(Client, TemplateSpecVersionData.DeserializeTemplateSpecVersionData(e)), _templateSpecVersionClientDiagnostics, Pipeline, "TemplateSpecVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

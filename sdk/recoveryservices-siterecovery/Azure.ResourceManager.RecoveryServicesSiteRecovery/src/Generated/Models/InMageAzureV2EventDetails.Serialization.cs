@@ -5,15 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageAzureV2EventDetails
+    public partial class InMageAzureV2EventDetails : IUtf8JsonSerializable, IModelJsonSerializable<InMageAzureV2EventDetails>
     {
-        internal static InMageAzureV2EventDetails DeserializeInMageAzureV2EventDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InMageAzureV2EventDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InMageAzureV2EventDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<InMageAzureV2EventDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(EventType))
+            {
+                writer.WritePropertyName("eventType"u8);
+                writer.WriteStringValue(EventType);
+            }
+            if (Optional.IsDefined(Category))
+            {
+                writer.WritePropertyName("category"u8);
+                writer.WriteStringValue(Category);
+            }
+            if (Optional.IsDefined(Component))
+            {
+                writer.WritePropertyName("component"u8);
+                writer.WriteStringValue(Component);
+            }
+            if (Optional.IsDefined(CorrectiveAction))
+            {
+                writer.WritePropertyName("correctiveAction"u8);
+                writer.WriteStringValue(CorrectiveAction);
+            }
+            if (Optional.IsDefined(Details))
+            {
+                writer.WritePropertyName("details"u8);
+                writer.WriteStringValue(Details);
+            }
+            if (Optional.IsDefined(Summary))
+            {
+                writer.WritePropertyName("summary"u8);
+                writer.WriteStringValue(Summary);
+            }
+            if (Optional.IsDefined(SiteName))
+            {
+                writer.WritePropertyName("siteName"u8);
+                writer.WriteStringValue(SiteName);
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static InMageAzureV2EventDetails DeserializeInMageAzureV2EventDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> summary = default;
             Optional<string> siteName = default;
             string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventType"u8))
@@ -68,8 +134,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InMageAzureV2EventDetails(instanceType, eventType.Value, category.Value, component.Value, correctiveAction.Value, details.Value, summary.Value, siteName.Value);
+            return new InMageAzureV2EventDetails(instanceType, eventType.Value, category.Value, component.Value, correctiveAction.Value, details.Value, summary.Value, siteName.Value, rawData);
+        }
+
+        InMageAzureV2EventDetails IModelJsonSerializable<InMageAzureV2EventDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageAzureV2EventDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageAzureV2EventDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InMageAzureV2EventDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageAzureV2EventDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InMageAzureV2EventDetails IModelSerializable<InMageAzureV2EventDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageAzureV2EventDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInMageAzureV2EventDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InMageAzureV2EventDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InMageAzureV2EventDetails"/> to convert. </param>
+        public static implicit operator RequestContent(InMageAzureV2EventDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InMageAzureV2EventDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InMageAzureV2EventDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInMageAzureV2EventDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

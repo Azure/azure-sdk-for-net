@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,14 +16,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Please note <see cref="BackupGenericJob"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="IaasVmBackupJob"/>, <see cref="IaasVmBackupJobV2"/>, <see cref="StorageBackupJob"/>, <see cref="WorkloadBackupJob"/>, <see cref="DpmBackupJob"/>, <see cref="MabBackupJob"/> and <see cref="VaultBackupJob"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownJob))]
     public abstract partial class BackupGenericJob
     {
-        /// <summary> Initializes a new instance of BackupGenericJob. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupGenericJob"/>. </summary>
         protected BackupGenericJob()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupGenericJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupGenericJob"/>. </summary>
         /// <param name="entityFriendlyName"> Friendly name of the entity on which the current job is executing. </param>
         /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
         /// <param name="operation"> The operation name. </param>
@@ -30,7 +36,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="endOn"> The end time. </param>
         /// <param name="activityId"> ActivityId of job. </param>
         /// <param name="jobType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        internal BackupGenericJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupGenericJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, Dictionary<string, BinaryData> rawData)
         {
             EntityFriendlyName = entityFriendlyName;
             BackupManagementType = backupManagementType;
@@ -40,6 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             EndOn = endOn;
             ActivityId = activityId;
             JobType = jobType;
+            _rawData = rawData;
         }
 
         /// <summary> Friendly name of the entity on which the current job is executing. </summary>

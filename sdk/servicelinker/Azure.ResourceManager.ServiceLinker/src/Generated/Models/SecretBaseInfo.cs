@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// Please note <see cref="SecretBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="KeyVaultSecretReferenceSecretInfo"/>, <see cref="KeyVaultSecretUriSecretInfo"/> and <see cref="RawValueSecretInfo"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownSecretInfoBase))]
     public abstract partial class SecretBaseInfo
     {
-        /// <summary> Initializes a new instance of SecretBaseInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecretBaseInfo"/>. </summary>
         protected SecretBaseInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SecretBaseInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretBaseInfo"/>. </summary>
         /// <param name="secretType"> The secret type. </param>
-        internal SecretBaseInfo(LinkerSecretType secretType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecretBaseInfo(LinkerSecretType secretType, Dictionary<string, BinaryData> rawData)
         {
             SecretType = secretType;
+            _rawData = rawData;
         }
 
         /// <summary> The secret type. </summary>

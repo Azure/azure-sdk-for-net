@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> MAB workload-specific error information. </summary>
     public partial class MabErrorInfo
     {
-        /// <summary> Initializes a new instance of MabErrorInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MabErrorInfo"/>. </summary>
         public MabErrorInfo()
         {
             Recommendations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MabErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MabErrorInfo"/>. </summary>
         /// <param name="errorString"> Localized error string. </param>
         /// <param name="recommendations"> List of localized recommendations. </param>
-        internal MabErrorInfo(string errorString, IReadOnlyList<string> recommendations)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MabErrorInfo(string errorString, IReadOnlyList<string> recommendations, Dictionary<string, BinaryData> rawData)
         {
             ErrorString = errorString;
             Recommendations = recommendations;
+            _rawData = rawData;
         }
 
         /// <summary> Localized error string. </summary>

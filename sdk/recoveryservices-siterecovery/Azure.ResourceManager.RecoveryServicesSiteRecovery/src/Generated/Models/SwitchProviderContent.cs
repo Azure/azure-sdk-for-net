@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Input definition for switch provider. </summary>
     public partial class SwitchProviderContent
     {
-        /// <summary> Initializes a new instance of SwitchProviderContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SwitchProviderContent"/>. </summary>
         public SwitchProviderContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SwitchProviderContent"/>. </summary>
+        /// <param name="properties"> Switch provider input properties. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SwitchProviderContent(SwitchProviderProperties properties, Dictionary<string, BinaryData> rawData)
+        {
+            Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Switch provider input properties. </summary>

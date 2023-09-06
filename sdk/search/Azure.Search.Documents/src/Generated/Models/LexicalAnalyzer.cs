@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -17,13 +18,23 @@ namespace Azure.Search.Documents.Indexes.Models
     /// </summary>
     public partial class LexicalAnalyzer
     {
-        /// <summary> Initializes a new instance of LexicalAnalyzer. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LexicalAnalyzer"/>. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the analyzer. </param>
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        internal LexicalAnalyzer(string oDataType, string name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LexicalAnalyzer(string oDataType, string name, Dictionary<string, BinaryData> rawData)
         {
             ODataType = oDataType;
             Name = name;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LexicalAnalyzer"/> for deserialization. </summary>
+        internal LexicalAnalyzer()
+        {
         }
 
         /// <summary> Identifies the concrete type of the analyzer. </summary>

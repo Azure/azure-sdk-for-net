@@ -5,20 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines a data change detection policy that captures changes using the Integrated Change Tracking feature of Azure SQL Database. </summary>
     public partial class SqlIntegratedChangeTrackingPolicy : DataChangeDetectionPolicy
     {
-        /// <summary> Initializes a new instance of SqlIntegratedChangeTrackingPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlIntegratedChangeTrackingPolicy"/>. </summary>
         public SqlIntegratedChangeTrackingPolicy()
         {
             ODataType = "#Microsoft.Azure.Search.SqlIntegratedChangeTrackingPolicy";
         }
 
-        /// <summary> Initializes a new instance of SqlIntegratedChangeTrackingPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlIntegratedChangeTrackingPolicy"/>. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the data change detection policy. </param>
-        internal SqlIntegratedChangeTrackingPolicy(string oDataType) : base(oDataType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlIntegratedChangeTrackingPolicy(string oDataType, Dictionary<string, BinaryData> rawData) : base(oDataType, rawData)
         {
             ODataType = oDataType ?? "#Microsoft.Azure.Search.SqlIntegratedChangeTrackingPolicy";
         }

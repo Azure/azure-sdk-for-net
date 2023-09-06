@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,26 +14,31 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Role definition properties. </summary>
     public partial class AzureRoleDefinition
     {
-        /// <summary> Initializes a new instance of AzureRoleDefinition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureRoleDefinition"/>. </summary>
         internal AzureRoleDefinition()
         {
             Permissions = new ChangeTrackingList<Permission>();
             Scopes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AzureRoleDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureRoleDefinition"/>. </summary>
         /// <param name="id"> The role definition ID. </param>
         /// <param name="name"> The role definition name. </param>
         /// <param name="isServiceRole"> If this is a service role. </param>
         /// <param name="permissions"> Role definition permissions. </param>
         /// <param name="scopes"> Role definition assignable scopes. </param>
-        internal AzureRoleDefinition(string id, string name, bool? isServiceRole, IReadOnlyList<Permission> permissions, IReadOnlyList<string> scopes)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureRoleDefinition(string id, string name, bool? isServiceRole, IReadOnlyList<Permission> permissions, IReadOnlyList<string> scopes, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
             IsServiceRole = isServiceRole;
             Permissions = permissions;
             Scopes = scopes;
+            _rawData = rawData;
         }
 
         /// <summary> The role definition ID. </summary>

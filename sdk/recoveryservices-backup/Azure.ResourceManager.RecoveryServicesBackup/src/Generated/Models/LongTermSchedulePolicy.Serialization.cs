@@ -5,28 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class LongTermSchedulePolicy : IUtf8JsonSerializable
+    public partial class LongTermSchedulePolicy : IUtf8JsonSerializable, IModelJsonSerializable<LongTermSchedulePolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LongTermSchedulePolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LongTermSchedulePolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LongTermSchedulePolicy>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("schedulePolicyType"u8);
             writer.WriteStringValue(SchedulePolicyType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LongTermSchedulePolicy DeserializeLongTermSchedulePolicy(JsonElement element)
+        internal static LongTermSchedulePolicy DeserializeLongTermSchedulePolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string schedulePolicyType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schedulePolicyType"u8))
@@ -34,8 +57,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     schedulePolicyType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LongTermSchedulePolicy(schedulePolicyType);
+            return new LongTermSchedulePolicy(schedulePolicyType, rawData);
+        }
+
+        LongTermSchedulePolicy IModelJsonSerializable<LongTermSchedulePolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LongTermSchedulePolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLongTermSchedulePolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LongTermSchedulePolicy>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LongTermSchedulePolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LongTermSchedulePolicy IModelSerializable<LongTermSchedulePolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LongTermSchedulePolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLongTermSchedulePolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LongTermSchedulePolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LongTermSchedulePolicy"/> to convert. </param>
+        public static implicit operator RequestContent(LongTermSchedulePolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LongTermSchedulePolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LongTermSchedulePolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLongTermSchedulePolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

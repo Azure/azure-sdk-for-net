@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the Sql Database resource settings. </summary>
     public partial class SqlDatabaseResourceSettings : MoverResourceSettings
     {
-        /// <summary> Initializes a new instance of SqlDatabaseResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDatabaseResourceSettings"/>. </summary>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceName"/> is null. </exception>
         public SqlDatabaseResourceSettings(string targetResourceName) : base(targetResourceName)
@@ -25,16 +25,22 @@ namespace Azure.ResourceManager.ResourceMover.Models
             ResourceType = "Microsoft.Sql/servers/databases";
         }
 
-        /// <summary> Initializes a new instance of SqlDatabaseResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDatabaseResourceSettings"/>. </summary>
         /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <param name="tags"> Gets or sets the Resource tags. </param>
         /// <param name="zoneRedundant"> Defines the zone redundant resource setting. </param>
-        internal SqlDatabaseResourceSettings(string resourceType, string targetResourceName, IDictionary<string, string> tags, ResourceZoneRedundantSetting? zoneRedundant) : base(resourceType, targetResourceName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlDatabaseResourceSettings(string resourceType, string targetResourceName, IDictionary<string, string> tags, ResourceZoneRedundantSetting? zoneRedundant, Dictionary<string, BinaryData> rawData) : base(resourceType, targetResourceName, rawData)
         {
             Tags = tags;
             ZoneRedundant = zoneRedundant;
             ResourceType = resourceType ?? "Microsoft.Sql/servers/databases";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlDatabaseResourceSettings"/> for deserialization. </summary>
+        internal SqlDatabaseResourceSettings()
+        {
         }
 
         /// <summary> Gets or sets the Resource tags. </summary>

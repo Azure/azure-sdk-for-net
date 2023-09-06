@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents Anomaly Security ML Analytics Settings. </summary>
     public partial class AnomalySecurityMLAnalyticsSettings : SecurityMLAnalyticsSettingData
     {
-        /// <summary> Initializes a new instance of AnomalySecurityMLAnalyticsSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalySecurityMLAnalyticsSettings"/>. </summary>
         public AnomalySecurityMLAnalyticsSettings()
         {
             RequiredDataConnectors = new ChangeTrackingList<SecurityMLAnalyticsSettingsDataSource>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = SecurityMLAnalyticsSettingsKind.Anomaly;
         }
 
-        /// <summary> Initializes a new instance of AnomalySecurityMLAnalyticsSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalySecurityMLAnalyticsSettings"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -47,7 +47,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="isDefaultSettings"> Determines whether this anomaly security ml analytics settings is a default settings. </param>
         /// <param name="anomalySettingsVersion"> The anomaly settings version of the Anomaly security ml analytics settings that dictates whether job version gets updated or not. </param>
         /// <param name="settingsDefinitionId"> The anomaly settings definition Id. </param>
-        internal AnomalySecurityMLAnalyticsSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityMLAnalyticsSettingsKind kind, ETag? etag, string description, string displayName, bool? isEnabled, DateTimeOffset? lastModifiedOn, IList<SecurityMLAnalyticsSettingsDataSource> requiredDataConnectors, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques, string anomalyVersion, BinaryData customizableObservations, TimeSpan? frequency, AnomalySecurityMLAnalyticsSettingsStatus? settingsStatus, bool? isDefaultSettings, int? anomalySettingsVersion, Guid? settingsDefinitionId) : base(id, name, resourceType, systemData, kind, etag)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnomalySecurityMLAnalyticsSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityMLAnalyticsSettingsKind kind, ETag? etag, string description, string displayName, bool? isEnabled, DateTimeOffset? lastModifiedOn, IList<SecurityMLAnalyticsSettingsDataSource> requiredDataConnectors, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques, string anomalyVersion, BinaryData customizableObservations, TimeSpan? frequency, AnomalySecurityMLAnalyticsSettingsStatus? settingsStatus, bool? isDefaultSettings, int? anomalySettingsVersion, Guid? settingsDefinitionId, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, kind, etag, rawData)
         {
             Description = description;
             DisplayName = displayName;

@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class DefenderForServersAwsOfferingSubPlan : IUtf8JsonSerializable
+    internal partial class DefenderForServersAwsOfferingSubPlan : IUtf8JsonSerializable, IModelJsonSerializable<DefenderForServersAwsOfferingSubPlan>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DefenderForServersAwsOfferingSubPlan>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DefenderForServersAwsOfferingSubPlan>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DefenderForServersAwsOfferingSubPlan>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AvailableSubPlanType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AvailableSubPlanType.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DefenderForServersAwsOfferingSubPlan DeserializeDefenderForServersAwsOfferingSubPlan(JsonElement element)
+        internal static DefenderForServersAwsOfferingSubPlan DeserializeDefenderForServersAwsOfferingSubPlan(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AvailableSubPlanType> type = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -41,8 +64,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     type = new AvailableSubPlanType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DefenderForServersAwsOfferingSubPlan(Optional.ToNullable(type));
+            return new DefenderForServersAwsOfferingSubPlan(Optional.ToNullable(type), rawData);
+        }
+
+        DefenderForServersAwsOfferingSubPlan IModelJsonSerializable<DefenderForServersAwsOfferingSubPlan>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DefenderForServersAwsOfferingSubPlan>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefenderForServersAwsOfferingSubPlan(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DefenderForServersAwsOfferingSubPlan>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DefenderForServersAwsOfferingSubPlan>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DefenderForServersAwsOfferingSubPlan IModelSerializable<DefenderForServersAwsOfferingSubPlan>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DefenderForServersAwsOfferingSubPlan>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDefenderForServersAwsOfferingSubPlan(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DefenderForServersAwsOfferingSubPlan"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DefenderForServersAwsOfferingSubPlan"/> to convert. </param>
+        public static implicit operator RequestContent(DefenderForServersAwsOfferingSubPlan model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DefenderForServersAwsOfferingSubPlan"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DefenderForServersAwsOfferingSubPlan(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDefenderForServersAwsOfferingSubPlan(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

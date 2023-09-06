@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
@@ -14,13 +17,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public partial class VmWorkloadProtectableItem : WorkloadProtectableItem
     {
-        /// <summary> Initializes a new instance of VmWorkloadProtectableItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadProtectableItem"/>. </summary>
         public VmWorkloadProtectableItem()
         {
             ProtectableItemType = "AzureVmWorkloadProtectableItem";
         }
 
-        /// <summary> Initializes a new instance of VmWorkloadProtectableItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadProtectableItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
         /// <param name="workloadType"> Type of workload for the backup management. </param>
         /// <param name="protectableItemType"> Type of the backup item. </param>
@@ -37,7 +40,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB's present. </param>
         /// <param name="subProtectableItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
         /// <param name="preBackupValidation"> Pre-backup validation for protectable objects. </param>
-        internal VmWorkloadProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, string parentName, string parentUniqueName, string serverName, bool? isAutoProtectable, bool? isAutoProtected, int? subInquiredItemCount, int? subProtectableItemCount, PreBackupValidation preBackupValidation) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmWorkloadProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, string parentName, string parentUniqueName, string serverName, bool? isAutoProtectable, bool? isAutoProtected, int? subInquiredItemCount, int? subProtectableItemCount, PreBackupValidation preBackupValidation, Dictionary<string, BinaryData> rawData) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, rawData)
         {
             ParentName = parentName;
             ParentUniqueName = parentUniqueName;

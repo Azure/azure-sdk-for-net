@@ -5,15 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class SelfHelpDiagnosticInsight
+    public partial class SelfHelpDiagnosticInsight : IUtf8JsonSerializable, IModelJsonSerializable<SelfHelpDiagnosticInsight>
     {
-        internal static SelfHelpDiagnosticInsight DeserializeSelfHelpDiagnosticInsight(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SelfHelpDiagnosticInsight>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SelfHelpDiagnosticInsight>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SelfHelpDiagnosticInsight>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Title))
+            {
+                writer.WritePropertyName("title"u8);
+                writer.WriteStringValue(Title);
+            }
+            if (Optional.IsDefined(Results))
+            {
+                writer.WritePropertyName("results"u8);
+                writer.WriteStringValue(Results);
+            }
+            if (Optional.IsDefined(InsightImportanceLevel))
+            {
+                writer.WritePropertyName("importanceLevel"u8);
+                writer.WriteStringValue(InsightImportanceLevel.Value.ToString());
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SelfHelpDiagnosticInsight DeserializeSelfHelpDiagnosticInsight(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +70,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             Optional<string> title = default;
             Optional<string> results = default;
             Optional<SelfHelpImportanceLevel> importanceLevel = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -48,8 +97,61 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     importanceLevel = new SelfHelpImportanceLevel(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SelfHelpDiagnosticInsight(id.Value, title.Value, results.Value, Optional.ToNullable(importanceLevel));
+            return new SelfHelpDiagnosticInsight(id.Value, title.Value, results.Value, Optional.ToNullable(importanceLevel), rawData);
+        }
+
+        SelfHelpDiagnosticInsight IModelJsonSerializable<SelfHelpDiagnosticInsight>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SelfHelpDiagnosticInsight>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSelfHelpDiagnosticInsight(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SelfHelpDiagnosticInsight>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SelfHelpDiagnosticInsight>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SelfHelpDiagnosticInsight IModelSerializable<SelfHelpDiagnosticInsight>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SelfHelpDiagnosticInsight>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSelfHelpDiagnosticInsight(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SelfHelpDiagnosticInsight"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SelfHelpDiagnosticInsight"/> to convert. </param>
+        public static implicit operator RequestContent(SelfHelpDiagnosticInsight model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SelfHelpDiagnosticInsight"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SelfHelpDiagnosticInsight(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSelfHelpDiagnosticInsight(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

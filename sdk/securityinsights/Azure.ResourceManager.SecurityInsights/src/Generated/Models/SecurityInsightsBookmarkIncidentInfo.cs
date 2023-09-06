@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Describes related incident information for the bookmark. </summary>
     public partial class SecurityInsightsBookmarkIncidentInfo
     {
-        /// <summary> Initializes a new instance of SecurityInsightsBookmarkIncidentInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsBookmarkIncidentInfo"/>. </summary>
         public SecurityInsightsBookmarkIncidentInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsBookmarkIncidentInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsBookmarkIncidentInfo"/>. </summary>
         /// <param name="incidentId"> Incident Id. </param>
         /// <param name="severity"> The severity of the incident. </param>
         /// <param name="title"> The title of the incident. </param>
         /// <param name="relationName"> Relation Name. </param>
-        internal SecurityInsightsBookmarkIncidentInfo(Guid? incidentId, SecurityInsightsIncidentSeverity? severity, string title, string relationName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsBookmarkIncidentInfo(Guid? incidentId, SecurityInsightsIncidentSeverity? severity, string title, string relationName, Dictionary<string, BinaryData> rawData)
         {
             IncidentId = incidentId;
             Severity = severity;
             Title = title;
             RelationName = relationName;
+            _rawData = rawData;
         }
 
         /// <summary> Incident Id. </summary>

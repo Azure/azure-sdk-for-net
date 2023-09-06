@@ -5,23 +5,68 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    internal partial class RedisPatchScheduleListResult
+    internal partial class RedisPatchScheduleListResult : IUtf8JsonSerializable, IModelJsonSerializable<RedisPatchScheduleListResult>
     {
-        internal static RedisPatchScheduleListResult DeserializeRedisPatchScheduleListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RedisPatchScheduleListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RedisPatchScheduleListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RedisPatchScheduleListResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<RedisPatchScheduleData>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RedisPatchScheduleListResult DeserializeRedisPatchScheduleListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<RedisPatchScheduleData>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +88,61 @@ namespace Azure.ResourceManager.Redis.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RedisPatchScheduleListResult(Optional.ToList(value), nextLink.Value);
+            return new RedisPatchScheduleListResult(Optional.ToList(value), nextLink.Value, rawData);
+        }
+
+        RedisPatchScheduleListResult IModelJsonSerializable<RedisPatchScheduleListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RedisPatchScheduleListResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRedisPatchScheduleListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RedisPatchScheduleListResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RedisPatchScheduleListResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RedisPatchScheduleListResult IModelSerializable<RedisPatchScheduleListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RedisPatchScheduleListResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRedisPatchScheduleListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RedisPatchScheduleListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RedisPatchScheduleListResult"/> to convert. </param>
+        public static implicit operator RequestContent(RedisPatchScheduleListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RedisPatchScheduleListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RedisPatchScheduleListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRedisPatchScheduleListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

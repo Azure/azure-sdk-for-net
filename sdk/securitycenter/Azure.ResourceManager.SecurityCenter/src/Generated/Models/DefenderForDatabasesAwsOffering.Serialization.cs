@@ -5,33 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForDatabasesAwsOffering : IUtf8JsonSerializable
+    public partial class DefenderForDatabasesAwsOffering : IUtf8JsonSerializable, IModelJsonSerializable<DefenderForDatabasesAwsOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DefenderForDatabasesAwsOffering>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DefenderForDatabasesAwsOffering>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DefenderForDatabasesAwsOffering>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ArcAutoProvisioning))
             {
                 writer.WritePropertyName("arcAutoProvisioning"u8);
-                writer.WriteObjectValue(ArcAutoProvisioning);
+                if (ArcAutoProvisioning is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DefenderForDatabasesAwsOfferingArcAutoProvisioning>)ArcAutoProvisioning).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Rds))
             {
                 writer.WritePropertyName("rds"u8);
-                writer.WriteObjectValue(Rds);
+                if (Rds is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DefenderForDatabasesAwsOfferingRds>)Rds).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DefenderForDatabasesAwsOffering DeserializeDefenderForDatabasesAwsOffering(JsonElement element)
+        internal static DefenderForDatabasesAwsOffering DeserializeDefenderForDatabasesAwsOffering(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +76,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<DefenderForDatabasesAwsOfferingRds> rds = default;
             OfferingType offeringType = default;
             Optional<string> description = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("arcAutoProvisioning"u8))
@@ -70,8 +107,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DefenderForDatabasesAwsOffering(offeringType, description.Value, arcAutoProvisioning.Value, rds.Value);
+            return new DefenderForDatabasesAwsOffering(offeringType, description.Value, arcAutoProvisioning.Value, rds.Value, rawData);
+        }
+
+        DefenderForDatabasesAwsOffering IModelJsonSerializable<DefenderForDatabasesAwsOffering>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DefenderForDatabasesAwsOffering>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefenderForDatabasesAwsOffering(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DefenderForDatabasesAwsOffering>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DefenderForDatabasesAwsOffering>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DefenderForDatabasesAwsOffering IModelSerializable<DefenderForDatabasesAwsOffering>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DefenderForDatabasesAwsOffering>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDefenderForDatabasesAwsOffering(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DefenderForDatabasesAwsOffering"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DefenderForDatabasesAwsOffering"/> to convert. </param>
+        public static implicit operator RequestContent(DefenderForDatabasesAwsOffering model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DefenderForDatabasesAwsOffering"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DefenderForDatabasesAwsOffering(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDefenderForDatabasesAwsOffering(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Additional information. </summary>
     internal partial class ResourceHealthEventAdditionalInformation
     {
-        /// <summary> Initializes a new instance of ResourceHealthEventAdditionalInformation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventAdditionalInformation"/>. </summary>
         internal ResourceHealthEventAdditionalInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthEventAdditionalInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventAdditionalInformation"/>. </summary>
         /// <param name="message"> Additional information Message. </param>
-        internal ResourceHealthEventAdditionalInformation(string message)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHealthEventAdditionalInformation(string message, Dictionary<string, BinaryData> rawData)
         {
             Message = message;
+            _rawData = rawData;
         }
 
         /// <summary> Additional information Message. </summary>

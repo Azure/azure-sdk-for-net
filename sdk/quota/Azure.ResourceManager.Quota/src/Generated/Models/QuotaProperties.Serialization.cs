@@ -6,25 +6,46 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    public partial class QuotaProperties : IUtf8JsonSerializable
+    public partial class QuotaProperties : IUtf8JsonSerializable, IModelJsonSerializable<QuotaProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<QuotaProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<QuotaProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<QuotaProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
-                writer.WriteObjectValue(Limit);
+                if (Limit is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<QuotaLimitJsonObject>)Limit).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                if (Name is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<QuotaRequestResourceName>)Name).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ResourceTypeName))
             {
@@ -40,11 +61,25 @@ namespace Azure.ResourceManager.Quota.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Properties.ToString()).RootElement);
 #endif
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static QuotaProperties DeserializeQuotaProperties(JsonElement element)
+        internal static QuotaProperties DeserializeQuotaProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -56,6 +91,7 @@ namespace Azure.ResourceManager.Quota.Models
             Optional<TimeSpan> quotaPeriod = default;
             Optional<bool> isQuotaApplicable = default;
             Optional<BinaryData> properties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("limit"u8))
@@ -113,8 +149,61 @@ namespace Azure.ResourceManager.Quota.Models
                     properties = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new QuotaProperties(limit.Value, unit.Value, name.Value, resourceType.Value, Optional.ToNullable(quotaPeriod), Optional.ToNullable(isQuotaApplicable), properties.Value);
+            return new QuotaProperties(limit.Value, unit.Value, name.Value, resourceType.Value, Optional.ToNullable(quotaPeriod), Optional.ToNullable(isQuotaApplicable), properties.Value, rawData);
+        }
+
+        QuotaProperties IModelJsonSerializable<QuotaProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QuotaProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeQuotaProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<QuotaProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QuotaProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        QuotaProperties IModelSerializable<QuotaProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QuotaProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeQuotaProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="QuotaProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="QuotaProperties"/> to convert. </param>
+        public static implicit operator RequestContent(QuotaProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="QuotaProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator QuotaProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeQuotaProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

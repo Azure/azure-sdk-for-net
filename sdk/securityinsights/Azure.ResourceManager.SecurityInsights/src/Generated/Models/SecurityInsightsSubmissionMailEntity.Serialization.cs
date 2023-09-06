@@ -9,26 +9,46 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsSubmissionMailEntity : IUtf8JsonSerializable
+    public partial class SecurityInsightsSubmissionMailEntity : IUtf8JsonSerializable, IModelJsonSerializable<SecurityInsightsSubmissionMailEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityInsightsSubmissionMailEntity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityInsightsSubmissionMailEntity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsSubmissionMailEntity>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsSubmissionMailEntity DeserializeSecurityInsightsSubmissionMailEntity(JsonElement element)
+        internal static SecurityInsightsSubmissionMailEntity DeserializeSecurityInsightsSubmissionMailEntity(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -50,6 +70,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<IPAddress> senderIP = default;
             Optional<string> subject = default;
             Optional<string> reportType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -189,8 +210,61 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityInsightsSubmissionMailEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToNullable(networkMessageId), Optional.ToNullable(submissionId), submitter.Value, Optional.ToNullable(submissionDate), Optional.ToNullable(timestamp), recipient.Value, sender.Value, senderIP.Value, subject.Value, reportType.Value);
+            return new SecurityInsightsSubmissionMailEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToNullable(networkMessageId), Optional.ToNullable(submissionId), submitter.Value, Optional.ToNullable(submissionDate), Optional.ToNullable(timestamp), recipient.Value, sender.Value, senderIP.Value, subject.Value, reportType.Value, rawData);
+        }
+
+        SecurityInsightsSubmissionMailEntity IModelJsonSerializable<SecurityInsightsSubmissionMailEntity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsSubmissionMailEntity>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsSubmissionMailEntity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityInsightsSubmissionMailEntity>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsSubmissionMailEntity>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityInsightsSubmissionMailEntity IModelSerializable<SecurityInsightsSubmissionMailEntity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsSubmissionMailEntity>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityInsightsSubmissionMailEntity(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SecurityInsightsSubmissionMailEntity"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SecurityInsightsSubmissionMailEntity"/> to convert. </param>
+        public static implicit operator RequestContent(SecurityInsightsSubmissionMailEntity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SecurityInsightsSubmissionMailEntity"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SecurityInsightsSubmissionMailEntity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityInsightsSubmissionMailEntity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

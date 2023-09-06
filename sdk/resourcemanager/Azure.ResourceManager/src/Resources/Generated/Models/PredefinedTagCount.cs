@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Tag count. </summary>
     public partial class PredefinedTagCount
     {
-        /// <summary> Initializes a new instance of PredefinedTagCount. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PredefinedTagCount"/>. </summary>
         internal PredefinedTagCount()
         {
         }
 
-        /// <summary> Initializes a new instance of PredefinedTagCount. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredefinedTagCount"/>. </summary>
         /// <param name="predefinedTagCountType"> Type of count. </param>
         /// <param name="value"> Value of count. </param>
-        internal PredefinedTagCount(string predefinedTagCountType, int? value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PredefinedTagCount(string predefinedTagCountType, int? value, Dictionary<string, BinaryData> rawData)
         {
             PredefinedTagCountType = predefinedTagCountType;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Type of count. </summary>

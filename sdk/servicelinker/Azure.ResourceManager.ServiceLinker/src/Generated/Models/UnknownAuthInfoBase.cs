@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The UnknownAuthInfoBase. </summary>
     internal partial class UnknownAuthInfoBase : AuthBaseInfo
     {
-        /// <summary> Initializes a new instance of UnknownAuthInfoBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAuthInfoBase"/>. </summary>
         /// <param name="authType"> The authentication type. </param>
-        internal UnknownAuthInfoBase(LinkerAuthType authType) : base(authType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAuthInfoBase(LinkerAuthType authType, Dictionary<string, BinaryData> rawData) : base(authType, rawData)
         {
             AuthType = authType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownAuthInfoBase"/> for deserialization. </summary>
+        internal UnknownAuthInfoBase()
+        {
         }
     }
 }

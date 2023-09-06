@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> Customer Managed Key details of the resource. </summary>
     public partial class VaultPropertiesEncryption
     {
-        /// <summary> Initializes a new instance of VaultPropertiesEncryption. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VaultPropertiesEncryption"/>. </summary>
         public VaultPropertiesEncryption()
         {
         }
 
-        /// <summary> Initializes a new instance of VaultPropertiesEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultPropertiesEncryption"/>. </summary>
         /// <param name="keyVaultProperties"> The properties of the Key Vault which hosts CMK. </param>
         /// <param name="kekIdentity"> The details of the identity used for CMK. </param>
         /// <param name="infrastructureEncryption"> Enabling/Disabling the Double Encryption state. </param>
-        internal VaultPropertiesEncryption(CmkKeyVaultProperties keyVaultProperties, CmkKekIdentity kekIdentity, InfrastructureEncryptionState? infrastructureEncryption)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VaultPropertiesEncryption(CmkKeyVaultProperties keyVaultProperties, CmkKekIdentity kekIdentity, InfrastructureEncryptionState? infrastructureEncryption, Dictionary<string, BinaryData> rawData)
         {
             KeyVaultProperties = keyVaultProperties;
             KekIdentity = kekIdentity;
             InfrastructureEncryption = infrastructureEncryption;
+            _rawData = rawData;
         }
 
         /// <summary> The properties of the Key Vault which hosts CMK. </summary>

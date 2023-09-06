@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class MoveRPAcrossTiersContent : IUtf8JsonSerializable
+    public partial class MoveRPAcrossTiersContent : IUtf8JsonSerializable, IModelJsonSerializable<MoveRPAcrossTiersContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MoveRPAcrossTiersContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MoveRPAcrossTiersContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MoveRPAcrossTiersContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ObjectType))
             {
@@ -30,7 +38,113 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("targetTierType"u8);
                 writer.WriteStringValue(TargetTierType.Value.ToSerialString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static MoveRPAcrossTiersContent DeserializeMoveRPAcrossTiersContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> objectType = default;
+            Optional<RecoveryPointTierType> sourceTierType = default;
+            Optional<RecoveryPointTierType> targetTierType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("objectType"u8))
+                {
+                    objectType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("sourceTierType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceTierType = property.Value.GetString().ToRecoveryPointTierType();
+                    continue;
+                }
+                if (property.NameEquals("targetTierType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetTierType = property.Value.GetString().ToRecoveryPointTierType();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new MoveRPAcrossTiersContent(objectType.Value, Optional.ToNullable(sourceTierType), Optional.ToNullable(targetTierType), rawData);
+        }
+
+        MoveRPAcrossTiersContent IModelJsonSerializable<MoveRPAcrossTiersContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MoveRPAcrossTiersContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMoveRPAcrossTiersContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MoveRPAcrossTiersContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MoveRPAcrossTiersContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MoveRPAcrossTiersContent IModelSerializable<MoveRPAcrossTiersContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MoveRPAcrossTiersContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMoveRPAcrossTiersContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MoveRPAcrossTiersContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MoveRPAcrossTiersContent"/> to convert. </param>
+        public static implicit operator RequestContent(MoveRPAcrossTiersContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MoveRPAcrossTiersContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MoveRPAcrossTiersContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMoveRPAcrossTiersContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

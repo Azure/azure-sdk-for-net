@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.SecurityCenter;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of device security groups. </summary>
     internal partial class DeviceSecurityGroupList
     {
-        /// <summary> Initializes a new instance of DeviceSecurityGroupList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeviceSecurityGroupList"/>. </summary>
         internal DeviceSecurityGroupList()
         {
             Value = new ChangeTrackingList<DeviceSecurityGroupData>();
         }
 
-        /// <summary> Initializes a new instance of DeviceSecurityGroupList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceSecurityGroupList"/>. </summary>
         /// <param name="value"> List of device security group objects. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal DeviceSecurityGroupList(IReadOnlyList<DeviceSecurityGroupData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceSecurityGroupList(IReadOnlyList<DeviceSecurityGroupData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of device security group objects. </summary>

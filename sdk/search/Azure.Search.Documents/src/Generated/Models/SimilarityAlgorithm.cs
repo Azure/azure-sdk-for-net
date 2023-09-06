@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
@@ -14,11 +17,16 @@ namespace Azure.Search.Documents.Indexes.Models
     /// </summary>
     public partial class SimilarityAlgorithm
     {
-        /// <summary> Initializes a new instance of SimilarityAlgorithm. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SimilarityAlgorithm"/>. </summary>
         /// <param name="oDataType"></param>
-        internal SimilarityAlgorithm(string oDataType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SimilarityAlgorithm(string oDataType, Dictionary<string, BinaryData> rawData)
         {
             ODataType = oDataType;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the o data type. </summary>

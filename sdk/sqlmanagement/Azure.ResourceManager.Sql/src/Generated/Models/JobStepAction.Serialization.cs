@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class JobStepAction : IUtf8JsonSerializable
+    public partial class JobStepAction : IUtf8JsonSerializable, IModelJsonSerializable<JobStepAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JobStepAction>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<JobStepAction>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<JobStepAction>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ActionType))
             {
@@ -27,11 +35,25 @@ namespace Azure.ResourceManager.Sql.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static JobStepAction DeserializeJobStepAction(JsonElement element)
+        internal static JobStepAction DeserializeJobStepAction(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +61,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<JobStepActionType> type = default;
             Optional<JobStepActionSource> source = default;
             string value = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -64,8 +87,61 @@ namespace Azure.ResourceManager.Sql.Models
                     value = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new JobStepAction(Optional.ToNullable(type), Optional.ToNullable(source), value);
+            return new JobStepAction(Optional.ToNullable(type), Optional.ToNullable(source), value, rawData);
+        }
+
+        JobStepAction IModelJsonSerializable<JobStepAction>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JobStepAction>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJobStepAction(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<JobStepAction>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JobStepAction>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        JobStepAction IModelSerializable<JobStepAction>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JobStepAction>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeJobStepAction(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="JobStepAction"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="JobStepAction"/> to convert. </param>
+        public static implicit operator RequestContent(JobStepAction model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="JobStepAction"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator JobStepAction(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeJobStepAction(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

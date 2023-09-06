@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class UnknownEnvironmentData : IUtf8JsonSerializable
+    internal partial class UnknownEnvironmentData : IUtf8JsonSerializable, IModelJsonSerializable<SecurityConnectorEnvironment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityConnectorEnvironment>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityConnectorEnvironment>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityConnectorEnvironment>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("environmentType"u8);
             writer.WriteStringValue(EnvironmentType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownEnvironmentData DeserializeUnknownEnvironmentData(JsonElement element)
+        internal static SecurityConnectorEnvironment DeserializeUnknownEnvironmentData(JsonElement element, ModelSerializerOptions options = default) => DeserializeSecurityConnectorEnvironment(element, options);
+
+        SecurityConnectorEnvironment IModelJsonSerializable<SecurityConnectorEnvironment>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            EnvironmentType environmentType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("environmentType"u8))
-                {
-                    environmentType = new EnvironmentType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownEnvironmentData(environmentType);
+            Core.ModelSerializerHelper.ValidateFormat<SecurityConnectorEnvironment>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownEnvironmentData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityConnectorEnvironment>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityConnectorEnvironment>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityConnectorEnvironment IModelSerializable<SecurityConnectorEnvironment>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityConnectorEnvironment>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityConnectorEnvironment(doc.RootElement, options);
         }
     }
 }

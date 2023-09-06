@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Request to failover a process server. </summary>
     public partial class FailoverProcessServerContent
     {
-        /// <summary> Initializes a new instance of FailoverProcessServerContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FailoverProcessServerContent"/>. </summary>
         public FailoverProcessServerContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FailoverProcessServerContent"/>. </summary>
+        /// <param name="properties"> The properties of the PS Failover request. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FailoverProcessServerContent(FailoverProcessServerProperties properties, Dictionary<string, BinaryData> rawData)
+        {
+            Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> The properties of the PS Failover request. </summary>

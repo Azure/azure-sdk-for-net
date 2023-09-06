@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Configure pairing input. </summary>
     public partial class ProtectionContainerMappingCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ProtectionContainerMappingCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProtectionContainerMappingCreateOrUpdateContent"/>. </summary>
         public ProtectionContainerMappingCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProtectionContainerMappingCreateOrUpdateContent"/>. </summary>
+        /// <param name="properties"> Configure protection input properties. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProtectionContainerMappingCreateOrUpdateContent(SiteRecoveryCreateProtectionContainerMappingProperties properties, Dictionary<string, BinaryData> rawData)
+        {
+            Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Configure protection input properties. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Properties of reservation swap. </summary>
     public partial class ReservationSwapProperties
     {
-        /// <summary> Initializes a new instance of ReservationSwapProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationSwapProperties"/>. </summary>
         internal ReservationSwapProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ReservationSwapProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationSwapProperties"/>. </summary>
         /// <param name="swapSource"> Resource id of the source reservation that gets swapped. Format of the resource id is /providers/microsoft.capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
         /// <param name="swapDestination"> Reservation resource id that the original resource gets swapped to. Format of the resource id is /providers/microsoft.capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
-        internal ReservationSwapProperties(string swapSource, string swapDestination)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationSwapProperties(string swapSource, string swapDestination, Dictionary<string, BinaryData> rawData)
         {
             SwapSource = swapSource;
             SwapDestination = swapDestination;
+            _rawData = rawData;
         }
 
         /// <summary> Resource id of the source reservation that gets swapped. Format of the resource id is /providers/microsoft.capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </summary>

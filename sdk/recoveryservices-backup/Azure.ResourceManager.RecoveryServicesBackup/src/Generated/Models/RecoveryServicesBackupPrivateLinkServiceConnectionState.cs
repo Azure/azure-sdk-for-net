@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Private Link Service Connection State. </summary>
     public partial class RecoveryServicesBackupPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of RecoveryServicesBackupPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackupPrivateLinkServiceConnectionState"/>. </summary>
         public RecoveryServicesBackupPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesBackupPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackupPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> Gets or sets the status. </param>
         /// <param name="description"> Gets or sets description. </param>
         /// <param name="actionRequired"> Gets or sets actions required. </param>
-        internal RecoveryServicesBackupPrivateLinkServiceConnectionState(PrivateEndpointConnectionStatus? status, string description, string actionRequired)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryServicesBackupPrivateLinkServiceConnectionState(PrivateEndpointConnectionStatus? status, string description, string actionRequired, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             Description = description;
             ActionRequired = actionRequired;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the status. </summary>

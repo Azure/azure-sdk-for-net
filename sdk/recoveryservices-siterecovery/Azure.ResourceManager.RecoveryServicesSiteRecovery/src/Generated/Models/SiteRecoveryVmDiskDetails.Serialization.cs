@@ -5,15 +5,93 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryVmDiskDetails
+    public partial class SiteRecoveryVmDiskDetails : IUtf8JsonSerializable, IModelJsonSerializable<SiteRecoveryVmDiskDetails>
     {
-        internal static SiteRecoveryVmDiskDetails DeserializeSiteRecoveryVmDiskDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SiteRecoveryVmDiskDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SiteRecoveryVmDiskDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryVmDiskDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(VhdType))
+            {
+                writer.WritePropertyName("vhdType"u8);
+                writer.WriteStringValue(VhdType);
+            }
+            if (Optional.IsDefined(VhdId))
+            {
+                writer.WritePropertyName("vhdId"u8);
+                writer.WriteStringValue(VhdId);
+            }
+            if (Optional.IsDefined(DiskId))
+            {
+                writer.WritePropertyName("diskId"u8);
+                writer.WriteStringValue(DiskId);
+            }
+            if (Optional.IsDefined(VhdName))
+            {
+                writer.WritePropertyName("vhdName"u8);
+                writer.WriteStringValue(VhdName);
+            }
+            if (Optional.IsDefined(MaxSizeMB))
+            {
+                writer.WritePropertyName("maxSizeMB"u8);
+                writer.WriteStringValue(MaxSizeMB);
+            }
+            if (Optional.IsDefined(TargetDiskLocation))
+            {
+                writer.WritePropertyName("targetDiskLocation"u8);
+                writer.WriteStringValue(TargetDiskLocation);
+            }
+            if (Optional.IsDefined(TargetDiskName))
+            {
+                writer.WritePropertyName("targetDiskName"u8);
+                writer.WriteStringValue(TargetDiskName);
+            }
+            if (Optional.IsDefined(LunId))
+            {
+                writer.WritePropertyName("lunId"u8);
+                writer.WriteStringValue(LunId);
+            }
+            if (Optional.IsDefined(DiskEncryptionSetId))
+            {
+                writer.WritePropertyName("diskEncryptionSetId"u8);
+                writer.WriteStringValue(DiskEncryptionSetId);
+            }
+            if (Optional.IsDefined(CustomTargetDiskName))
+            {
+                writer.WritePropertyName("customTargetDiskName"u8);
+                writer.WriteStringValue(CustomTargetDiskName);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SiteRecoveryVmDiskDetails DeserializeSiteRecoveryVmDiskDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> lunId = default;
             Optional<ResourceIdentifier> diskEncryptionSetId = default;
             Optional<string> customTargetDiskName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vhdType"u8))
@@ -84,8 +163,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     customTargetDiskName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SiteRecoveryVmDiskDetails(vhdType.Value, vhdId.Value, diskId.Value, vhdName.Value, maxSizeMB.Value, targetDiskLocation.Value, targetDiskName.Value, lunId.Value, diskEncryptionSetId.Value, customTargetDiskName.Value);
+            return new SiteRecoveryVmDiskDetails(vhdType.Value, vhdId.Value, diskId.Value, vhdName.Value, maxSizeMB.Value, targetDiskLocation.Value, targetDiskName.Value, lunId.Value, diskEncryptionSetId.Value, customTargetDiskName.Value, rawData);
+        }
+
+        SiteRecoveryVmDiskDetails IModelJsonSerializable<SiteRecoveryVmDiskDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryVmDiskDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryVmDiskDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SiteRecoveryVmDiskDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryVmDiskDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SiteRecoveryVmDiskDetails IModelSerializable<SiteRecoveryVmDiskDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryVmDiskDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryVmDiskDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SiteRecoveryVmDiskDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SiteRecoveryVmDiskDetails"/> to convert. </param>
+        public static implicit operator RequestContent(SiteRecoveryVmDiskDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SiteRecoveryVmDiskDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SiteRecoveryVmDiskDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSiteRecoveryVmDiskDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

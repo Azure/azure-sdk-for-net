@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Please note <see cref="SecurityAlertResourceIdentifier"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureResourceIdentifier"/> and <see cref="LogAnalyticsIdentifier"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownAlertResourceIdentifier))]
     public abstract partial class SecurityAlertResourceIdentifier
     {
-        /// <summary> Initializes a new instance of SecurityAlertResourceIdentifier. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertResourceIdentifier"/>. </summary>
         protected SecurityAlertResourceIdentifier()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityAlertResourceIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertResourceIdentifier"/>. </summary>
         /// <param name="resourceIdentifierType"> There can be multiple identifiers of different type per alert, this field specify the identifier type. </param>
-        internal SecurityAlertResourceIdentifier(ResourceIdentifierType resourceIdentifierType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityAlertResourceIdentifier(ResourceIdentifierType resourceIdentifierType, Dictionary<string, BinaryData> rawData)
         {
             ResourceIdentifierType = resourceIdentifierType;
+            _rawData = rawData;
         }
 
         /// <summary> There can be multiple identifiers of different type per alert, this field specify the identifier type. </summary>

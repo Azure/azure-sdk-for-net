@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Quantum.Models
     /// <summary> The response of a list Providers operation. </summary>
     internal partial class OfferingsListResult
     {
-        /// <summary> Initializes a new instance of OfferingsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OfferingsListResult"/>. </summary>
         internal OfferingsListResult()
         {
             Value = new ChangeTrackingList<ProviderDescription>();
         }
 
-        /// <summary> Initializes a new instance of OfferingsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OfferingsListResult"/>. </summary>
         /// <param name="value"> Result of a list Providers operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Providers. </param>
-        internal OfferingsListResult(IReadOnlyList<ProviderDescription> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OfferingsListResult(IReadOnlyList<ProviderDescription> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Result of a list Providers operation. </summary>

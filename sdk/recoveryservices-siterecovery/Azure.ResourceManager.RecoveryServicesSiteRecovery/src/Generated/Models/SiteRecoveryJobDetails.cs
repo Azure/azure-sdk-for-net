@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -15,21 +17,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Please note <see cref="SiteRecoveryJobDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AsrJobDetails"/>, <see cref="ExportJobDetails"/>, <see cref="FailoverJobDetails"/>, <see cref="SwitchProtectionJobDetails"/> and <see cref="TestFailoverJobDetails"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownJobDetails))]
     public abstract partial class SiteRecoveryJobDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryJobDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobDetails"/>. </summary>
         protected SiteRecoveryJobDetails()
         {
             AffectedObjectDetails = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobDetails"/>. </summary>
         /// <param name="instanceType"> Gets the type of job details (see JobDetailsTypes enum for possible values). </param>
         /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
-        internal SiteRecoveryJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails, Dictionary<string, BinaryData> rawData)
         {
             InstanceType = instanceType;
             AffectedObjectDetails = affectedObjectDetails;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the type of job details (see JobDetailsTypes enum for possible values). </summary>

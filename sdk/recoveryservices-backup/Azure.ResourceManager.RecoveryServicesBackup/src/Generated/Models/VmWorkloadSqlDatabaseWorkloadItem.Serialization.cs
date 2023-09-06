@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class VmWorkloadSqlDatabaseWorkloadItem : IUtf8JsonSerializable
+    public partial class VmWorkloadSqlDatabaseWorkloadItem : IUtf8JsonSerializable, IModelJsonSerializable<VmWorkloadSqlDatabaseWorkloadItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VmWorkloadSqlDatabaseWorkloadItem>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VmWorkloadSqlDatabaseWorkloadItem>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VmWorkloadSqlDatabaseWorkloadItem>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ParentName))
             {
@@ -62,11 +70,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VmWorkloadSqlDatabaseWorkloadItem DeserializeVmWorkloadSqlDatabaseWorkloadItem(JsonElement element)
+        internal static VmWorkloadSqlDatabaseWorkloadItem DeserializeVmWorkloadSqlDatabaseWorkloadItem(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -81,6 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string workloadItemType = default;
             Optional<string> friendlyName = default;
             Optional<BackupProtectionStatus> protectionState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parentName"u8))
@@ -149,8 +172,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectionState = new BackupProtectionStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VmWorkloadSqlDatabaseWorkloadItem(backupManagementType.Value, workloadType.Value, workloadItemType, friendlyName.Value, Optional.ToNullable(protectionState), parentName.Value, serverName.Value, Optional.ToNullable(isAutoProtectable), Optional.ToNullable(subinquireditemcount), Optional.ToNullable(subWorkloadItemCount));
+            return new VmWorkloadSqlDatabaseWorkloadItem(backupManagementType.Value, workloadType.Value, workloadItemType, friendlyName.Value, Optional.ToNullable(protectionState), parentName.Value, serverName.Value, Optional.ToNullable(isAutoProtectable), Optional.ToNullable(subinquireditemcount), Optional.ToNullable(subWorkloadItemCount), rawData);
+        }
+
+        VmWorkloadSqlDatabaseWorkloadItem IModelJsonSerializable<VmWorkloadSqlDatabaseWorkloadItem>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VmWorkloadSqlDatabaseWorkloadItem>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVmWorkloadSqlDatabaseWorkloadItem(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VmWorkloadSqlDatabaseWorkloadItem>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VmWorkloadSqlDatabaseWorkloadItem>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VmWorkloadSqlDatabaseWorkloadItem IModelSerializable<VmWorkloadSqlDatabaseWorkloadItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VmWorkloadSqlDatabaseWorkloadItem>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVmWorkloadSqlDatabaseWorkloadItem(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VmWorkloadSqlDatabaseWorkloadItem"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VmWorkloadSqlDatabaseWorkloadItem"/> to convert. </param>
+        public static implicit operator RequestContent(VmWorkloadSqlDatabaseWorkloadItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VmWorkloadSqlDatabaseWorkloadItem"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VmWorkloadSqlDatabaseWorkloadItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVmWorkloadSqlDatabaseWorkloadItem(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

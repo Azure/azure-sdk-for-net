@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    internal partial class UnknownAutomationRuleCondition : IUtf8JsonSerializable
+    internal partial class UnknownAutomationRuleCondition : IUtf8JsonSerializable, IModelJsonSerializable<SecurityInsightsAutomationRuleCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityInsightsAutomationRuleCondition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityInsightsAutomationRuleCondition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAutomationRuleCondition>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("conditionType"u8);
             writer.WriteStringValue(ConditionType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownAutomationRuleCondition DeserializeUnknownAutomationRuleCondition(JsonElement element)
+        internal static SecurityInsightsAutomationRuleCondition DeserializeUnknownAutomationRuleCondition(JsonElement element, ModelSerializerOptions options = default) => DeserializeSecurityInsightsAutomationRuleCondition(element, options);
+
+        SecurityInsightsAutomationRuleCondition IModelJsonSerializable<SecurityInsightsAutomationRuleCondition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            ConditionType conditionType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("conditionType"u8))
-                {
-                    conditionType = new ConditionType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownAutomationRuleCondition(conditionType);
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAutomationRuleCondition>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownAutomationRuleCondition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityInsightsAutomationRuleCondition>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAutomationRuleCondition>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityInsightsAutomationRuleCondition IModelSerializable<SecurityInsightsAutomationRuleCondition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAutomationRuleCondition>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityInsightsAutomationRuleCondition(doc.RootElement, options);
         }
     }
 }

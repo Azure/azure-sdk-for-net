@@ -5,18 +5,21 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Hyper-V Replica Blue specific protection profile details. </summary>
     public partial class HyperVReplicaPolicyDetails : PolicyProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of HyperVReplicaPolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaPolicyDetails"/>. </summary>
         internal HyperVReplicaPolicyDetails()
         {
             InstanceType = "HyperVReplica2012";
         }
 
-        /// <summary> Initializes a new instance of HyperVReplicaPolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaPolicyDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <param name="recoveryPoints"> A value indicating the number of recovery points. </param>
         /// <param name="applicationConsistentSnapshotFrequencyInHours"> A value indicating the application consistent frequency. </param>
@@ -28,7 +31,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="replicationPort"> A value indicating the recovery HTTPS port. </param>
         /// <param name="allowedAuthenticationType"> A value indicating the authentication type. </param>
         /// <param name="replicaDeletionOption"> A value indicating whether the VM has to be auto deleted. Supported Values: String.Empty, None, OnRecoveryCloud. </param>
-        internal HyperVReplicaPolicyDetails(string instanceType, int? recoveryPoints, int? applicationConsistentSnapshotFrequencyInHours, string compression, string initialReplicationMethod, string onlineReplicationStartTime, string offlineReplicationImportPath, string offlineReplicationExportPath, int? replicationPort, int? allowedAuthenticationType, string replicaDeletionOption) : base(instanceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HyperVReplicaPolicyDetails(string instanceType, int? recoveryPoints, int? applicationConsistentSnapshotFrequencyInHours, string compression, string initialReplicationMethod, string onlineReplicationStartTime, string offlineReplicationImportPath, string offlineReplicationExportPath, int? replicationPort, int? allowedAuthenticationType, string replicaDeletionOption, Dictionary<string, BinaryData> rawData) : base(instanceType, rawData)
         {
             RecoveryPoints = recoveryPoints;
             ApplicationConsistentSnapshotFrequencyInHours = applicationConsistentSnapshotFrequencyInHours;

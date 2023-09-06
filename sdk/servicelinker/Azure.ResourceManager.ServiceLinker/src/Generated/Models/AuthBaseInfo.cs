@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// Please note <see cref="AuthBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownAuthInfoBase))]
     public abstract partial class AuthBaseInfo
     {
-        /// <summary> Initializes a new instance of AuthBaseInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AuthBaseInfo"/>. </summary>
         protected AuthBaseInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AuthBaseInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthBaseInfo"/>. </summary>
         /// <param name="authType"> The authentication type. </param>
-        internal AuthBaseInfo(LinkerAuthType authType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AuthBaseInfo(LinkerAuthType authType, Dictionary<string, BinaryData> rawData)
         {
             AuthType = authType;
+            _rawData = rawData;
         }
 
         /// <summary> The authentication type. </summary>

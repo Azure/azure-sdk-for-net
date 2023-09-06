@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SqlSynapseLinkWorkspace : IUtf8JsonSerializable
+    public partial class SqlSynapseLinkWorkspace : IUtf8JsonSerializable, IModelJsonSerializable<SqlSynapseLinkWorkspace>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SqlSynapseLinkWorkspace>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SqlSynapseLinkWorkspace>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SqlSynapseLinkWorkspace>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -25,16 +32,37 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Workspaces)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SqlSynapseLinkWorkspaceInfo>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlSynapseLinkWorkspace DeserializeSqlSynapseLinkWorkspace(JsonElement element)
+        internal static SqlSynapseLinkWorkspace DeserializeSqlSynapseLinkWorkspace(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -44,6 +72,7 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<IList<SqlSynapseLinkWorkspaceInfo>> workspaces = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -96,8 +125,61 @@ namespace Azure.ResourceManager.Sql.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SqlSynapseLinkWorkspace(id, name, type, systemData.Value, Optional.ToList(workspaces));
+            return new SqlSynapseLinkWorkspace(id, name, type, systemData.Value, Optional.ToList(workspaces), rawData);
+        }
+
+        SqlSynapseLinkWorkspace IModelJsonSerializable<SqlSynapseLinkWorkspace>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SqlSynapseLinkWorkspace>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlSynapseLinkWorkspace(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SqlSynapseLinkWorkspace>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SqlSynapseLinkWorkspace>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SqlSynapseLinkWorkspace IModelSerializable<SqlSynapseLinkWorkspace>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SqlSynapseLinkWorkspace>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSqlSynapseLinkWorkspace(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SqlSynapseLinkWorkspace"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SqlSynapseLinkWorkspace"/> to convert. </param>
+        public static implicit operator RequestContent(SqlSynapseLinkWorkspace model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SqlSynapseLinkWorkspace"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SqlSynapseLinkWorkspace(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSqlSynapseLinkWorkspace(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

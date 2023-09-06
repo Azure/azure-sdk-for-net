@@ -15,14 +15,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Information protection policy. </summary>
     public partial class InformationProtectionPolicy : ResourceData
     {
-        /// <summary> Initializes a new instance of InformationProtectionPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InformationProtectionPolicy"/>. </summary>
         public InformationProtectionPolicy()
         {
             Labels = new ChangeTrackingDictionary<string, SensitivityLabel>();
             InformationTypes = new ChangeTrackingDictionary<string, SecurityInformationTypeInfo>();
         }
 
-        /// <summary> Initializes a new instance of InformationProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="InformationProtectionPolicy"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,12 +34,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="version"> Describes the version of the policy. </param>
         /// <param name="labels"> Dictionary of sensitivity labels. </param>
         /// <param name="informationTypes"> The sensitivity information types. </param>
-        internal InformationProtectionPolicy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedUtc, string version, IDictionary<string, SensitivityLabel> labels, IDictionary<string, SecurityInformationTypeInfo> informationTypes) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InformationProtectionPolicy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedUtc, string version, IDictionary<string, SensitivityLabel> labels, IDictionary<string, SecurityInformationTypeInfo> informationTypes, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             LastModifiedUtc = lastModifiedUtc;
             Version = version;
             Labels = labels;
             InformationTypes = informationTypes;
+            _rawData = rawData;
         }
 
         /// <summary> Describes the last UTC time the policy was modified. </summary>

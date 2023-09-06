@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The ARC autoprovisioning configuration. </summary>
     internal partial class DefenderForServersGcpOfferingArcAutoProvisioning
     {
-        /// <summary> Initializes a new instance of DefenderForServersGcpOfferingArcAutoProvisioning. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DefenderForServersGcpOfferingArcAutoProvisioning"/>. </summary>
         public DefenderForServersGcpOfferingArcAutoProvisioning()
         {
         }
 
-        /// <summary> Initializes a new instance of DefenderForServersGcpOfferingArcAutoProvisioning. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForServersGcpOfferingArcAutoProvisioning"/>. </summary>
         /// <param name="isEnabled"> Is arc auto provisioning enabled. </param>
-        internal DefenderForServersGcpOfferingArcAutoProvisioning(bool? isEnabled)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DefenderForServersGcpOfferingArcAutoProvisioning(bool? isEnabled, Dictionary<string, BinaryData> rawData)
         {
             IsEnabled = isEnabled;
+            _rawData = rawData;
         }
 
         /// <summary> Is arc auto provisioning enabled. </summary>

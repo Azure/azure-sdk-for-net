@@ -8,95 +8,103 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    internal partial class UnknownResourceCertificateDetails
+    internal partial class UnknownResourceCertificateDetails : IUtf8JsonSerializable, IModelJsonSerializable<ResourceCertificateDetails>
     {
-        internal static UnknownResourceCertificateDetails DeserializeUnknownResourceCertificateDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceCertificateDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceCertificateDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            Core.ModelSerializerHelper.ValidateFormat<ResourceCertificateDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("authType"u8);
+            writer.WriteStringValue(AuthType);
+            if (Optional.IsDefined(Certificate))
             {
-                return null;
+                writer.WritePropertyName("certificate"u8);
+                writer.WriteBase64StringValue(Certificate, "D");
             }
-            string authType = "Unknown";
-            Optional<byte[]> certificate = default;
-            Optional<string> friendlyName = default;
-            Optional<string> issuer = default;
-            Optional<long> resourceId = default;
-            Optional<string> subject = default;
-            Optional<BinaryData> thumbprint = default;
-            Optional<DateTimeOffset> validFrom = default;
-            Optional<DateTimeOffset> validTo = default;
-            foreach (var property in element.EnumerateObject())
+            if (Optional.IsDefined(FriendlyName))
             {
-                if (property.NameEquals("authType"u8))
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
+            if (Optional.IsDefined(Issuer))
+            {
+                writer.WritePropertyName("issuer"u8);
+                writer.WriteStringValue(Issuer);
+            }
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteNumberValue(ResourceId.Value);
+            }
+            if (Optional.IsDefined(Subject))
+            {
+                writer.WritePropertyName("subject"u8);
+                writer.WriteStringValue(Subject);
+            }
+            if (Optional.IsDefined(Thumbprint))
+            {
+                writer.WritePropertyName("thumbprint"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Thumbprint);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Thumbprint.ToString()).RootElement);
+#endif
+            }
+            if (Optional.IsDefined(ValidStartOn))
+            {
+                writer.WritePropertyName("validFrom"u8);
+                writer.WriteStringValue(ValidStartOn.Value, "O");
+            }
+            if (Optional.IsDefined(ValidEndOn))
+            {
+                writer.WritePropertyName("validTo"u8);
+                writer.WriteStringValue(ValidEndOn.Value, "O");
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
                 {
-                    authType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("certificate"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    certificate = property.Value.GetBytesFromBase64("D");
-                    continue;
-                }
-                if (property.NameEquals("friendlyName"u8))
-                {
-                    friendlyName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("issuer"u8))
-                {
-                    issuer = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resourceId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceId = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("subject"u8))
-                {
-                    subject = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("thumbprint"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    thumbprint = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("validFrom"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    validFrom = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("validTo"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    validTo = property.Value.GetDateTimeOffset("O");
-                    continue;
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
                 }
             }
-            return new UnknownResourceCertificateDetails(authType, certificate.Value, friendlyName.Value, issuer.Value, Optional.ToNullable(resourceId), subject.Value, thumbprint.Value, Optional.ToNullable(validFrom), Optional.ToNullable(validTo));
+            writer.WriteEndObject();
+        }
+
+        internal static ResourceCertificateDetails DeserializeUnknownResourceCertificateDetails(JsonElement element, ModelSerializerOptions options = default) => DeserializeResourceCertificateDetails(element, options);
+
+        ResourceCertificateDetails IModelJsonSerializable<ResourceCertificateDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceCertificateDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownResourceCertificateDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceCertificateDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceCertificateDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceCertificateDetails IModelSerializable<ResourceCertificateDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceCertificateDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceCertificateDetails(doc.RootElement, options);
         }
     }
 }

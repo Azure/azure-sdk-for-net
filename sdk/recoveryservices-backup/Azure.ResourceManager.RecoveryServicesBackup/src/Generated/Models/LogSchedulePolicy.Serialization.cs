@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class LogSchedulePolicy : IUtf8JsonSerializable
+    public partial class LogSchedulePolicy : IUtf8JsonSerializable, IModelJsonSerializable<LogSchedulePolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LogSchedulePolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LogSchedulePolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LogSchedulePolicy>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ScheduleFrequencyInMins))
             {
@@ -22,17 +30,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             writer.WritePropertyName("schedulePolicyType"u8);
             writer.WriteStringValue(SchedulePolicyType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LogSchedulePolicy DeserializeLogSchedulePolicy(JsonElement element)
+        internal static LogSchedulePolicy DeserializeLogSchedulePolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> scheduleFrequencyInMins = default;
             string schedulePolicyType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scheduleFrequencyInMins"u8))
@@ -49,8 +72,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     schedulePolicyType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LogSchedulePolicy(schedulePolicyType, Optional.ToNullable(scheduleFrequencyInMins));
+            return new LogSchedulePolicy(schedulePolicyType, Optional.ToNullable(scheduleFrequencyInMins), rawData);
+        }
+
+        LogSchedulePolicy IModelJsonSerializable<LogSchedulePolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LogSchedulePolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogSchedulePolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LogSchedulePolicy>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LogSchedulePolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LogSchedulePolicy IModelSerializable<LogSchedulePolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LogSchedulePolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLogSchedulePolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LogSchedulePolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LogSchedulePolicy"/> to convert. </param>
+        public static implicit operator RequestContent(LogSchedulePolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LogSchedulePolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LogSchedulePolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLogSchedulePolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

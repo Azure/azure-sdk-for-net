@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -13,7 +14,10 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A customer-managed encryption key in Azure Key Vault. Keys that you create and manage can be used to encrypt or decrypt data-at-rest in Azure Cognitive Search, such as indexes and synonym maps. </summary>
     public partial class SearchResourceEncryptionKey
     {
-        /// <summary> Initializes a new instance of SearchResourceEncryptionKey. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchResourceEncryptionKey"/>. </summary>
         /// <param name="keyName"> The name of your Azure Key Vault key to be used to encrypt your data at rest. </param>
         /// <param name="keyVersion"> The version of your Azure Key Vault key to be used to encrypt your data at rest. </param>
         /// <param name="vaultUri"> The URI of your Azure Key Vault, also referred to as DNS name, that contains the key to be used to encrypt your data at rest. An example URI might be https://my-keyvault-name.vault.azure.net. </param>
@@ -23,13 +27,20 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
         /// </param>
-        internal SearchResourceEncryptionKey(string keyName, string keyVersion, string vaultUri, AzureActiveDirectoryApplicationCredentials accessCredentialsInternal, SearchIndexerDataIdentity identity)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchResourceEncryptionKey(string keyName, string keyVersion, string vaultUri, AzureActiveDirectoryApplicationCredentials accessCredentialsInternal, SearchIndexerDataIdentity identity, Dictionary<string, BinaryData> rawData)
         {
             KeyName = keyName;
             KeyVersion = keyVersion;
             _vaultUri = vaultUri;
             AccessCredentialsInternal = accessCredentialsInternal;
             Identity = identity;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchResourceEncryptionKey"/> for deserialization. </summary>
+        internal SearchResourceEncryptionKey()
+        {
         }
         /// <summary>
         /// An explicit managed identity to use for this encryption key. If not specified and the access credentials property is null, the system-assigned managed identity is used. On update to the resource, if the explicit identity is unspecified, it remains unchanged. If "none" is specified, the value of this property is cleared.

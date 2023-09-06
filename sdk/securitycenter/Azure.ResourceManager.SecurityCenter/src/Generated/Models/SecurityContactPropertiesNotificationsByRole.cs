@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Defines whether to send email notifications from Microsoft Defender for Cloud to persons with specific RBAC roles on the subscription. </summary>
     public partial class SecurityContactPropertiesNotificationsByRole
     {
-        /// <summary> Initializes a new instance of SecurityContactPropertiesNotificationsByRole. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityContactPropertiesNotificationsByRole"/>. </summary>
         public SecurityContactPropertiesNotificationsByRole()
         {
             Roles = new ChangeTrackingList<SecurityAlertReceivingRole>();
         }
 
-        /// <summary> Initializes a new instance of SecurityContactPropertiesNotificationsByRole. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityContactPropertiesNotificationsByRole"/>. </summary>
         /// <param name="state"> Defines whether to send email notifications from AMicrosoft Defender for Cloud to persons with specific RBAC roles on the subscription. </param>
         /// <param name="roles"> Defines which RBAC roles will get email notifications from Microsoft Defender for Cloud. List of allowed RBAC roles:. </param>
-        internal SecurityContactPropertiesNotificationsByRole(SecurityAlertNotificationByRoleState? state, IList<SecurityAlertReceivingRole> roles)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityContactPropertiesNotificationsByRole(SecurityAlertNotificationByRoleState? state, IList<SecurityAlertReceivingRole> roles, Dictionary<string, BinaryData> rawData)
         {
             State = state;
             Roles = roles;
+            _rawData = rawData;
         }
 
         /// <summary> Defines whether to send email notifications from AMicrosoft Defender for Cloud to persons with specific RBAC roles on the subscription. </summary>

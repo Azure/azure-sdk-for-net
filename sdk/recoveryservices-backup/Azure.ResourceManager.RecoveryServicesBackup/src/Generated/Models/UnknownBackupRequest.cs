@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> The UnknownBackupRequest. </summary>
     internal partial class UnknownBackupRequest : BackupContent
     {
-        /// <summary> Initializes a new instance of UnknownBackupRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownBackupRequest"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        internal UnknownBackupRequest(string objectType) : base(objectType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownBackupRequest(string objectType, Dictionary<string, BinaryData> rawData) : base(objectType, rawData)
         {
             ObjectType = objectType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownBackupRequest"/> for deserialization. </summary>
+        internal UnknownBackupRequest()
+        {
         }
     }
 }

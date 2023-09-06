@@ -6,15 +6,100 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationRefundResponseProperties
+    public partial class ReservationRefundResponseProperties : IUtf8JsonSerializable, IModelJsonSerializable<ReservationRefundResponseProperties>
     {
-        internal static ReservationRefundResponseProperties DeserializeReservationRefundResponseProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ReservationRefundResponseProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ReservationRefundResponseProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ReservationRefundResponseProperties>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SessionId))
+            {
+                writer.WritePropertyName("sessionId"u8);
+                writer.WriteStringValue(SessionId.Value);
+            }
+            if (Optional.IsDefined(Quantity))
+            {
+                writer.WritePropertyName("quantity"u8);
+                writer.WriteNumberValue(Quantity.Value);
+            }
+            if (Optional.IsDefined(BillingRefundAmount))
+            {
+                writer.WritePropertyName("billingRefundAmount"u8);
+                if (BillingRefundAmount is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PurchasePrice>)BillingRefundAmount).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(PricingRefundAmount))
+            {
+                writer.WritePropertyName("pricingRefundAmount"u8);
+                if (PricingRefundAmount is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PurchasePrice>)PricingRefundAmount).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(PolicyResult))
+            {
+                writer.WritePropertyName("policyResult"u8);
+                if (PolicyResult is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RefundPolicyResult>)PolicyResult).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(BillingInformation))
+            {
+                writer.WritePropertyName("billingInformation"u8);
+                if (BillingInformation is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ReservationRefundBillingInformation>)BillingInformation).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ReservationRefundResponseProperties DeserializeReservationRefundResponseProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +110,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<PurchasePrice> pricingRefundAmount = default;
             Optional<RefundPolicyResult> policyResult = default;
             Optional<ReservationRefundBillingInformation> billingInformation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sessionId"u8))
@@ -81,8 +167,61 @@ namespace Azure.ResourceManager.Reservations.Models
                     billingInformation = ReservationRefundBillingInformation.DeserializeReservationRefundBillingInformation(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ReservationRefundResponseProperties(Optional.ToNullable(sessionId), Optional.ToNullable(quantity), billingRefundAmount.Value, pricingRefundAmount.Value, policyResult.Value, billingInformation.Value);
+            return new ReservationRefundResponseProperties(Optional.ToNullable(sessionId), Optional.ToNullable(quantity), billingRefundAmount.Value, pricingRefundAmount.Value, policyResult.Value, billingInformation.Value, rawData);
+        }
+
+        ReservationRefundResponseProperties IModelJsonSerializable<ReservationRefundResponseProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReservationRefundResponseProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeReservationRefundResponseProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ReservationRefundResponseProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReservationRefundResponseProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ReservationRefundResponseProperties IModelSerializable<ReservationRefundResponseProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReservationRefundResponseProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeReservationRefundResponseProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ReservationRefundResponseProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ReservationRefundResponseProperties"/> to convert. </param>
+        public static implicit operator RequestContent(ReservationRefundResponseProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ReservationRefundResponseProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ReservationRefundResponseProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeReservationRefundResponseProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageAzureV2SwitchProviderBlockingErrorDetails
+    public partial class InMageAzureV2SwitchProviderBlockingErrorDetails : IUtf8JsonSerializable, IModelJsonSerializable<InMageAzureV2SwitchProviderBlockingErrorDetails>
     {
-        internal static InMageAzureV2SwitchProviderBlockingErrorDetails DeserializeInMageAzureV2SwitchProviderBlockingErrorDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InMageAzureV2SwitchProviderBlockingErrorDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InMageAzureV2SwitchProviderBlockingErrorDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<InMageAzureV2SwitchProviderBlockingErrorDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static InMageAzureV2SwitchProviderBlockingErrorDetails DeserializeInMageAzureV2SwitchProviderBlockingErrorDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> recommendedAction = default;
             Optional<IReadOnlyDictionary<string, string>> errorMessageParameters = default;
             Optional<IReadOnlyDictionary<string, string>> errorTags = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorCode"u8))
@@ -75,8 +103,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     errorTags = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InMageAzureV2SwitchProviderBlockingErrorDetails(errorCode.Value, errorMessage.Value, possibleCauses.Value, recommendedAction.Value, Optional.ToDictionary(errorMessageParameters), Optional.ToDictionary(errorTags));
+            return new InMageAzureV2SwitchProviderBlockingErrorDetails(errorCode.Value, errorMessage.Value, possibleCauses.Value, recommendedAction.Value, Optional.ToDictionary(errorMessageParameters), Optional.ToDictionary(errorTags), rawData);
+        }
+
+        InMageAzureV2SwitchProviderBlockingErrorDetails IModelJsonSerializable<InMageAzureV2SwitchProviderBlockingErrorDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageAzureV2SwitchProviderBlockingErrorDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageAzureV2SwitchProviderBlockingErrorDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InMageAzureV2SwitchProviderBlockingErrorDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageAzureV2SwitchProviderBlockingErrorDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InMageAzureV2SwitchProviderBlockingErrorDetails IModelSerializable<InMageAzureV2SwitchProviderBlockingErrorDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageAzureV2SwitchProviderBlockingErrorDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInMageAzureV2SwitchProviderBlockingErrorDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InMageAzureV2SwitchProviderBlockingErrorDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InMageAzureV2SwitchProviderBlockingErrorDetails"/> to convert. </param>
+        public static implicit operator RequestContent(InMageAzureV2SwitchProviderBlockingErrorDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InMageAzureV2SwitchProviderBlockingErrorDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InMageAzureV2SwitchProviderBlockingErrorDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInMageAzureV2SwitchProviderBlockingErrorDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

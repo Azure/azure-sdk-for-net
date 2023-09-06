@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,22 +15,27 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A TDE certificate that can be uploaded into a server. </summary>
     public partial class TdeCertificate : ResourceData
     {
-        /// <summary> Initializes a new instance of TdeCertificate. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TdeCertificate"/>. </summary>
         public TdeCertificate()
         {
         }
 
-        /// <summary> Initializes a new instance of TdeCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="TdeCertificate"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="privateBlob"> The base64 encoded certificate private blob. </param>
         /// <param name="certPassword"> The certificate password. </param>
-        internal TdeCertificate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string privateBlob, string certPassword) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TdeCertificate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string privateBlob, string certPassword, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             PrivateBlob = privateBlob;
             CertPassword = certPassword;
+            _rawData = rawData;
         }
 
         /// <summary> The base64 encoded certificate private blob. </summary>

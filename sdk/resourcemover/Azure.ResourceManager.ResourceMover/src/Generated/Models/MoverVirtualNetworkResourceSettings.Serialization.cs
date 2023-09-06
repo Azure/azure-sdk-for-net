@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class MoverVirtualNetworkResourceSettings : IUtf8JsonSerializable
+    public partial class MoverVirtualNetworkResourceSettings : IUtf8JsonSerializable, IModelJsonSerializable<MoverVirtualNetworkResourceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MoverVirtualNetworkResourceSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MoverVirtualNetworkResourceSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MoverVirtualNetworkResourceSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteStartArray();
                     foreach (var item in Subnets)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item is null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IModelJsonSerializable<SubnetResourceSettings>)item).Serialize(writer, options);
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -101,11 +115,25 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteStringValue(ResourceType);
             writer.WritePropertyName("targetResourceName"u8);
             writer.WriteStringValue(TargetResourceName);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MoverVirtualNetworkResourceSettings DeserializeMoverVirtualNetworkResourceSettings(JsonElement element)
+        internal static MoverVirtualNetworkResourceSettings DeserializeMoverVirtualNetworkResourceSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -117,6 +145,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<IList<SubnetResourceSettings>> subnets = default;
             string resourceType = default;
             string targetResourceName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -199,8 +228,61 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     targetResourceName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MoverVirtualNetworkResourceSettings(resourceType, targetResourceName, Optional.ToDictionary(tags), Optional.ToNullable(enableDdosProtection), Optional.ToList(addressSpace), Optional.ToList(dnsServers), Optional.ToList(subnets));
+            return new MoverVirtualNetworkResourceSettings(resourceType, targetResourceName, Optional.ToDictionary(tags), Optional.ToNullable(enableDdosProtection), Optional.ToList(addressSpace), Optional.ToList(dnsServers), Optional.ToList(subnets), rawData);
+        }
+
+        MoverVirtualNetworkResourceSettings IModelJsonSerializable<MoverVirtualNetworkResourceSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MoverVirtualNetworkResourceSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMoverVirtualNetworkResourceSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MoverVirtualNetworkResourceSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MoverVirtualNetworkResourceSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MoverVirtualNetworkResourceSettings IModelSerializable<MoverVirtualNetworkResourceSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MoverVirtualNetworkResourceSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMoverVirtualNetworkResourceSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MoverVirtualNetworkResourceSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MoverVirtualNetworkResourceSettings"/> to convert. </param>
+        public static implicit operator RequestContent(MoverVirtualNetworkResourceSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MoverVirtualNetworkResourceSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MoverVirtualNetworkResourceSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMoverVirtualNetworkResourceSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

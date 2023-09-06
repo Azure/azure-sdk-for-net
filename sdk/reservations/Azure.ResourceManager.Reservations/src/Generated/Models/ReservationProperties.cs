@@ -14,13 +14,16 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The properties of the reservations. </summary>
     public partial class ReservationProperties
     {
-        /// <summary> Initializes a new instance of ReservationProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationProperties"/>. </summary>
         internal ReservationProperties()
         {
             AppliedScopes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ReservationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationProperties"/>. </summary>
         /// <param name="reservedResourceType"> The type of the resource that is being reserved. </param>
         /// <param name="instanceFlexibility"> Allows reservation discount to be applied across skus within the same auto fit group. Not all skus support instance size flexibility. </param>
         /// <param name="displayName"> Friendly name for user to easily identify the reservation. </param>
@@ -56,7 +59,8 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="userFriendlyAppliedScopeType"> The applied scope type of the reservation for display, e.g. Shared. </param>
         /// <param name="userFriendlyRenewState"> The renew state of the reservation for display, e.g. On. </param>
         /// <param name="utilization"> Reservation utilization. </param>
-        internal ReservationProperties(ReservedResourceType? reservedResourceType, InstanceFlexibility? instanceFlexibility, string displayName, IReadOnlyList<string> appliedScopes, AppliedScopeType? appliedScopeType, bool? isArchived, string capabilities, int? quantity, ReservationProvisioningState? provisioningState, DateTimeOffset? effectOn, DateTimeOffset? benefitStartOn, DateTimeOffset? lastUpdatedOn, DateTimeOffset? expireOn, DateTimeOffset? reservationExpireOn, DateTimeOffset? reviewOn, string skuDescription, ExtendedStatusInfo extendedStatusInfo, ReservationBillingPlan? billingPlan, string displayProvisioningState, string provisioningSubState, DateTimeOffset? purchaseOn, DateTimeOffset? reservationPurchaseOn, ReservationSplitProperties splitProperties, ReservationMergeProperties mergeProperties, ReservationSwapProperties swapProperties, AppliedScopeProperties appliedScopeProperties, ResourceIdentifier billingScopeId, bool? isRenewEnabled, string renewSource, string renewDestination, RenewProperties renewProperties, ReservationTerm? term, string userFriendlyAppliedScopeType, string userFriendlyRenewState, ReservationPropertiesUtilization utilization)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationProperties(ReservedResourceType? reservedResourceType, InstanceFlexibility? instanceFlexibility, string displayName, IReadOnlyList<string> appliedScopes, AppliedScopeType? appliedScopeType, bool? isArchived, string capabilities, int? quantity, ReservationProvisioningState? provisioningState, DateTimeOffset? effectOn, DateTimeOffset? benefitStartOn, DateTimeOffset? lastUpdatedOn, DateTimeOffset? expireOn, DateTimeOffset? reservationExpireOn, DateTimeOffset? reviewOn, string skuDescription, ExtendedStatusInfo extendedStatusInfo, ReservationBillingPlan? billingPlan, string displayProvisioningState, string provisioningSubState, DateTimeOffset? purchaseOn, DateTimeOffset? reservationPurchaseOn, ReservationSplitProperties splitProperties, ReservationMergeProperties mergeProperties, ReservationSwapProperties swapProperties, AppliedScopeProperties appliedScopeProperties, ResourceIdentifier billingScopeId, bool? isRenewEnabled, string renewSource, string renewDestination, RenewProperties renewProperties, ReservationTerm? term, string userFriendlyAppliedScopeType, string userFriendlyRenewState, ReservationPropertiesUtilization utilization, Dictionary<string, BinaryData> rawData)
         {
             ReservedResourceType = reservedResourceType;
             InstanceFlexibility = instanceFlexibility;
@@ -93,6 +97,7 @@ namespace Azure.ResourceManager.Reservations.Models
             UserFriendlyAppliedScopeType = userFriendlyAppliedScopeType;
             UserFriendlyRenewState = userFriendlyRenewState;
             Utilization = utilization;
+            _rawData = rawData;
         }
 
         /// <summary> The type of the resource that is being reserved. </summary>

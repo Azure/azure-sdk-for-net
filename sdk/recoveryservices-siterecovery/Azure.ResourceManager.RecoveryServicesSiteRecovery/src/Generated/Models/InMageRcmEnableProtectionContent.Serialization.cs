@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmEnableProtectionContent : IUtf8JsonSerializable
+    public partial class InMageRcmEnableProtectionContent : IUtf8JsonSerializable, IModelJsonSerializable<InMageRcmEnableProtectionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InMageRcmEnableProtectionContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InMageRcmEnableProtectionContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<InMageRcmEnableProtectionContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("fabricDiscoveryMachineId"u8);
             writer.WriteStringValue(FabricDiscoveryMachineId);
@@ -23,14 +31,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in DisksToInclude)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<InMageRcmDiskContent>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DisksDefault))
             {
                 writer.WritePropertyName("disksDefault"u8);
-                writer.WriteObjectValue(DisksDefault);
+                if (DisksDefault is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<InMageRcmDisksDefaultContent>)DisksDefault).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("targetResourceGroupId"u8);
             writer.WriteStringValue(TargetResourceGroupId);
@@ -103,7 +125,238 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static InMageRcmEnableProtectionContent DeserializeInMageRcmEnableProtectionContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string fabricDiscoveryMachineId = default;
+            Optional<IList<InMageRcmDiskContent>> disksToInclude = default;
+            Optional<InMageRcmDisksDefaultContent> disksDefault = default;
+            ResourceIdentifier targetResourceGroupId = default;
+            Optional<ResourceIdentifier> targetNetworkId = default;
+            Optional<ResourceIdentifier> testNetworkId = default;
+            Optional<string> targetSubnetName = default;
+            Optional<string> testSubnetName = default;
+            Optional<string> targetVmName = default;
+            Optional<string> targetVmSize = default;
+            Optional<SiteRecoveryLicenseType> licenseType = default;
+            Optional<ResourceIdentifier> targetAvailabilitySetId = default;
+            Optional<string> targetAvailabilityZone = default;
+            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
+            Optional<ResourceIdentifier> targetBootDiagnosticsStorageAccountId = default;
+            Optional<string> runAsAccountId = default;
+            Guid processServerId = default;
+            Optional<string> multiVmGroupName = default;
+            string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("fabricDiscoveryMachineId"u8))
+                {
+                    fabricDiscoveryMachineId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("disksToInclude"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<InMageRcmDiskContent> array = new List<InMageRcmDiskContent>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(InMageRcmDiskContent.DeserializeInMageRcmDiskContent(item));
+                    }
+                    disksToInclude = array;
+                    continue;
+                }
+                if (property.NameEquals("disksDefault"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    disksDefault = InMageRcmDisksDefaultContent.DeserializeInMageRcmDisksDefaultContent(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("targetResourceGroupId"u8))
+                {
+                    targetResourceGroupId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetNetworkId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetNetworkId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("testNetworkId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    testNetworkId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetSubnetName"u8))
+                {
+                    targetSubnetName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("testSubnetName"u8))
+                {
+                    testSubnetName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("targetVmName"u8))
+                {
+                    targetVmName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("targetVmSize"u8))
+                {
+                    targetVmSize = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("licenseType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    licenseType = new SiteRecoveryLicenseType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetAvailabilitySetId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetAvailabilitySetId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetAvailabilityZone"u8))
+                {
+                    targetAvailabilityZone = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("targetProximityPlacementGroupId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetProximityPlacementGroupId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetBootDiagnosticsStorageAccountId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetBootDiagnosticsStorageAccountId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("runAsAccountId"u8))
+                {
+                    runAsAccountId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("processServerId"u8))
+                {
+                    processServerId = property.Value.GetGuid();
+                    continue;
+                }
+                if (property.NameEquals("multiVmGroupName"u8))
+                {
+                    multiVmGroupName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new InMageRcmEnableProtectionContent(instanceType, fabricDiscoveryMachineId, Optional.ToList(disksToInclude), disksDefault.Value, targetResourceGroupId, targetNetworkId.Value, testNetworkId.Value, targetSubnetName.Value, testSubnetName.Value, targetVmName.Value, targetVmSize.Value, Optional.ToNullable(licenseType), targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, targetBootDiagnosticsStorageAccountId.Value, runAsAccountId.Value, processServerId, multiVmGroupName.Value, rawData);
+        }
+
+        InMageRcmEnableProtectionContent IModelJsonSerializable<InMageRcmEnableProtectionContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageRcmEnableProtectionContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageRcmEnableProtectionContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InMageRcmEnableProtectionContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageRcmEnableProtectionContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InMageRcmEnableProtectionContent IModelSerializable<InMageRcmEnableProtectionContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageRcmEnableProtectionContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInMageRcmEnableProtectionContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InMageRcmEnableProtectionContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InMageRcmEnableProtectionContent"/> to convert. </param>
+        public static implicit operator RequestContent(InMageRcmEnableProtectionContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InMageRcmEnableProtectionContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InMageRcmEnableProtectionContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInMageRcmEnableProtectionContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

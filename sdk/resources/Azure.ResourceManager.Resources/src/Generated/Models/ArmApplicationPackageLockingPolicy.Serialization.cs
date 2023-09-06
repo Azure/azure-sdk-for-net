@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmApplicationPackageLockingPolicy : IUtf8JsonSerializable
+    public partial class ArmApplicationPackageLockingPolicy : IUtf8JsonSerializable, IModelJsonSerializable<ArmApplicationPackageLockingPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ArmApplicationPackageLockingPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ArmApplicationPackageLockingPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ArmApplicationPackageLockingPolicy>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AllowedActions))
             {
@@ -36,17 +43,32 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ArmApplicationPackageLockingPolicy DeserializeArmApplicationPackageLockingPolicy(JsonElement element)
+        internal static ArmApplicationPackageLockingPolicy DeserializeArmApplicationPackageLockingPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<string>> allowedActions = default;
             Optional<IList<string>> allowedDataActions = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedActions"u8))
@@ -77,8 +99,61 @@ namespace Azure.ResourceManager.Resources.Models
                     allowedDataActions = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ArmApplicationPackageLockingPolicy(Optional.ToList(allowedActions), Optional.ToList(allowedDataActions));
+            return new ArmApplicationPackageLockingPolicy(Optional.ToList(allowedActions), Optional.ToList(allowedDataActions), rawData);
+        }
+
+        ArmApplicationPackageLockingPolicy IModelJsonSerializable<ArmApplicationPackageLockingPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArmApplicationPackageLockingPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeArmApplicationPackageLockingPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ArmApplicationPackageLockingPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArmApplicationPackageLockingPolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ArmApplicationPackageLockingPolicy IModelSerializable<ArmApplicationPackageLockingPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArmApplicationPackageLockingPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeArmApplicationPackageLockingPolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ArmApplicationPackageLockingPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ArmApplicationPackageLockingPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(ArmApplicationPackageLockingPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ArmApplicationPackageLockingPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ArmApplicationPackageLockingPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeArmApplicationPackageLockingPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

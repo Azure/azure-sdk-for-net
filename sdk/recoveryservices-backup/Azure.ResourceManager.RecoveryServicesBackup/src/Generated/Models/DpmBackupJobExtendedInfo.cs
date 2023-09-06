@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Additional information on the DPM workload-specific job. </summary>
     public partial class DpmBackupJobExtendedInfo
     {
-        /// <summary> Initializes a new instance of DpmBackupJobExtendedInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DpmBackupJobExtendedInfo"/>. </summary>
         public DpmBackupJobExtendedInfo()
         {
             TasksList = new ChangeTrackingList<DpmBackupJobTaskDetails>();
             PropertyBag = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DpmBackupJobExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DpmBackupJobExtendedInfo"/>. </summary>
         /// <param name="tasksList"> List of tasks associated with this job. </param>
         /// <param name="propertyBag"> The job properties. </param>
         /// <param name="dynamicErrorMessage"> Non localized error message on job execution. </param>
-        internal DpmBackupJobExtendedInfo(IList<DpmBackupJobTaskDetails> tasksList, IDictionary<string, string> propertyBag, string dynamicErrorMessage)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DpmBackupJobExtendedInfo(IList<DpmBackupJobTaskDetails> tasksList, IDictionary<string, string> propertyBag, string dynamicErrorMessage, Dictionary<string, BinaryData> rawData)
         {
             TasksList = tasksList;
             PropertyBag = propertyBag;
             DynamicErrorMessage = dynamicErrorMessage;
+            _rawData = rawData;
         }
 
         /// <summary> List of tasks associated with this job. </summary>

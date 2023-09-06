@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Replication protected item collection. </summary>
     internal partial class ReplicationProtectedItemListResult
     {
-        /// <summary> Initializes a new instance of ReplicationProtectedItemListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReplicationProtectedItemListResult"/>. </summary>
         internal ReplicationProtectedItemListResult()
         {
             Value = new ChangeTrackingList<ReplicationProtectedItemData>();
         }
 
-        /// <summary> Initializes a new instance of ReplicationProtectedItemListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationProtectedItemListResult"/>. </summary>
         /// <param name="value"> The Replication protected item details. </param>
         /// <param name="nextLink"> The value of next link. </param>
-        internal ReplicationProtectedItemListResult(IReadOnlyList<ReplicationProtectedItemData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReplicationProtectedItemListResult(IReadOnlyList<ReplicationProtectedItemData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The Replication protected item details. </summary>

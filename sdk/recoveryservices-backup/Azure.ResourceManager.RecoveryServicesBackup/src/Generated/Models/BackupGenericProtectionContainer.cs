@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
@@ -12,14 +16,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Please note <see cref="BackupGenericProtectionContainer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="BackupServerContainer"/>, <see cref="SqlContainer"/>, <see cref="WorkloadContainer"/>, <see cref="DpmContainer"/>, <see cref="GenericContainer"/>, <see cref="IaasVmContainer"/>, <see cref="IaasClassicComputeVmContainer"/>, <see cref="IaasComputeVmContainer"/>, <see cref="SqlAvailabilityGroupWorkloadProtectionContainer"/>, <see cref="StorageContainer"/>, <see cref="VmAppContainerProtectionContainer"/> and <see cref="MabContainer"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownProtectionContainer))]
     public abstract partial class BackupGenericProtectionContainer
     {
-        /// <summary> Initializes a new instance of BackupGenericProtectionContainer. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupGenericProtectionContainer"/>. </summary>
         protected BackupGenericProtectionContainer()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupGenericProtectionContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupGenericProtectionContainer"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the container. </param>
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
@@ -31,7 +39,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Backup is VMAppContainer
         /// </param>
         /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        internal BackupGenericProtectionContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupGenericProtectionContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, Dictionary<string, BinaryData> rawData)
         {
             FriendlyName = friendlyName;
             BackupManagementType = backupManagementType;
@@ -39,6 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             HealthStatus = healthStatus;
             ContainerType = containerType;
             ProtectableObjectType = protectableObjectType;
+            _rawData = rawData;
         }
 
         /// <summary> Friendly name of the container. </summary>

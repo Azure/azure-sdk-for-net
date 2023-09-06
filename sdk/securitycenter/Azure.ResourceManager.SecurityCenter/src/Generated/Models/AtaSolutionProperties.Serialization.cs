@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AtaSolutionProperties : IUtf8JsonSerializable
+    public partial class AtaSolutionProperties : IUtf8JsonSerializable, IModelJsonSerializable<AtaSolutionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AtaSolutionProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AtaSolutionProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AtaSolutionProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LastEventReceived))
             {
@@ -50,8 +56,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static AtaSolutionProperties DeserializeAtaSolutionProperties(JsonElement element)
+        internal static AtaSolutionProperties DeserializeAtaSolutionProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -92,6 +100,54 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AtaSolutionProperties(deviceVendor.Value, deviceType.Value, workspace, additionalProperties, lastEventReceived.Value);
+        }
+
+        AtaSolutionProperties IModelJsonSerializable<AtaSolutionProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AtaSolutionProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAtaSolutionProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AtaSolutionProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AtaSolutionProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AtaSolutionProperties IModelSerializable<AtaSolutionProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AtaSolutionProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAtaSolutionProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AtaSolutionProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AtaSolutionProperties"/> to convert. </param>
+        public static implicit operator RequestContent(AtaSolutionProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AtaSolutionProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AtaSolutionProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAtaSolutionProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

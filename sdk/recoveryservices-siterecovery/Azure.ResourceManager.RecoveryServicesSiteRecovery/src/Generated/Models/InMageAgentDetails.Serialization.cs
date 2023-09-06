@@ -6,15 +6,62 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageAgentDetails
+    public partial class InMageAgentDetails : IUtf8JsonSerializable, IModelJsonSerializable<InMageAgentDetails>
     {
-        internal static InMageAgentDetails DeserializeInMageAgentDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InMageAgentDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InMageAgentDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<InMageAgentDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AgentVersion))
+            {
+                writer.WritePropertyName("agentVersion"u8);
+                writer.WriteStringValue(AgentVersion);
+            }
+            if (Optional.IsDefined(AgentUpdateStatus))
+            {
+                writer.WritePropertyName("agentUpdateStatus"u8);
+                writer.WriteStringValue(AgentUpdateStatus);
+            }
+            if (Optional.IsDefined(PostUpdateRebootStatus))
+            {
+                writer.WritePropertyName("postUpdateRebootStatus"u8);
+                writer.WriteStringValue(PostUpdateRebootStatus);
+            }
+            if (Optional.IsDefined(AgentExpireOn))
+            {
+                writer.WritePropertyName("agentExpiryDate"u8);
+                writer.WriteStringValue(AgentExpireOn.Value, "O");
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static InMageAgentDetails DeserializeInMageAgentDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> agentUpdateStatus = default;
             Optional<string> postUpdateRebootStatus = default;
             Optional<DateTimeOffset> agentExpireOn = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("agentVersion"u8))
@@ -49,8 +97,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     agentExpireOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InMageAgentDetails(agentVersion.Value, agentUpdateStatus.Value, postUpdateRebootStatus.Value, Optional.ToNullable(agentExpireOn));
+            return new InMageAgentDetails(agentVersion.Value, agentUpdateStatus.Value, postUpdateRebootStatus.Value, Optional.ToNullable(agentExpireOn), rawData);
+        }
+
+        InMageAgentDetails IModelJsonSerializable<InMageAgentDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageAgentDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageAgentDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InMageAgentDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageAgentDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InMageAgentDetails IModelSerializable<InMageAgentDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageAgentDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInMageAgentDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InMageAgentDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InMageAgentDetails"/> to convert. </param>
+        public static implicit operator RequestContent(InMageAgentDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InMageAgentDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InMageAgentDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInMageAgentDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

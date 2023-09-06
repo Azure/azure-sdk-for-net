@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasComputeVmContainer : IUtf8JsonSerializable
+    public partial class IaasComputeVmContainer : IUtf8JsonSerializable, IModelJsonSerializable<IaasComputeVmContainer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IaasComputeVmContainer>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IaasComputeVmContainer>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IaasComputeVmContainer>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(VirtualMachineId))
             {
@@ -57,11 +65,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("protectableObjectType"u8);
                 writer.WriteStringValue(ProtectableObjectType);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IaasComputeVmContainer DeserializeIaasComputeVmContainer(JsonElement element)
+        internal static IaasComputeVmContainer DeserializeIaasComputeVmContainer(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -75,6 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> healthStatus = default;
             ProtectableContainerType containerType = default;
             Optional<string> protectableObjectType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualMachineId"u8))
@@ -130,8 +153,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectableObjectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IaasComputeVmContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, virtualMachineId.Value, virtualMachineVersion.Value, resourceGroup.Value);
+            return new IaasComputeVmContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, virtualMachineId.Value, virtualMachineVersion.Value, resourceGroup.Value, rawData);
+        }
+
+        IaasComputeVmContainer IModelJsonSerializable<IaasComputeVmContainer>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IaasComputeVmContainer>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIaasComputeVmContainer(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IaasComputeVmContainer>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IaasComputeVmContainer>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IaasComputeVmContainer IModelSerializable<IaasComputeVmContainer>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IaasComputeVmContainer>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIaasComputeVmContainer(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IaasComputeVmContainer"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IaasComputeVmContainer"/> to convert. </param>
+        public static implicit operator RequestContent(IaasComputeVmContainer model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IaasComputeVmContainer"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IaasComputeVmContainer(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIaasComputeVmContainer(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

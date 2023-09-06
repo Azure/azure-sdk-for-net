@@ -14,23 +14,28 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The ResourceGuardProxyProperties. </summary>
     public partial class ResourceGuardProxyProperties
     {
-        /// <summary> Initializes a new instance of ResourceGuardProxyProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardProxyProperties"/>. </summary>
         public ResourceGuardProxyProperties()
         {
             ResourceGuardOperationDetails = new ChangeTrackingList<ResourceGuardOperationDetail>();
         }
 
-        /// <summary> Initializes a new instance of ResourceGuardProxyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardProxyProperties"/>. </summary>
         /// <param name="resourceGuardResourceId"></param>
         /// <param name="resourceGuardOperationDetails"></param>
         /// <param name="lastUpdatedOn"></param>
         /// <param name="description"></param>
-        internal ResourceGuardProxyProperties(ResourceIdentifier resourceGuardResourceId, IList<ResourceGuardOperationDetail> resourceGuardOperationDetails, DateTimeOffset? lastUpdatedOn, string description)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceGuardProxyProperties(ResourceIdentifier resourceGuardResourceId, IList<ResourceGuardOperationDetail> resourceGuardOperationDetails, DateTimeOffset? lastUpdatedOn, string description, Dictionary<string, BinaryData> rawData)
         {
             ResourceGuardResourceId = resourceGuardResourceId;
             ResourceGuardOperationDetails = resourceGuardOperationDetails;
             LastUpdatedOn = lastUpdatedOn;
             Description = description;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the resource guard resource id. </summary>

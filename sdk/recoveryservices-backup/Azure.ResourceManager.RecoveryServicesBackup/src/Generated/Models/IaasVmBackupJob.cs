@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure IaaS VM workload-specific job object. </summary>
     public partial class IaasVmBackupJob : BackupGenericJob
     {
-        /// <summary> Initializes a new instance of IaasVmBackupJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmBackupJob"/>. </summary>
         public IaasVmBackupJob()
         {
             ActionsInfo = new ChangeTrackingList<JobSupportedAction>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             JobType = "AzureIaaSVMJob";
         }
 
-        /// <summary> Initializes a new instance of IaasVmBackupJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmBackupJob"/>. </summary>
         /// <param name="entityFriendlyName"> Friendly name of the entity on which the current job is executing. </param>
         /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
         /// <param name="operation"> The operation name. </param>
@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="extendedInfo"> Additional information for this job. </param>
         /// <param name="containerName"> Container name of the entity on which the current job is executing. </param>
         /// <param name="isUserTriggered"> Indicated that whether the job is adhoc(true) or scheduled(false). </param>
-        internal IaasVmBackupJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, TimeSpan? duration, IList<JobSupportedAction> actionsInfo, IList<IaasVmErrorInfo> errorDetails, string virtualMachineVersion, IaasVmBackupJobExtendedInfo extendedInfo, string containerName, bool? isUserTriggered) : base(entityFriendlyName, backupManagementType, operation, status, startOn, endOn, activityId, jobType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IaasVmBackupJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, TimeSpan? duration, IList<JobSupportedAction> actionsInfo, IList<IaasVmErrorInfo> errorDetails, string virtualMachineVersion, IaasVmBackupJobExtendedInfo extendedInfo, string containerName, bool? isUserTriggered, Dictionary<string, BinaryData> rawData) : base(entityFriendlyName, backupManagementType, operation, status, startOn, endOn, activityId, jobType, rawData)
         {
             Duration = duration;
             ActionsInfo = actionsInfo;

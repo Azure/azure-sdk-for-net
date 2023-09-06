@@ -5,21 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class RenewPropertiesBillingCurrencyTotal
+    public partial class RenewPropertiesBillingCurrencyTotal : IUtf8JsonSerializable, IModelJsonSerializable<RenewPropertiesBillingCurrencyTotal>
     {
-        internal static RenewPropertiesBillingCurrencyTotal DeserializeRenewPropertiesBillingCurrencyTotal(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RenewPropertiesBillingCurrencyTotal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RenewPropertiesBillingCurrencyTotal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RenewPropertiesBillingCurrencyTotal>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CurrencyCode))
+            {
+                writer.WritePropertyName("currencyCode"u8);
+                writer.WriteStringValue(CurrencyCode);
+            }
+            if (Optional.IsDefined(Amount))
+            {
+                writer.WritePropertyName("amount"u8);
+                writer.WriteNumberValue(Amount.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RenewPropertiesBillingCurrencyTotal DeserializeRenewPropertiesBillingCurrencyTotal(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> currencyCode = default;
             Optional<float> amount = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("currencyCode"u8))
@@ -36,8 +75,61 @@ namespace Azure.ResourceManager.Reservations.Models
                     amount = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RenewPropertiesBillingCurrencyTotal(currencyCode.Value, Optional.ToNullable(amount));
+            return new RenewPropertiesBillingCurrencyTotal(currencyCode.Value, Optional.ToNullable(amount), rawData);
+        }
+
+        RenewPropertiesBillingCurrencyTotal IModelJsonSerializable<RenewPropertiesBillingCurrencyTotal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RenewPropertiesBillingCurrencyTotal>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRenewPropertiesBillingCurrencyTotal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RenewPropertiesBillingCurrencyTotal>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RenewPropertiesBillingCurrencyTotal>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RenewPropertiesBillingCurrencyTotal IModelSerializable<RenewPropertiesBillingCurrencyTotal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RenewPropertiesBillingCurrencyTotal>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRenewPropertiesBillingCurrencyTotal(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RenewPropertiesBillingCurrencyTotal"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RenewPropertiesBillingCurrencyTotal"/> to convert. </param>
+        public static implicit operator RequestContent(RenewPropertiesBillingCurrencyTotal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RenewPropertiesBillingCurrencyTotal"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RenewPropertiesBillingCurrencyTotal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRenewPropertiesBillingCurrencyTotal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

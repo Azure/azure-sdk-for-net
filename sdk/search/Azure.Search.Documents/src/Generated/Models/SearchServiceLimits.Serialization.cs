@@ -5,15 +5,91 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SearchServiceLimits
+    public partial class SearchServiceLimits : IUtf8JsonSerializable, IModelJsonSerializable<SearchServiceLimits>
     {
-        internal static SearchServiceLimits DeserializeSearchServiceLimits(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SearchServiceLimits>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SearchServiceLimits>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SearchServiceLimits>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(MaxFieldsPerIndex))
+            {
+                if (MaxFieldsPerIndex != null)
+                {
+                    writer.WritePropertyName("maxFieldsPerIndex"u8);
+                    writer.WriteNumberValue(MaxFieldsPerIndex.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxFieldsPerIndex");
+                }
+            }
+            if (Optional.IsDefined(MaxFieldNestingDepthPerIndex))
+            {
+                if (MaxFieldNestingDepthPerIndex != null)
+                {
+                    writer.WritePropertyName("maxFieldNestingDepthPerIndex"u8);
+                    writer.WriteNumberValue(MaxFieldNestingDepthPerIndex.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxFieldNestingDepthPerIndex");
+                }
+            }
+            if (Optional.IsDefined(MaxComplexCollectionFieldsPerIndex))
+            {
+                if (MaxComplexCollectionFieldsPerIndex != null)
+                {
+                    writer.WritePropertyName("maxComplexCollectionFieldsPerIndex"u8);
+                    writer.WriteNumberValue(MaxComplexCollectionFieldsPerIndex.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxComplexCollectionFieldsPerIndex");
+                }
+            }
+            if (Optional.IsDefined(MaxComplexObjectsInCollectionsPerDocument))
+            {
+                if (MaxComplexObjectsInCollectionsPerDocument != null)
+                {
+                    writer.WritePropertyName("maxComplexObjectsInCollectionsPerDocument"u8);
+                    writer.WriteNumberValue(MaxComplexObjectsInCollectionsPerDocument.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxComplexObjectsInCollectionsPerDocument");
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SearchServiceLimits DeserializeSearchServiceLimits(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +98,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<int?> maxFieldNestingDepthPerIndex = default;
             Optional<int?> maxComplexCollectionFieldsPerIndex = default;
             Optional<int?> maxComplexObjectsInCollectionsPerDocument = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxFieldsPerIndex"u8))
@@ -64,8 +141,61 @@ namespace Azure.Search.Documents.Indexes.Models
                     maxComplexObjectsInCollectionsPerDocument = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SearchServiceLimits(Optional.ToNullable(maxFieldsPerIndex), Optional.ToNullable(maxFieldNestingDepthPerIndex), Optional.ToNullable(maxComplexCollectionFieldsPerIndex), Optional.ToNullable(maxComplexObjectsInCollectionsPerDocument));
+            return new SearchServiceLimits(Optional.ToNullable(maxFieldsPerIndex), Optional.ToNullable(maxFieldNestingDepthPerIndex), Optional.ToNullable(maxComplexCollectionFieldsPerIndex), Optional.ToNullable(maxComplexObjectsInCollectionsPerDocument), rawData);
+        }
+
+        SearchServiceLimits IModelJsonSerializable<SearchServiceLimits>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SearchServiceLimits>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSearchServiceLimits(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SearchServiceLimits>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SearchServiceLimits>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SearchServiceLimits IModelSerializable<SearchServiceLimits>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SearchServiceLimits>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSearchServiceLimits(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SearchServiceLimits"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SearchServiceLimits"/> to convert. </param>
+        public static implicit operator RequestContent(SearchServiceLimits model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SearchServiceLimits"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SearchServiceLimits(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSearchServiceLimits(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

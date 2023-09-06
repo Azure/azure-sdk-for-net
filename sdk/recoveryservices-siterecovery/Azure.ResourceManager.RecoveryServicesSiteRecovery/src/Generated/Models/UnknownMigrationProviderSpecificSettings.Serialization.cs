@@ -5,29 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    internal partial class UnknownMigrationProviderSpecificSettings
+    internal partial class UnknownMigrationProviderSpecificSettings : IUtf8JsonSerializable, IModelJsonSerializable<MigrationProviderSpecificSettings>
     {
-        internal static UnknownMigrationProviderSpecificSettings DeserializeUnknownMigrationProviderSpecificSettings(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MigrationProviderSpecificSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MigrationProviderSpecificSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            Core.ModelSerializerHelper.ValidateFormat<MigrationProviderSpecificSettings>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
             {
-                return null;
-            }
-            string instanceType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("instanceType"u8))
+                foreach (var property in _rawData)
                 {
-                    instanceType = property.Value.GetString();
-                    continue;
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
                 }
             }
-            return new UnknownMigrationProviderSpecificSettings(instanceType);
+            writer.WriteEndObject();
+        }
+
+        internal static MigrationProviderSpecificSettings DeserializeUnknownMigrationProviderSpecificSettings(JsonElement element, ModelSerializerOptions options = default) => DeserializeMigrationProviderSpecificSettings(element, options);
+
+        MigrationProviderSpecificSettings IModelJsonSerializable<MigrationProviderSpecificSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MigrationProviderSpecificSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownMigrationProviderSpecificSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MigrationProviderSpecificSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MigrationProviderSpecificSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MigrationProviderSpecificSettings IModelSerializable<MigrationProviderSpecificSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MigrationProviderSpecificSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMigrationProviderSpecificSettings(doc.RootElement, options);
         }
     }
 }

@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
     /// <summary> Azure Active Directory info. </summary>
     public partial class ProviderPropertiesAad
     {
-        /// <summary> Initializes a new instance of ProviderPropertiesAad. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProviderPropertiesAad"/>. </summary>
         internal ProviderPropertiesAad()
         {
         }
 
-        /// <summary> Initializes a new instance of ProviderPropertiesAad. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderPropertiesAad"/>. </summary>
         /// <param name="applicationId"> Provider's application id. </param>
         /// <param name="tenantId"> Provider's tenant id. </param>
-        internal ProviderPropertiesAad(string applicationId, Guid? tenantId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProviderPropertiesAad(string applicationId, Guid? tenantId, Dictionary<string, BinaryData> rawData)
         {
             ApplicationId = applicationId;
             TenantId = tenantId;
+            _rawData = rawData;
         }
 
         /// <summary> Provider's application id. </summary>

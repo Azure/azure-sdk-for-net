@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.Models
     [TypeReferenceType]
     public partial class OperationStatusResult
     {
-        /// <summary> Initializes a new instance of OperationStatusResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationStatusResult"/>. </summary>
         /// <param name="status"> Operation status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
         [InitializationConstructor]
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.Models
             Operations = new ChangeTrackingList<OperationStatusResult>();
         }
 
-        /// <summary> Initializes a new instance of OperationStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatusResult"/>. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -37,8 +40,8 @@ namespace Azure.ResourceManager.Models
         /// <param name="endOn"> The end time of the operation. </param>
         /// <param name="operations"> The operations list. </param>
         /// <param name="error"> If present, details of the operation error. </param>
-        [SerializationConstructor]
-        protected OperationStatusResult(ResourceIdentifier id, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        protected OperationStatusResult(ResourceIdentifier id, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
@@ -48,6 +51,12 @@ namespace Azure.ResourceManager.Models
             EndOn = endOn;
             Operations = operations;
             Error = error;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OperationStatusResult"/> for deserialization. </summary>
+        internal OperationStatusResult()
+        {
         }
 
         /// <summary> Fully qualified ID for the async operation. </summary>

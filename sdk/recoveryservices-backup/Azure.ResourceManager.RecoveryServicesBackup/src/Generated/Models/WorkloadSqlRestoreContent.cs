@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,14 +18,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public partial class WorkloadSqlRestoreContent : WorkloadRestoreContent
     {
-        /// <summary> Initializes a new instance of WorkloadSqlRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSqlRestoreContent"/>. </summary>
         public WorkloadSqlRestoreContent()
         {
             AlternateDirectoryPaths = new ChangeTrackingList<SqlDataDirectoryMapping>();
             ObjectType = "AzureWorkloadSQLRestoreRequest";
         }
 
-        /// <summary> Initializes a new instance of WorkloadSqlRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSqlRestoreContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="recoveryType"> Type of this recovery. </param>
         /// <param name="sourceResourceId"> Fully qualified ARM ID of the VM on which workload that was running is being recovered. </param>
@@ -38,7 +39,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="shouldUseAlternateTargetLocation"> Default option set to true. If this is set to false, alternate data directory must be provided. </param>
         /// <param name="isNonRecoverable"> SQL specific property where user can chose to set no-recovery when restore operation is tried. </param>
         /// <param name="alternateDirectoryPaths"> Data directory details. </param>
-        internal WorkloadSqlRestoreContent(string objectType, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, ResourceIdentifier targetVirtualMachineId, bool? shouldUseAlternateTargetLocation, bool? isNonRecoverable, IList<SqlDataDirectoryMapping> alternateDirectoryPaths) : base(objectType, recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetVirtualMachineId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadSqlRestoreContent(string objectType, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, ResourceIdentifier targetVirtualMachineId, bool? shouldUseAlternateTargetLocation, bool? isNonRecoverable, IList<SqlDataDirectoryMapping> alternateDirectoryPaths, Dictionary<string, BinaryData> rawData) : base(objectType, recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetVirtualMachineId, rawData)
         {
             ShouldUseAlternateTargetLocation = shouldUseAlternateTargetLocation;
             IsNonRecoverable = isNonRecoverable;

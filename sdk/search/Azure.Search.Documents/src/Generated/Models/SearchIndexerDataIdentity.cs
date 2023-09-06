@@ -5,6 +5,11 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+using Azure.Search.Documents.Models;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
@@ -12,18 +17,24 @@ namespace Azure.Search.Documents.Indexes.Models
     /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownSearchIndexerDataIdentity))]
     public abstract partial class SearchIndexerDataIdentity
     {
-        /// <summary> Initializes a new instance of SearchIndexerDataIdentity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerDataIdentity"/>. </summary>
         public SearchIndexerDataIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of SearchIndexerDataIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerDataIdentity"/>. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the identity. </param>
-        internal SearchIndexerDataIdentity(string oDataType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchIndexerDataIdentity(string oDataType, Dictionary<string, BinaryData> rawData)
         {
             ODataType = oDataType;
+            _rawData = rawData;
         }
 
         /// <summary> Identifies the concrete type of the identity. </summary>

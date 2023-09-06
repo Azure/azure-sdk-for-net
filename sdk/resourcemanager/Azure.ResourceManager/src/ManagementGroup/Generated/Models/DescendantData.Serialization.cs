@@ -5,16 +5,78 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    public partial class DescendantData
+    public partial class DescendantData : IUtf8JsonSerializable, IModelJsonSerializable<DescendantData>
     {
-        internal static DescendantData DeserializeDescendantData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DescendantData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DescendantData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DescendantData>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DisplayName))
+            {
+                if (DisplayName != null)
+                {
+                    writer.WritePropertyName("displayName"u8);
+                    writer.WriteStringValue(DisplayName);
+                }
+                else
+                {
+                    writer.WriteNull("displayName");
+                }
+            }
+            if (Optional.IsDefined(Parent))
+            {
+                if (Parent != null)
+                {
+                    writer.WritePropertyName("parent"u8);
+                    if (Parent is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DescendantParentGroupInfo>)Parent).Serialize(writer, options);
+                    }
+                }
+                else
+                {
+                    writer.WriteNull("parent");
+                }
+            }
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DescendantData DeserializeDescendantData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +87,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             Optional<SystemData> systemData = default;
             Optional<string> displayName = default;
             Optional<DescendantParentGroupInfo> parent = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -83,8 +146,61 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DescendantData(id, name, type, systemData.Value, displayName.Value, parent.Value);
+            return new DescendantData(id, name, type, systemData.Value, displayName.Value, parent.Value, rawData);
+        }
+
+        DescendantData IModelJsonSerializable<DescendantData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DescendantData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDescendantData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DescendantData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DescendantData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DescendantData IModelSerializable<DescendantData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DescendantData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDescendantData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DescendantData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DescendantData"/> to convert. </param>
+        public static implicit operator RequestContent(DescendantData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DescendantData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DescendantData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDescendantData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

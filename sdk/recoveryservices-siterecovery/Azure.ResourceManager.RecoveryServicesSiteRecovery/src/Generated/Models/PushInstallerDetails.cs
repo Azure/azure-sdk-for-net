@@ -14,13 +14,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Push installer details. </summary>
     public partial class PushInstallerDetails
     {
-        /// <summary> Initializes a new instance of PushInstallerDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PushInstallerDetails"/>. </summary>
         internal PushInstallerDetails()
         {
             HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of PushInstallerDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PushInstallerDetails"/>. </summary>
         /// <param name="id"> The push installer Id. </param>
         /// <param name="name"> The push installer name. </param>
         /// <param name="biosId"> The push installer Bios Id. </param>
@@ -30,7 +33,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the push installer. </param>
         /// <param name="health"> The health of the push installer. </param>
         /// <param name="healthErrors"> The health errors. </param>
-        internal PushInstallerDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatReceivedOn, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PushInstallerDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatReceivedOn, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
@@ -41,6 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             LastHeartbeatReceivedOn = lastHeartbeatReceivedOn;
             Health = health;
             HealthErrors = healthErrors;
+            _rawData = rawData;
         }
 
         /// <summary> The push installer Id. </summary>

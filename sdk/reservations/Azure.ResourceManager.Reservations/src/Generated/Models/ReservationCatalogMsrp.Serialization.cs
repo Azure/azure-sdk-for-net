@@ -5,15 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationCatalogMsrp
+    public partial class ReservationCatalogMsrp : IUtf8JsonSerializable, IModelJsonSerializable<ReservationCatalogMsrp>
     {
-        internal static ReservationCatalogMsrp DeserializeReservationCatalogMsrp(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ReservationCatalogMsrp>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ReservationCatalogMsrp>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ReservationCatalogMsrp>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(P1Y))
+            {
+                writer.WritePropertyName("p1Y"u8);
+                if (P1Y is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PurchasePrice>)P1Y).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(P3Y))
+            {
+                writer.WritePropertyName("p3Y"u8);
+                if (P3Y is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PurchasePrice>)P3Y).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(P5Y))
+            {
+                writer.WritePropertyName("p5Y"u8);
+                if (P5Y is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PurchasePrice>)P5Y).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ReservationCatalogMsrp DeserializeReservationCatalogMsrp(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +85,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<PurchasePrice> p1Y = default;
             Optional<PurchasePrice> p3Y = default;
             Optional<PurchasePrice> p5Y = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("p1Y"u8))
@@ -50,8 +115,61 @@ namespace Azure.ResourceManager.Reservations.Models
                     p5Y = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ReservationCatalogMsrp(p1Y.Value, p3Y.Value, p5Y.Value);
+            return new ReservationCatalogMsrp(p1Y.Value, p3Y.Value, p5Y.Value, rawData);
+        }
+
+        ReservationCatalogMsrp IModelJsonSerializable<ReservationCatalogMsrp>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReservationCatalogMsrp>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeReservationCatalogMsrp(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ReservationCatalogMsrp>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReservationCatalogMsrp>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ReservationCatalogMsrp IModelSerializable<ReservationCatalogMsrp>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReservationCatalogMsrp>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeReservationCatalogMsrp(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ReservationCatalogMsrp"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ReservationCatalogMsrp"/> to convert. </param>
+        public static implicit operator RequestContent(ReservationCatalogMsrp model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ReservationCatalogMsrp"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ReservationCatalogMsrp(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeReservationCatalogMsrp(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

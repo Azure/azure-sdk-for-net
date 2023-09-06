@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceKeyRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceKeyRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceKeyResource(Client, ManagedInstanceKeyData.DeserializeManagedInstanceKeyData(e)), _managedInstanceKeyClientDiagnostics, Pipeline, "ManagedInstanceKeyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedInstanceKeyResource(Client, ManagedInstanceKeyData.DeserializeManagedInstanceKeyData(e)), _managedInstanceKeyClientDiagnostics, Pipeline, "ManagedInstanceKeyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceKeyRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceKeyRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceKeyResource(Client, ManagedInstanceKeyData.DeserializeManagedInstanceKeyData(e)), _managedInstanceKeyClientDiagnostics, Pipeline, "ManagedInstanceKeyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedInstanceKeyResource(Client, ManagedInstanceKeyData.DeserializeManagedInstanceKeyData(e)), _managedInstanceKeyClientDiagnostics, Pipeline, "ManagedInstanceKeyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

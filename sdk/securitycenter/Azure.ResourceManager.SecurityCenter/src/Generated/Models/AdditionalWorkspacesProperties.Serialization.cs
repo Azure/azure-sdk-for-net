@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AdditionalWorkspacesProperties : IUtf8JsonSerializable
+    public partial class AdditionalWorkspacesProperties : IUtf8JsonSerializable, IModelJsonSerializable<AdditionalWorkspacesProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AdditionalWorkspacesProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AdditionalWorkspacesProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AdditionalWorkspacesProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Workspace))
             {
@@ -36,11 +43,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AdditionalWorkspacesProperties DeserializeAdditionalWorkspacesProperties(JsonElement element)
+        internal static AdditionalWorkspacesProperties DeserializeAdditionalWorkspacesProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> workspace = default;
             Optional<AdditionalWorkspaceType> type = default;
             Optional<IList<AdditionalWorkspaceDataType>> dataTypes = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workspace"u8))
@@ -78,8 +100,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     dataTypes = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AdditionalWorkspacesProperties(workspace.Value, Optional.ToNullable(type), Optional.ToList(dataTypes));
+            return new AdditionalWorkspacesProperties(workspace.Value, Optional.ToNullable(type), Optional.ToList(dataTypes), rawData);
+        }
+
+        AdditionalWorkspacesProperties IModelJsonSerializable<AdditionalWorkspacesProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AdditionalWorkspacesProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAdditionalWorkspacesProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AdditionalWorkspacesProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AdditionalWorkspacesProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AdditionalWorkspacesProperties IModelSerializable<AdditionalWorkspacesProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AdditionalWorkspacesProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAdditionalWorkspacesProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AdditionalWorkspacesProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AdditionalWorkspacesProperties"/> to convert. </param>
+        public static implicit operator RequestContent(AdditionalWorkspacesProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AdditionalWorkspacesProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AdditionalWorkspacesProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAdditionalWorkspacesProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

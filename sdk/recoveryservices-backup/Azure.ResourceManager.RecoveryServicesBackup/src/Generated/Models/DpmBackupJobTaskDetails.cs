@@ -6,30 +6,36 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> DPM workload-specific job task details. </summary>
     public partial class DpmBackupJobTaskDetails
     {
-        /// <summary> Initializes a new instance of DpmBackupJobTaskDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DpmBackupJobTaskDetails"/>. </summary>
         public DpmBackupJobTaskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of DpmBackupJobTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DpmBackupJobTaskDetails"/>. </summary>
         /// <param name="taskId"> The task display name. </param>
         /// <param name="startOn"> The start time. </param>
         /// <param name="endOn"> The end time. </param>
         /// <param name="duration"> Time elapsed for task. </param>
         /// <param name="status"> The status. </param>
-        internal DpmBackupJobTaskDetails(string taskId, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, string status)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DpmBackupJobTaskDetails(string taskId, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, string status, Dictionary<string, BinaryData> rawData)
         {
             TaskId = taskId;
             StartOn = startOn;
             EndOn = endOn;
             Duration = duration;
             Status = status;
+            _rawData = rawData;
         }
 
         /// <summary> The task display name. </summary>

@@ -5,19 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SqlVirtualMachine.Models;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
-    public partial class SqlVmData : IUtf8JsonSerializable
+    public partial class SqlVmData : IUtf8JsonSerializable, IModelJsonSerializable<SqlVmData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SqlVmData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SqlVmData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SqlVmData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -72,7 +79,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             if (Optional.IsDefined(WindowsServerFailoverClusterDomainCredentials))
             {
                 writer.WritePropertyName("wsfcDomainCredentials"u8);
-                writer.WriteObjectValue(WindowsServerFailoverClusterDomainCredentials);
+                if (WindowsServerFailoverClusterDomainCredentials is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<WindowsServerFailoverClusterDomainCredentials>)WindowsServerFailoverClusterDomainCredentials).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(WindowsServerFailoverClusterStaticIP))
             {
@@ -82,39 +96,95 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             if (Optional.IsDefined(AutoPatchingSettings))
             {
                 writer.WritePropertyName("autoPatchingSettings"u8);
-                writer.WriteObjectValue(AutoPatchingSettings);
+                if (AutoPatchingSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SqlVmAutoPatchingSettings>)AutoPatchingSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(AutoBackupSettings))
             {
                 writer.WritePropertyName("autoBackupSettings"u8);
-                writer.WriteObjectValue(AutoBackupSettings);
+                if (AutoBackupSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SqlVmAutoBackupSettings>)AutoBackupSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(KeyVaultCredentialSettings))
             {
                 writer.WritePropertyName("keyVaultCredentialSettings"u8);
-                writer.WriteObjectValue(KeyVaultCredentialSettings);
+                if (KeyVaultCredentialSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SqlVmKeyVaultCredentialSettings>)KeyVaultCredentialSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ServerConfigurationsManagementSettings))
             {
                 writer.WritePropertyName("serverConfigurationsManagementSettings"u8);
-                writer.WriteObjectValue(ServerConfigurationsManagementSettings);
+                if (ServerConfigurationsManagementSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SqlServerConfigurationsManagementSettings>)ServerConfigurationsManagementSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(StorageConfigurationSettings))
             {
                 writer.WritePropertyName("storageConfigurationSettings"u8);
-                writer.WriteObjectValue(StorageConfigurationSettings);
+                if (StorageConfigurationSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SqlVmStorageConfigurationSettings>)StorageConfigurationSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(AssessmentSettings))
             {
                 writer.WritePropertyName("assessmentSettings"u8);
-                writer.WriteObjectValue(AssessmentSettings);
+                if (AssessmentSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SqlVmAssessmentSettings>)AssessmentSettings).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlVmData DeserializeSqlVmData(JsonElement element)
+        internal static SqlVmData DeserializeSqlVmData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -141,6 +211,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             Optional<SqlServerConfigurationsManagementSettings> serverConfigurationsManagementSettings = default;
             Optional<SqlVmStorageConfigurationSettings> storageConfigurationSettings = default;
             Optional<SqlVmAssessmentSettings> assessmentSettings = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -334,8 +405,61 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SqlVmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, virtualMachineResourceId.Value, provisioningState.Value, sqlImageOffer.Value, Optional.ToNullable(sqlServerLicenseType), Optional.ToNullable(sqlManagement), Optional.ToNullable(sqlImageSku), sqlVmGroupResourceId.Value, windowsServerFailoverClusterDomainCredentials.Value, windowsServerFailoverClusterStaticIP.Value, autoPatchingSettings.Value, autoBackupSettings.Value, keyVaultCredentialSettings.Value, serverConfigurationsManagementSettings.Value, storageConfigurationSettings.Value, assessmentSettings.Value);
+            return new SqlVmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, virtualMachineResourceId.Value, provisioningState.Value, sqlImageOffer.Value, Optional.ToNullable(sqlServerLicenseType), Optional.ToNullable(sqlManagement), Optional.ToNullable(sqlImageSku), sqlVmGroupResourceId.Value, windowsServerFailoverClusterDomainCredentials.Value, windowsServerFailoverClusterStaticIP.Value, autoPatchingSettings.Value, autoBackupSettings.Value, keyVaultCredentialSettings.Value, serverConfigurationsManagementSettings.Value, storageConfigurationSettings.Value, assessmentSettings.Value, rawData);
+        }
+
+        SqlVmData IModelJsonSerializable<SqlVmData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SqlVmData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlVmData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SqlVmData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SqlVmData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SqlVmData IModelSerializable<SqlVmData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SqlVmData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSqlVmData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SqlVmData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SqlVmData"/> to convert. </param>
+        public static implicit operator RequestContent(SqlVmData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SqlVmData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SqlVmData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSqlVmData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

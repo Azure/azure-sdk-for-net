@@ -5,37 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class McasDataConnectorDataTypes : IUtf8JsonSerializable
+    public partial class McasDataConnectorDataTypes : IUtf8JsonSerializable, IModelJsonSerializable<McasDataConnectorDataTypes>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<McasDataConnectorDataTypes>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<McasDataConnectorDataTypes>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<McasDataConnectorDataTypes>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DiscoveryLogs))
             {
                 writer.WritePropertyName("discoveryLogs"u8);
-                writer.WriteObjectValue(DiscoveryLogs);
+                if (DiscoveryLogs is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DataConnectorDataTypeCommon>)DiscoveryLogs).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Alerts))
             {
                 writer.WritePropertyName("alerts"u8);
-                writer.WriteObjectValue(Alerts);
+                if (Alerts is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DataConnectorDataTypeCommon>)Alerts).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static McasDataConnectorDataTypes DeserializeMcasDataConnectorDataTypes(JsonElement element)
+        internal static McasDataConnectorDataTypes DeserializeMcasDataConnectorDataTypes(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DataConnectorDataTypeCommon> discoveryLogs = default;
             Optional<DataConnectorDataTypeCommon> alerts = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("discoveryLogs"u8))
@@ -56,8 +93,61 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     alerts = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new McasDataConnectorDataTypes(alerts.Value, discoveryLogs.Value);
+            return new McasDataConnectorDataTypes(alerts.Value, discoveryLogs.Value, rawData);
+        }
+
+        McasDataConnectorDataTypes IModelJsonSerializable<McasDataConnectorDataTypes>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<McasDataConnectorDataTypes>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMcasDataConnectorDataTypes(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<McasDataConnectorDataTypes>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<McasDataConnectorDataTypes>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        McasDataConnectorDataTypes IModelSerializable<McasDataConnectorDataTypes>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<McasDataConnectorDataTypes>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMcasDataConnectorDataTypes(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="McasDataConnectorDataTypes"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="McasDataConnectorDataTypes"/> to convert. </param>
+        public static implicit operator RequestContent(McasDataConnectorDataTypes model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="McasDataConnectorDataTypes"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator McasDataConnectorDataTypes(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMcasDataConnectorDataTypes(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

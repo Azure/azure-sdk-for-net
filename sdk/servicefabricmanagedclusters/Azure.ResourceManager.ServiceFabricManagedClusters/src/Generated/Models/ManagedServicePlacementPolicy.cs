@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// Please note <see cref="ManagedServicePlacementPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ServicePlacementInvalidDomainPolicy"/>, <see cref="ServicePlacementNonPartiallyPlaceServicePolicy"/>, <see cref="ServicePlacementPreferPrimaryDomainPolicy"/>, <see cref="ServicePlacementRequiredDomainPolicy"/> and <see cref="ServicePlacementRequireDomainDistributionPolicy"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownServicePlacementPolicy))]
     public abstract partial class ManagedServicePlacementPolicy
     {
-        /// <summary> Initializes a new instance of ManagedServicePlacementPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServicePlacementPolicy"/>. </summary>
         protected ManagedServicePlacementPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedServicePlacementPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicePlacementPolicy"/>. </summary>
         /// <param name="servicePlacementPolicyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
-        internal ManagedServicePlacementPolicy(ServicePlacementPolicyType servicePlacementPolicyType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedServicePlacementPolicy(ServicePlacementPolicyType servicePlacementPolicyType, Dictionary<string, BinaryData> rawData)
         {
             ServicePlacementPolicyType = servicePlacementPolicyType;
+            _rawData = rawData;
         }
 
         /// <summary> The type of placement policy for a service fabric service. Following are the possible values. </summary>

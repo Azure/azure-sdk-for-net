@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> Summary of the replication job data for this vault. </summary>
     public partial class ReplicationJobSummary
     {
-        /// <summary> Initializes a new instance of ReplicationJobSummary. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReplicationJobSummary"/>. </summary>
         internal ReplicationJobSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of ReplicationJobSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationJobSummary"/>. </summary>
         /// <param name="failedJobs"> Count of failed jobs. </param>
         /// <param name="suspendedJobs"> Count of suspended jobs. </param>
         /// <param name="inProgressJobs"> Count of in-progress jobs. </param>
-        internal ReplicationJobSummary(int? failedJobs, int? suspendedJobs, int? inProgressJobs)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReplicationJobSummary(int? failedJobs, int? suspendedJobs, int? inProgressJobs, Dictionary<string, BinaryData> rawData)
         {
             FailedJobs = failedJobs;
             SuspendedJobs = suspendedJobs;
             InProgressJobs = inProgressJobs;
+            _rawData = rawData;
         }
 
         /// <summary> Count of failed jobs. </summary>

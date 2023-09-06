@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The native cloud connection configuration. </summary>
     public partial class CspmMonitorGcpOfferingNativeCloudConnection
     {
-        /// <summary> Initializes a new instance of CspmMonitorGcpOfferingNativeCloudConnection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CspmMonitorGcpOfferingNativeCloudConnection"/>. </summary>
         public CspmMonitorGcpOfferingNativeCloudConnection()
         {
         }
 
-        /// <summary> Initializes a new instance of CspmMonitorGcpOfferingNativeCloudConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="CspmMonitorGcpOfferingNativeCloudConnection"/>. </summary>
         /// <param name="workloadIdentityProviderId"> The GCP workload identity provider id for the offering. </param>
         /// <param name="serviceAccountEmailAddress"> The service account email address in GCP for this offering. </param>
-        internal CspmMonitorGcpOfferingNativeCloudConnection(string workloadIdentityProviderId, string serviceAccountEmailAddress)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CspmMonitorGcpOfferingNativeCloudConnection(string workloadIdentityProviderId, string serviceAccountEmailAddress, Dictionary<string, BinaryData> rawData)
         {
             WorkloadIdentityProviderId = workloadIdentityProviderId;
             ServiceAccountEmailAddress = serviceAccountEmailAddress;
+            _rawData = rawData;
         }
 
         /// <summary> The GCP workload identity provider id for the offering. </summary>

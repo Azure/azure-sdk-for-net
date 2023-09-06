@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary> Defines the job status. </summary>
     public partial class MoverResourceJobStatus
     {
-        /// <summary> Initializes a new instance of MoverResourceJobStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MoverResourceJobStatus"/>. </summary>
         internal MoverResourceJobStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of MoverResourceJobStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourceJobStatus"/>. </summary>
         /// <param name="jobName"> Defines the job name. </param>
         /// <param name="jobProgress"> Gets or sets the monitoring job percentage. </param>
-        internal MoverResourceJobStatus(MoverResourceJobName? jobName, string jobProgress)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MoverResourceJobStatus(MoverResourceJobName? jobName, string jobProgress, Dictionary<string, BinaryData> rawData)
         {
             JobName = jobName;
             JobProgress = jobProgress;
+            _rawData = rawData;
         }
 
         /// <summary> Defines the job name. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityAlertSimulatorBundlesRequestProperties : IUtf8JsonSerializable
+    public partial class SecurityAlertSimulatorBundlesRequestProperties : IUtf8JsonSerializable, IModelJsonSerializable<SecurityAlertSimulatorBundlesRequestProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityAlertSimulatorBundlesRequestProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityAlertSimulatorBundlesRequestProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityAlertSimulatorBundlesRequestProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Bundles))
             {
@@ -37,6 +45,93 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 #endif
             }
             writer.WriteEndObject();
+        }
+
+        internal static SecurityAlertSimulatorBundlesRequestProperties DeserializeSecurityAlertSimulatorBundlesRequestProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<SecurityAlertSimulatorBundleType>> bundles = default;
+            SecurityCenterKind kind = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("bundles"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SecurityAlertSimulatorBundleType> array = new List<SecurityAlertSimulatorBundleType>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new SecurityAlertSimulatorBundleType(item.GetString()));
+                    }
+                    bundles = array;
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new SecurityCenterKind(property.Value.GetString());
+                    continue;
+                }
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+            }
+            additionalProperties = additionalPropertiesDictionary;
+            return new SecurityAlertSimulatorBundlesRequestProperties(kind, additionalProperties, Optional.ToList(bundles));
+        }
+
+        SecurityAlertSimulatorBundlesRequestProperties IModelJsonSerializable<SecurityAlertSimulatorBundlesRequestProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityAlertSimulatorBundlesRequestProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityAlertSimulatorBundlesRequestProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityAlertSimulatorBundlesRequestProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityAlertSimulatorBundlesRequestProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityAlertSimulatorBundlesRequestProperties IModelSerializable<SecurityAlertSimulatorBundlesRequestProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityAlertSimulatorBundlesRequestProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityAlertSimulatorBundlesRequestProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SecurityAlertSimulatorBundlesRequestProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SecurityAlertSimulatorBundlesRequestProperties"/> to convert. </param>
+        public static implicit operator RequestContent(SecurityAlertSimulatorBundlesRequestProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SecurityAlertSimulatorBundlesRequestProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SecurityAlertSimulatorBundlesRequestProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityAlertSimulatorBundlesRequestProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

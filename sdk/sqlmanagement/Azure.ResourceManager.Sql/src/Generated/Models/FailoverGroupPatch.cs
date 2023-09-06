@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,29 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A failover group update request. </summary>
     public partial class FailoverGroupPatch
     {
-        /// <summary> Initializes a new instance of FailoverGroupPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FailoverGroupPatch"/>. </summary>
         public FailoverGroupPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Databases = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FailoverGroupPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="readWriteEndpoint"> Read-write endpoint of the failover group instance. </param>
+        /// <param name="readOnlyEndpoint"> Read-only endpoint of the failover group instance. </param>
+        /// <param name="databases"> List of databases in the failover group. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FailoverGroupPatch(IDictionary<string, string> tags, FailoverGroupReadWriteEndpoint readWriteEndpoint, FailoverGroupReadOnlyEndpoint readOnlyEndpoint, IList<string> databases, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            ReadWriteEndpoint = readWriteEndpoint;
+            ReadOnlyEndpoint = readOnlyEndpoint;
+            Databases = databases;
+            _rawData = rawData;
         }
 
         /// <summary> Resource tags. </summary>

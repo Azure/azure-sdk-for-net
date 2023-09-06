@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    internal partial class BackupDailySchedule : IUtf8JsonSerializable
+    internal partial class BackupDailySchedule : IUtf8JsonSerializable, IModelJsonSerializable<BackupDailySchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BackupDailySchedule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BackupDailySchedule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BackupDailySchedule>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ScheduleRunTimes))
             {
@@ -27,16 +33,31 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BackupDailySchedule DeserializeBackupDailySchedule(JsonElement element)
+        internal static BackupDailySchedule DeserializeBackupDailySchedule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<DateTimeOffset>> scheduleRunTimes = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scheduleRunTimes"u8))
@@ -53,8 +74,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     scheduleRunTimes = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BackupDailySchedule(Optional.ToList(scheduleRunTimes));
+            return new BackupDailySchedule(Optional.ToList(scheduleRunTimes), rawData);
+        }
+
+        BackupDailySchedule IModelJsonSerializable<BackupDailySchedule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackupDailySchedule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupDailySchedule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BackupDailySchedule>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackupDailySchedule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BackupDailySchedule IModelSerializable<BackupDailySchedule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackupDailySchedule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBackupDailySchedule(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BackupDailySchedule"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BackupDailySchedule"/> to convert. </param>
+        public static implicit operator RequestContent(BackupDailySchedule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BackupDailySchedule"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BackupDailySchedule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBackupDailySchedule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

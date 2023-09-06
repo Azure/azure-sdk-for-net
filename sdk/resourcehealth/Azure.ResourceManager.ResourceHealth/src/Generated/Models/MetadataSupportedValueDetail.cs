@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> The metadata supported value detail. </summary>
     public partial class MetadataSupportedValueDetail
     {
-        /// <summary> Initializes a new instance of MetadataSupportedValueDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetadataSupportedValueDetail"/>. </summary>
         internal MetadataSupportedValueDetail()
         {
             ResourceTypes = new ChangeTrackingList<ResourceType>();
         }
 
-        /// <summary> Initializes a new instance of MetadataSupportedValueDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataSupportedValueDetail"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="displayName"> The display name. </param>
         /// <param name="resourceTypes"> The list of associated resource types. </param>
-        internal MetadataSupportedValueDetail(string id, string displayName, IReadOnlyList<ResourceType> resourceTypes)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetadataSupportedValueDetail(string id, string displayName, IReadOnlyList<ResourceType> resourceTypes, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             DisplayName = displayName;
             ResourceTypes = resourceTypes;
+            _rawData = rawData;
         }
 
         /// <summary> The id. </summary>

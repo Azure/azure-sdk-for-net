@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class JitNetworkAccessPolicyInitiatePort : IUtf8JsonSerializable
+    public partial class JitNetworkAccessPolicyInitiatePort : IUtf8JsonSerializable, IModelJsonSerializable<JitNetworkAccessPolicyInitiatePort>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JitNetworkAccessPolicyInitiatePort>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<JitNetworkAccessPolicyInitiatePort>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<JitNetworkAccessPolicyInitiatePort>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("number"u8);
             writer.WriteNumberValue(Number);
@@ -24,7 +32,105 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WritePropertyName("endTimeUtc"u8);
             writer.WriteStringValue(EndOn, "O");
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static JitNetworkAccessPolicyInitiatePort DeserializeJitNetworkAccessPolicyInitiatePort(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int number = default;
+            Optional<string> allowedSourceAddressPrefix = default;
+            DateTimeOffset endTimeUtc = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("number"u8))
+                {
+                    number = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("allowedSourceAddressPrefix"u8))
+                {
+                    allowedSourceAddressPrefix = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("endTimeUtc"u8))
+                {
+                    endTimeUtc = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new JitNetworkAccessPolicyInitiatePort(number, allowedSourceAddressPrefix.Value, endTimeUtc, rawData);
+        }
+
+        JitNetworkAccessPolicyInitiatePort IModelJsonSerializable<JitNetworkAccessPolicyInitiatePort>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JitNetworkAccessPolicyInitiatePort>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJitNetworkAccessPolicyInitiatePort(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<JitNetworkAccessPolicyInitiatePort>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JitNetworkAccessPolicyInitiatePort>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        JitNetworkAccessPolicyInitiatePort IModelSerializable<JitNetworkAccessPolicyInitiatePort>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JitNetworkAccessPolicyInitiatePort>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeJitNetworkAccessPolicyInitiatePort(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="JitNetworkAccessPolicyInitiatePort"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="JitNetworkAccessPolicyInitiatePort"/> to convert. </param>
+        public static implicit operator RequestContent(JitNetworkAccessPolicyInitiatePort model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="JitNetworkAccessPolicyInitiatePort"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator JitNetworkAccessPolicyInitiatePort(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeJitNetworkAccessPolicyInitiatePort(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WeeklyRetentionFormat : IUtf8JsonSerializable
+    public partial class WeeklyRetentionFormat : IUtf8JsonSerializable, IModelJsonSerializable<WeeklyRetentionFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WeeklyRetentionFormat>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WeeklyRetentionFormat>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<WeeklyRetentionFormat>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DaysOfTheWeek))
             {
@@ -36,17 +43,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WeeklyRetentionFormat DeserializeWeeklyRetentionFormat(JsonElement element)
+        internal static WeeklyRetentionFormat DeserializeWeeklyRetentionFormat(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<BackupDayOfWeek>> daysOfTheWeek = default;
             Optional<IList<BackupWeekOfMonth>> weeksOfTheMonth = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("daysOfTheWeek"u8))
@@ -77,8 +99,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     weeksOfTheMonth = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WeeklyRetentionFormat(Optional.ToList(daysOfTheWeek), Optional.ToList(weeksOfTheMonth));
+            return new WeeklyRetentionFormat(Optional.ToList(daysOfTheWeek), Optional.ToList(weeksOfTheMonth), rawData);
+        }
+
+        WeeklyRetentionFormat IModelJsonSerializable<WeeklyRetentionFormat>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WeeklyRetentionFormat>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWeeklyRetentionFormat(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WeeklyRetentionFormat>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WeeklyRetentionFormat>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WeeklyRetentionFormat IModelSerializable<WeeklyRetentionFormat>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WeeklyRetentionFormat>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWeeklyRetentionFormat(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WeeklyRetentionFormat"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WeeklyRetentionFormat"/> to convert. </param>
+        public static implicit operator RequestContent(WeeklyRetentionFormat model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WeeklyRetentionFormat"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WeeklyRetentionFormat(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWeeklyRetentionFormat(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

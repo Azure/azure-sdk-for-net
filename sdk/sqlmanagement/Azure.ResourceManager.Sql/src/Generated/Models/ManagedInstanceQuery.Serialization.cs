@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedInstanceQuery : IUtf8JsonSerializable
+    public partial class ManagedInstanceQuery : IUtf8JsonSerializable, IModelJsonSerializable<ManagedInstanceQuery>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedInstanceQuery>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedInstanceQuery>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedInstanceQuery>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -24,11 +32,25 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStringValue(QueryText);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedInstanceQuery DeserializeManagedInstanceQuery(JsonElement element)
+        internal static ManagedInstanceQuery DeserializeManagedInstanceQuery(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,6 +60,7 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> queryText = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -81,8 +104,61 @@ namespace Azure.ResourceManager.Sql.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedInstanceQuery(id, name, type, systemData.Value, queryText.Value);
+            return new ManagedInstanceQuery(id, name, type, systemData.Value, queryText.Value, rawData);
+        }
+
+        ManagedInstanceQuery IModelJsonSerializable<ManagedInstanceQuery>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedInstanceQuery>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedInstanceQuery(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedInstanceQuery>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedInstanceQuery>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedInstanceQuery IModelSerializable<ManagedInstanceQuery>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedInstanceQuery>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedInstanceQuery(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagedInstanceQuery"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagedInstanceQuery"/> to convert. </param>
+        public static implicit operator RequestContent(ManagedInstanceQuery model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagedInstanceQuery"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagedInstanceQuery(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedInstanceQuery(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

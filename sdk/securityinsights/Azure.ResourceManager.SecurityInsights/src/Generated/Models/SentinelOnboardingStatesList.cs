@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> List of the Sentinel onboarding states. </summary>
     internal partial class SentinelOnboardingStatesList
     {
-        /// <summary> Initializes a new instance of SentinelOnboardingStatesList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SentinelOnboardingStatesList"/>. </summary>
         /// <param name="value"> Array of Sentinel onboarding states. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SentinelOnboardingStatesList(IEnumerable<SecurityInsightsSentinelOnboardingStateData> value)
@@ -26,11 +29,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SentinelOnboardingStatesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentinelOnboardingStatesList"/>. </summary>
         /// <param name="value"> Array of Sentinel onboarding states. </param>
-        internal SentinelOnboardingStatesList(IReadOnlyList<SecurityInsightsSentinelOnboardingStateData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SentinelOnboardingStatesList(IReadOnlyList<SecurityInsightsSentinelOnboardingStateData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SentinelOnboardingStatesList"/> for deserialization. </summary>
+        internal SentinelOnboardingStatesList()
+        {
         }
 
         /// <summary> Array of Sentinel onboarding states. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Error Detail class which encapsulates Code, Message and Recommendations. </summary>
     public partial class BackupErrorDetail
     {
-        /// <summary> Initializes a new instance of BackupErrorDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupErrorDetail"/>. </summary>
         public BackupErrorDetail()
         {
             Recommendations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BackupErrorDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupErrorDetail"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error Message related to the Code. </param>
         /// <param name="recommendations"> List of recommendation strings. </param>
-        internal BackupErrorDetail(string code, string message, IReadOnlyList<string> recommendations)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupErrorDetail(string code, string message, IReadOnlyList<string> recommendations, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Message = message;
             Recommendations = recommendations;
+            _rawData = rawData;
         }
 
         /// <summary> Error code. </summary>

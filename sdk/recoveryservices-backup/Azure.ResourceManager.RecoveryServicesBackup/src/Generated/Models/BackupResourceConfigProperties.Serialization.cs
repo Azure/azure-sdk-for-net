@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupResourceConfigProperties : IUtf8JsonSerializable
+    public partial class BackupResourceConfigProperties : IUtf8JsonSerializable, IModelJsonSerializable<BackupResourceConfigProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BackupResourceConfigProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BackupResourceConfigProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BackupResourceConfigProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageModelType))
             {
@@ -45,11 +53,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("xcoolState"u8);
                 writer.WriteStringValue(XcoolState.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BackupResourceConfigProperties DeserializeBackupResourceConfigProperties(JsonElement element)
+        internal static BackupResourceConfigProperties DeserializeBackupResourceConfigProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<bool> crossRegionRestoreFlag = default;
             Optional<VaultDedupState> dedupState = default;
             Optional<VaultXcoolState> xcoolState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageModelType"u8))
@@ -116,8 +139,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     xcoolState = new VaultXcoolState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BackupResourceConfigProperties(Optional.ToNullable(storageModelType), Optional.ToNullable(storageType), Optional.ToNullable(storageTypeState), Optional.ToNullable(crossRegionRestoreFlag), Optional.ToNullable(dedupState), Optional.ToNullable(xcoolState));
+            return new BackupResourceConfigProperties(Optional.ToNullable(storageModelType), Optional.ToNullable(storageType), Optional.ToNullable(storageTypeState), Optional.ToNullable(crossRegionRestoreFlag), Optional.ToNullable(dedupState), Optional.ToNullable(xcoolState), rawData);
+        }
+
+        BackupResourceConfigProperties IModelJsonSerializable<BackupResourceConfigProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackupResourceConfigProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupResourceConfigProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BackupResourceConfigProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackupResourceConfigProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BackupResourceConfigProperties IModelSerializable<BackupResourceConfigProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackupResourceConfigProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBackupResourceConfigProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BackupResourceConfigProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BackupResourceConfigProperties"/> to convert. </param>
+        public static implicit operator RequestContent(BackupResourceConfigProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BackupResourceConfigProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BackupResourceConfigProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBackupResourceConfigProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,22 +5,50 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class SuggestDocumentsResult
+    internal partial class SuggestDocumentsResult : IUtf8JsonSerializable, IModelJsonSerializable<SuggestDocumentsResult>
     {
-        internal static SuggestDocumentsResult DeserializeSuggestDocumentsResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SuggestDocumentsResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SuggestDocumentsResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SuggestDocumentsResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SuggestDocumentsResult DeserializeSuggestDocumentsResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<SuggestResult> value = default;
             Optional<double> searchCoverage = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -42,8 +70,61 @@ namespace Azure.Search.Documents.Models
                     searchCoverage = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SuggestDocumentsResult(value, Optional.ToNullable(searchCoverage));
+            return new SuggestDocumentsResult(value, Optional.ToNullable(searchCoverage), rawData);
+        }
+
+        SuggestDocumentsResult IModelJsonSerializable<SuggestDocumentsResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SuggestDocumentsResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSuggestDocumentsResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SuggestDocumentsResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SuggestDocumentsResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SuggestDocumentsResult IModelSerializable<SuggestDocumentsResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SuggestDocumentsResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSuggestDocumentsResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SuggestDocumentsResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SuggestDocumentsResult"/> to convert. </param>
+        public static implicit operator RequestContent(SuggestDocumentsResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SuggestDocumentsResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SuggestDocumentsResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSuggestDocumentsResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

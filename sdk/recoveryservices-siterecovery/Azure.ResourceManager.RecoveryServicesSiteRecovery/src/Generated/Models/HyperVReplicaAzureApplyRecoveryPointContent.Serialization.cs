@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVReplicaAzureApplyRecoveryPointContent : IUtf8JsonSerializable
+    public partial class HyperVReplicaAzureApplyRecoveryPointContent : IUtf8JsonSerializable, IModelJsonSerializable<HyperVReplicaAzureApplyRecoveryPointContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HyperVReplicaAzureApplyRecoveryPointContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HyperVReplicaAzureApplyRecoveryPointContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HyperVReplicaAzureApplyRecoveryPointContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryKekCertificatePfx))
             {
@@ -27,7 +35,105 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static HyperVReplicaAzureApplyRecoveryPointContent DeserializeHyperVReplicaAzureApplyRecoveryPointContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> primaryKekCertificatePfx = default;
+            Optional<string> secondaryKekCertificatePfx = default;
+            string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("primaryKekCertificatePfx"u8))
+                {
+                    primaryKekCertificatePfx = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("secondaryKekCertificatePfx"u8))
+                {
+                    secondaryKekCertificatePfx = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new HyperVReplicaAzureApplyRecoveryPointContent(instanceType, primaryKekCertificatePfx.Value, secondaryKekCertificatePfx.Value, rawData);
+        }
+
+        HyperVReplicaAzureApplyRecoveryPointContent IModelJsonSerializable<HyperVReplicaAzureApplyRecoveryPointContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HyperVReplicaAzureApplyRecoveryPointContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHyperVReplicaAzureApplyRecoveryPointContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HyperVReplicaAzureApplyRecoveryPointContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HyperVReplicaAzureApplyRecoveryPointContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HyperVReplicaAzureApplyRecoveryPointContent IModelSerializable<HyperVReplicaAzureApplyRecoveryPointContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HyperVReplicaAzureApplyRecoveryPointContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHyperVReplicaAzureApplyRecoveryPointContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HyperVReplicaAzureApplyRecoveryPointContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HyperVReplicaAzureApplyRecoveryPointContent"/> to convert. </param>
+        public static implicit operator RequestContent(HyperVReplicaAzureApplyRecoveryPointContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HyperVReplicaAzureApplyRecoveryPointContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HyperVReplicaAzureApplyRecoveryPointContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHyperVReplicaAzureApplyRecoveryPointContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

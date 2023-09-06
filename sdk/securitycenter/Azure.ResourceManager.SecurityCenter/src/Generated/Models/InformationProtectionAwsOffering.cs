@@ -5,22 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The information protection for AWS offering. </summary>
     public partial class InformationProtectionAwsOffering : SecurityCenterCloudOffering
     {
-        /// <summary> Initializes a new instance of InformationProtectionAwsOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="InformationProtectionAwsOffering"/>. </summary>
         public InformationProtectionAwsOffering()
         {
             OfferingType = OfferingType.InformationProtectionAws;
         }
 
-        /// <summary> Initializes a new instance of InformationProtectionAwsOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="InformationProtectionAwsOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
         /// <param name="informationProtection"> The native cloud connection configuration. </param>
-        internal InformationProtectionAwsOffering(OfferingType offeringType, string description, AwsInformationProtection informationProtection) : base(offeringType, description)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InformationProtectionAwsOffering(OfferingType offeringType, string description, AwsInformationProtection informationProtection, Dictionary<string, BinaryData> rawData) : base(offeringType, description, rawData)
         {
             InformationProtection = informationProtection;
             OfferingType = offeringType;

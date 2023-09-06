@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sphere.Models
 {
     /// <summary>
@@ -13,19 +16,24 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     public partial class SphereCertificateChainResult
     {
-        /// <summary> Initializes a new instance of SphereCertificateChainResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SphereCertificateChainResult"/>. </summary>
         internal SphereCertificateChainResult()
         {
         }
 
-        /// <summary> Initializes a new instance of SphereCertificateChainResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereCertificateChainResult"/>. </summary>
         /// <param name="certificateChain">
         /// The certificate chain.
         /// Serialized Name: CertificateChainResponse.certificateChain
         /// </param>
-        internal SphereCertificateChainResult(string certificateChain)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SphereCertificateChainResult(string certificateChain, Dictionary<string, BinaryData> rawData)
         {
             CertificateChain = certificateChain;
+            _rawData = rawData;
         }
 
         /// <summary>

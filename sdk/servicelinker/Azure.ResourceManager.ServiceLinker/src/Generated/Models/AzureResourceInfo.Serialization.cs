@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class AzureResourceInfo : IUtf8JsonSerializable
+    public partial class AzureResourceInfo : IUtf8JsonSerializable, IModelJsonSerializable<AzureResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzureResourceInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzureResourceInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AzureResourceInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -25,7 +33,14 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 if (ResourceProperties != null)
                 {
                     writer.WritePropertyName("resourceProperties"u8);
-                    writer.WriteObjectValue(ResourceProperties);
+                    if (ResourceProperties is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AzureResourceBaseProperties>)ResourceProperties).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -34,11 +49,25 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TargetServiceType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureResourceInfo DeserializeAzureResourceInfo(JsonElement element)
+        internal static AzureResourceInfo DeserializeAzureResourceInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +75,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             Optional<ResourceIdentifier> id = default;
             Optional<AzureResourceBaseProperties> resourceProperties = default;
             TargetServiceType type = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -72,8 +102,61 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     type = new TargetServiceType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AzureResourceInfo(type, id.Value, resourceProperties.Value);
+            return new AzureResourceInfo(type, id.Value, resourceProperties.Value, rawData);
+        }
+
+        AzureResourceInfo IModelJsonSerializable<AzureResourceInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureResourceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureResourceInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureResourceInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureResourceInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureResourceInfo IModelSerializable<AzureResourceInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureResourceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureResourceInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AzureResourceInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AzureResourceInfo"/> to convert. </param>
+        public static implicit operator RequestContent(AzureResourceInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AzureResourceInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AzureResourceInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureResourceInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

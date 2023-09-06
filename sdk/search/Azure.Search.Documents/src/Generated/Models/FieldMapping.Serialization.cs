@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class FieldMapping : IUtf8JsonSerializable
+    public partial class FieldMapping : IUtf8JsonSerializable, IModelJsonSerializable<FieldMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FieldMapping>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FieldMapping>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FieldMapping>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("sourceFieldName"u8);
             writer.WriteStringValue(SourceFieldName);
@@ -27,18 +35,39 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (MappingFunction != null)
                 {
                     writer.WritePropertyName("mappingFunction"u8);
-                    writer.WriteObjectValue(MappingFunction);
+                    if (MappingFunction is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<FieldMappingFunction>)MappingFunction).Serialize(writer, options);
+                    }
                 }
                 else
                 {
                     writer.WriteNull("mappingFunction");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FieldMapping DeserializeFieldMapping(JsonElement element)
+        internal static FieldMapping DeserializeFieldMapping(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +75,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string sourceFieldName = default;
             Optional<string> targetFieldName = default;
             Optional<FieldMappingFunction> mappingFunction = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceFieldName"u8))
@@ -68,8 +98,61 @@ namespace Azure.Search.Documents.Indexes.Models
                     mappingFunction = FieldMappingFunction.DeserializeFieldMappingFunction(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FieldMapping(sourceFieldName, targetFieldName.Value, mappingFunction.Value);
+            return new FieldMapping(sourceFieldName, targetFieldName.Value, mappingFunction.Value, rawData);
+        }
+
+        FieldMapping IModelJsonSerializable<FieldMapping>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FieldMapping>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFieldMapping(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FieldMapping>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FieldMapping>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FieldMapping IModelSerializable<FieldMapping>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FieldMapping>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFieldMapping(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FieldMapping"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FieldMapping"/> to convert. </param>
+        public static implicit operator RequestContent(FieldMapping model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FieldMapping"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FieldMapping(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFieldMapping(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
@@ -12,26 +16,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Please note <see cref="WorkloadItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="VmWorkloadItem"/>, <see cref="VmWorkloadSapAseDatabaseWorkloadItem"/>, <see cref="VmWorkloadSapAseSystemWorkloadItem"/>, <see cref="VmWorkloadSapHanaDatabaseWorkloadItem"/>, <see cref="VmWorkloadSapHanaSystemWorkloadItem"/>, <see cref="VmWorkloadSqlDatabaseWorkloadItem"/> and <see cref="VmWorkloadSqlInstanceWorkloadItem"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownWorkloadItem))]
     public abstract partial class WorkloadItem
     {
-        /// <summary> Initializes a new instance of WorkloadItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadItem"/>. </summary>
         protected WorkloadItem()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkloadItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
         /// <param name="workloadType"> Type of workload for the backup management. </param>
         /// <param name="workloadItemType"> Type of the backup item. </param>
         /// <param name="friendlyName"> Friendly name of the backup item. </param>
         /// <param name="protectionState"> State of the back up item. </param>
-        internal WorkloadItem(string backupManagementType, string workloadType, string workloadItemType, string friendlyName, BackupProtectionStatus? protectionState)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadItem(string backupManagementType, string workloadType, string workloadItemType, string friendlyName, BackupProtectionStatus? protectionState, Dictionary<string, BinaryData> rawData)
         {
             BackupManagementType = backupManagementType;
             WorkloadType = workloadType;
             WorkloadItemType = workloadItemType;
             FriendlyName = friendlyName;
             ProtectionState = protectionState;
+            _rawData = rawData;
         }
 
         /// <summary> Type of backup management to backup an item. </summary>

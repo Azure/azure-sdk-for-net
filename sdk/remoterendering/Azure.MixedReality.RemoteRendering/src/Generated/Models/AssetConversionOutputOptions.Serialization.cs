@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.MixedReality.RemoteRendering
 {
-    public partial class AssetConversionOutputOptions : IUtf8JsonSerializable
+    public partial class AssetConversionOutputOptions : IUtf8JsonSerializable, IModelJsonSerializable<AssetConversionOutputOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AssetConversionOutputOptions>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AssetConversionOutputOptions>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AssetConversionOutputOptions>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("storageContainerUri"u8);
             writer.WriteStringValue(StorageContainerUri.AbsoluteUri);
@@ -33,11 +40,25 @@ namespace Azure.MixedReality.RemoteRendering
                 writer.WritePropertyName("outputAssetFilename"u8);
                 writer.WriteStringValue(OutputAssetFilename);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AssetConversionOutputOptions DeserializeAssetConversionOutputOptions(JsonElement element)
+        internal static AssetConversionOutputOptions DeserializeAssetConversionOutputOptions(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +67,7 @@ namespace Azure.MixedReality.RemoteRendering
             Optional<string> storageContainerWriteSas = default;
             Optional<string> blobPrefix = default;
             Optional<string> outputAssetFilename = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageContainerUri"u8))
@@ -68,8 +90,61 @@ namespace Azure.MixedReality.RemoteRendering
                     outputAssetFilename = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AssetConversionOutputOptions(storageContainerUri, storageContainerWriteSas.Value, blobPrefix.Value, outputAssetFilename.Value);
+            return new AssetConversionOutputOptions(storageContainerUri, storageContainerWriteSas.Value, blobPrefix.Value, outputAssetFilename.Value, rawData);
+        }
+
+        AssetConversionOutputOptions IModelJsonSerializable<AssetConversionOutputOptions>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AssetConversionOutputOptions>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAssetConversionOutputOptions(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AssetConversionOutputOptions>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AssetConversionOutputOptions>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AssetConversionOutputOptions IModelSerializable<AssetConversionOutputOptions>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AssetConversionOutputOptions>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAssetConversionOutputOptions(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AssetConversionOutputOptions"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AssetConversionOutputOptions"/> to convert. </param>
+        public static implicit operator RequestContent(AssetConversionOutputOptions model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AssetConversionOutputOptions"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AssetConversionOutputOptions(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAssetConversionOutputOptions(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

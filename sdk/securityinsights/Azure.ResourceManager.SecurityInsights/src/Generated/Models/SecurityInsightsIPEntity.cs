@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents an ip entity. </summary>
     public partial class SecurityInsightsIPEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsIPEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIPEntity"/>. </summary>
         public SecurityInsightsIPEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = SecurityInsightsEntityKind.IP;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsIPEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIPEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +35,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="address"> The IP address as string, e.g. 127.0.0.1 (either in Ipv4 or Ipv6). </param>
         /// <param name="location"> The geo-location context attached to the ip entity. </param>
         /// <param name="threatIntelligence"> A list of TI contexts attached to the ip entity. </param>
-        internal SecurityInsightsIPEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IPAddress address, SecurityInsightsIPEntityGeoLocation location, IReadOnlyList<SecurityInsightsThreatIntelligence> threatIntelligence) : base(id, name, resourceType, systemData, kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsIPEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IPAddress address, SecurityInsightsIPEntityGeoLocation location, IReadOnlyList<SecurityInsightsThreatIntelligence> threatIntelligence, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, kind, rawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

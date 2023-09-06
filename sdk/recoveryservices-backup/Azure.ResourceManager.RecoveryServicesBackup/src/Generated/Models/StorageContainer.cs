@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -12,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure Storage Account workload-specific container. </summary>
     public partial class StorageContainer : BackupGenericProtectionContainer
     {
-        /// <summary> Initializes a new instance of StorageContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageContainer"/>. </summary>
         public StorageContainer()
         {
             ContainerType = ProtectableContainerType.StorageContainer;
         }
 
-        /// <summary> Initializes a new instance of StorageContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageContainer"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the container. </param>
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
@@ -35,7 +37,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="resourceGroup"> Resource group name of Recovery Services Vault. </param>
         /// <param name="protectedItemCount"> Number of items backed up in this container. </param>
         /// <param name="acquireStorageAccountLock"> Whether storage account lock is to be acquired for this container or not. </param>
-        internal StorageContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, ResourceIdentifier sourceResourceId, string storageAccountVersion, string resourceGroup, long? protectedItemCount, AcquireStorageAccountLock? acquireStorageAccountLock) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, ResourceIdentifier sourceResourceId, string storageAccountVersion, string resourceGroup, long? protectedItemCount, AcquireStorageAccountLock? acquireStorageAccountLock, Dictionary<string, BinaryData> rawData) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, rawData)
         {
             SourceResourceId = sourceResourceId;
             StorageAccountVersion = storageAccountVersion;

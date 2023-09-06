@@ -5,15 +5,78 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Quantum.Jobs.Models
 {
-    public partial class QuantumJobQuota
+    public partial class QuantumJobQuota : IUtf8JsonSerializable, IModelJsonSerializable<QuantumJobQuota>
     {
-        internal static QuantumJobQuota DeserializeQuantumJobQuota(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<QuantumJobQuota>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<QuantumJobQuota>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<QuantumJobQuota>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Dimension))
+            {
+                writer.WritePropertyName("dimension"u8);
+                writer.WriteStringValue(Dimension);
+            }
+            if (Optional.IsDefined(Scope))
+            {
+                writer.WritePropertyName("scope"u8);
+                writer.WriteStringValue(Scope.Value.ToString());
+            }
+            if (Optional.IsDefined(ProviderId))
+            {
+                writer.WritePropertyName("providerId"u8);
+                writer.WriteStringValue(ProviderId);
+            }
+            if (Optional.IsDefined(Utilization))
+            {
+                writer.WritePropertyName("utilization"u8);
+                writer.WriteNumberValue(Utilization.Value);
+            }
+            if (Optional.IsDefined(Holds))
+            {
+                writer.WritePropertyName("holds"u8);
+                writer.WriteNumberValue(Holds.Value);
+            }
+            if (Optional.IsDefined(Limit))
+            {
+                writer.WritePropertyName("limit"u8);
+                writer.WriteNumberValue(Limit.Value);
+            }
+            if (Optional.IsDefined(Period))
+            {
+                writer.WritePropertyName("period"u8);
+                writer.WriteStringValue(Period.Value.ToString());
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static QuantumJobQuota DeserializeQuantumJobQuota(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +88,7 @@ namespace Azure.Quantum.Jobs.Models
             Optional<float> holds = default;
             Optional<float> limit = default;
             Optional<MeterPeriod> period = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dimension"u8))
@@ -82,8 +146,61 @@ namespace Azure.Quantum.Jobs.Models
                     period = new MeterPeriod(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new QuantumJobQuota(dimension.Value, Optional.ToNullable(scope), providerId.Value, Optional.ToNullable(utilization), Optional.ToNullable(holds), Optional.ToNullable(limit), Optional.ToNullable(period));
+            return new QuantumJobQuota(dimension.Value, Optional.ToNullable(scope), providerId.Value, Optional.ToNullable(utilization), Optional.ToNullable(holds), Optional.ToNullable(limit), Optional.ToNullable(period), rawData);
+        }
+
+        QuantumJobQuota IModelJsonSerializable<QuantumJobQuota>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QuantumJobQuota>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeQuantumJobQuota(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<QuantumJobQuota>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QuantumJobQuota>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        QuantumJobQuota IModelSerializable<QuantumJobQuota>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QuantumJobQuota>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeQuantumJobQuota(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="QuantumJobQuota"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="QuantumJobQuota"/> to convert. </param>
+        public static implicit operator RequestContent(QuantumJobQuota model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="QuantumJobQuota"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator QuantumJobQuota(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeQuantumJobQuota(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

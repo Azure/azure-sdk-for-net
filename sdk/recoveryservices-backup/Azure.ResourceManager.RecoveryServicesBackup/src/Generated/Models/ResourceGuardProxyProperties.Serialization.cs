@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class ResourceGuardProxyProperties : IUtf8JsonSerializable
+    public partial class ResourceGuardProxyProperties : IUtf8JsonSerializable, IModelJsonSerializable<ResourceGuardProxyProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceGuardProxyProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceGuardProxyProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceGuardProxyProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceGuardResourceId))
             {
@@ -28,7 +34,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceGuardOperationDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ResourceGuardOperationDetail>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,11 +55,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ResourceGuardProxyProperties DeserializeResourceGuardProxyProperties(JsonElement element)
+        internal static ResourceGuardProxyProperties DeserializeResourceGuardProxyProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IList<ResourceGuardOperationDetail>> resourceGuardOperationDetails = default;
             Optional<DateTimeOffset> lastUpdatedTime = default;
             Optional<string> description = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceGuardResourceId"u8))
@@ -94,8 +122,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResourceGuardProxyProperties(resourceGuardResourceId.Value, Optional.ToList(resourceGuardOperationDetails), Optional.ToNullable(lastUpdatedTime), description.Value);
+            return new ResourceGuardProxyProperties(resourceGuardResourceId.Value, Optional.ToList(resourceGuardOperationDetails), Optional.ToNullable(lastUpdatedTime), description.Value, rawData);
+        }
+
+        ResourceGuardProxyProperties IModelJsonSerializable<ResourceGuardProxyProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceGuardProxyProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceGuardProxyProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceGuardProxyProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceGuardProxyProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceGuardProxyProperties IModelSerializable<ResourceGuardProxyProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceGuardProxyProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceGuardProxyProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ResourceGuardProxyProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ResourceGuardProxyProperties"/> to convert. </param>
+        public static implicit operator RequestContent(ResourceGuardProxyProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ResourceGuardProxyProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ResourceGuardProxyProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourceGuardProxyProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

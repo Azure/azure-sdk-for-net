@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -12,16 +14,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The TopologySingleResourceChild. </summary>
     public partial class TopologySingleResourceChild
     {
-        /// <summary> Initializes a new instance of TopologySingleResourceChild. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TopologySingleResourceChild"/>. </summary>
         internal TopologySingleResourceChild()
         {
         }
 
-        /// <summary> Initializes a new instance of TopologySingleResourceChild. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopologySingleResourceChild"/>. </summary>
         /// <param name="resourceId"> Azure resource id which serves as child resource in topology view. </param>
-        internal TopologySingleResourceChild(ResourceIdentifier resourceId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TopologySingleResourceChild(ResourceIdentifier resourceId, Dictionary<string, BinaryData> rawData)
         {
             ResourceId = resourceId;
+            _rawData = rawData;
         }
 
         /// <summary> Azure resource id which serves as child resource in topology view. </summary>

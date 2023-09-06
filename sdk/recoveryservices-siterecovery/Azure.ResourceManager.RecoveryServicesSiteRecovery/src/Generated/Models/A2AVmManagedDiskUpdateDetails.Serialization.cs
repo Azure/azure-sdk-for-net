@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2AVmManagedDiskUpdateDetails : IUtf8JsonSerializable
+    public partial class A2AVmManagedDiskUpdateDetails : IUtf8JsonSerializable, IModelJsonSerializable<A2AVmManagedDiskUpdateDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<A2AVmManagedDiskUpdateDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<A2AVmManagedDiskUpdateDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<A2AVmManagedDiskUpdateDetails>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DiskId))
             {
@@ -33,7 +41,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(DiskEncryptionInfo))
             {
                 writer.WritePropertyName("diskEncryptionInfo"u8);
-                writer.WriteObjectValue(DiskEncryptionInfo);
+                if (DiskEncryptionInfo is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SiteRecoveryDiskEncryptionInfo>)DiskEncryptionInfo).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(FailoverDiskName))
             {
@@ -45,7 +60,127 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("tfoDiskName"u8);
                 writer.WriteStringValue(TfoDiskName);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static A2AVmManagedDiskUpdateDetails DeserializeA2AVmManagedDiskUpdateDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> diskId = default;
+            Optional<string> recoveryTargetDiskAccountType = default;
+            Optional<string> recoveryReplicaDiskAccountType = default;
+            Optional<SiteRecoveryDiskEncryptionInfo> diskEncryptionInfo = default;
+            Optional<string> failoverDiskName = default;
+            Optional<string> tfoDiskName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("diskId"u8))
+                {
+                    diskId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("recoveryTargetDiskAccountType"u8))
+                {
+                    recoveryTargetDiskAccountType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("recoveryReplicaDiskAccountType"u8))
+                {
+                    recoveryReplicaDiskAccountType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("diskEncryptionInfo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("failoverDiskName"u8))
+                {
+                    failoverDiskName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tfoDiskName"u8))
+                {
+                    tfoDiskName = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new A2AVmManagedDiskUpdateDetails(diskId.Value, recoveryTargetDiskAccountType.Value, recoveryReplicaDiskAccountType.Value, diskEncryptionInfo.Value, failoverDiskName.Value, tfoDiskName.Value, rawData);
+        }
+
+        A2AVmManagedDiskUpdateDetails IModelJsonSerializable<A2AVmManagedDiskUpdateDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<A2AVmManagedDiskUpdateDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeA2AVmManagedDiskUpdateDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<A2AVmManagedDiskUpdateDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<A2AVmManagedDiskUpdateDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        A2AVmManagedDiskUpdateDetails IModelSerializable<A2AVmManagedDiskUpdateDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<A2AVmManagedDiskUpdateDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeA2AVmManagedDiskUpdateDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="A2AVmManagedDiskUpdateDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="A2AVmManagedDiskUpdateDetails"/> to convert. </param>
+        public static implicit operator RequestContent(A2AVmManagedDiskUpdateDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="A2AVmManagedDiskUpdateDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator A2AVmManagedDiskUpdateDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeA2AVmManagedDiskUpdateDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

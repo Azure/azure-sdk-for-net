@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Please note <see cref="ReplicationProtectionIntentProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="A2AReplicationIntentDetails"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownReplicationProtectionIntentProviderSpecificSettings))]
     public abstract partial class ReplicationProtectionIntentProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of ReplicationProtectionIntentProviderSpecificSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReplicationProtectionIntentProviderSpecificSettings"/>. </summary>
         protected ReplicationProtectionIntentProviderSpecificSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ReplicationProtectionIntentProviderSpecificSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationProtectionIntentProviderSpecificSettings"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
-        internal ReplicationProtectionIntentProviderSpecificSettings(string instanceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReplicationProtectionIntentProviderSpecificSettings(string instanceType, Dictionary<string, BinaryData> rawData)
         {
             InstanceType = instanceType;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the Instance type. </summary>

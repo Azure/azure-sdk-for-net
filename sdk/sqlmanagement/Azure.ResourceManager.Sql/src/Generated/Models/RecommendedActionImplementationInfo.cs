@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Contains information for manual implementation for an Azure SQL Database, Server or Elastic Pool Recommended Action. </summary>
     public partial class RecommendedActionImplementationInfo
     {
-        /// <summary> Initializes a new instance of RecommendedActionImplementationInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecommendedActionImplementationInfo"/>. </summary>
         internal RecommendedActionImplementationInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of RecommendedActionImplementationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendedActionImplementationInfo"/>. </summary>
         /// <param name="method"> Gets the method in which this recommended action can be manually implemented. e.g., TSql, AzurePowerShell. </param>
         /// <param name="script"> Gets the manual implementation script. e.g., T-SQL script that could be executed on the database. </param>
-        internal RecommendedActionImplementationInfo(ImplementationMethod? method, string script)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecommendedActionImplementationInfo(ImplementationMethod? method, string script, Dictionary<string, BinaryData> rawData)
         {
             Method = method;
             Script = script;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the method in which this recommended action can be manually implemented. e.g., TSql, AzurePowerShell. </summary>

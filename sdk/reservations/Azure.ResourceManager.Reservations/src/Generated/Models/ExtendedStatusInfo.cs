@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> The ExtendedStatusInfo. </summary>
     public partial class ExtendedStatusInfo
     {
-        /// <summary> Initializes a new instance of ExtendedStatusInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExtendedStatusInfo"/>. </summary>
         internal ExtendedStatusInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtendedStatusInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedStatusInfo"/>. </summary>
         /// <param name="statusCode"></param>
         /// <param name="message"> The message giving detailed information about the status code. </param>
-        internal ExtendedStatusInfo(ReservationStatusCode? statusCode, string message)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExtendedStatusInfo(ReservationStatusCode? statusCode, string message, Dictionary<string, BinaryData> rawData)
         {
             StatusCode = statusCode;
             Message = message;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the status code. </summary>

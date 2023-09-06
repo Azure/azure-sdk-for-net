@@ -5,15 +5,88 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupStatusResult
+    public partial class BackupStatusResult : IUtf8JsonSerializable, IModelJsonSerializable<BackupStatusResult>
     {
-        internal static BackupStatusResult DeserializeBackupStatusResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BackupStatusResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BackupStatusResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BackupStatusResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ProtectionStatus))
+            {
+                writer.WritePropertyName("protectionStatus"u8);
+                writer.WriteStringValue(ProtectionStatus.Value.ToString());
+            }
+            if (Optional.IsDefined(VaultId))
+            {
+                writer.WritePropertyName("vaultId"u8);
+                writer.WriteStringValue(VaultId);
+            }
+            if (Optional.IsDefined(FabricName))
+            {
+                writer.WritePropertyName("fabricName"u8);
+                writer.WriteStringValue(FabricName.Value.ToString());
+            }
+            if (Optional.IsDefined(ContainerName))
+            {
+                writer.WritePropertyName("containerName"u8);
+                writer.WriteStringValue(ContainerName);
+            }
+            if (Optional.IsDefined(ProtectedItemName))
+            {
+                writer.WritePropertyName("protectedItemName"u8);
+                writer.WriteStringValue(ProtectedItemName);
+            }
+            if (Optional.IsDefined(ErrorCode))
+            {
+                writer.WritePropertyName("errorCode"u8);
+                writer.WriteStringValue(ErrorCode);
+            }
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                writer.WritePropertyName("errorMessage"u8);
+                writer.WriteStringValue(ErrorMessage);
+            }
+            if (Optional.IsDefined(PolicyName))
+            {
+                writer.WritePropertyName("policyName"u8);
+                writer.WriteStringValue(PolicyName);
+            }
+            if (Optional.IsDefined(RegistrationStatus))
+            {
+                writer.WritePropertyName("registrationStatus"u8);
+                writer.WriteStringValue(RegistrationStatus);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static BackupStatusResult DeserializeBackupStatusResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> errorMessage = default;
             Optional<string> policyName = default;
             Optional<string> registrationStatus = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protectionStatus"u8))
@@ -86,8 +160,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     registrationStatus = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BackupStatusResult(Optional.ToNullable(protectionStatus), vaultId.Value, Optional.ToNullable(fabricName), containerName.Value, protectedItemName.Value, errorCode.Value, errorMessage.Value, policyName.Value, registrationStatus.Value);
+            return new BackupStatusResult(Optional.ToNullable(protectionStatus), vaultId.Value, Optional.ToNullable(fabricName), containerName.Value, protectedItemName.Value, errorCode.Value, errorMessage.Value, policyName.Value, registrationStatus.Value, rawData);
+        }
+
+        BackupStatusResult IModelJsonSerializable<BackupStatusResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackupStatusResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupStatusResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BackupStatusResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackupStatusResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BackupStatusResult IModelSerializable<BackupStatusResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackupStatusResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBackupStatusResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BackupStatusResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BackupStatusResult"/> to convert. </param>
+        public static implicit operator RequestContent(BackupStatusResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BackupStatusResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BackupStatusResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBackupStatusResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

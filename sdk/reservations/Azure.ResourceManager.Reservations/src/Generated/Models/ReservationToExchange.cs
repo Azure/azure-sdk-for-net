@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
@@ -12,22 +14,27 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Reservation refund details. </summary>
     public partial class ReservationToExchange
     {
-        /// <summary> Initializes a new instance of ReservationToExchange. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationToExchange"/>. </summary>
         internal ReservationToExchange()
         {
         }
 
-        /// <summary> Initializes a new instance of ReservationToExchange. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationToExchange"/>. </summary>
         /// <param name="reservationId"> Fully qualified id of the reservation being returned. </param>
         /// <param name="quantity"> Quantity to be returned. </param>
         /// <param name="billingRefundAmount"> Pricing information containing the amount and the currency code. </param>
         /// <param name="billingInformation"> billing information. </param>
-        internal ReservationToExchange(ResourceIdentifier reservationId, int? quantity, PurchasePrice billingRefundAmount, BillingInformation billingInformation)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationToExchange(ResourceIdentifier reservationId, int? quantity, PurchasePrice billingRefundAmount, BillingInformation billingInformation, Dictionary<string, BinaryData> rawData)
         {
             ReservationId = reservationId;
             Quantity = quantity;
             BillingRefundAmount = billingRefundAmount;
             BillingInformation = billingInformation;
+            _rawData = rawData;
         }
 
         /// <summary> Fully qualified id of the reservation being returned. </summary>

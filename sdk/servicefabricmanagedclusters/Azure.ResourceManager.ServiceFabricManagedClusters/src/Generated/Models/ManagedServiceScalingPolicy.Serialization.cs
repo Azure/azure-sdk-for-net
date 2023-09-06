@@ -5,31 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ManagedServiceScalingPolicy : IUtf8JsonSerializable
+    public partial class ManagedServiceScalingPolicy : IUtf8JsonSerializable, IModelJsonSerializable<ManagedServiceScalingPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedServiceScalingPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedServiceScalingPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedServiceScalingPolicy>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("scalingMechanism"u8);
-            writer.WriteObjectValue(ScalingMechanism);
+            if (ScalingMechanism is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<ManagedServiceScalingMechanism>)ScalingMechanism).Serialize(writer, options);
+            }
             writer.WritePropertyName("scalingTrigger"u8);
-            writer.WriteObjectValue(ScalingTrigger);
+            if (ScalingTrigger is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<ManagedServiceScalingTrigger>)ScalingTrigger).Serialize(writer, options);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedServiceScalingPolicy DeserializeManagedServiceScalingPolicy(JsonElement element)
+        internal static ManagedServiceScalingPolicy DeserializeManagedServiceScalingPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ManagedServiceScalingMechanism scalingMechanism = default;
             ManagedServiceScalingTrigger scalingTrigger = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scalingMechanism"u8))
@@ -42,8 +79,61 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     scalingTrigger = ManagedServiceScalingTrigger.DeserializeManagedServiceScalingTrigger(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedServiceScalingPolicy(scalingMechanism, scalingTrigger);
+            return new ManagedServiceScalingPolicy(scalingMechanism, scalingTrigger, rawData);
+        }
+
+        ManagedServiceScalingPolicy IModelJsonSerializable<ManagedServiceScalingPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedServiceScalingPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedServiceScalingPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedServiceScalingPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedServiceScalingPolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedServiceScalingPolicy IModelSerializable<ManagedServiceScalingPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedServiceScalingPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedServiceScalingPolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagedServiceScalingPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagedServiceScalingPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(ManagedServiceScalingPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagedServiceScalingPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagedServiceScalingPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedServiceScalingPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

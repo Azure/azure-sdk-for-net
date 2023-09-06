@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Resource provider information. </summary>
     public partial class TenantResourceProvider
     {
-        /// <summary> Initializes a new instance of TenantResourceProvider. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TenantResourceProvider"/>. </summary>
         internal TenantResourceProvider()
         {
             ResourceTypes = new ChangeTrackingList<ProviderResourceType>();
         }
 
-        /// <summary> Initializes a new instance of TenantResourceProvider. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantResourceProvider"/>. </summary>
         /// <param name="namespace"> The namespace of the resource provider. </param>
         /// <param name="resourceTypes"> The collection of provider resource types. </param>
-        internal TenantResourceProvider(string @namespace, IReadOnlyList<ProviderResourceType> resourceTypes)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TenantResourceProvider(string @namespace, IReadOnlyList<ProviderResourceType> resourceTypes, Dictionary<string, BinaryData> rawData)
         {
             Namespace = @namespace;
             ResourceTypes = resourceTypes;
+            _rawData = rawData;
         }
 
         /// <summary> The namespace of the resource provider. </summary>

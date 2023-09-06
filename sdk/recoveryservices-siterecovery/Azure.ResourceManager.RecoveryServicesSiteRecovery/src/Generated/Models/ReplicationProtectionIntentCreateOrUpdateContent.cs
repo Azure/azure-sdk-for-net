@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Create protection intent input. </summary>
     public partial class ReplicationProtectionIntentCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ReplicationProtectionIntentCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReplicationProtectionIntentCreateOrUpdateContent"/>. </summary>
         public ReplicationProtectionIntentCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReplicationProtectionIntentCreateOrUpdateContent"/>. </summary>
+        /// <param name="properties"> Create protection intent input properties. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReplicationProtectionIntentCreateOrUpdateContent(SiteRecoveryCreateProtectionIntentProperties properties, Dictionary<string, BinaryData> rawData)
+        {
+            Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Create protection intent input properties. </summary>
