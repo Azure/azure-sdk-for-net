@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataMigration.Mocking;
 using Azure.ResourceManager.DataMigration.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,38 +20,30 @@ namespace Azure.ResourceManager.DataMigration
     /// <summary> A class to add extension methods to Azure.ResourceManager.DataMigration. </summary>
     public static partial class DataMigrationExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DataMigrationArmClientMockingExtension GetDataMigrationArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new DataMigrationArmClientMockingExtension(client);
+            });
+        }
+
+        private static DataMigrationResourceGroupMockingExtension GetDataMigrationResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DataMigrationResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DataMigrationSubscriptionMockingExtension GetDataMigrationSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DataMigrationSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region DatabaseMigrationSqlDBResource
         /// <summary>
         /// Gets an object representing a <see cref="DatabaseMigrationSqlDBResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DatabaseMigrationSqlDBResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseMigrationSqlDBResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -60,16 +53,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> Returns a <see cref="DatabaseMigrationSqlDBResource" /> object. </returns>
         public static DatabaseMigrationSqlDBResource GetDatabaseMigrationSqlDBResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DatabaseMigrationSqlDBResource.ValidateResourceId(id);
-                return new DatabaseMigrationSqlDBResource(client, id);
-            }
-            );
+            return GetDataMigrationArmClientMockingExtension(client).GetDatabaseMigrationSqlDBResource(id);
         }
-        #endregion
 
-        #region DatabaseMigrationSqlMIResource
         /// <summary>
         /// Gets an object representing a <see cref="DatabaseMigrationSqlMIResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DatabaseMigrationSqlMIResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseMigrationSqlMIResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -79,16 +65,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> Returns a <see cref="DatabaseMigrationSqlMIResource" /> object. </returns>
         public static DatabaseMigrationSqlMIResource GetDatabaseMigrationSqlMIResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DatabaseMigrationSqlMIResource.ValidateResourceId(id);
-                return new DatabaseMigrationSqlMIResource(client, id);
-            }
-            );
+            return GetDataMigrationArmClientMockingExtension(client).GetDatabaseMigrationSqlMIResource(id);
         }
-        #endregion
 
-        #region DatabaseMigrationSqlVmResource
         /// <summary>
         /// Gets an object representing a <see cref="DatabaseMigrationSqlVmResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DatabaseMigrationSqlVmResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseMigrationSqlVmResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -98,16 +77,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> Returns a <see cref="DatabaseMigrationSqlVmResource" /> object. </returns>
         public static DatabaseMigrationSqlVmResource GetDatabaseMigrationSqlVmResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DatabaseMigrationSqlVmResource.ValidateResourceId(id);
-                return new DatabaseMigrationSqlVmResource(client, id);
-            }
-            );
+            return GetDataMigrationArmClientMockingExtension(client).GetDatabaseMigrationSqlVmResource(id);
         }
-        #endregion
 
-        #region SqlMigrationServiceResource
         /// <summary>
         /// Gets an object representing a <see cref="SqlMigrationServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SqlMigrationServiceResource.CreateResourceIdentifier" /> to create a <see cref="SqlMigrationServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -117,16 +89,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> Returns a <see cref="SqlMigrationServiceResource" /> object. </returns>
         public static SqlMigrationServiceResource GetSqlMigrationServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlMigrationServiceResource.ValidateResourceId(id);
-                return new SqlMigrationServiceResource(client, id);
-            }
-            );
+            return GetDataMigrationArmClientMockingExtension(client).GetSqlMigrationServiceResource(id);
         }
-        #endregion
 
-        #region DataMigrationServiceResource
         /// <summary>
         /// Gets an object representing a <see cref="DataMigrationServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataMigrationServiceResource.CreateResourceIdentifier" /> to create a <see cref="DataMigrationServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -136,16 +101,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> Returns a <see cref="DataMigrationServiceResource" /> object. </returns>
         public static DataMigrationServiceResource GetDataMigrationServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataMigrationServiceResource.ValidateResourceId(id);
-                return new DataMigrationServiceResource(client, id);
-            }
-            );
+            return GetDataMigrationArmClientMockingExtension(client).GetDataMigrationServiceResource(id);
         }
-        #endregion
 
-        #region ServiceProjectTaskResource
         /// <summary>
         /// Gets an object representing a <see cref="ServiceProjectTaskResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ServiceProjectTaskResource.CreateResourceIdentifier" /> to create a <see cref="ServiceProjectTaskResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -155,16 +113,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> Returns a <see cref="ServiceProjectTaskResource" /> object. </returns>
         public static ServiceProjectTaskResource GetServiceProjectTaskResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ServiceProjectTaskResource.ValidateResourceId(id);
-                return new ServiceProjectTaskResource(client, id);
-            }
-            );
+            return GetDataMigrationArmClientMockingExtension(client).GetServiceProjectTaskResource(id);
         }
-        #endregion
 
-        #region ServiceServiceTaskResource
         /// <summary>
         /// Gets an object representing a <see cref="ServiceServiceTaskResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ServiceServiceTaskResource.CreateResourceIdentifier" /> to create a <see cref="ServiceServiceTaskResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -174,16 +125,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> Returns a <see cref="ServiceServiceTaskResource" /> object. </returns>
         public static ServiceServiceTaskResource GetServiceServiceTaskResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ServiceServiceTaskResource.ValidateResourceId(id);
-                return new ServiceServiceTaskResource(client, id);
-            }
-            );
+            return GetDataMigrationArmClientMockingExtension(client).GetServiceServiceTaskResource(id);
         }
-        #endregion
 
-        #region ProjectResource
         /// <summary>
         /// Gets an object representing a <see cref="ProjectResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ProjectResource.CreateResourceIdentifier" /> to create a <see cref="ProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -193,16 +137,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> Returns a <see cref="ProjectResource" /> object. </returns>
         public static ProjectResource GetProjectResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ProjectResource.ValidateResourceId(id);
-                return new ProjectResource(client, id);
-            }
-            );
+            return GetDataMigrationArmClientMockingExtension(client).GetProjectResource(id);
         }
-        #endregion
 
-        #region ProjectFileResource
         /// <summary>
         /// Gets an object representing a <see cref="ProjectFileResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ProjectFileResource.CreateResourceIdentifier" /> to create a <see cref="ProjectFileResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -212,21 +149,15 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> Returns a <see cref="ProjectFileResource" /> object. </returns>
         public static ProjectFileResource GetProjectFileResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ProjectFileResource.ValidateResourceId(id);
-                return new ProjectFileResource(client, id);
-            }
-            );
+            return GetDataMigrationArmClientMockingExtension(client).GetProjectFileResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of DatabaseMigrationSqlDBResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DatabaseMigrationSqlDBResources and their operations over a DatabaseMigrationSqlDBResource. </returns>
         public static DatabaseMigrationSqlDBCollection GetDatabaseMigrationSqlDBs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDatabaseMigrationSqlDBs();
+            return GetDataMigrationResourceGroupMockingExtension(resourceGroupResource).GetDatabaseMigrationSqlDBs();
         }
 
         /// <summary>
@@ -253,7 +184,7 @@ namespace Azure.ResourceManager.DataMigration
         [ForwardsClientCalls]
         public static async Task<Response<DatabaseMigrationSqlDBResource>> GetDatabaseMigrationSqlDBAsync(this ResourceGroupResource resourceGroupResource, string sqlDBInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDatabaseMigrationSqlDBs().GetAsync(sqlDBInstanceName, targetDBName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
+            return await GetDataMigrationResourceGroupMockingExtension(resourceGroupResource).GetDatabaseMigrationSqlDBAsync(sqlDBInstanceName, targetDBName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -280,7 +211,7 @@ namespace Azure.ResourceManager.DataMigration
         [ForwardsClientCalls]
         public static Response<DatabaseMigrationSqlDBResource> GetDatabaseMigrationSqlDB(this ResourceGroupResource resourceGroupResource, string sqlDBInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDatabaseMigrationSqlDBs().Get(sqlDBInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
+            return GetDataMigrationResourceGroupMockingExtension(resourceGroupResource).GetDatabaseMigrationSqlDB(sqlDBInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of DatabaseMigrationSqlMIResources in the ResourceGroupResource. </summary>
@@ -288,7 +219,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An object representing collection of DatabaseMigrationSqlMIResources and their operations over a DatabaseMigrationSqlMIResource. </returns>
         public static DatabaseMigrationSqlMICollection GetDatabaseMigrationSqlMIs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDatabaseMigrationSqlMIs();
+            return GetDataMigrationResourceGroupMockingExtension(resourceGroupResource).GetDatabaseMigrationSqlMIs();
         }
 
         /// <summary>
@@ -315,7 +246,7 @@ namespace Azure.ResourceManager.DataMigration
         [ForwardsClientCalls]
         public static async Task<Response<DatabaseMigrationSqlMIResource>> GetDatabaseMigrationSqlMIAsync(this ResourceGroupResource resourceGroupResource, string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDatabaseMigrationSqlMIs().GetAsync(managedInstanceName, targetDBName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
+            return await GetDataMigrationResourceGroupMockingExtension(resourceGroupResource).GetDatabaseMigrationSqlMIAsync(managedInstanceName, targetDBName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -342,7 +273,7 @@ namespace Azure.ResourceManager.DataMigration
         [ForwardsClientCalls]
         public static Response<DatabaseMigrationSqlMIResource> GetDatabaseMigrationSqlMI(this ResourceGroupResource resourceGroupResource, string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDatabaseMigrationSqlMIs().Get(managedInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
+            return GetDataMigrationResourceGroupMockingExtension(resourceGroupResource).GetDatabaseMigrationSqlMI(managedInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of DatabaseMigrationSqlVmResources in the ResourceGroupResource. </summary>
@@ -350,7 +281,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An object representing collection of DatabaseMigrationSqlVmResources and their operations over a DatabaseMigrationSqlVmResource. </returns>
         public static DatabaseMigrationSqlVmCollection GetDatabaseMigrationSqlVms(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDatabaseMigrationSqlVms();
+            return GetDataMigrationResourceGroupMockingExtension(resourceGroupResource).GetDatabaseMigrationSqlVms();
         }
 
         /// <summary>
@@ -377,7 +308,7 @@ namespace Azure.ResourceManager.DataMigration
         [ForwardsClientCalls]
         public static async Task<Response<DatabaseMigrationSqlVmResource>> GetDatabaseMigrationSqlVmAsync(this ResourceGroupResource resourceGroupResource, string sqlVirtualMachineName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDatabaseMigrationSqlVms().GetAsync(sqlVirtualMachineName, targetDBName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
+            return await GetDataMigrationResourceGroupMockingExtension(resourceGroupResource).GetDatabaseMigrationSqlVmAsync(sqlVirtualMachineName, targetDBName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -404,7 +335,7 @@ namespace Azure.ResourceManager.DataMigration
         [ForwardsClientCalls]
         public static Response<DatabaseMigrationSqlVmResource> GetDatabaseMigrationSqlVm(this ResourceGroupResource resourceGroupResource, string sqlVirtualMachineName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDatabaseMigrationSqlVms().Get(sqlVirtualMachineName, targetDBName, migrationOperationId, expand, cancellationToken);
+            return GetDataMigrationResourceGroupMockingExtension(resourceGroupResource).GetDatabaseMigrationSqlVm(sqlVirtualMachineName, targetDBName, migrationOperationId, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of SqlMigrationServiceResources in the ResourceGroupResource. </summary>
@@ -412,7 +343,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An object representing collection of SqlMigrationServiceResources and their operations over a SqlMigrationServiceResource. </returns>
         public static SqlMigrationServiceCollection GetSqlMigrationServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSqlMigrationServices();
+            return GetDataMigrationResourceGroupMockingExtension(resourceGroupResource).GetSqlMigrationServices();
         }
 
         /// <summary>
@@ -436,7 +367,7 @@ namespace Azure.ResourceManager.DataMigration
         [ForwardsClientCalls]
         public static async Task<Response<SqlMigrationServiceResource>> GetSqlMigrationServiceAsync(this ResourceGroupResource resourceGroupResource, string sqlMigrationServiceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetSqlMigrationServices().GetAsync(sqlMigrationServiceName, cancellationToken).ConfigureAwait(false);
+            return await GetDataMigrationResourceGroupMockingExtension(resourceGroupResource).GetSqlMigrationServiceAsync(sqlMigrationServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -460,7 +391,7 @@ namespace Azure.ResourceManager.DataMigration
         [ForwardsClientCalls]
         public static Response<SqlMigrationServiceResource> GetSqlMigrationService(this ResourceGroupResource resourceGroupResource, string sqlMigrationServiceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSqlMigrationServices().Get(sqlMigrationServiceName, cancellationToken);
+            return GetDataMigrationResourceGroupMockingExtension(resourceGroupResource).GetSqlMigrationService(sqlMigrationServiceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DataMigrationServiceResources in the ResourceGroupResource. </summary>
@@ -468,7 +399,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An object representing collection of DataMigrationServiceResources and their operations over a DataMigrationServiceResource. </returns>
         public static DataMigrationServiceCollection GetDataMigrationServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDataMigrationServices();
+            return GetDataMigrationResourceGroupMockingExtension(resourceGroupResource).GetDataMigrationServices();
         }
 
         /// <summary>
@@ -492,7 +423,7 @@ namespace Azure.ResourceManager.DataMigration
         [ForwardsClientCalls]
         public static async Task<Response<DataMigrationServiceResource>> GetDataMigrationServiceAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDataMigrationServices().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
+            return await GetDataMigrationResourceGroupMockingExtension(resourceGroupResource).GetDataMigrationServiceAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -516,7 +447,7 @@ namespace Azure.ResourceManager.DataMigration
         [ForwardsClientCalls]
         public static Response<DataMigrationServiceResource> GetDataMigrationService(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDataMigrationServices().Get(serviceName, cancellationToken);
+            return GetDataMigrationResourceGroupMockingExtension(resourceGroupResource).GetDataMigrationService(serviceName, cancellationToken);
         }
 
         /// <summary>
@@ -537,7 +468,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An async collection of <see cref="SqlMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SqlMigrationServiceResource> GetSqlMigrationServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSqlMigrationServicesAsync(cancellationToken);
+            return GetDataMigrationSubscriptionMockingExtension(subscriptionResource).GetSqlMigrationServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -558,7 +489,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> A collection of <see cref="SqlMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SqlMigrationServiceResource> GetSqlMigrationServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSqlMigrationServices(cancellationToken);
+            return GetDataMigrationSubscriptionMockingExtension(subscriptionResource).GetSqlMigrationServices(cancellationToken);
         }
 
         /// <summary>
@@ -579,7 +510,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An async collection of <see cref="ResourceSku" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ResourceSku> GetSkusResourceSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkusResourceSkusAsync(cancellationToken);
+            return GetDataMigrationSubscriptionMockingExtension(subscriptionResource).GetSkusResourceSkusAsync(cancellationToken);
         }
 
         /// <summary>
@@ -600,7 +531,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> A collection of <see cref="ResourceSku" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ResourceSku> GetSkusResourceSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkusResourceSkus(cancellationToken);
+            return GetDataMigrationSubscriptionMockingExtension(subscriptionResource).GetSkusResourceSkus(cancellationToken);
         }
 
         /// <summary>
@@ -621,7 +552,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An async collection of <see cref="DataMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataMigrationServiceResource> GetDataMigrationServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataMigrationServicesAsync(cancellationToken);
+            return GetDataMigrationSubscriptionMockingExtension(subscriptionResource).GetDataMigrationServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -642,7 +573,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> A collection of <see cref="DataMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataMigrationServiceResource> GetDataMigrationServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataMigrationServices(cancellationToken);
+            return GetDataMigrationSubscriptionMockingExtension(subscriptionResource).GetDataMigrationServices(cancellationToken);
         }
 
         /// <summary>
@@ -665,9 +596,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="nameAvailabilityRequest"/> is null. </exception>
         public static async Task<Response<NameAvailabilityResponse>> CheckNameAvailabilityServiceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, NameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nameAvailabilityRequest, nameof(nameAvailabilityRequest));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNameAvailabilityServiceAsync(location, nameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
+            return await GetDataMigrationSubscriptionMockingExtension(subscriptionResource).CheckNameAvailabilityServiceAsync(location, nameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -690,9 +619,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="nameAvailabilityRequest"/> is null. </exception>
         public static Response<NameAvailabilityResponse> CheckNameAvailabilityService(this SubscriptionResource subscriptionResource, AzureLocation location, NameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nameAvailabilityRequest, nameof(nameAvailabilityRequest));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNameAvailabilityService(location, nameAvailabilityRequest, cancellationToken);
+            return GetDataMigrationSubscriptionMockingExtension(subscriptionResource).CheckNameAvailabilityService(location, nameAvailabilityRequest, cancellationToken);
         }
 
         /// <summary>
@@ -714,7 +641,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An async collection of <see cref="Quota" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<Quota> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesAsync(location, cancellationToken);
+            return GetDataMigrationSubscriptionMockingExtension(subscriptionResource).GetUsagesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -736,7 +663,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> A collection of <see cref="Quota" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<Quota> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsages(location, cancellationToken);
+            return GetDataMigrationSubscriptionMockingExtension(subscriptionResource).GetUsages(location, cancellationToken);
         }
     }
 }
