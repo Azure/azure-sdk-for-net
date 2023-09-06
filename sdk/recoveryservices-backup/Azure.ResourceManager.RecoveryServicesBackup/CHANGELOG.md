@@ -6,11 +6,11 @@
 
 - Added a new property DistributedNodesInfo in AzureWorkloadContainerExtendedInfo, AzureVmWorkloadSQLAvailabilityGroupProtectableItem, AzureVmWorkloadProtectedItem response.
 - The property lists the nodes part of the distributed item at that time, their registration state and their ARM vm Id
+- Upgraded API version to 2023-04-01
 
 ### Breaking Changes
 
 - Renamed softDeleteRetentionPeriod to softDeleteRetentionPeriodInDays
-
 ### Bugs Fixed
 
 ### Other Changes
