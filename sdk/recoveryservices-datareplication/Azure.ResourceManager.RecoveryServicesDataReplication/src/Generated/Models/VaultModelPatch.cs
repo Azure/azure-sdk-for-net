@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Vault properties. </summary>
-        public VaultModelProperties Properties { get; set; }
         /// <summary> Gets or sets the resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> Vault properties. </summary>
+        public VaultModelProperties Properties { get; set; }
     }
 }

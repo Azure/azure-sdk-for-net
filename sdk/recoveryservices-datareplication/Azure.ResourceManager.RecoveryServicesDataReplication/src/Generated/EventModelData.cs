@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesDataReplication.Models;
@@ -27,7 +26,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of EventModelData. </summary>
@@ -36,16 +34,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Event model properties. </param>
-        /// <param name="tags"> Gets or sets the resource tags. </param>
-        internal EventModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EventModelProperties properties, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal EventModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EventModelProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            Tags = tags;
         }
 
         /// <summary> Event model properties. </summary>
         public EventModelProperties Properties { get; }
-        /// <summary> Gets or sets the resource tags. </summary>
-        public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

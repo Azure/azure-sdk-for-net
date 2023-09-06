@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -22,7 +21,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 return null;
             }
             EventModelProperties properties = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -32,20 +30,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 if (property.NameEquals("properties"u8))
                 {
                     properties = EventModelProperties.DeserializeEventModelProperties(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("tags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -73,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                     continue;
                 }
             }
-            return new EventModelData(id, name, type, systemData.Value, properties, Optional.ToDictionary(tags));
+            return new EventModelData(id, name, type, systemData.Value, properties);
         }
     }
 }

@@ -23,13 +23,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Dra model properties. </param>
-        /// <param name="tags"> Gets or sets the resource tags. </param>
         /// <returns> A new <see cref="RecoveryServicesDataReplication.DraModelData"/> instance for mocking. </returns>
-        public static DraModelData DraModelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DraModelProperties properties = null, IDictionary<string, string> tags = null)
+        public static DraModelData DraModelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DraModelProperties properties = null)
         {
-            tags ??= new Dictionary<string, string>();
-
-            return new DraModelData(id, name, resourceType, systemData, properties, tags);
+            return new DraModelData(id, name, resourceType, systemData, properties);
         }
 
         /// <summary> Initializes a new instance of DraModelProperties. </summary>
@@ -123,13 +120,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Email configuration model properties. </param>
-        /// <param name="tags"> Gets or sets the resource tags. </param>
         /// <returns> A new <see cref="RecoveryServicesDataReplication.EmailConfigurationModelData"/> instance for mocking. </returns>
-        public static EmailConfigurationModelData EmailConfigurationModelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EmailConfigurationModelProperties properties = null, IDictionary<string, string> tags = null)
+        public static EmailConfigurationModelData EmailConfigurationModelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EmailConfigurationModelProperties properties = null)
         {
-            tags ??= new Dictionary<string, string>();
-
-            return new EmailConfigurationModelData(id, name, resourceType, systemData, properties, tags);
+            return new EmailConfigurationModelData(id, name, resourceType, systemData, properties);
         }
 
         /// <summary> Initializes a new instance of EventModelData. </summary>
@@ -138,13 +132,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Event model properties. </param>
-        /// <param name="tags"> Gets or sets the resource tags. </param>
         /// <returns> A new <see cref="RecoveryServicesDataReplication.EventModelData"/> instance for mocking. </returns>
-        public static EventModelData EventModelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EventModelProperties properties = null, IReadOnlyDictionary<string, string> tags = null)
+        public static EventModelData EventModelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EventModelProperties properties = null)
         {
-            tags ??= new Dictionary<string, string>();
-
-            return new EventModelData(id, name, resourceType, systemData, properties, tags);
+            return new EventModelData(id, name, resourceType, systemData, properties);
         }
 
         /// <summary> Initializes a new instance of EventModelProperties. </summary>
@@ -211,13 +202,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Policy model properties. </param>
-        /// <param name="tags"> Gets or sets the resource tags. </param>
         /// <returns> A new <see cref="RecoveryServicesDataReplication.PolicyModelData"/> instance for mocking. </returns>
-        public static PolicyModelData PolicyModelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PolicyModelProperties properties = null, IDictionary<string, string> tags = null)
+        public static PolicyModelData PolicyModelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PolicyModelProperties properties = null)
         {
-            tags ??= new Dictionary<string, string>();
-
-            return new PolicyModelData(id, name, resourceType, systemData, properties, tags);
+            return new PolicyModelData(id, name, resourceType, systemData, properties);
         }
 
         /// <summary> Initializes a new instance of PolicyModelProperties. </summary>
@@ -239,13 +227,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Protected item model properties. </param>
-        /// <param name="tags"> Gets or sets the resource tags. </param>
         /// <returns> A new <see cref="RecoveryServicesDataReplication.ProtectedItemModelData"/> instance for mocking. </returns>
-        public static ProtectedItemModelData ProtectedItemModelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProtectedItemModelProperties properties = null, IDictionary<string, string> tags = null)
+        public static ProtectedItemModelData ProtectedItemModelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProtectedItemModelProperties properties = null)
         {
-            tags ??= new Dictionary<string, string>();
-
-            return new ProtectedItemModelData(id, name, resourceType, systemData, properties, tags);
+            return new ProtectedItemModelData(id, name, resourceType, systemData, properties);
         }
 
         /// <summary> Initializes a new instance of ProtectedItemModelProperties. </summary>
@@ -367,13 +352,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Recovery point model properties. </param>
-        /// <param name="tags"> Gets or sets the resource tags. </param>
         /// <returns> A new <see cref="RecoveryServicesDataReplication.RecoveryPointModelData"/> instance for mocking. </returns>
-        public static RecoveryPointModelData RecoveryPointModelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RecoveryPointModelProperties properties = null, IReadOnlyDictionary<string, string> tags = null)
+        public static RecoveryPointModelData RecoveryPointModelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RecoveryPointModelProperties properties = null)
         {
-            tags ??= new Dictionary<string, string>();
-
-            return new RecoveryPointModelData(id, name, resourceType, systemData, properties, tags);
+            return new RecoveryPointModelData(id, name, resourceType, systemData, properties);
         }
 
         /// <summary> Initializes a new instance of RecoveryPointModelProperties. </summary>
@@ -402,13 +384,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Replication extension model properties. </param>
-        /// <param name="tags"> Gets or sets the resource tags. </param>
         /// <returns> A new <see cref="RecoveryServicesDataReplication.ReplicationExtensionModelData"/> instance for mocking. </returns>
-        public static ReplicationExtensionModelData ReplicationExtensionModelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ReplicationExtensionModelProperties properties = null, IDictionary<string, string> tags = null)
+        public static ReplicationExtensionModelData ReplicationExtensionModelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ReplicationExtensionModelProperties properties = null)
         {
-            tags ??= new Dictionary<string, string>();
-
-            return new ReplicationExtensionModelData(id, name, resourceType, systemData, properties, tags);
+            return new ReplicationExtensionModelData(id, name, resourceType, systemData, properties);
         }
 
         /// <summary> Initializes a new instance of ReplicationExtensionModelProperties. </summary>
@@ -466,13 +445,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Workflow model properties. </param>
-        /// <param name="tags"> Gets or sets the resource tags. </param>
         /// <returns> A new <see cref="RecoveryServicesDataReplication.WorkflowModelData"/> instance for mocking. </returns>
-        public static WorkflowModelData WorkflowModelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkflowModelProperties properties = null, IReadOnlyDictionary<string, string> tags = null)
+        public static WorkflowModelData WorkflowModelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkflowModelProperties properties = null)
         {
-            tags ??= new Dictionary<string, string>();
-
-            return new WorkflowModelData(id, name, resourceType, systemData, properties, tags);
+            return new WorkflowModelData(id, name, resourceType, systemData, properties);
         }
 
         /// <summary> Initializes a new instance of WorkflowModelProperties. </summary>

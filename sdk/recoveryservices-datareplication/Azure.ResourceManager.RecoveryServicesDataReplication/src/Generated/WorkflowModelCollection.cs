@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workflowModelWorkflowRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workflowModelWorkflowRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, continuationToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkflowModelResource(Client, WorkflowModelData.DeserializeWorkflowModelData(e)), _workflowModelWorkflowClientDiagnostics, Pipeline, "WorkflowModelCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkflowModelResource(Client, WorkflowModelData.DeserializeWorkflowModelData(e)), _workflowModelWorkflowClientDiagnostics, Pipeline, "WorkflowModelCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,7 +172,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workflowModelWorkflowRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workflowModelWorkflowRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, continuationToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkflowModelResource(Client, WorkflowModelData.DeserializeWorkflowModelData(e)), _workflowModelWorkflowClientDiagnostics, Pipeline, "WorkflowModelCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkflowModelResource(Client, WorkflowModelData.DeserializeWorkflowModelData(e)), _workflowModelWorkflowClientDiagnostics, Pipeline, "WorkflowModelCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

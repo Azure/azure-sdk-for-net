@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FabricModelFabricRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FabricModelFabricRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, continuationToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FabricModelResource(Client, FabricModelData.DeserializeFabricModelData(e)), FabricModelFabricClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFabricModels", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FabricModelResource(Client, FabricModelData.DeserializeFabricModelData(e)), FabricModelFabricClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFabricModels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FabricModelFabricRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FabricModelFabricRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, continuationToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FabricModelResource(Client, FabricModelData.DeserializeFabricModelData(e)), FabricModelFabricClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFabricModels", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FabricModelResource(Client, FabricModelData.DeserializeFabricModelData(e)), FabricModelFabricClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFabricModels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VaultModelVaultRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VaultModelVaultRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, continuationToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VaultModelResource(Client, VaultModelData.DeserializeVaultModelData(e)), VaultModelVaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVaultModels", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VaultModelResource(Client, VaultModelData.DeserializeVaultModelData(e)), VaultModelVaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVaultModels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -204,7 +205,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VaultModelVaultRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VaultModelVaultRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, continuationToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VaultModelResource(Client, VaultModelData.DeserializeVaultModelData(e)), VaultModelVaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVaultModels", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VaultModelResource(Client, VaultModelData.DeserializeVaultModelData(e)), VaultModelVaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVaultModels", "value", "nextLink", cancellationToken);
         }
     }
 }

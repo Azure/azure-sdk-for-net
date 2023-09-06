@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesDataReplication.Models;
@@ -27,7 +26,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of WorkflowModelData. </summary>
@@ -36,16 +34,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Workflow model properties. </param>
-        /// <param name="tags"> Gets or sets the resource tags. </param>
-        internal WorkflowModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkflowModelProperties properties, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal WorkflowModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkflowModelProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            Tags = tags;
         }
 
         /// <summary> Workflow model properties. </summary>
         public WorkflowModelProperties Properties { get; }
-        /// <summary> Gets or sets the resource tags. </summary>
-        public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

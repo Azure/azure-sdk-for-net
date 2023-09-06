@@ -1,6 +1,6 @@
 # Microsoft Azure RecoveryServicesDataReplication management client library for .NET
 
-**[Describe the service briefly first.]**
+The Azure RecoveryServicesDataReplication provides VM migration capabilities from Hyper-V and VMware platforms to Azure Stack HCI utilizing Azure Migrate. The data movement that the service provides stays on-premises at all times while using Azure Migrate as the management plane.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 

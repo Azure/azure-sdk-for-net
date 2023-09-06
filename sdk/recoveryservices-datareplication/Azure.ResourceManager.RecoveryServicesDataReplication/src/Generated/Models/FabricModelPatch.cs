@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Fabric model properties. </summary>
-        public FabricModelProperties Properties { get; set; }
         /// <summary> Gets or sets the resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> Fabric model properties. </summary>
+        public FabricModelProperties Properties { get; set; }
     }
 }
