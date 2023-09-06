@@ -6,15 +6,49 @@
 #nullable disable
 
 using System;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Queues.Models
 {
-    internal partial class DequeuedMessageItem
+    internal partial class DequeuedMessageItem : IXmlSerializable, IModelSerializable<DequeuedMessageItem>
     {
-        internal static DequeuedMessageItem DeserializeDequeuedMessageItem(XElement element)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
+            writer.WriteStartElement(nameHint ?? "QueueMessage");
+            writer.WriteStartElement("MessageId");
+            writer.WriteValue(MessageId);
+            writer.WriteEndElement();
+            writer.WriteStartElement("InsertionTime");
+            writer.WriteValue(InsertionTime, "R");
+            writer.WriteEndElement();
+            writer.WriteStartElement("ExpirationTime");
+            writer.WriteValue(ExpirationTime, "R");
+            writer.WriteEndElement();
+            writer.WriteStartElement("PopReceipt");
+            writer.WriteValue(PopReceipt);
+            writer.WriteEndElement();
+            writer.WriteStartElement("TimeNextVisible");
+            writer.WriteValue(TimeNextVisible, "R");
+            writer.WriteEndElement();
+            writer.WriteStartElement("DequeueCount");
+            writer.WriteValue(DequeueCount);
+            writer.WriteEndElement();
+            writer.WriteStartElement("MessageText");
+            writer.WriteValue(MessageText);
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static DequeuedMessageItem DeserializeDequeuedMessageItem(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             string messageId = default;
             DateTimeOffset insertionTime = default;
             DateTimeOffset expirationTime = default;
@@ -50,7 +84,57 @@ namespace Azure.Storage.Queues.Models
             {
                 messageText = (string)messageTextElement;
             }
-            return new DequeuedMessageItem(messageId, insertionTime, expirationTime, popReceipt, timeNextVisible, dequeueCount, messageText);
+            return new DequeuedMessageItem(messageId, insertionTime, expirationTime, popReceipt, timeNextVisible, dequeueCount, messageText, default);
+        }
+
+        BinaryData IModelSerializable<DequeuedMessageItem>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DequeuedMessageItem>(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        DequeuedMessageItem IModelSerializable<DequeuedMessageItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DequeuedMessageItem>(this, options.Format);
+
+            return DeserializeDequeuedMessageItem(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="DequeuedMessageItem"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DequeuedMessageItem"/> to convert. </param>
+        public static implicit operator RequestContent(DequeuedMessageItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DequeuedMessageItem"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DequeuedMessageItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeDequeuedMessageItem(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

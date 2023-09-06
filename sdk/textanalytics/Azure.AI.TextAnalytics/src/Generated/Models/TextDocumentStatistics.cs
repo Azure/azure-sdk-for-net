@@ -5,10 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics
 {
     /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
     public readonly partial struct TextDocumentStatistics
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private readonly Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TextDocumentStatistics"/>. </summary>
+        /// <param name="characterCount"> Number of text elements recognized in the document. </param>
+        /// <param name="transactionCount"> Number of transactions for the document. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TextDocumentStatistics(int characterCount, int transactionCount, Dictionary<string, BinaryData> rawData)
+        {
+            CharacterCount = characterCount;
+            TransactionCount = transactionCount;
+            _rawData = rawData;
+        }
     }
 }

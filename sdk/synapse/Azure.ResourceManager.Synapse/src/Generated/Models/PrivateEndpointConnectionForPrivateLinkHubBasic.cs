@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> The PrivateEndpointConnectionForPrivateLinkHubBasic. </summary>
     public partial class PrivateEndpointConnectionForPrivateLinkHubBasic
     {
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionForPrivateLinkHubBasic. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionForPrivateLinkHubBasic"/>. </summary>
         internal PrivateEndpointConnectionForPrivateLinkHubBasic()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionForPrivateLinkHubBasic. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionForPrivateLinkHubBasic"/>. </summary>
         /// <param name="id"></param>
         /// <param name="properties"> Properties of a private endpoint connection. </param>
-        internal PrivateEndpointConnectionForPrivateLinkHubBasic(string id, SynapsePrivateEndpointConnectionProperties properties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateEndpointConnectionForPrivateLinkHubBasic(string id, SynapsePrivateEndpointConnectionProperties properties, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the id. </summary>

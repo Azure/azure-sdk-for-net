@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
@@ -13,5 +14,23 @@ namespace Azure.AI.TextAnalytics
     /// <summary> The HealthcareEntityLink. </summary>
     public partial class EntityDataSource
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EntityDataSource"/>. </summary>
+        /// <param name="name"> Entity Catalog. Examples include: UMLS, CHV, MSH, etc. </param>
+        /// <param name="entityId"> Entity id in the given source catalog. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EntityDataSource(string name, string entityId, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            EntityId = entityId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EntityDataSource"/> for deserialization. </summary>
+        internal EntityDataSource()
+        {
+        }
     }
 }

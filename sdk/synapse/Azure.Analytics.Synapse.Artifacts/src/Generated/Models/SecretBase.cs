@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// </summary>
     public partial class SecretBase
     {
-        /// <summary> Initializes a new instance of SecretBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecretBase"/>. </summary>
         public SecretBase()
         {
         }
 
-        /// <summary> Initializes a new instance of SecretBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretBase"/>. </summary>
         /// <param name="type"> Type of the secret. </param>
-        internal SecretBase(string type)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecretBase(string type, Dictionary<string, BinaryData> rawData)
         {
             Type = type;
+            _rawData = rawData;
         }
 
         /// <summary> Type of the secret. </summary>

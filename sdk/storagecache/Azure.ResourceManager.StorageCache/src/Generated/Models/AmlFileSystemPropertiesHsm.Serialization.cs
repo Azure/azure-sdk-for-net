@@ -5,33 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class AmlFileSystemPropertiesHsm : IUtf8JsonSerializable
+    public partial class AmlFileSystemPropertiesHsm : IUtf8JsonSerializable, IModelJsonSerializable<AmlFileSystemPropertiesHsm>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AmlFileSystemPropertiesHsm>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AmlFileSystemPropertiesHsm>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AmlFileSystemPropertiesHsm>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings);
+                if (Settings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AmlFileSystemHsmSettings>)Settings).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static AmlFileSystemPropertiesHsm DeserializeAmlFileSystemPropertiesHsm(JsonElement element)
+        internal static AmlFileSystemPropertiesHsm DeserializeAmlFileSystemPropertiesHsm(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AmlFileSystemHsmSettings> settings = default;
             Optional<IReadOnlyList<AmlFileSystemArchive>> archiveStatus = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("settings"u8))
@@ -57,8 +86,61 @@ namespace Azure.ResourceManager.StorageCache.Models
                     archiveStatus = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AmlFileSystemPropertiesHsm(settings.Value, Optional.ToList(archiveStatus));
+            return new AmlFileSystemPropertiesHsm(settings.Value, Optional.ToList(archiveStatus), rawData);
+        }
+
+        AmlFileSystemPropertiesHsm IModelJsonSerializable<AmlFileSystemPropertiesHsm>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AmlFileSystemPropertiesHsm>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAmlFileSystemPropertiesHsm(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AmlFileSystemPropertiesHsm>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AmlFileSystemPropertiesHsm>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AmlFileSystemPropertiesHsm IModelSerializable<AmlFileSystemPropertiesHsm>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AmlFileSystemPropertiesHsm>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAmlFileSystemPropertiesHsm(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AmlFileSystemPropertiesHsm"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AmlFileSystemPropertiesHsm"/> to convert. </param>
+        public static implicit operator RequestContent(AmlFileSystemPropertiesHsm model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AmlFileSystemPropertiesHsm"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AmlFileSystemPropertiesHsm(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAmlFileSystemPropertiesHsm(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

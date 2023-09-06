@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -13,7 +14,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> SSIS embedded child package. </summary>
     public partial class SsisChildPackage
     {
-        /// <summary> Initializes a new instance of SsisChildPackage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SsisChildPackage"/>. </summary>
         /// <param name="packagePath"> Path for embedded child package. Type: string (or Expression with resultType string). </param>
         /// <param name="packageContent"> Content for embedded child package. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packagePath"/> or <paramref name="packageContent"/> is null. </exception>
@@ -26,17 +30,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             PackageContent = packageContent;
         }
 
-        /// <summary> Initializes a new instance of SsisChildPackage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisChildPackage"/>. </summary>
         /// <param name="packagePath"> Path for embedded child package. Type: string (or Expression with resultType string). </param>
         /// <param name="packageName"> Name for embedded child package. </param>
         /// <param name="packageContent"> Content for embedded child package. Type: string (or Expression with resultType string). </param>
         /// <param name="packageLastModifiedDate"> Last modified date for embedded child package. </param>
-        internal SsisChildPackage(object packagePath, string packageName, object packageContent, string packageLastModifiedDate)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SsisChildPackage(object packagePath, string packageName, object packageContent, string packageLastModifiedDate, Dictionary<string, BinaryData> rawData)
         {
             PackagePath = packagePath;
             PackageName = packageName;
             PackageContent = packageContent;
             PackageLastModifiedDate = packageLastModifiedDate;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SsisChildPackage"/> for deserialization. </summary>
+        internal SsisChildPackage()
+        {
         }
 
         /// <summary> Path for embedded child package. Type: string (or Expression with resultType string). </summary>

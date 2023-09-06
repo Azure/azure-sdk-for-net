@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The UnknownDependencyReference. </summary>
     internal partial class UnknownDependencyReference : DependencyReference
     {
-        /// <summary> Initializes a new instance of UnknownDependencyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDependencyReference"/>. </summary>
         /// <param name="type"> The type of dependency reference. </param>
-        internal UnknownDependencyReference(string type) : base(type)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDependencyReference(string type, Dictionary<string, BinaryData> rawData) : base(type, rawData)
         {
             Type = type ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDependencyReference"/> for deserialization. </summary>
+        internal UnknownDependencyReference()
+        {
         }
     }
 }

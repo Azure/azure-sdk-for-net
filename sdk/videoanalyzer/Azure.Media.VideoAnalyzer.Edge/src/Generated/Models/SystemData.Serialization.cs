@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class SystemData : IUtf8JsonSerializable
+    public partial class SystemData : IUtf8JsonSerializable, IModelJsonSerializable<SystemData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SystemData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SystemData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SystemData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CreatedAt))
             {
@@ -26,17 +33,32 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("lastModifiedAt"u8);
                 writer.WriteStringValue(LastModifiedAt.Value, "O");
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SystemData DeserializeSystemData(JsonElement element)
+        internal static SystemData DeserializeSystemData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DateTimeOffset> createdAt = default;
             Optional<DateTimeOffset> lastModifiedAt = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdAt"u8))
@@ -57,8 +79,61 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     lastModifiedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SystemData(Optional.ToNullable(createdAt), Optional.ToNullable(lastModifiedAt));
+            return new SystemData(Optional.ToNullable(createdAt), Optional.ToNullable(lastModifiedAt), rawData);
+        }
+
+        SystemData IModelJsonSerializable<SystemData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SystemData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSystemData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SystemData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SystemData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SystemData IModelSerializable<SystemData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SystemData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSystemData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SystemData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SystemData"/> to convert. </param>
+        public static implicit operator RequestContent(SystemData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SystemData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SystemData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSystemData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -9,18 +9,31 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SqlPoolStoredProcedureActivityConverter))]
-    public partial class SqlPoolStoredProcedureActivity : IUtf8JsonSerializable
+    public partial class SqlPoolStoredProcedureActivity : IUtf8JsonSerializable, IModelJsonSerializable<SqlPoolStoredProcedureActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SqlPoolStoredProcedureActivity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SqlPoolStoredProcedureActivity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SqlPoolStoredProcedureActivity>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("sqlPool"u8);
-            writer.WriteObjectValue(SqlPool);
+            if (SqlPool is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<SqlPoolReference>)SqlPool).Serialize(writer, options);
+            }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
@@ -46,7 +59,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ActivityDependency>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -56,7 +76,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<UserProperty>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +98,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in StoredProcedureParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<StoredProcedureParameter>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -84,8 +118,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static SqlPoolStoredProcedureActivity DeserializeSqlPoolStoredProcedureActivity(JsonElement element)
+        internal static SqlPoolStoredProcedureActivity DeserializeSqlPoolStoredProcedureActivity(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -205,6 +241,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SqlPoolStoredProcedureActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, sqlPool, storedProcedureName, Optional.ToDictionary(storedProcedureParameters));
+        }
+
+        SqlPoolStoredProcedureActivity IModelJsonSerializable<SqlPoolStoredProcedureActivity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SqlPoolStoredProcedureActivity>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlPoolStoredProcedureActivity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SqlPoolStoredProcedureActivity>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SqlPoolStoredProcedureActivity>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SqlPoolStoredProcedureActivity IModelSerializable<SqlPoolStoredProcedureActivity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SqlPoolStoredProcedureActivity>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSqlPoolStoredProcedureActivity(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SqlPoolStoredProcedureActivity"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SqlPoolStoredProcedureActivity"/> to convert. </param>
+        public static implicit operator RequestContent(SqlPoolStoredProcedureActivity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SqlPoolStoredProcedureActivity"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SqlPoolStoredProcedureActivity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSqlPoolStoredProcedureActivity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class SqlPoolStoredProcedureActivityConverter : JsonConverter<SqlPoolStoredProcedureActivity>

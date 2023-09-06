@@ -5,37 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class StorageCacheDirectorySettings : IUtf8JsonSerializable
+    public partial class StorageCacheDirectorySettings : IUtf8JsonSerializable, IModelJsonSerializable<StorageCacheDirectorySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageCacheDirectorySettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageCacheDirectorySettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StorageCacheDirectorySettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ActiveDirectory))
             {
                 writer.WritePropertyName("activeDirectory"u8);
-                writer.WriteObjectValue(ActiveDirectory);
+                if (ActiveDirectory is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StorageCacheActiveDirectorySettings>)ActiveDirectory).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(UsernameDownload))
             {
                 writer.WritePropertyName("usernameDownload"u8);
-                writer.WriteObjectValue(UsernameDownload);
+                if (UsernameDownload is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StorageCacheUsernameDownloadSettings>)UsernameDownload).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static StorageCacheDirectorySettings DeserializeStorageCacheDirectorySettings(JsonElement element)
+        internal static StorageCacheDirectorySettings DeserializeStorageCacheDirectorySettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<StorageCacheActiveDirectorySettings> activeDirectory = default;
             Optional<StorageCacheUsernameDownloadSettings> usernameDownload = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activeDirectory"u8))
@@ -56,8 +93,61 @@ namespace Azure.ResourceManager.StorageCache.Models
                     usernameDownload = StorageCacheUsernameDownloadSettings.DeserializeStorageCacheUsernameDownloadSettings(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageCacheDirectorySettings(activeDirectory.Value, usernameDownload.Value);
+            return new StorageCacheDirectorySettings(activeDirectory.Value, usernameDownload.Value, rawData);
+        }
+
+        StorageCacheDirectorySettings IModelJsonSerializable<StorageCacheDirectorySettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageCacheDirectorySettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageCacheDirectorySettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageCacheDirectorySettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageCacheDirectorySettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageCacheDirectorySettings IModelSerializable<StorageCacheDirectorySettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageCacheDirectorySettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageCacheDirectorySettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageCacheDirectorySettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageCacheDirectorySettings"/> to convert. </param>
+        public static implicit operator RequestContent(StorageCacheDirectorySettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageCacheDirectorySettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageCacheDirectorySettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageCacheDirectorySettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

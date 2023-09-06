@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Class representing the MPEG4 Configuration. </summary>
     public partial class Mpeg4Configuration
     {
-        /// <summary> Initializes a new instance of Mpeg4Configuration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="Mpeg4Configuration"/>. </summary>
         public Mpeg4Configuration()
         {
         }
 
-        /// <summary> Initializes a new instance of Mpeg4Configuration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Mpeg4Configuration"/>. </summary>
         /// <param name="govLength"> Group of Video frames length. </param>
         /// <param name="profile"> The MPEG4 Profile. </param>
-        internal Mpeg4Configuration(float? govLength, Mpeg4Profile? profile)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal Mpeg4Configuration(float? govLength, Mpeg4Profile? profile, Dictionary<string, BinaryData> rawData)
         {
             GovLength = govLength;
             Profile = profile;
+            _rawData = rawData;
         }
 
         /// <summary> Group of Video frames length. </summary>

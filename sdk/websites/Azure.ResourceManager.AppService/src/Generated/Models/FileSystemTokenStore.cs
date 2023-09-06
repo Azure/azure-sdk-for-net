@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the storage of the tokens if a file system is used. </summary>
     internal partial class FileSystemTokenStore
     {
-        /// <summary> Initializes a new instance of FileSystemTokenStore. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FileSystemTokenStore"/>. </summary>
         public FileSystemTokenStore()
         {
         }
 
-        /// <summary> Initializes a new instance of FileSystemTokenStore. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileSystemTokenStore"/>. </summary>
         /// <param name="directory"> The directory in which the tokens will be stored. </param>
-        internal FileSystemTokenStore(string directory)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FileSystemTokenStore(string directory, Dictionary<string, BinaryData> rawData)
         {
             Directory = directory;
+            _rawData = rawData;
         }
 
         /// <summary> The directory in which the tokens will be stored. </summary>

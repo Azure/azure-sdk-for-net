@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The MetastoreRequestSuccessResponse. </summary>
     public partial class MetastoreRequestSuccessResponse
     {
-        /// <summary> Initializes a new instance of MetastoreRequestSuccessResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetastoreRequestSuccessResponse"/>. </summary>
         internal MetastoreRequestSuccessResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of MetastoreRequestSuccessResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetastoreRequestSuccessResponse"/>. </summary>
         /// <param name="status"> Enumerates possible Status of the resource. </param>
-        internal MetastoreRequestSuccessResponse(ResourceStatus? status)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetastoreRequestSuccessResponse(ResourceStatus? status, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
+            _rawData = rawData;
         }
 
         /// <summary> Enumerates possible Status of the resource. </summary>

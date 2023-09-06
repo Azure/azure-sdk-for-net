@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.Workloads.Models
     /// Please note <see cref="SapSizingRecommendationResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SingleServerRecommendationResult"/> and <see cref="ThreeTierRecommendationResult"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownSapSizingRecommendationResult))]
     public abstract partial class SapSizingRecommendationResult
     {
-        /// <summary> Initializes a new instance of SapSizingRecommendationResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapSizingRecommendationResult"/>. </summary>
         protected SapSizingRecommendationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of SapSizingRecommendationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapSizingRecommendationResult"/>. </summary>
         /// <param name="deploymentType"> The type of SAP deployment, single server or Three tier. </param>
-        internal SapSizingRecommendationResult(SapDeploymentType deploymentType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapSizingRecommendationResult(SapDeploymentType deploymentType, Dictionary<string, BinaryData> rawData)
         {
             DeploymentType = deploymentType;
+            _rawData = rawData;
         }
 
         /// <summary> The type of SAP deployment, single server or Three tier. </summary>

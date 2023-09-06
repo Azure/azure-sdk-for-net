@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The Amazon RDS for SQL Server dataset. </summary>
     public partial class AmazonRdsForSqlServerTableDataset : Dataset
     {
-        /// <summary> Initializes a new instance of AmazonRdsForSqlServerTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForSqlServerTableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public AmazonRdsForSqlServerTableDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AmazonRdsForSqlServerTable";
         }
 
-        /// <summary> Initializes a new instance of AmazonRdsForSqlServerTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForSqlServerTableDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -41,6 +41,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
             Table = table;
             Type = type ?? "AmazonRdsForSqlServerTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForSqlServerTableDataset"/> for deserialization. </summary>
+        internal AmazonRdsForSqlServerTableDataset()
+        {
         }
 
         /// <summary> The schema name of the SQL Server dataset. Type: string (or Expression with resultType string). </summary>

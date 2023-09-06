@@ -6,15 +6,49 @@
 #nullable disable
 
 using System;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class UserDelegationKey
+    public partial class UserDelegationKey : IXmlSerializable, IModelSerializable<UserDelegationKey>
     {
-        internal static UserDelegationKey DeserializeUserDelegationKey(XElement element)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
+            writer.WriteStartElement(nameHint ?? "UserDelegationKey");
+            writer.WriteStartElement("SignedOid");
+            writer.WriteValue(SignedObjectId);
+            writer.WriteEndElement();
+            writer.WriteStartElement("SignedTid");
+            writer.WriteValue(SignedTenantId);
+            writer.WriteEndElement();
+            writer.WriteStartElement("SignedStart");
+            writer.WriteValue(SignedStartsOn, "O");
+            writer.WriteEndElement();
+            writer.WriteStartElement("SignedExpiry");
+            writer.WriteValue(SignedExpiresOn, "O");
+            writer.WriteEndElement();
+            writer.WriteStartElement("SignedService");
+            writer.WriteValue(SignedService);
+            writer.WriteEndElement();
+            writer.WriteStartElement("SignedVersion");
+            writer.WriteValue(SignedVersion);
+            writer.WriteEndElement();
+            writer.WriteStartElement("Value");
+            writer.WriteValue(Value);
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static UserDelegationKey DeserializeUserDelegationKey(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             string signedObjectId = default;
             string signedTenantId = default;
             DateTimeOffset signedStartsOn = default;
@@ -50,7 +84,57 @@ namespace Azure.Storage.Blobs.Models
             {
                 value = (string)valueElement;
             }
-            return new UserDelegationKey(signedObjectId, signedTenantId, signedStartsOn, signedExpiresOn, signedService, signedVersion, value);
+            return new UserDelegationKey(signedObjectId, signedTenantId, signedStartsOn, signedExpiresOn, signedService, signedVersion, value, default);
+        }
+
+        BinaryData IModelSerializable<UserDelegationKey>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<UserDelegationKey>(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        UserDelegationKey IModelSerializable<UserDelegationKey>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<UserDelegationKey>(this, options.Format);
+
+            return DeserializeUserDelegationKey(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="UserDelegationKey"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="UserDelegationKey"/> to convert. </param>
+        public static implicit operator RequestContent(UserDelegationKey model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="UserDelegationKey"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator UserDelegationKey(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeUserDelegationKey(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,12 +5,243 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class GetSeries : IUtf8JsonSerializable
+    internal partial class GetSeries : IUtf8JsonSerializable, IModelJsonSerializable<GetSeries>
     {
+        void IModelJsonSerializable<GetSeries>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GetSeries>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("timeSeriesId"u8);
+            writer.WriteStartArray();
+            foreach (var item in TimeSeriesIdInternal)
+            {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("searchSpan"u8);
+            if (SearchSpan is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<DateTimeRange>)SearchSpan).Serialize(writer, options);
+            }
+            if (Optional.IsDefined(Filter))
+            {
+                writer.WritePropertyName("filter"u8);
+                if (Filter is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TimeSeriesExpression>)Filter).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(ProjectedVariables))
+            {
+                writer.WritePropertyName("projectedVariables"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProjectedVariables)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(InlineVariables))
+            {
+                writer.WritePropertyName("inlineVariables"u8);
+                writer.WriteStartObject();
+                foreach (var item in InlineVariables)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<TimeSeriesVariable>)item.Value).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Take))
+            {
+                writer.WritePropertyName("take"u8);
+                writer.WriteNumberValue(Take.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static GetSeries DeserializeGetSeries(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<object> timeSeriesId = default;
+            DateTimeRange searchSpan = default;
+            Optional<TimeSeriesExpression> filter = default;
+            Optional<IList<string>> projectedVariables = default;
+            Optional<IDictionary<string, TimeSeriesVariable>> inlineVariables = default;
+            Optional<int> take = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("timeSeriesId"u8))
+                {
+                    List<object> array = new List<object>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetObject());
+                        }
+                    }
+                    timeSeriesId = array;
+                    continue;
+                }
+                if (property.NameEquals("searchSpan"u8))
+                {
+                    searchSpan = DateTimeRange.DeserializeDateTimeRange(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("filter"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    filter = TimeSeriesExpression.DeserializeTimeSeriesExpression(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("projectedVariables"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    projectedVariables = array;
+                    continue;
+                }
+                if (property.NameEquals("inlineVariables"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, TimeSeriesVariable> dictionary = new Dictionary<string, TimeSeriesVariable>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, TimeSeriesVariable.DeserializeTimeSeriesVariable(property0.Value));
+                    }
+                    inlineVariables = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("take"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    take = property.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new GetSeries(timeSeriesId, searchSpan, filter.Value, Optional.ToList(projectedVariables), Optional.ToDictionary(inlineVariables), Optional.ToNullable(take), rawData);
+        }
+
+        GetSeries IModelJsonSerializable<GetSeries>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GetSeries>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGetSeries(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GetSeries>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GetSeries>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GetSeries IModelSerializable<GetSeries>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GetSeries>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGetSeries(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GetSeries"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GetSeries"/> to convert. </param>
+        public static implicit operator RequestContent(GetSeries model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GetSeries"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GetSeries(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGetSeries(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
     }
 }

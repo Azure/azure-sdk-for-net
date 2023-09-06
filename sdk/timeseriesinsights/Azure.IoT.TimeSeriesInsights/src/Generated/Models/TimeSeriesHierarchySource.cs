@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Definition of how time series hierarchy tree levels are created. </summary>
     public partial class TimeSeriesHierarchySource
     {
-        /// <summary> Initializes a new instance of TimeSeriesHierarchySource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesHierarchySource"/>. </summary>
         public TimeSeriesHierarchySource()
         {
             InstanceFieldNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of TimeSeriesHierarchySource. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesHierarchySource"/>. </summary>
         /// <param name="instanceFieldNames"> List of instance field names that must be set in all time series instances that belong to this hierarchy. The order of the instance fields defines the levels in the hierarchy. </param>
-        internal TimeSeriesHierarchySource(IList<string> instanceFieldNames)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TimeSeriesHierarchySource(IList<string> instanceFieldNames, Dictionary<string, BinaryData> rawData)
         {
             InstanceFieldNames = instanceFieldNames;
+            _rawData = rawData;
         }
 
         /// <summary> List of instance field names that must be set in all time series instances that belong to this hierarchy. The order of the instance fields defines the levels in the hierarchy. </summary>

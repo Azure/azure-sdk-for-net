@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(GoogleAdWordsSourceConverter))]
-    public partial class GoogleAdWordsSource : IUtf8JsonSerializable
+    public partial class GoogleAdWordsSource : IUtf8JsonSerializable, IModelJsonSerializable<GoogleAdWordsSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GoogleAdWordsSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GoogleAdWordsSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<GoogleAdWordsSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
@@ -59,8 +65,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static GoogleAdWordsSource DeserializeGoogleAdWordsSource(JsonElement element)
+        internal static GoogleAdWordsSource DeserializeGoogleAdWordsSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -139,6 +147,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new GoogleAdWordsSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, query.Value);
+        }
+
+        GoogleAdWordsSource IModelJsonSerializable<GoogleAdWordsSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GoogleAdWordsSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGoogleAdWordsSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GoogleAdWordsSource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GoogleAdWordsSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GoogleAdWordsSource IModelSerializable<GoogleAdWordsSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GoogleAdWordsSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGoogleAdWordsSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GoogleAdWordsSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GoogleAdWordsSource"/> to convert. </param>
+        public static implicit operator RequestContent(GoogleAdWordsSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GoogleAdWordsSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GoogleAdWordsSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGoogleAdWordsSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class GoogleAdWordsSourceConverter : JsonConverter<GoogleAdWordsSource>

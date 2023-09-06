@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> List of available SKUs for a Kusto Pool. </summary>
     internal partial class SynapseDataSourceResourceSkuListResult
     {
-        /// <summary> Initializes a new instance of SynapseDataSourceResourceSkuListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseDataSourceResourceSkuListResult"/>. </summary>
         internal SynapseDataSourceResourceSkuListResult()
         {
             Value = new ChangeTrackingList<SynapseDataSourceResourceSku>();
         }
 
-        /// <summary> Initializes a new instance of SynapseDataSourceResourceSkuListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataSourceResourceSkuListResult"/>. </summary>
         /// <param name="value"> The collection of available SKUs for an existing resource. </param>
-        internal SynapseDataSourceResourceSkuListResult(IReadOnlyList<SynapseDataSourceResourceSku> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseDataSourceResourceSkuListResult(IReadOnlyList<SynapseDataSourceResourceSku> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The collection of available SKUs for an existing resource. </summary>

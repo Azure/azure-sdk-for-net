@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class BigDataPoolAutoPauseProperties : IUtf8JsonSerializable
+    public partial class BigDataPoolAutoPauseProperties : IUtf8JsonSerializable, IModelJsonSerializable<BigDataPoolAutoPauseProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BigDataPoolAutoPauseProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BigDataPoolAutoPauseProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BigDataPoolAutoPauseProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DelayInMinutes))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BigDataPoolAutoPauseProperties DeserializeBigDataPoolAutoPauseProperties(JsonElement element)
+        internal static BigDataPoolAutoPauseProperties DeserializeBigDataPoolAutoPauseProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> delayInMinutes = default;
             Optional<bool> enabled = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("delayInMinutes"u8))
@@ -56,8 +79,61 @@ namespace Azure.ResourceManager.Synapse.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BigDataPoolAutoPauseProperties(Optional.ToNullable(delayInMinutes), Optional.ToNullable(enabled));
+            return new BigDataPoolAutoPauseProperties(Optional.ToNullable(delayInMinutes), Optional.ToNullable(enabled), rawData);
+        }
+
+        BigDataPoolAutoPauseProperties IModelJsonSerializable<BigDataPoolAutoPauseProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BigDataPoolAutoPauseProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBigDataPoolAutoPauseProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BigDataPoolAutoPauseProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BigDataPoolAutoPauseProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BigDataPoolAutoPauseProperties IModelSerializable<BigDataPoolAutoPauseProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BigDataPoolAutoPauseProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBigDataPoolAutoPauseProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BigDataPoolAutoPauseProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BigDataPoolAutoPauseProperties"/> to convert. </param>
+        public static implicit operator RequestContent(BigDataPoolAutoPauseProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BigDataPoolAutoPauseProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BigDataPoolAutoPauseProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBigDataPoolAutoPauseProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

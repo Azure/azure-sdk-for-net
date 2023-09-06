@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.AI.TextAnalytics.Legacy.Models;
 
 namespace Azure.AI.TextAnalytics.Legacy
@@ -12,9 +14,23 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The EntitiesTask. </summary>
     internal partial class EntitiesTask
     {
-        /// <summary> Initializes a new instance of EntitiesTask. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EntitiesTask"/>. </summary>
         public EntitiesTask()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EntitiesTask"/>. </summary>
+        /// <param name="parameters"></param>
+        /// <param name="taskName"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EntitiesTask(EntitiesTaskParameters parameters, string taskName, Dictionary<string, BinaryData> rawData)
+        {
+            Parameters = parameters;
+            TaskName = taskName;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the parameters. </summary>

@@ -15,7 +15,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A list of Notebook resources. </summary>
     internal partial class NotebookListResponse
     {
-        /// <summary> Initializes a new instance of NotebookListResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NotebookListResponse"/>. </summary>
         /// <param name="value"> List of Notebooks. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal NotebookListResponse(IEnumerable<NotebookResource> value)
@@ -25,13 +28,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of NotebookListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotebookListResponse"/>. </summary>
         /// <param name="value"> List of Notebooks. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal NotebookListResponse(IReadOnlyList<NotebookResource> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotebookListResponse(IReadOnlyList<NotebookResource> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NotebookListResponse"/> for deserialization. </summary>
+        internal NotebookListResponse()
+        {
         }
 
         /// <summary> List of Notebooks. </summary>

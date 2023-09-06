@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> The ONVIF device DNS properties. </summary>
     public partial class OnvifHostName
     {
-        /// <summary> Initializes a new instance of OnvifHostName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OnvifHostName"/>. </summary>
         public OnvifHostName()
         {
         }
 
-        /// <summary> Initializes a new instance of OnvifHostName. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnvifHostName"/>. </summary>
         /// <param name="fromDhcp"> Result value showing if the ONVIF device is configured to use DHCP. </param>
         /// <param name="hostname"> The hostname of the ONVIF device. </param>
-        internal OnvifHostName(bool? fromDhcp, string hostname)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OnvifHostName(bool? fromDhcp, string hostname, Dictionary<string, BinaryData> rawData)
         {
             FromDhcp = fromDhcp;
             Hostname = hostname;
+            _rawData = rawData;
         }
 
         /// <summary> Result value showing if the ONVIF device is configured to use DHCP. </summary>

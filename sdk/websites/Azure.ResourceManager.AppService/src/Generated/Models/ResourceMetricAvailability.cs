@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Metrics availability and retention. </summary>
     public partial class ResourceMetricAvailability
     {
-        /// <summary> Initializes a new instance of ResourceMetricAvailability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceMetricAvailability"/>. </summary>
         internal ResourceMetricAvailability()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceMetricAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceMetricAvailability"/>. </summary>
         /// <param name="timeGrain"> Time grain . </param>
         /// <param name="retention"> Retention period for the current time grain. </param>
-        internal ResourceMetricAvailability(string timeGrain, string retention)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceMetricAvailability(string timeGrain, string retention, Dictionary<string, BinaryData> rawData)
         {
             TimeGrain = timeGrain;
             Retention = retention;
+            _rawData = rawData;
         }
 
         /// <summary> Time grain . </summary>

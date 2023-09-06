@@ -6,33 +6,55 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DataFlowDebugQueryResponseConverter))]
-    public partial class DataFlowDebugQueryResponse : IUtf8JsonSerializable
+    public partial class DataFlowDebugQueryResponse : IUtf8JsonSerializable, IModelJsonSerializable<DataFlowDebugQueryResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataFlowDebugQueryResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataFlowDebugQueryResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataFlowDebugQueryResponse>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RunId))
             {
                 writer.WritePropertyName("runId"u8);
                 writer.WriteStringValue(RunId);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataFlowDebugQueryResponse DeserializeDataFlowDebugQueryResponse(JsonElement element)
+        internal static DataFlowDebugQueryResponse DeserializeDataFlowDebugQueryResponse(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> runId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("runId"u8))
@@ -40,8 +62,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     runId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataFlowDebugQueryResponse(runId.Value);
+            return new DataFlowDebugQueryResponse(runId.Value, rawData);
+        }
+
+        DataFlowDebugQueryResponse IModelJsonSerializable<DataFlowDebugQueryResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataFlowDebugQueryResponse>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFlowDebugQueryResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataFlowDebugQueryResponse>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataFlowDebugQueryResponse>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataFlowDebugQueryResponse IModelSerializable<DataFlowDebugQueryResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataFlowDebugQueryResponse>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataFlowDebugQueryResponse(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataFlowDebugQueryResponse"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataFlowDebugQueryResponse"/> to convert. </param>
+        public static implicit operator RequestContent(DataFlowDebugQueryResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataFlowDebugQueryResponse"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataFlowDebugQueryResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataFlowDebugQueryResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class DataFlowDebugQueryResponseConverter : JsonConverter<DataFlowDebugQueryResponse>

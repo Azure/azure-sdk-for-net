@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> An Access policy. </summary>
     public partial class BlobAccessPolicy
     {
-        /// <summary> Initializes a new instance of BlobAccessPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlobAccessPolicy"/>. </summary>
         public BlobAccessPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of BlobAccessPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobAccessPolicy"/>. </summary>
         /// <param name="policyStartsOn"> the date-time the policy is active. </param>
         /// <param name="policyExpiresOn"> the date-time the policy expires. </param>
         /// <param name="permissions"> the permissions for the acl policy. </param>
-        internal BlobAccessPolicy(DateTimeOffset? policyStartsOn, DateTimeOffset? policyExpiresOn, string permissions)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobAccessPolicy(DateTimeOffset? policyStartsOn, DateTimeOffset? policyExpiresOn, string permissions, Dictionary<string, BinaryData> rawData)
         {
             PolicyStartsOn = policyStartsOn;
             PolicyExpiresOn = policyExpiresOn;
             Permissions = permissions;
+            _rawData = rawData;
         }
     }
 }

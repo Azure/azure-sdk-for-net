@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Properties available for a Microsoft.Web resource provider operation. </summary>
     internal partial class CsmOperationDescriptionProperties
     {
-        /// <summary> Initializes a new instance of CsmOperationDescriptionProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CsmOperationDescriptionProperties"/>. </summary>
         internal CsmOperationDescriptionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of CsmOperationDescriptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CsmOperationDescriptionProperties"/>. </summary>
         /// <param name="serviceSpecification"> Resource metrics service provided by Microsoft.Insights resource provider. </param>
-        internal CsmOperationDescriptionProperties(ServiceSpecification serviceSpecification)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CsmOperationDescriptionProperties(ServiceSpecification serviceSpecification, Dictionary<string, BinaryData> rawData)
         {
             ServiceSpecification = serviceSpecification;
+            _rawData = rawData;
         }
 
         /// <summary> Resource metrics service provided by Microsoft.Insights resource provider. </summary>

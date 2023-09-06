@@ -6,15 +6,107 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
-    public partial class SparkServicePlugin
+    public partial class SparkServicePlugin : IUtf8JsonSerializable, IModelJsonSerializable<SparkServicePlugin>
     {
-        internal static SparkServicePlugin DeserializeSparkServicePlugin(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SparkServicePlugin>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SparkServicePlugin>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SparkServicePlugin>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PreparationStartedAt))
+            {
+                if (PreparationStartedAt != null)
+                {
+                    writer.WritePropertyName("preparationStartedAt"u8);
+                    writer.WriteStringValue(PreparationStartedAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("preparationStartedAt");
+                }
+            }
+            if (Optional.IsDefined(ResourceAcquisitionStartedAt))
+            {
+                if (ResourceAcquisitionStartedAt != null)
+                {
+                    writer.WritePropertyName("resourceAcquisitionStartedAt"u8);
+                    writer.WriteStringValue(ResourceAcquisitionStartedAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("resourceAcquisitionStartedAt");
+                }
+            }
+            if (Optional.IsDefined(SubmissionStartedAt))
+            {
+                if (SubmissionStartedAt != null)
+                {
+                    writer.WritePropertyName("submissionStartedAt"u8);
+                    writer.WriteStringValue(SubmissionStartedAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("submissionStartedAt");
+                }
+            }
+            if (Optional.IsDefined(MonitoringStartedAt))
+            {
+                if (MonitoringStartedAt != null)
+                {
+                    writer.WritePropertyName("monitoringStartedAt"u8);
+                    writer.WriteStringValue(MonitoringStartedAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("monitoringStartedAt");
+                }
+            }
+            if (Optional.IsDefined(CleanupStartedAt))
+            {
+                if (CleanupStartedAt != null)
+                {
+                    writer.WritePropertyName("cleanupStartedAt"u8);
+                    writer.WriteStringValue(CleanupStartedAt.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("cleanupStartedAt");
+                }
+            }
+            if (Optional.IsDefined(CurrentState))
+            {
+                writer.WritePropertyName("currentState"u8);
+                writer.WriteStringValue(CurrentState.Value.ToString());
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SparkServicePlugin DeserializeSparkServicePlugin(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +117,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Optional<DateTimeOffset?> monitoringStartedAt = default;
             Optional<DateTimeOffset?> cleanupStartedAt = default;
             Optional<PluginCurrentState> currentState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("preparationStartedAt"u8))
@@ -86,8 +179,61 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     currentState = new PluginCurrentState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SparkServicePlugin(Optional.ToNullable(preparationStartedAt), Optional.ToNullable(resourceAcquisitionStartedAt), Optional.ToNullable(submissionStartedAt), Optional.ToNullable(monitoringStartedAt), Optional.ToNullable(cleanupStartedAt), Optional.ToNullable(currentState));
+            return new SparkServicePlugin(Optional.ToNullable(preparationStartedAt), Optional.ToNullable(resourceAcquisitionStartedAt), Optional.ToNullable(submissionStartedAt), Optional.ToNullable(monitoringStartedAt), Optional.ToNullable(cleanupStartedAt), Optional.ToNullable(currentState), rawData);
+        }
+
+        SparkServicePlugin IModelJsonSerializable<SparkServicePlugin>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SparkServicePlugin>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSparkServicePlugin(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SparkServicePlugin>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SparkServicePlugin>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SparkServicePlugin IModelSerializable<SparkServicePlugin>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SparkServicePlugin>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSparkServicePlugin(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SparkServicePlugin"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SparkServicePlugin"/> to convert. </param>
+        public static implicit operator RequestContent(SparkServicePlugin model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SparkServicePlugin"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SparkServicePlugin(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSparkServicePlugin(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

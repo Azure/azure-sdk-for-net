@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StaticSiteBuildProperties : IUtf8JsonSerializable
+    public partial class StaticSiteBuildProperties : IUtf8JsonSerializable, IModelJsonSerializable<StaticSiteBuildProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StaticSiteBuildProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StaticSiteBuildProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StaticSiteBuildProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AppLocation))
             {
@@ -55,11 +63,25 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("githubActionSecretNameOverride"u8);
                 writer.WriteStringValue(GithubActionSecretNameOverride);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StaticSiteBuildProperties DeserializeStaticSiteBuildProperties(JsonElement element)
+        internal static StaticSiteBuildProperties DeserializeStaticSiteBuildProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -72,6 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> apiBuildCommand = default;
             Optional<bool> skipGithubActionWorkflowGeneration = default;
             Optional<string> githubActionSecretNameOverride = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appLocation"u8))
@@ -118,8 +141,61 @@ namespace Azure.ResourceManager.AppService.Models
                     githubActionSecretNameOverride = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StaticSiteBuildProperties(appLocation.Value, apiLocation.Value, appArtifactLocation.Value, outputLocation.Value, appBuildCommand.Value, apiBuildCommand.Value, Optional.ToNullable(skipGithubActionWorkflowGeneration), githubActionSecretNameOverride.Value);
+            return new StaticSiteBuildProperties(appLocation.Value, apiLocation.Value, appArtifactLocation.Value, outputLocation.Value, appBuildCommand.Value, apiBuildCommand.Value, Optional.ToNullable(skipGithubActionWorkflowGeneration), githubActionSecretNameOverride.Value, rawData);
+        }
+
+        StaticSiteBuildProperties IModelJsonSerializable<StaticSiteBuildProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StaticSiteBuildProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStaticSiteBuildProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StaticSiteBuildProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StaticSiteBuildProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StaticSiteBuildProperties IModelSerializable<StaticSiteBuildProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StaticSiteBuildProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStaticSiteBuildProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StaticSiteBuildProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StaticSiteBuildProperties"/> to convert. </param>
+        public static implicit operator RequestContent(StaticSiteBuildProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StaticSiteBuildProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StaticSiteBuildProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStaticSiteBuildProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

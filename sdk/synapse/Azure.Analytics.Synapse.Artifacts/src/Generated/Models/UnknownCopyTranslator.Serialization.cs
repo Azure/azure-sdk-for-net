@@ -5,16 +5,21 @@
 
 #nullable disable
 
-using System.Collections.Generic;
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    internal partial class UnknownCopyTranslator : IUtf8JsonSerializable
+    internal partial class UnknownCopyTranslator : IUtf8JsonSerializable, IModelJsonSerializable<CopyTranslator>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CopyTranslator>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CopyTranslator>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CopyTranslator>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -26,26 +31,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownCopyTranslator DeserializeUnknownCopyTranslator(JsonElement element)
+        internal static CopyTranslator DeserializeUnknownCopyTranslator(JsonElement element, ModelSerializerOptions options = default) => DeserializeCopyTranslator(element, options);
+
+        CopyTranslator IModelJsonSerializable<CopyTranslator>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string type = "Unknown";
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new UnknownCopyTranslator(type, additionalProperties);
+            Core.ModelSerializerHelper.ValidateFormat<CopyTranslator>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownCopyTranslator(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CopyTranslator>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CopyTranslator>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CopyTranslator IModelSerializable<CopyTranslator>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CopyTranslator>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCopyTranslator(doc.RootElement, options);
         }
     }
 }

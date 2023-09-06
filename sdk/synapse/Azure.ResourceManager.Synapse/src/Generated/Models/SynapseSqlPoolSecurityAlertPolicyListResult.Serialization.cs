@@ -5,23 +5,51 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    internal partial class SynapseSqlPoolSecurityAlertPolicyListResult
+    internal partial class SynapseSqlPoolSecurityAlertPolicyListResult : IUtf8JsonSerializable, IModelJsonSerializable<SynapseSqlPoolSecurityAlertPolicyListResult>
     {
-        internal static SynapseSqlPoolSecurityAlertPolicyListResult DeserializeSynapseSqlPoolSecurityAlertPolicyListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseSqlPoolSecurityAlertPolicyListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseSqlPoolSecurityAlertPolicyListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseSqlPoolSecurityAlertPolicyListResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SynapseSqlPoolSecurityAlertPolicyListResult DeserializeSynapseSqlPoolSecurityAlertPolicyListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<SynapseSqlPoolSecurityAlertPolicyData>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +71,61 @@ namespace Azure.ResourceManager.Synapse.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SynapseSqlPoolSecurityAlertPolicyListResult(Optional.ToList(value), nextLink.Value);
+            return new SynapseSqlPoolSecurityAlertPolicyListResult(Optional.ToList(value), nextLink.Value, rawData);
+        }
+
+        SynapseSqlPoolSecurityAlertPolicyListResult IModelJsonSerializable<SynapseSqlPoolSecurityAlertPolicyListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseSqlPoolSecurityAlertPolicyListResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseSqlPoolSecurityAlertPolicyListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseSqlPoolSecurityAlertPolicyListResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseSqlPoolSecurityAlertPolicyListResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseSqlPoolSecurityAlertPolicyListResult IModelSerializable<SynapseSqlPoolSecurityAlertPolicyListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseSqlPoolSecurityAlertPolicyListResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseSqlPoolSecurityAlertPolicyListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapseSqlPoolSecurityAlertPolicyListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapseSqlPoolSecurityAlertPolicyListResult"/> to convert. </param>
+        public static implicit operator RequestContent(SynapseSqlPoolSecurityAlertPolicyListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapseSqlPoolSecurityAlertPolicyListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapseSqlPoolSecurityAlertPolicyListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseSqlPoolSecurityAlertPolicyListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

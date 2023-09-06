@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseServerBlobAuditingPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseServerBlobAuditingPolicyData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseServerBlobAuditingPolicyData"/>. </summary>
         public SynapseServerBlobAuditingPolicyData()
         {
             AuditActionsAndGroups = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SynapseServerBlobAuditingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseServerBlobAuditingPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -133,7 +136,8 @@ namespace Azure.ResourceManager.Synapse
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
         ///
         /// </param>
-        internal SynapseServerBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SynapseBlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, IList<string> auditActionsAndGroups, Guid? storageAccountSubscriptionId, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, bool? isDevopsAuditEnabled) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseServerBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SynapseBlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, IList<string> auditActionsAndGroups, Guid? storageAccountSubscriptionId, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, bool? isDevopsAuditEnabled, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             State = state;
             StorageEndpoint = storageEndpoint;
@@ -145,6 +149,7 @@ namespace Azure.ResourceManager.Synapse
             IsAzureMonitorTargetEnabled = isAzureMonitorTargetEnabled;
             QueueDelayMs = queueDelayMs;
             IsDevopsAuditEnabled = isDevopsAuditEnabled;
+            _rawData = rawData;
         }
 
         /// <summary> Specifies the state of the policy. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </summary>

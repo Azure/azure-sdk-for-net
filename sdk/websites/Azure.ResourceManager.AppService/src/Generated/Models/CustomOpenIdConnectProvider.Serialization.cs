@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class CustomOpenIdConnectProvider : IUtf8JsonSerializable
+    public partial class CustomOpenIdConnectProvider : IUtf8JsonSerializable, IModelJsonSerializable<CustomOpenIdConnectProvider>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CustomOpenIdConnectProvider>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CustomOpenIdConnectProvider>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CustomOpenIdConnectProvider>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
@@ -23,18 +31,46 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
-                writer.WriteObjectValue(Registration);
+                if (Registration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<OpenIdConnectRegistration>)Registration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
-                writer.WriteObjectValue(Login);
+                if (Login is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<OpenIdConnectLogin>)Login).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static CustomOpenIdConnectProvider DeserializeCustomOpenIdConnectProvider(JsonElement element)
+        internal static CustomOpenIdConnectProvider DeserializeCustomOpenIdConnectProvider(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> enabled = default;
             Optional<OpenIdConnectRegistration> registration = default;
             Optional<OpenIdConnectLogin> login = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -71,8 +108,61 @@ namespace Azure.ResourceManager.AppService.Models
                     login = OpenIdConnectLogin.DeserializeOpenIdConnectLogin(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CustomOpenIdConnectProvider(Optional.ToNullable(enabled), registration.Value, login.Value);
+            return new CustomOpenIdConnectProvider(Optional.ToNullable(enabled), registration.Value, login.Value, rawData);
+        }
+
+        CustomOpenIdConnectProvider IModelJsonSerializable<CustomOpenIdConnectProvider>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomOpenIdConnectProvider>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomOpenIdConnectProvider(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CustomOpenIdConnectProvider>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomOpenIdConnectProvider>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CustomOpenIdConnectProvider IModelSerializable<CustomOpenIdConnectProvider>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomOpenIdConnectProvider>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCustomOpenIdConnectProvider(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CustomOpenIdConnectProvider"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CustomOpenIdConnectProvider"/> to convert. </param>
+        public static implicit operator RequestContent(CustomOpenIdConnectProvider model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CustomOpenIdConnectProvider"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CustomOpenIdConnectProvider(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCustomOpenIdConnectProvider(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

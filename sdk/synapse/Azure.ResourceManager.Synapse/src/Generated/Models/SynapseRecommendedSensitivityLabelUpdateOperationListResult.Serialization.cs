@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseRecommendedSensitivityLabelUpdateOperationListResult : IUtf8JsonSerializable
+    public partial class SynapseRecommendedSensitivityLabelUpdateOperationListResult : IUtf8JsonSerializable, IModelJsonSerializable<SynapseRecommendedSensitivityLabelUpdateOperationListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseRecommendedSensitivityLabelUpdateOperationListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseRecommendedSensitivityLabelUpdateOperationListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseRecommendedSensitivityLabelUpdateOperationListResult>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Operations))
             {
@@ -21,11 +29,113 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in Operations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SynapseRecommendedSensitivityLabelUpdate>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static SynapseRecommendedSensitivityLabelUpdateOperationListResult DeserializeSynapseRecommendedSensitivityLabelUpdateOperationListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<SynapseRecommendedSensitivityLabelUpdate>> operations = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("operations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SynapseRecommendedSensitivityLabelUpdate> array = new List<SynapseRecommendedSensitivityLabelUpdate>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(SynapseRecommendedSensitivityLabelUpdate.DeserializeSynapseRecommendedSensitivityLabelUpdate(item));
+                    }
+                    operations = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new SynapseRecommendedSensitivityLabelUpdateOperationListResult(Optional.ToList(operations), rawData);
+        }
+
+        SynapseRecommendedSensitivityLabelUpdateOperationListResult IModelJsonSerializable<SynapseRecommendedSensitivityLabelUpdateOperationListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseRecommendedSensitivityLabelUpdateOperationListResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseRecommendedSensitivityLabelUpdateOperationListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseRecommendedSensitivityLabelUpdateOperationListResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseRecommendedSensitivityLabelUpdateOperationListResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseRecommendedSensitivityLabelUpdateOperationListResult IModelSerializable<SynapseRecommendedSensitivityLabelUpdateOperationListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseRecommendedSensitivityLabelUpdateOperationListResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseRecommendedSensitivityLabelUpdateOperationListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapseRecommendedSensitivityLabelUpdateOperationListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapseRecommendedSensitivityLabelUpdateOperationListResult"/> to convert. </param>
+        public static implicit operator RequestContent(SynapseRecommendedSensitivityLabelUpdateOperationListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapseRecommendedSensitivityLabelUpdateOperationListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapseRecommendedSensitivityLabelUpdateOperationListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseRecommendedSensitivityLabelUpdateOperationListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

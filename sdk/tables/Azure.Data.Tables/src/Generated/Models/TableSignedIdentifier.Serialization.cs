@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableSignedIdentifier : IXmlSerializable
+    public partial class TableSignedIdentifier : IXmlSerializable, IModelSerializable<TableSignedIdentifier>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "SignedIdentifier");
             writer.WriteStartElement("Id");
@@ -26,8 +30,11 @@ namespace Azure.Data.Tables.Models
             writer.WriteEndElement();
         }
 
-        internal static TableSignedIdentifier DeserializeTableSignedIdentifier(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static TableSignedIdentifier DeserializeTableSignedIdentifier(XElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             string id = default;
             TableAccessPolicy accessPolicy = default;
             if (element.Element("Id") is XElement idElement)
@@ -38,7 +45,57 @@ namespace Azure.Data.Tables.Models
             {
                 accessPolicy = TableAccessPolicy.DeserializeTableAccessPolicy(accessPolicyElement);
             }
-            return new TableSignedIdentifier(id, accessPolicy);
+            return new TableSignedIdentifier(id, accessPolicy, default);
+        }
+
+        BinaryData IModelSerializable<TableSignedIdentifier>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TableSignedIdentifier>(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        TableSignedIdentifier IModelSerializable<TableSignedIdentifier>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TableSignedIdentifier>(this, options.Format);
+
+            return DeserializeTableSignedIdentifier(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="TableSignedIdentifier"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TableSignedIdentifier"/> to convert. </param>
+        public static implicit operator RequestContent(TableSignedIdentifier model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TableSignedIdentifier"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TableSignedIdentifier(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeTableSignedIdentifier(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

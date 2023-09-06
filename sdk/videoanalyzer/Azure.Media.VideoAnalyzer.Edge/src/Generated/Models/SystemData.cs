@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Read-only system metadata associated with a resource. </summary>
     public partial class SystemData
     {
-        /// <summary> Initializes a new instance of SystemData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SystemData"/>. </summary>
         public SystemData()
         {
         }
 
-        /// <summary> Initializes a new instance of SystemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemData"/>. </summary>
         /// <param name="createdAt"> Date and time when this resource was first created. Value is represented in UTC according to the ISO8601 date format. </param>
         /// <param name="lastModifiedAt"> Date and time when this resource was last modified. Value is represented in UTC according to the ISO8601 date format. </param>
-        internal SystemData(DateTimeOffset? createdAt, DateTimeOffset? lastModifiedAt)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SystemData(DateTimeOffset? createdAt, DateTimeOffset? lastModifiedAt, Dictionary<string, BinaryData> rawData)
         {
             CreatedAt = createdAt;
             LastModifiedAt = lastModifiedAt;
+            _rawData = rawData;
         }
 
         /// <summary> Date and time when this resource was first created. Value is represented in UTC according to the ISO8601 date format. </summary>

@@ -5,22 +5,120 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class HierarchiesExpandParameter : IUtf8JsonSerializable
+    internal partial class HierarchiesExpandParameter : IUtf8JsonSerializable, IModelJsonSerializable<HierarchiesExpandParameter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HierarchiesExpandParameter>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HierarchiesExpandParameter>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HierarchiesExpandParameter>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static HierarchiesExpandParameter DeserializeHierarchiesExpandParameter(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<HierarchiesExpandKind> kind = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("kind"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kind = new HierarchiesExpandKind(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new HierarchiesExpandParameter(Optional.ToNullable(kind), rawData);
+        }
+
+        HierarchiesExpandParameter IModelJsonSerializable<HierarchiesExpandParameter>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HierarchiesExpandParameter>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHierarchiesExpandParameter(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HierarchiesExpandParameter>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HierarchiesExpandParameter>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HierarchiesExpandParameter IModelSerializable<HierarchiesExpandParameter>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HierarchiesExpandParameter>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHierarchiesExpandParameter(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HierarchiesExpandParameter"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HierarchiesExpandParameter"/> to convert. </param>
+        public static implicit operator RequestContent(HierarchiesExpandParameter model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HierarchiesExpandParameter"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HierarchiesExpandParameter(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHierarchiesExpandParameter(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

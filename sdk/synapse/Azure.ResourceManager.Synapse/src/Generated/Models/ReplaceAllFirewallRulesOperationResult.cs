@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> An existing operation for replacing the firewall rules. </summary>
     public partial class ReplaceAllFirewallRulesOperationResult
     {
-        /// <summary> Initializes a new instance of ReplaceAllFirewallRulesOperationResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReplaceAllFirewallRulesOperationResult"/>. </summary>
         internal ReplaceAllFirewallRulesOperationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ReplaceAllFirewallRulesOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplaceAllFirewallRulesOperationResult"/>. </summary>
         /// <param name="operationId"> The operation ID. </param>
-        internal ReplaceAllFirewallRulesOperationResult(string operationId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReplaceAllFirewallRulesOperationResult(string operationId, Dictionary<string, BinaryData> rawData)
         {
             OperationId = operationId;
+            _rawData = rawData;
         }
 
         /// <summary> The operation ID. </summary>

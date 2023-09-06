@@ -5,23 +5,37 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.AI.TextAnalytics;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class CustomLabelClassificationResultDocumentsItem : IUtf8JsonSerializable
+    internal partial class CustomLabelClassificationResultDocumentsItem : IUtf8JsonSerializable, IModelJsonSerializable<CustomLabelClassificationResultDocumentsItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CustomLabelClassificationResultDocumentsItem>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CustomLabelClassificationResultDocumentsItem>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CustomLabelClassificationResultDocumentsItem>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("class"u8);
             writer.WriteStartArray();
             foreach (var item in Class)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ClassificationResult>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("id"u8);
@@ -30,19 +44,47 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Warnings)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DocumentWarning>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics.Value);
+                if (Statistics.Value is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TextDocumentStatistics>)Statistics.Value).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static CustomLabelClassificationResultDocumentsItem DeserializeCustomLabelClassificationResultDocumentsItem(JsonElement element)
+        internal static CustomLabelClassificationResultDocumentsItem DeserializeCustomLabelClassificationResultDocumentsItem(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +93,7 @@ namespace Azure.AI.TextAnalytics.Models
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("class"u8))
@@ -87,8 +130,61 @@ namespace Azure.AI.TextAnalytics.Models
                     statistics = TextDocumentStatistics.DeserializeTextDocumentStatistics(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CustomLabelClassificationResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), @class);
+            return new CustomLabelClassificationResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), @class, rawData);
+        }
+
+        CustomLabelClassificationResultDocumentsItem IModelJsonSerializable<CustomLabelClassificationResultDocumentsItem>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomLabelClassificationResultDocumentsItem>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomLabelClassificationResultDocumentsItem(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CustomLabelClassificationResultDocumentsItem>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomLabelClassificationResultDocumentsItem>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CustomLabelClassificationResultDocumentsItem IModelSerializable<CustomLabelClassificationResultDocumentsItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomLabelClassificationResultDocumentsItem>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCustomLabelClassificationResultDocumentsItem(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CustomLabelClassificationResultDocumentsItem"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CustomLabelClassificationResultDocumentsItem"/> to convert. </param>
+        public static implicit operator RequestContent(CustomLabelClassificationResultDocumentsItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CustomLabelClassificationResultDocumentsItem"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CustomLabelClassificationResultDocumentsItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCustomLabelClassificationResultDocumentsItem(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

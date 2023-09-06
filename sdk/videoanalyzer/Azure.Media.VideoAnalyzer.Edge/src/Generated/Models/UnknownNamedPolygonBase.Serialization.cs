@@ -5,45 +5,64 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    internal partial class UnknownNamedPolygonBase : IUtf8JsonSerializable
+    internal partial class UnknownNamedPolygonBase : IUtf8JsonSerializable, IModelJsonSerializable<NamedPolygonBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NamedPolygonBase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NamedPolygonBase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NamedPolygonBase>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownNamedPolygonBase DeserializeUnknownNamedPolygonBase(JsonElement element)
+        internal static NamedPolygonBase DeserializeUnknownNamedPolygonBase(JsonElement element, ModelSerializerOptions options = default) => DeserializeNamedPolygonBase(element, options);
+
+        NamedPolygonBase IModelJsonSerializable<NamedPolygonBase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string type = "Unknown";
-            string name = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownNamedPolygonBase(type, name);
+            Core.ModelSerializerHelper.ValidateFormat<NamedPolygonBase>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownNamedPolygonBase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NamedPolygonBase>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NamedPolygonBase>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NamedPolygonBase IModelSerializable<NamedPolygonBase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NamedPolygonBase>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNamedPolygonBase(doc.RootElement, options);
         }
     }
 }

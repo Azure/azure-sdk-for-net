@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> Status of the volume free space policy. </summary>
     public partial class CloudTieringVolumeFreeSpacePolicyStatus
     {
-        /// <summary> Initializes a new instance of CloudTieringVolumeFreeSpacePolicyStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudTieringVolumeFreeSpacePolicyStatus"/>. </summary>
         internal CloudTieringVolumeFreeSpacePolicyStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudTieringVolumeFreeSpacePolicyStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudTieringVolumeFreeSpacePolicyStatus"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="effectiveVolumeFreeSpacePolicy"> In the case where multiple server endpoints are present in a volume, an effective free space policy is applied. </param>
         /// <param name="currentVolumeFreeSpacePercent"> Current volume free space percentage. </param>
-        internal CloudTieringVolumeFreeSpacePolicyStatus(DateTimeOffset? lastUpdatedOn, int? effectiveVolumeFreeSpacePolicy, int? currentVolumeFreeSpacePercent)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudTieringVolumeFreeSpacePolicyStatus(DateTimeOffset? lastUpdatedOn, int? effectiveVolumeFreeSpacePolicy, int? currentVolumeFreeSpacePercent, Dictionary<string, BinaryData> rawData)
         {
             LastUpdatedOn = lastUpdatedOn;
             EffectiveVolumeFreeSpacePolicy = effectiveVolumeFreeSpacePolicy;
             CurrentVolumeFreeSpacePercent = currentVolumeFreeSpacePercent;
+            _rawData = rawData;
         }
 
         /// <summary> Last updated timestamp. </summary>

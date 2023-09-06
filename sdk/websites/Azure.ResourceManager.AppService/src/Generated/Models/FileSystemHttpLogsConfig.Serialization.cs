@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class FileSystemHttpLogsConfig : IUtf8JsonSerializable
+    public partial class FileSystemHttpLogsConfig : IUtf8JsonSerializable, IModelJsonSerializable<FileSystemHttpLogsConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FileSystemHttpLogsConfig>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FileSystemHttpLogsConfig>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FileSystemHttpLogsConfig>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RetentionInMb))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FileSystemHttpLogsConfig DeserializeFileSystemHttpLogsConfig(JsonElement element)
+        internal static FileSystemHttpLogsConfig DeserializeFileSystemHttpLogsConfig(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<int> retentionInMb = default;
             Optional<int> retentionInDays = default;
             Optional<bool> enabled = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("retentionInMb"u8))
@@ -71,8 +94,61 @@ namespace Azure.ResourceManager.AppService.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FileSystemHttpLogsConfig(Optional.ToNullable(retentionInMb), Optional.ToNullable(retentionInDays), Optional.ToNullable(enabled));
+            return new FileSystemHttpLogsConfig(Optional.ToNullable(retentionInMb), Optional.ToNullable(retentionInDays), Optional.ToNullable(enabled), rawData);
+        }
+
+        FileSystemHttpLogsConfig IModelJsonSerializable<FileSystemHttpLogsConfig>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FileSystemHttpLogsConfig>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFileSystemHttpLogsConfig(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FileSystemHttpLogsConfig>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FileSystemHttpLogsConfig>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FileSystemHttpLogsConfig IModelSerializable<FileSystemHttpLogsConfig>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FileSystemHttpLogsConfig>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFileSystemHttpLogsConfig(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FileSystemHttpLogsConfig"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FileSystemHttpLogsConfig"/> to convert. </param>
+        public static implicit operator RequestContent(FileSystemHttpLogsConfig model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FileSystemHttpLogsConfig"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FileSystemHttpLogsConfig(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFileSystemHttpLogsConfig(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

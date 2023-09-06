@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DatasetLocationConverter))]
-    public partial class DatasetLocation : IUtf8JsonSerializable
+    public partial class DatasetLocation : IUtf8JsonSerializable, IModelJsonSerializable<DatasetLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DatasetLocation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DatasetLocation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DatasetLocation>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -38,8 +45,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static DatasetLocation DeserializeDatasetLocation(JsonElement element)
+        internal static DatasetLocation DeserializeDatasetLocation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -61,7 +70,90 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "SftpLocation": return SftpLocation.DeserializeSftpLocation(element);
                 }
             }
-            return UnknownDatasetLocation.DeserializeUnknownDatasetLocation(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            string type = default;
+            Optional<object> folderPath = default;
+            Optional<object> fileName = default;
+            IDictionary<string, object> additionalProperties = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("type"u8))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("folderPath"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    folderPath = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("fileName"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fileName = property.Value.GetObject();
+                    continue;
+                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+            }
+            additionalProperties = additionalPropertiesDictionary;
+            return new UnknownDatasetLocation(type, folderPath.Value, fileName.Value, additionalProperties);
+        }
+
+        DatasetLocation IModelJsonSerializable<DatasetLocation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DatasetLocation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatasetLocation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DatasetLocation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DatasetLocation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DatasetLocation IModelSerializable<DatasetLocation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DatasetLocation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDatasetLocation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DatasetLocation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DatasetLocation"/> to convert. </param>
+        public static implicit operator RequestContent(DatasetLocation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DatasetLocation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DatasetLocation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDatasetLocation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class DatasetLocationConverter : JsonConverter<DatasetLocation>

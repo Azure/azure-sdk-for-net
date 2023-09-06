@@ -5,15 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class ListBlobsFlatSegmentResponse
+    internal partial class ListBlobsFlatSegmentResponse : IXmlSerializable, IModelSerializable<ListBlobsFlatSegmentResponse>
     {
-        internal static ListBlobsFlatSegmentResponse DeserializeListBlobsFlatSegmentResponse(XElement element)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
+            writer.WriteStartElement(nameHint ?? "EnumerationResults");
+            writer.WriteStartAttribute("ServiceEndpoint");
+            writer.WriteValue(ServiceEndpoint);
+            writer.WriteEndAttribute();
+            writer.WriteStartAttribute("ContainerName");
+            writer.WriteValue(ContainerName);
+            writer.WriteEndAttribute();
+            if (Optional.IsDefined(Prefix))
+            {
+                writer.WriteStartElement("Prefix");
+                writer.WriteValue(Prefix);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Marker))
+            {
+                writer.WriteStartElement("Marker");
+                writer.WriteValue(Marker);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(MaxResults))
+            {
+                writer.WriteStartElement("MaxResults");
+                writer.WriteValue(MaxResults.Value);
+                writer.WriteEndElement();
+            }
+            writer.WriteObjectValue(Segment, "Blobs");
+            if (Optional.IsDefined(NextMarker))
+            {
+                writer.WriteStartElement("NextMarker");
+                writer.WriteValue(NextMarker);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static ListBlobsFlatSegmentResponse DeserializeListBlobsFlatSegmentResponse(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             string serviceEndpoint = default;
             string containerName = default;
             string prefix = default;
@@ -49,7 +94,57 @@ namespace Azure.Storage.Blobs.Models
             {
                 nextMarker = (string)nextMarkerElement;
             }
-            return new ListBlobsFlatSegmentResponse(serviceEndpoint, containerName, prefix, marker, maxResults, segment, nextMarker);
+            return new ListBlobsFlatSegmentResponse(serviceEndpoint, containerName, prefix, marker, maxResults, segment, nextMarker, default);
+        }
+
+        BinaryData IModelSerializable<ListBlobsFlatSegmentResponse>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ListBlobsFlatSegmentResponse>(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        ListBlobsFlatSegmentResponse IModelSerializable<ListBlobsFlatSegmentResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ListBlobsFlatSegmentResponse>(this, options.Format);
+
+            return DeserializeListBlobsFlatSegmentResponse(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="ListBlobsFlatSegmentResponse"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ListBlobsFlatSegmentResponse"/> to convert. </param>
+        public static implicit operator RequestContent(ListBlobsFlatSegmentResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ListBlobsFlatSegmentResponse"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ListBlobsFlatSegmentResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeListBlobsFlatSegmentResponse(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

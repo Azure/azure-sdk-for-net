@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Triggered Web Job Run Information. </summary>
     public partial class TriggeredJobRun
     {
-        /// <summary> Initializes a new instance of TriggeredJobRun. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TriggeredJobRun"/>. </summary>
         public TriggeredJobRun()
         {
         }
 
-        /// <summary> Initializes a new instance of TriggeredJobRun. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggeredJobRun"/>. </summary>
         /// <param name="webJobId"> Job ID. </param>
         /// <param name="webJobName"> Job name. </param>
         /// <param name="status"> Job status. </param>
@@ -29,7 +33,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="uri"> Job URL. </param>
         /// <param name="jobName"> Job name. </param>
         /// <param name="trigger"> Job trigger. </param>
-        internal TriggeredJobRun(string webJobId, string webJobName, TriggeredWebJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, Uri outputUri, Uri errorUri, Uri uri, string jobName, string trigger)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TriggeredJobRun(string webJobId, string webJobName, TriggeredWebJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, Uri outputUri, Uri errorUri, Uri uri, string jobName, string trigger, Dictionary<string, BinaryData> rawData)
         {
             WebJobId = webJobId;
             WebJobName = webJobName;
@@ -42,6 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
             Uri = uri;
             JobName = jobName;
             Trigger = trigger;
+            _rawData = rawData;
         }
 
         /// <summary> Job ID. </summary>

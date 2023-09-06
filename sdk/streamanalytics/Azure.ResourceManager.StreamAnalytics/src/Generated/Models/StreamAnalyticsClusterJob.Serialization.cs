@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamAnalyticsClusterJob
+    public partial class StreamAnalyticsClusterJob : IUtf8JsonSerializable, IModelJsonSerializable<StreamAnalyticsClusterJob>
     {
-        internal static StreamAnalyticsClusterJob DeserializeStreamAnalyticsClusterJob(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StreamAnalyticsClusterJob>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StreamAnalyticsClusterJob>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StreamAnalyticsClusterJob>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static StreamAnalyticsClusterJob DeserializeStreamAnalyticsClusterJob(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +49,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<ResourceIdentifier> id = default;
             Optional<int> streamingUnits = default;
             Optional<StreamingJobState> jobState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -50,8 +79,61 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     jobState = new StreamingJobState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StreamAnalyticsClusterJob(id.Value, Optional.ToNullable(streamingUnits), Optional.ToNullable(jobState));
+            return new StreamAnalyticsClusterJob(id.Value, Optional.ToNullable(streamingUnits), Optional.ToNullable(jobState), rawData);
+        }
+
+        StreamAnalyticsClusterJob IModelJsonSerializable<StreamAnalyticsClusterJob>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamAnalyticsClusterJob>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamAnalyticsClusterJob(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StreamAnalyticsClusterJob>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamAnalyticsClusterJob>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StreamAnalyticsClusterJob IModelSerializable<StreamAnalyticsClusterJob>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamAnalyticsClusterJob>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStreamAnalyticsClusterJob(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StreamAnalyticsClusterJob"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StreamAnalyticsClusterJob"/> to convert. </param>
+        public static implicit operator RequestContent(StreamAnalyticsClusterJob model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StreamAnalyticsClusterJob"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StreamAnalyticsClusterJob(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStreamAnalyticsClusterJob(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

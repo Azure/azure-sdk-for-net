@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    internal partial class UnknownCredentialsBase : IUtf8JsonSerializable
+    internal partial class UnknownCredentialsBase : IUtf8JsonSerializable, IModelJsonSerializable<CredentialsBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CredentialsBase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CredentialsBase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CredentialsBase>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownCredentialsBase DeserializeUnknownCredentialsBase(JsonElement element)
+        internal static CredentialsBase DeserializeUnknownCredentialsBase(JsonElement element, ModelSerializerOptions options = default) => DeserializeCredentialsBase(element, options);
+
+        CredentialsBase IModelJsonSerializable<CredentialsBase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string type = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownCredentialsBase(type);
+            Core.ModelSerializerHelper.ValidateFormat<CredentialsBase>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownCredentialsBase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CredentialsBase>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CredentialsBase>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CredentialsBase IModelSerializable<CredentialsBase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CredentialsBase>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCredentialsBase(doc.RootElement, options);
         }
     }
 }

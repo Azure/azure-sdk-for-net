@@ -5,20 +5,88 @@
 
 #nullable disable
 
+using System;
+using System.IO;
 using System.Xml;
+using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class QueueMessage : IXmlSerializable
+    public partial class QueueMessage : IXmlSerializable, IModelSerializable<QueueMessage>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "QueueMessage");
             writer.WriteStartElement("MessageText");
             writer.WriteValue(MessageText);
             writer.WriteEndElement();
             writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static QueueMessage DeserializeQueueMessage(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            string messageText = default;
+            if (element.Element("MessageText") is XElement messageTextElement)
+            {
+                messageText = (string)messageTextElement;
+            }
+            return new QueueMessage(messageText, default);
+        }
+
+        BinaryData IModelSerializable<QueueMessage>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QueueMessage>(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        QueueMessage IModelSerializable<QueueMessage>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QueueMessage>(this, options.Format);
+
+            return DeserializeQueueMessage(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="QueueMessage"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="QueueMessage"/> to convert. </param>
+        public static implicit operator RequestContent(QueueMessage model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="QueueMessage"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator QueueMessage(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeQueueMessage(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

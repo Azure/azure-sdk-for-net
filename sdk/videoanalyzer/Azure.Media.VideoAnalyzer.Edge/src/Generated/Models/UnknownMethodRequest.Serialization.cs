@@ -5,46 +5,65 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    internal partial class UnknownMethodRequest : IUtf8JsonSerializable
+    internal partial class UnknownMethodRequest : IUtf8JsonSerializable, IModelJsonSerializable<MethodRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MethodRequest>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MethodRequest>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MethodRequest>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("@apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownMethodRequest DeserializeUnknownMethodRequest(JsonElement element)
+        internal static MethodRequest DeserializeUnknownMethodRequest(JsonElement element, ModelSerializerOptions options = default) => DeserializeMethodRequest(element, options);
+
+        MethodRequest IModelJsonSerializable<MethodRequest>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string methodName = "Unknown";
-            Optional<string> apiVersion = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("methodName"u8))
-                {
-                    methodName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("@apiVersion"u8))
-                {
-                    apiVersion = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownMethodRequest(methodName, apiVersion.Value);
+            Core.ModelSerializerHelper.ValidateFormat<MethodRequest>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownMethodRequest(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MethodRequest>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MethodRequest>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MethodRequest IModelSerializable<MethodRequest>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MethodRequest>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMethodRequest(doc.RootElement, options);
         }
     }
 }

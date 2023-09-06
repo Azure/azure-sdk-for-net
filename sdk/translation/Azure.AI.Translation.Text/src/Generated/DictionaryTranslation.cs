@@ -15,6 +15,9 @@ namespace Azure.AI.Translation.Text
     /// <summary> Translation source term. </summary>
     public partial class DictionaryTranslation
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of DictionaryTranslation. </summary>
         /// <param name="normalizedTarget">
         /// A string giving the normalized form of this term in the target language.
@@ -92,7 +95,8 @@ namespace Azure.AI.Translation.Text
         /// looked up is "fly", then it is guaranteed that "fly" will be in the backTranslations list).
         /// However, it is not guaranteed to be in the first position, and often will not be.
         /// </param>
-        internal DictionaryTranslation(string normalizedTarget, string displayTarget, string posTag, float confidence, string prefixWord, IReadOnlyList<BackTranslation> backTranslations)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DictionaryTranslation(string normalizedTarget, string displayTarget, string posTag, float confidence, string prefixWord, IReadOnlyList<BackTranslation> backTranslations, Dictionary<string, BinaryData> rawData)
         {
             NormalizedTarget = normalizedTarget;
             DisplayTarget = displayTarget;
@@ -100,6 +104,12 @@ namespace Azure.AI.Translation.Text
             Confidence = confidence;
             PrefixWord = prefixWord;
             BackTranslations = backTranslations;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DictionaryTranslation"/> for deserialization. </summary>
+        internal DictionaryTranslation()
+        {
         }
 
         /// <summary>

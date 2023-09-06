@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> The supported disk size details for a disk type. </summary>
     public partial class SupportedConfigurationsDiskDetails
     {
-        /// <summary> Initializes a new instance of SupportedConfigurationsDiskDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SupportedConfigurationsDiskDetails"/>. </summary>
         internal SupportedConfigurationsDiskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SupportedConfigurationsDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedConfigurationsDiskDetails"/>. </summary>
         /// <param name="sku"> The type of disk sku. For example, Standard_LRS, Standard_ZRS, Premium_LRS, Premium_ZRS. </param>
         /// <param name="sizeInGB"> The disk size in GB. </param>
         /// <param name="minimumSupportedDiskCount"> The minimum supported disk count. </param>
@@ -23,7 +29,8 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="iopsReadWrite"> The disk Iops. </param>
         /// <param name="mbpsReadWrite"> The disk provisioned throughput in MBps. </param>
         /// <param name="diskTier"> The disk tier, e.g. P10, E10. </param>
-        internal SupportedConfigurationsDiskDetails(SapDiskSku sku, long? sizeInGB, long? minimumSupportedDiskCount, long? maximumSupportedDiskCount, long? iopsReadWrite, long? mbpsReadWrite, string diskTier)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SupportedConfigurationsDiskDetails(SapDiskSku sku, long? sizeInGB, long? minimumSupportedDiskCount, long? maximumSupportedDiskCount, long? iopsReadWrite, long? mbpsReadWrite, string diskTier, Dictionary<string, BinaryData> rawData)
         {
             Sku = sku;
             SizeInGB = sizeInGB;
@@ -32,6 +39,7 @@ namespace Azure.ResourceManager.Workloads.Models
             IopsReadWrite = iopsReadWrite;
             MbpsReadWrite = mbpsReadWrite;
             DiskTier = diskTier;
+            _rawData = rawData;
         }
 
         /// <summary> The type of disk sku. For example, Standard_LRS, Standard_ZRS, Premium_LRS, Premium_ZRS. </summary>

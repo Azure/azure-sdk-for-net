@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> The entity reference. </summary>
     public partial class SynapseEntityReference
     {
-        /// <summary> Initializes a new instance of SynapseEntityReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseEntityReference"/>. </summary>
         public SynapseEntityReference()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseEntityReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseEntityReference"/>. </summary>
         /// <param name="integrationRuntimeEntityReferenceType"> The type of this referenced entity. </param>
         /// <param name="referenceName"> The name of this referenced entity. </param>
-        internal SynapseEntityReference(SynapseIntegrationRuntimeEntityReferenceType? integrationRuntimeEntityReferenceType, string referenceName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseEntityReference(SynapseIntegrationRuntimeEntityReferenceType? integrationRuntimeEntityReferenceType, string referenceName, Dictionary<string, BinaryData> rawData)
         {
             IntegrationRuntimeEntityReferenceType = integrationRuntimeEntityReferenceType;
             ReferenceName = referenceName;
+            _rawData = rawData;
         }
 
         /// <summary> The type of this referenced entity. </summary>

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SampleUtterance : IUtf8JsonSerializable
+    public partial class SampleUtterance : IUtf8JsonSerializable, IModelJsonSerializable<SampleUtterance>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SampleUtterance>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SampleUtterance>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SampleUtterance>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Text))
             {
@@ -36,11 +43,25 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("qid"u8);
                 writer.WriteStringValue(Qid);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SampleUtterance DeserializeSampleUtterance(JsonElement element)
+        internal static SampleUtterance DeserializeSampleUtterance(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> text = default;
             Optional<IList<string>> links = default;
             Optional<string> qid = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -74,8 +96,61 @@ namespace Azure.ResourceManager.AppService.Models
                     qid = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SampleUtterance(text.Value, Optional.ToList(links), qid.Value);
+            return new SampleUtterance(text.Value, Optional.ToList(links), qid.Value, rawData);
+        }
+
+        SampleUtterance IModelJsonSerializable<SampleUtterance>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SampleUtterance>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSampleUtterance(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SampleUtterance>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SampleUtterance>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SampleUtterance IModelSerializable<SampleUtterance>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SampleUtterance>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSampleUtterance(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SampleUtterance"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SampleUtterance"/> to convert. </param>
+        public static implicit operator RequestContent(SampleUtterance model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SampleUtterance"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SampleUtterance(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSampleUtterance(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

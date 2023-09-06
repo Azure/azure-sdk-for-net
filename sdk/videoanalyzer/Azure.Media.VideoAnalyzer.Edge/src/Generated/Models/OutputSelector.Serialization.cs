@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class OutputSelector : IUtf8JsonSerializable
+    public partial class OutputSelector : IUtf8JsonSerializable, IModelJsonSerializable<OutputSelector>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OutputSelector>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OutputSelector>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<OutputSelector>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Property))
             {
@@ -30,11 +38,25 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OutputSelector DeserializeOutputSelector(JsonElement element)
+        internal static OutputSelector DeserializeOutputSelector(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<OutputSelectorProperty> property = default;
             Optional<OutputSelectorOperator> @operator = default;
             Optional<string> value = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property0 in element.EnumerateObject())
             {
                 if (property0.NameEquals("property"u8))
@@ -67,8 +90,61 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     value = property0.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OutputSelector(Optional.ToNullable(property), Optional.ToNullable(@operator), value.Value);
+            return new OutputSelector(Optional.ToNullable(property), Optional.ToNullable(@operator), value.Value, rawData);
+        }
+
+        OutputSelector IModelJsonSerializable<OutputSelector>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OutputSelector>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOutputSelector(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OutputSelector>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OutputSelector>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OutputSelector IModelSerializable<OutputSelector>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OutputSelector>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOutputSelector(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OutputSelector"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OutputSelector"/> to convert. </param>
+        public static implicit operator RequestContent(OutputSelector model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OutputSelector"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OutputSelector(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOutputSelector(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

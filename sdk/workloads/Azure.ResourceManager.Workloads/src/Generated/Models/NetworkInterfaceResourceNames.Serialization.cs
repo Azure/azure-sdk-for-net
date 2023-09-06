@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class NetworkInterfaceResourceNames : IUtf8JsonSerializable
+    public partial class NetworkInterfaceResourceNames : IUtf8JsonSerializable, IModelJsonSerializable<NetworkInterfaceResourceNames>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkInterfaceResourceNames>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkInterfaceResourceNames>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkInterfaceResourceNames>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(NetworkInterfaceName))
             {
                 writer.WritePropertyName("networkInterfaceName"u8);
                 writer.WriteStringValue(NetworkInterfaceName);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkInterfaceResourceNames DeserializeNetworkInterfaceResourceNames(JsonElement element)
+        internal static NetworkInterfaceResourceNames DeserializeNetworkInterfaceResourceNames(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> networkInterfaceName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkInterfaceName"u8))
@@ -37,8 +60,61 @@ namespace Azure.ResourceManager.Workloads.Models
                     networkInterfaceName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkInterfaceResourceNames(networkInterfaceName.Value);
+            return new NetworkInterfaceResourceNames(networkInterfaceName.Value, rawData);
+        }
+
+        NetworkInterfaceResourceNames IModelJsonSerializable<NetworkInterfaceResourceNames>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkInterfaceResourceNames>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkInterfaceResourceNames(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkInterfaceResourceNames>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkInterfaceResourceNames>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkInterfaceResourceNames IModelSerializable<NetworkInterfaceResourceNames>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkInterfaceResourceNames>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkInterfaceResourceNames(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetworkInterfaceResourceNames"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetworkInterfaceResourceNames"/> to convert. </param>
+        public static implicit operator RequestContent(NetworkInterfaceResourceNames model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetworkInterfaceResourceNames"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetworkInterfaceResourceNames(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkInterfaceResourceNames(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

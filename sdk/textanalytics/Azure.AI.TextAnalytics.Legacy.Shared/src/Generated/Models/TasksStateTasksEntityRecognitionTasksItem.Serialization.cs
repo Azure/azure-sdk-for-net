@@ -6,16 +6,64 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.AI.TextAnalytics.Legacy;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Legacy.Models
 {
-    internal partial class TasksStateTasksEntityRecognitionTasksItem
+    internal partial class TasksStateTasksEntityRecognitionTasksItem : IUtf8JsonSerializable, IModelJsonSerializable<TasksStateTasksEntityRecognitionTasksItem>
     {
-        internal static TasksStateTasksEntityRecognitionTasksItem DeserializeTasksStateTasksEntityRecognitionTasksItem(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TasksStateTasksEntityRecognitionTasksItem>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TasksStateTasksEntityRecognitionTasksItem>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TasksStateTasksEntityRecognitionTasksItem>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Results))
+            {
+                writer.WritePropertyName("results"u8);
+                if (Results is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<EntitiesResult>)Results).Serialize(writer, options);
+                }
+            }
+            writer.WritePropertyName("lastUpdateDateTime"u8);
+            writer.WriteStringValue(LastUpdateDateTime, "O");
+            if (Optional.IsDefined(TaskName))
+            {
+                writer.WritePropertyName("taskName"u8);
+                writer.WriteStringValue(TaskName);
+            }
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToSerialString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TasksStateTasksEntityRecognitionTasksItem DeserializeTasksStateTasksEntityRecognitionTasksItem(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +72,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
             DateTimeOffset lastUpdateDateTime = default;
             Optional<string> taskName = default;
             State status = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))
@@ -50,8 +99,61 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                     status = property.Value.GetString().ToState();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TasksStateTasksEntityRecognitionTasksItem(lastUpdateDateTime, taskName.Value, status, results.Value);
+            return new TasksStateTasksEntityRecognitionTasksItem(lastUpdateDateTime, taskName.Value, status, results.Value, rawData);
+        }
+
+        TasksStateTasksEntityRecognitionTasksItem IModelJsonSerializable<TasksStateTasksEntityRecognitionTasksItem>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TasksStateTasksEntityRecognitionTasksItem>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTasksStateTasksEntityRecognitionTasksItem(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TasksStateTasksEntityRecognitionTasksItem>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TasksStateTasksEntityRecognitionTasksItem>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TasksStateTasksEntityRecognitionTasksItem IModelSerializable<TasksStateTasksEntityRecognitionTasksItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TasksStateTasksEntityRecognitionTasksItem>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTasksStateTasksEntityRecognitionTasksItem(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TasksStateTasksEntityRecognitionTasksItem"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TasksStateTasksEntityRecognitionTasksItem"/> to convert. </param>
+        public static implicit operator RequestContent(TasksStateTasksEntityRecognitionTasksItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TasksStateTasksEntityRecognitionTasksItem"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TasksStateTasksEntityRecognitionTasksItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTasksStateTasksEntityRecognitionTasksItem(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

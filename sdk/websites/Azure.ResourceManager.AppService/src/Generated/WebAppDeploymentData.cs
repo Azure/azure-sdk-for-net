@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,12 +18,15 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class WebAppDeploymentData : ResourceData
     {
-        /// <summary> Initializes a new instance of WebAppDeploymentData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebAppDeploymentData"/>. </summary>
         public WebAppDeploymentData()
         {
         }
 
-        /// <summary> Initializes a new instance of WebAppDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppDeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +41,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isActive"> True if deployment is currently active, false if completed and null if not started. </param>
         /// <param name="details"> Details on deployment. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal WebAppDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? status, string message, string author, string deployer, string authorEmail, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? isActive, string details, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? status, string message, string author, string deployer, string authorEmail, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? isActive, string details, string kind, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Status = status;
             Message = message;
@@ -49,6 +54,7 @@ namespace Azure.ResourceManager.AppService
             IsActive = isActive;
             Details = details;
             Kind = kind;
+            _rawData = rawData;
         }
 
         /// <summary> Deployment status. </summary>

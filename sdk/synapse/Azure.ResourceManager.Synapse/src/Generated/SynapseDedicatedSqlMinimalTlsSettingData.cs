@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,22 +18,27 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseDedicatedSqlMinimalTlsSettingData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseDedicatedSqlMinimalTlsSettingData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseDedicatedSqlMinimalTlsSettingData"/>. </summary>
         public SynapseDedicatedSqlMinimalTlsSettingData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseDedicatedSqlMinimalTlsSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDedicatedSqlMinimalTlsSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="minimalTlsVersion"> The minimal tls version of the sql server. </param>
-        internal SynapseDedicatedSqlMinimalTlsSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string minimalTlsVersion) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseDedicatedSqlMinimalTlsSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string minimalTlsVersion, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             MinimalTlsVersion = minimalTlsVersion;
+            _rawData = rawData;
         }
 
         /// <summary> Resource location. </summary>

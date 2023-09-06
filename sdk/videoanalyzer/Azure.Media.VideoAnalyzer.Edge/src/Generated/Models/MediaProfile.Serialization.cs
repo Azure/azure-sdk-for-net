@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class MediaProfile : IUtf8JsonSerializable
+    public partial class MediaProfile : IUtf8JsonSerializable, IModelJsonSerializable<MediaProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MediaProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MediaProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MediaProfile>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -28,13 +36,34 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(VideoEncoderConfiguration))
             {
                 writer.WritePropertyName("videoEncoderConfiguration"u8);
-                writer.WriteObjectValue(VideoEncoderConfiguration);
+                if (VideoEncoderConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<VideoEncoderConfiguration>)VideoEncoderConfiguration).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static MediaProfile DeserializeMediaProfile(JsonElement element)
+        internal static MediaProfile DeserializeMediaProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +71,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<string> name = default;
             Optional<object> mediaUri = default;
             Optional<VideoEncoderConfiguration> videoEncoderConfiguration = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -67,8 +97,61 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     videoEncoderConfiguration = VideoEncoderConfiguration.DeserializeVideoEncoderConfiguration(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MediaProfile(name.Value, mediaUri.Value, videoEncoderConfiguration.Value);
+            return new MediaProfile(name.Value, mediaUri.Value, videoEncoderConfiguration.Value, rawData);
+        }
+
+        MediaProfile IModelJsonSerializable<MediaProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MediaProfile>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MediaProfile IModelSerializable<MediaProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMediaProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MediaProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MediaProfile"/> to convert. </param>
+        public static implicit operator RequestContent(MediaProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MediaProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MediaProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMediaProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

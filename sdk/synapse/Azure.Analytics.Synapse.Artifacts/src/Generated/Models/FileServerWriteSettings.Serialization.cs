@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(FileServerWriteSettingsConverter))]
-    public partial class FileServerWriteSettings : IUtf8JsonSerializable
+    public partial class FileServerWriteSettings : IUtf8JsonSerializable, IModelJsonSerializable<FileServerWriteSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FileServerWriteSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FileServerWriteSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FileServerWriteSettings>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -39,8 +45,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static FileServerWriteSettings DeserializeFileServerWriteSettings(JsonElement element)
+        internal static FileServerWriteSettings DeserializeFileServerWriteSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -79,6 +87,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new FileServerWriteSettings(type, maxConcurrentConnections.Value, copyBehavior.Value, additionalProperties);
+        }
+
+        FileServerWriteSettings IModelJsonSerializable<FileServerWriteSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FileServerWriteSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFileServerWriteSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FileServerWriteSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FileServerWriteSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FileServerWriteSettings IModelSerializable<FileServerWriteSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FileServerWriteSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFileServerWriteSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FileServerWriteSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FileServerWriteSettings"/> to convert. </param>
+        public static implicit operator RequestContent(FileServerWriteSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FileServerWriteSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FileServerWriteSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFileServerWriteSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class FileServerWriteSettingsConverter : JsonConverter<FileServerWriteSettings>

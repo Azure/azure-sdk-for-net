@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Storage;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Response schema. Contains list of blobs returned, and if paging is requested or required, a URL to next page of containers. </summary>
     internal partial class ListContainerItems
     {
-        /// <summary> Initializes a new instance of ListContainerItems. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListContainerItems"/>. </summary>
         internal ListContainerItems()
         {
             Value = new ChangeTrackingList<BlobContainerData>();
         }
 
-        /// <summary> Initializes a new instance of ListContainerItems. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListContainerItems"/>. </summary>
         /// <param name="value"> List of blobs containers returned. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of containers. Returned when total number of requested containers exceed maximum page size. </param>
-        internal ListContainerItems(IReadOnlyList<BlobContainerData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListContainerItems(IReadOnlyList<BlobContainerData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of blobs containers returned. </summary>

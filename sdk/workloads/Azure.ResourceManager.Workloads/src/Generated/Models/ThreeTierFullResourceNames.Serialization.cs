@@ -5,43 +5,93 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class ThreeTierFullResourceNames : IUtf8JsonSerializable
+    public partial class ThreeTierFullResourceNames : IUtf8JsonSerializable, IModelJsonSerializable<ThreeTierFullResourceNames>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ThreeTierFullResourceNames>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ThreeTierFullResourceNames>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ThreeTierFullResourceNames>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CentralServer))
             {
                 writer.WritePropertyName("centralServer"u8);
-                writer.WriteObjectValue(CentralServer);
+                if (CentralServer is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CentralServerFullResourceNames>)CentralServer).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ApplicationServer))
             {
                 writer.WritePropertyName("applicationServer"u8);
-                writer.WriteObjectValue(ApplicationServer);
+                if (ApplicationServer is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ApplicationServerFullResourceNames>)ApplicationServer).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DatabaseServer))
             {
                 writer.WritePropertyName("databaseServer"u8);
-                writer.WriteObjectValue(DatabaseServer);
+                if (DatabaseServer is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DatabaseServerFullResourceNames>)DatabaseServer).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(SharedStorage))
             {
                 writer.WritePropertyName("sharedStorage"u8);
-                writer.WriteObjectValue(SharedStorage);
+                if (SharedStorage is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SharedStorageResourceNames>)SharedStorage).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("namingPatternType"u8);
             writer.WriteStringValue(NamingPatternType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ThreeTierFullResourceNames DeserializeThreeTierFullResourceNames(JsonElement element)
+        internal static ThreeTierFullResourceNames DeserializeThreeTierFullResourceNames(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +101,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<DatabaseServerFullResourceNames> databaseServer = default;
             Optional<SharedStorageResourceNames> sharedStorage = default;
             SapNamingPatternType namingPatternType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("centralServer"u8))
@@ -94,8 +145,61 @@ namespace Azure.ResourceManager.Workloads.Models
                     namingPatternType = new SapNamingPatternType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ThreeTierFullResourceNames(namingPatternType, centralServer.Value, applicationServer.Value, databaseServer.Value, sharedStorage.Value);
+            return new ThreeTierFullResourceNames(namingPatternType, centralServer.Value, applicationServer.Value, databaseServer.Value, sharedStorage.Value, rawData);
+        }
+
+        ThreeTierFullResourceNames IModelJsonSerializable<ThreeTierFullResourceNames>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ThreeTierFullResourceNames>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeThreeTierFullResourceNames(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ThreeTierFullResourceNames>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ThreeTierFullResourceNames>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ThreeTierFullResourceNames IModelSerializable<ThreeTierFullResourceNames>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ThreeTierFullResourceNames>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeThreeTierFullResourceNames(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ThreeTierFullResourceNames"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ThreeTierFullResourceNames"/> to convert. </param>
+        public static implicit operator RequestContent(ThreeTierFullResourceNames model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ThreeTierFullResourceNames"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ThreeTierFullResourceNames(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeThreeTierFullResourceNames(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

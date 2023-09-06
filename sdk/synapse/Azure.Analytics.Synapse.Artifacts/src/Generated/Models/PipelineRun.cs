@@ -14,14 +14,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Information about a pipeline run. </summary>
     public partial class PipelineRun
     {
-        /// <summary> Initializes a new instance of PipelineRun. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineRun"/>. </summary>
         internal PipelineRun()
         {
             Parameters = new ChangeTrackingDictionary<string, string>();
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of PipelineRun. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineRun"/>. </summary>
         /// <param name="runId"> Identifier of a run. </param>
         /// <param name="runGroupId"> Identifier that correlates all the recovery runs of a pipeline run. </param>
         /// <param name="isLatest"> Indicates if the recovered pipeline run is the latest in its group. </param>

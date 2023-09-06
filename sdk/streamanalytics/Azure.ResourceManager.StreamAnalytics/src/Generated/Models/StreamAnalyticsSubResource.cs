@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The base sub-resource model definition. </summary>
     public partial class StreamAnalyticsSubResource
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsSubResource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsSubResource"/>. </summary>
         public StreamAnalyticsSubResource()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsSubResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsSubResource"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        internal StreamAnalyticsSubResource(ResourceIdentifier id, string name, ResourceType? resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamAnalyticsSubResource(ResourceIdentifier id, string name, ResourceType? resourceType, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
             ResourceType = resourceType;
+            _rawData = rawData;
         }
 
         /// <summary> Resource Id. </summary>

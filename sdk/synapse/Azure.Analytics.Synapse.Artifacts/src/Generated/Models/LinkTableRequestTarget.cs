@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The LinkTableRequestTarget. </summary>
     public partial class LinkTableRequestTarget
     {
-        /// <summary> Initializes a new instance of LinkTableRequestTarget. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkTableRequestTarget"/>. </summary>
         public LinkTableRequestTarget()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkTableRequestTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkTableRequestTarget"/>. </summary>
         /// <param name="tableName"> Target table table name. </param>
         /// <param name="schemaName"> Target table schema name. </param>
         /// <param name="distributionOptions"> Target table distribution options for link table request. </param>
         /// <param name="structureOptions"> Target table structure options for link table request. </param>
-        internal LinkTableRequestTarget(string tableName, string schemaName, LinkTableRequestTargetDistributionOptions distributionOptions, LinkTableRequestTargetStructureOptions structureOptions)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkTableRequestTarget(string tableName, string schemaName, LinkTableRequestTargetDistributionOptions distributionOptions, LinkTableRequestTargetStructureOptions structureOptions, Dictionary<string, BinaryData> rawData)
         {
             TableName = tableName;
             SchemaName = schemaName;
             DistributionOptions = distributionOptions;
             StructureOptions = structureOptions;
+            _rawData = rawData;
         }
 
         /// <summary> Target table table name. </summary>

@@ -15,7 +15,10 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> An object representing the summarization results of each document. </summary>
     internal partial class AbstractiveSummarizationResultBase
     {
-        /// <summary> Initializes a new instance of AbstractiveSummarizationResultBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationResultBase"/>. </summary>
         /// <param name="documents"> Response by document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="documents"/> is null. </exception>
         public AbstractiveSummarizationResultBase(IEnumerable<AbstractiveSummaryDocumentResult> documents)
@@ -25,11 +28,18 @@ namespace Azure.AI.TextAnalytics.Models
             Documents = documents.ToList();
         }
 
-        /// <summary> Initializes a new instance of AbstractiveSummarizationResultBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationResultBase"/>. </summary>
         /// <param name="documents"> Response by document. </param>
-        internal AbstractiveSummarizationResultBase(IList<AbstractiveSummaryDocumentResult> documents)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AbstractiveSummarizationResultBase(IList<AbstractiveSummaryDocumentResult> documents, Dictionary<string, BinaryData> rawData)
         {
             Documents = documents;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationResultBase"/> for deserialization. </summary>
+        internal AbstractiveSummarizationResultBase()
+        {
         }
 
         /// <summary> Response by document. </summary>

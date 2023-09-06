@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Data.Tables.Models
 {
     /// <summary> The properties for creating a table. </summary>
     internal partial class TableProperties
     {
-        /// <summary> Initializes a new instance of TableProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TableProperties"/>. </summary>
         public TableProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TableProperties"/>. </summary>
+        /// <param name="tableName"> The name of the table to create. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TableProperties(string tableName, Dictionary<string, BinaryData> rawData)
+        {
+            TableName = tableName;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the table to create. </summary>

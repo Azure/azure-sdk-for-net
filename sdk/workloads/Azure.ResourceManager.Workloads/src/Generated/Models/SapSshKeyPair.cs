@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> The SSH Key-pair used to authenticate with the VM. The key needs to be at least 2048-bit and in ssh-rsa format. &lt;br&gt;&lt;br&gt; For creating ssh keys, see [Create SSH keys on Linux and Mac for Linux VMs in Azure](https://docs.microsoft.com/azure/virtual-machines/linux/create-ssh-keys-detailed). </summary>
     public partial class SapSshKeyPair
     {
-        /// <summary> Initializes a new instance of SapSshKeyPair. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapSshKeyPair"/>. </summary>
         public SapSshKeyPair()
         {
         }
 
-        /// <summary> Initializes a new instance of SapSshKeyPair. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapSshKeyPair"/>. </summary>
         /// <param name="publicKey"> SSH public key. </param>
         /// <param name="privateKey"> SSH private key. </param>
-        internal SapSshKeyPair(string publicKey, string privateKey)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapSshKeyPair(string publicKey, string privateKey, Dictionary<string, BinaryData> rawData)
         {
             PublicKey = publicKey;
             PrivateKey = privateKey;
+            _rawData = rawData;
         }
 
         /// <summary> SSH public key. </summary>

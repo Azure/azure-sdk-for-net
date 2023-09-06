@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Routing rules in production experiments. </summary>
     internal partial class RoutingRuleExperiments
     {
-        /// <summary> Initializes a new instance of RoutingRuleExperiments. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoutingRuleExperiments"/>. </summary>
         public RoutingRuleExperiments()
         {
             RampUpRules = new ChangeTrackingList<RampUpRule>();
         }
 
-        /// <summary> Initializes a new instance of RoutingRuleExperiments. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingRuleExperiments"/>. </summary>
         /// <param name="rampUpRules"> List of ramp-up rules. </param>
-        internal RoutingRuleExperiments(IList<RampUpRule> rampUpRules)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoutingRuleExperiments(IList<RampUpRule> rampUpRules, Dictionary<string, BinaryData> rawData)
         {
             RampUpRules = rampUpRules;
+            _rawData = rawData;
         }
 
         /// <summary> List of ramp-up rules. </summary>

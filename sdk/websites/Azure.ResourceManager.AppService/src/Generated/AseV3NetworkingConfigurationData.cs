@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
@@ -18,7 +19,10 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class AseV3NetworkingConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of AseV3NetworkingConfigurationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AseV3NetworkingConfigurationData"/>. </summary>
         public AseV3NetworkingConfigurationData()
         {
             WindowsOutboundIPAddresses = new ChangeTrackingList<IPAddress>();
@@ -27,7 +31,7 @@ namespace Azure.ResourceManager.AppService
             InternalInboundIPAddresses = new ChangeTrackingList<IPAddress>();
         }
 
-        /// <summary> Initializes a new instance of AseV3NetworkingConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AseV3NetworkingConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +42,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="internalInboundIPAddresses"></param>
         /// <param name="allowNewPrivateEndpointConnections"> Property to enable and disable new private endpoint connection creation on ASE. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AseV3NetworkingConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<IPAddress> windowsOutboundIPAddresses, IReadOnlyList<IPAddress> linuxOutboundIPAddresses, IReadOnlyList<IPAddress> externalInboundIPAddresses, IReadOnlyList<IPAddress> internalInboundIPAddresses, bool? allowNewPrivateEndpointConnections, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AseV3NetworkingConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<IPAddress> windowsOutboundIPAddresses, IReadOnlyList<IPAddress> linuxOutboundIPAddresses, IReadOnlyList<IPAddress> externalInboundIPAddresses, IReadOnlyList<IPAddress> internalInboundIPAddresses, bool? allowNewPrivateEndpointConnections, string kind, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             WindowsOutboundIPAddresses = windowsOutboundIPAddresses;
             LinuxOutboundIPAddresses = linuxOutboundIPAddresses;
@@ -46,6 +51,7 @@ namespace Azure.ResourceManager.AppService
             InternalInboundIPAddresses = internalInboundIPAddresses;
             AllowNewPrivateEndpointConnections = allowNewPrivateEndpointConnections;
             Kind = kind;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the windows outbound ip addresses. </summary>

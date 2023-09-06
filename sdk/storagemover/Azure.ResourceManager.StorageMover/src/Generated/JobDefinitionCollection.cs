@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.StorageMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jobDefinitionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobDefinitionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new JobDefinitionResource(Client, JobDefinitionData.DeserializeJobDefinitionData(e)), _jobDefinitionClientDiagnostics, Pipeline, "JobDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new JobDefinitionResource(Client, JobDefinitionData.DeserializeJobDefinitionData(e)), _jobDefinitionClientDiagnostics, Pipeline, "JobDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.StorageMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jobDefinitionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobDefinitionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new JobDefinitionResource(Client, JobDefinitionData.DeserializeJobDefinitionData(e)), _jobDefinitionClientDiagnostics, Pipeline, "JobDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new JobDefinitionResource(Client, JobDefinitionData.DeserializeJobDefinitionData(e)), _jobDefinitionClientDiagnostics, Pipeline, "JobDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

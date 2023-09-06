@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class PreRestoreContent : IUtf8JsonSerializable
+    public partial class PreRestoreContent : IUtf8JsonSerializable, IModelJsonSerializable<PreRestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PreRestoreContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PreRestoreContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PreRestoreContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Partition))
             {
@@ -56,7 +64,14 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WriteStartArray();
                 foreach (var item in RestoreFileSpec)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<RestoreFileSpec>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +80,162 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("pauseWaitForSyncDrainTimePeriodInSeconds"u8);
                 writer.WriteNumberValue(PauseWaitForSyncDrainTimePeriodInSeconds.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static PreRestoreContent DeserializePreRestoreContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> partition = default;
+            Optional<string> replicaGroup = default;
+            Optional<string> requestId = default;
+            Optional<Uri> azureFileShareUri = default;
+            Optional<string> status = default;
+            Optional<Uri> sourceAzureFileShareUri = default;
+            Optional<string> backupMetadataPropertyBag = default;
+            Optional<IList<RestoreFileSpec>> restoreFileSpec = default;
+            Optional<int> pauseWaitForSyncDrainTimePeriodInSeconds = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("partition"u8))
+                {
+                    partition = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("replicaGroup"u8))
+                {
+                    replicaGroup = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("requestId"u8))
+                {
+                    requestId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("azureFileShareUri"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    azureFileShareUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("status"u8))
+                {
+                    status = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("sourceAzureFileShareUri"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceAzureFileShareUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("backupMetadataPropertyBag"u8))
+                {
+                    backupMetadataPropertyBag = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("restoreFileSpec"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<RestoreFileSpec> array = new List<RestoreFileSpec>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(Models.RestoreFileSpec.DeserializeRestoreFileSpec(item));
+                    }
+                    restoreFileSpec = array;
+                    continue;
+                }
+                if (property.NameEquals("pauseWaitForSyncDrainTimePeriodInSeconds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    pauseWaitForSyncDrainTimePeriodInSeconds = property.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new PreRestoreContent(partition.Value, replicaGroup.Value, requestId.Value, azureFileShareUri.Value, status.Value, sourceAzureFileShareUri.Value, backupMetadataPropertyBag.Value, Optional.ToList(restoreFileSpec), Optional.ToNullable(pauseWaitForSyncDrainTimePeriodInSeconds), rawData);
+        }
+
+        PreRestoreContent IModelJsonSerializable<PreRestoreContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PreRestoreContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePreRestoreContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PreRestoreContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PreRestoreContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PreRestoreContent IModelSerializable<PreRestoreContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PreRestoreContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePreRestoreContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PreRestoreContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PreRestoreContent"/> to convert. </param>
+        public static implicit operator RequestContent(PreRestoreContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PreRestoreContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PreRestoreContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePreRestoreContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

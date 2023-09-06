@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseCmdkeySetup : IUtf8JsonSerializable
+    public partial class SynapseCmdkeySetup : IUtf8JsonSerializable, IModelJsonSerializable<SynapseCmdkeySetup>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseCmdkeySetup>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseCmdkeySetup>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseCmdkeySetup>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CustomSetupBaseType);
@@ -33,13 +40,34 @@ namespace Azure.ResourceManager.Synapse.Models
             JsonSerializer.Serialize(writer, JsonDocument.Parse(UserName.ToString()).RootElement);
 #endif
             writer.WritePropertyName("password"u8);
-            writer.WriteObjectValue(Password);
+            if (Password is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<SynapseSecretBase>)Password).Serialize(writer, options);
+            }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SynapseCmdkeySetup DeserializeSynapseCmdkeySetup(JsonElement element)
+        internal static SynapseCmdkeySetup DeserializeSynapseCmdkeySetup(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +76,7 @@ namespace Azure.ResourceManager.Synapse.Models
             BinaryData targetName = default;
             BinaryData userName = default;
             SynapseSecretBase password = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -82,8 +111,61 @@ namespace Azure.ResourceManager.Synapse.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SynapseCmdkeySetup(type, targetName, userName, password);
+            return new SynapseCmdkeySetup(type, targetName, userName, password, rawData);
+        }
+
+        SynapseCmdkeySetup IModelJsonSerializable<SynapseCmdkeySetup>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseCmdkeySetup>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseCmdkeySetup(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseCmdkeySetup>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseCmdkeySetup>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseCmdkeySetup IModelSerializable<SynapseCmdkeySetup>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseCmdkeySetup>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseCmdkeySetup(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapseCmdkeySetup"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapseCmdkeySetup"/> to convert. </param>
+        public static implicit operator RequestContent(SynapseCmdkeySetup model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapseCmdkeySetup"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapseCmdkeySetup(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseCmdkeySetup(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

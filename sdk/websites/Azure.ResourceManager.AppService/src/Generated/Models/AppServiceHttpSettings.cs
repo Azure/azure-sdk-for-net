@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization. </summary>
     public partial class AppServiceHttpSettings
     {
-        /// <summary> Initializes a new instance of AppServiceHttpSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceHttpSettings"/>. </summary>
         public AppServiceHttpSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceHttpSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceHttpSettings"/>. </summary>
         /// <param name="isHttpsRequired"> &lt;code&gt;false&lt;/code&gt; if the authentication/authorization responses not having the HTTPS scheme are permissible; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="routes"> The configuration settings of the paths HTTP requests. </param>
         /// <param name="forwardProxy"> The configuration settings of a forward proxy used to make the requests. </param>
-        internal AppServiceHttpSettings(bool? isHttpsRequired, AppServiceHttpSettingsRoutes routes, AppServiceForwardProxy forwardProxy)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceHttpSettings(bool? isHttpsRequired, AppServiceHttpSettingsRoutes routes, AppServiceForwardProxy forwardProxy, Dictionary<string, BinaryData> rawData)
         {
             IsHttpsRequired = isHttpsRequired;
             Routes = routes;
             ForwardProxy = forwardProxy;
+            _rawData = rawData;
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the authentication/authorization responses not having the HTTPS scheme are permissible; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>

@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Stamp capacity information. </summary>
     public partial class StampCapacity
     {
-        /// <summary> Initializes a new instance of StampCapacity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StampCapacity"/>. </summary>
         internal StampCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of StampCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="StampCapacity"/>. </summary>
         /// <param name="name"> Name of the stamp. </param>
         /// <param name="availableCapacity"> Available capacity (# of machines, bytes of storage etc...). </param>
         /// <param name="totalCapacity"> Total capacity (# of machines, bytes of storage etc...). </param>
@@ -35,7 +41,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isApplicableForAllComputeModes"> &lt;code&gt;true&lt;/code&gt; if capacity is applicable for all apps; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="siteMode"> Shared or Dedicated. </param>
         /// <param name="isLinux"> Is this a linux stamp capacity. </param>
-        internal StampCapacity(string name, long? availableCapacity, long? totalCapacity, string unit, ComputeModeOption? computeMode, WorkerSizeOption? workerSize, int? workerSizeId, bool? excludeFromCapacityAllocation, bool? isApplicableForAllComputeModes, string siteMode, bool? isLinux)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StampCapacity(string name, long? availableCapacity, long? totalCapacity, string unit, ComputeModeOption? computeMode, WorkerSizeOption? workerSize, int? workerSizeId, bool? excludeFromCapacityAllocation, bool? isApplicableForAllComputeModes, string siteMode, bool? isLinux, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             AvailableCapacity = availableCapacity;
@@ -48,6 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
             IsApplicableForAllComputeModes = isApplicableForAllComputeModes;
             SiteMode = siteMode;
             IsLinux = isLinux;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the stamp. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class TopLevelDomainAgreementOption : IUtf8JsonSerializable
+    public partial class TopLevelDomainAgreementOption : IUtf8JsonSerializable, IModelJsonSerializable<TopLevelDomainAgreementOption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TopLevelDomainAgreementOption>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TopLevelDomainAgreementOption>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TopLevelDomainAgreementOption>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IncludePrivacy))
             {
@@ -25,7 +33,107 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("forTransfer"u8);
                 writer.WriteBooleanValue(IsForTransfer.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static TopLevelDomainAgreementOption DeserializeTopLevelDomainAgreementOption(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<bool> includePrivacy = default;
+            Optional<bool> forTransfer = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("includePrivacy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    includePrivacy = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("forTransfer"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    forTransfer = property.Value.GetBoolean();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new TopLevelDomainAgreementOption(Optional.ToNullable(includePrivacy), Optional.ToNullable(forTransfer), rawData);
+        }
+
+        TopLevelDomainAgreementOption IModelJsonSerializable<TopLevelDomainAgreementOption>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TopLevelDomainAgreementOption>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTopLevelDomainAgreementOption(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TopLevelDomainAgreementOption>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TopLevelDomainAgreementOption>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TopLevelDomainAgreementOption IModelSerializable<TopLevelDomainAgreementOption>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TopLevelDomainAgreementOption>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTopLevelDomainAgreementOption(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TopLevelDomainAgreementOption"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TopLevelDomainAgreementOption"/> to convert. </param>
+        public static implicit operator RequestContent(TopLevelDomainAgreementOption model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TopLevelDomainAgreementOption"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TopLevelDomainAgreementOption(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTopLevelDomainAgreementOption(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

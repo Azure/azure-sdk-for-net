@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DataTableResponseColumn : IUtf8JsonSerializable
+    public partial class DataTableResponseColumn : IUtf8JsonSerializable, IModelJsonSerializable<DataTableResponseColumn>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataTableResponseColumn>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataTableResponseColumn>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataTableResponseColumn>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ColumnName))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("columnType"u8);
                 writer.WriteStringValue(ColumnType);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataTableResponseColumn DeserializeDataTableResponseColumn(JsonElement element)
+        internal static DataTableResponseColumn DeserializeDataTableResponseColumn(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> columnName = default;
             Optional<string> dataType = default;
             Optional<string> columnType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("columnName"u8))
@@ -59,8 +82,61 @@ namespace Azure.ResourceManager.AppService.Models
                     columnType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataTableResponseColumn(columnName.Value, dataType.Value, columnType.Value);
+            return new DataTableResponseColumn(columnName.Value, dataType.Value, columnType.Value, rawData);
+        }
+
+        DataTableResponseColumn IModelJsonSerializable<DataTableResponseColumn>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataTableResponseColumn>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataTableResponseColumn(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataTableResponseColumn>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataTableResponseColumn>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataTableResponseColumn IModelSerializable<DataTableResponseColumn>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataTableResponseColumn>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataTableResponseColumn(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataTableResponseColumn"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataTableResponseColumn"/> to convert. </param>
+        public static implicit operator RequestContent(DataTableResponseColumn model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataTableResponseColumn"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataTableResponseColumn(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataTableResponseColumn(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

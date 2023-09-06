@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    internal partial class UnknownOSConfiguration : IUtf8JsonSerializable
+    internal partial class UnknownOSConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<SapOSConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SapOSConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SapOSConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SapOSConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("osType"u8);
             writer.WriteStringValue(OSType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownOSConfiguration DeserializeUnknownOSConfiguration(JsonElement element)
+        internal static SapOSConfiguration DeserializeUnknownOSConfiguration(JsonElement element, ModelSerializerOptions options = default) => DeserializeSapOSConfiguration(element, options);
+
+        SapOSConfiguration IModelJsonSerializable<SapOSConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            SapOSType osType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("osType"u8))
-                {
-                    osType = new SapOSType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownOSConfiguration(osType);
+            Core.ModelSerializerHelper.ValidateFormat<SapOSConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownOSConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SapOSConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SapOSConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SapOSConfiguration IModelSerializable<SapOSConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SapOSConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSapOSConfiguration(doc.RootElement, options);
         }
     }
 }

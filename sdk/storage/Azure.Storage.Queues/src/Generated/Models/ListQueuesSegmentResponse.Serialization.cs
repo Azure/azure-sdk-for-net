@@ -5,16 +5,57 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Queues.Models
 {
-    internal partial class ListQueuesSegmentResponse
+    internal partial class ListQueuesSegmentResponse : IXmlSerializable, IModelSerializable<ListQueuesSegmentResponse>
     {
-        internal static ListQueuesSegmentResponse DeserializeListQueuesSegmentResponse(XElement element)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
+            writer.WriteStartElement(nameHint ?? "EnumerationResults");
+            writer.WriteStartAttribute("ServiceEndpoint");
+            writer.WriteValue(ServiceEndpoint);
+            writer.WriteEndAttribute();
+            writer.WriteStartElement("Prefix");
+            writer.WriteValue(Prefix);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(Marker))
+            {
+                writer.WriteStartElement("Marker");
+                writer.WriteValue(Marker);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("MaxResults");
+            writer.WriteValue(MaxResults);
+            writer.WriteEndElement();
+            writer.WriteStartElement("NextMarker");
+            writer.WriteValue(NextMarker);
+            writer.WriteEndElement();
+            if (Optional.IsCollectionDefined(QueueItems))
+            {
+                writer.WriteStartElement("Queues");
+                foreach (var item in QueueItems)
+                {
+                    writer.WriteObjectValue(item, "Queue");
+                }
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static ListQueuesSegmentResponse DeserializeListQueuesSegmentResponse(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             string serviceEndpoint = default;
             string prefix = default;
             string marker = default;
@@ -50,7 +91,57 @@ namespace Azure.Storage.Queues.Models
                 }
                 queueItems = array;
             }
-            return new ListQueuesSegmentResponse(serviceEndpoint, prefix, marker, maxResults, queueItems, nextMarker);
+            return new ListQueuesSegmentResponse(serviceEndpoint, prefix, marker, maxResults, queueItems, nextMarker, default);
+        }
+
+        BinaryData IModelSerializable<ListQueuesSegmentResponse>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ListQueuesSegmentResponse>(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        ListQueuesSegmentResponse IModelSerializable<ListQueuesSegmentResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ListQueuesSegmentResponse>(this, options.Format);
+
+            return DeserializeListQueuesSegmentResponse(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="ListQueuesSegmentResponse"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ListQueuesSegmentResponse"/> to convert. </param>
+        public static implicit operator RequestContent(ListQueuesSegmentResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ListQueuesSegmentResponse"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ListQueuesSegmentResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeListQueuesSegmentResponse(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

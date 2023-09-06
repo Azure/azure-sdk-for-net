@@ -5,23 +5,45 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class ProviderSpecificProperties : IUtf8JsonSerializable
+    public partial class ProviderSpecificProperties : IUtf8JsonSerializable, IModelJsonSerializable<ProviderSpecificProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProviderSpecificProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ProviderSpecificProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ProviderSpecificProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("providerType"u8);
             writer.WriteStringValue(ProviderType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ProviderSpecificProperties DeserializeProviderSpecificProperties(JsonElement element)
+        internal static ProviderSpecificProperties DeserializeProviderSpecificProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,7 +60,72 @@ namespace Azure.ResourceManager.Workloads.Models
                     case "SapNetWeaver": return SapNetWeaverProviderInstanceProperties.DeserializeSapNetWeaverProviderInstanceProperties(element);
                 }
             }
-            return UnknownProviderSpecificProperties.DeserializeUnknownProviderSpecificProperties(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            string providerType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("providerType"u8))
+                {
+                    providerType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownProviderSpecificProperties(providerType, rawData);
+        }
+
+        ProviderSpecificProperties IModelJsonSerializable<ProviderSpecificProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProviderSpecificProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeProviderSpecificProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ProviderSpecificProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProviderSpecificProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ProviderSpecificProperties IModelSerializable<ProviderSpecificProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProviderSpecificProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeProviderSpecificProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ProviderSpecificProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ProviderSpecificProperties"/> to convert. </param>
+        public static implicit operator RequestContent(ProviderSpecificProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ProviderSpecificProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ProviderSpecificProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeProviderSpecificProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

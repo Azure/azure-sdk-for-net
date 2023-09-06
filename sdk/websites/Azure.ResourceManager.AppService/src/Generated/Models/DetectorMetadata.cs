@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The DetectorMetadata. </summary>
     internal partial class DetectorMetadata
     {
-        /// <summary> Initializes a new instance of DetectorMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DetectorMetadata"/>. </summary>
         public DetectorMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of DetectorMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectorMetadata"/>. </summary>
         /// <param name="dataSource"> Source of the Data. </param>
-        internal DetectorMetadata(DetectorDataSource dataSource)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DetectorMetadata(DetectorDataSource dataSource, Dictionary<string, BinaryData> rawData)
         {
             DataSource = dataSource;
+            _rawData = rawData;
         }
 
         /// <summary> Source of the Data. </summary>

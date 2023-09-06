@@ -9,25 +9,45 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DelimitedTextSourceConverter))]
-    public partial class DelimitedTextSource : IUtf8JsonSerializable
+    public partial class DelimitedTextSource : IUtf8JsonSerializable, IModelJsonSerializable<DelimitedTextSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DelimitedTextSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DelimitedTextSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DelimitedTextSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(StoreSettings))
             {
                 writer.WritePropertyName("storeSettings"u8);
-                writer.WriteObjectValue(StoreSettings);
+                if (StoreSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StoreReadSettings>)StoreSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(FormatSettings))
             {
                 writer.WritePropertyName("formatSettings"u8);
-                writer.WriteObjectValue(FormatSettings);
+                if (FormatSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DelimitedTextReadSettings>)FormatSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
@@ -59,8 +79,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static DelimitedTextSource DeserializeDelimitedTextSource(JsonElement element)
+        internal static DelimitedTextSource DeserializeDelimitedTextSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -139,6 +161,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DelimitedTextSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, storeSettings.Value, formatSettings.Value, additionalColumns.Value);
+        }
+
+        DelimitedTextSource IModelJsonSerializable<DelimitedTextSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DelimitedTextSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDelimitedTextSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DelimitedTextSource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DelimitedTextSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DelimitedTextSource IModelSerializable<DelimitedTextSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DelimitedTextSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDelimitedTextSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DelimitedTextSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DelimitedTextSource"/> to convert. </param>
+        public static implicit operator RequestContent(DelimitedTextSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DelimitedTextSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DelimitedTextSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDelimitedTextSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class DelimitedTextSourceConverter : JsonConverter<DelimitedTextSource>

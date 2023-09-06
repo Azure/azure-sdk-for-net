@@ -13,13 +13,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> PolyBase settings. </summary>
     public partial class PolybaseSettings
     {
-        /// <summary> Initializes a new instance of PolybaseSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolybaseSettings"/>. </summary>
         public PolybaseSettings()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of PolybaseSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolybaseSettings"/>. </summary>
         /// <param name="rejectType"> Reject type. </param>
         /// <param name="rejectValue"> Specifies the value or the percentage of rows that can be rejected before the query fails. Type: number (or Expression with resultType number), minimum: 0. </param>
         /// <param name="rejectSampleValue"> Determines the number of rows to attempt to retrieve before the PolyBase recalculates the percentage of rejected rows. Type: integer (or Expression with resultType integer), minimum: 0. </param>

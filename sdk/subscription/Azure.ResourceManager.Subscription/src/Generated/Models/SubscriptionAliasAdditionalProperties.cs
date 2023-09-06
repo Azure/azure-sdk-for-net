@@ -14,10 +14,28 @@ namespace Azure.ResourceManager.Subscription.Models
     /// <summary> Put subscription additional properties. </summary>
     public partial class SubscriptionAliasAdditionalProperties
     {
-        /// <summary> Initializes a new instance of SubscriptionAliasAdditionalProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionAliasAdditionalProperties"/>. </summary>
         public SubscriptionAliasAdditionalProperties()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionAliasAdditionalProperties"/>. </summary>
+        /// <param name="managementGroupId"> Management group Id for the subscription. </param>
+        /// <param name="subscriptionTenantId"> Tenant Id of the subscription. </param>
+        /// <param name="subscriptionOwnerId"> Owner Id of the subscription. </param>
+        /// <param name="tags"> Tags for the subscription. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionAliasAdditionalProperties(string managementGroupId, Guid? subscriptionTenantId, string subscriptionOwnerId, IDictionary<string, string> tags, Dictionary<string, BinaryData> rawData)
+        {
+            ManagementGroupId = managementGroupId;
+            SubscriptionTenantId = subscriptionTenantId;
+            SubscriptionOwnerId = subscriptionOwnerId;
+            Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary> Management group Id for the subscription. </summary>

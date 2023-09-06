@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Synapse;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> List of IP firewall rules. </summary>
     internal partial class SynapseIPFirewallRuleInfoListResult
     {
-        /// <summary> Initializes a new instance of SynapseIPFirewallRuleInfoListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseIPFirewallRuleInfoListResult"/>. </summary>
         internal SynapseIPFirewallRuleInfoListResult()
         {
             Value = new ChangeTrackingList<SynapseIPFirewallRuleInfoData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseIPFirewallRuleInfoListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIPFirewallRuleInfoListResult"/>. </summary>
         /// <param name="nextLink"> Link to next page of results. </param>
         /// <param name="value"> List of IP firewall rules. </param>
-        internal SynapseIPFirewallRuleInfoListResult(string nextLink, IReadOnlyList<SynapseIPFirewallRuleInfoData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseIPFirewallRuleInfoListResult(string nextLink, IReadOnlyList<SynapseIPFirewallRuleInfoData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Link to next page of results. </summary>

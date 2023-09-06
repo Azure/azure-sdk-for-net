@@ -8,14 +8,51 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class Availability
+    internal partial class Availability : IUtf8JsonSerializable, IModelJsonSerializable<Availability>
     {
-        internal static Availability DeserializeAvailability(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Availability>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<Availability>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<Availability>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Distribution))
+            {
+                writer.WritePropertyName("distribution"u8);
+                writer.WriteStartObject();
+                foreach (var item in Distribution)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteNumberValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static Availability DeserializeAvailability(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +60,7 @@ namespace Azure.IoT.TimeSeriesInsights
             Optional<DateTimeRange> range = default;
             Optional<TimeSpan> intervalSize = default;
             Optional<IReadOnlyDictionary<string, int>> distribution = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("range"u8))
@@ -57,8 +95,61 @@ namespace Azure.IoT.TimeSeriesInsights
                     distribution = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new Availability(range.Value, Optional.ToNullable(intervalSize), Optional.ToDictionary(distribution));
+            return new Availability(range.Value, Optional.ToNullable(intervalSize), Optional.ToDictionary(distribution), rawData);
+        }
+
+        Availability IModelJsonSerializable<Availability>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Availability>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAvailability(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<Availability>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Availability>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        Availability IModelSerializable<Availability>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Availability>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAvailability(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="Availability"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="Availability"/> to convert. </param>
+        public static implicit operator RequestContent(Availability model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="Availability"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator Availability(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAvailability(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

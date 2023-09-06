@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
     /// <summary> The SparkSessionState. </summary>
     public partial class SparkSessionState
     {
-        /// <summary> Initializes a new instance of SparkSessionState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SparkSessionState"/>. </summary>
         internal SparkSessionState()
         {
         }
 
-        /// <summary> Initializes a new instance of SparkSessionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkSessionState"/>. </summary>
         /// <param name="notStartedAt"></param>
         /// <param name="startingAt"></param>
         /// <param name="idleAt"></param>
@@ -29,7 +33,8 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <param name="errorAt"></param>
         /// <param name="currentState"></param>
         /// <param name="jobCreationRequest"></param>
-        internal SparkSessionState(DateTimeOffset? notStartedAt, DateTimeOffset? startingAt, DateTimeOffset? idleAt, DateTimeOffset? deadAt, DateTimeOffset? shuttingDownAt, DateTimeOffset? terminatedAt, DateTimeOffset? recoveringAt, DateTimeOffset? busyAt, DateTimeOffset? errorAt, string currentState, SparkRequest jobCreationRequest)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkSessionState(DateTimeOffset? notStartedAt, DateTimeOffset? startingAt, DateTimeOffset? idleAt, DateTimeOffset? deadAt, DateTimeOffset? shuttingDownAt, DateTimeOffset? terminatedAt, DateTimeOffset? recoveringAt, DateTimeOffset? busyAt, DateTimeOffset? errorAt, string currentState, SparkRequest jobCreationRequest, Dictionary<string, BinaryData> rawData)
         {
             NotStartedAt = notStartedAt;
             StartingAt = startingAt;
@@ -42,6 +47,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             ErrorAt = errorAt;
             CurrentState = currentState;
             JobCreationRequest = jobCreationRequest;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the not started at. </summary>

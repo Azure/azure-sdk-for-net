@@ -15,6 +15,9 @@ namespace Azure.AI.Translation.Text
     /// <summary> An object returning sentence boundaries in the input and output texts. </summary>
     public partial class SentenceLength
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of SentenceLength. </summary>
         /// <param name="srcSentLen">
         /// An integer array representing the lengths of the sentences in the input text.
@@ -43,10 +46,17 @@ namespace Azure.AI.Translation.Text
         /// An integer array representing the lengths of the sentences in the translated text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </param>
-        internal SentenceLength(IReadOnlyList<int> srcSentLen, IReadOnlyList<int> transSentLen)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SentenceLength(IReadOnlyList<int> srcSentLen, IReadOnlyList<int> transSentLen, Dictionary<string, BinaryData> rawData)
         {
             SrcSentLen = srcSentLen;
             TransSentLen = transSentLen;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SentenceLength"/> for deserialization. </summary>
+        internal SentenceLength()
+        {
         }
 
         /// <summary>

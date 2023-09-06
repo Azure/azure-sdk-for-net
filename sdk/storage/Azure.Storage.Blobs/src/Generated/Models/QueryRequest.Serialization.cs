@@ -5,14 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.IO;
 using System.Xml;
+using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class QueryRequest : IXmlSerializable
+    internal partial class QueryRequest : IXmlSerializable, IModelSerializable<QueryRequest>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "QueryRequest");
             writer.WriteStartElement("QueryType");
@@ -30,6 +35,84 @@ namespace Azure.Storage.Blobs.Models
                 writer.WriteObjectValue(OutputSerialization, "OutputSerialization");
             }
             writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static QueryRequest DeserializeQueryRequest(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            string queryType = default;
+            string expression = default;
+            QuerySerialization inputSerialization = default;
+            QuerySerialization outputSerialization = default;
+            if (element.Element("QueryType") is XElement queryTypeElement)
+            {
+                queryType = (string)queryTypeElement;
+            }
+            if (element.Element("Expression") is XElement expressionElement)
+            {
+                expression = (string)expressionElement;
+            }
+            if (element.Element("InputSerialization") is XElement inputSerializationElement)
+            {
+                inputSerialization = QuerySerialization.DeserializeQuerySerialization(inputSerializationElement);
+            }
+            if (element.Element("OutputSerialization") is XElement outputSerializationElement)
+            {
+                outputSerialization = QuerySerialization.DeserializeQuerySerialization(outputSerializationElement);
+            }
+            return new QueryRequest(queryType, expression, inputSerialization, outputSerialization, default);
+        }
+
+        BinaryData IModelSerializable<QueryRequest>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QueryRequest>(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        QueryRequest IModelSerializable<QueryRequest>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QueryRequest>(this, options.Format);
+
+            return DeserializeQueryRequest(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="QueryRequest"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="QueryRequest"/> to convert. </param>
+        public static implicit operator RequestContent(QueryRequest model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="QueryRequest"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator QueryRequest(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeQueryRequest(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

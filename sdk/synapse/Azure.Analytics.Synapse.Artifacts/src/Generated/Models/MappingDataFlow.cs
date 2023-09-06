@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Mapping data flow. </summary>
     public partial class MappingDataFlow : DataFlow
     {
-        /// <summary> Initializes a new instance of MappingDataFlow. </summary>
+        /// <summary> Initializes a new instance of <see cref="MappingDataFlow"/>. </summary>
         public MappingDataFlow()
         {
             Sources = new ChangeTrackingList<DataFlowSource>();
@@ -23,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "MappingDataFlow";
         }
 
-        /// <summary> Initializes a new instance of MappingDataFlow. </summary>
+        /// <summary> Initializes a new instance of <see cref="MappingDataFlow"/>. </summary>
         /// <param name="type"> Type of data flow. </param>
         /// <param name="description"> The description of the data flow. </param>
         /// <param name="annotations"> List of tags that can be used for describing the data flow. </param>
@@ -33,7 +34,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="transformations"> List of transformations in data flow. </param>
         /// <param name="script"> DataFlow script. </param>
         /// <param name="scriptLines"> Data flow script lines. </param>
-        internal MappingDataFlow(string type, string description, IList<object> annotations, DataFlowFolder folder, IList<DataFlowSource> sources, IList<DataFlowSink> sinks, IList<Transformation> transformations, string script, IList<string> scriptLines) : base(type, description, annotations, folder)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MappingDataFlow(string type, string description, IList<object> annotations, DataFlowFolder folder, IList<DataFlowSource> sources, IList<DataFlowSink> sinks, IList<Transformation> transformations, string script, IList<string> scriptLines, Dictionary<string, BinaryData> rawData) : base(type, description, annotations, folder, rawData)
         {
             Sources = sources;
             Sinks = sinks;

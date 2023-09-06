@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -15,14 +17,18 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// Please note <see cref="StreamingJobInputProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ReferenceInputProperties"/> and <see cref="StreamInputProperties"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownInputProperties))]
     public abstract partial class StreamingJobInputProperties
     {
-        /// <summary> Initializes a new instance of StreamingJobInputProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingJobInputProperties"/>. </summary>
         protected StreamingJobInputProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingJobInputProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobInputProperties"/>. </summary>
         /// <param name="inputPropertiesType"> Indicates whether the input is a source of reference data or stream data. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="serialization">
         /// Describes how data from an input is serialized or how data is serialized when written to an output. Required on PUT (CreateOrReplace) requests.
@@ -34,7 +40,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="compression"> Describes how input data is compressed. </param>
         /// <param name="partitionKey"> partitionKey Describes a key in the input data which is used for partitioning the input data. </param>
         /// <param name="watermarkSettings"> Settings which determine whether to read watermark events. </param>
-        internal StreamingJobInputProperties(string inputPropertiesType, StreamAnalyticsDataSerialization serialization, StreamingJobDiagnostics diagnostics, ETag? etag, StreamingCompression compression, string partitionKey, StreamingJobInputWatermarkProperties watermarkSettings)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingJobInputProperties(string inputPropertiesType, StreamAnalyticsDataSerialization serialization, StreamingJobDiagnostics diagnostics, ETag? etag, StreamingCompression compression, string partitionKey, StreamingJobInputWatermarkProperties watermarkSettings, Dictionary<string, BinaryData> rawData)
         {
             InputPropertiesType = inputPropertiesType;
             Serialization = serialization;
@@ -43,6 +50,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Compression = compression;
             PartitionKey = partitionKey;
             WatermarkSettings = watermarkSettings;
+            _rawData = rawData;
         }
 
         /// <summary> Indicates whether the input is a source of reference data or stream data. Required on PUT (CreateOrReplace) requests. </summary>

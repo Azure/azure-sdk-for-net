@@ -9,15 +9,79 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DataFlowDebugSessionInfoConverter))]
-    public partial class DataFlowDebugSessionInfo
+    public partial class DataFlowDebugSessionInfo : IUtf8JsonSerializable, IModelJsonSerializable<DataFlowDebugSessionInfo>
     {
-        internal static DataFlowDebugSessionInfo DeserializeDataFlowDebugSessionInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataFlowDebugSessionInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataFlowDebugSessionInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataFlowDebugSessionInfo>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DataFlowName))
+            {
+                writer.WritePropertyName("dataFlowName"u8);
+                writer.WriteStringValue(DataFlowName);
+            }
+            if (Optional.IsDefined(ComputeType))
+            {
+                writer.WritePropertyName("computeType"u8);
+                writer.WriteStringValue(ComputeType);
+            }
+            if (Optional.IsDefined(CoreCount))
+            {
+                writer.WritePropertyName("coreCount"u8);
+                writer.WriteNumberValue(CoreCount.Value);
+            }
+            if (Optional.IsDefined(NodeCount))
+            {
+                writer.WritePropertyName("nodeCount"u8);
+                writer.WriteNumberValue(NodeCount.Value);
+            }
+            if (Optional.IsDefined(IntegrationRuntimeName))
+            {
+                writer.WritePropertyName("integrationRuntimeName"u8);
+                writer.WriteStringValue(IntegrationRuntimeName);
+            }
+            if (Optional.IsDefined(SessionId))
+            {
+                writer.WritePropertyName("sessionId"u8);
+                writer.WriteStringValue(SessionId);
+            }
+            if (Optional.IsDefined(StartTime))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartTime);
+            }
+            if (Optional.IsDefined(TimeToLiveInMinutes))
+            {
+                writer.WritePropertyName("timeToLiveInMinutes"u8);
+                writer.WriteNumberValue(TimeToLiveInMinutes.Value);
+            }
+            if (Optional.IsDefined(LastActivityTime))
+            {
+                writer.WritePropertyName("lastActivityTime"u8);
+                writer.WriteStringValue(LastActivityTime);
+            }
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value);
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DataFlowDebugSessionInfo DeserializeDataFlowDebugSessionInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -98,11 +162,59 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new DataFlowDebugSessionInfo(dataFlowName.Value, computeType.Value, Optional.ToNullable(coreCount), Optional.ToNullable(nodeCount), integrationRuntimeName.Value, sessionId.Value, startTime.Value, Optional.ToNullable(timeToLiveInMinutes), lastActivityTime.Value, additionalProperties);
         }
 
+        DataFlowDebugSessionInfo IModelJsonSerializable<DataFlowDebugSessionInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataFlowDebugSessionInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFlowDebugSessionInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataFlowDebugSessionInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataFlowDebugSessionInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataFlowDebugSessionInfo IModelSerializable<DataFlowDebugSessionInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataFlowDebugSessionInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataFlowDebugSessionInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataFlowDebugSessionInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataFlowDebugSessionInfo"/> to convert. </param>
+        public static implicit operator RequestContent(DataFlowDebugSessionInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataFlowDebugSessionInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataFlowDebugSessionInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataFlowDebugSessionInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
+
         internal partial class DataFlowDebugSessionInfoConverter : JsonConverter<DataFlowDebugSessionInfo>
         {
             public override void Write(Utf8JsonWriter writer, DataFlowDebugSessionInfo model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override DataFlowDebugSessionInfo Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

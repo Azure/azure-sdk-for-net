@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Error definition. </summary>
     public partial class SapVirtualInstanceErrorDetail
     {
-        /// <summary> Initializes a new instance of SapVirtualInstanceErrorDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapVirtualInstanceErrorDetail"/>. </summary>
         internal SapVirtualInstanceErrorDetail()
         {
             Details = new ChangeTrackingList<SapVirtualInstanceErrorDetail>();
         }
 
-        /// <summary> Initializes a new instance of SapVirtualInstanceErrorDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapVirtualInstanceErrorDetail"/>. </summary>
         /// <param name="code"> Service specific error code which serves as the substatus for the HTTP error code. </param>
         /// <param name="message"> Description of the error. </param>
         /// <param name="details"> Internal error details. </param>
-        internal SapVirtualInstanceErrorDetail(string code, string message, IReadOnlyList<SapVirtualInstanceErrorDetail> details)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapVirtualInstanceErrorDetail(string code, string message, IReadOnlyList<SapVirtualInstanceErrorDetail> details, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Message = message;
             Details = details;
+            _rawData = rawData;
         }
 
         /// <summary> Service specific error code which serves as the substatus for the HTTP error code. </summary>

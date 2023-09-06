@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(RecurrenceScheduleConverter))]
-    public partial class RecurrenceSchedule : IUtf8JsonSerializable
+    public partial class RecurrenceSchedule : IUtf8JsonSerializable, IModelJsonSerializable<RecurrenceSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RecurrenceSchedule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RecurrenceSchedule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RecurrenceSchedule>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Minutes))
             {
@@ -65,7 +71,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in MonthlyOccurrences)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<RecurrenceScheduleOccurrence>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -77,8 +90,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static RecurrenceSchedule DeserializeRecurrenceSchedule(JsonElement element)
+        internal static RecurrenceSchedule DeserializeRecurrenceSchedule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -166,6 +181,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new RecurrenceSchedule(Optional.ToList(minutes), Optional.ToList(hours), Optional.ToList(weekDays), Optional.ToList(monthDays), Optional.ToList(monthlyOccurrences), additionalProperties);
+        }
+
+        RecurrenceSchedule IModelJsonSerializable<RecurrenceSchedule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RecurrenceSchedule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecurrenceSchedule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RecurrenceSchedule>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RecurrenceSchedule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RecurrenceSchedule IModelSerializable<RecurrenceSchedule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RecurrenceSchedule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRecurrenceSchedule(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RecurrenceSchedule"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RecurrenceSchedule"/> to convert. </param>
+        public static implicit operator RequestContent(RecurrenceSchedule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RecurrenceSchedule"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RecurrenceSchedule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRecurrenceSchedule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class RecurrenceScheduleConverter : JsonConverter<RecurrenceSchedule>

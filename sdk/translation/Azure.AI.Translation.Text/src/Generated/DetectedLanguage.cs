@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Text
@@ -13,6 +14,9 @@ namespace Azure.AI.Translation.Text
     /// <summary> An object describing the detected language. </summary>
     public partial class DetectedLanguage
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of DetectedLanguage. </summary>
         /// <param name="language"> A string representing the code of the detected language. </param>
         /// <param name="score">
@@ -26,6 +30,25 @@ namespace Azure.AI.Translation.Text
 
             Language = language;
             Score = score;
+        }
+
+        /// <summary> Initializes a new instance of DetectedLanguage. </summary>
+        /// <param name="language"> A string representing the code of the detected language. </param>
+        /// <param name="score">
+        /// A float value indicating the confidence in the result.
+        /// The score is between zero and one and a low score indicates a low confidence.
+        /// </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DetectedLanguage(string language, float score, Dictionary<string, BinaryData> rawData)
+        {
+            Language = language;
+            Score = score;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DetectedLanguage"/> for deserialization. </summary>
+        internal DetectedLanguage()
+        {
         }
 
         /// <summary> A string representing the code of the detected language. </summary>

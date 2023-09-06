@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Synapse;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The response to a list recoverable sql pools request. </summary>
     internal partial class SynapseRecoverableSqlPoolListResult
     {
-        /// <summary> Initializes a new instance of SynapseRecoverableSqlPoolListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseRecoverableSqlPoolListResult"/>. </summary>
         internal SynapseRecoverableSqlPoolListResult()
         {
             Value = new ChangeTrackingList<SynapseRecoverableSqlPoolData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseRecoverableSqlPoolListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseRecoverableSqlPoolListResult"/>. </summary>
         /// <param name="value"> A list of recoverable sql pool. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal SynapseRecoverableSqlPoolListResult(IReadOnlyList<SynapseRecoverableSqlPoolData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseRecoverableSqlPoolListResult(IReadOnlyList<SynapseRecoverableSqlPoolData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> A list of recoverable sql pool. </summary>

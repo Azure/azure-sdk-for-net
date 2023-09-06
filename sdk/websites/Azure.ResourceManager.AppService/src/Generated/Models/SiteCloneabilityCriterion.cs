@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> An app cloneability criterion. </summary>
     public partial class SiteCloneabilityCriterion
     {
-        /// <summary> Initializes a new instance of SiteCloneabilityCriterion. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteCloneabilityCriterion"/>. </summary>
         internal SiteCloneabilityCriterion()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteCloneabilityCriterion. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteCloneabilityCriterion"/>. </summary>
         /// <param name="name"> Name of criterion. </param>
         /// <param name="description"> Description of criterion. </param>
-        internal SiteCloneabilityCriterion(string name, string description)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteCloneabilityCriterion(string name, string description, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Description = description;
+            _rawData = rawData;
         }
 
         /// <summary> Name of criterion. </summary>

@@ -5,15 +5,72 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServicePoolSkuInfo
+    public partial class AppServicePoolSkuInfo : IUtf8JsonSerializable, IModelJsonSerializable<AppServicePoolSkuInfo>
     {
-        internal static AppServicePoolSkuInfo DeserializeAppServicePoolSkuInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppServicePoolSkuInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppServicePoolSkuInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AppServicePoolSkuInfo>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(ResourceType.Value);
+            }
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AppServiceSkuDescription>)Sku).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(Capacity))
+            {
+                writer.WritePropertyName("capacity"u8);
+                if (Capacity is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AppServiceSkuCapacity>)Capacity).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AppServicePoolSkuInfo DeserializeAppServicePoolSkuInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<ResourceType> resourceType = default;
             Optional<AppServiceSkuDescription> sku = default;
             Optional<AppServiceSkuCapacity> capacity = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -50,8 +108,61 @@ namespace Azure.ResourceManager.AppService.Models
                     capacity = AppServiceSkuCapacity.DeserializeAppServiceSkuCapacity(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppServicePoolSkuInfo(Optional.ToNullable(resourceType), sku.Value, capacity.Value);
+            return new AppServicePoolSkuInfo(Optional.ToNullable(resourceType), sku.Value, capacity.Value, rawData);
+        }
+
+        AppServicePoolSkuInfo IModelJsonSerializable<AppServicePoolSkuInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServicePoolSkuInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServicePoolSkuInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppServicePoolSkuInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServicePoolSkuInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppServicePoolSkuInfo IModelSerializable<AppServicePoolSkuInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServicePoolSkuInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppServicePoolSkuInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppServicePoolSkuInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppServicePoolSkuInfo"/> to convert. </param>
+        public static implicit operator RequestContent(AppServicePoolSkuInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppServicePoolSkuInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppServicePoolSkuInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppServicePoolSkuInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

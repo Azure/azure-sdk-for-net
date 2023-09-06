@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The LinkTableRequestTargetDistributionOptions. </summary>
     public partial class LinkTableRequestTargetDistributionOptions
     {
-        /// <summary> Initializes a new instance of LinkTableRequestTargetDistributionOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkTableRequestTargetDistributionOptions"/>. </summary>
         public LinkTableRequestTargetDistributionOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkTableRequestTargetDistributionOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkTableRequestTargetDistributionOptions"/>. </summary>
         /// <param name="type"> Target table distribution type. </param>
         /// <param name="distributionColumn"> Target table distribution column. </param>
-        internal LinkTableRequestTargetDistributionOptions(string type, string distributionColumn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkTableRequestTargetDistributionOptions(string type, string distributionColumn, Dictionary<string, BinaryData> rawData)
         {
             Type = type;
             DistributionColumn = distributionColumn;
+            _rawData = rawData;
         }
 
         /// <summary> Target table distribution type. </summary>

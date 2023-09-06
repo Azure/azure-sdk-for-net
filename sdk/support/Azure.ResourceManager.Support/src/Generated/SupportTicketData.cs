@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Support.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.Support
     /// </summary>
     public partial class SupportTicketData : ResourceData
     {
-        /// <summary> Initializes a new instance of SupportTicketData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SupportTicketData"/>. </summary>
         public SupportTicketData()
         {
         }
 
-        /// <summary> Initializes a new instance of SupportTicketData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportTicketData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -48,7 +52,8 @@ namespace Azure.ResourceManager.Support
         /// <param name="modifiedOn"> Time in UTC (ISO 8601 format) when the support ticket was last modified. </param>
         /// <param name="technicalTicketDetails"> Additional ticket details associated with a technical support ticket request. </param>
         /// <param name="quotaTicketDetails"> Additional ticket details associated with a quota support ticket request. </param>
-        internal SupportTicketData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string supportTicketId, string description, string problemClassificationId, string problemClassificationDisplayName, SupportSeverityLevel? severity, string enrollmentId, bool? require24X7Response, SupportContactProfile contactDetails, SupportServiceLevelAgreement serviceLevelAgreement, SupportEngineer supportEngineer, string supportPlanType, string title, DateTimeOffset? problemStartOn, string serviceId, string serviceDisplayName, string status, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, TechnicalTicketDetails technicalTicketDetails, QuotaTicketDetails quotaTicketDetails) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SupportTicketData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string supportTicketId, string description, string problemClassificationId, string problemClassificationDisplayName, SupportSeverityLevel? severity, string enrollmentId, bool? require24X7Response, SupportContactProfile contactDetails, SupportServiceLevelAgreement serviceLevelAgreement, SupportEngineer supportEngineer, string supportPlanType, string title, DateTimeOffset? problemStartOn, string serviceId, string serviceDisplayName, string status, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, TechnicalTicketDetails technicalTicketDetails, QuotaTicketDetails quotaTicketDetails, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             SupportTicketId = supportTicketId;
             Description = description;
@@ -70,6 +75,7 @@ namespace Azure.ResourceManager.Support
             ModifiedOn = modifiedOn;
             TechnicalTicketDetails = technicalTicketDetails;
             QuotaTicketDetails = quotaTicketDetails;
+            _rawData = rawData;
         }
 
         /// <summary> System generated support ticket Id that is unique. </summary>

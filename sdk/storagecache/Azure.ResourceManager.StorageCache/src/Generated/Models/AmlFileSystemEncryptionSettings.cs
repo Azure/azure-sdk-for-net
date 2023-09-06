@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> AML file system encryption settings. </summary>
     internal partial class AmlFileSystemEncryptionSettings
     {
-        /// <summary> Initializes a new instance of AmlFileSystemEncryptionSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemEncryptionSettings"/>. </summary>
         public AmlFileSystemEncryptionSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of AmlFileSystemEncryptionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemEncryptionSettings"/>. </summary>
         /// <param name="keyEncryptionKey"> Specifies the location of the encryption key in Key Vault. </param>
-        internal AmlFileSystemEncryptionSettings(StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AmlFileSystemEncryptionSettings(StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey, Dictionary<string, BinaryData> rawData)
         {
             KeyEncryptionKey = keyEncryptionKey;
+            _rawData = rawData;
         }
 
         /// <summary> Specifies the location of the encryption key in Key Vault. </summary>

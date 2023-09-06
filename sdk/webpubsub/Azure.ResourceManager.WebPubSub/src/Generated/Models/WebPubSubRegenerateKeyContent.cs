@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Parameters describes the request to regenerate access keys. </summary>
     public partial class WebPubSubRegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of WebPubSubRegenerateKeyContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebPubSubRegenerateKeyContent"/>. </summary>
         public WebPubSubRegenerateKeyContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebPubSubRegenerateKeyContent"/>. </summary>
+        /// <param name="keyType"> The type of access key. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebPubSubRegenerateKeyContent(WebPubSubKeyType? keyType, Dictionary<string, BinaryData> rawData)
+        {
+            KeyType = keyType;
+            _rawData = rawData;
         }
 
         /// <summary> The type of access key. </summary>

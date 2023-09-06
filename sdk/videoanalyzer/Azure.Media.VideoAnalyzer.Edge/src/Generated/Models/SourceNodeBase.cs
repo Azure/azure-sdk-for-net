@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -15,9 +17,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// Please note <see cref="SourceNodeBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="IotHubMessageSource"/> and <see cref="RtspSource"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownSourceNodeBase))]
     public abstract partial class SourceNodeBase
     {
-        /// <summary> Initializes a new instance of SourceNodeBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SourceNodeBase"/>. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         protected SourceNodeBase(string name)
@@ -27,13 +33,20 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of SourceNodeBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceNodeBase"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
-        internal SourceNodeBase(string type, string name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SourceNodeBase(string type, string name, Dictionary<string, BinaryData> rawData)
         {
             Type = type;
             Name = name;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SourceNodeBase"/> for deserialization. </summary>
+        internal SourceNodeBase()
+        {
         }
 
         /// <summary> Type discriminator for the derived types. </summary>

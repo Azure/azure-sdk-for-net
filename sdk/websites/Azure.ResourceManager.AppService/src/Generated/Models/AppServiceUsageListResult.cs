@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of usages. </summary>
     internal partial class AppServiceUsageListResult
     {
-        /// <summary> Initializes a new instance of AppServiceUsageListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceUsageListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AppServiceUsageListResult(IEnumerable<AppServiceUsage> value)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AppServiceUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceUsageListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal AppServiceUsageListResult(IReadOnlyList<AppServiceUsage> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceUsageListResult(IReadOnlyList<AppServiceUsage> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceUsageListResult"/> for deserialization. </summary>
+        internal AppServiceUsageListResult()
+        {
         }
 
         /// <summary> Collection of resources. </summary>

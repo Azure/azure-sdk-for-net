@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class ServerEndpointFilesNotSyncingError
+    public partial class ServerEndpointFilesNotSyncingError : IUtf8JsonSerializable, IModelJsonSerializable<ServerEndpointFilesNotSyncingError>
     {
-        internal static ServerEndpointFilesNotSyncingError DeserializeServerEndpointFilesNotSyncingError(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServerEndpointFilesNotSyncingError>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServerEndpointFilesNotSyncingError>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ServerEndpointFilesNotSyncingError>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ServerEndpointFilesNotSyncingError DeserializeServerEndpointFilesNotSyncingError(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +49,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             Optional<int> errorCode = default;
             Optional<long> persistentCount = default;
             Optional<long> transientCount = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorCode"u8))
@@ -50,8 +79,61 @@ namespace Azure.ResourceManager.StorageSync.Models
                     transientCount = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServerEndpointFilesNotSyncingError(Optional.ToNullable(errorCode), Optional.ToNullable(persistentCount), Optional.ToNullable(transientCount));
+            return new ServerEndpointFilesNotSyncingError(Optional.ToNullable(errorCode), Optional.ToNullable(persistentCount), Optional.ToNullable(transientCount), rawData);
+        }
+
+        ServerEndpointFilesNotSyncingError IModelJsonSerializable<ServerEndpointFilesNotSyncingError>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServerEndpointFilesNotSyncingError>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServerEndpointFilesNotSyncingError(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServerEndpointFilesNotSyncingError>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServerEndpointFilesNotSyncingError>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServerEndpointFilesNotSyncingError IModelSerializable<ServerEndpointFilesNotSyncingError>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServerEndpointFilesNotSyncingError>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServerEndpointFilesNotSyncingError(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ServerEndpointFilesNotSyncingError"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ServerEndpointFilesNotSyncingError"/> to convert. </param>
+        public static implicit operator RequestContent(ServerEndpointFilesNotSyncingError model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ServerEndpointFilesNotSyncingError"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ServerEndpointFilesNotSyncingError(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServerEndpointFilesNotSyncingError(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

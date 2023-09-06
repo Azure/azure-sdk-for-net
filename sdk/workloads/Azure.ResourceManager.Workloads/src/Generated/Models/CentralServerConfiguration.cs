@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Gets or sets the central server configuration. </summary>
     public partial class CentralServerConfiguration
     {
-        /// <summary> Initializes a new instance of CentralServerConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CentralServerConfiguration"/>. </summary>
         /// <param name="subnetId"> The subnet id. </param>
         /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
         /// <param name="instanceCount"> The number of central server VMs. </param>
@@ -26,6 +30,24 @@ namespace Azure.ResourceManager.Workloads.Models
             SubnetId = subnetId;
             VirtualMachineConfiguration = virtualMachineConfiguration;
             InstanceCount = instanceCount;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CentralServerConfiguration"/>. </summary>
+        /// <param name="subnetId"> The subnet id. </param>
+        /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
+        /// <param name="instanceCount"> The number of central server VMs. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CentralServerConfiguration(ResourceIdentifier subnetId, SapVirtualMachineConfiguration virtualMachineConfiguration, long instanceCount, Dictionary<string, BinaryData> rawData)
+        {
+            SubnetId = subnetId;
+            VirtualMachineConfiguration = virtualMachineConfiguration;
+            InstanceCount = instanceCount;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CentralServerConfiguration"/> for deserialization. </summary>
+        internal CentralServerConfiguration()
+        {
         }
 
         /// <summary> The subnet id. </summary>

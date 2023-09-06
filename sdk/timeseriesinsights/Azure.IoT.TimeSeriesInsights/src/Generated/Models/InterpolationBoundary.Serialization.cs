@@ -6,31 +6,53 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class InterpolationBoundary : IUtf8JsonSerializable
+    public partial class InterpolationBoundary : IUtf8JsonSerializable, IModelJsonSerializable<InterpolationBoundary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InterpolationBoundary>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InterpolationBoundary>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<InterpolationBoundary>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Span))
             {
                 writer.WritePropertyName("span"u8);
                 writer.WriteStringValue(Span.Value, "P");
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static InterpolationBoundary DeserializeInterpolationBoundary(JsonElement element)
+        internal static InterpolationBoundary DeserializeInterpolationBoundary(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<TimeSpan> span = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("span"u8))
@@ -42,8 +64,61 @@ namespace Azure.IoT.TimeSeriesInsights
                     span = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InterpolationBoundary(Optional.ToNullable(span));
+            return new InterpolationBoundary(Optional.ToNullable(span), rawData);
+        }
+
+        InterpolationBoundary IModelJsonSerializable<InterpolationBoundary>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InterpolationBoundary>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInterpolationBoundary(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InterpolationBoundary>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InterpolationBoundary>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InterpolationBoundary IModelSerializable<InterpolationBoundary>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InterpolationBoundary>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInterpolationBoundary(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InterpolationBoundary"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InterpolationBoundary"/> to convert. </param>
+        public static implicit operator RequestContent(InterpolationBoundary model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InterpolationBoundary"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InterpolationBoundary(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInterpolationBoundary(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

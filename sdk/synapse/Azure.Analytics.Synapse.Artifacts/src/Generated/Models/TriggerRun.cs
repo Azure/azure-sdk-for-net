@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Trigger runs. </summary>
     public partial class TriggerRun
     {
-        /// <summary> Initializes a new instance of TriggerRun. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerRun"/>. </summary>
         internal TriggerRun()
         {
             Properties = new ChangeTrackingDictionary<string, string>();
@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of TriggerRun. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerRun"/>. </summary>
         /// <param name="triggerRunId"> Trigger run id. </param>
         /// <param name="triggerName"> Trigger name. </param>
         /// <param name="triggerType"> Trigger type. </param>

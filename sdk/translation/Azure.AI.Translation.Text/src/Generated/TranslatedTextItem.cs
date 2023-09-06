@@ -15,6 +15,9 @@ namespace Azure.AI.Translation.Text
     /// <summary> Element containing the translated text. </summary>
     public partial class TranslatedTextItem
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of TranslatedTextItem. </summary>
         /// <param name="translations">
         /// An array of translation results. The size of the array matches the number of target
@@ -40,11 +43,18 @@ namespace Azure.AI.Translation.Text
         /// if the input were Arabic written in Latin script, then sourceText.text would be the same Arabic text
         /// converted into Arab script.
         /// </param>
-        internal TranslatedTextItem(DetectedLanguage detectedLanguage, IReadOnlyList<Translation> translations, SourceText sourceText)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TranslatedTextItem(DetectedLanguage detectedLanguage, IReadOnlyList<Translation> translations, SourceText sourceText, Dictionary<string, BinaryData> rawData)
         {
             DetectedLanguage = detectedLanguage;
             Translations = translations;
             SourceText = sourceText;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TranslatedTextItem"/> for deserialization. </summary>
+        internal TranslatedTextItem()
+        {
         }
 
         /// <summary> The detectedLanguage property is only present in the result object when language auto-detection is requested. </summary>

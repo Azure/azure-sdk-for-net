@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
@@ -12,18 +14,19 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Describes the current quota for the subscription. </summary>
     public partial class StreamAnalyticsSubscriptionQuota : StreamAnalyticsSubResource
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsSubscriptionQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsSubscriptionQuota"/>. </summary>
         public StreamAnalyticsSubscriptionQuota()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsSubscriptionQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsSubscriptionQuota"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="maxCount"> The max permitted usage of this resource. </param>
         /// <param name="currentCount"> The current usage of this resource. </param>
-        internal StreamAnalyticsSubscriptionQuota(ResourceIdentifier id, string name, ResourceType? resourceType, int? maxCount, int? currentCount) : base(id, name, resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamAnalyticsSubscriptionQuota(ResourceIdentifier id, string name, ResourceType? resourceType, int? maxCount, int? currentCount, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, rawData)
         {
             MaxCount = maxCount;
             CurrentCount = currentCount;

@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteDetectorDiagnosticsRestClient.CreateListSiteDetectorResponsesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteDetectorDiagnosticsRestClient.CreateListSiteDetectorResponsesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _siteDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SiteDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _siteDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteDetectorDiagnosticsRestClient.CreateListSiteDetectorResponsesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteDetectorDiagnosticsRestClient.CreateListSiteDetectorResponsesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _siteDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SiteDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _siteDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

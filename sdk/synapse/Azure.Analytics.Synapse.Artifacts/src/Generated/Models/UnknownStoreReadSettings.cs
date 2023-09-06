@@ -12,13 +12,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The UnknownStoreReadSettings. </summary>
     internal partial class UnknownStoreReadSettings : StoreReadSettings
     {
-        /// <summary> Initializes a new instance of UnknownStoreReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownStoreReadSettings"/>. </summary>
         /// <param name="type"> The read setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal UnknownStoreReadSettings(string type, object maxConcurrentConnections, IDictionary<string, object> additionalProperties) : base(type, maxConcurrentConnections, additionalProperties)
         {
             Type = type ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownStoreReadSettings"/> for deserialization. </summary>
+        internal UnknownStoreReadSettings()
+        {
         }
     }
 }
