@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Resource name provided by the resource provider. Use this property for quotaRequest parameter. </summary>
     public partial class ReservationResourceName
     {
-        /// <summary> Initializes a new instance of ReservationResourceName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationResourceName"/>. </summary>
         public ReservationResourceName()
         {
         }
 
-        /// <summary> Initializes a new instance of ReservationResourceName. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationResourceName"/>. </summary>
         /// <param name="value"> Resource name. </param>
         /// <param name="localizedValue"> Resource display localized name. </param>
-        internal ReservationResourceName(string value, string localizedValue)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationResourceName(string value, string localizedValue, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             LocalizedValue = localizedValue;
+            _rawData = rawData;
         }
 
         /// <summary> Resource name. </summary>

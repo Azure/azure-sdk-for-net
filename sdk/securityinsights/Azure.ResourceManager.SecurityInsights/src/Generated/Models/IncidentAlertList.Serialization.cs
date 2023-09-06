@@ -5,21 +5,63 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    internal partial class IncidentAlertList
+    internal partial class IncidentAlertList : IUtf8JsonSerializable, IModelJsonSerializable<IncidentAlertList>
     {
-        internal static IncidentAlertList DeserializeIncidentAlertList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IncidentAlertList>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IncidentAlertList>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IncidentAlertList>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SecurityInsightsAlert>)item).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static IncidentAlertList DeserializeIncidentAlertList(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<SecurityInsightsAlert> value = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -32,8 +74,61 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     value = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IncidentAlertList(value);
+            return new IncidentAlertList(value, rawData);
+        }
+
+        IncidentAlertList IModelJsonSerializable<IncidentAlertList>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IncidentAlertList>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIncidentAlertList(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IncidentAlertList>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IncidentAlertList>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IncidentAlertList IModelSerializable<IncidentAlertList>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IncidentAlertList>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIncidentAlertList(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IncidentAlertList"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IncidentAlertList"/> to convert. </param>
+        public static implicit operator RequestContent(IncidentAlertList model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IncidentAlertList"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IncidentAlertList(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIncidentAlertList(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

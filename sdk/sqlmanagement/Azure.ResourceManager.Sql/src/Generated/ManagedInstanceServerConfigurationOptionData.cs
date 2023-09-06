@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
@@ -17,22 +19,27 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ManagedInstanceServerConfigurationOptionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedInstanceServerConfigurationOptionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceServerConfigurationOptionData"/>. </summary>
         public ManagedInstanceServerConfigurationOptionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceServerConfigurationOptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceServerConfigurationOptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="serverConfigurationOptionValue"> Value of the server configuration option. </param>
         /// <param name="provisioningState"> Provisioning state of server configuration option. </param>
-        internal ManagedInstanceServerConfigurationOptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? serverConfigurationOptionValue, JobExecutionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedInstanceServerConfigurationOptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? serverConfigurationOptionValue, JobExecutionProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ServerConfigurationOptionValue = serverConfigurationOptionValue;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
         }
 
         /// <summary> Value of the server configuration option. </summary>

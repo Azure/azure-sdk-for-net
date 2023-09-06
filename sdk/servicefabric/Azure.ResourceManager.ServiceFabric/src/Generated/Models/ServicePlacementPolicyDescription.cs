@@ -5,21 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> Describes the policy to be used for placement of a Service Fabric service. </summary>
+    [DeserializationProxy(typeof(UnknownServicePlacementPolicyDescription))]
     public abstract partial class ServicePlacementPolicyDescription
     {
-        /// <summary> Initializes a new instance of ServicePlacementPolicyDescription. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServicePlacementPolicyDescription"/>. </summary>
         protected ServicePlacementPolicyDescription()
         {
         }
 
-        /// <summary> Initializes a new instance of ServicePlacementPolicyDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePlacementPolicyDescription"/>. </summary>
         /// <param name="policyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
-        internal ServicePlacementPolicyDescription(ServicePlacementPolicyType policyType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServicePlacementPolicyDescription(ServicePlacementPolicyType policyType, Dictionary<string, BinaryData> rawData)
         {
             PolicyType = policyType;
+            _rawData = rawData;
         }
 
         /// <summary> The type of placement policy for a service fabric service. Following are the possible values. </summary>

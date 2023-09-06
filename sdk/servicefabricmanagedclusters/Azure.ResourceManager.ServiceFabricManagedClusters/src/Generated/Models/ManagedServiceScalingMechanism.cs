@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// Please note <see cref="ManagedServiceScalingMechanism"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="NamedPartitionAddOrRemoveScalingMechanism"/> and <see cref="PartitionInstanceCountScalingMechanism"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownScalingMechanism))]
     public abstract partial class ManagedServiceScalingMechanism
     {
-        /// <summary> Initializes a new instance of ManagedServiceScalingMechanism. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceScalingMechanism"/>. </summary>
         protected ManagedServiceScalingMechanism()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedServiceScalingMechanism. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceScalingMechanism"/>. </summary>
         /// <param name="kind"> Specifies the mechanism associated with this scaling policy. </param>
-        internal ManagedServiceScalingMechanism(ServiceScalingMechanismKind kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedServiceScalingMechanism(ServiceScalingMechanismKind kind, Dictionary<string, BinaryData> rawData)
         {
             Kind = kind;
+            _rawData = rawData;
         }
 
         /// <summary> Specifies the mechanism associated with this scaling policy. </summary>

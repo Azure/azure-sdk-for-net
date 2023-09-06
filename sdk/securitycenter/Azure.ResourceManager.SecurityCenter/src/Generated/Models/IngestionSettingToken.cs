@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Configures how to correlate scan data and logs with resources associated with the subscription. </summary>
     public partial class IngestionSettingToken
     {
-        /// <summary> Initializes a new instance of IngestionSettingToken. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IngestionSettingToken"/>. </summary>
         internal IngestionSettingToken()
         {
         }
 
-        /// <summary> Initializes a new instance of IngestionSettingToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngestionSettingToken"/>. </summary>
         /// <param name="token"> The token is used for correlating security data and logs with the resources in the subscription. </param>
-        internal IngestionSettingToken(string token)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IngestionSettingToken(string token, Dictionary<string, BinaryData> rawData)
         {
             Token = token;
+            _rawData = rawData;
         }
 
         /// <summary> The token is used for correlating security data and logs with the resources in the subscription. </summary>

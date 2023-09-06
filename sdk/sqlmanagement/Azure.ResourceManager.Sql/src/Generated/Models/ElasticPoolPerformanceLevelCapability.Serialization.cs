@@ -5,16 +5,48 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ElasticPoolPerformanceLevelCapability
+    public partial class ElasticPoolPerformanceLevelCapability : IUtf8JsonSerializable, IModelJsonSerializable<ElasticPoolPerformanceLevelCapability>
     {
-        internal static ElasticPoolPerformanceLevelCapability DeserializeElasticPoolPerformanceLevelCapability(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ElasticPoolPerformanceLevelCapability>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ElasticPoolPerformanceLevelCapability>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ElasticPoolPerformanceLevelCapability>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Reason))
+            {
+                writer.WritePropertyName("reason"u8);
+                writer.WriteStringValue(Reason);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ElasticPoolPerformanceLevelCapability DeserializeElasticPoolPerformanceLevelCapability(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +63,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<IReadOnlyList<MaintenanceConfigurationCapability>> supportedMaintenanceConfigurations = default;
             Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("performanceLevel"u8))
@@ -162,8 +195,61 @@ namespace Azure.ResourceManager.Sql.Models
                     reason = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ElasticPoolPerformanceLevelCapability(performanceLevel.Value, sku.Value, Optional.ToList(supportedLicenseTypes), Optional.ToNullable(maxDatabaseCount), includedMaxSize.Value, Optional.ToList(supportedMaxSizes), Optional.ToList(supportedPerDatabaseMaxSizes), Optional.ToList(supportedPerDatabaseMaxPerformanceLevels), Optional.ToNullable(zoneRedundant), Optional.ToList(supportedMaintenanceConfigurations), Optional.ToNullable(status), reason.Value);
+            return new ElasticPoolPerformanceLevelCapability(performanceLevel.Value, sku.Value, Optional.ToList(supportedLicenseTypes), Optional.ToNullable(maxDatabaseCount), includedMaxSize.Value, Optional.ToList(supportedMaxSizes), Optional.ToList(supportedPerDatabaseMaxSizes), Optional.ToList(supportedPerDatabaseMaxPerformanceLevels), Optional.ToNullable(zoneRedundant), Optional.ToList(supportedMaintenanceConfigurations), Optional.ToNullable(status), reason.Value, rawData);
+        }
+
+        ElasticPoolPerformanceLevelCapability IModelJsonSerializable<ElasticPoolPerformanceLevelCapability>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ElasticPoolPerformanceLevelCapability>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeElasticPoolPerformanceLevelCapability(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ElasticPoolPerformanceLevelCapability>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ElasticPoolPerformanceLevelCapability>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ElasticPoolPerformanceLevelCapability IModelSerializable<ElasticPoolPerformanceLevelCapability>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ElasticPoolPerformanceLevelCapability>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeElasticPoolPerformanceLevelCapability(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ElasticPoolPerformanceLevelCapability"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ElasticPoolPerformanceLevelCapability"/> to convert. </param>
+        public static implicit operator RequestContent(ElasticPoolPerformanceLevelCapability model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ElasticPoolPerformanceLevelCapability"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ElasticPoolPerformanceLevelCapability(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeElasticPoolPerformanceLevelCapability(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

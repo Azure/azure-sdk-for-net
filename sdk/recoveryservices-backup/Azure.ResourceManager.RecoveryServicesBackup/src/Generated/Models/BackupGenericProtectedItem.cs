@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -16,15 +17,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Please note <see cref="BackupGenericProtectedItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="FileshareProtectedItem"/>, <see cref="IaasVmProtectedItem"/>, <see cref="VmWorkloadProtectedItem"/>, <see cref="VmWorkloadSapAseDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDBInstanceProtectedItem"/>, <see cref="VmWorkloadSapHanaDatabaseProtectedItem"/>, <see cref="VmWorkloadSqlDatabaseProtectedItem"/>, <see cref="DpmProtectedItem"/>, <see cref="GenericProtectedItem"/>, <see cref="MabFileFolderProtectedItem"/>, <see cref="IaasClassicComputeVmProtectedItem"/>, <see cref="IaasComputeVmProtectedItem"/> and <see cref="SqlProtectedItem"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownProtectedItem))]
     public abstract partial class BackupGenericProtectedItem
     {
-        /// <summary> Initializes a new instance of BackupGenericProtectedItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupGenericProtectedItem"/>. </summary>
         protected BackupGenericProtectedItem()
         {
             ResourceGuardOperationRequests = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BackupGenericProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupGenericProtectedItem"/>. </summary>
         /// <param name="protectedItemType"> backup item type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>
@@ -43,7 +48,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isArchiveEnabled"> Flag to identify whether datasource is protected in archive. </param>
         /// <param name="policyName"> Name of the policy used for protection. </param>
         /// <param name="softDeleteRetentionPeriod"> Soft delete retention period in days. </param>
-        internal BackupGenericProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriod)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupGenericProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriod, Dictionary<string, BinaryData> rawData)
         {
             ProtectedItemType = protectedItemType;
             BackupManagementType = backupManagementType;
@@ -63,6 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             IsArchiveEnabled = isArchiveEnabled;
             PolicyName = policyName;
             SoftDeleteRetentionPeriod = softDeleteRetentionPeriod;
+            _rawData = rawData;
         }
 
         /// <summary> backup item type. </summary>

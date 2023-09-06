@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Location list operation response. </summary>
     internal partial class LocationListResult
     {
-        /// <summary> Initializes a new instance of LocationListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LocationListResult"/>. </summary>
         internal LocationListResult()
         {
             Value = new ChangeTrackingList<LocationExpanded>();
         }
 
-        /// <summary> Initializes a new instance of LocationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocationListResult"/>. </summary>
         /// <param name="value"> An array of locations. </param>
-        internal LocationListResult(IReadOnlyList<LocationExpanded> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LocationListResult(IReadOnlyList<LocationExpanded> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> An array of locations. </summary>

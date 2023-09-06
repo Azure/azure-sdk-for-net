@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// Please note <see cref="PartitionSchemeDescription"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="NamedPartitionSchemeDescription"/>, <see cref="SingletonPartitionSchemeDescription"/> and <see cref="UniformInt64RangePartitionSchemeDescription"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownPartitionSchemeDescription))]
     public abstract partial class PartitionSchemeDescription
     {
-        /// <summary> Initializes a new instance of PartitionSchemeDescription. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PartitionSchemeDescription"/>. </summary>
         protected PartitionSchemeDescription()
         {
         }
 
-        /// <summary> Initializes a new instance of PartitionSchemeDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartitionSchemeDescription"/>. </summary>
         /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
-        internal PartitionSchemeDescription(ApplicationPartitionScheme partitionScheme)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PartitionSchemeDescription(ApplicationPartitionScheme partitionScheme, Dictionary<string, BinaryData> rawData)
         {
             PartitionScheme = partitionScheme;
+            _rawData = rawData;
         }
 
         /// <summary> Specifies how the service is partitioned. </summary>

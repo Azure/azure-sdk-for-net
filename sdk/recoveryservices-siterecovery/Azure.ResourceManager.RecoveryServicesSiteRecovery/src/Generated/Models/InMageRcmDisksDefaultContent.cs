@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm disk input. </summary>
     public partial class InMageRcmDisksDefaultContent
     {
-        /// <summary> Initializes a new instance of InMageRcmDisksDefaultContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmDisksDefaultContent"/>. </summary>
         /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
         /// <param name="diskType"> The disk type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logStorageAccountId"/> is null. </exception>
@@ -23,6 +27,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
             LogStorageAccountId = logStorageAccountId;
             DiskType = diskType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmDisksDefaultContent"/>. </summary>
+        /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
+        /// <param name="diskType"> The disk type. </param>
+        /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM Id. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageRcmDisksDefaultContent(ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType diskType, ResourceIdentifier diskEncryptionSetId, Dictionary<string, BinaryData> rawData)
+        {
+            LogStorageAccountId = logStorageAccountId;
+            DiskType = diskType;
+            DiskEncryptionSetId = diskEncryptionSetId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmDisksDefaultContent"/> for deserialization. </summary>
+        internal InMageRcmDisksDefaultContent()
+        {
         }
 
         /// <summary> The log storage account ARM Id. </summary>

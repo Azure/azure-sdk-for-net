@@ -8,16 +8,134 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Reservations.Models;
 
 namespace Azure.ResourceManager.Reservations
 {
-    public partial class ReservationOrderData
+    public partial class ReservationOrderData : IUtf8JsonSerializable, IModelJsonSerializable<ReservationOrderData>
     {
-        internal static ReservationOrderData DeserializeReservationOrderData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ReservationOrderData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ReservationOrderData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ReservationOrderData>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteNumberValue(Version.Value);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsDefined(RequestOn))
+            {
+                writer.WritePropertyName("requestDateTime"u8);
+                writer.WriteStringValue(RequestOn.Value, "O");
+            }
+            if (Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdDateTime"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (Optional.IsDefined(ExpireOn))
+            {
+                writer.WritePropertyName("expiryDate"u8);
+                writer.WriteStringValue(ExpireOn.Value, "D");
+            }
+            if (Optional.IsDefined(ReservationExpireOn))
+            {
+                writer.WritePropertyName("expiryDateTime"u8);
+                writer.WriteStringValue(ReservationExpireOn.Value, "O");
+            }
+            if (Optional.IsDefined(BenefitStartOn))
+            {
+                writer.WritePropertyName("benefitStartTime"u8);
+                writer.WriteStringValue(BenefitStartOn.Value, "O");
+            }
+            if (Optional.IsDefined(OriginalQuantity))
+            {
+                writer.WritePropertyName("originalQuantity"u8);
+                writer.WriteNumberValue(OriginalQuantity.Value);
+            }
+            if (Optional.IsDefined(Term))
+            {
+                writer.WritePropertyName("term"u8);
+                writer.WriteStringValue(Term.Value.ToString());
+            }
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (Optional.IsDefined(BillingPlan))
+            {
+                writer.WritePropertyName("billingPlan"u8);
+                writer.WriteStringValue(BillingPlan.Value.ToString());
+            }
+            if (Optional.IsDefined(PlanInformation))
+            {
+                writer.WritePropertyName("planInformation"u8);
+                if (PlanInformation is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ReservationOrderBillingPlanInformation>)PlanInformation).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(Reservations))
+            {
+                writer.WritePropertyName("reservations"u8);
+                writer.WriteStartArray();
+                foreach (var item in Reservations)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ReservationDetailData>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ReviewOn))
+            {
+                writer.WritePropertyName("reviewDateTime"u8);
+                writer.WriteStringValue(ReviewOn.Value, "O");
+            }
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ReservationOrderData DeserializeReservationOrderData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +158,7 @@ namespace Azure.ResourceManager.Reservations
             Optional<ReservationOrderBillingPlanInformation> planInformation = default;
             Optional<IReadOnlyList<ReservationDetailData>> reservations = default;
             Optional<DateTimeOffset> reviewDateTime = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -205,8 +324,61 @@ namespace Azure.ResourceManager.Reservations
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ReservationOrderData(id, name, type, systemData.Value, Optional.ToNullable(etag), displayName.Value, Optional.ToNullable(requestDateTime), Optional.ToNullable(createdDateTime), Optional.ToNullable(expiryDate), Optional.ToNullable(expiryDateTime), Optional.ToNullable(benefitStartTime), Optional.ToNullable(originalQuantity), Optional.ToNullable(term), Optional.ToNullable(provisioningState), Optional.ToNullable(billingPlan), planInformation.Value, Optional.ToList(reservations), Optional.ToNullable(reviewDateTime));
+            return new ReservationOrderData(id, name, type, systemData.Value, Optional.ToNullable(etag), displayName.Value, Optional.ToNullable(requestDateTime), Optional.ToNullable(createdDateTime), Optional.ToNullable(expiryDate), Optional.ToNullable(expiryDateTime), Optional.ToNullable(benefitStartTime), Optional.ToNullable(originalQuantity), Optional.ToNullable(term), Optional.ToNullable(provisioningState), Optional.ToNullable(billingPlan), planInformation.Value, Optional.ToList(reservations), Optional.ToNullable(reviewDateTime), rawData);
+        }
+
+        ReservationOrderData IModelJsonSerializable<ReservationOrderData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReservationOrderData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeReservationOrderData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ReservationOrderData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReservationOrderData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ReservationOrderData IModelSerializable<ReservationOrderData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReservationOrderData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeReservationOrderData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ReservationOrderData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ReservationOrderData"/> to convert. </param>
+        public static implicit operator RequestContent(ReservationOrderData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ReservationOrderData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ReservationOrderData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeReservationOrderData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

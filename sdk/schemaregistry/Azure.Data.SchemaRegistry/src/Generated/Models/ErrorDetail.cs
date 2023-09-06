@@ -14,7 +14,10 @@ namespace Azure.Data.SchemaRegistry.Models
     /// <summary> Error response returned from Azure Schema Registry service. </summary>
     internal partial class ErrorDetail
     {
-        /// <summary> Initializes a new instance of ErrorDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ErrorDetail"/>. </summary>
         /// <param name="code"> Server-defined error code. </param>
         /// <param name="message"> Brief description of error. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
@@ -28,15 +31,22 @@ namespace Azure.Data.SchemaRegistry.Models
             Details = new ChangeTrackingList<ErrorDetail>();
         }
 
-        /// <summary> Initializes a new instance of ErrorDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorDetail"/>. </summary>
         /// <param name="code"> Server-defined error code. </param>
         /// <param name="message"> Brief description of error. </param>
         /// <param name="details"> Error message details to help user understand/debug failure. </param>
-        internal ErrorDetail(string code, string message, IReadOnlyList<ErrorDetail> details)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ErrorDetail(string code, string message, IReadOnlyList<ErrorDetail> details, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Message = message;
             Details = details;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ErrorDetail"/> for deserialization. </summary>
+        internal ErrorDetail()
+        {
         }
 
         /// <summary> Server-defined error code. </summary>

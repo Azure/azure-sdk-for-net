@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class EdgeNGramTokenizer : IUtf8JsonSerializable
+    public partial class EdgeNGramTokenizer : IUtf8JsonSerializable, IModelJsonSerializable<EdgeNGramTokenizer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EdgeNGramTokenizer>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EdgeNGramTokenizer>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeNGramTokenizer>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MinGram))
             {
@@ -40,11 +47,25 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(ODataType);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EdgeNGramTokenizer DeserializeEdgeNGramTokenizer(JsonElement element)
+        internal static EdgeNGramTokenizer DeserializeEdgeNGramTokenizer(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +75,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<IList<TokenCharacterKind>> tokenChars = default;
             string odataType = default;
             string name = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minGram"u8))
@@ -98,8 +120,61 @@ namespace Azure.Search.Documents.Indexes.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EdgeNGramTokenizer(odataType, name, Optional.ToNullable(minGram), Optional.ToNullable(maxGram), Optional.ToList(tokenChars));
+            return new EdgeNGramTokenizer(odataType, name, Optional.ToNullable(minGram), Optional.ToNullable(maxGram), Optional.ToList(tokenChars), rawData);
+        }
+
+        EdgeNGramTokenizer IModelJsonSerializable<EdgeNGramTokenizer>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeNGramTokenizer>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeNGramTokenizer(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EdgeNGramTokenizer>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeNGramTokenizer>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EdgeNGramTokenizer IModelSerializable<EdgeNGramTokenizer>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeNGramTokenizer>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEdgeNGramTokenizer(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EdgeNGramTokenizer"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EdgeNGramTokenizer"/> to convert. </param>
+        public static implicit operator RequestContent(EdgeNGramTokenizer model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EdgeNGramTokenizer"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EdgeNGramTokenizer(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEdgeNGramTokenizer(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
@@ -12,20 +16,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Please note <see cref="SecurityCenterCloudOffering"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="CspmMonitorAwsOffering"/>, <see cref="CspmMonitorAzureDevOpsOffering"/>, <see cref="CspmMonitorGcpOffering"/>, <see cref="CspmMonitorGithubOffering"/>, <see cref="DefenderCspmAwsOffering"/>, <see cref="DefenderCspmGcpOffering"/>, <see cref="DefenderForContainersAwsOffering"/>, <see cref="DefenderForContainersGcpOffering"/>, <see cref="DefenderForDatabasesAwsOffering"/>, <see cref="DefenderForDatabasesGcpOffering"/>, <see cref="DefenderForDevOpsAzureDevOpsOffering"/>, <see cref="DefenderForDevOpsGithubOffering"/>, <see cref="DefenderForServersAwsOffering"/>, <see cref="DefenderForServersGcpOffering"/> and <see cref="InformationProtectionAwsOffering"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownCloudOffering))]
     public abstract partial class SecurityCenterCloudOffering
     {
-        /// <summary> Initializes a new instance of SecurityCenterCloudOffering. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterCloudOffering"/>. </summary>
         protected SecurityCenterCloudOffering()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityCenterCloudOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterCloudOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
-        internal SecurityCenterCloudOffering(OfferingType offeringType, string description)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityCenterCloudOffering(OfferingType offeringType, string description, Dictionary<string, BinaryData> rawData)
         {
             OfferingType = offeringType;
             Description = description;
+            _rawData = rawData;
         }
 
         /// <summary> The type of the security offering. </summary>

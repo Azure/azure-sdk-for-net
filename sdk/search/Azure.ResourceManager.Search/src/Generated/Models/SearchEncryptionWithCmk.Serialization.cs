@@ -5,32 +5,55 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class SearchEncryptionWithCmk : IUtf8JsonSerializable
+    public partial class SearchEncryptionWithCmk : IUtf8JsonSerializable, IModelJsonSerializable<SearchEncryptionWithCmk>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SearchEncryptionWithCmk>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SearchEncryptionWithCmk>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SearchEncryptionWithCmk>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Enforcement))
             {
                 writer.WritePropertyName("enforcement"u8);
                 writer.WriteStringValue(Enforcement.Value.ToSerialString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SearchEncryptionWithCmk DeserializeSearchEncryptionWithCmk(JsonElement element)
+        internal static SearchEncryptionWithCmk DeserializeSearchEncryptionWithCmk(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<SearchEncryptionWithCmkEnforcement> enforcement = default;
             Optional<SearchEncryptionComplianceStatus> encryptionComplianceStatus = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enforcement"u8))
@@ -51,8 +74,61 @@ namespace Azure.ResourceManager.Search.Models
                     encryptionComplianceStatus = property.Value.GetString().ToSearchEncryptionComplianceStatus();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SearchEncryptionWithCmk(Optional.ToNullable(enforcement), Optional.ToNullable(encryptionComplianceStatus));
+            return new SearchEncryptionWithCmk(Optional.ToNullable(enforcement), Optional.ToNullable(encryptionComplianceStatus), rawData);
+        }
+
+        SearchEncryptionWithCmk IModelJsonSerializable<SearchEncryptionWithCmk>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SearchEncryptionWithCmk>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSearchEncryptionWithCmk(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SearchEncryptionWithCmk>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SearchEncryptionWithCmk>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SearchEncryptionWithCmk IModelSerializable<SearchEncryptionWithCmk>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SearchEncryptionWithCmk>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSearchEncryptionWithCmk(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SearchEncryptionWithCmk"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SearchEncryptionWithCmk"/> to convert. </param>
+        public static implicit operator RequestContent(SearchEncryptionWithCmk model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SearchEncryptionWithCmk"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SearchEncryptionWithCmk(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSearchEncryptionWithCmk(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedDatabasePatch : IUtf8JsonSerializable
+    public partial class ManagedDatabasePatch : IUtf8JsonSerializable, IModelJsonSerializable<ManagedDatabasePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedDatabasePatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedDatabasePatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedDatabasePatch>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -114,7 +122,318 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteBooleanValue(IsLedgerOn.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ManagedDatabasePatch DeserializeManagedDatabasePatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> collation = default;
+            Optional<ManagedDatabaseStatus> status = default;
+            Optional<DateTimeOffset> creationDate = default;
+            Optional<DateTimeOffset> earliestRestorePoint = default;
+            Optional<DateTimeOffset> restorePointInTime = default;
+            Optional<AzureLocation> defaultSecondaryLocation = default;
+            Optional<CatalogCollationType> catalogCollation = default;
+            Optional<ManagedDatabaseCreateMode> createMode = default;
+            Optional<Uri> storageContainerUri = default;
+            Optional<ResourceIdentifier> sourceDatabaseId = default;
+            Optional<ResourceIdentifier> crossSubscriptionSourceDatabaseId = default;
+            Optional<ResourceIdentifier> restorableDroppedDatabaseId = default;
+            Optional<ResourceIdentifier> crossSubscriptionRestorableDroppedDatabaseId = default;
+            Optional<string> storageContainerIdentity = default;
+            Optional<string> storageContainerSasToken = default;
+            Optional<ResourceIdentifier> failoverGroupId = default;
+            Optional<ResourceIdentifier> recoverableDatabaseId = default;
+            Optional<ResourceIdentifier> longTermRetentionBackupResourceId = default;
+            Optional<bool> autoCompleteRestore = default;
+            Optional<string> lastBackupName = default;
+            Optional<ResourceIdentifier> crossSubscriptionTargetManagedInstanceId = default;
+            Optional<bool> isLedgerOn = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("collation"u8))
+                        {
+                            collation = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("status"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            status = new ManagedDatabaseStatus(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("creationDate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            creationDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("earliestRestorePoint"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            earliestRestorePoint = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("restorePointInTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            restorePointInTime = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("defaultSecondaryLocation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            defaultSecondaryLocation = new AzureLocation(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("catalogCollation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            catalogCollation = new CatalogCollationType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("createMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            createMode = new ManagedDatabaseCreateMode(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("storageContainerUri"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            storageContainerUri = new Uri(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("sourceDatabaseId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sourceDatabaseId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("crossSubscriptionSourceDatabaseId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            crossSubscriptionSourceDatabaseId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("restorableDroppedDatabaseId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            restorableDroppedDatabaseId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("crossSubscriptionRestorableDroppedDatabaseId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            crossSubscriptionRestorableDroppedDatabaseId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("storageContainerIdentity"u8))
+                        {
+                            storageContainerIdentity = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("storageContainerSasToken"u8))
+                        {
+                            storageContainerSasToken = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("failoverGroupId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            failoverGroupId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("recoverableDatabaseId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            recoverableDatabaseId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("longTermRetentionBackupResourceId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            longTermRetentionBackupResourceId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("autoCompleteRestore"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            autoCompleteRestore = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("lastBackupName"u8))
+                        {
+                            lastBackupName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("crossSubscriptionTargetManagedInstanceId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            crossSubscriptionTargetManagedInstanceId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("isLedgerOn"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isLedgerOn = property0.Value.GetBoolean();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ManagedDatabasePatch(Optional.ToDictionary(tags), collation.Value, Optional.ToNullable(status), Optional.ToNullable(creationDate), Optional.ToNullable(earliestRestorePoint), Optional.ToNullable(restorePointInTime), Optional.ToNullable(defaultSecondaryLocation), Optional.ToNullable(catalogCollation), Optional.ToNullable(createMode), storageContainerUri.Value, sourceDatabaseId.Value, crossSubscriptionSourceDatabaseId.Value, restorableDroppedDatabaseId.Value, crossSubscriptionRestorableDroppedDatabaseId.Value, storageContainerIdentity.Value, storageContainerSasToken.Value, failoverGroupId.Value, recoverableDatabaseId.Value, longTermRetentionBackupResourceId.Value, Optional.ToNullable(autoCompleteRestore), lastBackupName.Value, crossSubscriptionTargetManagedInstanceId.Value, Optional.ToNullable(isLedgerOn), rawData);
+        }
+
+        ManagedDatabasePatch IModelJsonSerializable<ManagedDatabasePatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedDatabasePatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedDatabasePatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedDatabasePatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedDatabasePatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedDatabasePatch IModelSerializable<ManagedDatabasePatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedDatabasePatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedDatabasePatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagedDatabasePatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagedDatabasePatch"/> to convert. </param>
+        public static implicit operator RequestContent(ManagedDatabasePatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagedDatabasePatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagedDatabasePatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedDatabasePatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

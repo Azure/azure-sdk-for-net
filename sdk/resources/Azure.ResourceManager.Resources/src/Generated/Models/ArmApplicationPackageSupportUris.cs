@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The appliance package support URLs. </summary>
     public partial class ArmApplicationPackageSupportUris
     {
-        /// <summary> Initializes a new instance of ArmApplicationPackageSupportUris. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationPackageSupportUris"/>. </summary>
         internal ArmApplicationPackageSupportUris()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationPackageSupportUris. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationPackageSupportUris"/>. </summary>
         /// <param name="azurePublicCloudUri"> The public azure support URL. </param>
         /// <param name="azureGovernmentUri"> The government cloud support URL. </param>
-        internal ArmApplicationPackageSupportUris(Uri azurePublicCloudUri, Uri azureGovernmentUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmApplicationPackageSupportUris(Uri azurePublicCloudUri, Uri azureGovernmentUri, Dictionary<string, BinaryData> rawData)
         {
             AzurePublicCloudUri = azurePublicCloudUri;
             AzureGovernmentUri = azureGovernmentUri;
+            _rawData = rawData;
         }
 
         /// <summary> The public azure support URL. </summary>

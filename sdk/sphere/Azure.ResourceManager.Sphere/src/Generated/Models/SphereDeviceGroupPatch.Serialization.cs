@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    public partial class SphereDeviceGroupPatch : IUtf8JsonSerializable
+    public partial class SphereDeviceGroupPatch : IUtf8JsonSerializable, IModelJsonSerializable<SphereDeviceGroupPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SphereDeviceGroupPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SphereDeviceGroupPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SphereDeviceGroupPatch>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -43,7 +51,145 @@ namespace Azure.ResourceManager.Sphere.Models
                 writer.WriteStringValue(RegionalDataBoundary.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static SphereDeviceGroupPatch DeserializeSphereDeviceGroupPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> description = default;
+            Optional<SphereOSFeedType> osFeedType = default;
+            Optional<SphereUpdatePolicy> updatePolicy = default;
+            Optional<SphereAllowCrashDumpCollectionStatus> allowCrashDumpsCollection = default;
+            Optional<RegionalDataBoundary> regionalDataBoundary = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("description"u8))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("osFeedType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            osFeedType = new SphereOSFeedType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("updatePolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            updatePolicy = new SphereUpdatePolicy(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("allowCrashDumpsCollection"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            allowCrashDumpsCollection = new SphereAllowCrashDumpCollectionStatus(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("regionalDataBoundary"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            regionalDataBoundary = new RegionalDataBoundary(property0.Value.GetString());
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new SphereDeviceGroupPatch(description.Value, Optional.ToNullable(osFeedType), Optional.ToNullable(updatePolicy), Optional.ToNullable(allowCrashDumpsCollection), Optional.ToNullable(regionalDataBoundary), rawData);
+        }
+
+        SphereDeviceGroupPatch IModelJsonSerializable<SphereDeviceGroupPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SphereDeviceGroupPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSphereDeviceGroupPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SphereDeviceGroupPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SphereDeviceGroupPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SphereDeviceGroupPatch IModelSerializable<SphereDeviceGroupPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SphereDeviceGroupPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSphereDeviceGroupPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SphereDeviceGroupPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SphereDeviceGroupPatch"/> to convert. </param>
+        public static implicit operator RequestContent(SphereDeviceGroupPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SphereDeviceGroupPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SphereDeviceGroupPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSphereDeviceGroupPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

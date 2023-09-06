@@ -5,23 +5,73 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class AdaptiveNetworkHardeningsList
+    internal partial class AdaptiveNetworkHardeningsList : IUtf8JsonSerializable, IModelJsonSerializable<AdaptiveNetworkHardeningsList>
     {
-        internal static AdaptiveNetworkHardeningsList DeserializeAdaptiveNetworkHardeningsList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AdaptiveNetworkHardeningsList>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AdaptiveNetworkHardeningsList>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AdaptiveNetworkHardeningsList>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AdaptiveNetworkHardeningData>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AdaptiveNetworkHardeningsList DeserializeAdaptiveNetworkHardeningsList(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<AdaptiveNetworkHardeningData>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +93,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AdaptiveNetworkHardeningsList(Optional.ToList(value), nextLink.Value);
+            return new AdaptiveNetworkHardeningsList(Optional.ToList(value), nextLink.Value, rawData);
+        }
+
+        AdaptiveNetworkHardeningsList IModelJsonSerializable<AdaptiveNetworkHardeningsList>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AdaptiveNetworkHardeningsList>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAdaptiveNetworkHardeningsList(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AdaptiveNetworkHardeningsList>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AdaptiveNetworkHardeningsList>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AdaptiveNetworkHardeningsList IModelSerializable<AdaptiveNetworkHardeningsList>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AdaptiveNetworkHardeningsList>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAdaptiveNetworkHardeningsList(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AdaptiveNetworkHardeningsList"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AdaptiveNetworkHardeningsList"/> to convert. </param>
+        public static implicit operator RequestContent(AdaptiveNetworkHardeningsList model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AdaptiveNetworkHardeningsList"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AdaptiveNetworkHardeningsList(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAdaptiveNetworkHardeningsList(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

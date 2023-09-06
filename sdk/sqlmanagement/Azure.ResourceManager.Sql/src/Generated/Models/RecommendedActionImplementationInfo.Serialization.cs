@@ -5,21 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class RecommendedActionImplementationInfo
+    public partial class RecommendedActionImplementationInfo : IUtf8JsonSerializable, IModelJsonSerializable<RecommendedActionImplementationInfo>
     {
-        internal static RecommendedActionImplementationInfo DeserializeRecommendedActionImplementationInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RecommendedActionImplementationInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RecommendedActionImplementationInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RecommendedActionImplementationInfo>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RecommendedActionImplementationInfo DeserializeRecommendedActionImplementationInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ImplementationMethod> method = default;
             Optional<string> script = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("method"u8))
@@ -36,8 +65,61 @@ namespace Azure.ResourceManager.Sql.Models
                     script = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RecommendedActionImplementationInfo(Optional.ToNullable(method), script.Value);
+            return new RecommendedActionImplementationInfo(Optional.ToNullable(method), script.Value, rawData);
+        }
+
+        RecommendedActionImplementationInfo IModelJsonSerializable<RecommendedActionImplementationInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RecommendedActionImplementationInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecommendedActionImplementationInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RecommendedActionImplementationInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RecommendedActionImplementationInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RecommendedActionImplementationInfo IModelSerializable<RecommendedActionImplementationInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RecommendedActionImplementationInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRecommendedActionImplementationInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RecommendedActionImplementationInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RecommendedActionImplementationInfo"/> to convert. </param>
+        public static implicit operator RequestContent(RecommendedActionImplementationInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RecommendedActionImplementationInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RecommendedActionImplementationInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRecommendedActionImplementationInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

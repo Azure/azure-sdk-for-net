@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> billing information. </summary>
     public partial class BillingInformation
     {
-        /// <summary> Initializes a new instance of BillingInformation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingInformation"/>. </summary>
         internal BillingInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of BillingInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingInformation"/>. </summary>
         /// <param name="billingCurrencyTotalPaidAmount"> Pricing information containing the amount and the currency code. </param>
         /// <param name="billingCurrencyProratedAmount"> Pricing information containing the amount and the currency code. </param>
         /// <param name="billingCurrencyRemainingCommitmentAmount"> Pricing information containing the amount and the currency code. </param>
-        internal BillingInformation(PurchasePrice billingCurrencyTotalPaidAmount, PurchasePrice billingCurrencyProratedAmount, PurchasePrice billingCurrencyRemainingCommitmentAmount)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingInformation(PurchasePrice billingCurrencyTotalPaidAmount, PurchasePrice billingCurrencyProratedAmount, PurchasePrice billingCurrencyRemainingCommitmentAmount, Dictionary<string, BinaryData> rawData)
         {
             BillingCurrencyTotalPaidAmount = billingCurrencyTotalPaidAmount;
             BillingCurrencyProratedAmount = billingCurrencyProratedAmount;
             BillingCurrencyRemainingCommitmentAmount = billingCurrencyRemainingCommitmentAmount;
+            _rawData = rawData;
         }
 
         /// <summary> Pricing information containing the amount and the currency code. </summary>

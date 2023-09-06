@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Input for add disk(s) operation. </summary>
     public partial class SiteRecoveryAddDisksContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryAddDisksContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAddDisksContent"/>. </summary>
         public SiteRecoveryAddDisksContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAddDisksContent"/>. </summary>
+        /// <param name="properties"> Add disks input properties. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryAddDisksContent(SiteRecoveryAddDisksProperties properties, Dictionary<string, BinaryData> rawData)
+        {
+            Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Add disks input properties. </summary>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> IaaS VM workload-specific backup item representing the Classic Compute VM. </summary>
     public partial class IaasClassicComputeVmProtectedItem : IaasVmProtectedItem
     {
-        /// <summary> Initializes a new instance of IaasClassicComputeVmProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasClassicComputeVmProtectedItem"/>. </summary>
         public IaasClassicComputeVmProtectedItem()
         {
             ProtectedItemType = "Microsoft.ClassicCompute/virtualMachines";
         }
 
-        /// <summary> Initializes a new instance of IaasClassicComputeVmProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasClassicComputeVmProtectedItem"/>. </summary>
         /// <param name="protectedItemType"> backup item type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>
@@ -51,7 +51,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="protectedItemDataId"> Data ID of the protected item. </param>
         /// <param name="extendedInfo"> Additional information for this backup item. </param>
         /// <param name="extendedProperties"> Extended Properties for Azure IaasVM Backup. </param>
-        internal IaasClassicComputeVmProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriod, string friendlyName, ResourceIdentifier virtualMachineId, string protectionStatus, BackupProtectionState? protectionState, IaasVmProtectedItemHealthStatus? healthStatus, IList<IaasVmHealthDetails> healthDetails, IDictionary<string, KpiResourceHealthDetails> kpisHealths, string lastBackupStatus, DateTimeOffset? lastBackupOn, string protectedItemDataId, IaasVmProtectedItemExtendedInfo extendedInfo, IaasVmBackupExtendedProperties extendedProperties) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriod, friendlyName, virtualMachineId, protectionStatus, protectionState, healthStatus, healthDetails, kpisHealths, lastBackupStatus, lastBackupOn, protectedItemDataId, extendedInfo, extendedProperties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IaasClassicComputeVmProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriod, string friendlyName, ResourceIdentifier virtualMachineId, string protectionStatus, BackupProtectionState? protectionState, IaasVmProtectedItemHealthStatus? healthStatus, IList<IaasVmHealthDetails> healthDetails, IDictionary<string, KpiResourceHealthDetails> kpisHealths, string lastBackupStatus, DateTimeOffset? lastBackupOn, string protectedItemDataId, IaasVmProtectedItemExtendedInfo extendedInfo, IaasVmBackupExtendedProperties extendedProperties, Dictionary<string, BinaryData> rawData) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriod, friendlyName, virtualMachineId, protectionStatus, protectionState, healthStatus, healthDetails, kpisHealths, lastBackupStatus, lastBackupOn, protectedItemDataId, extendedInfo, extendedProperties, rawData)
         {
             ProtectedItemType = protectedItemType ?? "Microsoft.ClassicCompute/virtualMachines";
         }

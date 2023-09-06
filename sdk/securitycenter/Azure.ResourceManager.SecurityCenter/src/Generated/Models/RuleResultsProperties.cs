@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Rule results properties. </summary>
     internal partial class RuleResultsProperties
     {
-        /// <summary> Initializes a new instance of RuleResultsProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RuleResultsProperties"/>. </summary>
         public RuleResultsProperties()
         {
             Results = new ChangeTrackingList<IList<string>>();
         }
 
-        /// <summary> Initializes a new instance of RuleResultsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuleResultsProperties"/>. </summary>
         /// <param name="results"> Expected results in the baseline. </param>
-        internal RuleResultsProperties(IList<IList<string>> results)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RuleResultsProperties(IList<IList<string>> results, Dictionary<string, BinaryData> rawData)
         {
             Results = results;
+            _rawData = rawData;
         }
 
         /// <summary> Expected results in the baseline. </summary>

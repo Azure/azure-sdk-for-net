@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlVmGroupSqlVmGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlVmGroupSqlVmGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlVmGroupResource(Client, SqlVmGroupData.DeserializeSqlVmGroupData(e)), _sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, "SqlVmGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SqlVmGroupResource(Client, SqlVmGroupData.DeserializeSqlVmGroupData(e)), _sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, "SqlVmGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlVmGroupSqlVmGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlVmGroupSqlVmGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlVmGroupResource(Client, SqlVmGroupData.DeserializeSqlVmGroupData(e)), _sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, "SqlVmGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SqlVmGroupResource(Client, SqlVmGroupData.DeserializeSqlVmGroupData(e)), _sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, "SqlVmGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

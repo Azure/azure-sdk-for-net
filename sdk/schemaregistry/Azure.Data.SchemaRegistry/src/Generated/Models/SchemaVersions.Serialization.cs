@@ -5,22 +5,65 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Data.SchemaRegistry.Models
 {
-    internal partial class SchemaVersions
+    internal partial class SchemaVersions : IUtf8JsonSerializable, IModelJsonSerializable<SchemaVersions>
     {
-        internal static SchemaVersions DeserializeSchemaVersions(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SchemaVersions>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SchemaVersions>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SchemaVersions>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Versions))
+            {
+                writer.WritePropertyName("schemaVersions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Versions)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SchemaVersions DeserializeSchemaVersions(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<int>> schemaVersions = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaVersions"u8))
@@ -42,8 +85,61 @@ namespace Azure.Data.SchemaRegistry.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SchemaVersions(Optional.ToList(schemaVersions), nextLink.Value);
+            return new SchemaVersions(Optional.ToList(schemaVersions), nextLink.Value, rawData);
+        }
+
+        SchemaVersions IModelJsonSerializable<SchemaVersions>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SchemaVersions>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSchemaVersions(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SchemaVersions>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SchemaVersions>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SchemaVersions IModelSerializable<SchemaVersions>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SchemaVersions>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSchemaVersions(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SchemaVersions"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SchemaVersions"/> to convert. </param>
+        public static implicit operator RequestContent(SchemaVersions model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SchemaVersions"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SchemaVersions(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSchemaVersions(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

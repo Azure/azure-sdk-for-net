@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityCenterFileProtectionMode : IUtf8JsonSerializable
+    public partial class SecurityCenterFileProtectionMode : IUtf8JsonSerializable, IModelJsonSerializable<SecurityCenterFileProtectionMode>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityCenterFileProtectionMode>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityCenterFileProtectionMode>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityCenterFileProtectionMode>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Exe))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("executable"u8);
                 writer.WriteStringValue(Executable.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityCenterFileProtectionMode DeserializeSecurityCenterFileProtectionMode(JsonElement element)
+        internal static SecurityCenterFileProtectionMode DeserializeSecurityCenterFileProtectionMode(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<AdaptiveApplicationControlEnforcementMode> msi = default;
             Optional<AdaptiveApplicationControlEnforcementMode> script = default;
             Optional<AdaptiveApplicationControlEnforcementMode> executable = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exe"u8))
@@ -86,8 +109,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     executable = new AdaptiveApplicationControlEnforcementMode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityCenterFileProtectionMode(Optional.ToNullable(exe), Optional.ToNullable(msi), Optional.ToNullable(script), Optional.ToNullable(executable));
+            return new SecurityCenterFileProtectionMode(Optional.ToNullable(exe), Optional.ToNullable(msi), Optional.ToNullable(script), Optional.ToNullable(executable), rawData);
+        }
+
+        SecurityCenterFileProtectionMode IModelJsonSerializable<SecurityCenterFileProtectionMode>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityCenterFileProtectionMode>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityCenterFileProtectionMode(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityCenterFileProtectionMode>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityCenterFileProtectionMode>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityCenterFileProtectionMode IModelSerializable<SecurityCenterFileProtectionMode>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityCenterFileProtectionMode>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityCenterFileProtectionMode(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SecurityCenterFileProtectionMode"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SecurityCenterFileProtectionMode"/> to convert. </param>
+        public static implicit operator RequestContent(SecurityCenterFileProtectionMode model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SecurityCenterFileProtectionMode"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SecurityCenterFileProtectionMode(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityCenterFileProtectionMode(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

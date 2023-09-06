@@ -5,15 +5,65 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryJobStatusEventDetails
+    public partial class SiteRecoveryJobStatusEventDetails : IUtf8JsonSerializable, IModelJsonSerializable<SiteRecoveryJobStatusEventDetails>
     {
-        internal static SiteRecoveryJobStatusEventDetails DeserializeSiteRecoveryJobStatusEventDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SiteRecoveryJobStatusEventDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SiteRecoveryJobStatusEventDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryJobStatusEventDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(JobId))
+            {
+                writer.WritePropertyName("jobId"u8);
+                writer.WriteStringValue(JobId);
+            }
+            if (Optional.IsDefined(JobFriendlyName))
+            {
+                writer.WritePropertyName("jobFriendlyName"u8);
+                writer.WriteStringValue(JobFriendlyName);
+            }
+            if (Optional.IsDefined(JobStatus))
+            {
+                writer.WritePropertyName("jobStatus"u8);
+                writer.WriteStringValue(JobStatus);
+            }
+            if (Optional.IsDefined(AffectedObjectType))
+            {
+                writer.WritePropertyName("affectedObjectType"u8);
+                writer.WriteStringValue(AffectedObjectType);
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SiteRecoveryJobStatusEventDetails DeserializeSiteRecoveryJobStatusEventDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> jobStatus = default;
             Optional<string> affectedObjectType = default;
             string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobId"u8))
@@ -54,8 +105,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SiteRecoveryJobStatusEventDetails(instanceType, jobId.Value, jobFriendlyName.Value, jobStatus.Value, affectedObjectType.Value);
+            return new SiteRecoveryJobStatusEventDetails(instanceType, jobId.Value, jobFriendlyName.Value, jobStatus.Value, affectedObjectType.Value, rawData);
+        }
+
+        SiteRecoveryJobStatusEventDetails IModelJsonSerializable<SiteRecoveryJobStatusEventDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryJobStatusEventDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryJobStatusEventDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SiteRecoveryJobStatusEventDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryJobStatusEventDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SiteRecoveryJobStatusEventDetails IModelSerializable<SiteRecoveryJobStatusEventDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryJobStatusEventDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryJobStatusEventDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SiteRecoveryJobStatusEventDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SiteRecoveryJobStatusEventDetails"/> to convert. </param>
+        public static implicit operator RequestContent(SiteRecoveryJobStatusEventDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SiteRecoveryJobStatusEventDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SiteRecoveryJobStatusEventDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSiteRecoveryJobStatusEventDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

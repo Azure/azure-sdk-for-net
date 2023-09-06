@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,10 +15,26 @@ namespace Azure.ResourceManager.Purview.Models
     /// <summary> The account update properties. </summary>
     public partial class PurviewAccountPatch
     {
-        /// <summary> Initializes a new instance of PurviewAccountPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountPatch"/>. </summary>
         public PurviewAccountPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountPatch"/>. </summary>
+        /// <param name="identity"> Identity related info to add/remove userAssignedIdentities. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="properties"> The account properties. </param>
+        /// <param name="tags"> Tags on the azure resource. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PurviewAccountPatch(ManagedServiceIdentity identity, PurviewAccountProperties properties, IDictionary<string, string> tags, Dictionary<string, BinaryData> rawData)
+        {
+            Identity = identity;
+            Properties = properties;
+            Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary> Identity related info to add/remove userAssignedIdentities. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>

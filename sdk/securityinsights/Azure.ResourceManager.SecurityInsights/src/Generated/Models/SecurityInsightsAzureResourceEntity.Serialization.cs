@@ -8,26 +8,46 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsAzureResourceEntity : IUtf8JsonSerializable
+    public partial class SecurityInsightsAzureResourceEntity : IUtf8JsonSerializable, IModelJsonSerializable<SecurityInsightsAzureResourceEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityInsightsAzureResourceEntity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityInsightsAzureResourceEntity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAzureResourceEntity>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsAzureResourceEntity DeserializeSecurityInsightsAzureResourceEntity(JsonElement element)
+        internal static SecurityInsightsAzureResourceEntity DeserializeSecurityInsightsAzureResourceEntity(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -41,6 +61,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<string> friendlyName = default;
             Optional<string> resourceId = default;
             Optional<string> subscriptionId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -120,8 +141,61 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityInsightsAzureResourceEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, resourceId.Value, subscriptionId.Value);
+            return new SecurityInsightsAzureResourceEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, resourceId.Value, subscriptionId.Value, rawData);
+        }
+
+        SecurityInsightsAzureResourceEntity IModelJsonSerializable<SecurityInsightsAzureResourceEntity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAzureResourceEntity>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsAzureResourceEntity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityInsightsAzureResourceEntity>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAzureResourceEntity>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityInsightsAzureResourceEntity IModelSerializable<SecurityInsightsAzureResourceEntity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAzureResourceEntity>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityInsightsAzureResourceEntity(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SecurityInsightsAzureResourceEntity"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SecurityInsightsAzureResourceEntity"/> to convert. </param>
+        public static implicit operator RequestContent(SecurityInsightsAzureResourceEntity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SecurityInsightsAzureResourceEntity"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SecurityInsightsAzureResourceEntity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityInsightsAzureResourceEntity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

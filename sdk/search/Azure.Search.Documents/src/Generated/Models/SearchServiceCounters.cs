@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -13,7 +14,10 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Represents service-level resource counters and quotas. </summary>
     public partial class SearchServiceCounters
     {
-        /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchServiceCounters"/>. </summary>
         /// <param name="aliasCounter"> Total number of aliases. </param>
         /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
         /// <param name="indexCounter"> Total number of indexes. </param>
@@ -45,6 +49,36 @@ namespace Azure.Search.Documents.Indexes.Models
             SynonymMapCounter = synonymMapCounter;
             SkillsetCounter = skillsetCounter;
             VectorIndexSizeCounter = vectorIndexSizeCounter;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchServiceCounters"/>. </summary>
+        /// <param name="aliasCounter"> Total number of aliases. </param>
+        /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
+        /// <param name="indexCounter"> Total number of indexes. </param>
+        /// <param name="indexerCounter"> Total number of indexers. </param>
+        /// <param name="dataSourceCounter"> Total number of data sources. </param>
+        /// <param name="storageSizeCounter"> Total size of used storage in bytes. </param>
+        /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
+        /// <param name="skillsetCounter"> Total number of skillsets. </param>
+        /// <param name="vectorIndexSizeCounter"> Total memory consumption of all vector indexes within the service, in bytes. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchServiceCounters(SearchResourceCounter aliasCounter, SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter, SearchResourceCounter skillsetCounter, SearchResourceCounter vectorIndexSizeCounter, Dictionary<string, BinaryData> rawData)
+        {
+            AliasCounter = aliasCounter;
+            DocumentCounter = documentCounter;
+            IndexCounter = indexCounter;
+            IndexerCounter = indexerCounter;
+            DataSourceCounter = dataSourceCounter;
+            StorageSizeCounter = storageSizeCounter;
+            SynonymMapCounter = synonymMapCounter;
+            SkillsetCounter = skillsetCounter;
+            VectorIndexSizeCounter = vectorIndexSizeCounter;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchServiceCounters"/> for deserialization. </summary>
+        internal SearchServiceCounters()
+        {
         }
 
         /// <summary> Total number of aliases. </summary>

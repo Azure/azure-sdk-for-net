@@ -15,21 +15,26 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Managed identity generic object. </summary>
     public partial class ArmDeploymentScriptManagedIdentity
     {
-        /// <summary> Initializes a new instance of ArmDeploymentScriptManagedIdentity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentScriptManagedIdentity"/>. </summary>
         public ArmDeploymentScriptManagedIdentity()
         {
             UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentScriptManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentScriptManagedIdentity"/>. </summary>
         /// <param name="identityType"> Type of the managed identity. </param>
         /// <param name="tenantId"> ID of the Azure Active Directory. </param>
         /// <param name="userAssignedIdentities"> The list of user-assigned managed identities associated with the resource. Key is the Azure resource Id of the managed identity. </param>
-        internal ArmDeploymentScriptManagedIdentity(ArmDeploymentScriptManagedIdentityType? identityType, Guid? tenantId, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmDeploymentScriptManagedIdentity(ArmDeploymentScriptManagedIdentityType? identityType, Guid? tenantId, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, Dictionary<string, BinaryData> rawData)
         {
             IdentityType = identityType;
             TenantId = tenantId;
             UserAssignedIdentities = userAssignedIdentities;
+            _rawData = rawData;
         }
 
         /// <summary> Type of the managed identity. </summary>

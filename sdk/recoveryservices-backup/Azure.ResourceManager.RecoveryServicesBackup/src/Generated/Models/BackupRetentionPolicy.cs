@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Please note <see cref="BackupRetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="LongTermRetentionPolicy"/> and <see cref="SimpleRetentionPolicy"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownRetentionPolicy))]
     public abstract partial class BackupRetentionPolicy
     {
-        /// <summary> Initializes a new instance of BackupRetentionPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupRetentionPolicy"/>. </summary>
         protected BackupRetentionPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupRetentionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupRetentionPolicy"/>. </summary>
         /// <param name="retentionPolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        internal BackupRetentionPolicy(string retentionPolicyType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupRetentionPolicy(string retentionPolicyType, Dictionary<string, BinaryData> rawData)
         {
             RetentionPolicyType = retentionPolicyType;
+            _rawData = rawData;
         }
 
         /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>

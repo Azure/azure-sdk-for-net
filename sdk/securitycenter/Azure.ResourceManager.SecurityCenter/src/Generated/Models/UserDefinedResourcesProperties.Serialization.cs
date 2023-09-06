@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class UserDefinedResourcesProperties : IUtf8JsonSerializable
+    public partial class UserDefinedResourcesProperties : IUtf8JsonSerializable, IModelJsonSerializable<UserDefinedResourcesProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<UserDefinedResourcesProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<UserDefinedResourcesProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<UserDefinedResourcesProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Query != null)
             {
@@ -39,17 +46,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WriteNull("querySubscriptions");
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UserDefinedResourcesProperties DeserializeUserDefinedResourcesProperties(JsonElement element)
+        internal static UserDefinedResourcesProperties DeserializeUserDefinedResourcesProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string query = default;
             IList<string> querySubscriptions = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("query"u8))
@@ -77,8 +99,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     querySubscriptions = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new UserDefinedResourcesProperties(query, querySubscriptions);
+            return new UserDefinedResourcesProperties(query, querySubscriptions, rawData);
+        }
+
+        UserDefinedResourcesProperties IModelJsonSerializable<UserDefinedResourcesProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<UserDefinedResourcesProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUserDefinedResourcesProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<UserDefinedResourcesProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<UserDefinedResourcesProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        UserDefinedResourcesProperties IModelSerializable<UserDefinedResourcesProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<UserDefinedResourcesProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeUserDefinedResourcesProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="UserDefinedResourcesProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="UserDefinedResourcesProperties"/> to convert. </param>
+        public static implicit operator RequestContent(UserDefinedResourcesProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="UserDefinedResourcesProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator UserDefinedResourcesProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeUserDefinedResourcesProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

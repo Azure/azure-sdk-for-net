@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,13 +16,16 @@ namespace Azure.ResourceManager.SecurityDevOps
     /// <summary> A class representing the AzureDevOpsConnector data model. </summary>
     public partial class AzureDevOpsConnectorData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AzureDevOpsConnectorData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsConnectorData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AzureDevOpsConnectorData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsConnectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsConnectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,9 +33,16 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"></param>
-        internal AzureDevOpsConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AzureDevOpsConnectorProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureDevOpsConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AzureDevOpsConnectorProperties properties, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsConnectorData"/> for deserialization. </summary>
+        internal AzureDevOpsConnectorData()
+        {
         }
 
         /// <summary> Gets or sets the properties. </summary>

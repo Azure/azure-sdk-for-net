@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents credentials that can be used to connect to a datasource. </summary>
     internal partial class DataSourceCredentials
     {
-        /// <summary> Initializes a new instance of DataSourceCredentials. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataSourceCredentials"/>. </summary>
         public DataSourceCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of DataSourceCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataSourceCredentials"/>. </summary>
         /// <param name="connectionString"> The connection string for the datasource. Set to '&lt;unchanged&gt;' if you do not want the connection string updated. </param>
-        internal DataSourceCredentials(string connectionString)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataSourceCredentials(string connectionString, Dictionary<string, BinaryData> rawData)
         {
             ConnectionString = connectionString;
+            _rawData = rawData;
         }
 
         /// <summary> The connection string for the datasource. Set to '&lt;unchanged&gt;' if you do not want the connection string updated. </summary>

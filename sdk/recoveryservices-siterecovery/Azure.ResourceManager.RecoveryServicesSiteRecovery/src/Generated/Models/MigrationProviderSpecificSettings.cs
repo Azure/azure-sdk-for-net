@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Please note <see cref="MigrationProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="VMwareCbtMigrationDetails"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownMigrationProviderSpecificSettings))]
     public abstract partial class MigrationProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of MigrationProviderSpecificSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigrationProviderSpecificSettings"/>. </summary>
         protected MigrationProviderSpecificSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrationProviderSpecificSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationProviderSpecificSettings"/>. </summary>
         /// <param name="instanceType"> Gets the instance type. </param>
-        internal MigrationProviderSpecificSettings(string instanceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrationProviderSpecificSettings(string instanceType, Dictionary<string, BinaryData> rawData)
         {
             InstanceType = instanceType;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the instance type. </summary>

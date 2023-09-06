@@ -5,15 +5,22 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
+using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class UnknownCognitiveServicesAccount : IUtf8JsonSerializable
+    internal partial class UnknownCognitiveServicesAccount : IUtf8JsonSerializable, IModelJsonSerializable<CognitiveServicesAccount>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CognitiveServicesAccount>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CognitiveServicesAccount>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CognitiveServicesAccount>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
@@ -22,31 +29,44 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownCognitiveServicesAccount DeserializeUnknownCognitiveServicesAccount(JsonElement element)
+        internal static CognitiveServicesAccount DeserializeUnknownCognitiveServicesAccount(JsonElement element, ModelSerializerOptions options = default) => DeserializeCognitiveServicesAccount(element, options);
+
+        CognitiveServicesAccount IModelJsonSerializable<CognitiveServicesAccount>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string odataType = "Unknown";
-            Optional<string> description = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@odata.type"u8))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownCognitiveServicesAccount(odataType, description.Value);
+            Core.ModelSerializerHelper.ValidateFormat<CognitiveServicesAccount>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownCognitiveServicesAccount(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CognitiveServicesAccount>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CognitiveServicesAccount>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CognitiveServicesAccount IModelSerializable<CognitiveServicesAccount>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CognitiveServicesAccount>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCognitiveServicesAccount(doc.RootElement, options);
         }
     }
 }

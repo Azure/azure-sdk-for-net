@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class DpmBackupJobTaskDetails : IUtf8JsonSerializable
+    public partial class DpmBackupJobTaskDetails : IUtf8JsonSerializable, IModelJsonSerializable<DpmBackupJobTaskDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DpmBackupJobTaskDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DpmBackupJobTaskDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DpmBackupJobTaskDetails>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TaskId))
             {
@@ -41,11 +48,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DpmBackupJobTaskDetails DeserializeDpmBackupJobTaskDetails(JsonElement element)
+        internal static DpmBackupJobTaskDetails DeserializeDpmBackupJobTaskDetails(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<DateTimeOffset> endTime = default;
             Optional<TimeSpan> duration = default;
             Optional<string> status = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("taskId"u8))
@@ -94,8 +116,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     status = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DpmBackupJobTaskDetails(taskId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(duration), status.Value);
+            return new DpmBackupJobTaskDetails(taskId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(duration), status.Value, rawData);
+        }
+
+        DpmBackupJobTaskDetails IModelJsonSerializable<DpmBackupJobTaskDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DpmBackupJobTaskDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDpmBackupJobTaskDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DpmBackupJobTaskDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DpmBackupJobTaskDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DpmBackupJobTaskDetails IModelSerializable<DpmBackupJobTaskDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DpmBackupJobTaskDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDpmBackupJobTaskDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DpmBackupJobTaskDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DpmBackupJobTaskDetails"/> to convert. </param>
+        public static implicit operator RequestContent(DpmBackupJobTaskDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DpmBackupJobTaskDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DpmBackupJobTaskDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDpmBackupJobTaskDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

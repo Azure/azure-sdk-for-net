@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class NodeTypeVmssDataDisk : IUtf8JsonSerializable
+    public partial class NodeTypeVmssDataDisk : IUtf8JsonSerializable, IModelJsonSerializable<NodeTypeVmssDataDisk>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NodeTypeVmssDataDisk>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NodeTypeVmssDataDisk>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NodeTypeVmssDataDisk>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("lun"u8);
             writer.WriteNumberValue(Lun);
@@ -23,11 +31,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStringValue(DiskType.ToString());
             writer.WritePropertyName("diskLetter"u8);
             writer.WriteStringValue(DiskLetter);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NodeTypeVmssDataDisk DeserializeNodeTypeVmssDataDisk(JsonElement element)
+        internal static NodeTypeVmssDataDisk DeserializeNodeTypeVmssDataDisk(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +58,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             int diskSizeGB = default;
             ServiceFabricManagedDataDiskType diskType = default;
             string diskLetter = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lun"u8))
@@ -58,8 +81,61 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     diskLetter = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NodeTypeVmssDataDisk(lun, diskSizeGB, diskType, diskLetter);
+            return new NodeTypeVmssDataDisk(lun, diskSizeGB, diskType, diskLetter, rawData);
+        }
+
+        NodeTypeVmssDataDisk IModelJsonSerializable<NodeTypeVmssDataDisk>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NodeTypeVmssDataDisk>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNodeTypeVmssDataDisk(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NodeTypeVmssDataDisk>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NodeTypeVmssDataDisk>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NodeTypeVmssDataDisk IModelSerializable<NodeTypeVmssDataDisk>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NodeTypeVmssDataDisk>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNodeTypeVmssDataDisk(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NodeTypeVmssDataDisk"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NodeTypeVmssDataDisk"/> to convert. </param>
+        public static implicit operator RequestContent(NodeTypeVmssDataDisk model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NodeTypeVmssDataDisk"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NodeTypeVmssDataDisk(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNodeTypeVmssDataDisk(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

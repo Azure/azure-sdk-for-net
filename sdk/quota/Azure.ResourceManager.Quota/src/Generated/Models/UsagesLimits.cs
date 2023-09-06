@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Quota;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Quota.Models
     /// <summary> Quota limits. </summary>
     internal partial class UsagesLimits
     {
-        /// <summary> Initializes a new instance of UsagesLimits. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="UsagesLimits"/>. </summary>
         internal UsagesLimits()
         {
             Value = new ChangeTrackingList<CurrentUsagesBaseData>();
         }
 
-        /// <summary> Initializes a new instance of UsagesLimits. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsagesLimits"/>. </summary>
         /// <param name="value"> List of quota limits. </param>
         /// <param name="nextLink"> The URI used to fetch the next page of quota limits. When there are no more pages, this is null. </param>
-        internal UsagesLimits(IReadOnlyList<CurrentUsagesBaseData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UsagesLimits(IReadOnlyList<CurrentUsagesBaseData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of quota limits. </summary>

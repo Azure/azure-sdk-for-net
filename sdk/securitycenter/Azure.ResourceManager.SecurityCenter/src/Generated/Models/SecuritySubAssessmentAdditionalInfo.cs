@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Please note <see cref="SecuritySubAssessmentAdditionalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ContainerRegistryVulnerabilityProperties"/>, <see cref="ServerVulnerabilityProperties"/> and <see cref="SqlServerVulnerabilityProperties"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownAdditionalData))]
     public abstract partial class SecuritySubAssessmentAdditionalInfo
     {
-        /// <summary> Initializes a new instance of SecuritySubAssessmentAdditionalInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecuritySubAssessmentAdditionalInfo"/>. </summary>
         protected SecuritySubAssessmentAdditionalInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SecuritySubAssessmentAdditionalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecuritySubAssessmentAdditionalInfo"/>. </summary>
         /// <param name="assessedResourceType"> Sub-assessment resource type. </param>
-        internal SecuritySubAssessmentAdditionalInfo(AssessedResourceType assessedResourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecuritySubAssessmentAdditionalInfo(AssessedResourceType assessedResourceType, Dictionary<string, BinaryData> rawData)
         {
             AssessedResourceType = assessedResourceType;
+            _rawData = rawData;
         }
 
         /// <summary> Sub-assessment resource type. </summary>

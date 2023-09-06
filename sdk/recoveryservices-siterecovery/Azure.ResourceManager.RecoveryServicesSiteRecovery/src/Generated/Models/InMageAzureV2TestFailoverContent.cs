@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,10 +14,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageAzureV2 provider specific input for test failover. </summary>
     public partial class InMageAzureV2TestFailoverContent : TestFailoverProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of InMageAzureV2TestFailoverContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2TestFailoverContent"/>. </summary>
         public InMageAzureV2TestFailoverContent()
         {
             InstanceType = "InMageAzureV2";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2TestFailoverContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="recoveryPointId"> The recovery point id to be passed to test failover to a particular recovery point. In case of latest recovery point, null should be passed. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageAzureV2TestFailoverContent(string instanceType, ResourceIdentifier recoveryPointId, Dictionary<string, BinaryData> rawData) : base(instanceType, rawData)
+        {
+            RecoveryPointId = recoveryPointId;
+            InstanceType = instanceType ?? "InMageAzureV2";
         }
 
         /// <summary> The recovery point id to be passed to test failover to a particular recovery point. In case of latest recovery point, null should be passed. </summary>

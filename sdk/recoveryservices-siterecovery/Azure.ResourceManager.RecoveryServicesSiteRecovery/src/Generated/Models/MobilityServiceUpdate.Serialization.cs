@@ -5,15 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class MobilityServiceUpdate
+    public partial class MobilityServiceUpdate : IUtf8JsonSerializable, IModelJsonSerializable<MobilityServiceUpdate>
     {
-        internal static MobilityServiceUpdate DeserializeMobilityServiceUpdate(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MobilityServiceUpdate>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MobilityServiceUpdate>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MobilityServiceUpdate>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
+            if (Optional.IsDefined(RebootStatus))
+            {
+                writer.WritePropertyName("rebootStatus"u8);
+                writer.WriteStringValue(RebootStatus);
+            }
+            if (Optional.IsDefined(OSType))
+            {
+                writer.WritePropertyName("osType"u8);
+                writer.WriteStringValue(OSType);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MobilityServiceUpdate DeserializeMobilityServiceUpdate(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> version = default;
             Optional<string> rebootStatus = default;
             Optional<string> osType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("version"u8))
@@ -38,8 +82,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     osType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MobilityServiceUpdate(version.Value, rebootStatus.Value, osType.Value);
+            return new MobilityServiceUpdate(version.Value, rebootStatus.Value, osType.Value, rawData);
+        }
+
+        MobilityServiceUpdate IModelJsonSerializable<MobilityServiceUpdate>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MobilityServiceUpdate>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMobilityServiceUpdate(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MobilityServiceUpdate>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MobilityServiceUpdate>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MobilityServiceUpdate IModelSerializable<MobilityServiceUpdate>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MobilityServiceUpdate>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMobilityServiceUpdate(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MobilityServiceUpdate"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MobilityServiceUpdate"/> to convert. </param>
+        public static implicit operator RequestContent(MobilityServiceUpdate model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MobilityServiceUpdate"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MobilityServiceUpdate(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMobilityServiceUpdate(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

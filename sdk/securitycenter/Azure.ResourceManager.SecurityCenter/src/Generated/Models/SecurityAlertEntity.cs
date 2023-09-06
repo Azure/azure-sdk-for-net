@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Changing set of properties depending on the entity type. </summary>
     public partial class SecurityAlertEntity
     {
-        /// <summary> Initializes a new instance of SecurityAlertEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertEntity"/>. </summary>
         internal SecurityAlertEntity()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SecurityAlertEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertEntity"/>. </summary>
         /// <param name="alertEntityType"> Type of entity. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal SecurityAlertEntity(string alertEntityType, IReadOnlyDictionary<string, BinaryData> additionalProperties)

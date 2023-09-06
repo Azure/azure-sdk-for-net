@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> List of incident bookmarks. </summary>
     internal partial class IncidentBookmarkList
     {
-        /// <summary> Initializes a new instance of IncidentBookmarkList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IncidentBookmarkList"/>. </summary>
         /// <param name="value"> Array of incident bookmarks. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal IncidentBookmarkList(IEnumerable<SecurityInsightsHuntingBookmark> value)
@@ -25,11 +28,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of IncidentBookmarkList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncidentBookmarkList"/>. </summary>
         /// <param name="value"> Array of incident bookmarks. </param>
-        internal IncidentBookmarkList(IReadOnlyList<SecurityInsightsHuntingBookmark> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IncidentBookmarkList(IReadOnlyList<SecurityInsightsHuntingBookmark> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IncidentBookmarkList"/> for deserialization. </summary>
+        internal IncidentBookmarkList()
+        {
         }
 
         /// <summary> Array of incident bookmarks. </summary>

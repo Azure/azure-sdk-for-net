@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Availability zone mappings for the region. </summary>
     public partial class AvailabilityZoneMappings
     {
-        /// <summary> Initializes a new instance of AvailabilityZoneMappings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailabilityZoneMappings"/>. </summary>
         internal AvailabilityZoneMappings()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailabilityZoneMappings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailabilityZoneMappings"/>. </summary>
         /// <param name="logicalZone"> The logical zone id for the availability zone. </param>
         /// <param name="physicalZone"> The fully qualified physical zone id of availability zone to which logical zone id is mapped to. </param>
-        internal AvailabilityZoneMappings(string logicalZone, string physicalZone)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailabilityZoneMappings(string logicalZone, string physicalZone, Dictionary<string, BinaryData> rawData)
         {
             LogicalZone = logicalZone;
             PhysicalZone = physicalZone;
+            _rawData = rawData;
         }
 
         /// <summary> The logical zone id for the availability zone. </summary>

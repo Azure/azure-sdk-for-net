@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsBookmarkIncidentInfo : IUtf8JsonSerializable
+    public partial class SecurityInsightsBookmarkIncidentInfo : IUtf8JsonSerializable, IModelJsonSerializable<SecurityInsightsBookmarkIncidentInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityInsightsBookmarkIncidentInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityInsightsBookmarkIncidentInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsBookmarkIncidentInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IncidentId))
             {
@@ -36,11 +43,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("relationName"u8);
                 writer.WriteStringValue(RelationName);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsBookmarkIncidentInfo DeserializeSecurityInsightsBookmarkIncidentInfo(JsonElement element)
+        internal static SecurityInsightsBookmarkIncidentInfo DeserializeSecurityInsightsBookmarkIncidentInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +70,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<SecurityInsightsIncidentSeverity> severity = default;
             Optional<string> title = default;
             Optional<string> relationName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("incidentId"u8))
@@ -79,8 +101,61 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     relationName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityInsightsBookmarkIncidentInfo(Optional.ToNullable(incidentId), Optional.ToNullable(severity), title.Value, relationName.Value);
+            return new SecurityInsightsBookmarkIncidentInfo(Optional.ToNullable(incidentId), Optional.ToNullable(severity), title.Value, relationName.Value, rawData);
+        }
+
+        SecurityInsightsBookmarkIncidentInfo IModelJsonSerializable<SecurityInsightsBookmarkIncidentInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsBookmarkIncidentInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsBookmarkIncidentInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityInsightsBookmarkIncidentInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsBookmarkIncidentInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityInsightsBookmarkIncidentInfo IModelSerializable<SecurityInsightsBookmarkIncidentInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsBookmarkIncidentInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityInsightsBookmarkIncidentInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SecurityInsightsBookmarkIncidentInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SecurityInsightsBookmarkIncidentInfo"/> to convert. </param>
+        public static implicit operator RequestContent(SecurityInsightsBookmarkIncidentInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SecurityInsightsBookmarkIncidentInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SecurityInsightsBookmarkIncidentInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityInsightsBookmarkIncidentInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

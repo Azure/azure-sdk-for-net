@@ -6,15 +6,52 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VMwareCbtProtectedDiskDetails
+    public partial class VMwareCbtProtectedDiskDetails : IUtf8JsonSerializable, IModelJsonSerializable<VMwareCbtProtectedDiskDetails>
     {
-        internal static VMwareCbtProtectedDiskDetails DeserializeVMwareCbtProtectedDiskDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VMwareCbtProtectedDiskDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VMwareCbtProtectedDiskDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VMwareCbtProtectedDiskDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DiskType))
+            {
+                writer.WritePropertyName("diskType"u8);
+                writer.WriteStringValue(DiskType.Value.ToString());
+            }
+            if (Optional.IsDefined(TargetDiskName))
+            {
+                writer.WritePropertyName("targetDiskName"u8);
+                writer.WriteStringValue(TargetDiskName);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static VMwareCbtProtectedDiskDetails DeserializeVMwareCbtProtectedDiskDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> targetManagedDiskId = default;
             Optional<Uri> targetBlobUri = default;
             Optional<string> targetDiskName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskId"u8))
@@ -129,8 +167,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     targetDiskName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VMwareCbtProtectedDiskDetails(diskId.Value, diskName.Value, Optional.ToNullable(diskType), diskPath.Value, isOSDisk.Value, Optional.ToNullable(capacityInBytes), logStorageAccountId.Value, logStorageAccountSasSecretName.Value, diskEncryptionSetId.Value, seedManagedDiskId.Value, seedBlobUri.Value, targetManagedDiskId.Value, targetBlobUri.Value, targetDiskName.Value);
+            return new VMwareCbtProtectedDiskDetails(diskId.Value, diskName.Value, Optional.ToNullable(diskType), diskPath.Value, isOSDisk.Value, Optional.ToNullable(capacityInBytes), logStorageAccountId.Value, logStorageAccountSasSecretName.Value, diskEncryptionSetId.Value, seedManagedDiskId.Value, seedBlobUri.Value, targetManagedDiskId.Value, targetBlobUri.Value, targetDiskName.Value, rawData);
+        }
+
+        VMwareCbtProtectedDiskDetails IModelJsonSerializable<VMwareCbtProtectedDiskDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VMwareCbtProtectedDiskDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVMwareCbtProtectedDiskDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VMwareCbtProtectedDiskDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VMwareCbtProtectedDiskDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VMwareCbtProtectedDiskDetails IModelSerializable<VMwareCbtProtectedDiskDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VMwareCbtProtectedDiskDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVMwareCbtProtectedDiskDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VMwareCbtProtectedDiskDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VMwareCbtProtectedDiskDetails"/> to convert. </param>
+        public static implicit operator RequestContent(VMwareCbtProtectedDiskDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VMwareCbtProtectedDiskDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VMwareCbtProtectedDiskDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVMwareCbtProtectedDiskDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

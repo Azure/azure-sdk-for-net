@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,7 +20,10 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecurityAutomationData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SecurityAutomationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SecurityAutomationData(AzureLocation location) : base(location)
         {
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Actions = new ChangeTrackingList<SecurityAutomationAction>();
         }
 
-        /// <summary> Initializes a new instance of SecurityAutomationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -46,7 +50,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </param>
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
-        internal SecurityAutomationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, bool? isEnabled, IList<SecurityAutomationScope> scopes, IList<SecurityAutomationSource> sources, IList<SecurityAutomationAction> actions, string kind, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityAutomationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, bool? isEnabled, IList<SecurityAutomationScope> scopes, IList<SecurityAutomationSource> sources, IList<SecurityAutomationAction> actions, string kind, ETag? eTag, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Description = description;
             IsEnabled = isEnabled;
@@ -55,6 +60,12 @@ namespace Azure.ResourceManager.SecurityCenter
             Actions = actions;
             Kind = kind;
             ETag = eTag;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationData"/> for deserialization. </summary>
+        internal SecurityAutomationData()
+        {
         }
 
         /// <summary> The security automation description. </summary>

@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class AdaptiveApplicationControlGroupData : IUtf8JsonSerializable
+    public partial class AdaptiveApplicationControlGroupData : IUtf8JsonSerializable, IModelJsonSerializable<AdaptiveApplicationControlGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AdaptiveApplicationControlGroupData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AdaptiveApplicationControlGroupData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AdaptiveApplicationControlGroupData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -28,7 +35,14 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(ProtectionMode))
             {
                 writer.WritePropertyName("protectionMode"u8);
-                writer.WriteObjectValue(ProtectionMode);
+                if (ProtectionMode is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SecurityCenterFileProtectionMode>)ProtectionMode).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(VmRecommendations))
             {
@@ -36,7 +50,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in VmRecommendations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<VmRecommendation>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -46,16 +67,37 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in PathRecommendations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<PathRecommendation>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AdaptiveApplicationControlGroupData DeserializeAdaptiveApplicationControlGroupData(JsonElement element)
+        internal static AdaptiveApplicationControlGroupData DeserializeAdaptiveApplicationControlGroupData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -73,6 +115,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<AdaptiveApplicationControlGroupSourceSystem> sourceSystem = default;
             Optional<IList<VmRecommendation>> vmRecommendations = default;
             Optional<IList<PathRecommendation>> pathRecommendations = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -207,8 +250,61 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AdaptiveApplicationControlGroupData(id, name, type, systemData.Value, Optional.ToNullable(enforcementMode), protectionMode.Value, Optional.ToNullable(configurationStatus), Optional.ToNullable(recommendationStatus), Optional.ToList(issues), Optional.ToNullable(sourceSystem), Optional.ToList(vmRecommendations), Optional.ToList(pathRecommendations), Optional.ToNullable(location));
+            return new AdaptiveApplicationControlGroupData(id, name, type, systemData.Value, Optional.ToNullable(enforcementMode), protectionMode.Value, Optional.ToNullable(configurationStatus), Optional.ToNullable(recommendationStatus), Optional.ToList(issues), Optional.ToNullable(sourceSystem), Optional.ToList(vmRecommendations), Optional.ToList(pathRecommendations), Optional.ToNullable(location), rawData);
+        }
+
+        AdaptiveApplicationControlGroupData IModelJsonSerializable<AdaptiveApplicationControlGroupData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AdaptiveApplicationControlGroupData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAdaptiveApplicationControlGroupData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AdaptiveApplicationControlGroupData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AdaptiveApplicationControlGroupData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AdaptiveApplicationControlGroupData IModelSerializable<AdaptiveApplicationControlGroupData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AdaptiveApplicationControlGroupData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAdaptiveApplicationControlGroupData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AdaptiveApplicationControlGroupData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AdaptiveApplicationControlGroupData"/> to convert. </param>
+        public static implicit operator RequestContent(AdaptiveApplicationControlGroupData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AdaptiveApplicationControlGroupData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AdaptiveApplicationControlGroupData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAdaptiveApplicationControlGroupData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

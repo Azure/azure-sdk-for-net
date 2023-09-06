@@ -5,22 +5,36 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmRestoreWithRehydrationContent : IUtf8JsonSerializable
+    public partial class IaasVmRestoreWithRehydrationContent : IUtf8JsonSerializable, IModelJsonSerializable<IaasVmRestoreWithRehydrationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IaasVmRestoreWithRehydrationContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IaasVmRestoreWithRehydrationContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IaasVmRestoreWithRehydrationContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryPointRehydrationInfo))
             {
                 writer.WritePropertyName("recoveryPointRehydrationInfo"u8);
-                writer.WriteObjectValue(RecoveryPointRehydrationInfo);
+                if (RecoveryPointRehydrationInfo is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RecoveryPointRehydrationInfo>)RecoveryPointRehydrationInfo).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(RecoveryPointId))
             {
@@ -90,7 +104,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(EncryptionDetails))
             {
                 writer.WritePropertyName("encryptionDetails"u8);
-                writer.WriteObjectValue(EncryptionDetails);
+                if (EncryptionDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<VmEncryptionDetails>)EncryptionDetails).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(RestoreDiskLunList))
             {
@@ -125,12 +146,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(IdentityInfo))
             {
                 writer.WritePropertyName("identityInfo"u8);
-                writer.WriteObjectValue(IdentityInfo);
+                if (IdentityInfo is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BackupIdentityInfo>)IdentityInfo).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(IdentityBasedRestoreDetails))
             {
                 writer.WritePropertyName("identityBasedRestoreDetails"u8);
-                writer.WriteObjectValue(IdentityBasedRestoreDetails);
+                if (IdentityBasedRestoreDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<IdentityBasedRestoreDetails>)IdentityBasedRestoreDetails).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
@@ -140,20 +175,48 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(SecuredVmDetails))
             {
                 writer.WritePropertyName("securedVMDetails"u8);
-                writer.WriteObjectValue(SecuredVmDetails);
+                if (SecuredVmDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SecuredVmDetails>)SecuredVmDetails).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(TargetDiskNetworkAccessSettings))
             {
                 writer.WritePropertyName("targetDiskNetworkAccessSettings"u8);
-                writer.WriteObjectValue(TargetDiskNetworkAccessSettings);
+                if (TargetDiskNetworkAccessSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BackupTargetDiskNetworkAccessSettings>)TargetDiskNetworkAccessSettings).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IaasVmRestoreWithRehydrationContent DeserializeIaasVmRestoreWithRehydrationContent(JsonElement element)
+        internal static IaasVmRestoreWithRehydrationContent DeserializeIaasVmRestoreWithRehydrationContent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -183,6 +246,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<SecuredVmDetails> securedVmDetails = default;
             Optional<BackupTargetDiskNetworkAccessSettings> targetDiskNetworkAccessSettings = default;
             string objectType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointRehydrationInfo"u8))
@@ -404,8 +468,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IaasVmRestoreWithRehydrationContent(objectType, recoveryPointId.Value, Optional.ToNullable(recoveryType), sourceResourceId.Value, targetVirtualMachineId.Value, targetResourceGroupId.Value, storageAccountId.Value, virtualNetworkId.Value, subnetId.Value, targetDomainNameId.Value, Optional.ToNullable(region), affinityGroup.Value, Optional.ToNullable(createNewCloudService), Optional.ToNullable(originalStorageAccountOption), encryptionDetails.Value, Optional.ToList(restoreDiskLunList), Optional.ToNullable(restoreWithManagedDisks), diskEncryptionSetId.Value, Optional.ToList(zones), identityInfo.Value, identityBasedRestoreDetails.Value, extendedLocation, securedVmDetails.Value, targetDiskNetworkAccessSettings.Value, recoveryPointRehydrationInfo.Value);
+            return new IaasVmRestoreWithRehydrationContent(objectType, recoveryPointId.Value, Optional.ToNullable(recoveryType), sourceResourceId.Value, targetVirtualMachineId.Value, targetResourceGroupId.Value, storageAccountId.Value, virtualNetworkId.Value, subnetId.Value, targetDomainNameId.Value, Optional.ToNullable(region), affinityGroup.Value, Optional.ToNullable(createNewCloudService), Optional.ToNullable(originalStorageAccountOption), encryptionDetails.Value, Optional.ToList(restoreDiskLunList), Optional.ToNullable(restoreWithManagedDisks), diskEncryptionSetId.Value, Optional.ToList(zones), identityInfo.Value, identityBasedRestoreDetails.Value, extendedLocation, securedVmDetails.Value, targetDiskNetworkAccessSettings.Value, recoveryPointRehydrationInfo.Value, rawData);
+        }
+
+        IaasVmRestoreWithRehydrationContent IModelJsonSerializable<IaasVmRestoreWithRehydrationContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IaasVmRestoreWithRehydrationContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIaasVmRestoreWithRehydrationContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IaasVmRestoreWithRehydrationContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IaasVmRestoreWithRehydrationContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IaasVmRestoreWithRehydrationContent IModelSerializable<IaasVmRestoreWithRehydrationContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IaasVmRestoreWithRehydrationContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIaasVmRestoreWithRehydrationContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IaasVmRestoreWithRehydrationContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IaasVmRestoreWithRehydrationContent"/> to convert. </param>
+        public static implicit operator RequestContent(IaasVmRestoreWithRehydrationContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IaasVmRestoreWithRehydrationContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IaasVmRestoreWithRehydrationContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIaasVmRestoreWithRehydrationContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,75 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryNetworkProperties
+    public partial class SiteRecoveryNetworkProperties : IUtf8JsonSerializable, IModelJsonSerializable<SiteRecoveryNetworkProperties>
     {
-        internal static SiteRecoveryNetworkProperties DeserializeSiteRecoveryNetworkProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SiteRecoveryNetworkProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SiteRecoveryNetworkProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryNetworkProperties>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(FabricType))
+            {
+                writer.WritePropertyName("fabricType"u8);
+                writer.WriteStringValue(FabricType);
+            }
+            if (Optional.IsCollectionDefined(Subnets))
+            {
+                writer.WritePropertyName("subnets"u8);
+                writer.WriteStartArray();
+                foreach (var item in Subnets)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SiteRecoverySubnet>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(FriendlyName))
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
+            if (Optional.IsDefined(NetworkType))
+            {
+                writer.WritePropertyName("networkType"u8);
+                writer.WriteStringValue(NetworkType);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SiteRecoveryNetworkProperties DeserializeSiteRecoveryNetworkProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<SiteRecoverySubnet>> subnets = default;
             Optional<string> friendlyName = default;
             Optional<string> networkType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fabricType"u8))
@@ -54,8 +114,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     networkType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SiteRecoveryNetworkProperties(fabricType.Value, Optional.ToList(subnets), friendlyName.Value, networkType.Value);
+            return new SiteRecoveryNetworkProperties(fabricType.Value, Optional.ToList(subnets), friendlyName.Value, networkType.Value, rawData);
+        }
+
+        SiteRecoveryNetworkProperties IModelJsonSerializable<SiteRecoveryNetworkProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryNetworkProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryNetworkProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SiteRecoveryNetworkProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryNetworkProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SiteRecoveryNetworkProperties IModelSerializable<SiteRecoveryNetworkProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryNetworkProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryNetworkProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SiteRecoveryNetworkProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SiteRecoveryNetworkProperties"/> to convert. </param>
+        public static implicit operator RequestContent(SiteRecoveryNetworkProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SiteRecoveryNetworkProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SiteRecoveryNetworkProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSiteRecoveryNetworkProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

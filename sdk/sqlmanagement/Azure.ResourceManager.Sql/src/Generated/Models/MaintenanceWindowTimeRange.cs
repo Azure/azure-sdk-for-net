@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Maintenance window time range. </summary>
     public partial class MaintenanceWindowTimeRange
     {
-        /// <summary> Initializes a new instance of MaintenanceWindowTimeRange. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowTimeRange"/>. </summary>
         public MaintenanceWindowTimeRange()
         {
         }
 
-        /// <summary> Initializes a new instance of MaintenanceWindowTimeRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowTimeRange"/>. </summary>
         /// <param name="dayOfWeek"> Day of maintenance window. </param>
         /// <param name="startTime"> Start time minutes offset from 12am. </param>
         /// <param name="duration"> Duration of maintenance window in minutes. </param>
-        internal MaintenanceWindowTimeRange(SqlDayOfWeek? dayOfWeek, string startTime, TimeSpan? duration)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MaintenanceWindowTimeRange(SqlDayOfWeek? dayOfWeek, string startTime, TimeSpan? duration, Dictionary<string, BinaryData> rawData)
         {
             DayOfWeek = dayOfWeek;
             StartTime = startTime;
             Duration = duration;
+            _rawData = rawData;
         }
 
         /// <summary> Day of maintenance window. </summary>

@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Specifies whether template expressions are evaluated within the scope of the parent template or nested template. </summary>
     internal partial class ExpressionEvaluationOptions
     {
-        /// <summary> Initializes a new instance of ExpressionEvaluationOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExpressionEvaluationOptions"/>. </summary>
         public ExpressionEvaluationOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExpressionEvaluationOptions"/>. </summary>
+        /// <param name="scope"> The scope to be used for evaluation of parameters, variables and functions in a nested template. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressionEvaluationOptions(ExpressionEvaluationScope? scope, Dictionary<string, BinaryData> rawData)
+        {
+            Scope = scope;
+            _rawData = rawData;
         }
 
         /// <summary> The scope to be used for evaluation of parameters, variables and functions in a nested template. </summary>

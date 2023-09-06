@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Input for remove disk(s) operation. </summary>
     public partial class RemoveDisksContent
     {
-        /// <summary> Initializes a new instance of RemoveDisksContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RemoveDisksContent"/>. </summary>
         public RemoveDisksContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RemoveDisksContent"/>. </summary>
+        /// <param name="properties"> Remove disk input properties. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RemoveDisksContent(RemoveDisksContentProperties properties, Dictionary<string, BinaryData> rawData)
+        {
+            Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Remove disk input properties. </summary>

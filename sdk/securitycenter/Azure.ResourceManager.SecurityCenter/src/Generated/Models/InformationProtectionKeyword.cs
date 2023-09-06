@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The information type keyword. </summary>
     public partial class InformationProtectionKeyword
     {
-        /// <summary> Initializes a new instance of InformationProtectionKeyword. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InformationProtectionKeyword"/>. </summary>
         public InformationProtectionKeyword()
         {
         }
 
-        /// <summary> Initializes a new instance of InformationProtectionKeyword. </summary>
+        /// <summary> Initializes a new instance of <see cref="InformationProtectionKeyword"/>. </summary>
         /// <param name="pattern"> The keyword pattern. </param>
         /// <param name="custom"> Indicates whether the keyword is custom or not. </param>
         /// <param name="canBeNumeric"> Indicates whether the keyword can be applied on numeric types or not. </param>
         /// <param name="excluded"> Indicates whether the keyword is excluded or not. </param>
-        internal InformationProtectionKeyword(string pattern, bool? custom, bool? canBeNumeric, bool? excluded)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InformationProtectionKeyword(string pattern, bool? custom, bool? canBeNumeric, bool? excluded, Dictionary<string, BinaryData> rawData)
         {
             Pattern = pattern;
             Custom = custom;
             CanBeNumeric = canBeNumeric;
             Excluded = excluded;
+            _rawData = rawData;
         }
 
         /// <summary> The keyword pattern. </summary>

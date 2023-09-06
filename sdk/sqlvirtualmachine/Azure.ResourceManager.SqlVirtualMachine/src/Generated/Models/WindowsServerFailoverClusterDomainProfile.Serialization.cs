@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class WindowsServerFailoverClusterDomainProfile : IUtf8JsonSerializable
+    public partial class WindowsServerFailoverClusterDomainProfile : IUtf8JsonSerializable, IModelJsonSerializable<WindowsServerFailoverClusterDomainProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WindowsServerFailoverClusterDomainProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WindowsServerFailoverClusterDomainProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<WindowsServerFailoverClusterDomainProfile>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DomainFqdn))
             {
@@ -61,11 +68,25 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("clusterSubnetType"u8);
                 writer.WriteStringValue(ClusterSubnetType.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WindowsServerFailoverClusterDomainProfile DeserializeWindowsServerFailoverClusterDomainProfile(JsonElement element)
+        internal static WindowsServerFailoverClusterDomainProfile DeserializeWindowsServerFailoverClusterDomainProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -79,6 +100,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<Uri> storageAccountUrl = default;
             Optional<string> storageAccountPrimaryKey = default;
             Optional<SqlVmClusterSubnetType> clusterSubnetType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainFqdn"u8))
@@ -134,8 +156,61 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     clusterSubnetType = new SqlVmClusterSubnetType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WindowsServerFailoverClusterDomainProfile(domainFqdn.Value, ouPath.Value, clusterBootstrapAccount.Value, clusterOperatorAccount.Value, sqlServiceAccount.Value, fileShareWitnessPath.Value, storageAccountUrl.Value, storageAccountPrimaryKey.Value, Optional.ToNullable(clusterSubnetType));
+            return new WindowsServerFailoverClusterDomainProfile(domainFqdn.Value, ouPath.Value, clusterBootstrapAccount.Value, clusterOperatorAccount.Value, sqlServiceAccount.Value, fileShareWitnessPath.Value, storageAccountUrl.Value, storageAccountPrimaryKey.Value, Optional.ToNullable(clusterSubnetType), rawData);
+        }
+
+        WindowsServerFailoverClusterDomainProfile IModelJsonSerializable<WindowsServerFailoverClusterDomainProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WindowsServerFailoverClusterDomainProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWindowsServerFailoverClusterDomainProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WindowsServerFailoverClusterDomainProfile>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WindowsServerFailoverClusterDomainProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WindowsServerFailoverClusterDomainProfile IModelSerializable<WindowsServerFailoverClusterDomainProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WindowsServerFailoverClusterDomainProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWindowsServerFailoverClusterDomainProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WindowsServerFailoverClusterDomainProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WindowsServerFailoverClusterDomainProfile"/> to convert. </param>
+        public static implicit operator RequestContent(WindowsServerFailoverClusterDomainProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WindowsServerFailoverClusterDomainProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WindowsServerFailoverClusterDomainProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWindowsServerFailoverClusterDomainProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

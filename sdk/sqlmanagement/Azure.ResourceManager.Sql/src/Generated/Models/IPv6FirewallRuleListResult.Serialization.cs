@@ -5,23 +5,51 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal partial class IPv6FirewallRuleListResult
+    internal partial class IPv6FirewallRuleListResult : IUtf8JsonSerializable, IModelJsonSerializable<IPv6FirewallRuleListResult>
     {
-        internal static IPv6FirewallRuleListResult DeserializeIPv6FirewallRuleListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IPv6FirewallRuleListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IPv6FirewallRuleListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IPv6FirewallRuleListResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static IPv6FirewallRuleListResult DeserializeIPv6FirewallRuleListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<IPv6FirewallRuleData>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +71,61 @@ namespace Azure.ResourceManager.Sql.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IPv6FirewallRuleListResult(Optional.ToList(value), nextLink.Value);
+            return new IPv6FirewallRuleListResult(Optional.ToList(value), nextLink.Value, rawData);
+        }
+
+        IPv6FirewallRuleListResult IModelJsonSerializable<IPv6FirewallRuleListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IPv6FirewallRuleListResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIPv6FirewallRuleListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IPv6FirewallRuleListResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IPv6FirewallRuleListResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IPv6FirewallRuleListResult IModelSerializable<IPv6FirewallRuleListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IPv6FirewallRuleListResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIPv6FirewallRuleListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IPv6FirewallRuleListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IPv6FirewallRuleListResult"/> to convert. </param>
+        public static implicit operator RequestContent(IPv6FirewallRuleListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IPv6FirewallRuleListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IPv6FirewallRuleListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIPv6FirewallRuleListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

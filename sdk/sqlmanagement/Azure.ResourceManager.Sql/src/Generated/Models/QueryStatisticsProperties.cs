@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,25 +14,30 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Properties of a query execution statistics. </summary>
     public partial class QueryStatisticsProperties
     {
-        /// <summary> Initializes a new instance of QueryStatisticsProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryStatisticsProperties"/>. </summary>
         internal QueryStatisticsProperties()
         {
             Intervals = new ChangeTrackingList<QueryMetricInterval>();
         }
 
-        /// <summary> Initializes a new instance of QueryStatisticsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryStatisticsProperties"/>. </summary>
         /// <param name="databaseName"> Database name of the database in which this query was executed. </param>
         /// <param name="queryId"> Unique query id (unique within one database). </param>
         /// <param name="startTime"> The start time for the metric (ISO-8601 format). </param>
         /// <param name="endTime"> The end time for the metric (ISO-8601 format). </param>
         /// <param name="intervals"> List of intervals with appropriate metric data. </param>
-        internal QueryStatisticsProperties(string databaseName, string queryId, string startTime, string endTime, IReadOnlyList<QueryMetricInterval> intervals)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryStatisticsProperties(string databaseName, string queryId, string startTime, string endTime, IReadOnlyList<QueryMetricInterval> intervals, Dictionary<string, BinaryData> rawData)
         {
             DatabaseName = databaseName;
             QueryId = queryId;
             StartTime = startTime;
             EndTime = endTime;
             Intervals = intervals;
+            _rawData = rawData;
         }
 
         /// <summary> Database name of the database in which this query was executed. </summary>

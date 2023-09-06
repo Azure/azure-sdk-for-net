@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Qumulo.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Qumulo.Models
     /// <summary> MarketplaceDetails of Qumulo FileSystem resource. </summary>
     public partial class MarketplaceDetails
     {
-        /// <summary> Initializes a new instance of MarketplaceDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MarketplaceDetails"/>. </summary>
         /// <param name="planId"> Plan Id. </param>
         /// <param name="offerId"> Offer Id. </param>
         /// <param name="publisherId"> Publisher Id. </param>
@@ -29,19 +33,26 @@ namespace Azure.ResourceManager.Qumulo.Models
             PublisherId = publisherId;
         }
 
-        /// <summary> Initializes a new instance of MarketplaceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceDetails"/>. </summary>
         /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
         /// <param name="planId"> Plan Id. </param>
         /// <param name="offerId"> Offer Id. </param>
         /// <param name="publisherId"> Publisher Id. </param>
         /// <param name="marketplaceSubscriptionStatus"> Marketplace subscription status. </param>
-        internal MarketplaceDetails(string marketplaceSubscriptionId, string planId, string offerId, string publisherId, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MarketplaceDetails(string marketplaceSubscriptionId, string planId, string offerId, string publisherId, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, Dictionary<string, BinaryData> rawData)
         {
             MarketplaceSubscriptionId = marketplaceSubscriptionId;
             PlanId = planId;
             OfferId = offerId;
             PublisherId = publisherId;
             MarketplaceSubscriptionStatus = marketplaceSubscriptionStatus;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MarketplaceDetails"/> for deserialization. </summary>
+        internal MarketplaceDetails()
+        {
         }
 
         /// <summary> Marketplace Subscription Id. </summary>

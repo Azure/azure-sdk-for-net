@@ -13,19 +13,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The V2 policy schedule for IaaS that supports hourly backups. </summary>
     public partial class SimpleSchedulePolicyV2 : BackupSchedulePolicy
     {
-        /// <summary> Initializes a new instance of SimpleSchedulePolicyV2. </summary>
+        /// <summary> Initializes a new instance of <see cref="SimpleSchedulePolicyV2"/>. </summary>
         public SimpleSchedulePolicyV2()
         {
             SchedulePolicyType = "SimpleSchedulePolicyV2";
         }
 
-        /// <summary> Initializes a new instance of SimpleSchedulePolicyV2. </summary>
+        /// <summary> Initializes a new instance of <see cref="SimpleSchedulePolicyV2"/>. </summary>
         /// <param name="schedulePolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="scheduleRunFrequency"> Frequency of the schedule operation of this policy. </param>
         /// <param name="hourlySchedule"> hourly schedule of this policy. </param>
         /// <param name="dailySchedule"> Daily schedule of this policy. </param>
         /// <param name="weeklySchedule"> Weekly schedule of this policy. </param>
-        internal SimpleSchedulePolicyV2(string schedulePolicyType, ScheduleRunType? scheduleRunFrequency, BackupHourlySchedule hourlySchedule, BackupDailySchedule dailySchedule, BackupWeeklySchedule weeklySchedule) : base(schedulePolicyType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SimpleSchedulePolicyV2(string schedulePolicyType, ScheduleRunType? scheduleRunFrequency, BackupHourlySchedule hourlySchedule, BackupDailySchedule dailySchedule, BackupWeeklySchedule weeklySchedule, Dictionary<string, BinaryData> rawData) : base(schedulePolicyType, rawData)
         {
             ScheduleRunFrequency = scheduleRunFrequency;
             HourlySchedule = hourlySchedule;

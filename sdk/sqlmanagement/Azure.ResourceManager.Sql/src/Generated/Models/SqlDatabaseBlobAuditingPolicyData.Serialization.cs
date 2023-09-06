@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlDatabaseBlobAuditingPolicyData : IUtf8JsonSerializable
+    public partial class SqlDatabaseBlobAuditingPolicyData : IUtf8JsonSerializable, IModelJsonSerializable<SqlDatabaseBlobAuditingPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SqlDatabaseBlobAuditingPolicyData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SqlDatabaseBlobAuditingPolicyData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SqlDatabaseBlobAuditingPolicyData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -77,11 +83,25 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStringValue(StorageAccountSubscriptionId.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlDatabaseBlobAuditingPolicyData DeserializeSqlDatabaseBlobAuditingPolicyData(JsonElement element)
+        internal static SqlDatabaseBlobAuditingPolicyData DeserializeSqlDatabaseBlobAuditingPolicyData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -101,6 +121,7 @@ namespace Azure.ResourceManager.Sql
             Optional<string> storageEndpoint = default;
             Optional<string> storageAccountAccessKey = default;
             Optional<Guid> storageAccountSubscriptionId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -231,8 +252,61 @@ namespace Azure.ResourceManager.Sql
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SqlDatabaseBlobAuditingPolicyData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(retentionDays), Optional.ToList(auditActionsAndGroups), Optional.ToNullable(isStorageSecondaryKeyInUse), Optional.ToNullable(isAzureMonitorTargetEnabled), Optional.ToNullable(queueDelayMs), Optional.ToNullable(isManagedIdentityInUse), Optional.ToNullable(state), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(storageAccountSubscriptionId));
+            return new SqlDatabaseBlobAuditingPolicyData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(retentionDays), Optional.ToList(auditActionsAndGroups), Optional.ToNullable(isStorageSecondaryKeyInUse), Optional.ToNullable(isAzureMonitorTargetEnabled), Optional.ToNullable(queueDelayMs), Optional.ToNullable(isManagedIdentityInUse), Optional.ToNullable(state), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(storageAccountSubscriptionId), rawData);
+        }
+
+        SqlDatabaseBlobAuditingPolicyData IModelJsonSerializable<SqlDatabaseBlobAuditingPolicyData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SqlDatabaseBlobAuditingPolicyData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlDatabaseBlobAuditingPolicyData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SqlDatabaseBlobAuditingPolicyData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SqlDatabaseBlobAuditingPolicyData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SqlDatabaseBlobAuditingPolicyData IModelSerializable<SqlDatabaseBlobAuditingPolicyData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SqlDatabaseBlobAuditingPolicyData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSqlDatabaseBlobAuditingPolicyData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SqlDatabaseBlobAuditingPolicyData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SqlDatabaseBlobAuditingPolicyData"/> to convert. </param>
+        public static implicit operator RequestContent(SqlDatabaseBlobAuditingPolicyData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SqlDatabaseBlobAuditingPolicyData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SqlDatabaseBlobAuditingPolicyData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSqlDatabaseBlobAuditingPolicyData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

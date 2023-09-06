@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class BM25Similarity : IUtf8JsonSerializable
+    public partial class BM25Similarity : IUtf8JsonSerializable, IModelJsonSerializable<BM25Similarity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BM25Similarity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BM25Similarity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BM25Similarity>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(K1))
             {
@@ -41,11 +49,25 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BM25Similarity DeserializeBM25Similarity(JsonElement element)
+        internal static BM25Similarity DeserializeBM25Similarity(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,6 +75,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<double?> k1 = default;
             Optional<double?> b = default;
             string odataType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("k1"u8))
@@ -80,8 +103,61 @@ namespace Azure.Search.Documents.Indexes.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BM25Similarity(odataType, Optional.ToNullable(k1), Optional.ToNullable(b));
+            return new BM25Similarity(odataType, Optional.ToNullable(k1), Optional.ToNullable(b), rawData);
+        }
+
+        BM25Similarity IModelJsonSerializable<BM25Similarity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BM25Similarity>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBM25Similarity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BM25Similarity>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BM25Similarity>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BM25Similarity IModelSerializable<BM25Similarity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BM25Similarity>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBM25Similarity(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BM25Similarity"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BM25Similarity"/> to convert. </param>
+        public static implicit operator RequestContent(BM25Similarity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BM25Similarity"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BM25Similarity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBM25Similarity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

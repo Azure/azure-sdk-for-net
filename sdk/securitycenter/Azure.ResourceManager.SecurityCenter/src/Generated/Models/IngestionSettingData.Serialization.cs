@@ -6,16 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class IngestionSettingData : IUtf8JsonSerializable
+    public partial class IngestionSettingData : IUtf8JsonSerializable, IModelJsonSerializable<IngestionSettingData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IngestionSettingData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IngestionSettingData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IngestionSettingData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
@@ -26,11 +33,25 @@ namespace Azure.ResourceManager.SecurityCenter
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Properties.ToString()).RootElement);
 #endif
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IngestionSettingData DeserializeIngestionSettingData(JsonElement element)
+        internal static IngestionSettingData DeserializeIngestionSettingData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -75,8 +97,61 @@ namespace Azure.ResourceManager.SecurityCenter
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IngestionSettingData(id, name, type, systemData.Value, properties.Value);
+            return new IngestionSettingData(id, name, type, systemData.Value, properties.Value, rawData);
+        }
+
+        IngestionSettingData IModelJsonSerializable<IngestionSettingData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IngestionSettingData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIngestionSettingData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IngestionSettingData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IngestionSettingData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IngestionSettingData IModelSerializable<IngestionSettingData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IngestionSettingData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIngestionSettingData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IngestionSettingData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IngestionSettingData"/> to convert. </param>
+        public static implicit operator RequestContent(IngestionSettingData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IngestionSettingData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IngestionSettingData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIngestionSettingData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

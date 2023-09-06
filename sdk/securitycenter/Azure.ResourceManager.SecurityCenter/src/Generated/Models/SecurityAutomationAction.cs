@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Please note <see cref="SecurityAutomationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SecurityAutomationActionEventHub"/>, <see cref="SecurityAutomationActionLogicApp"/> and <see cref="SecurityAutomationActionWorkspace"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownAutomationAction))]
     public abstract partial class SecurityAutomationAction
     {
-        /// <summary> Initializes a new instance of SecurityAutomationAction. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationAction"/>. </summary>
         protected SecurityAutomationAction()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityAutomationAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationAction"/>. </summary>
         /// <param name="actionType"> The type of the action that will be triggered by the Automation. </param>
-        internal SecurityAutomationAction(ActionType actionType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityAutomationAction(ActionType actionType, Dictionary<string, BinaryData> rawData)
         {
             ActionType = actionType;
+            _rawData = rawData;
         }
 
         /// <summary> The type of the action that will be triggered by the Automation. </summary>

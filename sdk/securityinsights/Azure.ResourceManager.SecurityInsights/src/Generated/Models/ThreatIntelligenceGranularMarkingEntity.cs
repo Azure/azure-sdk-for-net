@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Describes threat granular marking model entity. </summary>
     public partial class ThreatIntelligenceGranularMarkingEntity
     {
-        /// <summary> Initializes a new instance of ThreatIntelligenceGranularMarkingEntity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceGranularMarkingEntity"/>. </summary>
         public ThreatIntelligenceGranularMarkingEntity()
         {
             Selectors = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ThreatIntelligenceGranularMarkingEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceGranularMarkingEntity"/>. </summary>
         /// <param name="language"> Language granular marking model. </param>
         /// <param name="markingRef"> marking reference granular marking model. </param>
         /// <param name="selectors"> granular marking model selectors. </param>
-        internal ThreatIntelligenceGranularMarkingEntity(string language, int? markingRef, IList<string> selectors)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ThreatIntelligenceGranularMarkingEntity(string language, int? markingRef, IList<string> selectors, Dictionary<string, BinaryData> rawData)
         {
             Language = language;
             MarkingRef = markingRef;
             Selectors = selectors;
+            _rawData = rawData;
         }
 
         /// <summary> Language granular marking model. </summary>

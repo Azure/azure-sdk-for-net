@@ -5,19 +5,113 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class CreateDatabaseRestorePointDefinition : IUtf8JsonSerializable
+    public partial class CreateDatabaseRestorePointDefinition : IUtf8JsonSerializable, IModelJsonSerializable<CreateDatabaseRestorePointDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CreateDatabaseRestorePointDefinition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CreateDatabaseRestorePointDefinition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CreateDatabaseRestorePointDefinition>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("restorePointLabel"u8);
             writer.WriteStringValue(RestorePointLabel);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static CreateDatabaseRestorePointDefinition DeserializeCreateDatabaseRestorePointDefinition(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string restorePointLabel = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("restorePointLabel"u8))
+                {
+                    restorePointLabel = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new CreateDatabaseRestorePointDefinition(restorePointLabel, rawData);
+        }
+
+        CreateDatabaseRestorePointDefinition IModelJsonSerializable<CreateDatabaseRestorePointDefinition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CreateDatabaseRestorePointDefinition>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCreateDatabaseRestorePointDefinition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CreateDatabaseRestorePointDefinition>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CreateDatabaseRestorePointDefinition>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CreateDatabaseRestorePointDefinition IModelSerializable<CreateDatabaseRestorePointDefinition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CreateDatabaseRestorePointDefinition>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCreateDatabaseRestorePointDefinition(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CreateDatabaseRestorePointDefinition"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CreateDatabaseRestorePointDefinition"/> to convert. </param>
+        public static implicit operator RequestContent(CreateDatabaseRestorePointDefinition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CreateDatabaseRestorePointDefinition"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CreateDatabaseRestorePointDefinition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCreateDatabaseRestorePointDefinition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

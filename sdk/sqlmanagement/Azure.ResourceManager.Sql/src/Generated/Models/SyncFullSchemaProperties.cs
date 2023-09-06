@@ -14,19 +14,24 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Properties of the database full schema. </summary>
     public partial class SyncFullSchemaProperties
     {
-        /// <summary> Initializes a new instance of SyncFullSchemaProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SyncFullSchemaProperties"/>. </summary>
         internal SyncFullSchemaProperties()
         {
             Tables = new ChangeTrackingList<SyncFullSchemaTable>();
         }
 
-        /// <summary> Initializes a new instance of SyncFullSchemaProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncFullSchemaProperties"/>. </summary>
         /// <param name="tables"> List of tables in the database full schema. </param>
         /// <param name="lastUpdateOn"> Last update time of the database schema. </param>
-        internal SyncFullSchemaProperties(IReadOnlyList<SyncFullSchemaTable> tables, DateTimeOffset? lastUpdateOn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SyncFullSchemaProperties(IReadOnlyList<SyncFullSchemaTable> tables, DateTimeOffset? lastUpdateOn, Dictionary<string, BinaryData> rawData)
         {
             Tables = tables;
             LastUpdateOn = lastUpdateOn;
+            _rawData = rawData;
         }
 
         /// <summary> List of tables in the database full schema. </summary>

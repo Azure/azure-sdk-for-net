@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Purview.Models
 {
     /// <summary> The Account access keys. </summary>
     public partial class PurviewAccountAccessKey
     {
-        /// <summary> Initializes a new instance of PurviewAccountAccessKey. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountAccessKey"/>. </summary>
         internal PurviewAccountAccessKey()
         {
         }
 
-        /// <summary> Initializes a new instance of PurviewAccountAccessKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountAccessKey"/>. </summary>
         /// <param name="atlasKafkaPrimaryEndpoint"> Gets or sets the primary connection string. </param>
         /// <param name="atlasKafkaSecondaryEndpoint"> Gets or sets the secondary connection string. </param>
-        internal PurviewAccountAccessKey(string atlasKafkaPrimaryEndpoint, string atlasKafkaSecondaryEndpoint)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PurviewAccountAccessKey(string atlasKafkaPrimaryEndpoint, string atlasKafkaSecondaryEndpoint, Dictionary<string, BinaryData> rawData)
         {
             AtlasKafkaPrimaryEndpoint = atlasKafkaPrimaryEndpoint;
             AtlasKafkaSecondaryEndpoint = atlasKafkaSecondaryEndpoint;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the primary connection string. </summary>

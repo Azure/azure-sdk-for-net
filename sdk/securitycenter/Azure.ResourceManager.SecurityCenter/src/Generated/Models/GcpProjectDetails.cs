@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The details about the project represented by the security connector. </summary>
     public partial class GcpProjectDetails
     {
-        /// <summary> Initializes a new instance of GcpProjectDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GcpProjectDetails"/>. </summary>
         public GcpProjectDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of GcpProjectDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="GcpProjectDetails"/>. </summary>
         /// <param name="projectNumber"> The unique GCP Project number. </param>
         /// <param name="projectId"> The GCP Project id. </param>
         /// <param name="workloadIdentityPoolId"> The GCP workload identity federation pool id. </param>
-        internal GcpProjectDetails(string projectNumber, string projectId, string workloadIdentityPoolId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GcpProjectDetails(string projectNumber, string projectId, string workloadIdentityPoolId, Dictionary<string, BinaryData> rawData)
         {
             ProjectNumber = projectNumber;
             ProjectId = projectId;
             WorkloadIdentityPoolId = workloadIdentityPoolId;
+            _rawData = rawData;
         }
 
         /// <summary> The unique GCP Project number. </summary>

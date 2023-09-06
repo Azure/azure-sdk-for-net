@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class DnsZone : IUtf8JsonSerializable
+    public partial class DnsZone : IUtf8JsonSerializable, IModelJsonSerializable<DnsZone>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DnsZone>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DnsZone>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DnsZone>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SubResource))
             {
                 writer.WritePropertyName("subResource"u8);
                 writer.WriteStringValue(SubResource.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DnsZone DeserializeDnsZone(JsonElement element)
+        internal static DnsZone DeserializeDnsZone(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<VaultSubResourceType> subResource = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subResource"u8))
@@ -41,8 +64,61 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     subResource = new VaultSubResourceType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DnsZone(Optional.ToNullable(subResource));
+            return new DnsZone(Optional.ToNullable(subResource), rawData);
+        }
+
+        DnsZone IModelJsonSerializable<DnsZone>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DnsZone>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDnsZone(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DnsZone>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DnsZone>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DnsZone IModelSerializable<DnsZone>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DnsZone>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDnsZone(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DnsZone"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DnsZone"/> to convert. </param>
+        public static implicit operator RequestContent(DnsZone model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DnsZone"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DnsZone(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDnsZone(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

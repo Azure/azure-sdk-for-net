@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> Indicates that either the API key or an access token from Azure Active Directory can be used for authentication. </summary>
     internal partial class DataPlaneAadOrApiKeyAuthOption
     {
-        /// <summary> Initializes a new instance of DataPlaneAadOrApiKeyAuthOption. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataPlaneAadOrApiKeyAuthOption"/>. </summary>
         public DataPlaneAadOrApiKeyAuthOption()
         {
         }
 
-        /// <summary> Initializes a new instance of DataPlaneAadOrApiKeyAuthOption. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataPlaneAadOrApiKeyAuthOption"/>. </summary>
         /// <param name="aadAuthFailureMode"> Describes what response the data plane API of a Search service would send for requests that failed authentication. </param>
-        internal DataPlaneAadOrApiKeyAuthOption(SearchAadAuthFailureMode? aadAuthFailureMode)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataPlaneAadOrApiKeyAuthOption(SearchAadAuthFailureMode? aadAuthFailureMode, Dictionary<string, BinaryData> rawData)
         {
             AadAuthFailureMode = aadAuthFailureMode;
+            _rawData = rawData;
         }
 
         /// <summary> Describes what response the data plane API of a Search service would send for requests that failed authentication. </summary>

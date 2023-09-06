@@ -9,14 +9,107 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryVCenterProperties
+    public partial class SiteRecoveryVCenterProperties : IUtf8JsonSerializable, IModelJsonSerializable<SiteRecoveryVCenterProperties>
     {
-        internal static SiteRecoveryVCenterProperties DeserializeSiteRecoveryVCenterProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SiteRecoveryVCenterProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SiteRecoveryVCenterProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryVCenterProperties>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(FriendlyName))
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
+            if (Optional.IsDefined(InternalId))
+            {
+                writer.WritePropertyName("internalId"u8);
+                writer.WriteStringValue(InternalId);
+            }
+            if (Optional.IsDefined(LastHeartbeatReceivedOn))
+            {
+                writer.WritePropertyName("lastHeartbeat"u8);
+                writer.WriteStringValue(LastHeartbeatReceivedOn.Value, "O");
+            }
+            if (Optional.IsDefined(DiscoveryStatus))
+            {
+                writer.WritePropertyName("discoveryStatus"u8);
+                writer.WriteStringValue(DiscoveryStatus);
+            }
+            if (Optional.IsDefined(ProcessServerId))
+            {
+                writer.WritePropertyName("processServerId"u8);
+                writer.WriteStringValue(ProcessServerId.Value);
+            }
+            if (Optional.IsDefined(IPAddress))
+            {
+                writer.WritePropertyName("ipAddress"u8);
+                writer.WriteStringValue(IPAddress.ToString());
+            }
+            if (Optional.IsDefined(InfrastructureId))
+            {
+                writer.WritePropertyName("infrastructureId"u8);
+                writer.WriteStringValue(InfrastructureId);
+            }
+            if (Optional.IsDefined(Port))
+            {
+                writer.WritePropertyName("port"u8);
+                writer.WriteStringValue(Port);
+            }
+            if (Optional.IsDefined(RunAsAccountId))
+            {
+                writer.WritePropertyName("runAsAccountId"u8);
+                writer.WriteStringValue(RunAsAccountId);
+            }
+            if (Optional.IsDefined(FabricArmResourceName))
+            {
+                writer.WritePropertyName("fabricArmResourceName"u8);
+                writer.WriteStringValue(FabricArmResourceName);
+            }
+            if (Optional.IsCollectionDefined(HealthErrors))
+            {
+                writer.WritePropertyName("healthErrors"u8);
+                writer.WriteStartArray();
+                foreach (var item in HealthErrors)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SiteRecoveryHealthError>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SiteRecoveryVCenterProperties DeserializeSiteRecoveryVCenterProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> runAsAccountId = default;
             Optional<string> fabricArmResourceName = default;
             Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -110,8 +204,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     healthErrors = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SiteRecoveryVCenterProperties(friendlyName.Value, internalId.Value, Optional.ToNullable(lastHeartbeat), discoveryStatus.Value, Optional.ToNullable(processServerId), ipAddress.Value, infrastructureId.Value, port.Value, runAsAccountId.Value, fabricArmResourceName.Value, Optional.ToList(healthErrors));
+            return new SiteRecoveryVCenterProperties(friendlyName.Value, internalId.Value, Optional.ToNullable(lastHeartbeat), discoveryStatus.Value, Optional.ToNullable(processServerId), ipAddress.Value, infrastructureId.Value, port.Value, runAsAccountId.Value, fabricArmResourceName.Value, Optional.ToList(healthErrors), rawData);
+        }
+
+        SiteRecoveryVCenterProperties IModelJsonSerializable<SiteRecoveryVCenterProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryVCenterProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryVCenterProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SiteRecoveryVCenterProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryVCenterProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SiteRecoveryVCenterProperties IModelSerializable<SiteRecoveryVCenterProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryVCenterProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryVCenterProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SiteRecoveryVCenterProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SiteRecoveryVCenterProperties"/> to convert. </param>
+        public static implicit operator RequestContent(SiteRecoveryVCenterProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SiteRecoveryVCenterProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SiteRecoveryVCenterProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSiteRecoveryVCenterProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

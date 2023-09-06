@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The parameters of a managed instance operation. </summary>
     public partial class ManagedInstanceOperationParametersPair
     {
-        /// <summary> Initializes a new instance of ManagedInstanceOperationParametersPair. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceOperationParametersPair"/>. </summary>
         internal ManagedInstanceOperationParametersPair()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceOperationParametersPair. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceOperationParametersPair"/>. </summary>
         /// <param name="currentParameters"> The current parameters. </param>
         /// <param name="requestedParameters"> The requested parameters. </param>
-        internal ManagedInstanceOperationParametersPair(UpsertManagedServerOperationParameters currentParameters, UpsertManagedServerOperationParameters requestedParameters)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedInstanceOperationParametersPair(UpsertManagedServerOperationParameters currentParameters, UpsertManagedServerOperationParameters requestedParameters, Dictionary<string, BinaryData> rawData)
         {
             CurrentParameters = currentParameters;
             RequestedParameters = requestedParameters;
+            _rawData = rawData;
         }
 
         /// <summary> The current parameters. </summary>

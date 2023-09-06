@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The Microsoft Defender for Server VM scanning configuration. </summary>
     public partial class DefenderForServersAwsOfferingVmScanners
     {
-        /// <summary> Initializes a new instance of DefenderForServersAwsOfferingVmScanners. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DefenderForServersAwsOfferingVmScanners"/>. </summary>
         public DefenderForServersAwsOfferingVmScanners()
         {
         }
 
-        /// <summary> Initializes a new instance of DefenderForServersAwsOfferingVmScanners. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForServersAwsOfferingVmScanners"/>. </summary>
         /// <param name="isEnabled"> Is Microsoft Defender for Server VM scanning enabled. </param>
         /// <param name="configuration"> configuration for Microsoft Defender for Server VM scanning. </param>
-        internal DefenderForServersAwsOfferingVmScanners(bool? isEnabled, DefenderForServersAwsOfferingVmScannersConfiguration configuration)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DefenderForServersAwsOfferingVmScanners(bool? isEnabled, DefenderForServersAwsOfferingVmScannersConfiguration configuration, Dictionary<string, BinaryData> rawData)
         {
             IsEnabled = isEnabled;
             Configuration = configuration;
+            _rawData = rawData;
         }
 
         /// <summary> Is Microsoft Defender for Server VM scanning enabled. </summary>

@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class GenericResourceData : TrackedResourceExtendedData
     {
-        /// <summary> Initializes a new instance of GenericResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public GenericResourceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of GenericResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +42,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="createdOn"> The created time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="changedOn"> The changed time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </param>
-        internal GenericResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, ArmPlan plan, BinaryData properties, string kind, string managedBy, ResourcesSku sku, ManagedServiceIdentity identity, DateTimeOffset? createdOn, DateTimeOffset? changedOn, string provisioningState) : base(id, name, resourceType, systemData, tags, location, extendedLocation)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GenericResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, ArmPlan plan, BinaryData properties, string kind, string managedBy, ResourcesSku sku, ManagedServiceIdentity identity, DateTimeOffset? createdOn, DateTimeOffset? changedOn, string provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location, extendedLocation, rawData)
         {
             Plan = plan;
             Properties = properties;
@@ -53,6 +54,11 @@ namespace Azure.ResourceManager.Resources
             CreatedOn = createdOn;
             ChangedOn = changedOn;
             ProvisioningState = provisioningState;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GenericResourceData"/> for deserialization. </summary>
+        internal GenericResourceData()
+        {
         }
 
         /// <summary> The plan of the resource. </summary>

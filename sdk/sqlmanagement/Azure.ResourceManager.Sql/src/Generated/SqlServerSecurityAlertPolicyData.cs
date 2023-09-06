@@ -19,14 +19,17 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerSecurityAlertPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlServerSecurityAlertPolicyData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerSecurityAlertPolicyData"/>. </summary>
         public SqlServerSecurityAlertPolicyData()
         {
             DisabledAlerts = new ChangeTrackingList<string>();
             EmailAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SqlServerSecurityAlertPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerSecurityAlertPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +42,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="storageAccountAccessKey"> Specifies the identifier key of the Threat Detection audit storage account. </param>
         /// <param name="retentionDays"> Specifies the number of days to keep in the Threat Detection audit logs. </param>
         /// <param name="createdOn"> Specifies the UTC creation time of the policy. </param>
-        internal SqlServerSecurityAlertPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityAlertsPolicyState? state, IList<string> disabledAlerts, IList<string> emailAddresses, bool? sendToEmailAccountAdmins, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlServerSecurityAlertPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityAlertsPolicyState? state, IList<string> disabledAlerts, IList<string> emailAddresses, bool? sendToEmailAccountAdmins, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, DateTimeOffset? createdOn, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             State = state;
             DisabledAlerts = disabledAlerts;
@@ -49,6 +53,7 @@ namespace Azure.ResourceManager.Sql
             StorageAccountAccessKey = storageAccountAccessKey;
             RetentionDays = retentionDays;
             CreatedOn = createdOn;
+            _rawData = rawData;
         }
 
         /// <summary> Specifies the state of the policy, whether it is enabled or disabled or a policy has not been applied yet on the specific database. </summary>

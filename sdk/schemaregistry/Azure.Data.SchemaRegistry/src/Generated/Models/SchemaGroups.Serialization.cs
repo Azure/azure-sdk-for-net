@@ -5,22 +5,65 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Data.SchemaRegistry.Models
 {
-    internal partial class SchemaGroups
+    internal partial class SchemaGroups : IUtf8JsonSerializable, IModelJsonSerializable<SchemaGroups>
     {
-        internal static SchemaGroups DeserializeSchemaGroups(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SchemaGroups>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SchemaGroups>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SchemaGroups>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Groups))
+            {
+                writer.WritePropertyName("schemaGroups"u8);
+                writer.WriteStartArray();
+                foreach (var item in Groups)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SchemaGroups DeserializeSchemaGroups(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<string>> schemaGroups = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaGroups"u8))
@@ -42,8 +85,61 @@ namespace Azure.Data.SchemaRegistry.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SchemaGroups(Optional.ToList(schemaGroups), nextLink.Value);
+            return new SchemaGroups(Optional.ToList(schemaGroups), nextLink.Value, rawData);
+        }
+
+        SchemaGroups IModelJsonSerializable<SchemaGroups>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SchemaGroups>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSchemaGroups(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SchemaGroups>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SchemaGroups>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SchemaGroups IModelSerializable<SchemaGroups>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SchemaGroups>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSchemaGroups(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SchemaGroups"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SchemaGroups"/> to convert. </param>
+        public static implicit operator RequestContent(SchemaGroups model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SchemaGroups"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SchemaGroups(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSchemaGroups(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

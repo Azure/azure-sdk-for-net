@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// Please note <see cref="ManagedServiceScalingTrigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AveragePartitionLoadScalingTrigger"/> and <see cref="AverageServiceLoadScalingTrigger"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownScalingTrigger))]
     public abstract partial class ManagedServiceScalingTrigger
     {
-        /// <summary> Initializes a new instance of ManagedServiceScalingTrigger. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceScalingTrigger"/>. </summary>
         protected ManagedServiceScalingTrigger()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedServiceScalingTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceScalingTrigger"/>. </summary>
         /// <param name="kind"> Specifies the trigger associated with this scaling policy. </param>
-        internal ManagedServiceScalingTrigger(ServiceScalingTriggerKind kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedServiceScalingTrigger(ServiceScalingTriggerKind kind, Dictionary<string, BinaryData> rawData)
         {
             Kind = kind;
+            _rawData = rawData;
         }
 
         /// <summary> Specifies the trigger associated with this scaling policy. </summary>

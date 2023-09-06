@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Sql;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of server communication links. </summary>
     internal partial class ServerCommunicationLinkListResult
     {
-        /// <summary> Initializes a new instance of ServerCommunicationLinkListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServerCommunicationLinkListResult"/>. </summary>
         internal ServerCommunicationLinkListResult()
         {
             Value = new ChangeTrackingList<SqlServerCommunicationLinkData>();
         }
 
-        /// <summary> Initializes a new instance of ServerCommunicationLinkListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerCommunicationLinkListResult"/>. </summary>
         /// <param name="value"> The list of server communication links. </param>
-        internal ServerCommunicationLinkListResult(IReadOnlyList<SqlServerCommunicationLinkData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerCommunicationLinkListResult(IReadOnlyList<SqlServerCommunicationLinkData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The list of server communication links. </summary>

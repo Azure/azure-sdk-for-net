@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Sql;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of Azure SQL Database sync members. </summary>
     internal partial class SyncMemberListResult
     {
-        /// <summary> Initializes a new instance of SyncMemberListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SyncMemberListResult"/>. </summary>
         internal SyncMemberListResult()
         {
             Value = new ChangeTrackingList<SyncMemberData>();
         }
 
-        /// <summary> Initializes a new instance of SyncMemberListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncMemberListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal SyncMemberListResult(IReadOnlyList<SyncMemberData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SyncMemberListResult(IReadOnlyList<SyncMemberData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Array of results. </summary>

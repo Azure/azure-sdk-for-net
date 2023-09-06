@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class CustomEntityLookupSkill : IUtf8JsonSerializable
+    public partial class CustomEntityLookupSkill : IUtf8JsonSerializable, IModelJsonSerializable<CustomEntityLookupSkill>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CustomEntityLookupSkill>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CustomEntityLookupSkill>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CustomEntityLookupSkill>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultLanguageCode))
             {
@@ -49,7 +55,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteStartArray();
                     foreach (var item in InlineEntitiesDefinition)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item is null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IModelJsonSerializable<CustomEntity>)item).Serialize(writer, options);
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -115,21 +128,49 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<InputFieldMappingEntry>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("outputs"u8);
             writer.WriteStartArray();
             foreach (var item in Outputs)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<OutputFieldMappingEntry>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CustomEntityLookupSkill DeserializeCustomEntityLookupSkill(JsonElement element)
+        internal static CustomEntityLookupSkill DeserializeCustomEntityLookupSkill(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -146,6 +187,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<string> context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultLanguageCode"u8))
@@ -253,8 +295,61 @@ namespace Azure.Search.Documents.Indexes.Models
                     outputs = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CustomEntityLookupSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode), entitiesDefinitionUri.Value, Optional.ToList(inlineEntitiesDefinition), Optional.ToNullable(globalDefaultCaseSensitive), Optional.ToNullable(globalDefaultAccentSensitive), Optional.ToNullable(globalDefaultFuzzyEditDistance));
+            return new CustomEntityLookupSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode), entitiesDefinitionUri.Value, Optional.ToList(inlineEntitiesDefinition), Optional.ToNullable(globalDefaultCaseSensitive), Optional.ToNullable(globalDefaultAccentSensitive), Optional.ToNullable(globalDefaultFuzzyEditDistance), rawData);
+        }
+
+        CustomEntityLookupSkill IModelJsonSerializable<CustomEntityLookupSkill>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomEntityLookupSkill>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomEntityLookupSkill(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CustomEntityLookupSkill>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomEntityLookupSkill>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CustomEntityLookupSkill IModelSerializable<CustomEntityLookupSkill>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomEntityLookupSkill>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCustomEntityLookupSkill(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CustomEntityLookupSkill"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CustomEntityLookupSkill"/> to convert. </param>
+        public static implicit operator RequestContent(CustomEntityLookupSkill model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CustomEntityLookupSkill"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CustomEntityLookupSkill(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCustomEntityLookupSkill(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

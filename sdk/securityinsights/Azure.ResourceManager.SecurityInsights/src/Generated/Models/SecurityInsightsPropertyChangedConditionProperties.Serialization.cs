@@ -5,34 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsPropertyChangedConditionProperties : IUtf8JsonSerializable
+    public partial class SecurityInsightsPropertyChangedConditionProperties : IUtf8JsonSerializable, IModelJsonSerializable<SecurityInsightsPropertyChangedConditionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityInsightsPropertyChangedConditionProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityInsightsPropertyChangedConditionProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsPropertyChangedConditionProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ConditionProperties))
             {
                 writer.WritePropertyName("conditionProperties"u8);
-                writer.WriteObjectValue(ConditionProperties);
+                if (ConditionProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AutomationRulePropertyValuesChangedCondition>)ConditionProperties).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("conditionType"u8);
             writer.WriteStringValue(ConditionType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsPropertyChangedConditionProperties DeserializeSecurityInsightsPropertyChangedConditionProperties(JsonElement element)
+        internal static SecurityInsightsPropertyChangedConditionProperties DeserializeSecurityInsightsPropertyChangedConditionProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AutomationRulePropertyValuesChangedCondition> conditionProperties = default;
             ConditionType conditionType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("conditionProperties"u8))
@@ -49,8 +79,61 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     conditionType = new ConditionType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityInsightsPropertyChangedConditionProperties(conditionType, conditionProperties.Value);
+            return new SecurityInsightsPropertyChangedConditionProperties(conditionType, conditionProperties.Value, rawData);
+        }
+
+        SecurityInsightsPropertyChangedConditionProperties IModelJsonSerializable<SecurityInsightsPropertyChangedConditionProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsPropertyChangedConditionProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsPropertyChangedConditionProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityInsightsPropertyChangedConditionProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsPropertyChangedConditionProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityInsightsPropertyChangedConditionProperties IModelSerializable<SecurityInsightsPropertyChangedConditionProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsPropertyChangedConditionProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityInsightsPropertyChangedConditionProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SecurityInsightsPropertyChangedConditionProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SecurityInsightsPropertyChangedConditionProperties"/> to convert. </param>
+        public static implicit operator RequestContent(SecurityInsightsPropertyChangedConditionProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SecurityInsightsPropertyChangedConditionProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SecurityInsightsPropertyChangedConditionProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityInsightsPropertyChangedConditionProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

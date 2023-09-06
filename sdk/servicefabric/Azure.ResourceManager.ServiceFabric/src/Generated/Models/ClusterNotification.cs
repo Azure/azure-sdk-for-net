@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Describes the notification channel for cluster events. </summary>
     public partial class ClusterNotification
     {
-        /// <summary> Initializes a new instance of ClusterNotification. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterNotification"/>. </summary>
         /// <param name="isEnabled"> Indicates if the notification is enabled. </param>
         /// <param name="notificationCategory"> The category of notification. </param>
         /// <param name="notificationLevel"> The level of notification. </param>
@@ -31,17 +34,24 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             NotificationTargets = notificationTargets.ToList();
         }
 
-        /// <summary> Initializes a new instance of ClusterNotification. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterNotification"/>. </summary>
         /// <param name="isEnabled"> Indicates if the notification is enabled. </param>
         /// <param name="notificationCategory"> The category of notification. </param>
         /// <param name="notificationLevel"> The level of notification. </param>
         /// <param name="notificationTargets"> List of targets that subscribe to the notification. </param>
-        internal ClusterNotification(bool isEnabled, ClusterNotificationCategory notificationCategory, ClusterNotificationLevel notificationLevel, IList<ClusterNotificationTarget> notificationTargets)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterNotification(bool isEnabled, ClusterNotificationCategory notificationCategory, ClusterNotificationLevel notificationLevel, IList<ClusterNotificationTarget> notificationTargets, Dictionary<string, BinaryData> rawData)
         {
             IsEnabled = isEnabled;
             NotificationCategory = notificationCategory;
             NotificationLevel = notificationLevel;
             NotificationTargets = notificationTargets;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterNotification"/> for deserialization. </summary>
+        internal ClusterNotification()
+        {
         }
 
         /// <summary> Indicates if the notification is enabled. </summary>

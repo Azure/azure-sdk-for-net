@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Describes threat intelligence metric. </summary>
     public partial class ThreatIntelligenceMetric
     {
-        /// <summary> Initializes a new instance of ThreatIntelligenceMetric. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceMetric"/>. </summary>
         internal ThreatIntelligenceMetric()
         {
             ThreatTypeMetrics = new ChangeTrackingList<ThreatIntelligenceMetricEntity>();
@@ -21,17 +25,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             SourceMetrics = new ChangeTrackingList<ThreatIntelligenceMetricEntity>();
         }
 
-        /// <summary> Initializes a new instance of ThreatIntelligenceMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceMetric"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated indicator metric. </param>
         /// <param name="threatTypeMetrics"> Threat type metrics. </param>
         /// <param name="patternTypeMetrics"> Pattern type metrics. </param>
         /// <param name="sourceMetrics"> Source metrics. </param>
-        internal ThreatIntelligenceMetric(string lastUpdatedOn, IReadOnlyList<ThreatIntelligenceMetricEntity> threatTypeMetrics, IReadOnlyList<ThreatIntelligenceMetricEntity> patternTypeMetrics, IReadOnlyList<ThreatIntelligenceMetricEntity> sourceMetrics)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ThreatIntelligenceMetric(string lastUpdatedOn, IReadOnlyList<ThreatIntelligenceMetricEntity> threatTypeMetrics, IReadOnlyList<ThreatIntelligenceMetricEntity> patternTypeMetrics, IReadOnlyList<ThreatIntelligenceMetricEntity> sourceMetrics, Dictionary<string, BinaryData> rawData)
         {
             LastUpdatedOn = lastUpdatedOn;
             ThreatTypeMetrics = threatTypeMetrics;
             PatternTypeMetrics = patternTypeMetrics;
             SourceMetrics = sourceMetrics;
+            _rawData = rawData;
         }
 
         /// <summary> Last updated indicator metric. </summary>

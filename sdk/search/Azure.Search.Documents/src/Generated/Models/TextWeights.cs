@@ -14,7 +14,10 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Defines weights on index fields for which matches should boost scoring in search queries. </summary>
     public partial class TextWeights
     {
-        /// <summary> Initializes a new instance of TextWeights. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TextWeights"/>. </summary>
         /// <param name="weights"> The dictionary of per-field weights to boost document scoring. The keys are field names and the values are the weights for each field. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="weights"/> is null. </exception>
         public TextWeights(IDictionary<string, double> weights)
@@ -22,6 +25,20 @@ namespace Azure.Search.Documents.Indexes.Models
             Argument.AssertNotNull(weights, nameof(weights));
 
             Weights = weights;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TextWeights"/>. </summary>
+        /// <param name="weights"> The dictionary of per-field weights to boost document scoring. The keys are field names and the values are the weights for each field. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TextWeights(IDictionary<string, double> weights, Dictionary<string, BinaryData> rawData)
+        {
+            Weights = weights;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TextWeights"/> for deserialization. </summary>
+        internal TextWeights()
+        {
         }
     }
 }

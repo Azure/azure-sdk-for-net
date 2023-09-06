@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Additional information on Azure Sql specific protected item. </summary>
     public partial class SqlProtectedItemExtendedInfo
     {
-        /// <summary> Initializes a new instance of SqlProtectedItemExtendedInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlProtectedItemExtendedInfo"/>. </summary>
         public SqlProtectedItemExtendedInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlProtectedItemExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlProtectedItemExtendedInfo"/>. </summary>
         /// <param name="oldestRecoverOn"> The oldest backup copy available for this item in the service. </param>
         /// <param name="recoveryPointCount"> Number of available backup copies associated with this backup item. </param>
         /// <param name="policyState"> State of the backup policy associated with this backup item. </param>
-        internal SqlProtectedItemExtendedInfo(DateTimeOffset? oldestRecoverOn, int? recoveryPointCount, string policyState)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlProtectedItemExtendedInfo(DateTimeOffset? oldestRecoverOn, int? recoveryPointCount, string policyState, Dictionary<string, BinaryData> rawData)
         {
             OldestRecoverOn = oldestRecoverOn;
             RecoveryPointCount = recoveryPointCount;
             PolicyState = policyState;
+            _rawData = rawData;
         }
 
         /// <summary> The oldest backup copy available for this item in the service. </summary>

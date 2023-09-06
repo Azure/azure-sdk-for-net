@@ -6,21 +6,66 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class IotSecuritySolutionAnalyticsModelDevicesMetrics
+    public partial class IotSecuritySolutionAnalyticsModelDevicesMetrics : IUtf8JsonSerializable, IModelJsonSerializable<IotSecuritySolutionAnalyticsModelDevicesMetrics>
     {
-        internal static IotSecuritySolutionAnalyticsModelDevicesMetrics DeserializeIotSecuritySolutionAnalyticsModelDevicesMetrics(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IotSecuritySolutionAnalyticsModelDevicesMetrics>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IotSecuritySolutionAnalyticsModelDevicesMetrics>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IotSecuritySolutionAnalyticsModelDevicesMetrics>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Date))
+            {
+                writer.WritePropertyName("date"u8);
+                writer.WriteStringValue(Date.Value, "O");
+            }
+            if (Optional.IsDefined(DevicesMetrics))
+            {
+                writer.WritePropertyName("devicesMetrics"u8);
+                if (DevicesMetrics is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<IotSeverityMetrics>)DevicesMetrics).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static IotSecuritySolutionAnalyticsModelDevicesMetrics DeserializeIotSecuritySolutionAnalyticsModelDevicesMetrics(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DateTimeOffset> date = default;
             Optional<IotSeverityMetrics> devicesMetrics = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("date"u8))
@@ -41,8 +86,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     devicesMetrics = IotSeverityMetrics.DeserializeIotSeverityMetrics(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IotSecuritySolutionAnalyticsModelDevicesMetrics(Optional.ToNullable(date), devicesMetrics.Value);
+            return new IotSecuritySolutionAnalyticsModelDevicesMetrics(Optional.ToNullable(date), devicesMetrics.Value, rawData);
+        }
+
+        IotSecuritySolutionAnalyticsModelDevicesMetrics IModelJsonSerializable<IotSecuritySolutionAnalyticsModelDevicesMetrics>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotSecuritySolutionAnalyticsModelDevicesMetrics>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotSecuritySolutionAnalyticsModelDevicesMetrics(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IotSecuritySolutionAnalyticsModelDevicesMetrics>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotSecuritySolutionAnalyticsModelDevicesMetrics>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IotSecuritySolutionAnalyticsModelDevicesMetrics IModelSerializable<IotSecuritySolutionAnalyticsModelDevicesMetrics>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotSecuritySolutionAnalyticsModelDevicesMetrics>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIotSecuritySolutionAnalyticsModelDevicesMetrics(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IotSecuritySolutionAnalyticsModelDevicesMetrics"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IotSecuritySolutionAnalyticsModelDevicesMetrics"/> to convert. </param>
+        public static implicit operator RequestContent(IotSecuritySolutionAnalyticsModelDevicesMetrics model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IotSecuritySolutionAnalyticsModelDevicesMetrics"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IotSecuritySolutionAnalyticsModelDevicesMetrics(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIotSecuritySolutionAnalyticsModelDevicesMetrics(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

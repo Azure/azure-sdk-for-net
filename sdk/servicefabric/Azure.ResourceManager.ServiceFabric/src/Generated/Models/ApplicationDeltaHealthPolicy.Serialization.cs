@@ -5,21 +5,35 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ApplicationDeltaHealthPolicy : IUtf8JsonSerializable
+    public partial class ApplicationDeltaHealthPolicy : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationDeltaHealthPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationDeltaHealthPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationDeltaHealthPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationDeltaHealthPolicy>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultServiceTypeDeltaHealthPolicy))
             {
                 writer.WritePropertyName("defaultServiceTypeDeltaHealthPolicy"u8);
-                writer.WriteObjectValue(DefaultServiceTypeDeltaHealthPolicy);
+                if (DefaultServiceTypeDeltaHealthPolicy is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ServiceTypeDeltaHealthPolicy>)DefaultServiceTypeDeltaHealthPolicy).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(ServiceTypeDeltaHealthPolicies))
             {
@@ -28,21 +42,43 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 foreach (var item in ServiceTypeDeltaHealthPolicies)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ServiceTypeDeltaHealthPolicy>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationDeltaHealthPolicy DeserializeApplicationDeltaHealthPolicy(JsonElement element)
+        internal static ApplicationDeltaHealthPolicy DeserializeApplicationDeltaHealthPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ServiceTypeDeltaHealthPolicy> defaultServiceTypeDeltaHealthPolicy = default;
             Optional<IDictionary<string, ServiceTypeDeltaHealthPolicy>> serviceTypeDeltaHealthPolicies = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultServiceTypeDeltaHealthPolicy"u8))
@@ -68,8 +104,61 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     serviceTypeDeltaHealthPolicies = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationDeltaHealthPolicy(defaultServiceTypeDeltaHealthPolicy.Value, Optional.ToDictionary(serviceTypeDeltaHealthPolicies));
+            return new ApplicationDeltaHealthPolicy(defaultServiceTypeDeltaHealthPolicy.Value, Optional.ToDictionary(serviceTypeDeltaHealthPolicies), rawData);
+        }
+
+        ApplicationDeltaHealthPolicy IModelJsonSerializable<ApplicationDeltaHealthPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationDeltaHealthPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationDeltaHealthPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationDeltaHealthPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationDeltaHealthPolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationDeltaHealthPolicy IModelSerializable<ApplicationDeltaHealthPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationDeltaHealthPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationDeltaHealthPolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApplicationDeltaHealthPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApplicationDeltaHealthPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(ApplicationDeltaHealthPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApplicationDeltaHealthPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApplicationDeltaHealthPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationDeltaHealthPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

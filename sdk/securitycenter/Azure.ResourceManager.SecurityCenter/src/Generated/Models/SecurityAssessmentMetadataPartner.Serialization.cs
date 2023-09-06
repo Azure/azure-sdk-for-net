@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityAssessmentMetadataPartner : IUtf8JsonSerializable
+    public partial class SecurityAssessmentMetadataPartner : IUtf8JsonSerializable, IModelJsonSerializable<SecurityAssessmentMetadataPartner>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityAssessmentMetadataPartner>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityAssessmentMetadataPartner>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityAssessmentMetadataPartner>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("partnerName"u8);
             writer.WriteStringValue(PartnerName);
@@ -24,11 +32,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WritePropertyName("secret"u8);
             writer.WriteStringValue(Secret);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityAssessmentMetadataPartner DeserializeSecurityAssessmentMetadataPartner(JsonElement element)
+        internal static SecurityAssessmentMetadataPartner DeserializeSecurityAssessmentMetadataPartner(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +58,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string partnerName = default;
             Optional<string> productName = default;
             string secret = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partnerName"u8))
@@ -53,8 +76,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     secret = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityAssessmentMetadataPartner(partnerName, productName.Value, secret);
+            return new SecurityAssessmentMetadataPartner(partnerName, productName.Value, secret, rawData);
+        }
+
+        SecurityAssessmentMetadataPartner IModelJsonSerializable<SecurityAssessmentMetadataPartner>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityAssessmentMetadataPartner>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityAssessmentMetadataPartner(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityAssessmentMetadataPartner>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityAssessmentMetadataPartner>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityAssessmentMetadataPartner IModelSerializable<SecurityAssessmentMetadataPartner>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityAssessmentMetadataPartner>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityAssessmentMetadataPartner(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SecurityAssessmentMetadataPartner"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SecurityAssessmentMetadataPartner"/> to convert. </param>
+        public static implicit operator RequestContent(SecurityAssessmentMetadataPartner model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SecurityAssessmentMetadataPartner"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SecurityAssessmentMetadataPartner(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityAssessmentMetadataPartner(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

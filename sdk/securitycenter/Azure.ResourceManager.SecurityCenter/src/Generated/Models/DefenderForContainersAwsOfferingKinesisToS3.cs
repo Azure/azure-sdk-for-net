@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The kinesis to s3 connection configuration. </summary>
     internal partial class DefenderForContainersAwsOfferingKinesisToS3
     {
-        /// <summary> Initializes a new instance of DefenderForContainersAwsOfferingKinesisToS3. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DefenderForContainersAwsOfferingKinesisToS3"/>. </summary>
         public DefenderForContainersAwsOfferingKinesisToS3()
         {
         }
 
-        /// <summary> Initializes a new instance of DefenderForContainersAwsOfferingKinesisToS3. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForContainersAwsOfferingKinesisToS3"/>. </summary>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS used by Kinesis to transfer data into S3. </param>
-        internal DefenderForContainersAwsOfferingKinesisToS3(string cloudRoleArn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DefenderForContainersAwsOfferingKinesisToS3(string cloudRoleArn, Dictionary<string, BinaryData> rawData)
         {
             CloudRoleArn = cloudRoleArn;
+            _rawData = rawData;
         }
 
         /// <summary> The cloud role ARN in AWS used by Kinesis to transfer data into S3. </summary>

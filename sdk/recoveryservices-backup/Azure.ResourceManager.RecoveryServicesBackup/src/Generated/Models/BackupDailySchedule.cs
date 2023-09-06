@@ -14,17 +14,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The BackupDailySchedule. </summary>
     internal partial class BackupDailySchedule
     {
-        /// <summary> Initializes a new instance of BackupDailySchedule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupDailySchedule"/>. </summary>
         public BackupDailySchedule()
         {
             ScheduleRunTimes = new ChangeTrackingList<DateTimeOffset>();
         }
 
-        /// <summary> Initializes a new instance of BackupDailySchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupDailySchedule"/>. </summary>
         /// <param name="scheduleRunTimes"> List of times of day this schedule has to be run. </param>
-        internal BackupDailySchedule(IList<DateTimeOffset> scheduleRunTimes)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupDailySchedule(IList<DateTimeOffset> scheduleRunTimes, Dictionary<string, BinaryData> rawData)
         {
             ScheduleRunTimes = scheduleRunTimes;
+            _rawData = rawData;
         }
 
         /// <summary> List of times of day this schedule has to be run. </summary>

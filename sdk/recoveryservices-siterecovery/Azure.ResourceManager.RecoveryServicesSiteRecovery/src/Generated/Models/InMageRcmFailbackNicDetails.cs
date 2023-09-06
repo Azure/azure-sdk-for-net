@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,22 +14,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcmFailback NIC details. </summary>
     public partial class InMageRcmFailbackNicDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmFailbackNicDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackNicDetails"/>. </summary>
         internal InMageRcmFailbackNicDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of InMageRcmFailbackNicDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackNicDetails"/>. </summary>
         /// <param name="macAddress"> The mac address. </param>
         /// <param name="networkName"> The network name. </param>
         /// <param name="adapterType"> The adapter type. </param>
         /// <param name="sourceIPAddress"> The IP address. </param>
-        internal InMageRcmFailbackNicDetails(string macAddress, string networkName, string adapterType, IPAddress sourceIPAddress)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageRcmFailbackNicDetails(string macAddress, string networkName, string adapterType, IPAddress sourceIPAddress, Dictionary<string, BinaryData> rawData)
         {
             MacAddress = macAddress;
             NetworkName = networkName;
             AdapterType = adapterType;
             SourceIPAddress = sourceIPAddress;
+            _rawData = rawData;
         }
 
         /// <summary> The mac address. </summary>

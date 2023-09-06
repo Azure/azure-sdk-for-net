@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationCalculateRefundRequestProperties : IUtf8JsonSerializable
+    public partial class ReservationCalculateRefundRequestProperties : IUtf8JsonSerializable, IModelJsonSerializable<ReservationCalculateRefundRequestProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ReservationCalculateRefundRequestProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ReservationCalculateRefundRequestProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ReservationCalculateRefundRequestProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Scope))
             {
@@ -23,9 +31,112 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ReservationToReturn))
             {
                 writer.WritePropertyName("reservationToReturn"u8);
-                writer.WriteObjectValue(ReservationToReturn);
+                if (ReservationToReturn is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ReservationToReturn>)ReservationToReturn).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
+        }
+
+        internal static ReservationCalculateRefundRequestProperties DeserializeReservationCalculateRefundRequestProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> scope = default;
+            Optional<ReservationToReturn> reservationToReturn = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("scope"u8))
+                {
+                    scope = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("reservationToReturn"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    reservationToReturn = ReservationToReturn.DeserializeReservationToReturn(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ReservationCalculateRefundRequestProperties(scope.Value, reservationToReturn.Value, rawData);
+        }
+
+        ReservationCalculateRefundRequestProperties IModelJsonSerializable<ReservationCalculateRefundRequestProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReservationCalculateRefundRequestProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeReservationCalculateRefundRequestProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ReservationCalculateRefundRequestProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReservationCalculateRefundRequestProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ReservationCalculateRefundRequestProperties IModelSerializable<ReservationCalculateRefundRequestProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReservationCalculateRefundRequestProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeReservationCalculateRefundRequestProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ReservationCalculateRefundRequestProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ReservationCalculateRefundRequestProperties"/> to convert. </param>
+        public static implicit operator RequestContent(ReservationCalculateRefundRequestProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ReservationCalculateRefundRequestProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ReservationCalculateRefundRequestProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeReservationCalculateRefundRequestProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

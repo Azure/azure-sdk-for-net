@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsMailMessageEntity : IUtf8JsonSerializable
+    public partial class SecurityInsightsMailMessageEntity : IUtf8JsonSerializable, IModelJsonSerializable<SecurityInsightsMailMessageEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityInsightsMailMessageEntity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityInsightsMailMessageEntity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsMailMessageEntity>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -64,11 +70,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStringValue(DeliveryLocation.Value.ToSerialString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsMailMessageEntity DeserializeSecurityInsightsMailMessageEntity(JsonElement element)
+        internal static SecurityInsightsMailMessageEntity DeserializeSecurityInsightsMailMessageEntity(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -105,6 +125,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<AntispamMailDirection> antispamDirection = default;
             Optional<SecurityInsightsMailMessageDeliveryAction> deliveryAction = default;
             Optional<SecurityInsightsMailMessageDeliveryLocation> deliveryLocation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -386,8 +407,61 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityInsightsMailMessageEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToList(fileEntityIds), recipient.Value, Optional.ToList(urls), Optional.ToList(threats), p1Sender.Value, p1SenderDisplayName.Value, p1SenderDomain.Value, senderIP.Value, p2Sender.Value, p2SenderDisplayName.Value, p2SenderDomain.Value, Optional.ToNullable(receiveDate), Optional.ToNullable(networkMessageId), internetMessageId.Value, subject.Value, language.Value, Optional.ToList(threatDetectionMethods), Optional.ToNullable(bodyFingerprintBin1), Optional.ToNullable(bodyFingerprintBin2), Optional.ToNullable(bodyFingerprintBin3), Optional.ToNullable(bodyFingerprintBin4), Optional.ToNullable(bodyFingerprintBin5), Optional.ToNullable(antispamDirection), Optional.ToNullable(deliveryAction), Optional.ToNullable(deliveryLocation));
+            return new SecurityInsightsMailMessageEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToList(fileEntityIds), recipient.Value, Optional.ToList(urls), Optional.ToList(threats), p1Sender.Value, p1SenderDisplayName.Value, p1SenderDomain.Value, senderIP.Value, p2Sender.Value, p2SenderDisplayName.Value, p2SenderDomain.Value, Optional.ToNullable(receiveDate), Optional.ToNullable(networkMessageId), internetMessageId.Value, subject.Value, language.Value, Optional.ToList(threatDetectionMethods), Optional.ToNullable(bodyFingerprintBin1), Optional.ToNullable(bodyFingerprintBin2), Optional.ToNullable(bodyFingerprintBin3), Optional.ToNullable(bodyFingerprintBin4), Optional.ToNullable(bodyFingerprintBin5), Optional.ToNullable(antispamDirection), Optional.ToNullable(deliveryAction), Optional.ToNullable(deliveryLocation), rawData);
+        }
+
+        SecurityInsightsMailMessageEntity IModelJsonSerializable<SecurityInsightsMailMessageEntity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsMailMessageEntity>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsMailMessageEntity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityInsightsMailMessageEntity>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsMailMessageEntity>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityInsightsMailMessageEntity IModelSerializable<SecurityInsightsMailMessageEntity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsMailMessageEntity>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityInsightsMailMessageEntity(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SecurityInsightsMailMessageEntity"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SecurityInsightsMailMessageEntity"/> to convert. </param>
+        public static implicit operator RequestContent(SecurityInsightsMailMessageEntity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SecurityInsightsMailMessageEntity"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SecurityInsightsMailMessageEntity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityInsightsMailMessageEntity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

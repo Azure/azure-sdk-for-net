@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageEnableProtectionContent : IUtf8JsonSerializable
+    public partial class InMageEnableProtectionContent : IUtf8JsonSerializable, IModelJsonSerializable<InMageEnableProtectionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InMageEnableProtectionContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InMageEnableProtectionContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<InMageEnableProtectionContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(VmFriendlyName))
             {
@@ -43,7 +51,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(DiskExclusionContent))
             {
                 writer.WritePropertyName("diskExclusionInput"u8);
-                writer.WriteObjectValue(DiskExclusionContent);
+                if (DiskExclusionContent is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<InMageDiskExclusionContent>)DiskExclusionContent).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(DisksToInclude))
             {
@@ -57,7 +72,166 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static InMageEnableProtectionContent DeserializeInMageEnableProtectionContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> vmFriendlyName = default;
+            string masterTargetId = default;
+            Guid processServerId = default;
+            string retentionDrive = default;
+            Optional<string> runAsAccountId = default;
+            string multiVmGroupId = default;
+            string multiVmGroupName = default;
+            Optional<string> datastoreName = default;
+            Optional<InMageDiskExclusionContent> diskExclusionContent = default;
+            Optional<IList<string>> disksToInclude = default;
+            string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("vmFriendlyName"u8))
+                {
+                    vmFriendlyName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("masterTargetId"u8))
+                {
+                    masterTargetId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("processServerId"u8))
+                {
+                    processServerId = property.Value.GetGuid();
+                    continue;
+                }
+                if (property.NameEquals("retentionDrive"u8))
+                {
+                    retentionDrive = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("runAsAccountId"u8))
+                {
+                    runAsAccountId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("multiVmGroupId"u8))
+                {
+                    multiVmGroupId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("multiVmGroupName"u8))
+                {
+                    multiVmGroupName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("datastoreName"u8))
+                {
+                    datastoreName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("diskExclusionInput"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskExclusionContent = InMageDiskExclusionContent.DeserializeInMageDiskExclusionContent(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("disksToInclude"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    disksToInclude = array;
+                    continue;
+                }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new InMageEnableProtectionContent(instanceType, vmFriendlyName.Value, masterTargetId, processServerId, retentionDrive, runAsAccountId.Value, multiVmGroupId, multiVmGroupName, datastoreName.Value, diskExclusionContent.Value, Optional.ToList(disksToInclude), rawData);
+        }
+
+        InMageEnableProtectionContent IModelJsonSerializable<InMageEnableProtectionContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageEnableProtectionContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageEnableProtectionContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InMageEnableProtectionContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageEnableProtectionContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InMageEnableProtectionContent IModelSerializable<InMageEnableProtectionContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageEnableProtectionContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInMageEnableProtectionContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InMageEnableProtectionContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InMageEnableProtectionContent"/> to convert. </param>
+        public static implicit operator RequestContent(InMageEnableProtectionContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InMageEnableProtectionContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InMageEnableProtectionContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInMageEnableProtectionContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

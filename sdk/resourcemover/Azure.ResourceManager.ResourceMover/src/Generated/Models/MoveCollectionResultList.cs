@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ResourceMover;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the collection of move collections. </summary>
     internal partial class MoveCollectionResultList
     {
-        /// <summary> Initializes a new instance of MoveCollectionResultList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MoveCollectionResultList"/>. </summary>
         internal MoveCollectionResultList()
         {
             Value = new ChangeTrackingList<MoverResourceSetData>();
         }
 
-        /// <summary> Initializes a new instance of MoveCollectionResultList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoveCollectionResultList"/>. </summary>
         /// <param name="value"> Gets the list of move collections. </param>
         /// <param name="nextLink"> Gets the value of  next link. </param>
-        internal MoveCollectionResultList(IReadOnlyList<MoverResourceSetData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MoveCollectionResultList(IReadOnlyList<MoverResourceSetData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the list of move collections. </summary>

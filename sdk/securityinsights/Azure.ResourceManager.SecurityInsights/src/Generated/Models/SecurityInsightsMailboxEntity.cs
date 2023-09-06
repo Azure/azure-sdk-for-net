@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a mailbox entity. </summary>
     public partial class SecurityInsightsMailboxEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsMailboxEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsMailboxEntity"/>. </summary>
         public SecurityInsightsMailboxEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = SecurityInsightsEntityKind.Mailbox;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsMailboxEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsMailboxEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +34,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="displayName"> The mailbox's display name. </param>
         /// <param name="upn"> The mailbox's UPN. </param>
         /// <param name="externalDirectoryObjectId"> The AzureAD identifier of mailbox. Similar to AadUserId in account entity but this property is specific to mailbox object on office side. </param>
-        internal SecurityInsightsMailboxEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string mailboxPrimaryAddress, string displayName, string upn, Guid? externalDirectoryObjectId) : base(id, name, resourceType, systemData, kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsMailboxEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string mailboxPrimaryAddress, string displayName, string upn, Guid? externalDirectoryObjectId, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, kind, rawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

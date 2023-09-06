@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlVmAutoBackupSettings : IUtf8JsonSerializable
+    public partial class SqlVmAutoBackupSettings : IUtf8JsonSerializable, IModelJsonSerializable<SqlVmAutoBackupSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SqlVmAutoBackupSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SqlVmAutoBackupSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SqlVmAutoBackupSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
@@ -92,11 +98,25 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("logBackupFrequency"u8);
                 writer.WriteNumberValue(LogBackupFrequency.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlVmAutoBackupSettings DeserializeSqlVmAutoBackupSettings(JsonElement element)
+        internal static SqlVmAutoBackupSettings DeserializeSqlVmAutoBackupSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -115,6 +135,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<int> fullBackupStartTime = default;
             Optional<int> fullBackupWindowHours = default;
             Optional<int> logBackupFrequency = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enable"u8))
@@ -236,8 +257,61 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     logBackupFrequency = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SqlVmAutoBackupSettings(Optional.ToNullable(enable), Optional.ToNullable(enableEncryption), Optional.ToNullable(retentionPeriod), storageAccountUrl.Value, storageContainerName.Value, storageAccessKey.Value, password.Value, Optional.ToNullable(backupSystemDbs), Optional.ToNullable(backupScheduleType), Optional.ToNullable(fullBackupFrequency), Optional.ToList(daysOfWeek), Optional.ToNullable(fullBackupStartTime), Optional.ToNullable(fullBackupWindowHours), Optional.ToNullable(logBackupFrequency));
+            return new SqlVmAutoBackupSettings(Optional.ToNullable(enable), Optional.ToNullable(enableEncryption), Optional.ToNullable(retentionPeriod), storageAccountUrl.Value, storageContainerName.Value, storageAccessKey.Value, password.Value, Optional.ToNullable(backupSystemDbs), Optional.ToNullable(backupScheduleType), Optional.ToNullable(fullBackupFrequency), Optional.ToList(daysOfWeek), Optional.ToNullable(fullBackupStartTime), Optional.ToNullable(fullBackupWindowHours), Optional.ToNullable(logBackupFrequency), rawData);
+        }
+
+        SqlVmAutoBackupSettings IModelJsonSerializable<SqlVmAutoBackupSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SqlVmAutoBackupSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlVmAutoBackupSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SqlVmAutoBackupSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SqlVmAutoBackupSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SqlVmAutoBackupSettings IModelSerializable<SqlVmAutoBackupSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SqlVmAutoBackupSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSqlVmAutoBackupSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SqlVmAutoBackupSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SqlVmAutoBackupSettings"/> to convert. </param>
+        public static implicit operator RequestContent(SqlVmAutoBackupSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SqlVmAutoBackupSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SqlVmAutoBackupSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSqlVmAutoBackupSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

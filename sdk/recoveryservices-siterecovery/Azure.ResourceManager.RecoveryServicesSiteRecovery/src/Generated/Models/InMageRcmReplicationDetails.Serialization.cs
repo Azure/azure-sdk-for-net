@@ -9,14 +9,189 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmReplicationDetails
+    public partial class InMageRcmReplicationDetails : IUtf8JsonSerializable, IModelJsonSerializable<InMageRcmReplicationDetails>
     {
-        internal static InMageRcmReplicationDetails DeserializeInMageRcmReplicationDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InMageRcmReplicationDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InMageRcmReplicationDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<InMageRcmReplicationDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(LicenseType))
+            {
+                writer.WritePropertyName("licenseType"u8);
+                writer.WriteStringValue(LicenseType);
+            }
+            if (Optional.IsDefined(TargetVmName))
+            {
+                writer.WritePropertyName("targetVmName"u8);
+                writer.WriteStringValue(TargetVmName);
+            }
+            if (Optional.IsDefined(TargetVmSize))
+            {
+                writer.WritePropertyName("targetVmSize"u8);
+                writer.WriteStringValue(TargetVmSize);
+            }
+            if (Optional.IsDefined(TargetResourceGroupId))
+            {
+                writer.WritePropertyName("targetResourceGroupId"u8);
+                writer.WriteStringValue(TargetResourceGroupId);
+            }
+            if (Optional.IsDefined(TargetLocation))
+            {
+                writer.WritePropertyName("targetLocation"u8);
+                writer.WriteStringValue(TargetLocation);
+            }
+            if (Optional.IsDefined(TargetAvailabilitySetId))
+            {
+                writer.WritePropertyName("targetAvailabilitySetId"u8);
+                writer.WriteStringValue(TargetAvailabilitySetId);
+            }
+            if (Optional.IsDefined(TargetAvailabilityZone))
+            {
+                writer.WritePropertyName("targetAvailabilityZone"u8);
+                writer.WriteStringValue(TargetAvailabilityZone);
+            }
+            if (Optional.IsDefined(TargetProximityPlacementGroupId))
+            {
+                writer.WritePropertyName("targetProximityPlacementGroupId"u8);
+                writer.WriteStringValue(TargetProximityPlacementGroupId);
+            }
+            if (Optional.IsDefined(TargetBootDiagnosticsStorageAccountId))
+            {
+                writer.WritePropertyName("targetBootDiagnosticsStorageAccountId"u8);
+                writer.WriteStringValue(TargetBootDiagnosticsStorageAccountId);
+            }
+            if (Optional.IsDefined(TargetNetworkId))
+            {
+                writer.WritePropertyName("targetNetworkId"u8);
+                writer.WriteStringValue(TargetNetworkId);
+            }
+            if (Optional.IsDefined(TestNetworkId))
+            {
+                writer.WritePropertyName("testNetworkId"u8);
+                writer.WriteStringValue(TestNetworkId);
+            }
+            if (Optional.IsCollectionDefined(ProtectedDisks))
+            {
+                writer.WritePropertyName("protectedDisks"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProtectedDisks)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<InMageRcmProtectedDiskDetails>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(MobilityAgentDetails))
+            {
+                writer.WritePropertyName("mobilityAgentDetails"u8);
+                if (MobilityAgentDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<InMageRcmMobilityAgentDetails>)MobilityAgentDetails).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(LastAgentUpgradeErrorDetails))
+            {
+                writer.WritePropertyName("lastAgentUpgradeErrorDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in LastAgentUpgradeErrorDetails)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<InMageRcmLastAgentUpgradeErrorDetails>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(AgentUpgradeBlockingErrorDetails))
+            {
+                writer.WritePropertyName("agentUpgradeBlockingErrorDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in AgentUpgradeBlockingErrorDetails)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<InMageRcmAgentUpgradeBlockingErrorDetails>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(VmNics))
+            {
+                writer.WritePropertyName("vmNics"u8);
+                writer.WriteStartArray();
+                foreach (var item in VmNics)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<InMageRcmNicDetails>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DiscoveredVmDetails))
+            {
+                writer.WritePropertyName("discoveredVmDetails"u8);
+                if (DiscoveredVmDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<InMageRcmDiscoveredProtectedVmDetails>)DiscoveredVmDetails).Serialize(writer, options);
+                }
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static InMageRcmReplicationDetails DeserializeInMageRcmReplicationDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -74,6 +249,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<InMageRcmNicDetails>> vmNics = default;
             Optional<InMageRcmDiscoveredProtectedVmDetails> discoveredVmDetails = default;
             string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("internalIdentifier"u8))
@@ -493,8 +669,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InMageRcmReplicationDetails(instanceType, internalIdentifier.Value, fabricDiscoveryMachineId.Value, multiVmGroupName.Value, discoveryType.Value, Optional.ToNullable(processServerId), Optional.ToNullable(processorCoreCount), Optional.ToNullable(allocatedMemoryInMB), processServerName.Value, runAsAccountId.Value, osType.Value, firmwareType.Value, primaryNicIPAddress.Value, targetGeneration.Value, licenseType.Value, storageAccountId.Value, targetVmName.Value, targetVmSize.Value, targetResourceGroupId.Value, targetLocation.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, targetBootDiagnosticsStorageAccountId.Value, targetNetworkId.Value, testNetworkId.Value, failoverRecoveryPointId.Value, Optional.ToNullable(lastRecoveryPointReceived), Optional.ToNullable(lastRpoInSeconds), Optional.ToNullable(lastRpoCalculatedTime), lastRecoveryPointId.Value, Optional.ToNullable(initialReplicationProgressPercentage), Optional.ToNullable(initialReplicationProcessedBytes), Optional.ToNullable(initialReplicationTransferredBytes), Optional.ToNullable(initialReplicationProgressHealth), Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resyncProcessedBytes), Optional.ToNullable(resyncTransferredBytes), Optional.ToNullable(resyncProgressHealth), resyncRequired.Value, Optional.ToNullable(resyncState), Optional.ToNullable(agentUpgradeState), lastAgentUpgradeType.Value, agentUpgradeJobId.Value, agentUpgradeAttemptToVersion.Value, Optional.ToList(protectedDisks), isLastUpgradeSuccessful.Value, Optional.ToNullable(isAgentRegistrationSuccessfulAfterFailover), mobilityAgentDetails.Value, Optional.ToList(lastAgentUpgradeErrorDetails), Optional.ToList(agentUpgradeBlockingErrorDetails), Optional.ToList(vmNics), discoveredVmDetails.Value);
+            return new InMageRcmReplicationDetails(instanceType, internalIdentifier.Value, fabricDiscoveryMachineId.Value, multiVmGroupName.Value, discoveryType.Value, Optional.ToNullable(processServerId), Optional.ToNullable(processorCoreCount), Optional.ToNullable(allocatedMemoryInMB), processServerName.Value, runAsAccountId.Value, osType.Value, firmwareType.Value, primaryNicIPAddress.Value, targetGeneration.Value, licenseType.Value, storageAccountId.Value, targetVmName.Value, targetVmSize.Value, targetResourceGroupId.Value, targetLocation.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, targetBootDiagnosticsStorageAccountId.Value, targetNetworkId.Value, testNetworkId.Value, failoverRecoveryPointId.Value, Optional.ToNullable(lastRecoveryPointReceived), Optional.ToNullable(lastRpoInSeconds), Optional.ToNullable(lastRpoCalculatedTime), lastRecoveryPointId.Value, Optional.ToNullable(initialReplicationProgressPercentage), Optional.ToNullable(initialReplicationProcessedBytes), Optional.ToNullable(initialReplicationTransferredBytes), Optional.ToNullable(initialReplicationProgressHealth), Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resyncProcessedBytes), Optional.ToNullable(resyncTransferredBytes), Optional.ToNullable(resyncProgressHealth), resyncRequired.Value, Optional.ToNullable(resyncState), Optional.ToNullable(agentUpgradeState), lastAgentUpgradeType.Value, agentUpgradeJobId.Value, agentUpgradeAttemptToVersion.Value, Optional.ToList(protectedDisks), isLastUpgradeSuccessful.Value, Optional.ToNullable(isAgentRegistrationSuccessfulAfterFailover), mobilityAgentDetails.Value, Optional.ToList(lastAgentUpgradeErrorDetails), Optional.ToList(agentUpgradeBlockingErrorDetails), Optional.ToList(vmNics), discoveredVmDetails.Value, rawData);
+        }
+
+        InMageRcmReplicationDetails IModelJsonSerializable<InMageRcmReplicationDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageRcmReplicationDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageRcmReplicationDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InMageRcmReplicationDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageRcmReplicationDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InMageRcmReplicationDetails IModelSerializable<InMageRcmReplicationDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageRcmReplicationDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInMageRcmReplicationDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InMageRcmReplicationDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InMageRcmReplicationDetails"/> to convert. </param>
+        public static implicit operator RequestContent(InMageRcmReplicationDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InMageRcmReplicationDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InMageRcmReplicationDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInMageRcmReplicationDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

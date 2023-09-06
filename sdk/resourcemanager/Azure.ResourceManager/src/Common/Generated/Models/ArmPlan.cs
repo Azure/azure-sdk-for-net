@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Models
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.Models
     [PropertyReferenceType]
     public partial class ArmPlan
     {
-        /// <summary> Initializes a new instance of ArmPlan. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmPlan"/>. </summary>
         /// <param name="name"> A user defined name of the 3rd Party Artifact that is being procured. </param>
         /// <param name="publisher"> The publisher of the 3rd Party Artifact that is being bought. E.g. NewRelic. </param>
         /// <param name="product"> The 3rd Party artifact that is being procured. E.g. NewRelic. Product maps to the OfferID specified for the artifact at the time of Data Market onboarding. </param>
@@ -31,20 +35,26 @@ namespace Azure.ResourceManager.Models
             Product = product;
         }
 
-        /// <summary> Initializes a new instance of ArmPlan. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmPlan"/>. </summary>
         /// <param name="name"> A user defined name of the 3rd Party Artifact that is being procured. </param>
         /// <param name="publisher"> The publisher of the 3rd Party Artifact that is being bought. E.g. NewRelic. </param>
         /// <param name="product"> The 3rd Party artifact that is being procured. E.g. NewRelic. Product maps to the OfferID specified for the artifact at the time of Data Market onboarding. </param>
         /// <param name="promotionCode"> A publisher provided promotion code as provisioned in Data Market for the said product/artifact. </param>
         /// <param name="version"> The version of the desired product/artifact. </param>
-        [SerializationConstructor]
-        internal ArmPlan(string name, string publisher, string product, string promotionCode, string version)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmPlan(string name, string publisher, string product, string promotionCode, string version, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Publisher = publisher;
             Product = product;
             PromotionCode = promotionCode;
             Version = version;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArmPlan"/> for deserialization. </summary>
+        internal ArmPlan()
+        {
         }
 
         /// <summary> A user defined name of the 3rd Party Artifact that is being procured. </summary>

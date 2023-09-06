@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class PurchasePrice : IUtf8JsonSerializable
+    public partial class PurchasePrice : IUtf8JsonSerializable, IModelJsonSerializable<PurchasePrice>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PurchasePrice>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PurchasePrice>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PurchasePrice>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CurrencyCode))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WritePropertyName("amount"u8);
                 writer.WriteNumberValue(Amount.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PurchasePrice DeserializePurchasePrice(JsonElement element)
+        internal static PurchasePrice DeserializePurchasePrice(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> currencyCode = default;
             Optional<double> amount = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("currencyCode"u8))
@@ -52,8 +75,61 @@ namespace Azure.ResourceManager.Reservations.Models
                     amount = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PurchasePrice(currencyCode.Value, Optional.ToNullable(amount));
+            return new PurchasePrice(currencyCode.Value, Optional.ToNullable(amount), rawData);
+        }
+
+        PurchasePrice IModelJsonSerializable<PurchasePrice>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PurchasePrice>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePurchasePrice(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PurchasePrice>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PurchasePrice>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PurchasePrice IModelSerializable<PurchasePrice>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PurchasePrice>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePurchasePrice(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PurchasePrice"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PurchasePrice"/> to convert. </param>
+        public static implicit operator RequestContent(PurchasePrice model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PurchasePrice"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PurchasePrice(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePurchasePrice(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

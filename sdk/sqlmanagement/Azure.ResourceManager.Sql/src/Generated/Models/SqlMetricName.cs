@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A database metric name. </summary>
     public partial class SqlMetricName
     {
-        /// <summary> Initializes a new instance of SqlMetricName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlMetricName"/>. </summary>
         internal SqlMetricName()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlMetricName. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlMetricName"/>. </summary>
         /// <param name="value"> The name of the database metric. </param>
         /// <param name="localizedValue"> The friendly name of the database metric. </param>
-        internal SqlMetricName(string value, string localizedValue)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlMetricName(string value, string localizedValue, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             LocalizedValue = localizedValue;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the database metric. </summary>

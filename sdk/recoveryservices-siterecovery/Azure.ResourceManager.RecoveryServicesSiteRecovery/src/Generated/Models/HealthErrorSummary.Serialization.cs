@@ -5,16 +5,83 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HealthErrorSummary
+    public partial class HealthErrorSummary : IUtf8JsonSerializable, IModelJsonSerializable<HealthErrorSummary>
     {
-        internal static HealthErrorSummary DeserializeHealthErrorSummary(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HealthErrorSummary>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HealthErrorSummary>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HealthErrorSummary>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SummaryCode))
+            {
+                writer.WritePropertyName("summaryCode"u8);
+                writer.WriteStringValue(SummaryCode);
+            }
+            if (Optional.IsDefined(Category))
+            {
+                writer.WritePropertyName("category"u8);
+                writer.WriteStringValue(Category.Value.ToString());
+            }
+            if (Optional.IsDefined(Severity))
+            {
+                writer.WritePropertyName("severity"u8);
+                writer.WriteStringValue(Severity.Value.ToString());
+            }
+            if (Optional.IsDefined(SummaryMessage))
+            {
+                writer.WritePropertyName("summaryMessage"u8);
+                writer.WriteStringValue(SummaryMessage);
+            }
+            if (Optional.IsDefined(AffectedResourceType))
+            {
+                writer.WritePropertyName("affectedResourceType"u8);
+                writer.WriteStringValue(AffectedResourceType);
+            }
+            if (Optional.IsDefined(AffectedResourceSubtype))
+            {
+                writer.WritePropertyName("affectedResourceSubtype"u8);
+                writer.WriteStringValue(AffectedResourceSubtype);
+            }
+            if (Optional.IsCollectionDefined(AffectedResourceCorrelationIds))
+            {
+                writer.WritePropertyName("affectedResourceCorrelationIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in AffectedResourceCorrelationIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static HealthErrorSummary DeserializeHealthErrorSummary(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> affectedResourceType = default;
             Optional<string> affectedResourceSubtype = default;
             Optional<IReadOnlyList<string>> affectedResourceCorrelationIds = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summaryCode"u8))
@@ -80,8 +148,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     affectedResourceCorrelationIds = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HealthErrorSummary(summaryCode.Value, Optional.ToNullable(category), Optional.ToNullable(severity), summaryMessage.Value, affectedResourceType.Value, affectedResourceSubtype.Value, Optional.ToList(affectedResourceCorrelationIds));
+            return new HealthErrorSummary(summaryCode.Value, Optional.ToNullable(category), Optional.ToNullable(severity), summaryMessage.Value, affectedResourceType.Value, affectedResourceSubtype.Value, Optional.ToList(affectedResourceCorrelationIds), rawData);
+        }
+
+        HealthErrorSummary IModelJsonSerializable<HealthErrorSummary>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthErrorSummary>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHealthErrorSummary(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HealthErrorSummary>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthErrorSummary>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HealthErrorSummary IModelSerializable<HealthErrorSummary>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthErrorSummary>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHealthErrorSummary(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HealthErrorSummary"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HealthErrorSummary"/> to convert. </param>
+        public static implicit operator RequestContent(HealthErrorSummary model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HealthErrorSummary"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HealthErrorSummary(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHealthErrorSummary(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

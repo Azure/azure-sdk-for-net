@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class JobExecutionTarget
+    public partial class JobExecutionTarget : IUtf8JsonSerializable, IModelJsonSerializable<JobExecutionTarget>
     {
-        internal static JobExecutionTarget DeserializeJobExecutionTarget(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JobExecutionTarget>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<JobExecutionTarget>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<JobExecutionTarget>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static JobExecutionTarget DeserializeJobExecutionTarget(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +49,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<JobTargetType> type = default;
             Optional<string> serverName = default;
             Optional<string> databaseName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -42,8 +71,61 @@ namespace Azure.ResourceManager.Sql.Models
                     databaseName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new JobExecutionTarget(Optional.ToNullable(type), serverName.Value, databaseName.Value);
+            return new JobExecutionTarget(Optional.ToNullable(type), serverName.Value, databaseName.Value, rawData);
+        }
+
+        JobExecutionTarget IModelJsonSerializable<JobExecutionTarget>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JobExecutionTarget>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJobExecutionTarget(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<JobExecutionTarget>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JobExecutionTarget>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        JobExecutionTarget IModelSerializable<JobExecutionTarget>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JobExecutionTarget>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeJobExecutionTarget(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="JobExecutionTarget"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="JobExecutionTarget"/> to convert. </param>
+        public static implicit operator RequestContent(JobExecutionTarget model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="JobExecutionTarget"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator JobExecutionTarget(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeJobExecutionTarget(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,77 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationToExchange
+    public partial class ReservationToExchange : IUtf8JsonSerializable, IModelJsonSerializable<ReservationToExchange>
     {
-        internal static ReservationToExchange DeserializeReservationToExchange(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ReservationToExchange>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ReservationToExchange>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ReservationToExchange>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ReservationId))
+            {
+                writer.WritePropertyName("reservationId"u8);
+                writer.WriteStringValue(ReservationId);
+            }
+            if (Optional.IsDefined(Quantity))
+            {
+                writer.WritePropertyName("quantity"u8);
+                writer.WriteNumberValue(Quantity.Value);
+            }
+            if (Optional.IsDefined(BillingRefundAmount))
+            {
+                writer.WritePropertyName("billingRefundAmount"u8);
+                if (BillingRefundAmount is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PurchasePrice>)BillingRefundAmount).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(BillingInformation))
+            {
+                writer.WritePropertyName("billingInformation"u8);
+                if (BillingInformation is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BillingInformation>)BillingInformation).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ReservationToExchange DeserializeReservationToExchange(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +84,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<int> quantity = default;
             Optional<PurchasePrice> billingRefundAmount = default;
             Optional<BillingInformation> billingInformation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("reservationId"u8))
@@ -60,8 +123,61 @@ namespace Azure.ResourceManager.Reservations.Models
                     billingInformation = BillingInformation.DeserializeBillingInformation(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ReservationToExchange(reservationId.Value, Optional.ToNullable(quantity), billingRefundAmount.Value, billingInformation.Value);
+            return new ReservationToExchange(reservationId.Value, Optional.ToNullable(quantity), billingRefundAmount.Value, billingInformation.Value, rawData);
+        }
+
+        ReservationToExchange IModelJsonSerializable<ReservationToExchange>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReservationToExchange>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeReservationToExchange(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ReservationToExchange>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReservationToExchange>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ReservationToExchange IModelSerializable<ReservationToExchange>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReservationToExchange>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeReservationToExchange(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ReservationToExchange"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ReservationToExchange"/> to convert. </param>
+        public static implicit operator RequestContent(ReservationToExchange model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ReservationToExchange"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ReservationToExchange(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeReservationToExchange(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

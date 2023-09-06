@@ -5,25 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class DataWarehouseUserActivityData : IUtf8JsonSerializable
+    public partial class DataWarehouseUserActivityData : IUtf8JsonSerializable, IModelJsonSerializable<DataWarehouseUserActivityData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataWarehouseUserActivityData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataWarehouseUserActivityData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataWarehouseUserActivityData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataWarehouseUserActivityData DeserializeDataWarehouseUserActivityData(JsonElement element)
+        internal static DataWarehouseUserActivityData DeserializeDataWarehouseUserActivityData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +55,7 @@ namespace Azure.ResourceManager.Sql
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<int> activeQueriesCount = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -80,8 +103,61 @@ namespace Azure.ResourceManager.Sql
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataWarehouseUserActivityData(id, name, type, systemData.Value, Optional.ToNullable(activeQueriesCount));
+            return new DataWarehouseUserActivityData(id, name, type, systemData.Value, Optional.ToNullable(activeQueriesCount), rawData);
+        }
+
+        DataWarehouseUserActivityData IModelJsonSerializable<DataWarehouseUserActivityData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataWarehouseUserActivityData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataWarehouseUserActivityData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataWarehouseUserActivityData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataWarehouseUserActivityData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataWarehouseUserActivityData IModelSerializable<DataWarehouseUserActivityData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataWarehouseUserActivityData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataWarehouseUserActivityData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataWarehouseUserActivityData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataWarehouseUserActivityData"/> to convert. </param>
+        public static implicit operator RequestContent(DataWarehouseUserActivityData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataWarehouseUserActivityData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataWarehouseUserActivityData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataWarehouseUserActivityData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -9,14 +9,262 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VMwareDetails
+    public partial class VMwareDetails : IUtf8JsonSerializable, IModelJsonSerializable<VMwareDetails>
     {
-        internal static VMwareDetails DeserializeVMwareDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VMwareDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VMwareDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VMwareDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(ProcessServers))
+            {
+                writer.WritePropertyName("processServers"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProcessServers)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SiteRecoveryProcessServer>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(MasterTargetServers))
+            {
+                writer.WritePropertyName("masterTargetServers"u8);
+                writer.WriteStartArray();
+                foreach (var item in MasterTargetServers)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MasterTargetServer>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(RunAsAccounts))
+            {
+                writer.WritePropertyName("runAsAccounts"u8);
+                writer.WriteStartArray();
+                foreach (var item in RunAsAccounts)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SiteRecoveryRunAsAccount>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ReplicationPairCount))
+            {
+                writer.WritePropertyName("replicationPairCount"u8);
+                writer.WriteStringValue(ReplicationPairCount);
+            }
+            if (Optional.IsDefined(ProcessServerCount))
+            {
+                writer.WritePropertyName("processServerCount"u8);
+                writer.WriteStringValue(ProcessServerCount);
+            }
+            if (Optional.IsDefined(AgentCount))
+            {
+                writer.WritePropertyName("agentCount"u8);
+                writer.WriteStringValue(AgentCount);
+            }
+            if (Optional.IsDefined(ProtectedServers))
+            {
+                writer.WritePropertyName("protectedServers"u8);
+                writer.WriteStringValue(ProtectedServers);
+            }
+            if (Optional.IsDefined(SystemLoad))
+            {
+                writer.WritePropertyName("systemLoad"u8);
+                writer.WriteStringValue(SystemLoad);
+            }
+            if (Optional.IsDefined(SystemLoadStatus))
+            {
+                writer.WritePropertyName("systemLoadStatus"u8);
+                writer.WriteStringValue(SystemLoadStatus);
+            }
+            if (Optional.IsDefined(CpuLoad))
+            {
+                writer.WritePropertyName("cpuLoad"u8);
+                writer.WriteStringValue(CpuLoad);
+            }
+            if (Optional.IsDefined(CpuLoadStatus))
+            {
+                writer.WritePropertyName("cpuLoadStatus"u8);
+                writer.WriteStringValue(CpuLoadStatus);
+            }
+            if (Optional.IsDefined(TotalMemoryInBytes))
+            {
+                writer.WritePropertyName("totalMemoryInBytes"u8);
+                writer.WriteNumberValue(TotalMemoryInBytes.Value);
+            }
+            if (Optional.IsDefined(AvailableMemoryInBytes))
+            {
+                writer.WritePropertyName("availableMemoryInBytes"u8);
+                writer.WriteNumberValue(AvailableMemoryInBytes.Value);
+            }
+            if (Optional.IsDefined(MemoryUsageStatus))
+            {
+                writer.WritePropertyName("memoryUsageStatus"u8);
+                writer.WriteStringValue(MemoryUsageStatus);
+            }
+            if (Optional.IsDefined(TotalSpaceInBytes))
+            {
+                writer.WritePropertyName("totalSpaceInBytes"u8);
+                writer.WriteNumberValue(TotalSpaceInBytes.Value);
+            }
+            if (Optional.IsDefined(AvailableSpaceInBytes))
+            {
+                writer.WritePropertyName("availableSpaceInBytes"u8);
+                writer.WriteNumberValue(AvailableSpaceInBytes.Value);
+            }
+            if (Optional.IsDefined(SpaceUsageStatus))
+            {
+                writer.WritePropertyName("spaceUsageStatus"u8);
+                writer.WriteStringValue(SpaceUsageStatus);
+            }
+            if (Optional.IsDefined(WebLoad))
+            {
+                writer.WritePropertyName("webLoad"u8);
+                writer.WriteStringValue(WebLoad);
+            }
+            if (Optional.IsDefined(WebLoadStatus))
+            {
+                writer.WritePropertyName("webLoadStatus"u8);
+                writer.WriteStringValue(WebLoadStatus);
+            }
+            if (Optional.IsDefined(DatabaseServerLoad))
+            {
+                writer.WritePropertyName("databaseServerLoad"u8);
+                writer.WriteStringValue(DatabaseServerLoad);
+            }
+            if (Optional.IsDefined(DatabaseServerLoadStatus))
+            {
+                writer.WritePropertyName("databaseServerLoadStatus"u8);
+                writer.WriteStringValue(DatabaseServerLoadStatus);
+            }
+            if (Optional.IsDefined(CsServiceStatus))
+            {
+                writer.WritePropertyName("csServiceStatus"u8);
+                writer.WriteStringValue(CsServiceStatus);
+            }
+            if (Optional.IsDefined(IPAddress))
+            {
+                writer.WritePropertyName("ipAddress"u8);
+                writer.WriteStringValue(IPAddress.ToString());
+            }
+            if (Optional.IsDefined(AgentVersion))
+            {
+                writer.WritePropertyName("agentVersion"u8);
+                writer.WriteStringValue(AgentVersion);
+            }
+            if (Optional.IsDefined(HostName))
+            {
+                writer.WritePropertyName("hostName"u8);
+                writer.WriteStringValue(HostName);
+            }
+            if (Optional.IsDefined(LastHeartbeat))
+            {
+                writer.WritePropertyName("lastHeartbeat"u8);
+                writer.WriteStringValue(LastHeartbeat.Value, "O");
+            }
+            if (Optional.IsDefined(VersionStatus))
+            {
+                writer.WritePropertyName("versionStatus"u8);
+                writer.WriteStringValue(VersionStatus);
+            }
+            if (Optional.IsDefined(SslCertExpireOn))
+            {
+                writer.WritePropertyName("sslCertExpiryDate"u8);
+                writer.WriteStringValue(SslCertExpireOn.Value, "O");
+            }
+            if (Optional.IsDefined(SslCertExpiryRemainingDays))
+            {
+                writer.WritePropertyName("sslCertExpiryRemainingDays"u8);
+                writer.WriteNumberValue(SslCertExpiryRemainingDays.Value);
+            }
+            if (Optional.IsDefined(PSTemplateVersion))
+            {
+                writer.WritePropertyName("psTemplateVersion"u8);
+                writer.WriteStringValue(PSTemplateVersion);
+            }
+            if (Optional.IsDefined(AgentExpireOn))
+            {
+                writer.WritePropertyName("agentExpiryDate"u8);
+                writer.WriteStringValue(AgentExpireOn.Value, "O");
+            }
+            if (Optional.IsDefined(AgentVersionDetails))
+            {
+                writer.WritePropertyName("agentVersionDetails"u8);
+                if (AgentVersionDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SiteRecoveryVersionDetails>)AgentVersionDetails).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(SwitchProviderBlockingErrorDetails))
+            {
+                writer.WritePropertyName("switchProviderBlockingErrorDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in SwitchProviderBlockingErrorDetails)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<InMageFabricSwitchProviderBlockingErrorDetails>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static VMwareDetails DeserializeVMwareDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +303,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<SiteRecoveryVersionDetails> agentVersionDetails = default;
             Optional<IReadOnlyList<InMageFabricSwitchProviderBlockingErrorDetails>> switchProviderBlockingErrorDetails = default;
             string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("processServers"u8))
@@ -303,8 +552,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VMwareDetails(instanceType, Optional.ToList(processServers), Optional.ToList(masterTargetServers), Optional.ToList(runAsAccounts), replicationPairCount.Value, processServerCount.Value, agentCount.Value, protectedServers.Value, systemLoad.Value, systemLoadStatus.Value, cpuLoad.Value, cpuLoadStatus.Value, Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), memoryUsageStatus.Value, Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), spaceUsageStatus.Value, webLoad.Value, webLoadStatus.Value, databaseServerLoad.Value, databaseServerLoadStatus.Value, csServiceStatus.Value, ipAddress.Value, agentVersion.Value, hostName.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToNullable(sslCertExpireOn), Optional.ToNullable(sslCertExpiryRemainingDays), psTemplateVersion.Value, Optional.ToNullable(agentExpireOn), agentVersionDetails.Value, Optional.ToList(switchProviderBlockingErrorDetails));
+            return new VMwareDetails(instanceType, Optional.ToList(processServers), Optional.ToList(masterTargetServers), Optional.ToList(runAsAccounts), replicationPairCount.Value, processServerCount.Value, agentCount.Value, protectedServers.Value, systemLoad.Value, systemLoadStatus.Value, cpuLoad.Value, cpuLoadStatus.Value, Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), memoryUsageStatus.Value, Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), spaceUsageStatus.Value, webLoad.Value, webLoadStatus.Value, databaseServerLoad.Value, databaseServerLoadStatus.Value, csServiceStatus.Value, ipAddress.Value, agentVersion.Value, hostName.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToNullable(sslCertExpireOn), Optional.ToNullable(sslCertExpiryRemainingDays), psTemplateVersion.Value, Optional.ToNullable(agentExpireOn), agentVersionDetails.Value, Optional.ToList(switchProviderBlockingErrorDetails), rawData);
+        }
+
+        VMwareDetails IModelJsonSerializable<VMwareDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VMwareDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVMwareDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VMwareDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VMwareDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VMwareDetails IModelSerializable<VMwareDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VMwareDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVMwareDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VMwareDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VMwareDetails"/> to convert. </param>
+        public static implicit operator RequestContent(VMwareDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VMwareDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VMwareDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVMwareDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

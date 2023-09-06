@@ -5,16 +5,150 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VmNicDetails
+    public partial class VmNicDetails : IUtf8JsonSerializable, IModelJsonSerializable<VmNicDetails>
     {
-        internal static VmNicDetails DeserializeVmNicDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VmNicDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VmNicDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VmNicDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NicId))
+            {
+                writer.WritePropertyName("nicId"u8);
+                writer.WriteStringValue(NicId);
+            }
+            if (Optional.IsDefined(ReplicaNicId))
+            {
+                writer.WritePropertyName("replicaNicId"u8);
+                writer.WriteStringValue(ReplicaNicId);
+            }
+            if (Optional.IsDefined(SourceNicArmId))
+            {
+                writer.WritePropertyName("sourceNicArmId"u8);
+                writer.WriteStringValue(SourceNicArmId);
+            }
+            if (Optional.IsDefined(VmNetworkName))
+            {
+                writer.WritePropertyName("vMNetworkName"u8);
+                writer.WriteStringValue(VmNetworkName);
+            }
+            if (Optional.IsDefined(RecoveryVmNetworkId))
+            {
+                writer.WritePropertyName("recoveryVMNetworkId"u8);
+                writer.WriteStringValue(RecoveryVmNetworkId);
+            }
+            if (Optional.IsCollectionDefined(IPConfigs))
+            {
+                writer.WritePropertyName("ipConfigs"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPConfigs)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<HyperVIPConfigDetails>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SelectionType))
+            {
+                writer.WritePropertyName("selectionType"u8);
+                writer.WriteStringValue(SelectionType);
+            }
+            if (Optional.IsDefined(RecoveryNetworkSecurityGroupId))
+            {
+                writer.WritePropertyName("recoveryNetworkSecurityGroupId"u8);
+                writer.WriteStringValue(RecoveryNetworkSecurityGroupId);
+            }
+            if (Optional.IsDefined(IsAcceleratedNetworkingOnRecoveryEnabled))
+            {
+                writer.WritePropertyName("enableAcceleratedNetworkingOnRecovery"u8);
+                writer.WriteBooleanValue(IsAcceleratedNetworkingOnRecoveryEnabled.Value);
+            }
+            if (Optional.IsDefined(TfoVmNetworkId))
+            {
+                writer.WritePropertyName("tfoVMNetworkId"u8);
+                writer.WriteStringValue(TfoVmNetworkId);
+            }
+            if (Optional.IsDefined(TfoNetworkSecurityGroupId))
+            {
+                writer.WritePropertyName("tfoNetworkSecurityGroupId"u8);
+                writer.WriteStringValue(TfoNetworkSecurityGroupId);
+            }
+            if (Optional.IsDefined(IsAcceleratedNetworkingOnTfoEnabled))
+            {
+                writer.WritePropertyName("enableAcceleratedNetworkingOnTfo"u8);
+                writer.WriteBooleanValue(IsAcceleratedNetworkingOnTfoEnabled.Value);
+            }
+            if (Optional.IsDefined(RecoveryNicName))
+            {
+                writer.WritePropertyName("recoveryNicName"u8);
+                writer.WriteStringValue(RecoveryNicName);
+            }
+            if (Optional.IsDefined(RecoveryNicResourceGroupName))
+            {
+                writer.WritePropertyName("recoveryNicResourceGroupName"u8);
+                writer.WriteStringValue(RecoveryNicResourceGroupName);
+            }
+            if (Optional.IsDefined(IsReuseExistingNicAllowed))
+            {
+                writer.WritePropertyName("reuseExistingNic"u8);
+                writer.WriteBooleanValue(IsReuseExistingNicAllowed.Value);
+            }
+            if (Optional.IsDefined(TfoRecoveryNicName))
+            {
+                writer.WritePropertyName("tfoRecoveryNicName"u8);
+                writer.WriteStringValue(TfoRecoveryNicName);
+            }
+            if (Optional.IsDefined(TfoRecoveryNicResourceGroupName))
+            {
+                writer.WritePropertyName("tfoRecoveryNicResourceGroupName"u8);
+                writer.WriteStringValue(TfoRecoveryNicResourceGroupName);
+            }
+            if (Optional.IsDefined(IsTfoReuseExistingNicAllowed))
+            {
+                writer.WritePropertyName("tfoReuseExistingNic"u8);
+                writer.WriteBooleanValue(IsTfoReuseExistingNicAllowed.Value);
+            }
+            if (Optional.IsDefined(TargetNicName))
+            {
+                writer.WritePropertyName("targetNicName"u8);
+                writer.WriteStringValue(TargetNicName);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static VmNicDetails DeserializeVmNicDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,6 +172,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> tfoRecoveryNicResourceGroupName = default;
             Optional<bool> tfoReuseExistingNic = default;
             Optional<string> targetNicName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nicId"u8))
@@ -172,8 +307,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     targetNicName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VmNicDetails(nicId.Value, replicaNicId.Value, sourceNicArmId.Value, vmNetworkName.Value, recoveryVmNetworkId.Value, Optional.ToList(ipConfigs), selectionType.Value, recoveryNetworkSecurityGroupId.Value, Optional.ToNullable(enableAcceleratedNetworkingOnRecovery), tfoVmNetworkId.Value, tfoNetworkSecurityGroupId.Value, Optional.ToNullable(enableAcceleratedNetworkingOnTfo), recoveryNicName.Value, recoveryNicResourceGroupName.Value, Optional.ToNullable(reuseExistingNic), tfoRecoveryNicName.Value, tfoRecoveryNicResourceGroupName.Value, Optional.ToNullable(tfoReuseExistingNic), targetNicName.Value);
+            return new VmNicDetails(nicId.Value, replicaNicId.Value, sourceNicArmId.Value, vmNetworkName.Value, recoveryVmNetworkId.Value, Optional.ToList(ipConfigs), selectionType.Value, recoveryNetworkSecurityGroupId.Value, Optional.ToNullable(enableAcceleratedNetworkingOnRecovery), tfoVmNetworkId.Value, tfoNetworkSecurityGroupId.Value, Optional.ToNullable(enableAcceleratedNetworkingOnTfo), recoveryNicName.Value, recoveryNicResourceGroupName.Value, Optional.ToNullable(reuseExistingNic), tfoRecoveryNicName.Value, tfoRecoveryNicResourceGroupName.Value, Optional.ToNullable(tfoReuseExistingNic), targetNicName.Value, rawData);
+        }
+
+        VmNicDetails IModelJsonSerializable<VmNicDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VmNicDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVmNicDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VmNicDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VmNicDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VmNicDetails IModelSerializable<VmNicDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VmNicDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVmNicDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VmNicDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VmNicDetails"/> to convert. </param>
+        public static implicit operator RequestContent(VmNicDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VmNicDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VmNicDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVmNicDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

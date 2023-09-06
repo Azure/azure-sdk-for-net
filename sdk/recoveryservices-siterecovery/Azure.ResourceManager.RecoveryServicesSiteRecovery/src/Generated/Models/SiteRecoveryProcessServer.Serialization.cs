@@ -9,14 +9,211 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryProcessServer
+    public partial class SiteRecoveryProcessServer : IUtf8JsonSerializable, IModelJsonSerializable<SiteRecoveryProcessServer>
     {
-        internal static SiteRecoveryProcessServer DeserializeSiteRecoveryProcessServer(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SiteRecoveryProcessServer>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SiteRecoveryProcessServer>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryProcessServer>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(FriendlyName))
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(IPAddress))
+            {
+                writer.WritePropertyName("ipAddress"u8);
+                writer.WriteStringValue(IPAddress.ToString());
+            }
+            if (Optional.IsDefined(OSType))
+            {
+                writer.WritePropertyName("osType"u8);
+                writer.WriteStringValue(OSType);
+            }
+            if (Optional.IsDefined(AgentVersion))
+            {
+                writer.WritePropertyName("agentVersion"u8);
+                writer.WriteStringValue(AgentVersion);
+            }
+            if (Optional.IsDefined(LastHeartbeatReceivedOn))
+            {
+                writer.WritePropertyName("lastHeartbeat"u8);
+                writer.WriteStringValue(LastHeartbeatReceivedOn.Value, "O");
+            }
+            if (Optional.IsDefined(VersionStatus))
+            {
+                writer.WritePropertyName("versionStatus"u8);
+                writer.WriteStringValue(VersionStatus);
+            }
+            if (Optional.IsCollectionDefined(MobilityServiceUpdates))
+            {
+                writer.WritePropertyName("mobilityServiceUpdates"u8);
+                writer.WriteStartArray();
+                foreach (var item in MobilityServiceUpdates)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MobilityServiceUpdate>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(HostId))
+            {
+                writer.WritePropertyName("hostId"u8);
+                writer.WriteStringValue(HostId);
+            }
+            if (Optional.IsDefined(MachineCount))
+            {
+                writer.WritePropertyName("machineCount"u8);
+                writer.WriteStringValue(MachineCount);
+            }
+            if (Optional.IsDefined(ReplicationPairCount))
+            {
+                writer.WritePropertyName("replicationPairCount"u8);
+                writer.WriteStringValue(ReplicationPairCount);
+            }
+            if (Optional.IsDefined(SystemLoad))
+            {
+                writer.WritePropertyName("systemLoad"u8);
+                writer.WriteStringValue(SystemLoad);
+            }
+            if (Optional.IsDefined(SystemLoadStatus))
+            {
+                writer.WritePropertyName("systemLoadStatus"u8);
+                writer.WriteStringValue(SystemLoadStatus);
+            }
+            if (Optional.IsDefined(CpuLoad))
+            {
+                writer.WritePropertyName("cpuLoad"u8);
+                writer.WriteStringValue(CpuLoad);
+            }
+            if (Optional.IsDefined(CpuLoadStatus))
+            {
+                writer.WritePropertyName("cpuLoadStatus"u8);
+                writer.WriteStringValue(CpuLoadStatus);
+            }
+            if (Optional.IsDefined(TotalMemoryInBytes))
+            {
+                writer.WritePropertyName("totalMemoryInBytes"u8);
+                writer.WriteNumberValue(TotalMemoryInBytes.Value);
+            }
+            if (Optional.IsDefined(AvailableMemoryInBytes))
+            {
+                writer.WritePropertyName("availableMemoryInBytes"u8);
+                writer.WriteNumberValue(AvailableMemoryInBytes.Value);
+            }
+            if (Optional.IsDefined(MemoryUsageStatus))
+            {
+                writer.WritePropertyName("memoryUsageStatus"u8);
+                writer.WriteStringValue(MemoryUsageStatus);
+            }
+            if (Optional.IsDefined(TotalSpaceInBytes))
+            {
+                writer.WritePropertyName("totalSpaceInBytes"u8);
+                writer.WriteNumberValue(TotalSpaceInBytes.Value);
+            }
+            if (Optional.IsDefined(AvailableSpaceInBytes))
+            {
+                writer.WritePropertyName("availableSpaceInBytes"u8);
+                writer.WriteNumberValue(AvailableSpaceInBytes.Value);
+            }
+            if (Optional.IsDefined(SpaceUsageStatus))
+            {
+                writer.WritePropertyName("spaceUsageStatus"u8);
+                writer.WriteStringValue(SpaceUsageStatus);
+            }
+            if (Optional.IsDefined(PsServiceStatus))
+            {
+                writer.WritePropertyName("psServiceStatus"u8);
+                writer.WriteStringValue(PsServiceStatus);
+            }
+            if (Optional.IsDefined(SslCertExpireOn))
+            {
+                writer.WritePropertyName("sslCertExpiryDate"u8);
+                writer.WriteStringValue(SslCertExpireOn.Value, "O");
+            }
+            if (Optional.IsDefined(SslCertExpiryRemainingDays))
+            {
+                writer.WritePropertyName("sslCertExpiryRemainingDays"u8);
+                writer.WriteNumberValue(SslCertExpiryRemainingDays.Value);
+            }
+            if (Optional.IsDefined(OSVersion))
+            {
+                writer.WritePropertyName("osVersion"u8);
+                writer.WriteStringValue(OSVersion);
+            }
+            if (Optional.IsCollectionDefined(HealthErrors))
+            {
+                writer.WritePropertyName("healthErrors"u8);
+                writer.WriteStartArray();
+                foreach (var item in HealthErrors)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SiteRecoveryHealthError>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(AgentExpireOn))
+            {
+                writer.WritePropertyName("agentExpiryDate"u8);
+                writer.WriteStringValue(AgentExpireOn.Value, "O");
+            }
+            if (Optional.IsDefined(AgentVersionDetails))
+            {
+                writer.WritePropertyName("agentVersionDetails"u8);
+                if (AgentVersionDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SiteRecoveryVersionDetails>)AgentVersionDetails).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SiteRecoveryProcessServer DeserializeSiteRecoveryProcessServer(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +254,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> throughputStatus = default;
             Optional<string> marsCommunicationStatus = default;
             Optional<string> marsRegistrationStatus = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -317,8 +515,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     marsRegistrationStatus = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SiteRecoveryProcessServer(friendlyName.Value, id.Value, ipAddress.Value, osType.Value, agentVersion.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToList(mobilityServiceUpdates), hostId.Value, machineCount.Value, replicationPairCount.Value, systemLoad.Value, systemLoadStatus.Value, cpuLoad.Value, cpuLoadStatus.Value, Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), memoryUsageStatus.Value, Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), spaceUsageStatus.Value, psServiceStatus.Value, Optional.ToNullable(sslCertExpireOn), Optional.ToNullable(sslCertExpiryRemainingDays), osVersion.Value, Optional.ToList(healthErrors), Optional.ToNullable(agentExpireOn), agentVersionDetails.Value, Optional.ToNullable(health), Optional.ToNullable(psStatsRefreshTime), Optional.ToNullable(throughputUploadPendingDataInBytes), Optional.ToNullable(throughputInMBps), Optional.ToNullable(throughputInBytes), throughputStatus.Value, marsCommunicationStatus.Value, marsRegistrationStatus.Value);
+            return new SiteRecoveryProcessServer(friendlyName.Value, id.Value, ipAddress.Value, osType.Value, agentVersion.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToList(mobilityServiceUpdates), hostId.Value, machineCount.Value, replicationPairCount.Value, systemLoad.Value, systemLoadStatus.Value, cpuLoad.Value, cpuLoadStatus.Value, Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), memoryUsageStatus.Value, Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), spaceUsageStatus.Value, psServiceStatus.Value, Optional.ToNullable(sslCertExpireOn), Optional.ToNullable(sslCertExpiryRemainingDays), osVersion.Value, Optional.ToList(healthErrors), Optional.ToNullable(agentExpireOn), agentVersionDetails.Value, Optional.ToNullable(health), Optional.ToNullable(psStatsRefreshTime), Optional.ToNullable(throughputUploadPendingDataInBytes), Optional.ToNullable(throughputInMBps), Optional.ToNullable(throughputInBytes), throughputStatus.Value, marsCommunicationStatus.Value, marsRegistrationStatus.Value, rawData);
+        }
+
+        SiteRecoveryProcessServer IModelJsonSerializable<SiteRecoveryProcessServer>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryProcessServer>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryProcessServer(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SiteRecoveryProcessServer>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryProcessServer>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SiteRecoveryProcessServer IModelSerializable<SiteRecoveryProcessServer>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryProcessServer>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryProcessServer(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SiteRecoveryProcessServer"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SiteRecoveryProcessServer"/> to convert. </param>
+        public static implicit operator RequestContent(SiteRecoveryProcessServer model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SiteRecoveryProcessServer"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SiteRecoveryProcessServer(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSiteRecoveryProcessServer(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class CopyLongTermRetentionBackupContent : IUtf8JsonSerializable
+    public partial class CopyLongTermRetentionBackupContent : IUtf8JsonSerializable, IModelJsonSerializable<CopyLongTermRetentionBackupContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CopyLongTermRetentionBackupContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CopyLongTermRetentionBackupContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CopyLongTermRetentionBackupContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -48,7 +56,143 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStringValue(TargetBackupStorageRedundancy.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static CopyLongTermRetentionBackupContent DeserializeCopyLongTermRetentionBackupContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> targetSubscriptionId = default;
+            Optional<string> targetResourceGroup = default;
+            Optional<ResourceIdentifier> targetServerResourceId = default;
+            Optional<string> targetServerFullyQualifiedDomainName = default;
+            Optional<string> targetDatabaseName = default;
+            Optional<SqlBackupStorageRedundancy> targetBackupStorageRedundancy = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("targetSubscriptionId"u8))
+                        {
+                            targetSubscriptionId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("targetResourceGroup"u8))
+                        {
+                            targetResourceGroup = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("targetServerResourceId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            targetServerResourceId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("targetServerFullyQualifiedDomainName"u8))
+                        {
+                            targetServerFullyQualifiedDomainName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("targetDatabaseName"u8))
+                        {
+                            targetDatabaseName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("targetBackupStorageRedundancy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            targetBackupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new CopyLongTermRetentionBackupContent(targetSubscriptionId.Value, targetResourceGroup.Value, targetServerResourceId.Value, targetServerFullyQualifiedDomainName.Value, targetDatabaseName.Value, Optional.ToNullable(targetBackupStorageRedundancy), rawData);
+        }
+
+        CopyLongTermRetentionBackupContent IModelJsonSerializable<CopyLongTermRetentionBackupContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CopyLongTermRetentionBackupContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCopyLongTermRetentionBackupContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CopyLongTermRetentionBackupContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CopyLongTermRetentionBackupContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CopyLongTermRetentionBackupContent IModelSerializable<CopyLongTermRetentionBackupContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CopyLongTermRetentionBackupContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCopyLongTermRetentionBackupContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CopyLongTermRetentionBackupContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CopyLongTermRetentionBackupContent"/> to convert. </param>
+        public static implicit operator RequestContent(CopyLongTermRetentionBackupContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CopyLongTermRetentionBackupContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CopyLongTermRetentionBackupContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCopyLongTermRetentionBackupContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

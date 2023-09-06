@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> ExtendedLocation details data. </summary>
     public partial class A2AExtendedLocationDetails
     {
-        /// <summary> Initializes a new instance of A2AExtendedLocationDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="A2AExtendedLocationDetails"/>. </summary>
         internal A2AExtendedLocationDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of A2AExtendedLocationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AExtendedLocationDetails"/>. </summary>
         /// <param name="primaryExtendedLocation"> The primary ExtendedLocation. </param>
         /// <param name="recoveryExtendedLocation"> The recovery ExtendedLocation. </param>
-        internal A2AExtendedLocationDetails(SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal A2AExtendedLocationDetails(SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation, Dictionary<string, BinaryData> rawData)
         {
             PrimaryExtendedLocation = primaryExtendedLocation;
             RecoveryExtendedLocation = recoveryExtendedLocation;
+            _rawData = rawData;
         }
 
         /// <summary> The primary ExtendedLocation. </summary>

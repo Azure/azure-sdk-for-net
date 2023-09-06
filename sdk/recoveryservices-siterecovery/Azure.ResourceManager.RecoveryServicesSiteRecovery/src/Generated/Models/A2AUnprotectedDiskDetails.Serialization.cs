@@ -5,21 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2AUnprotectedDiskDetails
+    public partial class A2AUnprotectedDiskDetails : IUtf8JsonSerializable, IModelJsonSerializable<A2AUnprotectedDiskDetails>
     {
-        internal static A2AUnprotectedDiskDetails DeserializeA2AUnprotectedDiskDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<A2AUnprotectedDiskDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<A2AUnprotectedDiskDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<A2AUnprotectedDiskDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DiskLunId))
+            {
+                writer.WritePropertyName("diskLunId"u8);
+                writer.WriteNumberValue(DiskLunId.Value);
+            }
+            if (Optional.IsDefined(DiskAutoProtectionStatus))
+            {
+                writer.WritePropertyName("diskAutoProtectionStatus"u8);
+                writer.WriteStringValue(DiskAutoProtectionStatus.Value.ToString());
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static A2AUnprotectedDiskDetails DeserializeA2AUnprotectedDiskDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> diskLunId = default;
             Optional<AutoProtectionOfDataDisk> diskAutoProtectionStatus = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskLunId"u8))
@@ -40,8 +79,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     diskAutoProtectionStatus = new AutoProtectionOfDataDisk(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new A2AUnprotectedDiskDetails(Optional.ToNullable(diskLunId), Optional.ToNullable(diskAutoProtectionStatus));
+            return new A2AUnprotectedDiskDetails(Optional.ToNullable(diskLunId), Optional.ToNullable(diskAutoProtectionStatus), rawData);
+        }
+
+        A2AUnprotectedDiskDetails IModelJsonSerializable<A2AUnprotectedDiskDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<A2AUnprotectedDiskDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeA2AUnprotectedDiskDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<A2AUnprotectedDiskDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<A2AUnprotectedDiskDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        A2AUnprotectedDiskDetails IModelSerializable<A2AUnprotectedDiskDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<A2AUnprotectedDiskDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeA2AUnprotectedDiskDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="A2AUnprotectedDiskDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="A2AUnprotectedDiskDetails"/> to convert. </param>
+        public static implicit operator RequestContent(A2AUnprotectedDiskDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="A2AUnprotectedDiskDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator A2AUnprotectedDiskDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeA2AUnprotectedDiskDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    public partial class RedisPatchScheduleSetting : IUtf8JsonSerializable
+    public partial class RedisPatchScheduleSetting : IUtf8JsonSerializable, IModelJsonSerializable<RedisPatchScheduleSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RedisPatchScheduleSetting>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RedisPatchScheduleSetting>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RedisPatchScheduleSetting>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("dayOfWeek"u8);
             writer.WriteStringValue(DayOfWeek.ToSerialString());
@@ -25,11 +32,25 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WritePropertyName("maintenanceWindow"u8);
                 writer.WriteStringValue(MaintenanceWindow.Value, "P");
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RedisPatchScheduleSetting DeserializeRedisPatchScheduleSetting(JsonElement element)
+        internal static RedisPatchScheduleSetting DeserializeRedisPatchScheduleSetting(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +58,7 @@ namespace Azure.ResourceManager.Redis.Models
             RedisDayOfWeek dayOfWeek = default;
             int startHourUtc = default;
             Optional<TimeSpan> maintenanceWindow = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dayOfWeek"u8))
@@ -58,8 +80,61 @@ namespace Azure.ResourceManager.Redis.Models
                     maintenanceWindow = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RedisPatchScheduleSetting(dayOfWeek, startHourUtc, Optional.ToNullable(maintenanceWindow));
+            return new RedisPatchScheduleSetting(dayOfWeek, startHourUtc, Optional.ToNullable(maintenanceWindow), rawData);
+        }
+
+        RedisPatchScheduleSetting IModelJsonSerializable<RedisPatchScheduleSetting>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RedisPatchScheduleSetting>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRedisPatchScheduleSetting(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RedisPatchScheduleSetting>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RedisPatchScheduleSetting>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RedisPatchScheduleSetting IModelSerializable<RedisPatchScheduleSetting>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RedisPatchScheduleSetting>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRedisPatchScheduleSetting(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RedisPatchScheduleSetting"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RedisPatchScheduleSetting"/> to convert. </param>
+        public static implicit operator RequestContent(RedisPatchScheduleSetting model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RedisPatchScheduleSetting"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RedisPatchScheduleSetting(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRedisPatchScheduleSetting(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,15 +6,57 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterVersionDetails
+    public partial class ClusterVersionDetails : IUtf8JsonSerializable, IModelJsonSerializable<ClusterVersionDetails>
     {
-        internal static ClusterVersionDetails DeserializeClusterVersionDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ClusterVersionDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ClusterVersionDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ClusterVersionDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CodeVersion))
+            {
+                writer.WritePropertyName("codeVersion"u8);
+                writer.WriteStringValue(CodeVersion);
+            }
+            if (Optional.IsDefined(SupportExpireOn))
+            {
+                writer.WritePropertyName("supportExpiryUtc"u8);
+                writer.WriteStringValue(SupportExpireOn.Value, "O");
+            }
+            if (Optional.IsDefined(Environment))
+            {
+                writer.WritePropertyName("environment"u8);
+                writer.WriteStringValue(Environment.Value.ToString());
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ClusterVersionDetails DeserializeClusterVersionDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +64,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Optional<string> codeVersion = default;
             Optional<DateTimeOffset> supportExpiryUtc = default;
             Optional<ClusterEnvironment> environment = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("codeVersion"u8))
@@ -47,8 +90,61 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     environment = new ClusterEnvironment(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ClusterVersionDetails(codeVersion.Value, Optional.ToNullable(supportExpiryUtc), Optional.ToNullable(environment));
+            return new ClusterVersionDetails(codeVersion.Value, Optional.ToNullable(supportExpiryUtc), Optional.ToNullable(environment), rawData);
+        }
+
+        ClusterVersionDetails IModelJsonSerializable<ClusterVersionDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClusterVersionDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeClusterVersionDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ClusterVersionDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClusterVersionDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ClusterVersionDetails IModelSerializable<ClusterVersionDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClusterVersionDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeClusterVersionDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ClusterVersionDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ClusterVersionDetails"/> to convert. </param>
+        public static implicit operator RequestContent(ClusterVersionDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ClusterVersionDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ClusterVersionDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeClusterVersionDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

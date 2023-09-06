@@ -6,15 +6,79 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class VaultUsage
+    public partial class VaultUsage : IUtf8JsonSerializable, IModelJsonSerializable<VaultUsage>
     {
-        internal static VaultUsage DeserializeVaultUsage(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VaultUsage>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VaultUsage>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VaultUsage>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Unit))
+            {
+                writer.WritePropertyName("unit"u8);
+                writer.WriteStringValue(Unit.Value.ToString());
+            }
+            if (Optional.IsDefined(QuotaPeriod))
+            {
+                writer.WritePropertyName("quotaPeriod"u8);
+                writer.WriteStringValue(QuotaPeriod);
+            }
+            if (Optional.IsDefined(NextResetOn))
+            {
+                writer.WritePropertyName("nextResetTime"u8);
+                writer.WriteStringValue(NextResetOn.Value, "O");
+            }
+            if (Optional.IsDefined(CurrentValue))
+            {
+                writer.WritePropertyName("currentValue"u8);
+                writer.WriteNumberValue(CurrentValue.Value);
+            }
+            if (Optional.IsDefined(Limit))
+            {
+                writer.WritePropertyName("limit"u8);
+                writer.WriteNumberValue(Limit.Value);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                if (Name is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<VaultUsageNameInfo>)Name).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static VaultUsage DeserializeVaultUsage(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +89,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<long> currentValue = default;
             Optional<long> limit = default;
             Optional<VaultUsageNameInfo> name = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unit"u8))
@@ -77,8 +142,61 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     name = VaultUsageNameInfo.DeserializeVaultUsageNameInfo(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VaultUsage(Optional.ToNullable(unit), quotaPeriod.Value, Optional.ToNullable(nextResetTime), Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value);
+            return new VaultUsage(Optional.ToNullable(unit), quotaPeriod.Value, Optional.ToNullable(nextResetTime), Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, rawData);
+        }
+
+        VaultUsage IModelJsonSerializable<VaultUsage>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VaultUsage>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVaultUsage(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VaultUsage>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VaultUsage>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VaultUsage IModelSerializable<VaultUsage>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VaultUsage>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVaultUsage(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VaultUsage"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VaultUsage"/> to convert. </param>
+        public static implicit operator RequestContent(VaultUsage model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VaultUsage"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VaultUsage(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVaultUsage(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

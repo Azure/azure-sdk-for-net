@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Response contract for enable backup validation request. </summary>
     public partial class PreValidateEnableBackupResult
     {
-        /// <summary> Initializes a new instance of PreValidateEnableBackupResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PreValidateEnableBackupResult"/>. </summary>
         internal PreValidateEnableBackupResult()
         {
         }
 
-        /// <summary> Initializes a new instance of PreValidateEnableBackupResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreValidateEnableBackupResult"/>. </summary>
         /// <param name="status"> Validation Status. </param>
         /// <param name="errorCode"> Response error code. </param>
         /// <param name="errorMessage"> Response error message. </param>
@@ -25,7 +31,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// for portal
         /// </param>
         /// <param name="protectedItemName"> Specifies the product specific ds name. E.g. vm;iaasvmcontainer;rgname;vmname. This is required for portal. </param>
-        internal PreValidateEnableBackupResult(BackupValidationStatus? status, string errorCode, string errorMessage, string recommendation, string containerName, string protectedItemName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PreValidateEnableBackupResult(BackupValidationStatus? status, string errorCode, string errorMessage, string recommendation, string containerName, string protectedItemName, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             ErrorCode = errorCode;
@@ -33,6 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Recommendation = recommendation;
             ContainerName = containerName;
             ProtectedItemName = protectedItemName;
+            _rawData = rawData;
         }
 
         /// <summary> Validation Status. </summary>

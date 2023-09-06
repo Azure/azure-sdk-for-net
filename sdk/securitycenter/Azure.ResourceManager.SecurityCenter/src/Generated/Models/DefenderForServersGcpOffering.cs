@@ -5,18 +5,21 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The Defender for Servers GCP offering configurations. </summary>
     public partial class DefenderForServersGcpOffering : SecurityCenterCloudOffering
     {
-        /// <summary> Initializes a new instance of DefenderForServersGcpOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForServersGcpOffering"/>. </summary>
         public DefenderForServersGcpOffering()
         {
             OfferingType = OfferingType.DefenderForServersGcp;
         }
 
-        /// <summary> Initializes a new instance of DefenderForServersGcpOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForServersGcpOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
         /// <param name="defenderForServers"> The Defender for servers connection configuration. </param>
@@ -24,7 +27,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="vulnerabilityAssessmentAutoProvisioning"> The Vulnerability Assessment autoprovisioning configuration. </param>
         /// <param name="mdeAutoProvisioning"> The Microsoft Defender for Endpoint autoprovisioning configuration. </param>
         /// <param name="subPlan"> configuration for the servers offering subPlan. </param>
-        internal DefenderForServersGcpOffering(OfferingType offeringType, string description, GcpDefenderForServersInfo defenderForServers, DefenderForServersGcpOfferingArcAutoProvisioning arcAutoProvisioning, DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning vulnerabilityAssessmentAutoProvisioning, DefenderForServersGcpOfferingMdeAutoProvisioning mdeAutoProvisioning, DefenderForServersGcpOfferingSubPlan subPlan) : base(offeringType, description)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DefenderForServersGcpOffering(OfferingType offeringType, string description, GcpDefenderForServersInfo defenderForServers, DefenderForServersGcpOfferingArcAutoProvisioning arcAutoProvisioning, DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning vulnerabilityAssessmentAutoProvisioning, DefenderForServersGcpOfferingMdeAutoProvisioning mdeAutoProvisioning, DefenderForServersGcpOfferingSubPlan subPlan, Dictionary<string, BinaryData> rawData) : base(offeringType, description, rawData)
         {
             DefenderForServers = defenderForServers;
             ArcAutoProvisioning = arcAutoProvisioning;

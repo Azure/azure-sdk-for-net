@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The available data types for TI (Threat Intelligence) data connector. </summary>
     internal partial class TIDataConnectorDataTypes
     {
-        /// <summary> Initializes a new instance of TIDataConnectorDataTypes. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TIDataConnectorDataTypes"/>. </summary>
         public TIDataConnectorDataTypes()
         {
         }
 
-        /// <summary> Initializes a new instance of TIDataConnectorDataTypes. </summary>
+        /// <summary> Initializes a new instance of <see cref="TIDataConnectorDataTypes"/>. </summary>
         /// <param name="indicators"> Data type for indicators connection. </param>
-        internal TIDataConnectorDataTypes(TIDataConnectorDataTypesIndicators indicators)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TIDataConnectorDataTypes(TIDataConnectorDataTypesIndicators indicators, Dictionary<string, BinaryData> rawData)
         {
             Indicators = indicators;
+            _rawData = rawData;
         }
 
         /// <summary> Data type for indicators connection. </summary>

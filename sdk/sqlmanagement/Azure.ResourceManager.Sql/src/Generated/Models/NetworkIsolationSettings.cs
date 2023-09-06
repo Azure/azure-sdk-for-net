@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -12,9 +14,23 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Contains the ARM resources for which to create private endpoint connection. </summary>
     public partial class NetworkIsolationSettings
     {
-        /// <summary> Initializes a new instance of NetworkIsolationSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkIsolationSettings"/>. </summary>
         public NetworkIsolationSettings()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkIsolationSettings"/>. </summary>
+        /// <param name="storageAccountResourceId"> The resource id for the storage account used to store BACPAC file. If set, private endpoint connection will be created for the storage account. Must match storage account used for StorageUri parameter. </param>
+        /// <param name="sqlServerResourceId"> The resource id for the SQL server which is the target of this request. If set, private endpoint connection will be created for the SQL server. Must match server which is target of the operation. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkIsolationSettings(ResourceIdentifier storageAccountResourceId, ResourceIdentifier sqlServerResourceId, Dictionary<string, BinaryData> rawData)
+        {
+            StorageAccountResourceId = storageAccountResourceId;
+            SqlServerResourceId = sqlServerResourceId;
+            _rawData = rawData;
         }
 
         /// <summary> The resource id for the storage account used to store BACPAC file. If set, private endpoint connection will be created for the storage account. Must match storage account used for StorageUri parameter. </summary>

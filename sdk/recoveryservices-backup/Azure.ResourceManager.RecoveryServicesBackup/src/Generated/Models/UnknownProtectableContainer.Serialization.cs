@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    internal partial class UnknownProtectableContainer : IUtf8JsonSerializable
+    internal partial class UnknownProtectableContainer : IUtf8JsonSerializable, IModelJsonSerializable<ProtectableContainer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProtectableContainer>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ProtectableContainer>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ProtectableContainer>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FriendlyName))
             {
@@ -37,53 +43,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("containerId"u8);
                 writer.WriteStringValue(ContainerId);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownProtectableContainer DeserializeUnknownProtectableContainer(JsonElement element)
+        internal static ProtectableContainer DeserializeUnknownProtectableContainer(JsonElement element, ModelSerializerOptions options = default) => DeserializeProtectableContainer(element, options);
+
+        ProtectableContainer IModelJsonSerializable<ProtectableContainer>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<string> friendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            ProtectableContainerType protectableContainerType = default;
-            Optional<string> healthStatus = default;
-            Optional<string> containerId = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("friendlyName"u8))
-                {
-                    friendlyName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("backupManagementType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    backupManagementType = new BackupManagementType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("protectableContainerType"u8))
-                {
-                    protectableContainerType = property.Value.GetString().ToProtectableContainerType();
-                    continue;
-                }
-                if (property.NameEquals("healthStatus"u8))
-                {
-                    healthStatus = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("containerId"u8))
-                {
-                    containerId = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownProtectableContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), protectableContainerType, healthStatus.Value, containerId.Value);
+            Core.ModelSerializerHelper.ValidateFormat<ProtectableContainer>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownProtectableContainer(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ProtectableContainer>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProtectableContainer>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ProtectableContainer IModelSerializable<ProtectableContainer>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProtectableContainer>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeProtectableContainer(doc.RootElement, options);
         }
     }
 }

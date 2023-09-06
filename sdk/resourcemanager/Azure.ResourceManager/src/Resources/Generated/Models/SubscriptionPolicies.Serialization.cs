@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class SubscriptionPolicies
+    public partial class SubscriptionPolicies : IUtf8JsonSerializable, IModelJsonSerializable<SubscriptionPolicies>
     {
-        internal static SubscriptionPolicies DeserializeSubscriptionPolicies(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SubscriptionPolicies>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SubscriptionPolicies>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SubscriptionPolicies>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SubscriptionPolicies DeserializeSubscriptionPolicies(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +49,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> locationPlacementId = default;
             Optional<string> quotaId = default;
             Optional<SpendingLimit> spendingLimit = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("locationPlacementId"u8))
@@ -42,8 +71,61 @@ namespace Azure.ResourceManager.Resources.Models
                     spendingLimit = property.Value.GetString().ToSpendingLimit();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SubscriptionPolicies(locationPlacementId.Value, quotaId.Value, Optional.ToNullable(spendingLimit));
+            return new SubscriptionPolicies(locationPlacementId.Value, quotaId.Value, Optional.ToNullable(spendingLimit), rawData);
+        }
+
+        SubscriptionPolicies IModelJsonSerializable<SubscriptionPolicies>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SubscriptionPolicies>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubscriptionPolicies(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SubscriptionPolicies>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SubscriptionPolicies>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SubscriptionPolicies IModelSerializable<SubscriptionPolicies>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SubscriptionPolicies>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSubscriptionPolicies(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SubscriptionPolicies"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SubscriptionPolicies"/> to convert. </param>
+        public static implicit operator RequestContent(SubscriptionPolicies model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SubscriptionPolicies"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SubscriptionPolicies(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSubscriptionPolicies(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

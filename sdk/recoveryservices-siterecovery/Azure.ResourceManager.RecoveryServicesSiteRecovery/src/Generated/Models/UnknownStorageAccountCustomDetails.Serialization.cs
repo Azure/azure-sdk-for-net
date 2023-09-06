@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    internal partial class UnknownStorageAccountCustomDetails : IUtf8JsonSerializable
+    internal partial class UnknownStorageAccountCustomDetails : IUtf8JsonSerializable, IModelJsonSerializable<StorageAccountCustomDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageAccountCustomDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageAccountCustomDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StorageAccountCustomDetails>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownStorageAccountCustomDetails DeserializeUnknownStorageAccountCustomDetails(JsonElement element)
+        internal static StorageAccountCustomDetails DeserializeUnknownStorageAccountCustomDetails(JsonElement element, ModelSerializerOptions options = default) => DeserializeStorageAccountCustomDetails(element, options);
+
+        StorageAccountCustomDetails IModelJsonSerializable<StorageAccountCustomDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string resourceType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("resourceType"u8))
-                {
-                    resourceType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownStorageAccountCustomDetails(resourceType);
+            Core.ModelSerializerHelper.ValidateFormat<StorageAccountCustomDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownStorageAccountCustomDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageAccountCustomDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageAccountCustomDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageAccountCustomDetails IModelSerializable<StorageAccountCustomDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageAccountCustomDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageAccountCustomDetails(doc.RootElement, options);
         }
     }
 }

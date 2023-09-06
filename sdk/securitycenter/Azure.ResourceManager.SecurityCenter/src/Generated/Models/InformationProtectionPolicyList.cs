@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Information protection policies response. </summary>
     internal partial class InformationProtectionPolicyList
     {
-        /// <summary> Initializes a new instance of InformationProtectionPolicyList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InformationProtectionPolicyList"/>. </summary>
         internal InformationProtectionPolicyList()
         {
             Value = new ChangeTrackingList<InformationProtectionPolicy>();
         }
 
-        /// <summary> Initializes a new instance of InformationProtectionPolicyList. </summary>
+        /// <summary> Initializes a new instance of <see cref="InformationProtectionPolicyList"/>. </summary>
         /// <param name="value"> List of information protection policies. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal InformationProtectionPolicyList(IReadOnlyList<InformationProtectionPolicy> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InformationProtectionPolicyList(IReadOnlyList<InformationProtectionPolicy> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of information protection policies. </summary>

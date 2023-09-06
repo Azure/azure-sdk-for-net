@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The AutomationRulePropertyArrayChangedValuesCondition. </summary>
     public partial class AutomationRulePropertyArrayChangedValuesCondition
     {
-        /// <summary> Initializes a new instance of AutomationRulePropertyArrayChangedValuesCondition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationRulePropertyArrayChangedValuesCondition"/>. </summary>
         public AutomationRulePropertyArrayChangedValuesCondition()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationRulePropertyArrayChangedValuesCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRulePropertyArrayChangedValuesCondition"/>. </summary>
         /// <param name="arrayType"></param>
         /// <param name="changeType"></param>
-        internal AutomationRulePropertyArrayChangedValuesCondition(AutomationRulePropertyArrayChangedConditionSupportedArrayType? arrayType, AutomationRulePropertyArrayChangedConditionSupportedChangeType? changeType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationRulePropertyArrayChangedValuesCondition(AutomationRulePropertyArrayChangedConditionSupportedArrayType? arrayType, AutomationRulePropertyArrayChangedConditionSupportedChangeType? changeType, Dictionary<string, BinaryData> rawData)
         {
             ArrayType = arrayType;
             ChangeType = changeType;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the array type. </summary>

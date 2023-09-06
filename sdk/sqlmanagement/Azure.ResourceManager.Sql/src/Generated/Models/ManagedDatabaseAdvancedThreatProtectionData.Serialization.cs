@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class ManagedDatabaseAdvancedThreatProtectionData : IUtf8JsonSerializable
+    public partial class ManagedDatabaseAdvancedThreatProtectionData : IUtf8JsonSerializable, IModelJsonSerializable<ManagedDatabaseAdvancedThreatProtectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedDatabaseAdvancedThreatProtectionData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedDatabaseAdvancedThreatProtectionData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedDatabaseAdvancedThreatProtectionData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -26,11 +33,25 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedDatabaseAdvancedThreatProtectionData DeserializeManagedDatabaseAdvancedThreatProtectionData(JsonElement element)
+        internal static ManagedDatabaseAdvancedThreatProtectionData DeserializeManagedDatabaseAdvancedThreatProtectionData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -41,6 +62,7 @@ namespace Azure.ResourceManager.Sql
             Optional<SystemData> systemData = default;
             Optional<AdvancedThreatProtectionState> state = default;
             Optional<DateTimeOffset> creationTime = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -97,8 +119,61 @@ namespace Azure.ResourceManager.Sql
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedDatabaseAdvancedThreatProtectionData(id, name, type, systemData.Value, Optional.ToNullable(state), Optional.ToNullable(creationTime));
+            return new ManagedDatabaseAdvancedThreatProtectionData(id, name, type, systemData.Value, Optional.ToNullable(state), Optional.ToNullable(creationTime), rawData);
+        }
+
+        ManagedDatabaseAdvancedThreatProtectionData IModelJsonSerializable<ManagedDatabaseAdvancedThreatProtectionData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedDatabaseAdvancedThreatProtectionData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedDatabaseAdvancedThreatProtectionData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedDatabaseAdvancedThreatProtectionData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedDatabaseAdvancedThreatProtectionData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedDatabaseAdvancedThreatProtectionData IModelSerializable<ManagedDatabaseAdvancedThreatProtectionData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedDatabaseAdvancedThreatProtectionData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedDatabaseAdvancedThreatProtectionData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagedDatabaseAdvancedThreatProtectionData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagedDatabaseAdvancedThreatProtectionData"/> to convert. </param>
+        public static implicit operator RequestContent(ManagedDatabaseAdvancedThreatProtectionData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagedDatabaseAdvancedThreatProtectionData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagedDatabaseAdvancedThreatProtectionData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedDatabaseAdvancedThreatProtectionData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

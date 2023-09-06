@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Update network mapping input. </summary>
     public partial class SiteRecoveryNetworkMappingPatch
     {
-        /// <summary> Initializes a new instance of SiteRecoveryNetworkMappingPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryNetworkMappingPatch"/>. </summary>
         public SiteRecoveryNetworkMappingPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryNetworkMappingPatch"/>. </summary>
+        /// <param name="properties"> The input properties needed to update network mapping. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryNetworkMappingPatch(UpdateNetworkMappingProperties properties, Dictionary<string, BinaryData> rawData)
+        {
+            Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> The input properties needed to update network mapping. </summary>

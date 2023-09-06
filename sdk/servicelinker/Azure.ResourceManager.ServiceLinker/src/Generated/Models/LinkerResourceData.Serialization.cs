@@ -5,29 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceLinker.Models;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
-    public partial class LinkerResourceData : IUtf8JsonSerializable
+    public partial class LinkerResourceData : IUtf8JsonSerializable, IModelJsonSerializable<LinkerResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LinkerResourceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LinkerResourceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LinkerResourceData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(TargetService))
             {
                 writer.WritePropertyName("targetService"u8);
-                writer.WriteObjectValue(TargetService);
+                if (TargetService is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TargetServiceBaseInfo>)TargetService).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(AuthInfo))
             {
                 writer.WritePropertyName("authInfo"u8);
-                writer.WriteObjectValue(AuthInfo);
+                if (AuthInfo is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AuthBaseInfo>)AuthInfo).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ClientType))
             {
@@ -39,7 +61,14 @@ namespace Azure.ResourceManager.ServiceLinker
                 if (VnetSolution != null)
                 {
                     writer.WritePropertyName("vNetSolution"u8);
-                    writer.WriteObjectValue(VnetSolution);
+                    if (VnetSolution is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<VnetSolution>)VnetSolution).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -51,7 +80,14 @@ namespace Azure.ResourceManager.ServiceLinker
                 if (SecretStore != null)
                 {
                     writer.WritePropertyName("secretStore"u8);
-                    writer.WriteObjectValue(SecretStore);
+                    if (SecretStore is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<LinkerSecretStore>)SecretStore).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -71,11 +107,25 @@ namespace Azure.ResourceManager.ServiceLinker
                 }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LinkerResourceData DeserializeLinkerResourceData(JsonElement element)
+        internal static LinkerResourceData DeserializeLinkerResourceData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -91,6 +141,7 @@ namespace Azure.ResourceManager.ServiceLinker
             Optional<VnetSolution> vnetSolution = default;
             Optional<LinkerSecretStore> secretStore = default;
             Optional<string> scope = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -191,8 +242,61 @@ namespace Azure.ResourceManager.ServiceLinker
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LinkerResourceData(id, name, type, systemData.Value, targetService.Value, authInfo.Value, Optional.ToNullable(clientType), provisioningState.Value, vnetSolution.Value, secretStore.Value, scope.Value);
+            return new LinkerResourceData(id, name, type, systemData.Value, targetService.Value, authInfo.Value, Optional.ToNullable(clientType), provisioningState.Value, vnetSolution.Value, secretStore.Value, scope.Value, rawData);
+        }
+
+        LinkerResourceData IModelJsonSerializable<LinkerResourceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinkerResourceData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinkerResourceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LinkerResourceData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinkerResourceData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LinkerResourceData IModelSerializable<LinkerResourceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinkerResourceData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLinkerResourceData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LinkerResourceData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LinkerResourceData"/> to convert. </param>
+        public static implicit operator RequestContent(LinkerResourceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LinkerResourceData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LinkerResourceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLinkerResourceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

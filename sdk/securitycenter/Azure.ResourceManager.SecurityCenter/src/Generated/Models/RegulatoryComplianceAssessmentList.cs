@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of regulatory compliance assessment response. </summary>
     internal partial class RegulatoryComplianceAssessmentList
     {
-        /// <summary> Initializes a new instance of RegulatoryComplianceAssessmentList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceAssessmentList"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RegulatoryComplianceAssessmentList(IEnumerable<RegulatoryComplianceAssessmentData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of RegulatoryComplianceAssessmentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceAssessmentList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal RegulatoryComplianceAssessmentList(IReadOnlyList<RegulatoryComplianceAssessmentData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RegulatoryComplianceAssessmentList(IReadOnlyList<RegulatoryComplianceAssessmentData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceAssessmentList"/> for deserialization. </summary>
+        internal RegulatoryComplianceAssessmentList()
+        {
         }
 
         /// <summary> Gets the value. </summary>

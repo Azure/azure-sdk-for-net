@@ -9,14 +9,310 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageReplicationDetails
+    public partial class InMageReplicationDetails : IUtf8JsonSerializable, IModelJsonSerializable<InMageReplicationDetails>
     {
-        internal static InMageReplicationDetails DeserializeInMageReplicationDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InMageReplicationDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InMageReplicationDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<InMageReplicationDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ActiveSiteType))
+            {
+                writer.WritePropertyName("activeSiteType"u8);
+                writer.WriteStringValue(ActiveSiteType);
+            }
+            if (Optional.IsDefined(SourceVmCpuCount))
+            {
+                writer.WritePropertyName("sourceVmCpuCount"u8);
+                writer.WriteNumberValue(SourceVmCpuCount.Value);
+            }
+            if (Optional.IsDefined(SourceVmRamSizeInMB))
+            {
+                writer.WritePropertyName("sourceVmRamSizeInMB"u8);
+                writer.WriteNumberValue(SourceVmRamSizeInMB.Value);
+            }
+            if (Optional.IsDefined(OSDetails))
+            {
+                writer.WritePropertyName("osDetails"u8);
+                if (OSDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SiteRecoveryOSDiskDetails>)OSDetails).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(ProtectionStage))
+            {
+                writer.WritePropertyName("protectionStage"u8);
+                writer.WriteStringValue(ProtectionStage);
+            }
+            if (Optional.IsDefined(VmId))
+            {
+                writer.WritePropertyName("vmId"u8);
+                writer.WriteStringValue(VmId);
+            }
+            if (Optional.IsDefined(VmProtectionState))
+            {
+                writer.WritePropertyName("vmProtectionState"u8);
+                writer.WriteStringValue(VmProtectionState);
+            }
+            if (Optional.IsDefined(VmProtectionStateDescription))
+            {
+                writer.WritePropertyName("vmProtectionStateDescription"u8);
+                writer.WriteStringValue(VmProtectionStateDescription);
+            }
+            if (Optional.IsDefined(ResyncDetails))
+            {
+                writer.WritePropertyName("resyncDetails"u8);
+                if (ResyncDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<InitialReplicationDetails>)ResyncDetails).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(RetentionWindowStartOn))
+            {
+                writer.WritePropertyName("retentionWindowStart"u8);
+                writer.WriteStringValue(RetentionWindowStartOn.Value, "O");
+            }
+            if (Optional.IsDefined(RetentionWindowEndOn))
+            {
+                writer.WritePropertyName("retentionWindowEnd"u8);
+                writer.WriteStringValue(RetentionWindowEndOn.Value, "O");
+            }
+            if (Optional.IsDefined(CompressedDataRateInMB))
+            {
+                writer.WritePropertyName("compressedDataRateInMB"u8);
+                writer.WriteNumberValue(CompressedDataRateInMB.Value);
+            }
+            if (Optional.IsDefined(UncompressedDataRateInMB))
+            {
+                writer.WritePropertyName("uncompressedDataRateInMB"u8);
+                writer.WriteNumberValue(UncompressedDataRateInMB.Value);
+            }
+            if (Optional.IsDefined(RpoInSeconds))
+            {
+                writer.WritePropertyName("rpoInSeconds"u8);
+                writer.WriteNumberValue(RpoInSeconds.Value);
+            }
+            if (Optional.IsCollectionDefined(ProtectedDisks))
+            {
+                writer.WritePropertyName("protectedDisks"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProtectedDisks)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<InMageProtectedDiskDetails>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(IPAddress))
+            {
+                writer.WritePropertyName("ipAddress"u8);
+                writer.WriteStringValue(IPAddress.ToString());
+            }
+            if (Optional.IsDefined(LastHeartbeatReceivedOn))
+            {
+                writer.WritePropertyName("lastHeartbeat"u8);
+                writer.WriteStringValue(LastHeartbeatReceivedOn.Value, "O");
+            }
+            if (Optional.IsDefined(ProcessServerId))
+            {
+                writer.WritePropertyName("processServerId"u8);
+                writer.WriteStringValue(ProcessServerId.Value);
+            }
+            if (Optional.IsDefined(MasterTargetId))
+            {
+                writer.WritePropertyName("masterTargetId"u8);
+                writer.WriteStringValue(MasterTargetId);
+            }
+            if (Optional.IsCollectionDefined(ConsistencyPoints))
+            {
+                writer.WritePropertyName("consistencyPoints"u8);
+                writer.WriteStartObject();
+                foreach (var item in ConsistencyPoints)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value, "O");
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(DiskResized))
+            {
+                writer.WritePropertyName("diskResized"u8);
+                writer.WriteStringValue(DiskResized);
+            }
+            if (Optional.IsDefined(RebootAfterUpdateStatus))
+            {
+                writer.WritePropertyName("rebootAfterUpdateStatus"u8);
+                writer.WriteStringValue(RebootAfterUpdateStatus);
+            }
+            if (Optional.IsDefined(MultiVmGroupId))
+            {
+                writer.WritePropertyName("multiVmGroupId"u8);
+                writer.WriteStringValue(MultiVmGroupId);
+            }
+            if (Optional.IsDefined(MultiVmGroupName))
+            {
+                writer.WritePropertyName("multiVmGroupName"u8);
+                writer.WriteStringValue(MultiVmGroupName);
+            }
+            if (Optional.IsDefined(MultiVmSyncStatus))
+            {
+                writer.WritePropertyName("multiVmSyncStatus"u8);
+                writer.WriteStringValue(MultiVmSyncStatus);
+            }
+            if (Optional.IsDefined(AgentDetails))
+            {
+                writer.WritePropertyName("agentDetails"u8);
+                if (AgentDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<InMageAgentDetails>)AgentDetails).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(VCenterInfrastructureId))
+            {
+                writer.WritePropertyName("vCenterInfrastructureId"u8);
+                writer.WriteStringValue(VCenterInfrastructureId);
+            }
+            if (Optional.IsDefined(InfrastructureVmId))
+            {
+                writer.WritePropertyName("infrastructureVmId"u8);
+                writer.WriteStringValue(InfrastructureVmId);
+            }
+            if (Optional.IsCollectionDefined(VmNics))
+            {
+                writer.WritePropertyName("vmNics"u8);
+                writer.WriteStartArray();
+                foreach (var item in VmNics)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<VmNicDetails>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DiscoveryType))
+            {
+                writer.WritePropertyName("discoveryType"u8);
+                writer.WriteStringValue(DiscoveryType);
+            }
+            if (Optional.IsDefined(AzureStorageAccountId))
+            {
+                writer.WritePropertyName("azureStorageAccountId"u8);
+                writer.WriteStringValue(AzureStorageAccountId);
+            }
+            if (Optional.IsCollectionDefined(Datastores))
+            {
+                writer.WritePropertyName("datastores"u8);
+                writer.WriteStartArray();
+                foreach (var item in Datastores)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ValidationErrors))
+            {
+                writer.WritePropertyName("validationErrors"u8);
+                writer.WriteStartArray();
+                foreach (var item in ValidationErrors)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SiteRecoveryHealthError>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(LastRpoCalculatedOn))
+            {
+                writer.WritePropertyName("lastRpoCalculatedTime"u8);
+                writer.WriteStringValue(LastRpoCalculatedOn.Value, "O");
+            }
+            if (Optional.IsDefined(LastUpdateReceivedOn))
+            {
+                writer.WritePropertyName("lastUpdateReceivedTime"u8);
+                writer.WriteStringValue(LastUpdateReceivedOn.Value, "O");
+            }
+            if (Optional.IsDefined(ReplicaId))
+            {
+                writer.WritePropertyName("replicaId"u8);
+                writer.WriteStringValue(ReplicaId);
+            }
+            if (Optional.IsDefined(OSVersion))
+            {
+                writer.WritePropertyName("osVersion"u8);
+                writer.WriteStringValue(OSVersion);
+            }
+            if (Optional.IsDefined(IsAdditionalStatsAvailable))
+            {
+                writer.WritePropertyName("isAdditionalStatsAvailable"u8);
+                writer.WriteBooleanValue(IsAdditionalStatsAvailable.Value);
+            }
+            if (Optional.IsDefined(TotalDataTransferred))
+            {
+                writer.WritePropertyName("totalDataTransferred"u8);
+                writer.WriteNumberValue(TotalDataTransferred.Value);
+            }
+            if (Optional.IsDefined(TotalProgressHealth))
+            {
+                writer.WritePropertyName("totalProgressHealth"u8);
+                writer.WriteStringValue(TotalProgressHealth);
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static InMageReplicationDetails DeserializeInMageReplicationDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -62,6 +358,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<long> totalDataTransferred = default;
             Optional<string> totalProgressHealth = default;
             string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activeSiteType"u8))
@@ -386,8 +683,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InMageReplicationDetails(instanceType, activeSiteType.Value, Optional.ToNullable(sourceVmCpuCount), Optional.ToNullable(sourceVmRamSizeInMB), osDetails.Value, protectionStage.Value, vmId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, resyncDetails.Value, Optional.ToNullable(retentionWindowStart), Optional.ToNullable(retentionWindowEnd), Optional.ToNullable(compressedDataRateInMB), Optional.ToNullable(uncompressedDataRateInMB), Optional.ToNullable(rpoInSeconds), Optional.ToList(protectedDisks), ipAddress.Value, Optional.ToNullable(lastHeartbeat), Optional.ToNullable(processServerId), masterTargetId.Value, Optional.ToDictionary(consistencyPoints), diskResized.Value, rebootAfterUpdateStatus.Value, multiVmGroupId.Value, multiVmGroupName.Value, multiVmSyncStatus.Value, agentDetails.Value, vCenterInfrastructureId.Value, infrastructureVmId.Value, Optional.ToList(vmNics), discoveryType.Value, azureStorageAccountId.Value, Optional.ToList(datastores), Optional.ToList(validationErrors), Optional.ToNullable(lastRpoCalculatedTime), Optional.ToNullable(lastUpdateReceivedTime), replicaId.Value, osVersion.Value, Optional.ToNullable(isAdditionalStatsAvailable), Optional.ToNullable(totalDataTransferred), totalProgressHealth.Value);
+            return new InMageReplicationDetails(instanceType, activeSiteType.Value, Optional.ToNullable(sourceVmCpuCount), Optional.ToNullable(sourceVmRamSizeInMB), osDetails.Value, protectionStage.Value, vmId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, resyncDetails.Value, Optional.ToNullable(retentionWindowStart), Optional.ToNullable(retentionWindowEnd), Optional.ToNullable(compressedDataRateInMB), Optional.ToNullable(uncompressedDataRateInMB), Optional.ToNullable(rpoInSeconds), Optional.ToList(protectedDisks), ipAddress.Value, Optional.ToNullable(lastHeartbeat), Optional.ToNullable(processServerId), masterTargetId.Value, Optional.ToDictionary(consistencyPoints), diskResized.Value, rebootAfterUpdateStatus.Value, multiVmGroupId.Value, multiVmGroupName.Value, multiVmSyncStatus.Value, agentDetails.Value, vCenterInfrastructureId.Value, infrastructureVmId.Value, Optional.ToList(vmNics), discoveryType.Value, azureStorageAccountId.Value, Optional.ToList(datastores), Optional.ToList(validationErrors), Optional.ToNullable(lastRpoCalculatedTime), Optional.ToNullable(lastUpdateReceivedTime), replicaId.Value, osVersion.Value, Optional.ToNullable(isAdditionalStatsAvailable), Optional.ToNullable(totalDataTransferred), totalProgressHealth.Value, rawData);
+        }
+
+        InMageReplicationDetails IModelJsonSerializable<InMageReplicationDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageReplicationDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageReplicationDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InMageReplicationDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageReplicationDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InMageReplicationDetails IModelSerializable<InMageReplicationDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageReplicationDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInMageReplicationDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InMageReplicationDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InMageReplicationDetails"/> to convert. </param>
+        public static implicit operator RequestContent(InMageReplicationDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InMageReplicationDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InMageReplicationDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInMageReplicationDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

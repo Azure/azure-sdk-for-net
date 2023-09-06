@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationUtilizationAggregates
+    public partial class ReservationUtilizationAggregates : IUtf8JsonSerializable, IModelJsonSerializable<ReservationUtilizationAggregates>
     {
-        internal static ReservationUtilizationAggregates DeserializeReservationUtilizationAggregates(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ReservationUtilizationAggregates>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ReservationUtilizationAggregates>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ReservationUtilizationAggregates>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ReservationUtilizationAggregates DeserializeReservationUtilizationAggregates(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +50,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<string> grainUnit = default;
             Optional<float> value = default;
             Optional<string> valueUnit = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("grain"u8))
@@ -52,8 +81,61 @@ namespace Azure.ResourceManager.Reservations.Models
                     valueUnit = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ReservationUtilizationAggregates(Optional.ToNullable(grain), grainUnit.Value, Optional.ToNullable(value), valueUnit.Value);
+            return new ReservationUtilizationAggregates(Optional.ToNullable(grain), grainUnit.Value, Optional.ToNullable(value), valueUnit.Value, rawData);
+        }
+
+        ReservationUtilizationAggregates IModelJsonSerializable<ReservationUtilizationAggregates>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReservationUtilizationAggregates>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeReservationUtilizationAggregates(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ReservationUtilizationAggregates>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReservationUtilizationAggregates>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ReservationUtilizationAggregates IModelSerializable<ReservationUtilizationAggregates>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReservationUtilizationAggregates>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeReservationUtilizationAggregates(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ReservationUtilizationAggregates"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ReservationUtilizationAggregates"/> to convert. </param>
+        public static implicit operator RequestContent(ReservationUtilizationAggregates model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ReservationUtilizationAggregates"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ReservationUtilizationAggregates(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeReservationUtilizationAggregates(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

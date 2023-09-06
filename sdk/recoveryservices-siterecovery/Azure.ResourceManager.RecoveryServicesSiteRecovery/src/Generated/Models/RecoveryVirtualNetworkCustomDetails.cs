@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Please note <see cref="RecoveryVirtualNetworkCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ExistingRecoveryVirtualNetwork"/> and <see cref="NewRecoveryVirtualNetwork"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownRecoveryVirtualNetworkCustomDetails))]
     public abstract partial class RecoveryVirtualNetworkCustomDetails
     {
-        /// <summary> Initializes a new instance of RecoveryVirtualNetworkCustomDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryVirtualNetworkCustomDetails"/>. </summary>
         protected RecoveryVirtualNetworkCustomDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryVirtualNetworkCustomDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryVirtualNetworkCustomDetails"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
-        internal RecoveryVirtualNetworkCustomDetails(string resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryVirtualNetworkCustomDetails(string resourceType, Dictionary<string, BinaryData> rawData)
         {
             ResourceType = resourceType;
+            _rawData = rawData;
         }
 
         /// <summary> The class type. </summary>

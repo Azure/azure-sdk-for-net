@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlVmAutoPatchingSettings : IUtf8JsonSerializable
+    public partial class SqlVmAutoPatchingSettings : IUtf8JsonSerializable, IModelJsonSerializable<SqlVmAutoPatchingSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SqlVmAutoPatchingSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SqlVmAutoPatchingSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SqlVmAutoPatchingSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("maintenanceWindowDuration"u8);
                 writer.WriteNumberValue(MaintenanceWindowDurationInMinutes.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlVmAutoPatchingSettings DeserializeSqlVmAutoPatchingSettings(JsonElement element)
+        internal static SqlVmAutoPatchingSettings DeserializeSqlVmAutoPatchingSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<SqlVmAutoPatchingDayOfWeek> dayOfWeek = default;
             Optional<int> maintenanceWindowStartingHour = default;
             Optional<int> maintenanceWindowDuration = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enable"u8))
@@ -86,8 +109,61 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     maintenanceWindowDuration = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SqlVmAutoPatchingSettings(Optional.ToNullable(enable), Optional.ToNullable(dayOfWeek), Optional.ToNullable(maintenanceWindowStartingHour), Optional.ToNullable(maintenanceWindowDuration));
+            return new SqlVmAutoPatchingSettings(Optional.ToNullable(enable), Optional.ToNullable(dayOfWeek), Optional.ToNullable(maintenanceWindowStartingHour), Optional.ToNullable(maintenanceWindowDuration), rawData);
+        }
+
+        SqlVmAutoPatchingSettings IModelJsonSerializable<SqlVmAutoPatchingSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SqlVmAutoPatchingSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlVmAutoPatchingSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SqlVmAutoPatchingSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SqlVmAutoPatchingSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SqlVmAutoPatchingSettings IModelSerializable<SqlVmAutoPatchingSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SqlVmAutoPatchingSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSqlVmAutoPatchingSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SqlVmAutoPatchingSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SqlVmAutoPatchingSettings"/> to convert. </param>
+        public static implicit operator RequestContent(SqlVmAutoPatchingSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SqlVmAutoPatchingSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SqlVmAutoPatchingSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSqlVmAutoPatchingSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

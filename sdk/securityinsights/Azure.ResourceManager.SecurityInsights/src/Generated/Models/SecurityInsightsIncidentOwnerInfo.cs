@@ -6,30 +6,36 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Information on the user an incident is assigned to. </summary>
     public partial class SecurityInsightsIncidentOwnerInfo
     {
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentOwnerInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentOwnerInfo"/>. </summary>
         public SecurityInsightsIncidentOwnerInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentOwnerInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentOwnerInfo"/>. </summary>
         /// <param name="email"> The email of the user the incident is assigned to. </param>
         /// <param name="assignedTo"> The name of the user the incident is assigned to. </param>
         /// <param name="objectId"> The object id of the user the incident is assigned to. </param>
         /// <param name="userPrincipalName"> The user principal name of the user the incident is assigned to. </param>
         /// <param name="ownerType"> The type of the owner the incident is assigned to. </param>
-        internal SecurityInsightsIncidentOwnerInfo(string email, string assignedTo, Guid? objectId, string userPrincipalName, SecurityInsightsIncidentOwnerType? ownerType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsIncidentOwnerInfo(string email, string assignedTo, Guid? objectId, string userPrincipalName, SecurityInsightsIncidentOwnerType? ownerType, Dictionary<string, BinaryData> rawData)
         {
             Email = email;
             AssignedTo = assignedTo;
             ObjectId = objectId;
             UserPrincipalName = userPrincipalName;
             OwnerType = ownerType;
+            _rawData = rawData;
         }
 
         /// <summary> The email of the user the incident is assigned to. </summary>

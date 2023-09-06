@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Pairs of Managed Instances in the failover group. </summary>
     public partial class ManagedInstancePairInfo
     {
-        /// <summary> Initializes a new instance of ManagedInstancePairInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedInstancePairInfo"/>. </summary>
         public ManagedInstancePairInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstancePairInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstancePairInfo"/>. </summary>
         /// <param name="primaryManagedInstanceId"> Id of Primary Managed Instance in pair. </param>
         /// <param name="partnerManagedInstanceId"> Id of Partner Managed Instance in pair. </param>
-        internal ManagedInstancePairInfo(ResourceIdentifier primaryManagedInstanceId, ResourceIdentifier partnerManagedInstanceId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedInstancePairInfo(ResourceIdentifier primaryManagedInstanceId, ResourceIdentifier partnerManagedInstanceId, Dictionary<string, BinaryData> rawData)
         {
             PrimaryManagedInstanceId = primaryManagedInstanceId;
             PartnerManagedInstanceId = partnerManagedInstanceId;
+            _rawData = rawData;
         }
 
         /// <summary> Id of Primary Managed Instance in pair. </summary>

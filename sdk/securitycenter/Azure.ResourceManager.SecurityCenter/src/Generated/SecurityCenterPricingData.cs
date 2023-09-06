@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecurityCenterPricingData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityCenterPricingData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterPricingData"/>. </summary>
         public SecurityCenterPricingData()
         {
             ReplacedBy = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SecurityCenterPricingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterPricingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,13 +38,15 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="freeTrialRemainingTime"> The duration left for the subscriptions free trial period - in ISO 8601 format (e.g. P3Y6M4DT12H30M5S). </param>
         /// <param name="isDeprecated"> Optional. True if the plan is deprecated. If there are replacing plans they will appear in `replacedBy` property. </param>
         /// <param name="replacedBy"> Optional. List of plans that replace this plan. This property exists only if this plan is deprecated. </param>
-        internal SecurityCenterPricingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityCenterPricingTier? pricingTier, string subPlan, TimeSpan? freeTrialRemainingTime, bool? isDeprecated, IReadOnlyList<string> replacedBy) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityCenterPricingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityCenterPricingTier? pricingTier, string subPlan, TimeSpan? freeTrialRemainingTime, bool? isDeprecated, IReadOnlyList<string> replacedBy, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             PricingTier = pricingTier;
             SubPlan = subPlan;
             FreeTrialRemainingTime = freeTrialRemainingTime;
             IsDeprecated = isDeprecated;
             ReplacedBy = replacedBy;
+            _rawData = rawData;
         }
 
         /// <summary> The pricing tier value. Microsoft Defender for Cloud is provided in two pricing tiers: free and standard, with the standard tier available with a trial period. The standard tier offers advanced security capabilities, while the free tier offers basic security features. </summary>

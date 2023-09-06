@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Sql;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The response to a list geo backup policies request. </summary>
     internal partial class GeoBackupPolicyListResult
     {
-        /// <summary> Initializes a new instance of GeoBackupPolicyListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GeoBackupPolicyListResult"/>. </summary>
         internal GeoBackupPolicyListResult()
         {
             Value = new ChangeTrackingList<GeoBackupPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of GeoBackupPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoBackupPolicyListResult"/>. </summary>
         /// <param name="value"> The list of geo backup policies. </param>
-        internal GeoBackupPolicyListResult(IReadOnlyList<GeoBackupPolicyData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GeoBackupPolicyListResult(IReadOnlyList<GeoBackupPolicyData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The list of geo backup policies. </summary>

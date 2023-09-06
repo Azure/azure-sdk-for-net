@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -19,20 +21,25 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecuritySettingData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecuritySettingData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecuritySettingData"/>. </summary>
         public SecuritySettingData()
         {
         }
 
-        /// <summary> Initializes a new instance of SecuritySettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecuritySettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> the kind of the settings string. </param>
-        internal SecuritySettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SettingKind kind) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecuritySettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SettingKind kind, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
+            _rawData = rawData;
         }
 
         /// <summary> the kind of the settings string. </summary>

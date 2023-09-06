@@ -223,9 +223,7 @@ namespace Azure.ResourceManager.Sql
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -386,9 +384,7 @@ namespace Azure.ResourceManager.Sql
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
-            request.Content = content;
+            request.Content = patch;
             _userAgent.Apply(message);
             return message;
         }
@@ -470,9 +466,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(managedDatabaseMoveDefinition);
-            request.Content = content;
+            request.Content = managedDatabaseMoveDefinition;
             _userAgent.Apply(message);
             return message;
         }
@@ -554,9 +548,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(managedDatabaseMoveDefinition);
-            request.Content = content;
+            request.Content = managedDatabaseMoveDefinition;
             _userAgent.Apply(message);
             return message;
         }
@@ -638,9 +630,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(completeDatabaseRestoreDefinition);
-            request.Content = content;
+            request.Content = completeDatabaseRestoreDefinition;
             _userAgent.Apply(message);
             return message;
         }
@@ -722,9 +712,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(managedDatabaseStartMoveDefinition);
-            request.Content = content;
+            request.Content = managedDatabaseStartMoveDefinition;
             _userAgent.Apply(message);
             return message;
         }

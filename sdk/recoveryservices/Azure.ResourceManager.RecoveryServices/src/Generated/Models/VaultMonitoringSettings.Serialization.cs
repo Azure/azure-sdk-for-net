@@ -5,37 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class VaultMonitoringSettings : IUtf8JsonSerializable
+    public partial class VaultMonitoringSettings : IUtf8JsonSerializable, IModelJsonSerializable<VaultMonitoringSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VaultMonitoringSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VaultMonitoringSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VaultMonitoringSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AzureMonitorAlertSettings))
             {
                 writer.WritePropertyName("azureMonitorAlertSettings"u8);
-                writer.WriteObjectValue(AzureMonitorAlertSettings);
+                if (AzureMonitorAlertSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AzureMonitorAlertSettings>)AzureMonitorAlertSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ClassicAlertSettings))
             {
                 writer.WritePropertyName("classicAlertSettings"u8);
-                writer.WriteObjectValue(ClassicAlertSettings);
+                if (ClassicAlertSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ClassicAlertSettings>)ClassicAlertSettings).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static VaultMonitoringSettings DeserializeVaultMonitoringSettings(JsonElement element)
+        internal static VaultMonitoringSettings DeserializeVaultMonitoringSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AzureMonitorAlertSettings> azureMonitorAlertSettings = default;
             Optional<ClassicAlertSettings> classicAlertSettings = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureMonitorAlertSettings"u8))
@@ -56,8 +93,61 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     classicAlertSettings = ClassicAlertSettings.DeserializeClassicAlertSettings(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VaultMonitoringSettings(azureMonitorAlertSettings.Value, classicAlertSettings.Value);
+            return new VaultMonitoringSettings(azureMonitorAlertSettings.Value, classicAlertSettings.Value, rawData);
+        }
+
+        VaultMonitoringSettings IModelJsonSerializable<VaultMonitoringSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VaultMonitoringSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVaultMonitoringSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VaultMonitoringSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VaultMonitoringSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VaultMonitoringSettings IModelSerializable<VaultMonitoringSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VaultMonitoringSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVaultMonitoringSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VaultMonitoringSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VaultMonitoringSettings"/> to convert. </param>
+        public static implicit operator RequestContent(VaultMonitoringSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VaultMonitoringSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VaultMonitoringSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVaultMonitoringSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

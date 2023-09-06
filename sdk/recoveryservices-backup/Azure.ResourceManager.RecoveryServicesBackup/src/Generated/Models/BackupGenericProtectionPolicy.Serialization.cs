@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupGenericProtectionPolicy : IUtf8JsonSerializable
+    public partial class BackupGenericProtectionPolicy : IUtf8JsonSerializable, IModelJsonSerializable<BackupGenericProtectionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BackupGenericProtectionPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BackupGenericProtectionPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BackupGenericProtectionPolicy>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ProtectedItemsCount))
             {
@@ -32,11 +40,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BackupGenericProtectionPolicy DeserializeBackupGenericProtectionPolicy(JsonElement element)
+        internal static BackupGenericProtectionPolicy DeserializeBackupGenericProtectionPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,7 +75,97 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "MAB": return MabProtectionPolicy.DeserializeMabProtectionPolicy(element);
                 }
             }
-            return UnknownProtectionPolicy.DeserializeUnknownProtectionPolicy(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            Optional<int> protectedItemsCount = default;
+            string backupManagementType = default;
+            Optional<IList<string>> resourceGuardOperationRequests = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("protectedItemsCount"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    protectedItemsCount = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("backupManagementType"u8))
+                {
+                    backupManagementType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("resourceGuardOperationRequests"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    resourceGuardOperationRequests = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownProtectionPolicy(Optional.ToNullable(protectedItemsCount), backupManagementType, Optional.ToList(resourceGuardOperationRequests), rawData);
+        }
+
+        BackupGenericProtectionPolicy IModelJsonSerializable<BackupGenericProtectionPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackupGenericProtectionPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupGenericProtectionPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BackupGenericProtectionPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackupGenericProtectionPolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BackupGenericProtectionPolicy IModelSerializable<BackupGenericProtectionPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackupGenericProtectionPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBackupGenericProtectionPolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BackupGenericProtectionPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BackupGenericProtectionPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(BackupGenericProtectionPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BackupGenericProtectionPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BackupGenericProtectionPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBackupGenericProtectionPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

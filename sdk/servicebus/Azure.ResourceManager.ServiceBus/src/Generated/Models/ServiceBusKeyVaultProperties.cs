@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Properties to configure keyVault Properties. </summary>
     public partial class ServiceBusKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of ServiceBusKeyVaultProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceBusKeyVaultProperties"/>. </summary>
         public ServiceBusKeyVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBusKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusKeyVaultProperties"/>. </summary>
         /// <param name="keyName"> Name of the Key from KeyVault. </param>
         /// <param name="keyVaultUri"> Uri of KeyVault. </param>
         /// <param name="keyVersion"> Version of KeyVault. </param>
         /// <param name="identity"></param>
-        internal ServiceBusKeyVaultProperties(string keyName, Uri keyVaultUri, string keyVersion, UserAssignedIdentityProperties identity)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceBusKeyVaultProperties(string keyName, Uri keyVaultUri, string keyVersion, UserAssignedIdentityProperties identity, Dictionary<string, BinaryData> rawData)
         {
             KeyName = keyName;
             KeyVaultUri = keyVaultUri;
             KeyVersion = keyVersion;
             Identity = identity;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the Key from KeyVault. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> List of policy assignments. </summary>
     internal partial class PolicyAssignmentListResult
     {
-        /// <summary> Initializes a new instance of PolicyAssignmentListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicyAssignmentListResult"/>. </summary>
         internal PolicyAssignmentListResult()
         {
             Value = new ChangeTrackingList<PolicyAssignmentData>();
         }
 
-        /// <summary> Initializes a new instance of PolicyAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAssignmentListResult"/>. </summary>
         /// <param name="value"> An array of policy assignments. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal PolicyAssignmentListResult(IReadOnlyList<PolicyAssignmentData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyAssignmentListResult(IReadOnlyList<PolicyAssignmentData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> An array of policy assignments. </summary>

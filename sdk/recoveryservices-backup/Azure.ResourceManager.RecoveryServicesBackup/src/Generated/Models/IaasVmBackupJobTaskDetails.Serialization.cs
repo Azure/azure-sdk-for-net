@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmBackupJobTaskDetails : IUtf8JsonSerializable
+    public partial class IaasVmBackupJobTaskDetails : IUtf8JsonSerializable, IModelJsonSerializable<IaasVmBackupJobTaskDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IaasVmBackupJobTaskDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IaasVmBackupJobTaskDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IaasVmBackupJobTaskDetails>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TaskId))
             {
@@ -56,11 +63,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("taskExecutionDetails"u8);
                 writer.WriteStringValue(TaskExecutionDetails);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IaasVmBackupJobTaskDetails DeserializeIaasVmBackupJobTaskDetails(JsonElement element)
+        internal static IaasVmBackupJobTaskDetails DeserializeIaasVmBackupJobTaskDetails(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -73,6 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> status = default;
             Optional<double> progressPercentage = default;
             Optional<string> taskExecutionDetails = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("taskId"u8))
@@ -131,8 +153,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     taskExecutionDetails = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IaasVmBackupJobTaskDetails(taskId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), instanceId.Value, Optional.ToNullable(duration), status.Value, Optional.ToNullable(progressPercentage), taskExecutionDetails.Value);
+            return new IaasVmBackupJobTaskDetails(taskId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), instanceId.Value, Optional.ToNullable(duration), status.Value, Optional.ToNullable(progressPercentage), taskExecutionDetails.Value, rawData);
+        }
+
+        IaasVmBackupJobTaskDetails IModelJsonSerializable<IaasVmBackupJobTaskDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IaasVmBackupJobTaskDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIaasVmBackupJobTaskDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IaasVmBackupJobTaskDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IaasVmBackupJobTaskDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IaasVmBackupJobTaskDetails IModelSerializable<IaasVmBackupJobTaskDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IaasVmBackupJobTaskDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIaasVmBackupJobTaskDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IaasVmBackupJobTaskDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IaasVmBackupJobTaskDetails"/> to convert. </param>
+        public static implicit operator RequestContent(IaasVmBackupJobTaskDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IaasVmBackupJobTaskDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IaasVmBackupJobTaskDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIaasVmBackupJobTaskDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

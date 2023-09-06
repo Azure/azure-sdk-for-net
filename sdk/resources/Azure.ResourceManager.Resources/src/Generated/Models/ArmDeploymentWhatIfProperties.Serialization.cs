@@ -5,20 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmDeploymentWhatIfProperties : IUtf8JsonSerializable
+    public partial class ArmDeploymentWhatIfProperties : IUtf8JsonSerializable, IModelJsonSerializable<ArmDeploymentWhatIfProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ArmDeploymentWhatIfProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ArmDeploymentWhatIfProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ArmDeploymentWhatIfProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(WhatIfSettings))
             {
                 writer.WritePropertyName("whatIfSettings"u8);
-                writer.WriteObjectValue(WhatIfSettings);
+                if (WhatIfSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ArmDeploymentWhatIfSettings>)WhatIfSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Template))
             {
@@ -32,7 +47,14 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(TemplateLink))
             {
                 writer.WritePropertyName("templateLink"u8);
-                writer.WriteObjectValue(TemplateLink);
+                if (TemplateLink is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ArmDeploymentTemplateLink>)TemplateLink).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Parameters))
             {
@@ -46,26 +68,220 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(ParametersLink))
             {
                 writer.WritePropertyName("parametersLink"u8);
-                writer.WriteObjectValue(ParametersLink);
+                if (ParametersLink is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ArmDeploymentParametersLink>)ParametersLink).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToSerialString());
             if (Optional.IsDefined(DebugSetting))
             {
                 writer.WritePropertyName("debugSetting"u8);
-                writer.WriteObjectValue(DebugSetting);
+                if (DebugSetting is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DebugSetting>)DebugSetting).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ErrorDeployment))
             {
                 writer.WritePropertyName("onErrorDeployment"u8);
-                writer.WriteObjectValue(ErrorDeployment);
+                if (ErrorDeployment is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ErrorDeployment>)ErrorDeployment).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ExpressionEvaluation))
             {
                 writer.WritePropertyName("expressionEvaluationOptions"u8);
-                writer.WriteObjectValue(ExpressionEvaluation);
+                if (ExpressionEvaluation is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ExpressionEvaluationOptions>)ExpressionEvaluation).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
+        }
+
+        internal static ArmDeploymentWhatIfProperties DeserializeArmDeploymentWhatIfProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ArmDeploymentWhatIfSettings> whatIfSettings = default;
+            Optional<BinaryData> template = default;
+            Optional<ArmDeploymentTemplateLink> templateLink = default;
+            Optional<BinaryData> parameters = default;
+            Optional<ArmDeploymentParametersLink> parametersLink = default;
+            ArmDeploymentMode mode = default;
+            Optional<DebugSetting> debugSetting = default;
+            Optional<ErrorDeployment> onErrorDeployment = default;
+            Optional<ExpressionEvaluationOptions> expressionEvaluationOptions = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("whatIfSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    whatIfSettings = ArmDeploymentWhatIfSettings.DeserializeArmDeploymentWhatIfSettings(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("template"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    template = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("templateLink"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    templateLink = ArmDeploymentTemplateLink.DeserializeArmDeploymentTemplateLink(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("parameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parameters = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("parametersLink"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parametersLink = ArmDeploymentParametersLink.DeserializeArmDeploymentParametersLink(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("mode"u8))
+                {
+                    mode = property.Value.GetString().ToArmDeploymentMode();
+                    continue;
+                }
+                if (property.NameEquals("debugSetting"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    debugSetting = DebugSetting.DeserializeDebugSetting(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("onErrorDeployment"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    onErrorDeployment = ErrorDeployment.DeserializeErrorDeployment(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("expressionEvaluationOptions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expressionEvaluationOptions = ExpressionEvaluationOptions.DeserializeExpressionEvaluationOptions(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ArmDeploymentWhatIfProperties(template.Value, templateLink.Value, parameters.Value, parametersLink.Value, mode, debugSetting.Value, onErrorDeployment.Value, expressionEvaluationOptions.Value, whatIfSettings.Value, rawData);
+        }
+
+        ArmDeploymentWhatIfProperties IModelJsonSerializable<ArmDeploymentWhatIfProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArmDeploymentWhatIfProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeArmDeploymentWhatIfProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ArmDeploymentWhatIfProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArmDeploymentWhatIfProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ArmDeploymentWhatIfProperties IModelSerializable<ArmDeploymentWhatIfProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArmDeploymentWhatIfProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeArmDeploymentWhatIfProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ArmDeploymentWhatIfProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ArmDeploymentWhatIfProperties"/> to convert. </param>
+        public static implicit operator RequestContent(ArmDeploymentWhatIfProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ArmDeploymentWhatIfProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ArmDeploymentWhatIfProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeArmDeploymentWhatIfProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

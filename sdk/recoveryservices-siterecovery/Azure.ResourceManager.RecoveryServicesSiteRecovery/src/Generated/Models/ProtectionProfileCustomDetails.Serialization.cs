@@ -5,23 +5,45 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ProtectionProfileCustomDetails : IUtf8JsonSerializable
+    public partial class ProtectionProfileCustomDetails : IUtf8JsonSerializable, IModelJsonSerializable<ProtectionProfileCustomDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProtectionProfileCustomDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ProtectionProfileCustomDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ProtectionProfileCustomDetails>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ProtectionProfileCustomDetails DeserializeProtectionProfileCustomDetails(JsonElement element)
+        internal static ProtectionProfileCustomDetails DeserializeProtectionProfileCustomDetails(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,7 +56,72 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     case "New": return NewProtectionProfile.DeserializeNewProtectionProfile(element);
                 }
             }
-            return UnknownProtectionProfileCustomDetails.DeserializeUnknownProtectionProfileCustomDetails(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            string resourceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("resourceType"u8))
+                {
+                    resourceType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownProtectionProfileCustomDetails(resourceType, rawData);
+        }
+
+        ProtectionProfileCustomDetails IModelJsonSerializable<ProtectionProfileCustomDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProtectionProfileCustomDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeProtectionProfileCustomDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ProtectionProfileCustomDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProtectionProfileCustomDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ProtectionProfileCustomDetails IModelSerializable<ProtectionProfileCustomDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProtectionProfileCustomDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeProtectionProfileCustomDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ProtectionProfileCustomDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ProtectionProfileCustomDetails"/> to convert. </param>
+        public static implicit operator RequestContent(ProtectionProfileCustomDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ProtectionProfileCustomDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ProtectionProfileCustomDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeProtectionProfileCustomDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

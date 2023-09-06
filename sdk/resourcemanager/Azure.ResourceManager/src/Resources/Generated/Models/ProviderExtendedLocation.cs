@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The provider extended location. </summary>
     public partial class ProviderExtendedLocation
     {
-        /// <summary> Initializes a new instance of ProviderExtendedLocation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProviderExtendedLocation"/>. </summary>
         internal ProviderExtendedLocation()
         {
             ExtendedLocations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ProviderExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderExtendedLocation"/>. </summary>
         /// <param name="location"> The azure location. </param>
         /// <param name="providerExtendedLocationType"> The extended location type. </param>
         /// <param name="extendedLocations"> The extended locations for the azure location. </param>
-        internal ProviderExtendedLocation(AzureLocation? location, string providerExtendedLocationType, IReadOnlyList<string> extendedLocations)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProviderExtendedLocation(AzureLocation? location, string providerExtendedLocationType, IReadOnlyList<string> extendedLocations, Dictionary<string, BinaryData> rawData)
         {
             Location = location;
             ProviderExtendedLocationType = providerExtendedLocationType;
             ExtendedLocations = extendedLocations;
+            _rawData = rawData;
         }
 
         /// <summary> The azure location. </summary>

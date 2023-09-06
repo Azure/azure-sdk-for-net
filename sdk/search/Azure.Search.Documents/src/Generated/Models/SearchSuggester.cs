@@ -15,15 +15,25 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Defines how the Suggest API should apply to a group of fields in the index. </summary>
     public partial class SearchSuggester
     {
-        /// <summary> Initializes a new instance of SearchSuggester. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchSuggester"/>. </summary>
         /// <param name="name"> The name of the suggester. </param>
         /// <param name="searchMode"> A value indicating the capabilities of the suggester. </param>
         /// <param name="sourceFields"> The list of field names to which the suggester applies. Each field must be searchable. </param>
-        internal SearchSuggester(string name, string searchMode, IList<string> sourceFields)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchSuggester(string name, string searchMode, IList<string> sourceFields, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             SearchMode = searchMode;
             SourceFields = sourceFields;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchSuggester"/> for deserialization. </summary>
+        internal SearchSuggester()
+        {
         }
 
         /// <summary> The name of the suggester. </summary>

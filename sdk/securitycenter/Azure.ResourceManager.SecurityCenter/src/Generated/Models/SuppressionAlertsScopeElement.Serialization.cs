@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SuppressionAlertsScopeElement : IUtf8JsonSerializable
+    public partial class SuppressionAlertsScopeElement : IUtf8JsonSerializable, IModelJsonSerializable<SuppressionAlertsScopeElement>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SuppressionAlertsScopeElement>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SuppressionAlertsScopeElement>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SuppressionAlertsScopeElement>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Field))
             {
@@ -34,8 +40,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static SuppressionAlertsScopeElement DeserializeSuppressionAlertsScopeElement(JsonElement element)
+        internal static SuppressionAlertsScopeElement DeserializeSuppressionAlertsScopeElement(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +62,54 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SuppressionAlertsScopeElement(field.Value, additionalProperties);
+        }
+
+        SuppressionAlertsScopeElement IModelJsonSerializable<SuppressionAlertsScopeElement>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SuppressionAlertsScopeElement>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSuppressionAlertsScopeElement(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SuppressionAlertsScopeElement>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SuppressionAlertsScopeElement>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SuppressionAlertsScopeElement IModelSerializable<SuppressionAlertsScopeElement>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SuppressionAlertsScopeElement>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSuppressionAlertsScopeElement(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SuppressionAlertsScopeElement"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SuppressionAlertsScopeElement"/> to convert. </param>
+        public static implicit operator RequestContent(SuppressionAlertsScopeElement model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SuppressionAlertsScopeElement"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SuppressionAlertsScopeElement(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSuppressionAlertsScopeElement(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

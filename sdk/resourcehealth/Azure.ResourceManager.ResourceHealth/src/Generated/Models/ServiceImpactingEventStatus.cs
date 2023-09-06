@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Status of the service impacting event. </summary>
     internal partial class ServiceImpactingEventStatus
     {
-        /// <summary> Initializes a new instance of ServiceImpactingEventStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceImpactingEventStatus"/>. </summary>
         internal ServiceImpactingEventStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceImpactingEventStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceImpactingEventStatus"/>. </summary>
         /// <param name="value"> Current status of the event. </param>
-        internal ServiceImpactingEventStatus(string value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceImpactingEventStatus(string value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Current status of the event. </summary>

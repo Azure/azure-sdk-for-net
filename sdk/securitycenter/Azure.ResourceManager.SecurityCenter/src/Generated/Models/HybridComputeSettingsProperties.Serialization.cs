@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class HybridComputeSettingsProperties : IUtf8JsonSerializable
+    public partial class HybridComputeSettingsProperties : IUtf8JsonSerializable, IModelJsonSerializable<HybridComputeSettingsProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HybridComputeSettingsProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HybridComputeSettingsProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HybridComputeSettingsProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("autoProvision"u8);
             writer.WriteStringValue(AutoProvision.ToString());
@@ -30,18 +38,46 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(ProxyServer))
             {
                 writer.WritePropertyName("proxyServer"u8);
-                writer.WriteObjectValue(ProxyServer);
+                if (ProxyServer is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ProxyServerProperties>)ProxyServer).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ServicePrincipal))
             {
                 writer.WritePropertyName("servicePrincipal"u8);
-                writer.WriteObjectValue(ServicePrincipal);
+                if (ServicePrincipal is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ServicePrincipalProperties>)ServicePrincipal).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static HybridComputeSettingsProperties DeserializeHybridComputeSettingsProperties(JsonElement element)
+        internal static HybridComputeSettingsProperties DeserializeHybridComputeSettingsProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,6 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> region = default;
             Optional<ProxyServerProperties> proxyServer = default;
             Optional<ServicePrincipalProperties> servicePrincipal = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hybridComputeProvisioningState"u8))
@@ -96,8 +133,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     servicePrincipal = ServicePrincipalProperties.DeserializeServicePrincipalProperties(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HybridComputeSettingsProperties(Optional.ToNullable(hybridComputeProvisioningState), autoProvision, resourceGroupName.Value, region.Value, proxyServer.Value, servicePrincipal.Value);
+            return new HybridComputeSettingsProperties(Optional.ToNullable(hybridComputeProvisioningState), autoProvision, resourceGroupName.Value, region.Value, proxyServer.Value, servicePrincipal.Value, rawData);
+        }
+
+        HybridComputeSettingsProperties IModelJsonSerializable<HybridComputeSettingsProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HybridComputeSettingsProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHybridComputeSettingsProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HybridComputeSettingsProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HybridComputeSettingsProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HybridComputeSettingsProperties IModelSerializable<HybridComputeSettingsProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HybridComputeSettingsProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHybridComputeSettingsProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HybridComputeSettingsProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HybridComputeSettingsProperties"/> to convert. </param>
+        public static implicit operator RequestContent(HybridComputeSettingsProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HybridComputeSettingsProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HybridComputeSettingsProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHybridComputeSettingsProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

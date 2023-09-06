@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityAlertSyncSettings : IUtf8JsonSerializable
+    public partial class SecurityAlertSyncSettings : IUtf8JsonSerializable, IModelJsonSerializable<SecurityAlertSyncSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityAlertSyncSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityAlertSyncSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityAlertSyncSettings>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -26,11 +34,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityAlertSyncSettings DeserializeSecurityAlertSyncSettings(JsonElement element)
+        internal static SecurityAlertSyncSettings DeserializeSecurityAlertSyncSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -41,6 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<bool> enabled = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -93,8 +116,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityAlertSyncSettings(id, name, type, systemData.Value, kind, Optional.ToNullable(enabled));
+            return new SecurityAlertSyncSettings(id, name, type, systemData.Value, kind, Optional.ToNullable(enabled), rawData);
+        }
+
+        SecurityAlertSyncSettings IModelJsonSerializable<SecurityAlertSyncSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityAlertSyncSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityAlertSyncSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityAlertSyncSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityAlertSyncSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityAlertSyncSettings IModelSerializable<SecurityAlertSyncSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityAlertSyncSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityAlertSyncSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SecurityAlertSyncSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SecurityAlertSyncSettings"/> to convert. </param>
+        public static implicit operator RequestContent(SecurityAlertSyncSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SecurityAlertSyncSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SecurityAlertSyncSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityAlertSyncSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

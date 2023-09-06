@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> InMageRcmFailback protected disk details. </summary>
     public partial class InMageRcmFailbackProtectedDiskDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmFailbackProtectedDiskDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackProtectedDiskDetails"/>. </summary>
         internal InMageRcmFailbackProtectedDiskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of InMageRcmFailbackProtectedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackProtectedDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk Id (reported by source agent). </param>
         /// <param name="diskName"> The disk name. </param>
         /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>
@@ -29,7 +33,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="irDetails"> The initial replication details. </param>
         /// <param name="resyncDetails"> The resync details. </param>
         /// <param name="lastSyncedOn"> The last sync time. </param>
-        internal InMageRcmFailbackProtectedDiskDetails(string diskId, string diskName, string isOSDisk, long? capacityInBytes, string diskUuid, double? dataPendingInLogDataStoreInMB, double? dataPendingAtSourceAgentInMB, string isInitialReplicationComplete, InMageRcmFailbackSyncDetails irDetails, InMageRcmFailbackSyncDetails resyncDetails, DateTimeOffset? lastSyncedOn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageRcmFailbackProtectedDiskDetails(string diskId, string diskName, string isOSDisk, long? capacityInBytes, string diskUuid, double? dataPendingInLogDataStoreInMB, double? dataPendingAtSourceAgentInMB, string isInitialReplicationComplete, InMageRcmFailbackSyncDetails irDetails, InMageRcmFailbackSyncDetails resyncDetails, DateTimeOffset? lastSyncedOn, Dictionary<string, BinaryData> rawData)
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -42,6 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IrDetails = irDetails;
             ResyncDetails = resyncDetails;
             LastSyncedOn = lastSyncedOn;
+            _rawData = rawData;
         }
 
         /// <summary> The disk Id (reported by source agent). </summary>

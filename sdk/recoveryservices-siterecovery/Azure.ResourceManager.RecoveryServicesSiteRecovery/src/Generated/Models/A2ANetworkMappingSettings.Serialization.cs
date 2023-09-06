@@ -5,15 +5,55 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2ANetworkMappingSettings
+    public partial class A2ANetworkMappingSettings : IUtf8JsonSerializable, IModelJsonSerializable<A2ANetworkMappingSettings>
     {
-        internal static A2ANetworkMappingSettings DeserializeA2ANetworkMappingSettings(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<A2ANetworkMappingSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<A2ANetworkMappingSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<A2ANetworkMappingSettings>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PrimaryFabricLocation))
+            {
+                writer.WritePropertyName("primaryFabricLocation"u8);
+                writer.WriteStringValue(PrimaryFabricLocation.Value);
+            }
+            if (Optional.IsDefined(RecoveryFabricLocation))
+            {
+                writer.WritePropertyName("recoveryFabricLocation"u8);
+                writer.WriteStringValue(RecoveryFabricLocation.Value);
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static A2ANetworkMappingSettings DeserializeA2ANetworkMappingSettings(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<AzureLocation> primaryFabricLocation = default;
             Optional<AzureLocation> recoveryFabricLocation = default;
             string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryFabricLocation"u8))
@@ -46,8 +87,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new A2ANetworkMappingSettings(instanceType, Optional.ToNullable(primaryFabricLocation), Optional.ToNullable(recoveryFabricLocation));
+            return new A2ANetworkMappingSettings(instanceType, Optional.ToNullable(primaryFabricLocation), Optional.ToNullable(recoveryFabricLocation), rawData);
+        }
+
+        A2ANetworkMappingSettings IModelJsonSerializable<A2ANetworkMappingSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<A2ANetworkMappingSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeA2ANetworkMappingSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<A2ANetworkMappingSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<A2ANetworkMappingSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        A2ANetworkMappingSettings IModelSerializable<A2ANetworkMappingSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<A2ANetworkMappingSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeA2ANetworkMappingSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="A2ANetworkMappingSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="A2ANetworkMappingSettings"/> to convert. </param>
+        public static implicit operator RequestContent(A2ANetworkMappingSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="A2ANetworkMappingSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator A2ANetworkMappingSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeA2ANetworkMappingSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

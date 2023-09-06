@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,26 +14,31 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Incident additional data property bag. </summary>
     public partial class SecurityInsightsIncidentAdditionalInfo
     {
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentAdditionalInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentAdditionalInfo"/>. </summary>
         internal SecurityInsightsIncidentAdditionalInfo()
         {
             AlertProductNames = new ChangeTrackingList<string>();
             Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentAdditionalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentAdditionalInfo"/>. </summary>
         /// <param name="alertsCount"> The number of alerts in the incident. </param>
         /// <param name="bookmarksCount"> The number of bookmarks in the incident. </param>
         /// <param name="commentsCount"> The number of comments in the incident. </param>
         /// <param name="alertProductNames"> List of product names of alerts in the incident. </param>
         /// <param name="tactics"> The tactics associated with incident. </param>
-        internal SecurityInsightsIncidentAdditionalInfo(int? alertsCount, int? bookmarksCount, int? commentsCount, IReadOnlyList<string> alertProductNames, IReadOnlyList<SecurityInsightsAttackTactic> tactics)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsIncidentAdditionalInfo(int? alertsCount, int? bookmarksCount, int? commentsCount, IReadOnlyList<string> alertProductNames, IReadOnlyList<SecurityInsightsAttackTactic> tactics, Dictionary<string, BinaryData> rawData)
         {
             AlertsCount = alertsCount;
             BookmarksCount = bookmarksCount;
             CommentsCount = commentsCount;
             AlertProductNames = alertProductNames;
             Tactics = tactics;
+            _rawData = rawData;
         }
 
         /// <summary> The number of alerts in the incident. </summary>
