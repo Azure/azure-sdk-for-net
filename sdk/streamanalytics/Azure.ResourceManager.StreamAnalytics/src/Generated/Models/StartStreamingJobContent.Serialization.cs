@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StartStreamingJobContent : IUtf8JsonSerializable
+    public partial class StartStreamingJobContent : IUtf8JsonSerializable, IModelJsonSerializable<StartStreamingJobContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StartStreamingJobContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StartStreamingJobContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StartStreamingJobContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(OutputStartMode))
             {
@@ -25,7 +33,107 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WritePropertyName("outputStartTime"u8);
                 writer.WriteStringValue(OutputStartOn.Value, "O");
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static StartStreamingJobContent DeserializeStartStreamingJobContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<StreamingJobOutputStartMode> outputStartMode = default;
+            Optional<DateTimeOffset> outputStartTime = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("outputStartMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outputStartMode = new StreamingJobOutputStartMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("outputStartTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outputStartTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new StartStreamingJobContent(Optional.ToNullable(outputStartMode), Optional.ToNullable(outputStartTime), rawData);
+        }
+
+        StartStreamingJobContent IModelJsonSerializable<StartStreamingJobContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StartStreamingJobContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStartStreamingJobContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StartStreamingJobContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StartStreamingJobContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StartStreamingJobContent IModelSerializable<StartStreamingJobContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StartStreamingJobContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStartStreamingJobContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StartStreamingJobContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StartStreamingJobContent"/> to convert. </param>
+        public static implicit operator RequestContent(StartStreamingJobContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StartStreamingJobContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StartStreamingJobContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStartStreamingJobContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

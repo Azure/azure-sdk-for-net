@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentDetectorDiagnosticsRestClient.CreateListHostingEnvironmentDetectorResponsesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentDetectorDiagnosticsRestClient.CreateListHostingEnvironmentDetectorResponsesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HostingEnvironmentDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _hostingEnvironmentDetectorDiagnosticsClientDiagnostics, Pipeline, "HostingEnvironmentDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new HostingEnvironmentDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _hostingEnvironmentDetectorDiagnosticsClientDiagnostics, Pipeline, "HostingEnvironmentDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentDetectorDiagnosticsRestClient.CreateListHostingEnvironmentDetectorResponsesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentDetectorDiagnosticsRestClient.CreateListHostingEnvironmentDetectorResponsesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HostingEnvironmentDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _hostingEnvironmentDetectorDiagnosticsClientDiagnostics, Pipeline, "HostingEnvironmentDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new HostingEnvironmentDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _hostingEnvironmentDetectorDiagnosticsClientDiagnostics, Pipeline, "HostingEnvironmentDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -5,37 +5,87 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class NumericVariable : IUtf8JsonSerializable
+    public partial class NumericVariable : IUtf8JsonSerializable, IModelJsonSerializable<NumericVariable>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NumericVariable>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NumericVariable>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NumericVariable>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
-            writer.WriteObjectValue(Value);
+            if (Value is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<TimeSeriesExpression>)Value).Serialize(writer, options);
+            }
             if (Optional.IsDefined(Interpolation))
             {
                 writer.WritePropertyName("interpolation"u8);
-                writer.WriteObjectValue(Interpolation);
+                if (Interpolation is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TimeSeriesInterpolation>)Interpolation).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("aggregation"u8);
-            writer.WriteObjectValue(Aggregation);
+            if (Aggregation is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<TimeSeriesExpression>)Aggregation).Serialize(writer, options);
+            }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                if (Filter is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TimeSeriesExpression>)Filter).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static NumericVariable DeserializeNumericVariable(JsonElement element)
+        internal static NumericVariable DeserializeNumericVariable(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +95,7 @@ namespace Azure.IoT.TimeSeriesInsights
             TimeSeriesExpression aggregation = default;
             string kind = default;
             Optional<TimeSeriesExpression> filter = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -80,8 +131,61 @@ namespace Azure.IoT.TimeSeriesInsights
                     filter = TimeSeriesExpression.DeserializeTimeSeriesExpression(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NumericVariable(kind, filter.Value, value, interpolation.Value, aggregation);
+            return new NumericVariable(kind, filter.Value, value, interpolation.Value, aggregation, rawData);
+        }
+
+        NumericVariable IModelJsonSerializable<NumericVariable>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NumericVariable>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNumericVariable(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NumericVariable>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NumericVariable>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NumericVariable IModelSerializable<NumericVariable>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NumericVariable>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNumericVariable(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NumericVariable"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NumericVariable"/> to convert. </param>
+        public static implicit operator RequestContent(NumericVariable model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NumericVariable"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NumericVariable(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNumericVariable(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Data proxy properties for a managed dedicated integration runtime. </summary>
     public partial class SynapseIntegrationRuntimeDataProxyProperties
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeDataProxyProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeDataProxyProperties"/>. </summary>
         public SynapseIntegrationRuntimeDataProxyProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeDataProxyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeDataProxyProperties"/>. </summary>
         /// <param name="connectVia"> The self-hosted integration runtime reference. </param>
         /// <param name="stagingLinkedService"> The staging linked service reference. </param>
         /// <param name="path"> The path to contain the staged data in the Blob storage. </param>
-        internal SynapseIntegrationRuntimeDataProxyProperties(SynapseEntityReference connectVia, SynapseEntityReference stagingLinkedService, string path)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseIntegrationRuntimeDataProxyProperties(SynapseEntityReference connectVia, SynapseEntityReference stagingLinkedService, string path, Dictionary<string, BinaryData> rawData)
         {
             ConnectVia = connectVia;
             StagingLinkedService = stagingLinkedService;
             Path = path;
+            _rawData = rawData;
         }
 
         /// <summary> The self-hosted integration runtime reference. </summary>

@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The SAP BW cube dataset. </summary>
     public partial class SapBwCubeDataset : Dataset
     {
-        /// <summary> Initializes a new instance of SapBwCubeDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapBwCubeDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public SapBwCubeDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "SapBwCube";
         }
 
-        /// <summary> Initializes a new instance of SapBwCubeDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapBwCubeDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -37,6 +37,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal SapBwCubeDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Type = type ?? "SapBwCube";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SapBwCubeDataset"/> for deserialization. </summary>
+        internal SapBwCubeDataset()
+        {
         }
     }
 }

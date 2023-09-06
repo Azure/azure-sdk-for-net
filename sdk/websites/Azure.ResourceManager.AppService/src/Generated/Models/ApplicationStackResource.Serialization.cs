@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ApplicationStackResource : IUtf8JsonSerializable
+    public partial class ApplicationStackResource : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationStackResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationStackResource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationStackResource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationStackResource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
@@ -45,7 +52,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in MajorVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<StackMajorVersion>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +69,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Frameworks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ApplicationStack>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -65,16 +86,37 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in IsDeprecated)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ApplicationStack>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationStackResource DeserializeApplicationStackResource(JsonElement element)
+        internal static ApplicationStackResource DeserializeApplicationStackResource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -90,6 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<IList<StackMajorVersion>> majorVersions = default;
             Optional<IList<ApplicationStack>> frameworks = default;
             Optional<IList<ApplicationStack>> isDeprecated = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -190,8 +233,61 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationStackResource(id, name, type, systemData.Value, name0.Value, display.Value, dependency.Value, Optional.ToList(majorVersions), Optional.ToList(frameworks), Optional.ToList(isDeprecated), kind.Value);
+            return new ApplicationStackResource(id, name, type, systemData.Value, name0.Value, display.Value, dependency.Value, Optional.ToList(majorVersions), Optional.ToList(frameworks), Optional.ToList(isDeprecated), kind.Value, rawData);
+        }
+
+        ApplicationStackResource IModelJsonSerializable<ApplicationStackResource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationStackResource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationStackResource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationStackResource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationStackResource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationStackResource IModelSerializable<ApplicationStackResource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationStackResource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationStackResource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApplicationStackResource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApplicationStackResource"/> to convert. </param>
+        public static implicit operator RequestContent(ApplicationStackResource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApplicationStackResource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApplicationStackResource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationStackResource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

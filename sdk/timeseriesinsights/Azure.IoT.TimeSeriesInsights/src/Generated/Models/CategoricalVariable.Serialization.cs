@@ -5,23 +5,44 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class CategoricalVariable : IUtf8JsonSerializable
+    public partial class CategoricalVariable : IUtf8JsonSerializable, IModelJsonSerializable<CategoricalVariable>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CategoricalVariable>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CategoricalVariable>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CategoricalVariable>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
-            writer.WriteObjectValue(Value);
+            if (Value is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<TimeSeriesExpression>)Value).Serialize(writer, options);
+            }
             if (Optional.IsDefined(Interpolation))
             {
                 writer.WritePropertyName("interpolation"u8);
-                writer.WriteObjectValue(Interpolation);
+                if (Interpolation is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TimeSeriesInterpolation>)Interpolation).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Categories))
             {
@@ -29,24 +50,59 @@ namespace Azure.IoT.TimeSeriesInsights
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<TimeSeriesAggregateCategory>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("defaultCategory"u8);
-            writer.WriteObjectValue(DefaultCategory);
+            if (DefaultCategory is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<TimeSeriesDefaultCategory>)DefaultCategory).Serialize(writer, options);
+            }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                if (Filter is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TimeSeriesExpression>)Filter).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static CategoricalVariable DeserializeCategoricalVariable(JsonElement element)
+        internal static CategoricalVariable DeserializeCategoricalVariable(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +113,7 @@ namespace Azure.IoT.TimeSeriesInsights
             TimeSeriesDefaultCategory defaultCategory = default;
             string kind = default;
             Optional<TimeSeriesExpression> filter = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -106,8 +163,61 @@ namespace Azure.IoT.TimeSeriesInsights
                     filter = TimeSeriesExpression.DeserializeTimeSeriesExpression(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CategoricalVariable(kind, filter.Value, value, interpolation.Value, Optional.ToList(categories), defaultCategory);
+            return new CategoricalVariable(kind, filter.Value, value, interpolation.Value, Optional.ToList(categories), defaultCategory, rawData);
+        }
+
+        CategoricalVariable IModelJsonSerializable<CategoricalVariable>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CategoricalVariable>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCategoricalVariable(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CategoricalVariable>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CategoricalVariable>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CategoricalVariable IModelSerializable<CategoricalVariable>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CategoricalVariable>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCategoricalVariable(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CategoricalVariable"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CategoricalVariable"/> to convert. </param>
+        public static implicit operator RequestContent(CategoricalVariable model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CategoricalVariable"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CategoricalVariable(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCategoricalVariable(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

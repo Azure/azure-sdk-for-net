@@ -5,16 +5,77 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
-    internal partial class HealthcareLinkingProperties
+    internal partial class HealthcareLinkingProperties : IUtf8JsonSerializable, IModelJsonSerializable<HealthcareLinkingProperties>
     {
-        internal static HealthcareLinkingProperties DeserializeHealthcareLinkingProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HealthcareLinkingProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HealthcareLinkingProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareLinkingProperties>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Assertion))
+            {
+                writer.WritePropertyName("assertion"u8);
+                if (Assertion is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<HealthcareAssertion>)Assertion).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsCollectionDefined(Links))
+            {
+                writer.WritePropertyName("links"u8);
+                writer.WriteStartArray();
+                foreach (var item in Links)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<HealthcareEntityLink>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static HealthcareLinkingProperties DeserializeHealthcareLinkingProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +83,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             Optional<HealthcareAssertion> assertion = default;
             Optional<string> name = default;
             Optional<IReadOnlyList<HealthcareEntityLink>> links = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assertion"u8))
@@ -52,8 +114,61 @@ namespace Azure.AI.TextAnalytics.Legacy
                     links = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HealthcareLinkingProperties(assertion.Value, name.Value, Optional.ToList(links));
+            return new HealthcareLinkingProperties(assertion.Value, name.Value, Optional.ToList(links), rawData);
+        }
+
+        HealthcareLinkingProperties IModelJsonSerializable<HealthcareLinkingProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareLinkingProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHealthcareLinkingProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HealthcareLinkingProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareLinkingProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HealthcareLinkingProperties IModelSerializable<HealthcareLinkingProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareLinkingProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHealthcareLinkingProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HealthcareLinkingProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HealthcareLinkingProperties"/> to convert. </param>
+        public static implicit operator RequestContent(HealthcareLinkingProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HealthcareLinkingProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HealthcareLinkingProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHealthcareLinkingProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

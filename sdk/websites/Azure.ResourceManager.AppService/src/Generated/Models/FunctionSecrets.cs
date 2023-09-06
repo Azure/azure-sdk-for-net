@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Function secrets. </summary>
     public partial class FunctionSecrets
     {
-        /// <summary> Initializes a new instance of FunctionSecrets. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FunctionSecrets"/>. </summary>
         internal FunctionSecrets()
         {
         }
 
-        /// <summary> Initializes a new instance of FunctionSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionSecrets"/>. </summary>
         /// <param name="key"> Secret key. </param>
         /// <param name="triggerUri"> Trigger URL. </param>
-        internal FunctionSecrets(string key, Uri triggerUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FunctionSecrets(string key, Uri triggerUri, Dictionary<string, BinaryData> rawData)
         {
             Key = key;
             TriggerUri = triggerUri;
+            _rawData = rawData;
         }
 
         /// <summary> Secret key. </summary>

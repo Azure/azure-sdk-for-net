@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Describes the properties of a resource type that has been onboarded to private link service. </summary>
     public partial class ShareablePrivateLinkProperties
     {
-        /// <summary> Initializes a new instance of ShareablePrivateLinkProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShareablePrivateLinkProperties"/>. </summary>
         public ShareablePrivateLinkProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ShareablePrivateLinkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareablePrivateLinkProperties"/>. </summary>
         /// <param name="description"> The description of the resource type that has been onboarded to private link service. </param>
         /// <param name="groupId"> The resource provider group id for the resource that has been onboarded to private link service. </param>
         /// <param name="shareablePrivateLinkPropertiesType"> The resource provider type for the resource that has been onboarded to private link service. </param>
-        internal ShareablePrivateLinkProperties(string description, string groupId, string shareablePrivateLinkPropertiesType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShareablePrivateLinkProperties(string description, string groupId, string shareablePrivateLinkPropertiesType, Dictionary<string, BinaryData> rawData)
         {
             Description = description;
             GroupId = groupId;
             ShareablePrivateLinkPropertiesType = shareablePrivateLinkPropertiesType;
+            _rawData = rawData;
         }
 
         /// <summary> The description of the resource type that has been onboarded to private link service. </summary>

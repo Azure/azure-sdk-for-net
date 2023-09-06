@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class EventGridStreamInputDataSource : IUtf8JsonSerializable
+    public partial class EventGridStreamInputDataSource : IUtf8JsonSerializable, IModelJsonSerializable<EventGridStreamInputDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EventGridStreamInputDataSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EventGridStreamInputDataSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EventGridStreamInputDataSource>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StreamInputDataSourceType);
@@ -23,7 +30,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(Subscriber))
             {
                 writer.WritePropertyName("subscriber"u8);
-                writer.WriteObjectValue(Subscriber);
+                if (Subscriber is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<EventHubV2StreamInputDataSource>)Subscriber).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Schema))
             {
@@ -36,7 +50,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<StreamAnalyticsStorageAccount>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -51,11 +72,25 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EventGridStreamInputDataSource DeserializeEventGridStreamInputDataSource(JsonElement element)
+        internal static EventGridStreamInputDataSource DeserializeEventGridStreamInputDataSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -65,6 +100,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<EventGridEventSchemaType> schema = default;
             Optional<IList<StreamAnalyticsStorageAccount>> storageAccounts = default;
             Optional<IList<string>> eventTypes = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -130,8 +166,61 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EventGridStreamInputDataSource(type, subscriber.Value, Optional.ToNullable(schema), Optional.ToList(storageAccounts), Optional.ToList(eventTypes));
+            return new EventGridStreamInputDataSource(type, subscriber.Value, Optional.ToNullable(schema), Optional.ToList(storageAccounts), Optional.ToList(eventTypes), rawData);
+        }
+
+        EventGridStreamInputDataSource IModelJsonSerializable<EventGridStreamInputDataSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventGridStreamInputDataSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventGridStreamInputDataSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EventGridStreamInputDataSource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventGridStreamInputDataSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EventGridStreamInputDataSource IModelSerializable<EventGridStreamInputDataSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventGridStreamInputDataSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEventGridStreamInputDataSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EventGridStreamInputDataSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EventGridStreamInputDataSource"/> to convert. </param>
+        public static implicit operator RequestContent(EventGridStreamInputDataSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EventGridStreamInputDataSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EventGridStreamInputDataSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEventGridStreamInputDataSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

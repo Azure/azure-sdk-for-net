@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageSignedIdentifier : IUtf8JsonSerializable
+    public partial class StorageSignedIdentifier : IUtf8JsonSerializable, IModelJsonSerializable<StorageSignedIdentifier>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageSignedIdentifier>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageSignedIdentifier>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StorageSignedIdentifier>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -23,19 +31,41 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(AccessPolicy))
             {
                 writer.WritePropertyName("accessPolicy"u8);
-                writer.WriteObjectValue(AccessPolicy);
+                if (AccessPolicy is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StorageServiceAccessPolicy>)AccessPolicy).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static StorageSignedIdentifier DeserializeStorageSignedIdentifier(JsonElement element)
+        internal static StorageSignedIdentifier DeserializeStorageSignedIdentifier(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> id = default;
             Optional<StorageServiceAccessPolicy> accessPolicy = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -52,8 +82,61 @@ namespace Azure.ResourceManager.Storage.Models
                     accessPolicy = StorageServiceAccessPolicy.DeserializeStorageServiceAccessPolicy(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageSignedIdentifier(id.Value, accessPolicy.Value);
+            return new StorageSignedIdentifier(id.Value, accessPolicy.Value, rawData);
+        }
+
+        StorageSignedIdentifier IModelJsonSerializable<StorageSignedIdentifier>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageSignedIdentifier>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageSignedIdentifier(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageSignedIdentifier>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageSignedIdentifier>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageSignedIdentifier IModelSerializable<StorageSignedIdentifier>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageSignedIdentifier>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageSignedIdentifier(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageSignedIdentifier"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageSignedIdentifier"/> to convert. </param>
+        public static implicit operator RequestContent(StorageSignedIdentifier model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageSignedIdentifier"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageSignedIdentifier(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageSignedIdentifier(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

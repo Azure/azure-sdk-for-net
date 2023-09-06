@@ -48,9 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(request);
-            request0.Content = content;
+            request0.Content = request;
             return message;
         }
 
@@ -168,9 +166,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(request);
-            request0.Content = content;
+            request0.Content = request;
             return message;
         }
 
@@ -240,9 +236,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(request);
-            request0.Content = content;
+            request0.Content = request;
             return message;
         }
 
@@ -302,9 +296,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(request);
-            request0.Content = content;
+            request0.Content = request;
             return message;
         }
 

@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
     /// <summary> Model factory for models. </summary>
     public static partial class AnalyticsSynapseMonitoringModelFactory
     {
-        /// <summary> Initializes a new instance of SparkJobListViewResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkJobListViewResponse"/>. </summary>
         /// <param name="nJobs"></param>
         /// <param name="sparkJobs"></param>
         /// <returns> A new <see cref="Models.SparkJobListViewResponse"/> instance for mocking. </returns>
@@ -22,10 +22,10 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
         {
             sparkJobs ??= new List<SparkJob>();
 
-            return new SparkJobListViewResponse(nJobs, sparkJobs?.ToList());
+            return new SparkJobListViewResponse(nJobs, sparkJobs?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of SparkJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkJob"/>. </summary>
         /// <param name="state"></param>
         /// <param name="name"></param>
         /// <param name="submitter"></param>
@@ -47,15 +47,15 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
             timing ??= new List<string>();
             pipeline ??= new List<SparkJob>();
 
-            return new SparkJob(state, name, submitter, compute, sparkApplicationId, livyId, timing?.ToList(), sparkJobDefinition, pipeline?.ToList(), jobType, submitTime, endTime, queuedDuration, runningDuration, totalDuration);
+            return new SparkJob(state, name, submitter, compute, sparkApplicationId, livyId, timing?.ToList(), sparkJobDefinition, pipeline?.ToList(), jobType, submitTime, endTime, queuedDuration, runningDuration, totalDuration, default);
         }
 
-        /// <summary> Initializes a new instance of SqlQueryStringDataModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlQueryStringDataModel"/>. </summary>
         /// <param name="query"></param>
         /// <returns> A new <see cref="Models.SqlQueryStringDataModel"/> instance for mocking. </returns>
         public static SqlQueryStringDataModel SqlQueryStringDataModel(string query = null)
         {
-            return new SqlQueryStringDataModel(query);
+            return new SqlQueryStringDataModel(query, default);
         }
     }
 }

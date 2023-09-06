@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Staging info for execute data flow activity. </summary>
     public partial class DataFlowStagingInfo
     {
-        /// <summary> Initializes a new instance of DataFlowStagingInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFlowStagingInfo"/>. </summary>
         public DataFlowStagingInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFlowStagingInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowStagingInfo"/>. </summary>
         /// <param name="linkedService"> Staging linked service reference. </param>
         /// <param name="folderPath"> Folder path for staging blob. </param>
-        internal DataFlowStagingInfo(LinkedServiceReference linkedService, object folderPath)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFlowStagingInfo(LinkedServiceReference linkedService, object folderPath, Dictionary<string, BinaryData> rawData)
         {
             LinkedService = linkedService;
             FolderPath = folderPath;
+            _rawData = rawData;
         }
 
         /// <summary> Staging linked service reference. </summary>

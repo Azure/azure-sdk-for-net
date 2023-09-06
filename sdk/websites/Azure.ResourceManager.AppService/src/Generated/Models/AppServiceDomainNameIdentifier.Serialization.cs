@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceDomainNameIdentifier : IUtf8JsonSerializable
+    public partial class AppServiceDomainNameIdentifier : IUtf8JsonSerializable, IModelJsonSerializable<AppServiceDomainNameIdentifier>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppServiceDomainNameIdentifier>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppServiceDomainNameIdentifier>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceDomainNameIdentifier>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServiceDomainNameIdentifier DeserializeAppServiceDomainNameIdentifier(JsonElement element)
+        internal static AppServiceDomainNameIdentifier DeserializeAppServiceDomainNameIdentifier(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> name = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -37,8 +60,61 @@ namespace Azure.ResourceManager.AppService.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppServiceDomainNameIdentifier(name.Value);
+            return new AppServiceDomainNameIdentifier(name.Value, rawData);
+        }
+
+        AppServiceDomainNameIdentifier IModelJsonSerializable<AppServiceDomainNameIdentifier>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceDomainNameIdentifier>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceDomainNameIdentifier(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppServiceDomainNameIdentifier>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceDomainNameIdentifier>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppServiceDomainNameIdentifier IModelSerializable<AppServiceDomainNameIdentifier>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceDomainNameIdentifier>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppServiceDomainNameIdentifier(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppServiceDomainNameIdentifier"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppServiceDomainNameIdentifier"/> to convert. </param>
+        public static implicit operator RequestContent(AppServiceDomainNameIdentifier model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppServiceDomainNameIdentifier"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppServiceDomainNameIdentifier(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppServiceDomainNameIdentifier(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

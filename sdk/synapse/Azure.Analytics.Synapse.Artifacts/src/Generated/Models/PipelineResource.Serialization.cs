@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(PipelineResourceConverter))]
-    public partial class PipelineResource : IUtf8JsonSerializable
+    public partial class PipelineResource : IUtf8JsonSerializable, IModelJsonSerializable<PipelineResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PipelineResource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PipelineResource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PipelineResource>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -32,7 +38,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Activities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<Activity>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -43,7 +56,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ParameterSpecification>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -54,7 +74,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Variables)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<VariableSpecification>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -97,7 +124,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                if (Folder is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PipelineFolder>)Folder).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -108,8 +142,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static PipelineResource DeserializePipelineResource(JsonElement element)
+        internal static PipelineResource DeserializePipelineResource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -273,6 +309,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new PipelineResource(id.Value, name.Value, type.Value, etag.Value, description.Value, Optional.ToList(activities), Optional.ToDictionary(parameters), Optional.ToDictionary(variables), Optional.ToNullable(concurrency), Optional.ToList(annotations), Optional.ToDictionary(runDimensions), folder.Value, additionalProperties);
+        }
+
+        PipelineResource IModelJsonSerializable<PipelineResource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PipelineResource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePipelineResource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PipelineResource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PipelineResource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PipelineResource IModelSerializable<PipelineResource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PipelineResource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePipelineResource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PipelineResource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PipelineResource"/> to convert. </param>
+        public static implicit operator RequestContent(PipelineResource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PipelineResource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PipelineResource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePipelineResource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class PipelineResourceConverter : JsonConverter<PipelineResource>

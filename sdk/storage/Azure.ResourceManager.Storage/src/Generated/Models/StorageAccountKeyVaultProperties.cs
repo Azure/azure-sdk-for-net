@@ -6,25 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Properties of key vault. </summary>
     public partial class StorageAccountKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of StorageAccountKeyVaultProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageAccountKeyVaultProperties"/>. </summary>
         public StorageAccountKeyVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageAccountKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountKeyVaultProperties"/>. </summary>
         /// <param name="keyName"> The name of KeyVault key. </param>
         /// <param name="keyVersion"> The version of KeyVault key. </param>
         /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
         /// <param name="currentVersionedKeyIdentifier"> The object identifier of the current versioned Key Vault Key in use. </param>
         /// <param name="lastKeyRotationTimestamp"> Timestamp of last rotation of the Key Vault Key. </param>
         /// <param name="currentVersionedKeyExpirationTimestamp"> This is a read only property that represents the expiration time of the current version of the customer managed key used for encryption. </param>
-        internal StorageAccountKeyVaultProperties(string keyName, string keyVersion, Uri keyVaultUri, string currentVersionedKeyIdentifier, DateTimeOffset? lastKeyRotationTimestamp, DateTimeOffset? currentVersionedKeyExpirationTimestamp)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageAccountKeyVaultProperties(string keyName, string keyVersion, Uri keyVaultUri, string currentVersionedKeyIdentifier, DateTimeOffset? lastKeyRotationTimestamp, DateTimeOffset? currentVersionedKeyExpirationTimestamp, Dictionary<string, BinaryData> rawData)
         {
             KeyName = keyName;
             KeyVersion = keyVersion;
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.Storage.Models
             CurrentVersionedKeyIdentifier = currentVersionedKeyIdentifier;
             LastKeyRotationTimestamp = lastKeyRotationTimestamp;
             CurrentVersionedKeyExpirationTimestamp = currentVersionedKeyExpirationTimestamp;
+            _rawData = rawData;
         }
 
         /// <summary> The name of KeyVault key. </summary>

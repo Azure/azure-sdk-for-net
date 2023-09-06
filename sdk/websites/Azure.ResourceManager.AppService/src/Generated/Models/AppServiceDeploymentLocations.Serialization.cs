@@ -5,16 +5,94 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceDeploymentLocations
+    public partial class AppServiceDeploymentLocations : IUtf8JsonSerializable, IModelJsonSerializable<AppServiceDeploymentLocations>
     {
-        internal static AppServiceDeploymentLocations DeserializeAppServiceDeploymentLocations(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppServiceDeploymentLocations>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppServiceDeploymentLocations>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceDeploymentLocations>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Locations))
+            {
+                writer.WritePropertyName("locations"u8);
+                writer.WriteStartArray();
+                foreach (var item in Locations)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AppServiceGeoRegion>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(HostingEnvironments))
+            {
+                writer.WritePropertyName("hostingEnvironments"u8);
+                writer.WriteStartArray();
+                foreach (var item in HostingEnvironments)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AppServiceEnvironmentProperties>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(HostingEnvironmentDeploymentInfos))
+            {
+                writer.WritePropertyName("hostingEnvironmentDeploymentInfos"u8);
+                writer.WriteStartArray();
+                foreach (var item in HostingEnvironmentDeploymentInfos)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<HostingEnvironmentDeploymentInfo>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AppServiceDeploymentLocations DeserializeAppServiceDeploymentLocations(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<IReadOnlyList<AppServiceGeoRegion>> locations = default;
             Optional<IReadOnlyList<AppServiceEnvironmentProperties>> hostingEnvironments = default;
             Optional<IReadOnlyList<HostingEnvironmentDeploymentInfo>> hostingEnvironmentDeploymentInfos = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("locations"u8))
@@ -66,8 +145,61 @@ namespace Azure.ResourceManager.AppService.Models
                     hostingEnvironmentDeploymentInfos = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppServiceDeploymentLocations(Optional.ToList(locations), Optional.ToList(hostingEnvironments), Optional.ToList(hostingEnvironmentDeploymentInfos));
+            return new AppServiceDeploymentLocations(Optional.ToList(locations), Optional.ToList(hostingEnvironments), Optional.ToList(hostingEnvironmentDeploymentInfos), rawData);
+        }
+
+        AppServiceDeploymentLocations IModelJsonSerializable<AppServiceDeploymentLocations>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceDeploymentLocations>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceDeploymentLocations(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppServiceDeploymentLocations>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceDeploymentLocations>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppServiceDeploymentLocations IModelSerializable<AppServiceDeploymentLocations>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceDeploymentLocations>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppServiceDeploymentLocations(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppServiceDeploymentLocations"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppServiceDeploymentLocations"/> to convert. </param>
+        public static implicit operator RequestContent(AppServiceDeploymentLocations model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppServiceDeploymentLocations"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppServiceDeploymentLocations(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppServiceDeploymentLocations(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,20 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails
+    public partial class SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails : IUtf8JsonSerializable, IModelJsonSerializable<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>
     {
-        internal static SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Port))
+            {
+                writer.WritePropertyName("port"u8);
+                writer.WriteNumberValue(Port.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> port = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("port"u8))
@@ -30,8 +64,61 @@ namespace Azure.ResourceManager.Synapse.Models
                     port = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(Optional.ToNullable(port));
+            return new SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(Optional.ToNullable(port), rawData);
+        }
+
+        SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails IModelJsonSerializable<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails IModelSerializable<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails"/> to convert. </param>
+        public static implicit operator RequestContent(SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

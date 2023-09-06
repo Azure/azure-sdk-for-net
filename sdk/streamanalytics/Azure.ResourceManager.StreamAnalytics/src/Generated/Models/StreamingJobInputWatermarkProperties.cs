@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Settings which determine whether to read watermark events. </summary>
     internal partial class StreamingJobInputWatermarkProperties
     {
-        /// <summary> Initializes a new instance of StreamingJobInputWatermarkProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingJobInputWatermarkProperties"/>. </summary>
         public StreamingJobInputWatermarkProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingJobInputWatermarkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobInputWatermarkProperties"/>. </summary>
         /// <param name="watermarkMode"> The input watermark mode. </param>
-        internal StreamingJobInputWatermarkProperties(StreamingJobInputWatermarkMode? watermarkMode)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingJobInputWatermarkProperties(StreamingJobInputWatermarkMode? watermarkMode, Dictionary<string, BinaryData> rawData)
         {
             WatermarkMode = watermarkMode;
+            _rawData = rawData;
         }
 
         /// <summary> The input watermark mode. </summary>

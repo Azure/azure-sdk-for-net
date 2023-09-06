@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
 {
-    public partial class TrafficManagerGeographicHierarchyData : IUtf8JsonSerializable
+    public partial class TrafficManagerGeographicHierarchyData : IUtf8JsonSerializable, IModelJsonSerializable<TrafficManagerGeographicHierarchyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TrafficManagerGeographicHierarchyData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TrafficManagerGeographicHierarchyData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TrafficManagerGeographicHierarchyData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -36,14 +44,35 @@ namespace Azure.ResourceManager.TrafficManager
             if (Optional.IsDefined(GeographicHierarchy))
             {
                 writer.WritePropertyName("geographicHierarchy"u8);
-                writer.WriteObjectValue(GeographicHierarchy);
+                if (GeographicHierarchy is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TrafficManagerRegion>)GeographicHierarchy).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TrafficManagerGeographicHierarchyData DeserializeTrafficManagerGeographicHierarchyData(JsonElement element)
+        internal static TrafficManagerGeographicHierarchyData DeserializeTrafficManagerGeographicHierarchyData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,6 +81,7 @@ namespace Azure.ResourceManager.TrafficManager
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<TrafficManagerRegion> geographicHierarchy = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -98,8 +128,61 @@ namespace Azure.ResourceManager.TrafficManager
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TrafficManagerGeographicHierarchyData(id.Value, name.Value, Optional.ToNullable(type), geographicHierarchy.Value);
+            return new TrafficManagerGeographicHierarchyData(id.Value, name.Value, Optional.ToNullable(type), geographicHierarchy.Value, rawData);
+        }
+
+        TrafficManagerGeographicHierarchyData IModelJsonSerializable<TrafficManagerGeographicHierarchyData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrafficManagerGeographicHierarchyData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrafficManagerGeographicHierarchyData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TrafficManagerGeographicHierarchyData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrafficManagerGeographicHierarchyData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TrafficManagerGeographicHierarchyData IModelSerializable<TrafficManagerGeographicHierarchyData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrafficManagerGeographicHierarchyData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTrafficManagerGeographicHierarchyData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TrafficManagerGeographicHierarchyData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TrafficManagerGeographicHierarchyData"/> to convert. </param>
+        public static implicit operator RequestContent(TrafficManagerGeographicHierarchyData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TrafficManagerGeographicHierarchyData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TrafficManagerGeographicHierarchyData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTrafficManagerGeographicHierarchyData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

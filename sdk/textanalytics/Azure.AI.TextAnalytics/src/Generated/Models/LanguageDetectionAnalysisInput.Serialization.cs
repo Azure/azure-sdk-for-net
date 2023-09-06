@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class LanguageDetectionAnalysisInput : IUtf8JsonSerializable
+    internal partial class LanguageDetectionAnalysisInput : IUtf8JsonSerializable, IModelJsonSerializable<LanguageDetectionAnalysisInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LanguageDetectionAnalysisInput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LanguageDetectionAnalysisInput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LanguageDetectionAnalysisInput>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Documents))
             {
@@ -21,11 +29,113 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Documents)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<LanguageInput>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static LanguageDetectionAnalysisInput DeserializeLanguageDetectionAnalysisInput(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<LanguageInput>> documents = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("documents"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<LanguageInput> array = new List<LanguageInput>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(LanguageInput.DeserializeLanguageInput(item));
+                    }
+                    documents = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new LanguageDetectionAnalysisInput(Optional.ToList(documents), rawData);
+        }
+
+        LanguageDetectionAnalysisInput IModelJsonSerializable<LanguageDetectionAnalysisInput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LanguageDetectionAnalysisInput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLanguageDetectionAnalysisInput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LanguageDetectionAnalysisInput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LanguageDetectionAnalysisInput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LanguageDetectionAnalysisInput IModelSerializable<LanguageDetectionAnalysisInput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LanguageDetectionAnalysisInput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLanguageDetectionAnalysisInput(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LanguageDetectionAnalysisInput"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LanguageDetectionAnalysisInput"/> to convert. </param>
+        public static implicit operator RequestContent(LanguageDetectionAnalysisInput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LanguageDetectionAnalysisInput"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LanguageDetectionAnalysisInput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLanguageDetectionAnalysisInput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

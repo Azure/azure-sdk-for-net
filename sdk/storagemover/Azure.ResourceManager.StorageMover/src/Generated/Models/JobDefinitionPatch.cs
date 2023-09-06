@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary> The Job Definition resource. </summary>
     public partial class JobDefinitionPatch
     {
-        /// <summary> Initializes a new instance of JobDefinitionPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobDefinitionPatch"/>. </summary>
         public JobDefinitionPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobDefinitionPatch"/>. </summary>
+        /// <param name="description"> A description for the Job Definition. </param>
+        /// <param name="copyMode"> Strategy to use for copy. </param>
+        /// <param name="agentName"> Name of the Agent to assign for new Job Runs of this Job Definition. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobDefinitionPatch(string description, StorageMoverCopyMode? copyMode, string agentName, Dictionary<string, BinaryData> rawData)
+        {
+            Description = description;
+            CopyMode = copyMode;
+            AgentName = agentName;
+            _rawData = rawData;
         }
 
         /// <summary> A description for the Job Definition. </summary>

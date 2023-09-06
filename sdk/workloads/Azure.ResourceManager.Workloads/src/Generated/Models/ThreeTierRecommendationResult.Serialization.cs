@@ -5,15 +5,75 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class ThreeTierRecommendationResult
+    public partial class ThreeTierRecommendationResult : IUtf8JsonSerializable, IModelJsonSerializable<ThreeTierRecommendationResult>
     {
-        internal static ThreeTierRecommendationResult DeserializeThreeTierRecommendationResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ThreeTierRecommendationResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ThreeTierRecommendationResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ThreeTierRecommendationResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DBVmSku))
+            {
+                writer.WritePropertyName("dbVmSku"u8);
+                writer.WriteStringValue(DBVmSku);
+            }
+            if (Optional.IsDefined(DatabaseInstanceCount))
+            {
+                writer.WritePropertyName("databaseInstanceCount"u8);
+                writer.WriteNumberValue(DatabaseInstanceCount.Value);
+            }
+            if (Optional.IsDefined(CentralServerVmSku))
+            {
+                writer.WritePropertyName("centralServerVmSku"u8);
+                writer.WriteStringValue(CentralServerVmSku);
+            }
+            if (Optional.IsDefined(CentralServerInstanceCount))
+            {
+                writer.WritePropertyName("centralServerInstanceCount"u8);
+                writer.WriteNumberValue(CentralServerInstanceCount.Value);
+            }
+            if (Optional.IsDefined(ApplicationServerVmSku))
+            {
+                writer.WritePropertyName("applicationServerVmSku"u8);
+                writer.WriteStringValue(ApplicationServerVmSku);
+            }
+            if (Optional.IsDefined(ApplicationServerInstanceCount))
+            {
+                writer.WritePropertyName("applicationServerInstanceCount"u8);
+                writer.WriteNumberValue(ApplicationServerInstanceCount.Value);
+            }
+            writer.WritePropertyName("deploymentType"u8);
+            writer.WriteStringValue(DeploymentType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ThreeTierRecommendationResult DeserializeThreeTierRecommendationResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +85,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<string> applicationServerVmSku = default;
             Optional<long> applicationServerInstanceCount = default;
             SapDeploymentType deploymentType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dbVmSku"u8))
@@ -74,8 +135,61 @@ namespace Azure.ResourceManager.Workloads.Models
                     deploymentType = new SapDeploymentType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ThreeTierRecommendationResult(deploymentType, dbVmSku.Value, Optional.ToNullable(databaseInstanceCount), centralServerVmSku.Value, Optional.ToNullable(centralServerInstanceCount), applicationServerVmSku.Value, Optional.ToNullable(applicationServerInstanceCount));
+            return new ThreeTierRecommendationResult(deploymentType, dbVmSku.Value, Optional.ToNullable(databaseInstanceCount), centralServerVmSku.Value, Optional.ToNullable(centralServerInstanceCount), applicationServerVmSku.Value, Optional.ToNullable(applicationServerInstanceCount), rawData);
+        }
+
+        ThreeTierRecommendationResult IModelJsonSerializable<ThreeTierRecommendationResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ThreeTierRecommendationResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeThreeTierRecommendationResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ThreeTierRecommendationResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ThreeTierRecommendationResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ThreeTierRecommendationResult IModelSerializable<ThreeTierRecommendationResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ThreeTierRecommendationResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeThreeTierRecommendationResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ThreeTierRecommendationResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ThreeTierRecommendationResult"/> to convert. </param>
+        public static implicit operator RequestContent(ThreeTierRecommendationResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ThreeTierRecommendationResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ThreeTierRecommendationResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeThreeTierRecommendationResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

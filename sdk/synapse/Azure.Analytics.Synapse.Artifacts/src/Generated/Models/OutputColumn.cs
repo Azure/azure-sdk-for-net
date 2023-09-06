@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The columns to be read out from the Office 365 table. </summary>
     internal partial class OutputColumn
     {
-        /// <summary> Initializes a new instance of OutputColumn. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OutputColumn"/>. </summary>
         internal OutputColumn()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OutputColumn"/>. </summary>
+        /// <param name="name"> Name of the table column. Type: string. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OutputColumn(string name, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the table column. Type: string. </summary>

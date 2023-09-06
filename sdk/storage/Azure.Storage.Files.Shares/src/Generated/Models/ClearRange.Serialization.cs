@@ -5,15 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class ClearRange
+    internal partial class ClearRange : IXmlSerializable, IModelSerializable<ClearRange>
     {
-        internal static ClearRange DeserializeClearRange(XElement element)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
+            writer.WriteStartElement(nameHint ?? "ClearRange");
+            writer.WriteStartElement("Start");
+            writer.WriteValue(Start);
+            writer.WriteEndElement();
+            writer.WriteStartElement("End");
+            writer.WriteValue(End);
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static ClearRange DeserializeClearRange(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             long start = default;
             long end = default;
             if (element.Element("Start") is XElement startElement)
@@ -24,7 +44,57 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 end = (long)endElement;
             }
-            return new ClearRange(start, end);
+            return new ClearRange(start, end, default);
+        }
+
+        BinaryData IModelSerializable<ClearRange>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClearRange>(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        ClearRange IModelSerializable<ClearRange>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClearRange>(this, options.Format);
+
+            return DeserializeClearRange(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="ClearRange"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ClearRange"/> to convert. </param>
+        public static implicit operator RequestContent(ClearRange model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ClearRange"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ClearRange(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeClearRange(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

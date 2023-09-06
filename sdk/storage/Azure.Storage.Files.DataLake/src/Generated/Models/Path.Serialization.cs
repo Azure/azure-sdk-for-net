@@ -6,15 +6,102 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    internal partial class Path
+    internal partial class Path : IUtf8JsonSerializable, IModelJsonSerializable<Path>
     {
-        internal static Path DeserializePath(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Path>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<Path>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<Path>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(LastModified))
+            {
+                writer.WritePropertyName("lastModified"u8);
+                writer.WriteStringValue(LastModified.Value, "R");
+            }
+            if (Optional.IsDefined(Owner))
+            {
+                writer.WritePropertyName("owner"u8);
+                writer.WriteStringValue(Owner);
+            }
+            if (Optional.IsDefined(Group))
+            {
+                writer.WritePropertyName("group"u8);
+                writer.WriteStringValue(Group);
+            }
+            if (Optional.IsDefined(Permissions))
+            {
+                writer.WritePropertyName("permissions"u8);
+                writer.WriteStringValue(Permissions);
+            }
+            if (Optional.IsDefined(EncryptionScope))
+            {
+                writer.WritePropertyName("EncryptionScope"u8);
+                writer.WriteStringValue(EncryptionScope);
+            }
+            if (Optional.IsDefined(CreationTime))
+            {
+                writer.WritePropertyName("creationTime"u8);
+                writer.WriteStringValue(CreationTime);
+            }
+            if (Optional.IsDefined(ExpiryTime))
+            {
+                writer.WritePropertyName("expiryTime"u8);
+                writer.WriteStringValue(ExpiryTime);
+            }
+            if (Optional.IsDefined(EncryptionContext))
+            {
+                writer.WritePropertyName("EncryptionContext"u8);
+                writer.WriteStringValue(EncryptionContext);
+            }
+            if (Optional.IsDefined(ContentLength))
+            {
+                writer.WritePropertyName("contentLength"u8);
+                writer.WriteStringValue(ContentLength);
+            }
+            if (Optional.IsDefined(IsDirectory))
+            {
+                writer.WritePropertyName("isDirectory"u8);
+                writer.WriteStringValue(IsDirectory);
+            }
+            if (Optional.IsDefined(Etag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(Etag);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static Path DeserializePath(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +118,7 @@ namespace Azure.Storage.Files.DataLake.Models
             Optional<string> contentLength = default;
             Optional<string> isDirectory = default;
             Optional<string> etag = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -97,8 +185,61 @@ namespace Azure.Storage.Files.DataLake.Models
                     etag = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new Path(name.Value, Optional.ToNullable(lastModified), owner.Value, group.Value, permissions.Value, encryptionScope.Value, creationTime.Value, expiryTime.Value, encryptionContext.Value, contentLength.Value, isDirectory.Value, etag.Value);
+            return new Path(name.Value, Optional.ToNullable(lastModified), owner.Value, group.Value, permissions.Value, encryptionScope.Value, creationTime.Value, expiryTime.Value, encryptionContext.Value, contentLength.Value, isDirectory.Value, etag.Value, rawData);
+        }
+
+        Path IModelJsonSerializable<Path>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Path>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePath(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<Path>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Path>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        Path IModelSerializable<Path>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Path>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePath(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="Path"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="Path"/> to convert. </param>
+        public static implicit operator RequestContent(Path model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="Path"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator Path(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePath(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.Workloads.Models
     /// Please note <see cref="FileShareConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="CreateAndMountFileShareConfiguration"/>, <see cref="MountFileShareConfiguration"/> and <see cref="SkipFileShareConfiguration"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownFileShareConfiguration))]
     public abstract partial class FileShareConfiguration
     {
-        /// <summary> Initializes a new instance of FileShareConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FileShareConfiguration"/>. </summary>
         protected FileShareConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of FileShareConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareConfiguration"/>. </summary>
         /// <param name="configurationType"> The type of file share config. </param>
-        internal FileShareConfiguration(ConfigurationType configurationType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FileShareConfiguration(ConfigurationType configurationType, Dictionary<string, BinaryData> rawData)
         {
             ConfigurationType = configurationType;
+            _rawData = rawData;
         }
 
         /// <summary> The type of file share config. </summary>

@@ -9,25 +9,45 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ExecuteSsisPackageActivityConverter))]
-    public partial class ExecuteSsisPackageActivity : IUtf8JsonSerializable
+    public partial class ExecuteSsisPackageActivity : IUtf8JsonSerializable, IModelJsonSerializable<ExecuteSsisPackageActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExecuteSsisPackageActivity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExecuteSsisPackageActivity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ExecuteSsisPackageActivity>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
-                writer.WriteObjectValue(LinkedServiceName);
+                if (LinkedServiceName is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LinkedServiceReference>)LinkedServiceName).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                if (Policy is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ActivityPolicy>)Policy).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -54,7 +74,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ActivityDependency>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -64,14 +91,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<UserProperty>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("packageLocation"u8);
-            writer.WriteObjectValue(PackageLocation);
+            if (PackageLocation is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<SsisPackageLocation>)PackageLocation).Serialize(writer, options);
+            }
             if (Optional.IsDefined(Runtime))
             {
                 writer.WritePropertyName("runtime"u8);
@@ -90,10 +131,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ExecutionCredential))
             {
                 writer.WritePropertyName("executionCredential"u8);
-                writer.WriteObjectValue(ExecutionCredential);
+                if (ExecutionCredential is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SsisExecutionCredential>)ExecutionCredential).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("connectVia"u8);
-            writer.WriteObjectValue(ConnectVia);
+            if (ConnectVia is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<IntegrationRuntimeReference>)ConnectVia).Serialize(writer, options);
+            }
             if (Optional.IsCollectionDefined(ProjectParameters))
             {
                 writer.WritePropertyName("projectParameters"u8);
@@ -101,7 +156,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in ProjectParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SsisExecutionParameter>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -112,7 +174,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in PackageParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SsisExecutionParameter>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -132,7 +201,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     foreach (var item0 in item.Value)
                     {
                         writer.WritePropertyName(item0.Key);
-                        writer.WriteObjectValue(item0.Value);
+                        if (item0.Value is null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IModelJsonSerializable<SsisExecutionParameter>)item0.Value).Serialize(writer, options);
+                        }
                     }
                     writer.WriteEndObject();
                 }
@@ -154,7 +230,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     foreach (var item0 in item.Value)
                     {
                         writer.WritePropertyName(item0.Key);
-                        writer.WriteObjectValue(item0.Value);
+                        if (item0.Value is null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IModelJsonSerializable<SsisExecutionParameter>)item0.Value).Serialize(writer, options);
+                        }
                     }
                     writer.WriteEndObject();
                 }
@@ -167,14 +250,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in PropertyOverrides)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SsisPropertyOverride>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(LogLocation))
             {
                 writer.WritePropertyName("logLocation"u8);
-                writer.WriteObjectValue(LogLocation);
+                if (LogLocation is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SsisLogLocation>)LogLocation).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -185,8 +282,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static ExecuteSsisPackageActivity DeserializeExecuteSsisPackageActivity(JsonElement element)
+        internal static ExecuteSsisPackageActivity DeserializeExecuteSsisPackageActivity(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -460,6 +559,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ExecuteSsisPackageActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, packageLocation, runtime.Value, loggingLevel.Value, environmentPath.Value, executionCredential.Value, connectVia, Optional.ToDictionary(projectParameters), Optional.ToDictionary(packageParameters), Optional.ToDictionary(projectConnectionManagers), Optional.ToDictionary(packageConnectionManagers), Optional.ToDictionary(propertyOverrides), logLocation.Value);
+        }
+
+        ExecuteSsisPackageActivity IModelJsonSerializable<ExecuteSsisPackageActivity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExecuteSsisPackageActivity>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExecuteSsisPackageActivity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExecuteSsisPackageActivity>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExecuteSsisPackageActivity>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExecuteSsisPackageActivity IModelSerializable<ExecuteSsisPackageActivity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExecuteSsisPackageActivity>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExecuteSsisPackageActivity(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExecuteSsisPackageActivity"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExecuteSsisPackageActivity"/> to convert. </param>
+        public static implicit operator RequestContent(ExecuteSsisPackageActivity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExecuteSsisPackageActivity"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExecuteSsisPackageActivity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExecuteSsisPackageActivity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class ExecuteSsisPackageActivityConverter : JsonConverter<ExecuteSsisPackageActivity>

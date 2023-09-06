@@ -5,21 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
-    internal partial class HealthcareEntityLink
+    internal partial class HealthcareEntityLink : IUtf8JsonSerializable, IModelJsonSerializable<HealthcareEntityLink>
     {
-        internal static HealthcareEntityLink DeserializeHealthcareEntityLink(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HealthcareEntityLink>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HealthcareEntityLink>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareEntityLink>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("dataSource"u8);
+            writer.WriteStringValue(DataSource);
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static HealthcareEntityLink DeserializeHealthcareEntityLink(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string dataSource = default;
             string id = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataSource"u8))
@@ -32,8 +65,61 @@ namespace Azure.AI.TextAnalytics.Legacy
                     id = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HealthcareEntityLink(dataSource, id);
+            return new HealthcareEntityLink(dataSource, id, rawData);
+        }
+
+        HealthcareEntityLink IModelJsonSerializable<HealthcareEntityLink>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareEntityLink>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHealthcareEntityLink(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HealthcareEntityLink>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareEntityLink>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HealthcareEntityLink IModelSerializable<HealthcareEntityLink>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareEntityLink>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHealthcareEntityLink(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HealthcareEntityLink"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HealthcareEntityLink"/> to convert. </param>
+        public static implicit operator RequestContent(HealthcareEntityLink model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HealthcareEntityLink"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HealthcareEntityLink(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHealthcareEntityLink(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

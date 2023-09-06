@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class SearchInstancesResponse
+    internal partial class SearchInstancesResponse : IUtf8JsonSerializable, IModelJsonSerializable<SearchInstancesResponse>
     {
-        internal static SearchInstancesResponse DeserializeSearchInstancesResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SearchInstancesResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SearchInstancesResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SearchInstancesResponse>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SearchInstancesResponse DeserializeSearchInstancesResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +49,7 @@ namespace Azure.IoT.TimeSeriesInsights
             Optional<IReadOnlyList<InstanceHit>> hits = default;
             Optional<int> hitCount = default;
             Optional<string> continuationToken = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hits"u8))
@@ -52,8 +80,61 @@ namespace Azure.IoT.TimeSeriesInsights
                     continuationToken = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SearchInstancesResponse(Optional.ToList(hits), Optional.ToNullable(hitCount), continuationToken.Value);
+            return new SearchInstancesResponse(Optional.ToList(hits), Optional.ToNullable(hitCount), continuationToken.Value, rawData);
+        }
+
+        SearchInstancesResponse IModelJsonSerializable<SearchInstancesResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SearchInstancesResponse>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSearchInstancesResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SearchInstancesResponse>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SearchInstancesResponse>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SearchInstancesResponse IModelSerializable<SearchInstancesResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SearchInstancesResponse>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSearchInstancesResponse(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SearchInstancesResponse"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SearchInstancesResponse"/> to convert. </param>
+        public static implicit operator RequestContent(SearchInstancesResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SearchInstancesResponse"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SearchInstancesResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSearchInstancesResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

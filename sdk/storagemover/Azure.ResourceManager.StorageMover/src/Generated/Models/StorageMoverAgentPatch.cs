@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary> The Agent resource. </summary>
     public partial class StorageMoverAgentPatch
     {
-        /// <summary> Initializes a new instance of StorageMoverAgentPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageMoverAgentPatch"/>. </summary>
         public StorageMoverAgentPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageMoverAgentPatch"/>. </summary>
+        /// <param name="description"> A description for the Agent. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageMoverAgentPatch(string description, Dictionary<string, BinaryData> rawData)
+        {
+            Description = description;
+            _rawData = rawData;
         }
 
         /// <summary> A description for the Agent. </summary>

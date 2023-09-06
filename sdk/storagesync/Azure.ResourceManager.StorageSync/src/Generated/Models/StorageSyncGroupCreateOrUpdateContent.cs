@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,20 +15,25 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> The parameters used when creating a sync group. </summary>
     public partial class StorageSyncGroupCreateOrUpdateContent : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageSyncGroupCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageSyncGroupCreateOrUpdateContent"/>. </summary>
         public StorageSyncGroupCreateOrUpdateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSyncGroupCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncGroupCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The parameters used to create the sync group. </param>
-        internal StorageSyncGroupCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData properties) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageSyncGroupCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData properties, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary>

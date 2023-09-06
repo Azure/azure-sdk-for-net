@@ -9,22 +9,35 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(VerticaLinkedServiceConverter))]
-    public partial class VerticaLinkedService : IUtf8JsonSerializable
+    public partial class VerticaLinkedService : IUtf8JsonSerializable, IModelJsonSerializable<VerticaLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VerticaLinkedService>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VerticaLinkedService>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VerticaLinkedService>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                if (ConnectVia is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<IntegrationRuntimeReference>)ConnectVia).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Description))
             {
@@ -38,7 +51,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ParameterSpecification>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -67,7 +87,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Pwd))
             {
                 writer.WritePropertyName("pwd"u8);
-                writer.WriteObjectValue(Pwd);
+                if (Pwd is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AzureKeyVaultSecretReference>)Pwd).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -83,8 +110,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static VerticaLinkedService DeserializeVerticaLinkedService(JsonElement element)
+        internal static VerticaLinkedService DeserializeVerticaLinkedService(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -198,6 +227,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new VerticaLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString.Value, pwd.Value, encryptedCredential.Value);
+        }
+
+        VerticaLinkedService IModelJsonSerializable<VerticaLinkedService>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VerticaLinkedService>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVerticaLinkedService(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VerticaLinkedService>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VerticaLinkedService>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VerticaLinkedService IModelSerializable<VerticaLinkedService>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VerticaLinkedService>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVerticaLinkedService(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VerticaLinkedService"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VerticaLinkedService"/> to convert. </param>
+        public static implicit operator RequestContent(VerticaLinkedService model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VerticaLinkedService"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VerticaLinkedService(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVerticaLinkedService(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class VerticaLinkedServiceConverter : JsonConverter<VerticaLinkedService>

@@ -5,44 +5,86 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.AI.TextAnalytics;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class SentimentResponse : IUtf8JsonSerializable
+    internal partial class SentimentResponse : IUtf8JsonSerializable, IModelJsonSerializable<SentimentResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SentimentResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SentimentResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SentimentResponse>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("documents"u8);
             writer.WriteStartArray();
             foreach (var item in Documents)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SentimentResponseDocumentsItem>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("errors"u8);
             writer.WriteStartArray();
             foreach (var item in Errors)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DocumentError>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics);
+                if (Statistics is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TextDocumentBatchStatistics>)Statistics).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("modelVersion"u8);
             writer.WriteStringValue(ModelVersion);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SentimentResponse DeserializeSentimentResponse(JsonElement element)
+        internal static SentimentResponse DeserializeSentimentResponse(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +93,7 @@ namespace Azure.AI.TextAnalytics.Models
             IList<DocumentError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
             string modelVersion = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("documents"u8))
@@ -87,8 +130,61 @@ namespace Azure.AI.TextAnalytics.Models
                     modelVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SentimentResponse(errors, statistics.Value, modelVersion, documents);
+            return new SentimentResponse(errors, statistics.Value, modelVersion, documents, rawData);
+        }
+
+        SentimentResponse IModelJsonSerializable<SentimentResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SentimentResponse>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSentimentResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SentimentResponse>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SentimentResponse>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SentimentResponse IModelSerializable<SentimentResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SentimentResponse>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSentimentResponse(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SentimentResponse"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SentimentResponse"/> to convert. </param>
+        public static implicit operator RequestContent(SentimentResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SentimentResponse"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SentimentResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSentimentResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

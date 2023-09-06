@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceSkuDescription : IUtf8JsonSerializable
+    public partial class AppServiceSkuDescription : IUtf8JsonSerializable, IModelJsonSerializable<AppServiceSkuDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppServiceSkuDescription>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppServiceSkuDescription>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceSkuDescription>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -44,7 +51,14 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(SkuCapacity))
             {
                 writer.WritePropertyName("skuCapacity"u8);
-                writer.WriteObjectValue(SkuCapacity);
+                if (SkuCapacity is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AppServiceSkuCapacity>)SkuCapacity).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Locations))
             {
@@ -62,15 +76,36 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AppServiceSkuCapability>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static AppServiceSkuDescription DeserializeAppServiceSkuDescription(JsonElement element)
+        internal static AppServiceSkuDescription DeserializeAppServiceSkuDescription(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -83,6 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<AppServiceSkuCapacity> skuCapacity = default;
             Optional<IList<AzureLocation>> locations = default;
             Optional<IList<AppServiceSkuCapability>> capabilities = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -151,8 +187,61 @@ namespace Azure.ResourceManager.AppService.Models
                     capabilities = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppServiceSkuDescription(name.Value, tier.Value, size.Value, family.Value, Optional.ToNullable(capacity), skuCapacity.Value, Optional.ToList(locations), Optional.ToList(capabilities));
+            return new AppServiceSkuDescription(name.Value, tier.Value, size.Value, family.Value, Optional.ToNullable(capacity), skuCapacity.Value, Optional.ToList(locations), Optional.ToList(capabilities), rawData);
+        }
+
+        AppServiceSkuDescription IModelJsonSerializable<AppServiceSkuDescription>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceSkuDescription>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceSkuDescription(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppServiceSkuDescription>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceSkuDescription>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppServiceSkuDescription IModelSerializable<AppServiceSkuDescription>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceSkuDescription>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppServiceSkuDescription(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppServiceSkuDescription"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppServiceSkuDescription"/> to convert. </param>
+        public static implicit operator RequestContent(AppServiceSkuDescription model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppServiceSkuDescription"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppServiceSkuDescription(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppServiceSkuDescription(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

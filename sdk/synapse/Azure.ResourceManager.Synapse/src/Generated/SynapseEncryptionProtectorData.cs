@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseEncryptionProtectorData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseEncryptionProtectorData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseEncryptionProtectorData"/>. </summary>
         public SynapseEncryptionProtectorData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseEncryptionProtectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseEncryptionProtectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +39,8 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="serverKeyType"> The encryption protector type like 'ServiceManaged', 'AzureKeyVault'. </param>
         /// <param name="uri"> The URI of the server key. </param>
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
-        internal SynapseEncryptionProtectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string subregion, string serverKeyName, SynapseServerKeyType? serverKeyType, Uri uri, BinaryData thumbprint) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseEncryptionProtectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string subregion, string serverKeyName, SynapseServerKeyType? serverKeyType, Uri uri, BinaryData thumbprint, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Location = location;
@@ -44,6 +49,7 @@ namespace Azure.ResourceManager.Synapse
             ServerKeyType = serverKeyType;
             Uri = uri;
             Thumbprint = thumbprint;
+            _rawData = rawData;
         }
 
         /// <summary> Kind of encryption protector. This is metadata used for the Azure portal experience. </summary>

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class NodeInput : IUtf8JsonSerializable
+    public partial class NodeInput : IUtf8JsonSerializable, IModelJsonSerializable<NodeInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NodeInput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NodeInput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NodeInput>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("nodeName"u8);
             writer.WriteStringValue(NodeName);
@@ -24,21 +31,43 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStartArray();
                 foreach (var item in OutputSelectors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<OutputSelector>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static NodeInput DeserializeNodeInput(JsonElement element)
+        internal static NodeInput DeserializeNodeInput(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string nodeName = default;
             Optional<IList<OutputSelector>> outputSelectors = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nodeName"u8))
@@ -60,8 +89,61 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     outputSelectors = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NodeInput(nodeName, Optional.ToList(outputSelectors));
+            return new NodeInput(nodeName, Optional.ToList(outputSelectors), rawData);
+        }
+
+        NodeInput IModelJsonSerializable<NodeInput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NodeInput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNodeInput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NodeInput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NodeInput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NodeInput IModelSerializable<NodeInput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NodeInput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNodeInput(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NodeInput"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NodeInput"/> to convert. </param>
+        public static implicit operator RequestContent(NodeInput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NodeInput"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NodeInput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNodeInput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

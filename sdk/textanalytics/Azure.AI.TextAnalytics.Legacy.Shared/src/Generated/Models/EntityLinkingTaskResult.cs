@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Legacy
 {
     /// <summary> The EntityLinkingTaskResult. </summary>
     internal partial class EntityLinkingTaskResult
     {
-        /// <summary> Initializes a new instance of EntityLinkingTaskResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EntityLinkingTaskResult"/>. </summary>
         internal EntityLinkingTaskResult()
         {
         }
 
-        /// <summary> Initializes a new instance of EntityLinkingTaskResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityLinkingTaskResult"/>. </summary>
         /// <param name="results"></param>
-        internal EntityLinkingTaskResult(EntityLinkingResult results)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EntityLinkingTaskResult(EntityLinkingResult results, Dictionary<string, BinaryData> rawData)
         {
             Results = results;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the results. </summary>

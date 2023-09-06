@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class DomainOwnershipIdentifierData : IUtf8JsonSerializable
+    public partial class DomainOwnershipIdentifierData : IUtf8JsonSerializable, IModelJsonSerializable<DomainOwnershipIdentifierData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DomainOwnershipIdentifierData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DomainOwnershipIdentifierData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DomainOwnershipIdentifierData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
@@ -29,11 +37,25 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStringValue(OwnershipId);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DomainOwnershipIdentifierData DeserializeDomainOwnershipIdentifierData(JsonElement element)
+        internal static DomainOwnershipIdentifierData DeserializeDomainOwnershipIdentifierData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -44,6 +66,7 @@ namespace Azure.ResourceManager.AppService
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> ownershipId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -92,8 +115,61 @@ namespace Azure.ResourceManager.AppService
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DomainOwnershipIdentifierData(id, name, type, systemData.Value, ownershipId.Value, kind.Value);
+            return new DomainOwnershipIdentifierData(id, name, type, systemData.Value, ownershipId.Value, kind.Value, rawData);
+        }
+
+        DomainOwnershipIdentifierData IModelJsonSerializable<DomainOwnershipIdentifierData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DomainOwnershipIdentifierData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDomainOwnershipIdentifierData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DomainOwnershipIdentifierData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DomainOwnershipIdentifierData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DomainOwnershipIdentifierData IModelSerializable<DomainOwnershipIdentifierData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DomainOwnershipIdentifierData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDomainOwnershipIdentifierData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DomainOwnershipIdentifierData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DomainOwnershipIdentifierData"/> to convert. </param>
+        public static implicit operator RequestContent(DomainOwnershipIdentifierData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DomainOwnershipIdentifierData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DomainOwnershipIdentifierData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDomainOwnershipIdentifierData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

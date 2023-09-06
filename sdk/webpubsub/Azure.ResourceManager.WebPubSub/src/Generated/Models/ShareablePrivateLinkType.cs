@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Describes a  resource type that has been onboarded to private link service. </summary>
     public partial class ShareablePrivateLinkType
     {
-        /// <summary> Initializes a new instance of ShareablePrivateLinkType. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShareablePrivateLinkType"/>. </summary>
         public ShareablePrivateLinkType()
         {
         }
 
-        /// <summary> Initializes a new instance of ShareablePrivateLinkType. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareablePrivateLinkType"/>. </summary>
         /// <param name="name"> The name of the resource type that has been onboarded to private link service. </param>
         /// <param name="properties"> Describes the properties of a resource type that has been onboarded to private link service. </param>
-        internal ShareablePrivateLinkType(string name, ShareablePrivateLinkProperties properties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShareablePrivateLinkType(string name, ShareablePrivateLinkProperties properties, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the resource type that has been onboarded to private link service. </summary>

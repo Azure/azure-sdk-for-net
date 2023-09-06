@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Workloads;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The response from the List SAP Landscape Monitor Dashboard operation. </summary>
     internal partial class SapLandscapeMonitorListResult
     {
-        /// <summary> Initializes a new instance of SapLandscapeMonitorListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapLandscapeMonitorListResult"/>. </summary>
         internal SapLandscapeMonitorListResult()
         {
             Value = new ChangeTrackingList<SapLandscapeMonitorData>();
         }
 
-        /// <summary> Initializes a new instance of SapLandscapeMonitorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapLandscapeMonitorListResult"/>. </summary>
         /// <param name="value"> The list of Sap Landscape Monitor configuration. </param>
         /// <param name="nextLink"> The URL to get the next set of SAP Landscape Monitor Dashboard. </param>
-        internal SapLandscapeMonitorListResult(IReadOnlyList<SapLandscapeMonitorData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapLandscapeMonitorListResult(IReadOnlyList<SapLandscapeMonitorData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of Sap Landscape Monitor configuration. </summary>

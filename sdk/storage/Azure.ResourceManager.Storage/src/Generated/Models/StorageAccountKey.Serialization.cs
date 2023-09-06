@@ -6,15 +6,42 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageAccountKey
+    public partial class StorageAccountKey : IUtf8JsonSerializable, IModelJsonSerializable<StorageAccountKey>
     {
-        internal static StorageAccountKey DeserializeStorageAccountKey(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageAccountKey>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageAccountKey>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StorageAccountKey>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static StorageAccountKey DeserializeStorageAccountKey(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<string> value = default;
             Optional<StorageAccountKeyPermission> permissions = default;
             Optional<DateTimeOffset> creationTime = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyName"u8))
@@ -53,8 +81,61 @@ namespace Azure.ResourceManager.Storage.Models
                     creationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageAccountKey(keyName.Value, value.Value, Optional.ToNullable(permissions), Optional.ToNullable(creationTime));
+            return new StorageAccountKey(keyName.Value, value.Value, Optional.ToNullable(permissions), Optional.ToNullable(creationTime), rawData);
+        }
+
+        StorageAccountKey IModelJsonSerializable<StorageAccountKey>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageAccountKey>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageAccountKey(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageAccountKey>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageAccountKey>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageAccountKey IModelSerializable<StorageAccountKey>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageAccountKey>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageAccountKey(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageAccountKey"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageAccountKey"/> to convert. </param>
+        public static implicit operator RequestContent(StorageAccountKey model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageAccountKey"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageAccountKey(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageAccountKey(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

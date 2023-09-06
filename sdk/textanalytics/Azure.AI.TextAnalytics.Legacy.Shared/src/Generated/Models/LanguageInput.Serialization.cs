@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
-    internal partial class LanguageInput : IUtf8JsonSerializable
+    internal partial class LanguageInput : IUtf8JsonSerializable, IModelJsonSerializable<LanguageInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LanguageInput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LanguageInput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LanguageInput>(this, options.Format);
+
             writer.WriteStartObject();
             if (Id != null)
             {
@@ -38,7 +46,115 @@ namespace Azure.AI.TextAnalytics.Legacy
                 writer.WritePropertyName("countryHint"u8);
                 writer.WriteStringValue(CountryHint);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static LanguageInput DeserializeLanguageInput(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string id = default;
+            string text = default;
+            Optional<string> countryHint = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("id"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        id = null;
+                        continue;
+                    }
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("text"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        text = null;
+                        continue;
+                    }
+                    text = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("countryHint"u8))
+                {
+                    countryHint = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new LanguageInput(id, text, countryHint.Value, rawData);
+        }
+
+        LanguageInput IModelJsonSerializable<LanguageInput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LanguageInput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLanguageInput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LanguageInput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LanguageInput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LanguageInput IModelSerializable<LanguageInput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LanguageInput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLanguageInput(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LanguageInput"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LanguageInput"/> to convert. </param>
+        public static implicit operator RequestContent(LanguageInput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LanguageInput"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LanguageInput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLanguageInput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

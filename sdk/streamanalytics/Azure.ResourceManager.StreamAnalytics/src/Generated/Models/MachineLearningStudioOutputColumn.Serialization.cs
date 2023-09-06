@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class MachineLearningStudioOutputColumn : IUtf8JsonSerializable
+    public partial class MachineLearningStudioOutputColumn : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningStudioOutputColumn>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningStudioOutputColumn>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningStudioOutputColumn>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningStudioOutputColumn>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningStudioOutputColumn DeserializeMachineLearningStudioOutputColumn(JsonElement element)
+        internal static MachineLearningStudioOutputColumn DeserializeMachineLearningStudioOutputColumn(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> name = default;
             Optional<string> dataType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -48,8 +71,61 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     dataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningStudioOutputColumn(name.Value, dataType.Value);
+            return new MachineLearningStudioOutputColumn(name.Value, dataType.Value, rawData);
+        }
+
+        MachineLearningStudioOutputColumn IModelJsonSerializable<MachineLearningStudioOutputColumn>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningStudioOutputColumn>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningStudioOutputColumn(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningStudioOutputColumn>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningStudioOutputColumn>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningStudioOutputColumn IModelSerializable<MachineLearningStudioOutputColumn>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningStudioOutputColumn>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningStudioOutputColumn(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningStudioOutputColumn"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningStudioOutputColumn"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningStudioOutputColumn model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningStudioOutputColumn"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningStudioOutputColumn(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningStudioOutputColumn(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

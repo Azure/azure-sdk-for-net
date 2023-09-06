@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -15,9 +17,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// Please note <see cref="EndpointBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="TlsEndpoint"/> and <see cref="UnsecuredEndpoint"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownEndpointBase))]
     public abstract partial class EndpointBase
     {
-        /// <summary> Initializes a new instance of EndpointBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EndpointBase"/>. </summary>
         /// <param name="url"> The endpoint URL for Video Analyzer to connect to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         protected EndpointBase(string url)
@@ -27,7 +33,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Url = url;
         }
 
-        /// <summary> Initializes a new instance of EndpointBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointBase"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="credentials">
         /// Credentials to be presented to the endpoint.
@@ -35,11 +41,18 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// The available derived classes include <see cref="HttpHeaderCredentials"/>, <see cref="SymmetricKeyCredentials"/> and <see cref="UsernamePasswordCredentials"/>.
         /// </param>
         /// <param name="url"> The endpoint URL for Video Analyzer to connect to. </param>
-        internal EndpointBase(string type, CredentialsBase credentials, string url)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EndpointBase(string type, CredentialsBase credentials, string url, Dictionary<string, BinaryData> rawData)
         {
             Type = type;
             Credentials = credentials;
             Url = url;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EndpointBase"/> for deserialization. </summary>
+        internal EndpointBase()
+        {
         }
 
         /// <summary> Type discriminator for the derived types. </summary>

@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ControlActivityConverter))]
-    public partial class ControlActivity : IUtf8JsonSerializable
+    public partial class ControlActivity : IUtf8JsonSerializable, IModelJsonSerializable<ControlActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ControlActivity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ControlActivity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ControlActivity>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -44,7 +50,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ActivityDependency>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -54,7 +67,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<UserProperty>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -66,8 +86,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static ControlActivity DeserializeControlActivity(JsonElement element)
+        internal static ControlActivity DeserializeControlActivity(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -90,6 +112,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "WebHook": return WebHookActivity.DeserializeWebHookActivity(element);
                 }
             }
+
+            // Unknown type found so we will deserialize the base properties only
             string name = default;
             string type = "Container";
             Optional<string> description = default;
@@ -166,6 +190,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ControlActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties);
+        }
+
+        ControlActivity IModelJsonSerializable<ControlActivity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ControlActivity>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeControlActivity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ControlActivity>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ControlActivity>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ControlActivity IModelSerializable<ControlActivity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ControlActivity>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeControlActivity(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ControlActivity"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ControlActivity"/> to convert. </param>
+        public static implicit operator RequestContent(ControlActivity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ControlActivity"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ControlActivity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeControlActivity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class ControlActivityConverter : JsonConverter<ControlActivity>

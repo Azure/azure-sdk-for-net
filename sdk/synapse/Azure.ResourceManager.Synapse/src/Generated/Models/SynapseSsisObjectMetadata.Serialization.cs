@@ -5,14 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
+using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseSsisObjectMetadata
+    public partial class SynapseSsisObjectMetadata : IUtf8JsonSerializable, IModelJsonSerializable<SynapseSsisObjectMetadata>
     {
-        internal static SynapseSsisObjectMetadata DeserializeSynapseSsisObjectMetadata(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseSsisObjectMetadata>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseSsisObjectMetadata>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseSsisObjectMetadata>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(MetadataType.ToString());
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteNumberValue(Id.Value);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SynapseSsisObjectMetadata DeserializeSynapseSsisObjectMetadata(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,7 +73,94 @@ namespace Azure.ResourceManager.Synapse.Models
                     case "Project": return SynapseSsisProject.DeserializeSynapseSsisProject(element);
                 }
             }
-            return UnknownSsisObjectMetadata.DeserializeUnknownSsisObjectMetadata(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            SynapseSsisObjectMetadataType type = default;
+            Optional<long> id = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("type"u8))
+                {
+                    type = new SynapseSsisObjectMetadataType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("description"u8))
+                {
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownSsisObjectMetadata(type, Optional.ToNullable(id), name.Value, description.Value, rawData);
+        }
+
+        SynapseSsisObjectMetadata IModelJsonSerializable<SynapseSsisObjectMetadata>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseSsisObjectMetadata>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseSsisObjectMetadata(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseSsisObjectMetadata>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseSsisObjectMetadata>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseSsisObjectMetadata IModelSerializable<SynapseSsisObjectMetadata>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseSsisObjectMetadata>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseSsisObjectMetadata(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapseSsisObjectMetadata"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapseSsisObjectMetadata"/> to convert. </param>
+        public static implicit operator RequestContent(SynapseSsisObjectMetadata model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapseSsisObjectMetadata"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapseSsisObjectMetadata(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseSsisObjectMetadata(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

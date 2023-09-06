@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(FtpReadSettingsConverter))]
-    public partial class FtpReadSettings : IUtf8JsonSerializable
+    public partial class FtpReadSettings : IUtf8JsonSerializable, IModelJsonSerializable<FtpReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FtpReadSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FtpReadSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FtpReadSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Recursive))
             {
@@ -79,8 +85,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static FtpReadSettings DeserializeFtpReadSettings(JsonElement element)
+        internal static FtpReadSettings DeserializeFtpReadSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -199,6 +207,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new FtpReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, Optional.ToNullable(enablePartitionDiscovery), partitionRootPath.Value, deleteFilesAfterCompletion.Value, fileListPath.Value, Optional.ToNullable(useBinaryTransfer), disableChunking.Value);
+        }
+
+        FtpReadSettings IModelJsonSerializable<FtpReadSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FtpReadSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFtpReadSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FtpReadSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FtpReadSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FtpReadSettings IModelSerializable<FtpReadSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FtpReadSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFtpReadSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FtpReadSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FtpReadSettings"/> to convert. </param>
+        public static implicit operator RequestContent(FtpReadSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FtpReadSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FtpReadSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFtpReadSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class FtpReadSettingsConverter : JsonConverter<FtpReadSettings>

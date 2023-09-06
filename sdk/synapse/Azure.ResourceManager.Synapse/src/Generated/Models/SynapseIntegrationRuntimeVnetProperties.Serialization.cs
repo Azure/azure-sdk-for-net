@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseIntegrationRuntimeVnetProperties : IUtf8JsonSerializable
+    public partial class SynapseIntegrationRuntimeVnetProperties : IUtf8JsonSerializable, IModelJsonSerializable<SynapseIntegrationRuntimeVnetProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseIntegrationRuntimeVnetProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseIntegrationRuntimeVnetProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseIntegrationRuntimeVnetProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(VnetId))
             {
@@ -54,8 +60,10 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteEndObject();
         }
 
-        internal static SynapseIntegrationRuntimeVnetProperties DeserializeSynapseIntegrationRuntimeVnetProperties(JsonElement element)
+        internal static SynapseIntegrationRuntimeVnetProperties DeserializeSynapseIntegrationRuntimeVnetProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -109,6 +117,54 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SynapseIntegrationRuntimeVnetProperties(Optional.ToNullable(vNetId), subnet.Value, Optional.ToList(publicIPs), subnetId.Value, additionalProperties);
+        }
+
+        SynapseIntegrationRuntimeVnetProperties IModelJsonSerializable<SynapseIntegrationRuntimeVnetProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseIntegrationRuntimeVnetProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseIntegrationRuntimeVnetProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseIntegrationRuntimeVnetProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseIntegrationRuntimeVnetProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseIntegrationRuntimeVnetProperties IModelSerializable<SynapseIntegrationRuntimeVnetProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseIntegrationRuntimeVnetProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseIntegrationRuntimeVnetProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapseIntegrationRuntimeVnetProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapseIntegrationRuntimeVnetProperties"/> to convert. </param>
+        public static implicit operator RequestContent(SynapseIntegrationRuntimeVnetProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapseIntegrationRuntimeVnetProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapseIntegrationRuntimeVnetProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseIntegrationRuntimeVnetProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

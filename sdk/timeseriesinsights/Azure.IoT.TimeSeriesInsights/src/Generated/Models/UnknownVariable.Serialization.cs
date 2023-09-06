@@ -5,52 +5,74 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class UnknownVariable : IUtf8JsonSerializable
+    internal partial class UnknownVariable : IUtf8JsonSerializable, IModelJsonSerializable<TimeSeriesVariable>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TimeSeriesVariable>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TimeSeriesVariable>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TimeSeriesVariable>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                if (Filter is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TimeSeriesExpression>)Filter).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static UnknownVariable DeserializeUnknownVariable(JsonElement element)
+        internal static TimeSeriesVariable DeserializeUnknownVariable(JsonElement element, ModelSerializerOptions options = default) => DeserializeTimeSeriesVariable(element, options);
+
+        TimeSeriesVariable IModelJsonSerializable<TimeSeriesVariable>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string kind = "Unknown";
-            Optional<TimeSeriesExpression> filter = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("filter"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    filter = TimeSeriesExpression.DeserializeTimeSeriesExpression(property.Value);
-                    continue;
-                }
-            }
-            return new UnknownVariable(kind, filter.Value);
+            Core.ModelSerializerHelper.ValidateFormat<TimeSeriesVariable>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownVariable(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TimeSeriesVariable>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TimeSeriesVariable>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TimeSeriesVariable IModelSerializable<TimeSeriesVariable>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TimeSeriesVariable>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTimeSeriesVariable(doc.RootElement, options);
         }
     }
 }

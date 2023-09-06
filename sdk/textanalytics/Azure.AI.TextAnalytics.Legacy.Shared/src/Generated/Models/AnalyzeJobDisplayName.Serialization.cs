@@ -5,20 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
-    internal partial class AnalyzeJobDisplayName
+    internal partial class AnalyzeJobDisplayName : IUtf8JsonSerializable, IModelJsonSerializable<AnalyzeJobDisplayName>
     {
-        internal static AnalyzeJobDisplayName DeserializeAnalyzeJobDisplayName(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AnalyzeJobDisplayName>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AnalyzeJobDisplayName>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AnalyzeJobDisplayName>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AnalyzeJobDisplayName DeserializeAnalyzeJobDisplayName(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> displayName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -26,8 +60,61 @@ namespace Azure.AI.TextAnalytics.Legacy
                     displayName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AnalyzeJobDisplayName(displayName.Value);
+            return new AnalyzeJobDisplayName(displayName.Value, rawData);
+        }
+
+        AnalyzeJobDisplayName IModelJsonSerializable<AnalyzeJobDisplayName>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnalyzeJobDisplayName>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalyzeJobDisplayName(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AnalyzeJobDisplayName>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnalyzeJobDisplayName>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AnalyzeJobDisplayName IModelSerializable<AnalyzeJobDisplayName>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnalyzeJobDisplayName>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAnalyzeJobDisplayName(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AnalyzeJobDisplayName"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AnalyzeJobDisplayName"/> to convert. </param>
+        public static implicit operator RequestContent(AnalyzeJobDisplayName model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AnalyzeJobDisplayName"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AnalyzeJobDisplayName(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAnalyzeJobDisplayName(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

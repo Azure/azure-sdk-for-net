@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class AppServiceDetectorData : IUtf8JsonSerializable
+    public partial class AppServiceDetectorData : IUtf8JsonSerializable, IModelJsonSerializable<AppServiceDetectorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppServiceDetectorData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppServiceDetectorData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceDetectorData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
@@ -28,7 +35,14 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                if (Metadata is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DetectorInfo>)Metadata).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Dataset))
             {
@@ -36,14 +50,28 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in Dataset)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DiagnosticDataset>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                if (Status is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AppServiceStatusInfo>)Status).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(DataProvidersMetadata))
             {
@@ -51,21 +79,49 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in DataProvidersMetadata)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DataProviderMetadata>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SuggestedUtterances))
             {
                 writer.WritePropertyName("suggestedUtterances"u8);
-                writer.WriteObjectValue(SuggestedUtterances);
+                if (SuggestedUtterances is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<QueryUtterancesResults>)SuggestedUtterances).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServiceDetectorData DeserializeAppServiceDetectorData(JsonElement element)
+        internal static AppServiceDetectorData DeserializeAppServiceDetectorData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -80,6 +136,7 @@ namespace Azure.ResourceManager.AppService
             Optional<AppServiceStatusInfo> status = default;
             Optional<IList<DataProviderMetadata>> dataProvidersMetadata = default;
             Optional<QueryUtterancesResults> suggestedUtterances = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -178,8 +235,61 @@ namespace Azure.ResourceManager.AppService
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppServiceDetectorData(id, name, type, systemData.Value, metadata.Value, Optional.ToList(dataset), status.Value, Optional.ToList(dataProvidersMetadata), suggestedUtterances.Value, kind.Value);
+            return new AppServiceDetectorData(id, name, type, systemData.Value, metadata.Value, Optional.ToList(dataset), status.Value, Optional.ToList(dataProvidersMetadata), suggestedUtterances.Value, kind.Value, rawData);
+        }
+
+        AppServiceDetectorData IModelJsonSerializable<AppServiceDetectorData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceDetectorData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceDetectorData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppServiceDetectorData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceDetectorData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppServiceDetectorData IModelSerializable<AppServiceDetectorData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceDetectorData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppServiceDetectorData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppServiceDetectorData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppServiceDetectorData"/> to convert. </param>
+        public static implicit operator RequestContent(AppServiceDetectorData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppServiceDetectorData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppServiceDetectorData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppServiceDetectorData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamAnalyticsResourceTestStatus
+    public partial class StreamAnalyticsResourceTestStatus : IUtf8JsonSerializable, IModelJsonSerializable<StreamAnalyticsResourceTestStatus>
     {
-        internal static StreamAnalyticsResourceTestStatus DeserializeStreamAnalyticsResourceTestStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StreamAnalyticsResourceTestStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StreamAnalyticsResourceTestStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StreamAnalyticsResourceTestStatus>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("error"u8);
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static StreamAnalyticsResourceTestStatus DeserializeStreamAnalyticsResourceTestStatus(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +52,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> status = default;
             Optional<string> code = default;
             Optional<string> message = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -50,8 +82,61 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StreamAnalyticsResourceTestStatus(status.Value, code.Value, message.Value);
+            return new StreamAnalyticsResourceTestStatus(status.Value, code.Value, message.Value, rawData);
+        }
+
+        StreamAnalyticsResourceTestStatus IModelJsonSerializable<StreamAnalyticsResourceTestStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamAnalyticsResourceTestStatus>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamAnalyticsResourceTestStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StreamAnalyticsResourceTestStatus>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamAnalyticsResourceTestStatus>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StreamAnalyticsResourceTestStatus IModelSerializable<StreamAnalyticsResourceTestStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamAnalyticsResourceTestStatus>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStreamAnalyticsResourceTestStatus(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StreamAnalyticsResourceTestStatus"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StreamAnalyticsResourceTestStatus"/> to convert. </param>
+        public static implicit operator RequestContent(StreamAnalyticsResourceTestStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StreamAnalyticsResourceTestStatus"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StreamAnalyticsResourceTestStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStreamAnalyticsResourceTestStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

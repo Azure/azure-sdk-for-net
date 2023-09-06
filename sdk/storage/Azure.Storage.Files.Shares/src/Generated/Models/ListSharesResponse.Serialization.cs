@@ -5,16 +5,63 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class ListSharesResponse
+    internal partial class ListSharesResponse : IXmlSerializable, IModelSerializable<ListSharesResponse>
     {
-        internal static ListSharesResponse DeserializeListSharesResponse(XElement element)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
+            writer.WriteStartElement(nameHint ?? "EnumerationResults");
+            writer.WriteStartAttribute("ServiceEndpoint");
+            writer.WriteValue(ServiceEndpoint);
+            writer.WriteEndAttribute();
+            if (Optional.IsDefined(Prefix))
+            {
+                writer.WriteStartElement("Prefix");
+                writer.WriteValue(Prefix);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Marker))
+            {
+                writer.WriteStartElement("Marker");
+                writer.WriteValue(Marker);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(MaxResults))
+            {
+                writer.WriteStartElement("MaxResults");
+                writer.WriteValue(MaxResults.Value);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("NextMarker");
+            writer.WriteValue(NextMarker);
+            writer.WriteEndElement();
+            if (Optional.IsCollectionDefined(ShareItems))
+            {
+                writer.WriteStartElement("Shares");
+                foreach (var item in ShareItems)
+                {
+                    writer.WriteObjectValue(item, "Share");
+                }
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static ListSharesResponse DeserializeListSharesResponse(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             string serviceEndpoint = default;
             string prefix = default;
             string marker = default;
@@ -50,7 +97,57 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 shareItems = array;
             }
-            return new ListSharesResponse(serviceEndpoint, prefix, marker, maxResults, shareItems, nextMarker);
+            return new ListSharesResponse(serviceEndpoint, prefix, marker, maxResults, shareItems, nextMarker, default);
+        }
+
+        BinaryData IModelSerializable<ListSharesResponse>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ListSharesResponse>(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        ListSharesResponse IModelSerializable<ListSharesResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ListSharesResponse>(this, options.Format);
+
+            return DeserializeListSharesResponse(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="ListSharesResponse"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ListSharesResponse"/> to convert. </param>
+        public static implicit operator RequestContent(ListSharesResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ListSharesResponse"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ListSharesResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeListSharesResponse(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

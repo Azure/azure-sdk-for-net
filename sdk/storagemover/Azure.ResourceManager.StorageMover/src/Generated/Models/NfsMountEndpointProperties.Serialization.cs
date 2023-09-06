@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    public partial class NfsMountEndpointProperties : IUtf8JsonSerializable
+    public partial class NfsMountEndpointProperties : IUtf8JsonSerializable, IModelJsonSerializable<NfsMountEndpointProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NfsMountEndpointProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NfsMountEndpointProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NfsMountEndpointProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("host"u8);
             writer.WriteStringValue(Host);
@@ -31,11 +39,25 @@ namespace Azure.ResourceManager.StorageMover.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NfsMountEndpointProperties DeserializeNfsMountEndpointProperties(JsonElement element)
+        internal static NfsMountEndpointProperties DeserializeNfsMountEndpointProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +68,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             EndpointType endpointType = default;
             Optional<string> description = default;
             Optional<StorageMoverProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("host"u8))
@@ -86,8 +109,61 @@ namespace Azure.ResourceManager.StorageMover.Models
                     provisioningState = new StorageMoverProvisioningState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NfsMountEndpointProperties(endpointType, description.Value, Optional.ToNullable(provisioningState), host, Optional.ToNullable(nfsVersion), export);
+            return new NfsMountEndpointProperties(endpointType, description.Value, Optional.ToNullable(provisioningState), host, Optional.ToNullable(nfsVersion), export, rawData);
+        }
+
+        NfsMountEndpointProperties IModelJsonSerializable<NfsMountEndpointProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NfsMountEndpointProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNfsMountEndpointProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NfsMountEndpointProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NfsMountEndpointProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NfsMountEndpointProperties IModelSerializable<NfsMountEndpointProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NfsMountEndpointProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNfsMountEndpointProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NfsMountEndpointProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NfsMountEndpointProperties"/> to convert. </param>
+        public static implicit operator RequestContent(NfsMountEndpointProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NfsMountEndpointProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NfsMountEndpointProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNfsMountEndpointProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

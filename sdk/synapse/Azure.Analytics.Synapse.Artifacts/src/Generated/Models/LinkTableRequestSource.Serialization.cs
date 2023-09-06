@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LinkTableRequestSourceConverter))]
-    public partial class LinkTableRequestSource : IUtf8JsonSerializable
+    public partial class LinkTableRequestSource : IUtf8JsonSerializable, IModelJsonSerializable<LinkTableRequestSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LinkTableRequestSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LinkTableRequestSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LinkTableRequestSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TableName))
             {
@@ -28,17 +35,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("schemaName"u8);
                 writer.WriteStringValue(SchemaName);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LinkTableRequestSource DeserializeLinkTableRequestSource(JsonElement element)
+        internal static LinkTableRequestSource DeserializeLinkTableRequestSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> tableName = default;
             Optional<string> schemaName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tableName"u8))
@@ -51,8 +73,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     schemaName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LinkTableRequestSource(tableName.Value, schemaName.Value);
+            return new LinkTableRequestSource(tableName.Value, schemaName.Value, rawData);
+        }
+
+        LinkTableRequestSource IModelJsonSerializable<LinkTableRequestSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinkTableRequestSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinkTableRequestSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LinkTableRequestSource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinkTableRequestSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LinkTableRequestSource IModelSerializable<LinkTableRequestSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinkTableRequestSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLinkTableRequestSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LinkTableRequestSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LinkTableRequestSource"/> to convert. </param>
+        public static implicit operator RequestContent(LinkTableRequestSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LinkTableRequestSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LinkTableRequestSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLinkTableRequestSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class LinkTableRequestSourceConverter : JsonConverter<LinkTableRequestSource>

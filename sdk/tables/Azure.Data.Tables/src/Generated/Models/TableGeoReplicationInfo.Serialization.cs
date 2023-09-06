@@ -6,12 +6,95 @@
 #nullable disable
 
 using System;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableGeoReplicationInfo
+    public partial class TableGeoReplicationInfo : IXmlSerializable, IModelSerializable<TableGeoReplicationInfo>
     {
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
+        {
+            writer.WriteStartElement(nameHint ?? "GeoReplication");
+            writer.WriteStartElement("Status");
+            writer.WriteValue(Status.ToString());
+            writer.WriteEndElement();
+            writer.WriteStartElement("LastSyncTime");
+            writer.WriteValue(LastSyncedOn, "R");
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static TableGeoReplicationInfo DeserializeTableGeoReplicationInfo(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            TableGeoReplicationStatus status = default;
+            DateTimeOffset lastSyncedOn = default;
+            if (element.Element("Status") is XElement statusElement)
+            {
+                status = new TableGeoReplicationStatus(statusElement.Value);
+            }
+            if (element.Element("LastSyncTime") is XElement lastSyncTimeElement)
+            {
+                lastSyncedOn = lastSyncTimeElement.GetDateTimeOffsetValue("R");
+            }
+            return new TableGeoReplicationInfo(status, lastSyncedOn, default);
+        }
+
+        BinaryData IModelSerializable<TableGeoReplicationInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TableGeoReplicationInfo>(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        TableGeoReplicationInfo IModelSerializable<TableGeoReplicationInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TableGeoReplicationInfo>(this, options.Format);
+
+            return DeserializeTableGeoReplicationInfo(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="TableGeoReplicationInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TableGeoReplicationInfo"/> to convert. </param>
+        public static implicit operator RequestContent(TableGeoReplicationInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TableGeoReplicationInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TableGeoReplicationInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeTableGeoReplicationInfo(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
+        }
     }
 }

@@ -9,22 +9,35 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SquareLinkedServiceConverter))]
-    public partial class SquareLinkedService : IUtf8JsonSerializable
+    public partial class SquareLinkedService : IUtf8JsonSerializable, IModelJsonSerializable<SquareLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SquareLinkedService>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SquareLinkedService>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SquareLinkedService>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                if (ConnectVia is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<IntegrationRuntimeReference>)ConnectVia).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Description))
             {
@@ -38,7 +51,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ParameterSpecification>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -71,7 +91,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
-                writer.WriteObjectValue(ClientSecret);
+                if (ClientSecret is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SecretBase>)ClientSecret).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("redirectUri"u8);
             writer.WriteObjectValue(RedirectUri);
@@ -104,8 +131,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static SquareLinkedService DeserializeSquareLinkedService(JsonElement element)
+        internal static SquareLinkedService DeserializeSquareLinkedService(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -267,6 +296,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SquareLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionProperties.Value, host, clientId, clientSecret.Value, redirectUri, useEncryptedEndpoints.Value, useHostVerification.Value, usePeerVerification.Value, encryptedCredential.Value);
+        }
+
+        SquareLinkedService IModelJsonSerializable<SquareLinkedService>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SquareLinkedService>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSquareLinkedService(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SquareLinkedService>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SquareLinkedService>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SquareLinkedService IModelSerializable<SquareLinkedService>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SquareLinkedService>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSquareLinkedService(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SquareLinkedService"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SquareLinkedService"/> to convert. </param>
+        public static implicit operator RequestContent(SquareLinkedService model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SquareLinkedService"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SquareLinkedService(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSquareLinkedService(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class SquareLinkedServiceConverter : JsonConverter<SquareLinkedService>

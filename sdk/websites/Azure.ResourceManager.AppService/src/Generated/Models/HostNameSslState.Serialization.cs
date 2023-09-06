@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class HostNameSslState : IUtf8JsonSerializable
+    public partial class HostNameSslState : IUtf8JsonSerializable, IModelJsonSerializable<HostNameSslState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HostNameSslState>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HostNameSslState>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HostNameSslState>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -52,11 +60,25 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("hostType"u8);
                 writer.WriteStringValue(HostType.Value.ToSerialString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HostNameSslState DeserializeHostNameSslState(JsonElement element)
+        internal static HostNameSslState DeserializeHostNameSslState(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -67,6 +89,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> thumbprint = default;
             Optional<bool?> toUpdate = default;
             Optional<AppServiceHostType> hostType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -112,8 +135,61 @@ namespace Azure.ResourceManager.AppService.Models
                     hostType = property.Value.GetString().ToAppServiceHostType();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HostNameSslState(name.Value, Optional.ToNullable(sslState), virtualIP.Value, thumbprint.Value, Optional.ToNullable(toUpdate), Optional.ToNullable(hostType));
+            return new HostNameSslState(name.Value, Optional.ToNullable(sslState), virtualIP.Value, thumbprint.Value, Optional.ToNullable(toUpdate), Optional.ToNullable(hostType), rawData);
+        }
+
+        HostNameSslState IModelJsonSerializable<HostNameSslState>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HostNameSslState>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHostNameSslState(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HostNameSslState>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HostNameSslState>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HostNameSslState IModelSerializable<HostNameSslState>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HostNameSslState>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHostNameSslState(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HostNameSslState"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HostNameSslState"/> to convert. </param>
+        public static implicit operator RequestContent(HostNameSslState model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HostNameSslState"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HostNameSslState(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHostNameSslState(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

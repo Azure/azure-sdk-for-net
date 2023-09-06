@@ -6,15 +6,37 @@
 #nullable disable
 
 using System;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobGeoReplication
+    public partial class BlobGeoReplication : IXmlSerializable, IModelSerializable<BlobGeoReplication>
     {
-        internal static BlobGeoReplication DeserializeBlobGeoReplication(XElement element)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
+            writer.WriteStartElement(nameHint ?? "GeoReplication");
+            writer.WriteStartElement("Status");
+            writer.WriteValue(Status.ToSerialString());
+            writer.WriteEndElement();
+            if (LastSyncedOn != null)
+            {
+                writer.WriteStartElement("LastSyncTime");
+                writer.WriteValue(LastSyncedOn.Value, "R");
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static BlobGeoReplication DeserializeBlobGeoReplication(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             BlobGeoReplicationStatus status = default;
             DateTimeOffset? lastSyncedOn = default;
             if (element.Element("Status") is XElement statusElement)
@@ -25,7 +47,57 @@ namespace Azure.Storage.Blobs.Models
             {
                 lastSyncedOn = lastSyncTimeElement.GetDateTimeOffsetValue("R");
             }
-            return new BlobGeoReplication(status, lastSyncedOn);
+            return new BlobGeoReplication(status, lastSyncedOn, default);
+        }
+
+        BinaryData IModelSerializable<BlobGeoReplication>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlobGeoReplication>(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        BlobGeoReplication IModelSerializable<BlobGeoReplication>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlobGeoReplication>(this, options.Format);
+
+            return DeserializeBlobGeoReplication(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="BlobGeoReplication"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BlobGeoReplication"/> to convert. </param>
+        public static implicit operator RequestContent(BlobGeoReplication model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BlobGeoReplication"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BlobGeoReplication(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeBlobGeoReplication(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

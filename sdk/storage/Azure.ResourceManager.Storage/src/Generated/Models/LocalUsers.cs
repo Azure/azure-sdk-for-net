@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Storage;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> List storage account local users. </summary>
     internal partial class LocalUsers
     {
-        /// <summary> Initializes a new instance of LocalUsers. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LocalUsers"/>. </summary>
         internal LocalUsers()
         {
             Value = new ChangeTrackingList<StorageAccountLocalUserData>();
         }
 
-        /// <summary> Initializes a new instance of LocalUsers. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalUsers"/>. </summary>
         /// <param name="value"> The local users associated with the storage account. </param>
-        internal LocalUsers(IReadOnlyList<StorageAccountLocalUserData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LocalUsers(IReadOnlyList<StorageAccountLocalUserData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The local users associated with the storage account. </summary>

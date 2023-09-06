@@ -6,50 +6,58 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    internal partial class UnknownIntegrationRuntimeStatus
+    internal partial class UnknownIntegrationRuntimeStatus : IUtf8JsonSerializable, IModelJsonSerializable<SynapseIntegrationRuntimeStatus>
     {
-        internal static UnknownIntegrationRuntimeStatus DeserializeUnknownIntegrationRuntimeStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseIntegrationRuntimeStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseIntegrationRuntimeStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            Core.ModelSerializerHelper.ValidateFormat<SynapseIntegrationRuntimeStatus>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(RuntimeType.ToString());
+            foreach (var item in AdditionalProperties)
             {
-                return null;
+                writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
             }
-            IntegrationRuntimeType type = "Unknown";
-            Optional<string> dataFactoryName = default;
-            Optional<SynapseIntegrationRuntimeState> state = default;
-            IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"u8))
-                {
-                    type = new IntegrationRuntimeType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("dataFactoryName"u8))
-                {
-                    dataFactoryName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("state"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    state = new SynapseIntegrationRuntimeState(property.Value.GetString());
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new UnknownIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties);
+            writer.WriteEndObject();
+        }
+
+        internal static SynapseIntegrationRuntimeStatus DeserializeUnknownIntegrationRuntimeStatus(JsonElement element, ModelSerializerOptions options = default) => DeserializeSynapseIntegrationRuntimeStatus(element, options);
+
+        SynapseIntegrationRuntimeStatus IModelJsonSerializable<SynapseIntegrationRuntimeStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseIntegrationRuntimeStatus>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownIntegrationRuntimeStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseIntegrationRuntimeStatus>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseIntegrationRuntimeStatus>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseIntegrationRuntimeStatus IModelSerializable<SynapseIntegrationRuntimeStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseIntegrationRuntimeStatus>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseIntegrationRuntimeStatus(doc.RootElement, options);
         }
     }
 }

@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Log Definition of a single resource metric. </summary>
     public partial class LogSpecification
     {
-        /// <summary> Initializes a new instance of LogSpecification. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogSpecification"/>. </summary>
         internal LogSpecification()
         {
         }
 
-        /// <summary> Initializes a new instance of LogSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogSpecification"/>. </summary>
         /// <param name="name"></param>
         /// <param name="displayName"></param>
         /// <param name="blobDuration"></param>
         /// <param name="logFilterPattern"></param>
-        internal LogSpecification(string name, string displayName, TimeSpan? blobDuration, string logFilterPattern)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogSpecification(string name, string displayName, TimeSpan? blobDuration, string logFilterPattern, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             DisplayName = displayName;
             BlobDuration = blobDuration;
             LogFilterPattern = logFilterPattern;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the name. </summary>

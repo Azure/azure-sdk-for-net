@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class StorageCacheUsernameDownloadCredential : IUtf8JsonSerializable
+    public partial class StorageCacheUsernameDownloadCredential : IUtf8JsonSerializable, IModelJsonSerializable<StorageCacheUsernameDownloadCredential>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageCacheUsernameDownloadCredential>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageCacheUsernameDownloadCredential>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StorageCacheUsernameDownloadCredential>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BindDistinguishedName))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WritePropertyName("bindPassword"u8);
                 writer.WriteStringValue(BindPassword);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StorageCacheUsernameDownloadCredential DeserializeStorageCacheUsernameDownloadCredential(JsonElement element)
+        internal static StorageCacheUsernameDownloadCredential DeserializeStorageCacheUsernameDownloadCredential(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> bindDn = default;
             Optional<string> bindPassword = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bindDn"u8))
@@ -48,8 +71,61 @@ namespace Azure.ResourceManager.StorageCache.Models
                     bindPassword = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageCacheUsernameDownloadCredential(bindDn.Value, bindPassword.Value);
+            return new StorageCacheUsernameDownloadCredential(bindDn.Value, bindPassword.Value, rawData);
+        }
+
+        StorageCacheUsernameDownloadCredential IModelJsonSerializable<StorageCacheUsernameDownloadCredential>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageCacheUsernameDownloadCredential>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageCacheUsernameDownloadCredential(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageCacheUsernameDownloadCredential>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageCacheUsernameDownloadCredential>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageCacheUsernameDownloadCredential IModelSerializable<StorageCacheUsernameDownloadCredential>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageCacheUsernameDownloadCredential>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageCacheUsernameDownloadCredential(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageCacheUsernameDownloadCredential"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageCacheUsernameDownloadCredential"/> to convert. </param>
+        public static implicit operator RequestContent(StorageCacheUsernameDownloadCredential model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageCacheUsernameDownloadCredential"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageCacheUsernameDownloadCredential(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageCacheUsernameDownloadCredential(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

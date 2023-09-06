@@ -9,22 +9,35 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(GoogleSheetsLinkedServiceConverter))]
-    public partial class GoogleSheetsLinkedService : IUtf8JsonSerializable
+    public partial class GoogleSheetsLinkedService : IUtf8JsonSerializable, IModelJsonSerializable<GoogleSheetsLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GoogleSheetsLinkedService>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GoogleSheetsLinkedService>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<GoogleSheetsLinkedService>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                if (ConnectVia is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<IntegrationRuntimeReference>)ConnectVia).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Description))
             {
@@ -38,7 +51,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ParameterSpecification>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -60,7 +80,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("apiToken"u8);
-            writer.WriteObjectValue(ApiToken);
+            if (ApiToken is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<SecretBase>)ApiToken).Serialize(writer, options);
+            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -75,8 +102,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static GoogleSheetsLinkedService DeserializeGoogleSheetsLinkedService(JsonElement element)
+        internal static GoogleSheetsLinkedService DeserializeGoogleSheetsLinkedService(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -176,6 +205,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new GoogleSheetsLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, apiToken, encryptedCredential.Value);
+        }
+
+        GoogleSheetsLinkedService IModelJsonSerializable<GoogleSheetsLinkedService>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GoogleSheetsLinkedService>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGoogleSheetsLinkedService(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GoogleSheetsLinkedService>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GoogleSheetsLinkedService>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GoogleSheetsLinkedService IModelSerializable<GoogleSheetsLinkedService>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GoogleSheetsLinkedService>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGoogleSheetsLinkedService(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GoogleSheetsLinkedService"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GoogleSheetsLinkedService"/> to convert. </param>
+        public static implicit operator RequestContent(GoogleSheetsLinkedService model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GoogleSheetsLinkedService"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GoogleSheetsLinkedService(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGoogleSheetsLinkedService(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class GoogleSheetsLinkedServiceConverter : JsonConverter<GoogleSheetsLinkedService>

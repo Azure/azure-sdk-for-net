@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseMaintenanceWindowTimeRange : IUtf8JsonSerializable
+    public partial class SynapseMaintenanceWindowTimeRange : IUtf8JsonSerializable, IModelJsonSerializable<SynapseMaintenanceWindowTimeRange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseMaintenanceWindowTimeRange>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseMaintenanceWindowTimeRange>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseMaintenanceWindowTimeRange>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DayOfWeek))
             {
@@ -31,11 +38,25 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SynapseMaintenanceWindowTimeRange DeserializeSynapseMaintenanceWindowTimeRange(JsonElement element)
+        internal static SynapseMaintenanceWindowTimeRange DeserializeSynapseMaintenanceWindowTimeRange(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +64,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<SynapseDayOfWeek> dayOfWeek = default;
             Optional<TimeSpan> startTime = default;
             Optional<TimeSpan> duration = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dayOfWeek"u8))
@@ -72,8 +94,61 @@ namespace Azure.ResourceManager.Synapse.Models
                     duration = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SynapseMaintenanceWindowTimeRange(Optional.ToNullable(dayOfWeek), Optional.ToNullable(startTime), Optional.ToNullable(duration));
+            return new SynapseMaintenanceWindowTimeRange(Optional.ToNullable(dayOfWeek), Optional.ToNullable(startTime), Optional.ToNullable(duration), rawData);
+        }
+
+        SynapseMaintenanceWindowTimeRange IModelJsonSerializable<SynapseMaintenanceWindowTimeRange>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseMaintenanceWindowTimeRange>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseMaintenanceWindowTimeRange(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseMaintenanceWindowTimeRange>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseMaintenanceWindowTimeRange>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseMaintenanceWindowTimeRange IModelSerializable<SynapseMaintenanceWindowTimeRange>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseMaintenanceWindowTimeRange>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseMaintenanceWindowTimeRange(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapseMaintenanceWindowTimeRange"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapseMaintenanceWindowTimeRange"/> to convert. </param>
+        public static implicit operator RequestContent(SynapseMaintenanceWindowTimeRange model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapseMaintenanceWindowTimeRange"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapseMaintenanceWindowTimeRange(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseMaintenanceWindowTimeRange(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -9,22 +9,35 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureBlobFSLinkedServiceConverter))]
-    public partial class AzureBlobFSLinkedService : IUtf8JsonSerializable
+    public partial class AzureBlobFSLinkedService : IUtf8JsonSerializable, IModelJsonSerializable<AzureBlobFSLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzureBlobFSLinkedService>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzureBlobFSLinkedService>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AzureBlobFSLinkedService>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                if (ConnectVia is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<IntegrationRuntimeReference>)ConnectVia).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Description))
             {
@@ -38,7 +51,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ParameterSpecification>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -77,7 +97,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ServicePrincipalKey))
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
-                writer.WriteObjectValue(ServicePrincipalKey);
+                if (ServicePrincipalKey is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SecretBase>)ServicePrincipalKey).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Tenant))
             {
@@ -97,7 +124,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ServicePrincipalCredential))
             {
                 writer.WritePropertyName("servicePrincipalCredential"u8);
-                writer.WriteObjectValue(ServicePrincipalCredential);
+                if (ServicePrincipalCredential is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SecretBase>)ServicePrincipalCredential).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -112,12 +146,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
-                writer.WriteObjectValue(SasToken);
+                if (SasToken is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SecretBase>)SasToken).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential);
+                if (Credential is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CredentialReference>)Credential).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -128,8 +176,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureBlobFSLinkedService DeserializeAzureBlobFSLinkedService(JsonElement element)
+        internal static AzureBlobFSLinkedService DeserializeAzureBlobFSLinkedService(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -333,6 +383,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureBlobFSLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, url.Value, accountKey.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, servicePrincipalCredentialType.Value, servicePrincipalCredential.Value, encryptedCredential.Value, sasUri.Value, sasToken.Value, credential.Value);
+        }
+
+        AzureBlobFSLinkedService IModelJsonSerializable<AzureBlobFSLinkedService>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureBlobFSLinkedService>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureBlobFSLinkedService(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureBlobFSLinkedService>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureBlobFSLinkedService>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureBlobFSLinkedService IModelSerializable<AzureBlobFSLinkedService>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureBlobFSLinkedService>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureBlobFSLinkedService(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AzureBlobFSLinkedService"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AzureBlobFSLinkedService"/> to convert. </param>
+        public static implicit operator RequestContent(AzureBlobFSLinkedService model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AzureBlobFSLinkedService"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AzureBlobFSLinkedService(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureBlobFSLinkedService(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class AzureBlobFSLinkedServiceConverter : JsonConverter<AzureBlobFSLinkedService>

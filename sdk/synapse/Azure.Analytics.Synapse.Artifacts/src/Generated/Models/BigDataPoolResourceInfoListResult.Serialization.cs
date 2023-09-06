@@ -9,21 +9,70 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(BigDataPoolResourceInfoListResultConverter))]
-    public partial class BigDataPoolResourceInfoListResult
+    public partial class BigDataPoolResourceInfoListResult : IUtf8JsonSerializable, IModelJsonSerializable<BigDataPoolResourceInfoListResult>
     {
-        internal static BigDataPoolResourceInfoListResult DeserializeBigDataPoolResourceInfoListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BigDataPoolResourceInfoListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BigDataPoolResourceInfoListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BigDataPoolResourceInfoListResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<BigDataPoolResourceInfo>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static BigDataPoolResourceInfoListResult DeserializeBigDataPoolResourceInfoListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<BigDataPoolResourceInfo>> value = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -45,15 +94,68 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     value = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BigDataPoolResourceInfoListResult(nextLink.Value, Optional.ToList(value));
+            return new BigDataPoolResourceInfoListResult(nextLink.Value, Optional.ToList(value), rawData);
+        }
+
+        BigDataPoolResourceInfoListResult IModelJsonSerializable<BigDataPoolResourceInfoListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BigDataPoolResourceInfoListResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBigDataPoolResourceInfoListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BigDataPoolResourceInfoListResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BigDataPoolResourceInfoListResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BigDataPoolResourceInfoListResult IModelSerializable<BigDataPoolResourceInfoListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BigDataPoolResourceInfoListResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBigDataPoolResourceInfoListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BigDataPoolResourceInfoListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BigDataPoolResourceInfoListResult"/> to convert. </param>
+        public static implicit operator RequestContent(BigDataPoolResourceInfoListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BigDataPoolResourceInfoListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BigDataPoolResourceInfoListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBigDataPoolResourceInfoListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class BigDataPoolResourceInfoListResultConverter : JsonConverter<BigDataPoolResourceInfoListResult>
         {
             public override void Write(Utf8JsonWriter writer, BigDataPoolResourceInfoListResult model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override BigDataPoolResourceInfoListResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

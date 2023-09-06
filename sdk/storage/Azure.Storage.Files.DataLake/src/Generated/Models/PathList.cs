@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary> The PathList. </summary>
     internal partial class PathList
     {
-        /// <summary> Initializes a new instance of PathList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PathList"/>. </summary>
         internal PathList()
         {
             Paths = new ChangeTrackingList<Path>();
         }
 
-        /// <summary> Initializes a new instance of PathList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PathList"/>. </summary>
         /// <param name="paths"></param>
-        internal PathList(IReadOnlyList<Path> paths)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PathList(IReadOnlyList<Path> paths, Dictionary<string, BinaryData> rawData)
         {
             Paths = paths;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the paths. </summary>

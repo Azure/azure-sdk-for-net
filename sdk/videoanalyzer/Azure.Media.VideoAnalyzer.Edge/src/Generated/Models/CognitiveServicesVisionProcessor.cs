@@ -14,7 +14,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> A processor that allows the pipeline topology to send video frames to a Cognitive Services Vision extension. Inference results are relayed to downstream nodes. </summary>
     public partial class CognitiveServicesVisionProcessor : ProcessorNodeBase
     {
-        /// <summary> Initializes a new instance of CognitiveServicesVisionProcessor. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesVisionProcessor"/>. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <param name="endpoint">
@@ -40,7 +40,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = "#Microsoft.VideoAnalyzer.CognitiveServicesVisionProcessor";
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesVisionProcessor. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesVisionProcessor"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
@@ -56,13 +56,19 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// Please note <see cref="SpatialAnalysisOperationBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SpatialAnalysisCustomOperation"/>, <see cref="SpatialAnalysisPersonCountOperation"/>, <see cref="SpatialAnalysisPersonDistanceOperation"/>, <see cref="SpatialAnalysisPersonLineCrossingOperation"/>, <see cref="SpatialAnalysisPersonZoneCrossingOperation"/> and <see cref="SpatialAnalysisTypedOperationBase"/>.
         /// </param>
-        internal CognitiveServicesVisionProcessor(string type, string name, IList<NodeInput> inputs, EndpointBase endpoint, ImageProperties image, SamplingOptions samplingOptions, SpatialAnalysisOperationBase operation) : base(type, name, inputs)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesVisionProcessor(string type, string name, IList<NodeInput> inputs, EndpointBase endpoint, ImageProperties image, SamplingOptions samplingOptions, SpatialAnalysisOperationBase operation, Dictionary<string, BinaryData> rawData) : base(type, name, inputs, rawData)
         {
             Endpoint = endpoint;
             Image = image;
             SamplingOptions = samplingOptions;
             Operation = operation;
             Type = type ?? "#Microsoft.VideoAnalyzer.CognitiveServicesVisionProcessor";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesVisionProcessor"/> for deserialization. </summary>
+        internal CognitiveServicesVisionProcessor()
+        {
         }
 
         /// <summary>

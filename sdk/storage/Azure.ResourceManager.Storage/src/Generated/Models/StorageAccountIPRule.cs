@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> IP rule with specific IP or IP range in CIDR format. </summary>
     public partial class StorageAccountIPRule
     {
-        /// <summary> Initializes a new instance of StorageAccountIPRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageAccountIPRule"/>. </summary>
         /// <param name="ipAddressOrRange"> Specifies the IP or IP range in CIDR format. Only IPV4 address is allowed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddressOrRange"/> is null. </exception>
         public StorageAccountIPRule(string ipAddressOrRange)
@@ -23,13 +27,20 @@ namespace Azure.ResourceManager.Storage.Models
             IPAddressOrRange = ipAddressOrRange;
         }
 
-        /// <summary> Initializes a new instance of StorageAccountIPRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountIPRule"/>. </summary>
         /// <param name="ipAddressOrRange"> Specifies the IP or IP range in CIDR format. Only IPV4 address is allowed. </param>
         /// <param name="action"> The action of IP ACL rule. </param>
-        internal StorageAccountIPRule(string ipAddressOrRange, StorageAccountNetworkRuleAction? action)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageAccountIPRule(string ipAddressOrRange, StorageAccountNetworkRuleAction? action, Dictionary<string, BinaryData> rawData)
         {
             IPAddressOrRange = ipAddressOrRange;
             Action = action;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageAccountIPRule"/> for deserialization. </summary>
+        internal StorageAccountIPRule()
+        {
         }
 
         /// <summary> Specifies the IP or IP range in CIDR format. Only IPV4 address is allowed. </summary>

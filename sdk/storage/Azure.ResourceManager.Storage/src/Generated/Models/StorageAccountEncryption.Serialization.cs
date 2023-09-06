@@ -5,20 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageAccountEncryption : IUtf8JsonSerializable
+    public partial class StorageAccountEncryption : IUtf8JsonSerializable, IModelJsonSerializable<StorageAccountEncryption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageAccountEncryption>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageAccountEncryption>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StorageAccountEncryption>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Services))
             {
                 writer.WritePropertyName("services"u8);
-                writer.WriteObjectValue(Services);
+                if (Services is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StorageAccountEncryptionServices>)Services).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(KeySource))
             {
@@ -33,18 +48,46 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyvaultproperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                if (KeyVaultProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StorageAccountKeyVaultProperties>)KeyVaultProperties).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(EncryptionIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(EncryptionIdentity);
+                if (EncryptionIdentity is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StorageAccountEncryptionIdentity>)EncryptionIdentity).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static StorageAccountEncryption DeserializeStorageAccountEncryption(JsonElement element)
+        internal static StorageAccountEncryption DeserializeStorageAccountEncryption(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +97,7 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<bool> requireInfrastructureEncryption = default;
             Optional<StorageAccountKeyVaultProperties> keyvaultproperties = default;
             Optional<StorageAccountEncryptionIdentity> identity = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("services"u8))
@@ -101,8 +145,61 @@ namespace Azure.ResourceManager.Storage.Models
                     identity = StorageAccountEncryptionIdentity.DeserializeStorageAccountEncryptionIdentity(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageAccountEncryption(services.Value, Optional.ToNullable(keySource), Optional.ToNullable(requireInfrastructureEncryption), keyvaultproperties.Value, identity.Value);
+            return new StorageAccountEncryption(services.Value, Optional.ToNullable(keySource), Optional.ToNullable(requireInfrastructureEncryption), keyvaultproperties.Value, identity.Value, rawData);
+        }
+
+        StorageAccountEncryption IModelJsonSerializable<StorageAccountEncryption>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageAccountEncryption>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageAccountEncryption(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageAccountEncryption>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageAccountEncryption>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageAccountEncryption IModelSerializable<StorageAccountEncryption>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageAccountEncryption>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageAccountEncryption(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageAccountEncryption"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageAccountEncryption"/> to convert. </param>
+        public static implicit operator RequestContent(StorageAccountEncryption model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageAccountEncryption"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageAccountEncryption(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageAccountEncryption(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

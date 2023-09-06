@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class TwitterRegistration : IUtf8JsonSerializable
+    public partial class TwitterRegistration : IUtf8JsonSerializable, IModelJsonSerializable<TwitterRegistration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TwitterRegistration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TwitterRegistration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TwitterRegistration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ConsumerKey))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("consumerSecretSettingName"u8);
                 writer.WriteStringValue(ConsumerSecretSettingName);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TwitterRegistration DeserializeTwitterRegistration(JsonElement element)
+        internal static TwitterRegistration DeserializeTwitterRegistration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> consumerKey = default;
             Optional<string> consumerSecretSettingName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("consumerKey"u8))
@@ -48,8 +71,61 @@ namespace Azure.ResourceManager.AppService.Models
                     consumerSecretSettingName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TwitterRegistration(consumerKey.Value, consumerSecretSettingName.Value);
+            return new TwitterRegistration(consumerKey.Value, consumerSecretSettingName.Value, rawData);
+        }
+
+        TwitterRegistration IModelJsonSerializable<TwitterRegistration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TwitterRegistration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTwitterRegistration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TwitterRegistration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TwitterRegistration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TwitterRegistration IModelSerializable<TwitterRegistration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TwitterRegistration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTwitterRegistration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TwitterRegistration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TwitterRegistration"/> to convert. </param>
+        public static implicit operator RequestContent(TwitterRegistration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TwitterRegistration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TwitterRegistration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTwitterRegistration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

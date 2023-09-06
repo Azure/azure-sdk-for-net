@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,26 +14,31 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Class Representing Detector Evidence used for analysis. </summary>
     public partial class AnalysisDetectorEvidences
     {
-        /// <summary> Initializes a new instance of AnalysisDetectorEvidences. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnalysisDetectorEvidences"/>. </summary>
         public AnalysisDetectorEvidences()
         {
             Metrics = new ChangeTrackingList<DiagnosticMetricSet>();
             Data = new ChangeTrackingList<IList<AppServiceNameValuePair>>();
         }
 
-        /// <summary> Initializes a new instance of AnalysisDetectorEvidences. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisDetectorEvidences"/>. </summary>
         /// <param name="source"> Name of the Detector. </param>
         /// <param name="detectorDefinition"> Detector Definition. </param>
         /// <param name="metrics"> Source Metrics. </param>
         /// <param name="data"> Additional Source Data. </param>
         /// <param name="detectorMetaData"> Detector Meta Data. </param>
-        internal AnalysisDetectorEvidences(string source, DetectorDefinition detectorDefinition, IList<DiagnosticMetricSet> metrics, IList<IList<AppServiceNameValuePair>> data, DetectorMetadata detectorMetaData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalysisDetectorEvidences(string source, DetectorDefinition detectorDefinition, IList<DiagnosticMetricSet> metrics, IList<IList<AppServiceNameValuePair>> data, DetectorMetadata detectorMetaData, Dictionary<string, BinaryData> rawData)
         {
             Source = source;
             DetectorDefinition = detectorDefinition;
             Metrics = metrics;
             Data = data;
             DetectorMetaData = detectorMetaData;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the Detector. </summary>

@@ -9,22 +9,35 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ShopifyLinkedServiceConverter))]
-    public partial class ShopifyLinkedService : IUtf8JsonSerializable
+    public partial class ShopifyLinkedService : IUtf8JsonSerializable, IModelJsonSerializable<ShopifyLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ShopifyLinkedService>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ShopifyLinkedService>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ShopifyLinkedService>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                if (ConnectVia is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<IntegrationRuntimeReference>)ConnectVia).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Description))
             {
@@ -38,7 +51,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ParameterSpecification>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -64,7 +84,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(AccessToken))
             {
                 writer.WritePropertyName("accessToken"u8);
-                writer.WriteObjectValue(AccessToken);
+                if (AccessToken is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SecretBase>)AccessToken).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
@@ -95,8 +122,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static ShopifyLinkedService DeserializeShopifyLinkedService(JsonElement element)
+        internal static ShopifyLinkedService DeserializeShopifyLinkedService(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -236,6 +265,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ShopifyLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, host, accessToken.Value, useEncryptedEndpoints.Value, useHostVerification.Value, usePeerVerification.Value, encryptedCredential.Value);
+        }
+
+        ShopifyLinkedService IModelJsonSerializable<ShopifyLinkedService>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ShopifyLinkedService>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeShopifyLinkedService(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ShopifyLinkedService>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ShopifyLinkedService>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ShopifyLinkedService IModelSerializable<ShopifyLinkedService>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ShopifyLinkedService>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeShopifyLinkedService(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ShopifyLinkedService"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ShopifyLinkedService"/> to convert. </param>
+        public static implicit operator RequestContent(ShopifyLinkedService model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ShopifyLinkedService"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ShopifyLinkedService(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeShopifyLinkedService(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class ShopifyLinkedServiceConverter : JsonConverter<ShopifyLinkedService>

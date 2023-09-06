@@ -5,18 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapsePrivateEndpointConnectionData : IUtf8JsonSerializable
+    public partial class SynapsePrivateEndpointConnectionData : IUtf8JsonSerializable, IModelJsonSerializable<SynapsePrivateEndpointConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapsePrivateEndpointConnectionData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapsePrivateEndpointConnectionData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SynapsePrivateEndpointConnectionData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -28,14 +36,35 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                if (ConnectionState is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SynapsePrivateLinkServiceConnectionState>)ConnectionState).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SynapsePrivateEndpointConnectionData DeserializeSynapsePrivateEndpointConnectionData(JsonElement element)
+        internal static SynapsePrivateEndpointConnectionData DeserializeSynapsePrivateEndpointConnectionData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -47,6 +76,7 @@ namespace Azure.ResourceManager.Synapse
             Optional<SubResource> privateEndpoint = default;
             Optional<SynapsePrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<string> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -108,8 +138,61 @@ namespace Azure.ResourceManager.Synapse
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SynapsePrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, provisioningState.Value);
+            return new SynapsePrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, provisioningState.Value, rawData);
+        }
+
+        SynapsePrivateEndpointConnectionData IModelJsonSerializable<SynapsePrivateEndpointConnectionData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapsePrivateEndpointConnectionData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapsePrivateEndpointConnectionData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapsePrivateEndpointConnectionData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapsePrivateEndpointConnectionData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapsePrivateEndpointConnectionData IModelSerializable<SynapsePrivateEndpointConnectionData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapsePrivateEndpointConnectionData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapsePrivateEndpointConnectionData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapsePrivateEndpointConnectionData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapsePrivateEndpointConnectionData"/> to convert. </param>
+        public static implicit operator RequestContent(SynapsePrivateEndpointConnectionData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapsePrivateEndpointConnectionData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapsePrivateEndpointConnectionData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapsePrivateEndpointConnectionData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

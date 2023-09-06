@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,27 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Properties of a private link resource. </summary>
     public partial class SynapsePrivateLinkResourceProperties
     {
-        /// <summary> Initializes a new instance of SynapsePrivateLinkResourceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapsePrivateLinkResourceProperties"/>. </summary>
         internal SynapsePrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SynapsePrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapsePrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
-        internal SynapsePrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapsePrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, Dictionary<string, BinaryData> rawData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
             RequiredZoneNames = requiredZoneNames;
+            _rawData = rawData;
         }
 
         /// <summary> The private link resource group id. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Text
@@ -13,6 +14,9 @@ namespace Azure.AI.Translation.Text
     /// <summary> Element containing the text for translation. </summary>
     public partial class InputTextItem
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of InputTextItem. </summary>
         /// <param name="text"> Text to translate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
@@ -21,6 +25,20 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
+        }
+
+        /// <summary> Initializes a new instance of InputTextItem. </summary>
+        /// <param name="text"> Text to translate. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InputTextItem(string text, Dictionary<string, BinaryData> rawData)
+        {
+            Text = text;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InputTextItem"/> for deserialization. </summary>
+        internal InputTextItem()
+        {
         }
 
         /// <summary> Text to translate. </summary>

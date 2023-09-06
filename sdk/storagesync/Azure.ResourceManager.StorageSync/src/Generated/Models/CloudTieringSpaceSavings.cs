@@ -6,25 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> Server endpoint cloud tiering status object. </summary>
     public partial class CloudTieringSpaceSavings
     {
-        /// <summary> Initializes a new instance of CloudTieringSpaceSavings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudTieringSpaceSavings"/>. </summary>
         internal CloudTieringSpaceSavings()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudTieringSpaceSavings. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudTieringSpaceSavings"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="volumeSizeInBytes"> Volume size. </param>
         /// <param name="cloudTotalSizeInBytes"> Total size of content in the azure file share. </param>
         /// <param name="cachedSizeInBytes"> Cached content size on the server. </param>
         /// <param name="spaceSavingsPercent"> Percentage of cached size over total size. </param>
         /// <param name="spaceSavingsInBytes"> Count of bytes saved on the server. </param>
-        internal CloudTieringSpaceSavings(DateTimeOffset? lastUpdatedOn, long? volumeSizeInBytes, long? cloudTotalSizeInBytes, long? cachedSizeInBytes, int? spaceSavingsPercent, long? spaceSavingsInBytes)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudTieringSpaceSavings(DateTimeOffset? lastUpdatedOn, long? volumeSizeInBytes, long? cloudTotalSizeInBytes, long? cachedSizeInBytes, int? spaceSavingsPercent, long? spaceSavingsInBytes, Dictionary<string, BinaryData> rawData)
         {
             LastUpdatedOn = lastUpdatedOn;
             VolumeSizeInBytes = volumeSizeInBytes;
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             CachedSizeInBytes = cachedSizeInBytes;
             SpaceSavingsPercent = spaceSavingsPercent;
             SpaceSavingsInBytes = spaceSavingsInBytes;
+            _rawData = rawData;
         }
 
         /// <summary> Last updated timestamp. </summary>

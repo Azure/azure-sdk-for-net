@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(NotebookConverter))]
-    public partial class Notebook : IUtf8JsonSerializable
+    public partial class Notebook : IUtf8JsonSerializable, IModelJsonSerializable<Notebook>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Notebook>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<Notebook>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<Notebook>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
@@ -29,7 +35,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 if (BigDataPool != null)
                 {
                     writer.WritePropertyName("bigDataPool"u8);
-                    writer.WriteObjectValue(BigDataPool);
+                    if (BigDataPool is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<BigDataPoolReference>)BigDataPool).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -39,14 +52,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(TargetSparkConfiguration))
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
-                writer.WriteObjectValue(TargetSparkConfiguration);
+                if (TargetSparkConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SparkConfigurationReference>)TargetSparkConfiguration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(SessionProperties))
             {
                 if (SessionProperties != null)
                 {
                     writer.WritePropertyName("sessionProperties"u8);
-                    writer.WriteObjectValue(SessionProperties);
+                    if (SessionProperties is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<NotebookSessionProperties>)SessionProperties).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -54,7 +81,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             writer.WritePropertyName("metadata"u8);
-            writer.WriteObjectValue(Metadata);
+            if (Metadata is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<NotebookMetadata>)Metadata).Serialize(writer, options);
+            }
             writer.WritePropertyName("nbformat"u8);
             writer.WriteNumberValue(NotebookFormat);
             writer.WritePropertyName("nbformat_minor"u8);
@@ -63,7 +97,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartArray();
             foreach (var item in Cells)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<NotebookCell>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Folder))
@@ -71,7 +112,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 if (Folder != null)
                 {
                     writer.WritePropertyName("folder"u8);
-                    writer.WriteObjectValue(Folder);
+                    if (Folder is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<NotebookFolder>)Folder).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -86,8 +134,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static Notebook DeserializeNotebook(JsonElement element)
+        internal static Notebook DeserializeNotebook(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -178,6 +228,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new Notebook(description.Value, bigDataPool.Value, targetSparkConfiguration.Value, sessionProperties.Value, metadata, nbformat, nbformatMinor, cells, folder.Value, additionalProperties);
+        }
+
+        Notebook IModelJsonSerializable<Notebook>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Notebook>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNotebook(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<Notebook>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Notebook>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        Notebook IModelSerializable<Notebook>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Notebook>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNotebook(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="Notebook"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="Notebook"/> to convert. </param>
+        public static implicit operator RequestContent(Notebook model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="Notebook"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator Notebook(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNotebook(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class NotebookConverter : JsonConverter<Notebook>

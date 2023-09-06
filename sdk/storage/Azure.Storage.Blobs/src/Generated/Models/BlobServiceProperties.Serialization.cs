@@ -5,16 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobServiceProperties : IXmlSerializable
+    public partial class BlobServiceProperties : IXmlSerializable, IModelSerializable<BlobServiceProperties>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "StorageServiceProperties");
             if (Optional.IsDefined(Logging))
@@ -55,8 +59,11 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
         }
 
-        internal static BlobServiceProperties DeserializeBlobServiceProperties(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static BlobServiceProperties DeserializeBlobServiceProperties(XElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             BlobAnalyticsLogging logging = default;
             BlobMetrics hourMetrics = default;
             BlobMetrics minuteMetrics = default;
@@ -97,7 +104,57 @@ namespace Azure.Storage.Blobs.Models
                 }
                 cors = array;
             }
-            return new BlobServiceProperties(logging, hourMetrics, minuteMetrics, cors, defaultServiceVersion, deleteRetentionPolicy, staticWebsite);
+            return new BlobServiceProperties(logging, hourMetrics, minuteMetrics, cors, defaultServiceVersion, deleteRetentionPolicy, staticWebsite, default);
+        }
+
+        BinaryData IModelSerializable<BlobServiceProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlobServiceProperties>(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        BlobServiceProperties IModelSerializable<BlobServiceProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlobServiceProperties>(this, options.Format);
+
+            return DeserializeBlobServiceProperties(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="BlobServiceProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BlobServiceProperties"/> to convert. </param>
+        public static implicit operator RequestContent(BlobServiceProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BlobServiceProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BlobServiceProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeBlobServiceProperties(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

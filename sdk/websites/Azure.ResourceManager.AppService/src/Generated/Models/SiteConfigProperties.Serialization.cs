@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SiteConfigProperties : IUtf8JsonSerializable
+    public partial class SiteConfigProperties : IUtf8JsonSerializable, IModelJsonSerializable<SiteConfigProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SiteConfigProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SiteConfigProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SiteConfigProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(NumberOfWorkers))
             {
@@ -258,7 +264,14 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteStartArray();
                     foreach (var item in AppSettings)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item is null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IModelJsonSerializable<AppServiceNameValuePair>)item).Serialize(writer, options);
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -275,7 +288,14 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteStartArray();
                     foreach (var item in ConnectionStrings)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item is null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IModelJsonSerializable<ConnStringInfo>)item).Serialize(writer, options);
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -292,7 +312,14 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteStartArray();
                     foreach (var item in HandlerMappings)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item is null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IModelJsonSerializable<HttpRequestHandlerMapping>)item).Serialize(writer, options);
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -429,7 +456,14 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteStartArray();
                     foreach (var item in VirtualApplications)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item is null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IModelJsonSerializable<VirtualApplication>)item).Serialize(writer, options);
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -455,7 +489,14 @@ namespace Azure.ResourceManager.AppService.Models
                 if (Experiments != null)
                 {
                     writer.WritePropertyName("experiments"u8);
-                    writer.WriteObjectValue(Experiments);
+                    if (Experiments is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<RoutingRuleExperiments>)Experiments).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -467,7 +508,14 @@ namespace Azure.ResourceManager.AppService.Models
                 if (Limits != null)
                 {
                     writer.WritePropertyName("limits"u8);
-                    writer.WriteObjectValue(Limits);
+                    if (Limits is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SiteLimits>)Limits).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -491,7 +539,14 @@ namespace Azure.ResourceManager.AppService.Models
                 if (AutoHealRules != null)
                 {
                     writer.WritePropertyName("autoHealRules"u8);
-                    writer.WriteObjectValue(AutoHealRules);
+                    if (AutoHealRules is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AutoHealRules>)AutoHealRules).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -551,7 +606,14 @@ namespace Azure.ResourceManager.AppService.Models
                 if (Cors != null)
                 {
                     writer.WritePropertyName("cors"u8);
-                    writer.WriteObjectValue(Cors);
+                    if (Cors is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AppServiceCorsSettings>)Cors).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -563,7 +625,14 @@ namespace Azure.ResourceManager.AppService.Models
                 if (Push != null)
                 {
                     writer.WritePropertyName("push"u8);
-                    writer.WriteObjectValue(Push);
+                    if (Push is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<WebAppPushSettings>)Push).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -575,7 +644,14 @@ namespace Azure.ResourceManager.AppService.Models
                 if (ApiDefinition != null)
                 {
                     writer.WritePropertyName("apiDefinition"u8);
-                    writer.WriteObjectValue(ApiDefinition);
+                    if (ApiDefinition is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AppServiceApiDefinitionInfo>)ApiDefinition).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -587,7 +663,14 @@ namespace Azure.ResourceManager.AppService.Models
                 if (ApiManagementConfig != null)
                 {
                     writer.WritePropertyName("apiManagementConfig"u8);
-                    writer.WriteObjectValue(ApiManagementConfig);
+                    if (ApiManagementConfig is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ApiManagementConfig>)ApiManagementConfig).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -662,7 +745,14 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteStartArray();
                     foreach (var item in IPSecurityRestrictions)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item is null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IModelJsonSerializable<AppServiceIPSecurityRestriction>)item).Serialize(writer, options);
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -679,7 +769,14 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteStartArray();
                     foreach (var item in ScmIPSecurityRestrictions)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item is null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IModelJsonSerializable<AppServiceIPSecurityRestriction>)item).Serialize(writer, options);
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -829,7 +926,14 @@ namespace Azure.ResourceManager.AppService.Models
                     foreach (var item in AzureStorageAccounts)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        if (item.Value is null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IModelJsonSerializable<AppServiceStorageAccessInfo>)item.Value).Serialize(writer, options);
+                        }
                     }
                     writer.WriteEndObject();
                 }
@@ -850,11 +954,25 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("publicNetworkAccess");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SiteConfigProperties DeserializeSiteConfigProperties(JsonElement element)
+        internal static SiteConfigProperties DeserializeSiteConfigProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -926,6 +1044,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<int?> minimumElasticInstanceCount = default;
             Optional<IDictionary<string, AppServiceStorageAccessInfo>> azureStorageAccounts = default;
             Optional<string> publicNetworkAccess = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("numberOfWorkers"u8))
@@ -1638,8 +1757,61 @@ namespace Azure.ResourceManager.AppService.Models
                     publicNetworkAccess = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SiteConfigProperties(Optional.ToNullable(numberOfWorkers), Optional.ToList(defaultDocuments), netFrameworkVersion.Value, phpVersion.Value, pythonVersion.Value, nodeVersion.Value, powerShellVersion.Value, linuxFxVersion.Value, windowsFxVersion.Value, Optional.ToNullable(requestTracingEnabled), Optional.ToNullable(requestTracingExpirationTime), Optional.ToNullable(remoteDebuggingEnabled), remoteDebuggingVersion.Value, Optional.ToNullable(httpLoggingEnabled), Optional.ToNullable(acrUseManagedIdentityCreds), acrUserManagedIdentityId.Value, Optional.ToNullable(logsDirectorySizeLimit), Optional.ToNullable(detailedErrorLoggingEnabled), publishingUsername.Value, Optional.ToList(appSettings), Optional.ToList(connectionStrings), machineKey.Value, Optional.ToList(handlerMappings), documentRoot.Value, Optional.ToNullable(scmType), Optional.ToNullable(use32BitWorkerProcess), Optional.ToNullable(webSocketsEnabled), Optional.ToNullable(alwaysOn), javaVersion.Value, javaContainer.Value, javaContainerVersion.Value, appCommandLine.Value, Optional.ToNullable(managedPipelineMode), Optional.ToList(virtualApplications), Optional.ToNullable(loadBalancing), experiments.Value, limits.Value, Optional.ToNullable(autoHealEnabled), autoHealRules.Value, tracingOptions.Value, vnetName.Value, Optional.ToNullable(vnetRouteAllEnabled), Optional.ToNullable(vnetPrivatePortsCount), cors.Value, push.Value, apiDefinition.Value, apiManagementConfig.Value, autoSwapSlotName.Value, Optional.ToNullable(localMySqlEnabled), Optional.ToNullable(managedServiceIdentityId), Optional.ToNullable(xManagedServiceIdentityId), keyVaultReferenceIdentity.Value, Optional.ToList(ipSecurityRestrictions), Optional.ToList(scmIPSecurityRestrictions), Optional.ToNullable(scmIPSecurityRestrictionsUseMain), Optional.ToNullable(http20Enabled), Optional.ToNullable(minTlsVersion), Optional.ToNullable(scmMinTlsVersion), Optional.ToNullable(ftpsState), Optional.ToNullable(preWarmedInstanceCount), Optional.ToNullable(functionAppScaleLimit), healthCheckPath.Value, Optional.ToNullable(functionsRuntimeScaleMonitoringEnabled), websiteTimeZone.Value, Optional.ToNullable(minimumElasticInstanceCount), Optional.ToDictionary(azureStorageAccounts), publicNetworkAccess.Value);
+            return new SiteConfigProperties(Optional.ToNullable(numberOfWorkers), Optional.ToList(defaultDocuments), netFrameworkVersion.Value, phpVersion.Value, pythonVersion.Value, nodeVersion.Value, powerShellVersion.Value, linuxFxVersion.Value, windowsFxVersion.Value, Optional.ToNullable(requestTracingEnabled), Optional.ToNullable(requestTracingExpirationTime), Optional.ToNullable(remoteDebuggingEnabled), remoteDebuggingVersion.Value, Optional.ToNullable(httpLoggingEnabled), Optional.ToNullable(acrUseManagedIdentityCreds), acrUserManagedIdentityId.Value, Optional.ToNullable(logsDirectorySizeLimit), Optional.ToNullable(detailedErrorLoggingEnabled), publishingUsername.Value, Optional.ToList(appSettings), Optional.ToList(connectionStrings), machineKey.Value, Optional.ToList(handlerMappings), documentRoot.Value, Optional.ToNullable(scmType), Optional.ToNullable(use32BitWorkerProcess), Optional.ToNullable(webSocketsEnabled), Optional.ToNullable(alwaysOn), javaVersion.Value, javaContainer.Value, javaContainerVersion.Value, appCommandLine.Value, Optional.ToNullable(managedPipelineMode), Optional.ToList(virtualApplications), Optional.ToNullable(loadBalancing), experiments.Value, limits.Value, Optional.ToNullable(autoHealEnabled), autoHealRules.Value, tracingOptions.Value, vnetName.Value, Optional.ToNullable(vnetRouteAllEnabled), Optional.ToNullable(vnetPrivatePortsCount), cors.Value, push.Value, apiDefinition.Value, apiManagementConfig.Value, autoSwapSlotName.Value, Optional.ToNullable(localMySqlEnabled), Optional.ToNullable(managedServiceIdentityId), Optional.ToNullable(xManagedServiceIdentityId), keyVaultReferenceIdentity.Value, Optional.ToList(ipSecurityRestrictions), Optional.ToList(scmIPSecurityRestrictions), Optional.ToNullable(scmIPSecurityRestrictionsUseMain), Optional.ToNullable(http20Enabled), Optional.ToNullable(minTlsVersion), Optional.ToNullable(scmMinTlsVersion), Optional.ToNullable(ftpsState), Optional.ToNullable(preWarmedInstanceCount), Optional.ToNullable(functionAppScaleLimit), healthCheckPath.Value, Optional.ToNullable(functionsRuntimeScaleMonitoringEnabled), websiteTimeZone.Value, Optional.ToNullable(minimumElasticInstanceCount), Optional.ToDictionary(azureStorageAccounts), publicNetworkAccess.Value, rawData);
+        }
+
+        SiteConfigProperties IModelJsonSerializable<SiteConfigProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteConfigProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteConfigProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SiteConfigProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteConfigProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SiteConfigProperties IModelSerializable<SiteConfigProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteConfigProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSiteConfigProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SiteConfigProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SiteConfigProperties"/> to convert. </param>
+        public static implicit operator RequestContent(SiteConfigProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SiteConfigProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SiteConfigProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSiteConfigProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

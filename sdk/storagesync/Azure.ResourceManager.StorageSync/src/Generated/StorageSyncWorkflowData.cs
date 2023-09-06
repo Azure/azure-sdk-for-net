@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageSync.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.StorageSync
     /// </summary>
     public partial class StorageSyncWorkflowData : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageSyncWorkflowData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageSyncWorkflowData"/>. </summary>
         public StorageSyncWorkflowData()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSyncWorkflowData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncWorkflowData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +40,8 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="commandName"> workflow command name. </param>
         /// <param name="createdOn"> workflow created timestamp. </param>
         /// <param name="lastStatusUpdatedOn"> workflow last status timestamp. </param>
-        internal StorageSyncWorkflowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string lastStepName, StorageSyncWorkflowStatus? status, StorageSyncOperationDirection? operation, string steps, Guid? lastOperationId, string commandName, DateTimeOffset? createdOn, DateTimeOffset? lastStatusUpdatedOn) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageSyncWorkflowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string lastStepName, StorageSyncWorkflowStatus? status, StorageSyncOperationDirection? operation, string steps, Guid? lastOperationId, string commandName, DateTimeOffset? createdOn, DateTimeOffset? lastStatusUpdatedOn, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             LastStepName = lastStepName;
             Status = status;
@@ -46,6 +51,7 @@ namespace Azure.ResourceManager.StorageSync
             CommandName = commandName;
             CreatedOn = createdOn;
             LastStatusUpdatedOn = lastStatusUpdatedOn;
+            _rawData = rawData;
         }
 
         /// <summary> last step name. </summary>

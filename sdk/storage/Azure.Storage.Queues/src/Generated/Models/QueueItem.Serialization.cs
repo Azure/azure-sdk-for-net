@@ -5,16 +5,42 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class QueueItem
+    public partial class QueueItem : IXmlSerializable, IModelSerializable<QueueItem>
     {
-        internal static QueueItem DeserializeQueueItem(XElement element)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
+            writer.WriteStartElement(nameHint ?? "Queue");
+            writer.WriteStartElement("Name");
+            writer.WriteValue(Name);
+            writer.WriteEndElement();
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                foreach (var pair in Metadata)
+                {
+                    writer.WriteStartElement("String");
+                    writer.WriteValue(pair.Value);
+                    writer.WriteEndElement();
+                }
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static QueueItem DeserializeQueueItem(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             string name = default;
             IDictionary<string, string> metadata = default;
             if (element.Element("Name") is XElement nameElement)
@@ -30,7 +56,57 @@ namespace Azure.Storage.Queues.Models
                 }
                 metadata = dictionary;
             }
-            return new QueueItem(name, metadata);
+            return new QueueItem(name, metadata, default);
+        }
+
+        BinaryData IModelSerializable<QueueItem>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QueueItem>(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        QueueItem IModelSerializable<QueueItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QueueItem>(this, options.Format);
+
+            return DeserializeQueueItem(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="QueueItem"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="QueueItem"/> to convert. </param>
+        public static implicit operator RequestContent(QueueItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="QueueItem"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator QueueItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeQueueItem(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

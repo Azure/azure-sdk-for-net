@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    internal partial class StreamingJobInputWatermarkProperties : IUtf8JsonSerializable
+    internal partial class StreamingJobInputWatermarkProperties : IUtf8JsonSerializable, IModelJsonSerializable<StreamingJobInputWatermarkProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StreamingJobInputWatermarkProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StreamingJobInputWatermarkProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StreamingJobInputWatermarkProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(WatermarkMode))
             {
                 writer.WritePropertyName("watermarkMode"u8);
                 writer.WriteStringValue(WatermarkMode.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StreamingJobInputWatermarkProperties DeserializeStreamingJobInputWatermarkProperties(JsonElement element)
+        internal static StreamingJobInputWatermarkProperties DeserializeStreamingJobInputWatermarkProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<StreamingJobInputWatermarkMode> watermarkMode = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("watermarkMode"u8))
@@ -41,8 +64,61 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     watermarkMode = new StreamingJobInputWatermarkMode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StreamingJobInputWatermarkProperties(Optional.ToNullable(watermarkMode));
+            return new StreamingJobInputWatermarkProperties(Optional.ToNullable(watermarkMode), rawData);
+        }
+
+        StreamingJobInputWatermarkProperties IModelJsonSerializable<StreamingJobInputWatermarkProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamingJobInputWatermarkProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamingJobInputWatermarkProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StreamingJobInputWatermarkProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamingJobInputWatermarkProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StreamingJobInputWatermarkProperties IModelSerializable<StreamingJobInputWatermarkProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamingJobInputWatermarkProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStreamingJobInputWatermarkProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StreamingJobInputWatermarkProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StreamingJobInputWatermarkProperties"/> to convert. </param>
+        public static implicit operator RequestContent(StreamingJobInputWatermarkProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StreamingJobInputWatermarkProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StreamingJobInputWatermarkProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStreamingJobInputWatermarkProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

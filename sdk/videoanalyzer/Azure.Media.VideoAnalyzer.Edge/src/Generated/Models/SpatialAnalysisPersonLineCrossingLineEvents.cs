@@ -14,7 +14,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> The SpatialAnalysisPersonLineCrossingLineEvents. </summary>
     public partial class SpatialAnalysisPersonLineCrossingLineEvents
     {
-        /// <summary> Initializes a new instance of SpatialAnalysisPersonLineCrossingLineEvents. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonLineCrossingLineEvents"/>. </summary>
         /// <param name="line">
         /// The named line.
         /// Please note <see cref="NamedLineBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -29,17 +32,24 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Events = new ChangeTrackingList<SpatialAnalysisPersonLineCrossingEvent>();
         }
 
-        /// <summary> Initializes a new instance of SpatialAnalysisPersonLineCrossingLineEvents. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonLineCrossingLineEvents"/>. </summary>
         /// <param name="line">
         /// The named line.
         /// Please note <see cref="NamedLineBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="NamedLineString"/>.
         /// </param>
         /// <param name="events"> The event configuration. </param>
-        internal SpatialAnalysisPersonLineCrossingLineEvents(NamedLineBase line, IList<SpatialAnalysisPersonLineCrossingEvent> events)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SpatialAnalysisPersonLineCrossingLineEvents(NamedLineBase line, IList<SpatialAnalysisPersonLineCrossingEvent> events, Dictionary<string, BinaryData> rawData)
         {
             Line = line;
             Events = events;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonLineCrossingLineEvents"/> for deserialization. </summary>
+        internal SpatialAnalysisPersonLineCrossingLineEvents()
+        {
         }
 
         /// <summary>

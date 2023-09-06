@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SqlConnectionConverter))]
-    public partial class SqlConnection : IUtf8JsonSerializable
+    public partial class SqlConnection : IUtf8JsonSerializable, IModelJsonSerializable<SqlConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SqlConnection>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SqlConnection>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SqlConnection>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Type))
             {
@@ -47,8 +53,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static SqlConnection DeserializeSqlConnection(JsonElement element)
+        internal static SqlConnection DeserializeSqlConnection(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,6 +97,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SqlConnection(Optional.ToNullable(type), name.Value, poolName.Value, databaseName.Value, additionalProperties);
+        }
+
+        SqlConnection IModelJsonSerializable<SqlConnection>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SqlConnection>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlConnection(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SqlConnection>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SqlConnection>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SqlConnection IModelSerializable<SqlConnection>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SqlConnection>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSqlConnection(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SqlConnection"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SqlConnection"/> to convert. </param>
+        public static implicit operator RequestContent(SqlConnection model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SqlConnection"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SqlConnection(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSqlConnection(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class SqlConnectionConverter : JsonConverter<SqlConnection>

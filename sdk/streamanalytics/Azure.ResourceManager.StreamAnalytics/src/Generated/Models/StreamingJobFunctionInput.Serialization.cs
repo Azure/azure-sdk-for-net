@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamingJobFunctionInput : IUtf8JsonSerializable
+    public partial class StreamingJobFunctionInput : IUtf8JsonSerializable, IModelJsonSerializable<StreamingJobFunctionInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StreamingJobFunctionInput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StreamingJobFunctionInput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StreamingJobFunctionInput>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DataType))
             {
@@ -32,17 +40,32 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     writer.WriteNull("isConfigurationParameter");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StreamingJobFunctionInput DeserializeStreamingJobFunctionInput(JsonElement element)
+        internal static StreamingJobFunctionInput DeserializeStreamingJobFunctionInput(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> dataType = default;
             Optional<bool?> isConfigurationParameter = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataType"u8))
@@ -60,8 +83,61 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     isConfigurationParameter = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StreamingJobFunctionInput(dataType.Value, Optional.ToNullable(isConfigurationParameter));
+            return new StreamingJobFunctionInput(dataType.Value, Optional.ToNullable(isConfigurationParameter), rawData);
+        }
+
+        StreamingJobFunctionInput IModelJsonSerializable<StreamingJobFunctionInput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamingJobFunctionInput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamingJobFunctionInput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StreamingJobFunctionInput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamingJobFunctionInput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StreamingJobFunctionInput IModelSerializable<StreamingJobFunctionInput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamingJobFunctionInput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStreamingJobFunctionInput(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StreamingJobFunctionInput"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StreamingJobFunctionInput"/> to convert. </param>
+        public static implicit operator RequestContent(StreamingJobFunctionInput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StreamingJobFunctionInput"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StreamingJobFunctionInput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStreamingJobFunctionInput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

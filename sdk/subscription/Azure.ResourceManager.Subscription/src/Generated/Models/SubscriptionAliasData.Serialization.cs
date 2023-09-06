@@ -5,17 +5,57 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Subscription.Models;
 
 namespace Azure.ResourceManager.Subscription
 {
-    public partial class SubscriptionAliasData
+    public partial class SubscriptionAliasData : IUtf8JsonSerializable, IModelJsonSerializable<SubscriptionAliasData>
     {
-        internal static SubscriptionAliasData DeserializeSubscriptionAliasData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SubscriptionAliasData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SubscriptionAliasData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SubscriptionAliasData>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                if (Properties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SubscriptionAliasProperties>)Properties).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SubscriptionAliasData DeserializeSubscriptionAliasData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +65,7 @@ namespace Azure.ResourceManager.Subscription
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -60,8 +101,61 @@ namespace Azure.ResourceManager.Subscription
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SubscriptionAliasData(id, name, type, systemData.Value, properties.Value);
+            return new SubscriptionAliasData(id, name, type, systemData.Value, properties.Value, rawData);
+        }
+
+        SubscriptionAliasData IModelJsonSerializable<SubscriptionAliasData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SubscriptionAliasData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubscriptionAliasData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SubscriptionAliasData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SubscriptionAliasData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SubscriptionAliasData IModelSerializable<SubscriptionAliasData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SubscriptionAliasData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSubscriptionAliasData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SubscriptionAliasData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SubscriptionAliasData"/> to convert. </param>
+        public static implicit operator RequestContent(SubscriptionAliasData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SubscriptionAliasData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SubscriptionAliasData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSubscriptionAliasData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

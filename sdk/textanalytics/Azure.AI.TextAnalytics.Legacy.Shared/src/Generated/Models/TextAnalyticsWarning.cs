@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.AI.TextAnalytics.Legacy.Models;
 using Azure.Core;
 
@@ -14,7 +15,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The TextAnalyticsWarning. </summary>
     internal partial class TextAnalyticsWarning
     {
-        /// <summary> Initializes a new instance of TextAnalyticsWarning. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TextAnalyticsWarning"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Warning message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
@@ -26,15 +30,22 @@ namespace Azure.AI.TextAnalytics.Legacy
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of TextAnalyticsWarning. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextAnalyticsWarning"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Warning message. </param>
         /// <param name="targetRef"> A JSON pointer reference indicating the target object. </param>
-        internal TextAnalyticsWarning(WarningCodeValue code, string message, string targetRef)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TextAnalyticsWarning(WarningCodeValue code, string message, string targetRef, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Message = message;
             TargetRef = targetRef;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TextAnalyticsWarning"/> for deserialization. </summary>
+        internal TextAnalyticsWarning()
+        {
         }
 
         /// <summary> Error code. </summary>

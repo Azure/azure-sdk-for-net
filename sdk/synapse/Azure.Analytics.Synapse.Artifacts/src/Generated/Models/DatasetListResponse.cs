@@ -15,7 +15,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A list of dataset resources. </summary>
     internal partial class DatasetListResponse
     {
-        /// <summary> Initializes a new instance of DatasetListResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatasetListResponse"/>. </summary>
         /// <param name="value"> List of datasets. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DatasetListResponse(IEnumerable<DatasetResource> value)
@@ -25,13 +28,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DatasetListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetListResponse"/>. </summary>
         /// <param name="value"> List of datasets. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal DatasetListResponse(IReadOnlyList<DatasetResource> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatasetListResponse(IReadOnlyList<DatasetResource> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DatasetListResponse"/> for deserialization. </summary>
+        internal DatasetListResponse()
+        {
         }
 
         /// <summary> List of datasets. </summary>

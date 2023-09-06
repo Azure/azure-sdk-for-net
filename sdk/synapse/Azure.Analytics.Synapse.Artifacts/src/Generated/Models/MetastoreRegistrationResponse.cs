@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The MetastoreRegistrationResponse. </summary>
     public partial class MetastoreRegistrationResponse
     {
-        /// <summary> Initializes a new instance of MetastoreRegistrationResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetastoreRegistrationResponse"/>. </summary>
         internal MetastoreRegistrationResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of MetastoreRegistrationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetastoreRegistrationResponse"/>. </summary>
         /// <param name="status"> Enumerates possible request statuses. </param>
-        internal MetastoreRegistrationResponse(RequestStatus? status)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetastoreRegistrationResponse(RequestStatus? status, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
+            _rawData = rawData;
         }
 
         /// <summary> Enumerates possible request statuses. </summary>

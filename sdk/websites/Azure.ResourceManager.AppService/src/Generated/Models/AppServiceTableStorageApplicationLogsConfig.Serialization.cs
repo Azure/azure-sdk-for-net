@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceTableStorageApplicationLogsConfig : IUtf8JsonSerializable
+    public partial class AppServiceTableStorageApplicationLogsConfig : IUtf8JsonSerializable, IModelJsonSerializable<AppServiceTableStorageApplicationLogsConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppServiceTableStorageApplicationLogsConfig>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppServiceTableStorageApplicationLogsConfig>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceTableStorageApplicationLogsConfig>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Level))
             {
@@ -22,17 +30,32 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("sasUrl"u8);
             writer.WriteStringValue(SasUriString);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServiceTableStorageApplicationLogsConfig DeserializeAppServiceTableStorageApplicationLogsConfig(JsonElement element)
+        internal static AppServiceTableStorageApplicationLogsConfig DeserializeAppServiceTableStorageApplicationLogsConfig(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<WebAppLogLevel> level = default;
             string sasUrl = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("level"u8))
@@ -49,8 +72,61 @@ namespace Azure.ResourceManager.AppService.Models
                     sasUrl = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppServiceTableStorageApplicationLogsConfig(Optional.ToNullable(level), sasUrl);
+            return new AppServiceTableStorageApplicationLogsConfig(Optional.ToNullable(level), sasUrl, rawData);
+        }
+
+        AppServiceTableStorageApplicationLogsConfig IModelJsonSerializable<AppServiceTableStorageApplicationLogsConfig>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceTableStorageApplicationLogsConfig>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceTableStorageApplicationLogsConfig(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppServiceTableStorageApplicationLogsConfig>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceTableStorageApplicationLogsConfig>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppServiceTableStorageApplicationLogsConfig IModelSerializable<AppServiceTableStorageApplicationLogsConfig>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceTableStorageApplicationLogsConfig>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppServiceTableStorageApplicationLogsConfig(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppServiceTableStorageApplicationLogsConfig"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppServiceTableStorageApplicationLogsConfig"/> to convert. </param>
+        public static implicit operator RequestContent(AppServiceTableStorageApplicationLogsConfig model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppServiceTableStorageApplicationLogsConfig"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppServiceTableStorageApplicationLogsConfig(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppServiceTableStorageApplicationLogsConfig(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(CopyTranslatorConverter))]
-    public partial class CopyTranslator : IUtf8JsonSerializable
+    public partial class CopyTranslator : IUtf8JsonSerializable, IModelJsonSerializable<CopyTranslator>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CopyTranslator>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CopyTranslator>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CopyTranslator>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -28,8 +35,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static CopyTranslator DeserializeCopyTranslator(JsonElement element)
+        internal static CopyTranslator DeserializeCopyTranslator(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -41,7 +50,70 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "TabularTranslator": return TabularTranslator.DeserializeTabularTranslator(element);
                 }
             }
-            return UnknownCopyTranslator.DeserializeUnknownCopyTranslator(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            string type = default;
+            IDictionary<string, object> additionalProperties = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("type"u8))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+            }
+            additionalProperties = additionalPropertiesDictionary;
+            return new UnknownCopyTranslator(type, additionalProperties);
+        }
+
+        CopyTranslator IModelJsonSerializable<CopyTranslator>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CopyTranslator>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCopyTranslator(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CopyTranslator>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CopyTranslator>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CopyTranslator IModelSerializable<CopyTranslator>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CopyTranslator>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCopyTranslator(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CopyTranslator"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CopyTranslator"/> to convert. </param>
+        public static implicit operator RequestContent(CopyTranslator model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CopyTranslator"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CopyTranslator(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCopyTranslator(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class CopyTranslatorConverter : JsonConverter<CopyTranslator>

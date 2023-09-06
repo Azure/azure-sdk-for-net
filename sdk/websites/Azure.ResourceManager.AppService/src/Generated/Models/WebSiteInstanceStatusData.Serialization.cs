@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class WebSiteInstanceStatusData : IUtf8JsonSerializable
+    public partial class WebSiteInstanceStatusData : IUtf8JsonSerializable, IModelJsonSerializable<WebSiteInstanceStatusData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WebSiteInstanceStatusData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WebSiteInstanceStatusData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<WebSiteInstanceStatusData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
@@ -58,16 +64,37 @@ namespace Azure.ResourceManager.AppService
                 foreach (var item in Containers)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ContainerInfo>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WebSiteInstanceStatusData DeserializeWebSiteInstanceStatusData(JsonElement element)
+        internal static WebSiteInstanceStatusData DeserializeWebSiteInstanceStatusData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -83,6 +110,7 @@ namespace Azure.ResourceManager.AppService
             Optional<Uri> consoleUrl = default;
             Optional<Uri> healthCheckUrl = default;
             Optional<IDictionary<string, ContainerInfo>> containers = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -185,8 +213,61 @@ namespace Azure.ResourceManager.AppService
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WebSiteInstanceStatusData(id, name, type, systemData.Value, Optional.ToNullable(state), statusUrl.Value, detectorUrl.Value, consoleUrl.Value, healthCheckUrl.Value, Optional.ToDictionary(containers), kind.Value);
+            return new WebSiteInstanceStatusData(id, name, type, systemData.Value, Optional.ToNullable(state), statusUrl.Value, detectorUrl.Value, consoleUrl.Value, healthCheckUrl.Value, Optional.ToDictionary(containers), kind.Value, rawData);
+        }
+
+        WebSiteInstanceStatusData IModelJsonSerializable<WebSiteInstanceStatusData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebSiteInstanceStatusData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebSiteInstanceStatusData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WebSiteInstanceStatusData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebSiteInstanceStatusData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WebSiteInstanceStatusData IModelSerializable<WebSiteInstanceStatusData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebSiteInstanceStatusData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWebSiteInstanceStatusData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WebSiteInstanceStatusData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WebSiteInstanceStatusData"/> to convert. </param>
+        public static implicit operator RequestContent(WebSiteInstanceStatusData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WebSiteInstanceStatusData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WebSiteInstanceStatusData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWebSiteInstanceStatusData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

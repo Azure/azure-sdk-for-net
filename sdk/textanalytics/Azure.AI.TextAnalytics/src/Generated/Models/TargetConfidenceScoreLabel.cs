@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> Represents the confidence scores across all sentiment classes: positive and negative. </summary>
     internal partial class TargetConfidenceScoreLabel
     {
-        /// <summary> Initializes a new instance of TargetConfidenceScoreLabel. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TargetConfidenceScoreLabel"/>. </summary>
         /// <param name="positive"> Confidence score for positive sentiment. </param>
         /// <param name="negative"> Confidence score for negative sentiment. </param>
         public TargetConfidenceScoreLabel(double positive, double negative)
         {
             Positive = positive;
             Negative = negative;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TargetConfidenceScoreLabel"/>. </summary>
+        /// <param name="positive"> Confidence score for positive sentiment. </param>
+        /// <param name="negative"> Confidence score for negative sentiment. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TargetConfidenceScoreLabel(double positive, double negative, Dictionary<string, BinaryData> rawData)
+        {
+            Positive = positive;
+            Negative = negative;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TargetConfidenceScoreLabel"/> for deserialization. </summary>
+        internal TargetConfidenceScoreLabel()
+        {
         }
 
         /// <summary> Confidence score for positive sentiment. </summary>

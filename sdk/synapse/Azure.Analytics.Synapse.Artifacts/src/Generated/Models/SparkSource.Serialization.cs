@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SparkSourceConverter))]
-    public partial class SparkSource : IUtf8JsonSerializable
+    public partial class SparkSource : IUtf8JsonSerializable, IModelJsonSerializable<SparkSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SparkSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SparkSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SparkSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
@@ -59,8 +65,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static SparkSource DeserializeSparkSource(JsonElement element)
+        internal static SparkSource DeserializeSparkSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -139,6 +147,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SparkSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, query.Value);
+        }
+
+        SparkSource IModelJsonSerializable<SparkSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SparkSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSparkSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SparkSource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SparkSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SparkSource IModelSerializable<SparkSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SparkSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSparkSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SparkSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SparkSource"/> to convert. </param>
+        public static implicit operator RequestContent(SparkSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SparkSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SparkSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSparkSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class SparkSourceConverter : JsonConverter<SparkSource>

@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    public partial class TrafficManagerEndpointSubnetInfo : IUtf8JsonSerializable
+    public partial class TrafficManagerEndpointSubnetInfo : IUtf8JsonSerializable, IModelJsonSerializable<TrafficManagerEndpointSubnetInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TrafficManagerEndpointSubnetInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TrafficManagerEndpointSubnetInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TrafficManagerEndpointSubnetInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(First))
             {
@@ -31,11 +39,25 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 writer.WritePropertyName("scope"u8);
                 writer.WriteNumberValue(Scope.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TrafficManagerEndpointSubnetInfo DeserializeTrafficManagerEndpointSubnetInfo(JsonElement element)
+        internal static TrafficManagerEndpointSubnetInfo DeserializeTrafficManagerEndpointSubnetInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +65,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             Optional<IPAddress> first = default;
             Optional<IPAddress> last = default;
             Optional<int> scope = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("first"u8))
@@ -72,8 +95,61 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     scope = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TrafficManagerEndpointSubnetInfo(first.Value, last.Value, Optional.ToNullable(scope));
+            return new TrafficManagerEndpointSubnetInfo(first.Value, last.Value, Optional.ToNullable(scope), rawData);
+        }
+
+        TrafficManagerEndpointSubnetInfo IModelJsonSerializable<TrafficManagerEndpointSubnetInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrafficManagerEndpointSubnetInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrafficManagerEndpointSubnetInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TrafficManagerEndpointSubnetInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrafficManagerEndpointSubnetInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TrafficManagerEndpointSubnetInfo IModelSerializable<TrafficManagerEndpointSubnetInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrafficManagerEndpointSubnetInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTrafficManagerEndpointSubnetInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TrafficManagerEndpointSubnetInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TrafficManagerEndpointSubnetInfo"/> to convert. </param>
+        public static implicit operator RequestContent(TrafficManagerEndpointSubnetInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TrafficManagerEndpointSubnetInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TrafficManagerEndpointSubnetInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTrafficManagerEndpointSubnetInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureDataExplorerSinkConverter))]
-    public partial class AzureDataExplorerSink : IUtf8JsonSerializable
+    public partial class AzureDataExplorerSink : IUtf8JsonSerializable, IModelJsonSerializable<AzureDataExplorerSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzureDataExplorerSink>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzureDataExplorerSink>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AzureDataExplorerSink>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IngestionMappingName))
             {
@@ -69,8 +75,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureDataExplorerSink DeserializeAzureDataExplorerSink(JsonElement element)
+        internal static AzureDataExplorerSink DeserializeAzureDataExplorerSink(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -169,6 +177,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureDataExplorerSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, ingestionMappingName.Value, ingestionMappingAsJson.Value, flushImmediately.Value);
+        }
+
+        AzureDataExplorerSink IModelJsonSerializable<AzureDataExplorerSink>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureDataExplorerSink>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureDataExplorerSink(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureDataExplorerSink>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureDataExplorerSink>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureDataExplorerSink IModelSerializable<AzureDataExplorerSink>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureDataExplorerSink>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureDataExplorerSink(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AzureDataExplorerSink"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AzureDataExplorerSink"/> to convert. </param>
+        public static implicit operator RequestContent(AzureDataExplorerSink model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AzureDataExplorerSink"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AzureDataExplorerSink(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureDataExplorerSink(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class AzureDataExplorerSinkConverter : JsonConverter<AzureDataExplorerSink>

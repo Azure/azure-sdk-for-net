@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class MSDeployStatusData : ResourceData
     {
-        /// <summary> Initializes a new instance of MSDeployStatusData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MSDeployStatusData"/>. </summary>
         public MSDeployStatusData()
         {
         }
 
-        /// <summary> Initializes a new instance of MSDeployStatusData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MSDeployStatusData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +38,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endOn"> End time of deploy operation. </param>
         /// <param name="isComplete"> Whether the deployment operation has completed. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal MSDeployStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deployer, MSDeployProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? isComplete, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MSDeployStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deployer, MSDeployProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? isComplete, string kind, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Deployer = deployer;
             ProvisioningState = provisioningState;
@@ -42,6 +47,7 @@ namespace Azure.ResourceManager.AppService
             EndOn = endOn;
             IsComplete = isComplete;
             Kind = kind;
+            _rawData = rawData;
         }
 
         /// <summary> Username of deployer. </summary>

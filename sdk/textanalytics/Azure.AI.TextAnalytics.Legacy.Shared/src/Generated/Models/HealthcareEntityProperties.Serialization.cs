@@ -5,16 +5,59 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.AI.TextAnalytics.Legacy.Models;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
-    internal partial class HealthcareEntityProperties
+    internal partial class HealthcareEntityProperties : IUtf8JsonSerializable, IModelJsonSerializable<HealthcareEntityProperties>
     {
-        internal static HealthcareEntityProperties DeserializeHealthcareEntityProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HealthcareEntityProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HealthcareEntityProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareEntityProperties>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("text"u8);
+            writer.WriteStringValue(Text);
+            writer.WritePropertyName("category"u8);
+            writer.WriteStringValue(Category.ToString());
+            if (Optional.IsDefined(Subcategory))
+            {
+                writer.WritePropertyName("subcategory"u8);
+                writer.WriteStringValue(Subcategory);
+            }
+            writer.WritePropertyName("offset"u8);
+            writer.WriteNumberValue(Offset);
+            writer.WritePropertyName("length"u8);
+            writer.WriteNumberValue(Length);
+            writer.WritePropertyName("confidenceScore"u8);
+            writer.WriteNumberValue(ConfidenceScore);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static HealthcareEntityProperties DeserializeHealthcareEntityProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +68,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             int offset = default;
             int length = default;
             double confidenceScore = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -57,8 +101,61 @@ namespace Azure.AI.TextAnalytics.Legacy
                     confidenceScore = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HealthcareEntityProperties(text, category, subcategory.Value, offset, length, confidenceScore);
+            return new HealthcareEntityProperties(text, category, subcategory.Value, offset, length, confidenceScore, rawData);
+        }
+
+        HealthcareEntityProperties IModelJsonSerializable<HealthcareEntityProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareEntityProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHealthcareEntityProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HealthcareEntityProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareEntityProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HealthcareEntityProperties IModelSerializable<HealthcareEntityProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareEntityProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHealthcareEntityProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HealthcareEntityProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HealthcareEntityProperties"/> to convert. </param>
+        public static implicit operator RequestContent(HealthcareEntityProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HealthcareEntityProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HealthcareEntityProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHealthcareEntityProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

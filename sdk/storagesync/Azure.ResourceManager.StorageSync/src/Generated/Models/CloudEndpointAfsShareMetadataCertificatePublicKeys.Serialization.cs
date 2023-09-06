@@ -5,21 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class CloudEndpointAfsShareMetadataCertificatePublicKeys
+    public partial class CloudEndpointAfsShareMetadataCertificatePublicKeys : IUtf8JsonSerializable, IModelJsonSerializable<CloudEndpointAfsShareMetadataCertificatePublicKeys>
     {
-        internal static CloudEndpointAfsShareMetadataCertificatePublicKeys DeserializeCloudEndpointAfsShareMetadataCertificatePublicKeys(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CloudEndpointAfsShareMetadataCertificatePublicKeys>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CloudEndpointAfsShareMetadataCertificatePublicKeys>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CloudEndpointAfsShareMetadataCertificatePublicKeys>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CloudEndpointAfsShareMetadataCertificatePublicKeys DeserializeCloudEndpointAfsShareMetadataCertificatePublicKeys(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> firstKey = default;
             Optional<string> secondKey = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("firstKey"u8))
@@ -32,8 +61,61 @@ namespace Azure.ResourceManager.StorageSync.Models
                     secondKey = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CloudEndpointAfsShareMetadataCertificatePublicKeys(firstKey.Value, secondKey.Value);
+            return new CloudEndpointAfsShareMetadataCertificatePublicKeys(firstKey.Value, secondKey.Value, rawData);
+        }
+
+        CloudEndpointAfsShareMetadataCertificatePublicKeys IModelJsonSerializable<CloudEndpointAfsShareMetadataCertificatePublicKeys>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CloudEndpointAfsShareMetadataCertificatePublicKeys>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudEndpointAfsShareMetadataCertificatePublicKeys(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CloudEndpointAfsShareMetadataCertificatePublicKeys>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CloudEndpointAfsShareMetadataCertificatePublicKeys>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CloudEndpointAfsShareMetadataCertificatePublicKeys IModelSerializable<CloudEndpointAfsShareMetadataCertificatePublicKeys>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CloudEndpointAfsShareMetadataCertificatePublicKeys>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCloudEndpointAfsShareMetadataCertificatePublicKeys(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CloudEndpointAfsShareMetadataCertificatePublicKeys"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CloudEndpointAfsShareMetadataCertificatePublicKeys"/> to convert. </param>
+        public static implicit operator RequestContent(CloudEndpointAfsShareMetadataCertificatePublicKeys model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CloudEndpointAfsShareMetadataCertificatePublicKeys"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CloudEndpointAfsShareMetadataCertificatePublicKeys(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCloudEndpointAfsShareMetadataCertificatePublicKeys(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

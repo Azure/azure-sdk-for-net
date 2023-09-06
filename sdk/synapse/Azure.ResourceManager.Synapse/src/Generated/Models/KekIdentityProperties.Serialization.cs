@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class KekIdentityProperties : IUtf8JsonSerializable
+    public partial class KekIdentityProperties : IUtf8JsonSerializable, IModelJsonSerializable<KekIdentityProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KekIdentityProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KekIdentityProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KekIdentityProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(UserAssignedIdentityId))
             {
@@ -30,17 +37,32 @@ namespace Azure.ResourceManager.Synapse.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(UseSystemAssignedIdentity.ToString()).RootElement);
 #endif
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KekIdentityProperties DeserializeKekIdentityProperties(JsonElement element)
+        internal static KekIdentityProperties DeserializeKekIdentityProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceIdentifier> userAssignedIdentity = default;
             Optional<BinaryData> useSystemAssignedIdentity = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userAssignedIdentity"u8))
@@ -61,8 +83,61 @@ namespace Azure.ResourceManager.Synapse.Models
                     useSystemAssignedIdentity = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KekIdentityProperties(userAssignedIdentity.Value, useSystemAssignedIdentity.Value);
+            return new KekIdentityProperties(userAssignedIdentity.Value, useSystemAssignedIdentity.Value, rawData);
+        }
+
+        KekIdentityProperties IModelJsonSerializable<KekIdentityProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KekIdentityProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKekIdentityProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KekIdentityProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KekIdentityProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KekIdentityProperties IModelSerializable<KekIdentityProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KekIdentityProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKekIdentityProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KekIdentityProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KekIdentityProperties"/> to convert. </param>
+        public static implicit operator RequestContent(KekIdentityProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KekIdentityProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KekIdentityProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKekIdentityProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

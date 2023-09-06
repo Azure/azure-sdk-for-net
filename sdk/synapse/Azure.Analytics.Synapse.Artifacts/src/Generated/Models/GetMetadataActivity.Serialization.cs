@@ -9,25 +9,45 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(GetMetadataActivityConverter))]
-    public partial class GetMetadataActivity : IUtf8JsonSerializable
+    public partial class GetMetadataActivity : IUtf8JsonSerializable, IModelJsonSerializable<GetMetadataActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GetMetadataActivity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GetMetadataActivity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<GetMetadataActivity>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
-                writer.WriteObjectValue(LinkedServiceName);
+                if (LinkedServiceName is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LinkedServiceReference>)LinkedServiceName).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                if (Policy is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ActivityPolicy>)Policy).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -54,7 +74,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ActivityDependency>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -64,14 +91,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<UserProperty>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("dataset"u8);
-            writer.WriteObjectValue(Dataset);
+            if (Dataset is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<DatasetReference>)Dataset).Serialize(writer, options);
+            }
             if (Optional.IsCollectionDefined(FieldList))
             {
                 writer.WritePropertyName("fieldList"u8);
@@ -90,12 +131,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(StoreSettings))
             {
                 writer.WritePropertyName("storeSettings"u8);
-                writer.WriteObjectValue(StoreSettings);
+                if (StoreSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StoreReadSettings>)StoreSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(FormatSettings))
             {
                 writer.WritePropertyName("formatSettings"u8);
-                writer.WriteObjectValue(FormatSettings);
+                if (FormatSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<FormatReadSettings>)FormatSettings).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -106,8 +161,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static GetMetadataActivity DeserializeGetMetadataActivity(JsonElement element)
+        internal static GetMetadataActivity DeserializeGetMetadataActivity(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -268,6 +325,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new GetMetadataActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, dataset, Optional.ToList(fieldList), storeSettings.Value, formatSettings.Value);
+        }
+
+        GetMetadataActivity IModelJsonSerializable<GetMetadataActivity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GetMetadataActivity>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGetMetadataActivity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GetMetadataActivity>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GetMetadataActivity>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GetMetadataActivity IModelSerializable<GetMetadataActivity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GetMetadataActivity>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGetMetadataActivity(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GetMetadataActivity"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GetMetadataActivity"/> to convert. </param>
+        public static implicit operator RequestContent(GetMetadataActivity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GetMetadataActivity"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GetMetadataActivity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGetMetadataActivity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class GetMetadataActivityConverter : JsonConverter<GetMetadataActivity>

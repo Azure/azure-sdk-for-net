@@ -5,16 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.Translation.Text
 {
-    public partial class CommonScriptModel
+    public partial class CommonScriptModel : IUtf8JsonSerializable, IModelJsonSerializable<CommonScriptModel>
     {
-        internal static CommonScriptModel DeserializeCommonScriptModel(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CommonScriptModel>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CommonScriptModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("code"u8);
+            writer.WriteStringValue(Code);
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("nativeName"u8);
+            writer.WriteStringValue(NativeName);
+            writer.WritePropertyName("dir"u8);
+            writer.WriteStringValue(Dir);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CommonScriptModel DeserializeCommonScriptModel(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +58,7 @@ namespace Azure.AI.Translation.Text
             string name = default;
             string nativeName = default;
             string dir = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -45,16 +81,61 @@ namespace Azure.AI.Translation.Text
                     dir = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CommonScriptModel(code, name, nativeName, dir);
+            return new CommonScriptModel(code, name, nativeName, dir, rawData);
         }
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CommonScriptModel FromResponse(Response response)
+        CommonScriptModel IModelJsonSerializable<CommonScriptModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCommonScriptModel(document.RootElement);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommonScriptModel(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CommonScriptModel>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CommonScriptModel IModelSerializable<CommonScriptModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCommonScriptModel(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CommonScriptModel"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CommonScriptModel"/> to convert. </param>
+        public static implicit operator RequestContent(CommonScriptModel model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CommonScriptModel"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CommonScriptModel(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCommonScriptModel(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

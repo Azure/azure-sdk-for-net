@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class ShareablePrivateLinkType : IUtf8JsonSerializable
+    public partial class ShareablePrivateLinkType : IUtf8JsonSerializable, IModelJsonSerializable<ShareablePrivateLinkType>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ShareablePrivateLinkType>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ShareablePrivateLinkType>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ShareablePrivateLinkType>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -23,19 +31,41 @@ namespace Azure.ResourceManager.WebPubSub.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                if (Properties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ShareablePrivateLinkProperties>)Properties).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ShareablePrivateLinkType DeserializeShareablePrivateLinkType(JsonElement element)
+        internal static ShareablePrivateLinkType DeserializeShareablePrivateLinkType(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> name = default;
             Optional<ShareablePrivateLinkProperties> properties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -52,8 +82,61 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     properties = ShareablePrivateLinkProperties.DeserializeShareablePrivateLinkProperties(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ShareablePrivateLinkType(name.Value, properties.Value);
+            return new ShareablePrivateLinkType(name.Value, properties.Value, rawData);
+        }
+
+        ShareablePrivateLinkType IModelJsonSerializable<ShareablePrivateLinkType>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ShareablePrivateLinkType>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeShareablePrivateLinkType(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ShareablePrivateLinkType>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ShareablePrivateLinkType>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ShareablePrivateLinkType IModelSerializable<ShareablePrivateLinkType>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ShareablePrivateLinkType>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeShareablePrivateLinkType(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ShareablePrivateLinkType"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ShareablePrivateLinkType"/> to convert. </param>
+        public static implicit operator RequestContent(ShareablePrivateLinkType model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ShareablePrivateLinkType"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ShareablePrivateLinkType(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeShareablePrivateLinkType(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

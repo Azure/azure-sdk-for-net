@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class ImageScale : IUtf8JsonSerializable
+    public partial class ImageScale : IUtf8JsonSerializable, IModelJsonSerializable<ImageScale>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ImageScale>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ImageScale>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ImageScale>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Mode))
             {
@@ -30,11 +38,25 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ImageScale DeserializeImageScale(JsonElement element)
+        internal static ImageScale DeserializeImageScale(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<ImageScaleMode> mode = default;
             Optional<string> width = default;
             Optional<string> height = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"u8))
@@ -63,8 +86,61 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     height = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ImageScale(Optional.ToNullable(mode), width.Value, height.Value);
+            return new ImageScale(Optional.ToNullable(mode), width.Value, height.Value, rawData);
+        }
+
+        ImageScale IModelJsonSerializable<ImageScale>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ImageScale>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeImageScale(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ImageScale>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ImageScale>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ImageScale IModelSerializable<ImageScale>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ImageScale>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeImageScale(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ImageScale"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ImageScale"/> to convert. </param>
+        public static implicit operator RequestContent(ImageScale model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ImageScale"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ImageScale(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeImageScale(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

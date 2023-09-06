@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class BlobInventoryPolicyRule : IUtf8JsonSerializable
+    public partial class BlobInventoryPolicyRule : IUtf8JsonSerializable, IModelJsonSerializable<BlobInventoryPolicyRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BlobInventoryPolicyRule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BlobInventoryPolicyRule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BlobInventoryPolicyRule>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
@@ -22,12 +30,33 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WritePropertyName("destination"u8);
             writer.WriteStringValue(Destination);
             writer.WritePropertyName("definition"u8);
-            writer.WriteObjectValue(Definition);
+            if (Definition is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<BlobInventoryPolicyDefinition>)Definition).Serialize(writer, options);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BlobInventoryPolicyRule DeserializeBlobInventoryPolicyRule(JsonElement element)
+        internal static BlobInventoryPolicyRule DeserializeBlobInventoryPolicyRule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +65,7 @@ namespace Azure.ResourceManager.Storage.Models
             string name = default;
             string destination = default;
             BlobInventoryPolicyDefinition definition = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -58,8 +88,61 @@ namespace Azure.ResourceManager.Storage.Models
                     definition = BlobInventoryPolicyDefinition.DeserializeBlobInventoryPolicyDefinition(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BlobInventoryPolicyRule(enabled, name, destination, definition);
+            return new BlobInventoryPolicyRule(enabled, name, destination, definition, rawData);
+        }
+
+        BlobInventoryPolicyRule IModelJsonSerializable<BlobInventoryPolicyRule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlobInventoryPolicyRule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBlobInventoryPolicyRule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BlobInventoryPolicyRule>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlobInventoryPolicyRule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BlobInventoryPolicyRule IModelSerializable<BlobInventoryPolicyRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlobInventoryPolicyRule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBlobInventoryPolicyRule(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BlobInventoryPolicyRule"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BlobInventoryPolicyRule"/> to convert. </param>
+        public static implicit operator RequestContent(BlobInventoryPolicyRule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BlobInventoryPolicyRule"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BlobInventoryPolicyRule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBlobInventoryPolicyRule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

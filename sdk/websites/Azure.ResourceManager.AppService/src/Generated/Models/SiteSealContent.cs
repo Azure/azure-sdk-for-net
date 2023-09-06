@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Site seal request. </summary>
     public partial class SiteSealContent
     {
-        /// <summary> Initializes a new instance of SiteSealContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteSealContent"/>. </summary>
         public SiteSealContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteSealContent"/>. </summary>
+        /// <param name="isLightTheme"> If &lt;code&gt;true&lt;/code&gt; use the light color theme for site seal; otherwise, use the default color theme. </param>
+        /// <param name="locale"> Locale of site seal. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteSealContent(bool? isLightTheme, string locale, Dictionary<string, BinaryData> rawData)
+        {
+            IsLightTheme = isLightTheme;
+            Locale = locale;
+            _rawData = rawData;
         }
 
         /// <summary> If &lt;code&gt;true&lt;/code&gt; use the light color theme for site seal; otherwise, use the default color theme. </summary>

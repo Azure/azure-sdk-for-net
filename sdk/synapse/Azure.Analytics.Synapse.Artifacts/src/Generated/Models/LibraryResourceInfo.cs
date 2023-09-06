@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Library resource info. </summary>
     public partial class LibraryResourceInfo
     {
-        /// <summary> Initializes a new instance of LibraryResourceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LibraryResourceInfo"/>. </summary>
         internal LibraryResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of LibraryResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="LibraryResourceInfo"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="recordId"> record Id of the library/package. </param>
         /// <param name="state"> Provisioning status of the library/package. </param>
@@ -25,7 +31,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Name of the library/package. </param>
         /// <param name="operationId"> Operation Id of the operation performed on library/package. </param>
         /// <param name="artifactId"> artifact Id of the library/package. </param>
-        internal LibraryResourceInfo(string id, int? recordId, string state, string created, string changed, string type, string name, string operationId, string artifactId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LibraryResourceInfo(string id, int? recordId, string state, string created, string changed, string type, string name, string operationId, string artifactId, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             RecordId = recordId;
@@ -36,6 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Name = name;
             OperationId = operationId;
             ArtifactId = artifactId;
+            _rawData = rawData;
         }
 
         /// <summary> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </summary>

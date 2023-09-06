@@ -5,14 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.Translation.Document.Models
 {
     /// <summary> The DocumentFilter. </summary>
     internal partial class DocumentFilter
     {
-        /// <summary> Initializes a new instance of DocumentFilter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DocumentFilter"/>. </summary>
         public DocumentFilter()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentFilter"/>. </summary>
+        /// <param name="prefix">
+        /// A case-sensitive prefix string to filter documents in the source path for translation.
+        /// For example, when using a Azure storage blob Uri, use the prefix to restrict sub folders for translation.
+        /// </param>
+        /// <param name="suffix">
+        /// A case-sensitive suffix string to filter documents in the source path for translation.
+        /// This is most often use for file extensions
+        /// </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentFilter(string prefix, string suffix, Dictionary<string, BinaryData> rawData)
+        {
+            Prefix = prefix;
+            Suffix = suffix;
+            _rawData = rawData;
         }
 
         /// <summary>

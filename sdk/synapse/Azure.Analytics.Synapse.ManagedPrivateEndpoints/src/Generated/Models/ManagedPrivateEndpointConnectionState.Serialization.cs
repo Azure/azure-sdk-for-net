@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 {
-    public partial class ManagedPrivateEndpointConnectionState : IUtf8JsonSerializable
+    public partial class ManagedPrivateEndpointConnectionState : IUtf8JsonSerializable, IModelJsonSerializable<ManagedPrivateEndpointConnectionState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedPrivateEndpointConnectionState>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedPrivateEndpointConnectionState>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedPrivateEndpointConnectionState>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
@@ -25,11 +33,25 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                 writer.WritePropertyName("actionsRequired"u8);
                 writer.WriteStringValue(ActionsRequired);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedPrivateEndpointConnectionState DeserializeManagedPrivateEndpointConnectionState(JsonElement element)
+        internal static ManagedPrivateEndpointConnectionState DeserializeManagedPrivateEndpointConnectionState(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +59,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
             Optional<string> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -54,8 +77,61 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                     actionsRequired = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedPrivateEndpointConnectionState(status.Value, description.Value, actionsRequired.Value);
+            return new ManagedPrivateEndpointConnectionState(status.Value, description.Value, actionsRequired.Value, rawData);
+        }
+
+        ManagedPrivateEndpointConnectionState IModelJsonSerializable<ManagedPrivateEndpointConnectionState>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedPrivateEndpointConnectionState>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedPrivateEndpointConnectionState(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedPrivateEndpointConnectionState>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedPrivateEndpointConnectionState>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedPrivateEndpointConnectionState IModelSerializable<ManagedPrivateEndpointConnectionState>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedPrivateEndpointConnectionState>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedPrivateEndpointConnectionState(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagedPrivateEndpointConnectionState"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagedPrivateEndpointConnectionState"/> to convert. </param>
+        public static implicit operator RequestContent(ManagedPrivateEndpointConnectionState model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagedPrivateEndpointConnectionState"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagedPrivateEndpointConnectionState(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedPrivateEndpointConnectionState(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

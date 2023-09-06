@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Synapse;
@@ -14,21 +15,26 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The list Kusto data connections operation response. </summary>
     internal partial class SynapseDataConnectionListResult
     {
-        /// <summary> Initializes a new instance of SynapseDataConnectionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseDataConnectionListResult"/>. </summary>
         internal SynapseDataConnectionListResult()
         {
             Value = new ChangeTrackingList<SynapseDataConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseDataConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataConnectionListResult"/>. </summary>
         /// <param name="value">
         /// The list of Kusto data connections.
         /// Please note <see cref="SynapseDataConnectionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SynapseEventGridDataConnection"/>, <see cref="SynapseEventHubDataConnection"/> and <see cref="SynapseIotHubDataConnection"/>.
         /// </param>
-        internal SynapseDataConnectionListResult(IReadOnlyList<SynapseDataConnectionData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseDataConnectionListResult(IReadOnlyList<SynapseDataConnectionData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary>

@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(CredentialReferenceConverter))]
-    public partial class CredentialReference : IUtf8JsonSerializable
+    public partial class CredentialReference : IUtf8JsonSerializable, IModelJsonSerializable<CredentialReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CredentialReference>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CredentialReference>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CredentialReference>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -31,8 +37,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static CredentialReference DeserializeCredentialReference(JsonElement element)
+        internal static CredentialReference DeserializeCredentialReference(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +65,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new CredentialReference(type, referenceName, additionalProperties);
+        }
+
+        CredentialReference IModelJsonSerializable<CredentialReference>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CredentialReference>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCredentialReference(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CredentialReference>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CredentialReference>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CredentialReference IModelSerializable<CredentialReference>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CredentialReference>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCredentialReference(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CredentialReference"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CredentialReference"/> to convert. </param>
+        public static implicit operator RequestContent(CredentialReference model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CredentialReference"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CredentialReference(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCredentialReference(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class CredentialReferenceConverter : JsonConverter<CredentialReference>

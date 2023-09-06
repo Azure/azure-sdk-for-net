@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ImportSettingsConverter))]
-    public partial class ImportSettings : IUtf8JsonSerializable
+    public partial class ImportSettings : IUtf8JsonSerializable, IModelJsonSerializable<ImportSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ImportSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ImportSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ImportSettings>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -28,8 +35,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static ImportSettings DeserializeImportSettings(JsonElement element)
+        internal static ImportSettings DeserializeImportSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,7 +51,70 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "AzureDatabricksDeltaLakeImportCommand": return AzureDatabricksDeltaLakeImportCommand.DeserializeAzureDatabricksDeltaLakeImportCommand(element);
                 }
             }
-            return UnknownImportSettings.DeserializeUnknownImportSettings(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            string type = default;
+            IDictionary<string, object> additionalProperties = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("type"u8))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+            }
+            additionalProperties = additionalPropertiesDictionary;
+            return new UnknownImportSettings(type, additionalProperties);
+        }
+
+        ImportSettings IModelJsonSerializable<ImportSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ImportSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeImportSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ImportSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ImportSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ImportSettings IModelSerializable<ImportSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ImportSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeImportSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ImportSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ImportSettings"/> to convert. </param>
+        public static implicit operator RequestContent(ImportSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ImportSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ImportSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeImportSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class ImportSettingsConverter : JsonConverter<ImportSettings>

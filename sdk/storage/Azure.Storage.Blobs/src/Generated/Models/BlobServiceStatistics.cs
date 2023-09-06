@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> Stats for the storage service. </summary>
     public partial class BlobServiceStatistics
     {
-        /// <summary> Initializes a new instance of BlobServiceStatistics. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlobServiceStatistics"/>. </summary>
         internal BlobServiceStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of BlobServiceStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobServiceStatistics"/>. </summary>
         /// <param name="geoReplication"> Geo-Replication information for the Secondary Storage Service. </param>
-        internal BlobServiceStatistics(BlobGeoReplication geoReplication)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobServiceStatistics(BlobGeoReplication geoReplication, Dictionary<string, BinaryData> rawData)
         {
             GeoReplication = geoReplication;
+            _rawData = rawData;
         }
 
         /// <summary> Geo-Replication information for the Secondary Storage Service. </summary>

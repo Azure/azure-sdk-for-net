@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.StorageSync
         public virtual AsyncPageable<StorageSyncServiceResource> GetStorageSyncServicesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageSyncServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StorageSyncServiceResource(Client, StorageSyncServiceData.DeserializeStorageSyncServiceData(e)), StorageSyncServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageSyncServices", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new StorageSyncServiceResource(Client, StorageSyncServiceData.DeserializeStorageSyncServiceData(e)), StorageSyncServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageSyncServices", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.StorageSync
         public virtual Pageable<StorageSyncServiceResource> GetStorageSyncServices(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageSyncServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new StorageSyncServiceResource(Client, StorageSyncServiceData.DeserializeStorageSyncServiceData(e)), StorageSyncServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageSyncServices", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new StorageSyncServiceResource(Client, StorageSyncServiceData.DeserializeStorageSyncServiceData(e)), StorageSyncServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageSyncServices", "value", null, cancellationToken);
         }
     }
 }

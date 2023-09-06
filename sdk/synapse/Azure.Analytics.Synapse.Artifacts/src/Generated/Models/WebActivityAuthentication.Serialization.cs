@@ -6,24 +6,38 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(WebActivityAuthenticationConverter))]
-    public partial class WebActivityAuthentication : IUtf8JsonSerializable
+    public partial class WebActivityAuthentication : IUtf8JsonSerializable, IModelJsonSerializable<WebActivityAuthentication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WebActivityAuthentication>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WebActivityAuthentication>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<WebActivityAuthentication>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Pfx))
             {
                 writer.WritePropertyName("pfx"u8);
-                writer.WriteObjectValue(Pfx);
+                if (Pfx is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SecretBase>)Pfx).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Username))
             {
@@ -33,7 +47,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password);
+                if (Password is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SecretBase>)Password).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Resource))
             {
@@ -48,13 +69,34 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential);
+                if (Credential is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CredentialReference>)Credential).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static WebActivityAuthentication DeserializeWebActivityAuthentication(JsonElement element)
+        internal static WebActivityAuthentication DeserializeWebActivityAuthentication(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,6 +108,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> resource = default;
             Optional<object> userTenant = default;
             Optional<CredentialReference> credential = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -123,8 +166,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     credential = CredentialReference.DeserializeCredentialReference(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WebActivityAuthentication(type, pfx.Value, username.Value, password.Value, resource.Value, userTenant.Value, credential.Value);
+            return new WebActivityAuthentication(type, pfx.Value, username.Value, password.Value, resource.Value, userTenant.Value, credential.Value, rawData);
+        }
+
+        WebActivityAuthentication IModelJsonSerializable<WebActivityAuthentication>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebActivityAuthentication>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebActivityAuthentication(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WebActivityAuthentication>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebActivityAuthentication>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WebActivityAuthentication IModelSerializable<WebActivityAuthentication>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebActivityAuthentication>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWebActivityAuthentication(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WebActivityAuthentication"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WebActivityAuthentication"/> to convert. </param>
+        public static implicit operator RequestContent(WebActivityAuthentication model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WebActivityAuthentication"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WebActivityAuthentication(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWebActivityAuthentication(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class WebActivityAuthenticationConverter : JsonConverter<WebActivityAuthentication>

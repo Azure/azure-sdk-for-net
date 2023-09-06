@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
 {
-    public partial class StorageSyncServiceData : IUtf8JsonSerializable
+    public partial class StorageSyncServiceData : IUtf8JsonSerializable, IModelJsonSerializable<StorageSyncServiceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageSyncServiceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageSyncServiceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StorageSyncServiceData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -40,11 +46,25 @@ namespace Azure.ResourceManager.StorageSync
                 writer.WriteStringValue(IncomingTrafficPolicy.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StorageSyncServiceData DeserializeStorageSyncServiceData(JsonElement element)
+        internal static StorageSyncServiceData DeserializeStorageSyncServiceData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -62,6 +82,7 @@ namespace Azure.ResourceManager.StorageSync
             Optional<string> lastWorkflowId = default;
             Optional<string> lastOperationName = default;
             Optional<IReadOnlyList<StorageSyncPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -175,8 +196,61 @@ namespace Azure.ResourceManager.StorageSync
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageSyncServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(incomingTrafficPolicy), Optional.ToNullable(storageSyncServiceStatus), Optional.ToNullable(storageSyncServiceUid), provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, Optional.ToList(privateEndpointConnections));
+            return new StorageSyncServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(incomingTrafficPolicy), Optional.ToNullable(storageSyncServiceStatus), Optional.ToNullable(storageSyncServiceUid), provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, Optional.ToList(privateEndpointConnections), rawData);
+        }
+
+        StorageSyncServiceData IModelJsonSerializable<StorageSyncServiceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageSyncServiceData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageSyncServiceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageSyncServiceData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageSyncServiceData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageSyncServiceData IModelSerializable<StorageSyncServiceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageSyncServiceData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageSyncServiceData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageSyncServiceData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageSyncServiceData"/> to convert. </param>
+        public static implicit operator RequestContent(StorageSyncServiceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageSyncServiceData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageSyncServiceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageSyncServiceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

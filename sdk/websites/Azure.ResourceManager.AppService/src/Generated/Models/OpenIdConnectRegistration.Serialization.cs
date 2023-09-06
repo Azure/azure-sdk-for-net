@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class OpenIdConnectRegistration : IUtf8JsonSerializable
+    public partial class OpenIdConnectRegistration : IUtf8JsonSerializable, IModelJsonSerializable<OpenIdConnectRegistration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OpenIdConnectRegistration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OpenIdConnectRegistration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<OpenIdConnectRegistration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientId))
             {
@@ -23,18 +31,46 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ClientCredential))
             {
                 writer.WritePropertyName("clientCredential"u8);
-                writer.WriteObjectValue(ClientCredential);
+                if (ClientCredential is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<OpenIdConnectClientCredential>)ClientCredential).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(OpenIdConnectConfiguration))
             {
                 writer.WritePropertyName("openIdConnectConfiguration"u8);
-                writer.WriteObjectValue(OpenIdConnectConfiguration);
+                if (OpenIdConnectConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<OpenIdConnectConfig>)OpenIdConnectConfiguration).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static OpenIdConnectRegistration DeserializeOpenIdConnectRegistration(JsonElement element)
+        internal static OpenIdConnectRegistration DeserializeOpenIdConnectRegistration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> clientId = default;
             Optional<OpenIdConnectClientCredential> clientCredential = default;
             Optional<OpenIdConnectConfig> openIdConnectConfiguration = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientId"u8))
@@ -67,8 +104,61 @@ namespace Azure.ResourceManager.AppService.Models
                     openIdConnectConfiguration = OpenIdConnectConfig.DeserializeOpenIdConnectConfig(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OpenIdConnectRegistration(clientId.Value, clientCredential.Value, openIdConnectConfiguration.Value);
+            return new OpenIdConnectRegistration(clientId.Value, clientCredential.Value, openIdConnectConfiguration.Value, rawData);
+        }
+
+        OpenIdConnectRegistration IModelJsonSerializable<OpenIdConnectRegistration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OpenIdConnectRegistration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOpenIdConnectRegistration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OpenIdConnectRegistration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OpenIdConnectRegistration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OpenIdConnectRegistration IModelSerializable<OpenIdConnectRegistration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OpenIdConnectRegistration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOpenIdConnectRegistration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OpenIdConnectRegistration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OpenIdConnectRegistration"/> to convert. </param>
+        public static implicit operator RequestContent(OpenIdConnectRegistration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OpenIdConnectRegistration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OpenIdConnectRegistration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOpenIdConnectRegistration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

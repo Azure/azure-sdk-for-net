@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -13,7 +14,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> TLS endpoint describes an endpoint that the pipeline can connect to over TLS transport (data is encrypted in transit). </summary>
     public partial class TlsEndpoint : EndpointBase
     {
-        /// <summary> Initializes a new instance of TlsEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="TlsEndpoint"/>. </summary>
         /// <param name="url"> The endpoint URL for Video Analyzer to connect to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public TlsEndpoint(string url) : base(url)
@@ -23,7 +24,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = "#Microsoft.VideoAnalyzer.TlsEndpoint";
         }
 
-        /// <summary> Initializes a new instance of TlsEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="TlsEndpoint"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="credentials">
         /// Credentials to be presented to the endpoint.
@@ -37,11 +38,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// The available derived classes include <see cref="PemCertificateList"/>.
         /// </param>
         /// <param name="validationOptions"> Validation options to use when authenticating a TLS connection. By default, strict validation is used. </param>
-        internal TlsEndpoint(string type, CredentialsBase credentials, string url, CertificateSource trustedCertificates, TlsValidationOptions validationOptions) : base(type, credentials, url)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TlsEndpoint(string type, CredentialsBase credentials, string url, CertificateSource trustedCertificates, TlsValidationOptions validationOptions, Dictionary<string, BinaryData> rawData) : base(type, credentials, url, rawData)
         {
             TrustedCertificates = trustedCertificates;
             ValidationOptions = validationOptions;
             Type = type ?? "#Microsoft.VideoAnalyzer.TlsEndpoint";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TlsEndpoint"/> for deserialization. </summary>
+        internal TlsEndpoint()
+        {
         }
 
         /// <summary>

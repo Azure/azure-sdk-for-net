@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The data stored in JSON format. </summary>
     public partial class JsonFormat : DatasetStorageFormat
     {
-        /// <summary> Initializes a new instance of JsonFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="JsonFormat"/>. </summary>
         public JsonFormat()
         {
             Type = "JsonFormat";
         }
 
-        /// <summary> Initializes a new instance of JsonFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="JsonFormat"/>. </summary>
         /// <param name="type"> Type of dataset storage format. </param>
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>

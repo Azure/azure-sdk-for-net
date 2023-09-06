@@ -5,16 +5,21 @@
 
 #nullable disable
 
-using System.Collections.Generic;
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    internal partial class UnknownCopySink : IUtf8JsonSerializable
+    internal partial class UnknownCopySink : IUtf8JsonSerializable, IModelJsonSerializable<CopySink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CopySink>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CopySink>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CopySink>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -51,76 +56,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownCopySink DeserializeUnknownCopySink(JsonElement element)
+        internal static CopySink DeserializeUnknownCopySink(JsonElement element, ModelSerializerOptions options = default) => DeserializeCopySink(element, options);
+
+        CopySink IModelJsonSerializable<CopySink>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string type = "Unknown";
-            Optional<object> writeBatchSize = default;
-            Optional<object> writeBatchTimeout = default;
-            Optional<object> sinkRetryCount = default;
-            Optional<object> sinkRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("writeBatchSize"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    writeBatchSize = property.Value.GetObject();
-                    continue;
-                }
-                if (property.NameEquals("writeBatchTimeout"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    writeBatchTimeout = property.Value.GetObject();
-                    continue;
-                }
-                if (property.NameEquals("sinkRetryCount"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sinkRetryCount = property.Value.GetObject();
-                    continue;
-                }
-                if (property.NameEquals("sinkRetryWait"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sinkRetryWait = property.Value.GetObject();
-                    continue;
-                }
-                if (property.NameEquals("maxConcurrentConnections"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxConcurrentConnections = property.Value.GetObject();
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new UnknownCopySink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties);
+            Core.ModelSerializerHelper.ValidateFormat<CopySink>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownCopySink(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CopySink>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CopySink>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CopySink IModelSerializable<CopySink>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CopySink>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCopySink(doc.RootElement, options);
         }
     }
 }

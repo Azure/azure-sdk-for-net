@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    internal partial class UnknownFunctionBinding : IUtf8JsonSerializable
+    internal partial class UnknownFunctionBinding : IUtf8JsonSerializable, IModelJsonSerializable<StreamingJobFunctionBinding>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StreamingJobFunctionBinding>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StreamingJobFunctionBinding>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StreamingJobFunctionBinding>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FunctionBindingType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownFunctionBinding DeserializeUnknownFunctionBinding(JsonElement element)
+        internal static StreamingJobFunctionBinding DeserializeUnknownFunctionBinding(JsonElement element, ModelSerializerOptions options = default) => DeserializeStreamingJobFunctionBinding(element, options);
+
+        StreamingJobFunctionBinding IModelJsonSerializable<StreamingJobFunctionBinding>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string type = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownFunctionBinding(type);
+            Core.ModelSerializerHelper.ValidateFormat<StreamingJobFunctionBinding>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownFunctionBinding(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StreamingJobFunctionBinding>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamingJobFunctionBinding>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StreamingJobFunctionBinding IModelSerializable<StreamingJobFunctionBinding>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamingJobFunctionBinding>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStreamingJobFunctionBinding(doc.RootElement, options);
         }
     }
 }

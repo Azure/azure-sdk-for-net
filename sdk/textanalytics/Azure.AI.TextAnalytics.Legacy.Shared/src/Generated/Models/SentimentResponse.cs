@@ -15,7 +15,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The SentimentResponse. </summary>
     internal partial class SentimentResponse
     {
-        /// <summary> Initializes a new instance of SentimentResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SentimentResponse"/>. </summary>
         /// <param name="documents"> Sentiment analysis per document. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
@@ -31,17 +34,24 @@ namespace Azure.AI.TextAnalytics.Legacy
             ModelVersion = modelVersion;
         }
 
-        /// <summary> Initializes a new instance of SentimentResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentimentResponse"/>. </summary>
         /// <param name="documents"> Sentiment analysis per document. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
-        internal SentimentResponse(IReadOnlyList<DocumentSentiment> documents, IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string modelVersion)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SentimentResponse(IReadOnlyList<DocumentSentiment> documents, IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string modelVersion, Dictionary<string, BinaryData> rawData)
         {
             Documents = documents;
             Errors = errors;
             Statistics = statistics;
             ModelVersion = modelVersion;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SentimentResponse"/> for deserialization. </summary>
+        internal SentimentResponse()
+        {
         }
 
         /// <summary> Sentiment analysis per document. </summary>

@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(TypeConversionSettingsConverter))]
-    public partial class TypeConversionSettings : IUtf8JsonSerializable
+    public partial class TypeConversionSettings : IUtf8JsonSerializable, IModelJsonSerializable<TypeConversionSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TypeConversionSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TypeConversionSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TypeConversionSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AllowDataTruncation))
             {
@@ -48,11 +55,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("culture"u8);
                 writer.WriteObjectValue(Culture);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TypeConversionSettings DeserializeTypeConversionSettings(JsonElement element)
+        internal static TypeConversionSettings DeserializeTypeConversionSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -63,6 +84,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> dateTimeOffsetFormat = default;
             Optional<object> timeSpanFormat = default;
             Optional<object> culture = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowDataTruncation"u8))
@@ -119,8 +141,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     culture = property.Value.GetObject();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TypeConversionSettings(allowDataTruncation.Value, treatBooleanAsNumber.Value, dateTimeFormat.Value, dateTimeOffsetFormat.Value, timeSpanFormat.Value, culture.Value);
+            return new TypeConversionSettings(allowDataTruncation.Value, treatBooleanAsNumber.Value, dateTimeFormat.Value, dateTimeOffsetFormat.Value, timeSpanFormat.Value, culture.Value, rawData);
+        }
+
+        TypeConversionSettings IModelJsonSerializable<TypeConversionSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TypeConversionSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTypeConversionSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TypeConversionSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TypeConversionSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TypeConversionSettings IModelSerializable<TypeConversionSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TypeConversionSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTypeConversionSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TypeConversionSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TypeConversionSettings"/> to convert. </param>
+        public static implicit operator RequestContent(TypeConversionSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TypeConversionSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TypeConversionSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTypeConversionSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class TypeConversionSettingsConverter : JsonConverter<TypeConversionSettings>

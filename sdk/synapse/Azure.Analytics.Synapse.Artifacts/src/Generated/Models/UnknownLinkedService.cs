@@ -12,7 +12,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The UnknownLinkedService. </summary>
     internal partial class UnknownLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of UnknownLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -22,6 +22,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal UnknownLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Type = type ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownLinkedService"/> for deserialization. </summary>
+        internal UnknownLinkedService()
+        {
         }
     }
 }

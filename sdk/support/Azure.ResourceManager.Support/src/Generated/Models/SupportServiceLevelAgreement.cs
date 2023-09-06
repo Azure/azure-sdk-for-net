@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Support.Models
 {
     /// <summary> Service Level Agreement details for a support ticket. </summary>
     public partial class SupportServiceLevelAgreement
     {
-        /// <summary> Initializes a new instance of SupportServiceLevelAgreement. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SupportServiceLevelAgreement"/>. </summary>
         public SupportServiceLevelAgreement()
         {
         }
 
-        /// <summary> Initializes a new instance of SupportServiceLevelAgreement. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportServiceLevelAgreement"/>. </summary>
         /// <param name="startOn"> Time in UTC (ISO 8601 format) when the service level agreement starts. </param>
         /// <param name="expireOn"> Time in UTC (ISO 8601 format) when the service level agreement expires. </param>
         /// <param name="slaInMinutes"> Service Level Agreement in minutes. </param>
-        internal SupportServiceLevelAgreement(DateTimeOffset? startOn, DateTimeOffset? expireOn, int? slaInMinutes)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SupportServiceLevelAgreement(DateTimeOffset? startOn, DateTimeOffset? expireOn, int? slaInMinutes, Dictionary<string, BinaryData> rawData)
         {
             StartOn = startOn;
             ExpireOn = expireOn;
             SlaInMinutes = slaInMinutes;
+            _rawData = rawData;
         }
 
         /// <summary> Time in UTC (ISO 8601 format) when the service level agreement starts. </summary>

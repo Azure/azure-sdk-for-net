@@ -5,21 +5,35 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class BlobInventoryPolicyDefinition : IUtf8JsonSerializable
+    public partial class BlobInventoryPolicyDefinition : IUtf8JsonSerializable, IModelJsonSerializable<BlobInventoryPolicyDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BlobInventoryPolicyDefinition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BlobInventoryPolicyDefinition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BlobInventoryPolicyDefinition>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue(Filters);
+                if (Filters is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BlobInventoryPolicyFilter>)Filters).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("format"u8);
             writer.WriteStringValue(Format.ToString());
@@ -34,11 +48,25 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BlobInventoryPolicyDefinition DeserializeBlobInventoryPolicyDefinition(JsonElement element)
+        internal static BlobInventoryPolicyDefinition DeserializeBlobInventoryPolicyDefinition(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +76,7 @@ namespace Azure.ResourceManager.Storage.Models
             BlobInventoryPolicySchedule schedule = default;
             BlobInventoryPolicyObjectType objectType = default;
             IList<string> schemaFields = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filters"u8))
@@ -84,8 +113,61 @@ namespace Azure.ResourceManager.Storage.Models
                     schemaFields = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BlobInventoryPolicyDefinition(filters.Value, format, schedule, objectType, schemaFields);
+            return new BlobInventoryPolicyDefinition(filters.Value, format, schedule, objectType, schemaFields, rawData);
+        }
+
+        BlobInventoryPolicyDefinition IModelJsonSerializable<BlobInventoryPolicyDefinition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlobInventoryPolicyDefinition>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBlobInventoryPolicyDefinition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BlobInventoryPolicyDefinition>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlobInventoryPolicyDefinition>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BlobInventoryPolicyDefinition IModelSerializable<BlobInventoryPolicyDefinition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlobInventoryPolicyDefinition>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBlobInventoryPolicyDefinition(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BlobInventoryPolicyDefinition"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BlobInventoryPolicyDefinition"/> to convert. </param>
+        public static implicit operator RequestContent(BlobInventoryPolicyDefinition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BlobInventoryPolicyDefinition"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BlobInventoryPolicyDefinition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBlobInventoryPolicyDefinition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

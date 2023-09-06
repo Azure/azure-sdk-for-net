@@ -5,14 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.IO;
 using System.Xml;
+using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class JsonTextConfigurationInternal : IXmlSerializable
+    internal partial class JsonTextConfigurationInternal : IXmlSerializable, IModelSerializable<JsonTextConfigurationInternal>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "JsonTextConfiguration");
             if (Optional.IsDefined(RecordSeparator))
@@ -22,6 +27,69 @@ namespace Azure.Storage.Blobs.Models
                 writer.WriteEndElement();
             }
             writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static JsonTextConfigurationInternal DeserializeJsonTextConfigurationInternal(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            string recordSeparator = default;
+            if (element.Element("RecordSeparator") is XElement recordSeparatorElement)
+            {
+                recordSeparator = (string)recordSeparatorElement;
+            }
+            return new JsonTextConfigurationInternal(recordSeparator, default);
+        }
+
+        BinaryData IModelSerializable<JsonTextConfigurationInternal>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JsonTextConfigurationInternal>(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        JsonTextConfigurationInternal IModelSerializable<JsonTextConfigurationInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JsonTextConfigurationInternal>(this, options.Format);
+
+            return DeserializeJsonTextConfigurationInternal(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="JsonTextConfigurationInternal"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="JsonTextConfigurationInternal"/> to convert. </param>
+        public static implicit operator RequestContent(JsonTextConfigurationInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="JsonTextConfigurationInternal"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator JsonTextConfigurationInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeJsonTextConfigurationInternal(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

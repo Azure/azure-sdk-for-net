@@ -6,15 +6,18 @@
 #nullable disable
 
 using System;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobAccessPolicy : IXmlSerializable
+    public partial class BlobAccessPolicy : IXmlSerializable, IModelSerializable<BlobAccessPolicy>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "AccessPolicy");
             if (Optional.IsDefined(PolicyStartsOn))
@@ -38,8 +41,11 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
         }
 
-        internal static BlobAccessPolicy DeserializeBlobAccessPolicy(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static BlobAccessPolicy DeserializeBlobAccessPolicy(XElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             DateTimeOffset? policyStartsOn = default;
             DateTimeOffset? policyExpiresOn = default;
             string permissions = default;
@@ -55,7 +61,57 @@ namespace Azure.Storage.Blobs.Models
             {
                 permissions = (string)permissionElement;
             }
-            return new BlobAccessPolicy(policyStartsOn, policyExpiresOn, permissions);
+            return new BlobAccessPolicy(policyStartsOn, policyExpiresOn, permissions, default);
+        }
+
+        BinaryData IModelSerializable<BlobAccessPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlobAccessPolicy>(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        BlobAccessPolicy IModelSerializable<BlobAccessPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlobAccessPolicy>(this, options.Format);
+
+            return DeserializeBlobAccessPolicy(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="BlobAccessPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BlobAccessPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(BlobAccessPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BlobAccessPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BlobAccessPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeBlobAccessPolicy(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

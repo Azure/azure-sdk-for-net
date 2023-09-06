@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SkuConverter))]
-    public partial class Sku : IUtf8JsonSerializable
+    public partial class Sku : IUtf8JsonSerializable, IModelJsonSerializable<Sku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Sku>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<Sku>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<Sku>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Tier))
             {
@@ -33,11 +40,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static Sku DeserializeSku(JsonElement element)
+        internal static Sku DeserializeSku(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> tier = default;
             Optional<string> name = default;
             Optional<int> capacity = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tier"u8))
@@ -66,8 +88,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     capacity = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new Sku(tier.Value, name.Value, Optional.ToNullable(capacity));
+            return new Sku(tier.Value, name.Value, Optional.ToNullable(capacity), rawData);
+        }
+
+        Sku IModelJsonSerializable<Sku>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Sku>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSku(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<Sku>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Sku>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        Sku IModelSerializable<Sku>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Sku>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSku(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="Sku"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="Sku"/> to convert. </param>
+        public static implicit operator RequestContent(Sku model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="Sku"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator Sku(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSku(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class SkuConverter : JsonConverter<Sku>

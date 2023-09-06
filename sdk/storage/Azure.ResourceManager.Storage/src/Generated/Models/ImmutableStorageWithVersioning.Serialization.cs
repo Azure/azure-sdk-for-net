@@ -6,26 +6,47 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ImmutableStorageWithVersioning : IUtf8JsonSerializable
+    public partial class ImmutableStorageWithVersioning : IUtf8JsonSerializable, IModelJsonSerializable<ImmutableStorageWithVersioning>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ImmutableStorageWithVersioning>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ImmutableStorageWithVersioning>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ImmutableStorageWithVersioning>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ImmutableStorageWithVersioning DeserializeImmutableStorageWithVersioning(JsonElement element)
+        internal static ImmutableStorageWithVersioning DeserializeImmutableStorageWithVersioning(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +54,7 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<bool> enabled = default;
             Optional<DateTimeOffset> timeStamp = default;
             Optional<ImmutableStorageWithVersioningMigrationState> migrationState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -62,8 +84,61 @@ namespace Azure.ResourceManager.Storage.Models
                     migrationState = new ImmutableStorageWithVersioningMigrationState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ImmutableStorageWithVersioning(Optional.ToNullable(enabled), Optional.ToNullable(timeStamp), Optional.ToNullable(migrationState));
+            return new ImmutableStorageWithVersioning(Optional.ToNullable(enabled), Optional.ToNullable(timeStamp), Optional.ToNullable(migrationState), rawData);
+        }
+
+        ImmutableStorageWithVersioning IModelJsonSerializable<ImmutableStorageWithVersioning>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ImmutableStorageWithVersioning>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeImmutableStorageWithVersioning(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ImmutableStorageWithVersioning>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ImmutableStorageWithVersioning>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ImmutableStorageWithVersioning IModelSerializable<ImmutableStorageWithVersioning>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ImmutableStorageWithVersioning>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeImmutableStorageWithVersioning(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ImmutableStorageWithVersioning"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ImmutableStorageWithVersioning"/> to convert. </param>
+        public static implicit operator RequestContent(ImmutableStorageWithVersioning model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ImmutableStorageWithVersioning"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ImmutableStorageWithVersioning(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeImmutableStorageWithVersioning(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

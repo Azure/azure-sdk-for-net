@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> The ONVIF device properties. </summary>
     public partial class OnvifDevice
     {
-        /// <summary> Initializes a new instance of OnvifDevice. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OnvifDevice"/>. </summary>
         public OnvifDevice()
         {
             MediaProfiles = new ChangeTrackingList<MediaProfile>();
         }
 
-        /// <summary> Initializes a new instance of OnvifDevice. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnvifDevice"/>. </summary>
         /// <param name="hostname"> The hostname of the ONVIF device. </param>
         /// <param name="systemDateTime"> The system date and time of the ONVIF device. </param>
         /// <param name="dns"> The ONVIF device DNS properties. </param>
         /// <param name="mediaProfiles"> An array of of ONVIF media profiles supported by the ONVIF device. </param>
-        internal OnvifDevice(OnvifHostName hostname, OnvifSystemDateTime systemDateTime, OnvifDns dns, IList<MediaProfile> mediaProfiles)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OnvifDevice(OnvifHostName hostname, OnvifSystemDateTime systemDateTime, OnvifDns dns, IList<MediaProfile> mediaProfiles, Dictionary<string, BinaryData> rawData)
         {
             Hostname = hostname;
             SystemDateTime = systemDateTime;
             Dns = dns;
             MediaProfiles = mediaProfiles;
+            _rawData = rawData;
         }
 
         /// <summary> The hostname of the ONVIF device. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceStatusInfo : IUtf8JsonSerializable
+    public partial class AppServiceStatusInfo : IUtf8JsonSerializable, IModelJsonSerializable<AppServiceStatusInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppServiceStatusInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppServiceStatusInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceStatusInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Message))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("statusId"u8);
                 writer.WriteStringValue(StatusId.Value.ToSerialString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServiceStatusInfo DeserializeAppServiceStatusInfo(JsonElement element)
+        internal static AppServiceStatusInfo DeserializeAppServiceStatusInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> message = default;
             Optional<DetectorInsightStatus> statusId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -52,8 +75,61 @@ namespace Azure.ResourceManager.AppService.Models
                     statusId = property.Value.GetString().ToDetectorInsightStatus();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppServiceStatusInfo(message.Value, Optional.ToNullable(statusId));
+            return new AppServiceStatusInfo(message.Value, Optional.ToNullable(statusId), rawData);
+        }
+
+        AppServiceStatusInfo IModelJsonSerializable<AppServiceStatusInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceStatusInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceStatusInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppServiceStatusInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceStatusInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppServiceStatusInfo IModelSerializable<AppServiceStatusInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceStatusInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppServiceStatusInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppServiceStatusInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppServiceStatusInfo"/> to convert. </param>
+        public static implicit operator RequestContent(AppServiceStatusInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppServiceStatusInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppServiceStatusInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppServiceStatusInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

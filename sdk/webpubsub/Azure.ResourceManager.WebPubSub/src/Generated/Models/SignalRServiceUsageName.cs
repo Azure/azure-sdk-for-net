@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Localizable String object containing the name and a localized value. </summary>
     public partial class SignalRServiceUsageName
     {
-        /// <summary> Initializes a new instance of SignalRServiceUsageName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SignalRServiceUsageName"/>. </summary>
         internal SignalRServiceUsageName()
         {
         }
 
-        /// <summary> Initializes a new instance of SignalRServiceUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRServiceUsageName"/>. </summary>
         /// <param name="value"> The identifier of the usage. </param>
         /// <param name="localizedValue"> Localized name of the usage. </param>
-        internal SignalRServiceUsageName(string value, string localizedValue)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRServiceUsageName(string value, string localizedValue, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             LocalizedValue = localizedValue;
+            _rawData = rawData;
         }
 
         /// <summary> The identifier of the usage. </summary>

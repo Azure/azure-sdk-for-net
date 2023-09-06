@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotDiagnosticAnalysisDiagnosticsRestClient.CreateListSiteAnalysesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotDiagnosticAnalysisDiagnosticsRestClient.CreateListSiteAnalysesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteSlotDiagnosticAnalysisResource(Client, WebSiteAnalysisDefinitionData.DeserializeWebSiteAnalysisDefinitionData(e)), _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics, Pipeline, "SiteSlotDiagnosticAnalysisCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SiteSlotDiagnosticAnalysisResource(Client, WebSiteAnalysisDefinitionData.DeserializeWebSiteAnalysisDefinitionData(e)), _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics, Pipeline, "SiteSlotDiagnosticAnalysisCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotDiagnosticAnalysisDiagnosticsRestClient.CreateListSiteAnalysesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotDiagnosticAnalysisDiagnosticsRestClient.CreateListSiteAnalysesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteSlotDiagnosticAnalysisResource(Client, WebSiteAnalysisDefinitionData.DeserializeWebSiteAnalysisDefinitionData(e)), _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics, Pipeline, "SiteSlotDiagnosticAnalysisCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SiteSlotDiagnosticAnalysisResource(Client, WebSiteAnalysisDefinitionData.DeserializeWebSiteAnalysisDefinitionData(e)), _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics, Pipeline, "SiteSlotDiagnosticAnalysisCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

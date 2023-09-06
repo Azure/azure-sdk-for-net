@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteBackupWebAppsRestClient.CreateListBackupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteBackupWebAppsRestClient.CreateListBackupsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteBackupResource(Client, WebAppBackupData.DeserializeWebAppBackupData(e)), _siteBackupWebAppsClientDiagnostics, Pipeline, "SiteBackupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SiteBackupResource(Client, WebAppBackupData.DeserializeWebAppBackupData(e)), _siteBackupWebAppsClientDiagnostics, Pipeline, "SiteBackupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteBackupWebAppsRestClient.CreateListBackupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteBackupWebAppsRestClient.CreateListBackupsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteBackupResource(Client, WebAppBackupData.DeserializeWebAppBackupData(e)), _siteBackupWebAppsClientDiagnostics, Pipeline, "SiteBackupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SiteBackupResource(Client, WebAppBackupData.DeserializeWebAppBackupData(e)), _siteBackupWebAppsClientDiagnostics, Pipeline, "SiteBackupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

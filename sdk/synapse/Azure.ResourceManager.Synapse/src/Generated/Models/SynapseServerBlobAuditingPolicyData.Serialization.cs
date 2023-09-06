@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseServerBlobAuditingPolicyData : IUtf8JsonSerializable
+    public partial class SynapseServerBlobAuditingPolicyData : IUtf8JsonSerializable, IModelJsonSerializable<SynapseServerBlobAuditingPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseServerBlobAuditingPolicyData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseServerBlobAuditingPolicyData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseServerBlobAuditingPolicyData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -77,11 +83,25 @@ namespace Azure.ResourceManager.Synapse
                 writer.WriteBooleanValue(IsDevopsAuditEnabled.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SynapseServerBlobAuditingPolicyData DeserializeSynapseServerBlobAuditingPolicyData(JsonElement element)
+        internal static SynapseServerBlobAuditingPolicyData DeserializeSynapseServerBlobAuditingPolicyData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -100,6 +120,7 @@ namespace Azure.ResourceManager.Synapse
             Optional<bool> isAzureMonitorTargetEnabled = default;
             Optional<int> queueDelayMs = default;
             Optional<bool> isDevopsAuditEnabled = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -225,8 +246,61 @@ namespace Azure.ResourceManager.Synapse
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SynapseServerBlobAuditingPolicyData(id, name, type, systemData.Value, Optional.ToNullable(state), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), Optional.ToList(auditActionsAndGroups), Optional.ToNullable(storageAccountSubscriptionId), Optional.ToNullable(isStorageSecondaryKeyInUse), Optional.ToNullable(isAzureMonitorTargetEnabled), Optional.ToNullable(queueDelayMs), Optional.ToNullable(isDevopsAuditEnabled));
+            return new SynapseServerBlobAuditingPolicyData(id, name, type, systemData.Value, Optional.ToNullable(state), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), Optional.ToList(auditActionsAndGroups), Optional.ToNullable(storageAccountSubscriptionId), Optional.ToNullable(isStorageSecondaryKeyInUse), Optional.ToNullable(isAzureMonitorTargetEnabled), Optional.ToNullable(queueDelayMs), Optional.ToNullable(isDevopsAuditEnabled), rawData);
+        }
+
+        SynapseServerBlobAuditingPolicyData IModelJsonSerializable<SynapseServerBlobAuditingPolicyData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseServerBlobAuditingPolicyData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseServerBlobAuditingPolicyData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseServerBlobAuditingPolicyData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseServerBlobAuditingPolicyData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseServerBlobAuditingPolicyData IModelSerializable<SynapseServerBlobAuditingPolicyData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseServerBlobAuditingPolicyData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseServerBlobAuditingPolicyData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapseServerBlobAuditingPolicyData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapseServerBlobAuditingPolicyData"/> to convert. </param>
+        public static implicit operator RequestContent(SynapseServerBlobAuditingPolicyData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapseServerBlobAuditingPolicyData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapseServerBlobAuditingPolicyData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseServerBlobAuditingPolicyData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

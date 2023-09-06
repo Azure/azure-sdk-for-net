@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Xml;
+using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class BlockLookupList : IXmlSerializable
+    internal partial class BlockLookupList : IXmlSerializable, IModelSerializable<BlockLookupList>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "BlockList");
             if (Optional.IsCollectionDefined(Committed))
@@ -43,6 +49,85 @@ namespace Azure.Storage.Blobs.Models
                 }
             }
             writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static BlockLookupList DeserializeBlockLookupList(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            IList<string> committed = default;
+            IList<string> uncommitted = default;
+            IList<string> latest = default;
+            var array = new List<string>();
+            foreach (var e in element.Elements("Committed"))
+            {
+                array.Add((string)e);
+            }
+            committed = array;
+            var array0 = new List<string>();
+            foreach (var e in element.Elements("Uncommitted"))
+            {
+                array0.Add((string)e);
+            }
+            uncommitted = array0;
+            var array1 = new List<string>();
+            foreach (var e in element.Elements("Latest"))
+            {
+                array1.Add((string)e);
+            }
+            latest = array1;
+            return new BlockLookupList(committed, uncommitted, latest, default);
+        }
+
+        BinaryData IModelSerializable<BlockLookupList>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlockLookupList>(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        BlockLookupList IModelSerializable<BlockLookupList>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlockLookupList>(this, options.Format);
+
+            return DeserializeBlockLookupList(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="BlockLookupList"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BlockLookupList"/> to convert. </param>
+        public static implicit operator RequestContent(BlockLookupList model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BlockLookupList"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BlockLookupList(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeBlockLookupList(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

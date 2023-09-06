@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseEncryptionProtectorData : IUtf8JsonSerializable
+    public partial class SynapseEncryptionProtectorData : IUtf8JsonSerializable, IModelJsonSerializable<SynapseEncryptionProtectorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseEncryptionProtectorData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseEncryptionProtectorData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseEncryptionProtectorData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -31,11 +38,25 @@ namespace Azure.ResourceManager.Synapse
                 writer.WriteStringValue(ServerKeyType.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SynapseEncryptionProtectorData DeserializeSynapseEncryptionProtectorData(JsonElement element)
+        internal static SynapseEncryptionProtectorData DeserializeSynapseEncryptionProtectorData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +72,7 @@ namespace Azure.ResourceManager.Synapse
             Optional<SynapseServerKeyType> serverKeyType = default;
             Optional<Uri> uri = default;
             Optional<BinaryData> thumbprint = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -140,8 +162,61 @@ namespace Azure.ResourceManager.Synapse
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SynapseEncryptionProtectorData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), subregion.Value, serverKeyName.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value);
+            return new SynapseEncryptionProtectorData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), subregion.Value, serverKeyName.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, rawData);
+        }
+
+        SynapseEncryptionProtectorData IModelJsonSerializable<SynapseEncryptionProtectorData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseEncryptionProtectorData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseEncryptionProtectorData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseEncryptionProtectorData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseEncryptionProtectorData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseEncryptionProtectorData IModelSerializable<SynapseEncryptionProtectorData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseEncryptionProtectorData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseEncryptionProtectorData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapseEncryptionProtectorData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapseEncryptionProtectorData"/> to convert. </param>
+        public static implicit operator RequestContent(SynapseEncryptionProtectorData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapseEncryptionProtectorData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapseEncryptionProtectorData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseEncryptionProtectorData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

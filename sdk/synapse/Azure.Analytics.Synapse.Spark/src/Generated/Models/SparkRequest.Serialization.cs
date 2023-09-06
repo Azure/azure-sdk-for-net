@@ -5,16 +5,144 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
-    public partial class SparkRequest
+    public partial class SparkRequest : IUtf8JsonSerializable, IModelJsonSerializable<SparkRequest>
     {
-        internal static SparkRequest DeserializeSparkRequest(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SparkRequest>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SparkRequest>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SparkRequest>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(File))
+            {
+                writer.WritePropertyName("file"u8);
+                writer.WriteStringValue(File);
+            }
+            if (Optional.IsDefined(ClassName))
+            {
+                writer.WritePropertyName("className"u8);
+                writer.WriteStringValue(ClassName);
+            }
+            if (Optional.IsCollectionDefined(Arguments))
+            {
+                writer.WritePropertyName("args"u8);
+                writer.WriteStartArray();
+                foreach (var item in Arguments)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Jars))
+            {
+                writer.WritePropertyName("jars"u8);
+                writer.WriteStartArray();
+                foreach (var item in Jars)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(PythonFiles))
+            {
+                writer.WritePropertyName("pyFiles"u8);
+                writer.WriteStartArray();
+                foreach (var item in PythonFiles)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Files))
+            {
+                writer.WritePropertyName("files"u8);
+                writer.WriteStartArray();
+                foreach (var item in Files)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Archives))
+            {
+                writer.WritePropertyName("archives"u8);
+                writer.WriteStartArray();
+                foreach (var item in Archives)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Configuration))
+            {
+                writer.WritePropertyName("conf"u8);
+                writer.WriteStartObject();
+                foreach (var item in Configuration)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(DriverMemory))
+            {
+                writer.WritePropertyName("driverMemory"u8);
+                writer.WriteStringValue(DriverMemory);
+            }
+            if (Optional.IsDefined(DriverCores))
+            {
+                writer.WritePropertyName("driverCores"u8);
+                writer.WriteNumberValue(DriverCores.Value);
+            }
+            if (Optional.IsDefined(ExecutorMemory))
+            {
+                writer.WritePropertyName("executorMemory"u8);
+                writer.WriteStringValue(ExecutorMemory);
+            }
+            if (Optional.IsDefined(ExecutorCores))
+            {
+                writer.WritePropertyName("executorCores"u8);
+                writer.WriteNumberValue(ExecutorCores.Value);
+            }
+            if (Optional.IsDefined(ExecutorCount))
+            {
+                writer.WritePropertyName("numExecutors"u8);
+                writer.WriteNumberValue(ExecutorCount.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SparkRequest DeserializeSparkRequest(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +161,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Optional<string> executorMemory = default;
             Optional<int> executorCores = default;
             Optional<int> numExecutors = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -171,8 +300,61 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     numExecutors = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SparkRequest(name.Value, file.Value, className.Value, Optional.ToList(args), Optional.ToList(jars), Optional.ToList(pyFiles), Optional.ToList(files), Optional.ToList(archives), Optional.ToDictionary(conf), driverMemory.Value, Optional.ToNullable(driverCores), executorMemory.Value, Optional.ToNullable(executorCores), Optional.ToNullable(numExecutors));
+            return new SparkRequest(name.Value, file.Value, className.Value, Optional.ToList(args), Optional.ToList(jars), Optional.ToList(pyFiles), Optional.ToList(files), Optional.ToList(archives), Optional.ToDictionary(conf), driverMemory.Value, Optional.ToNullable(driverCores), executorMemory.Value, Optional.ToNullable(executorCores), Optional.ToNullable(numExecutors), rawData);
+        }
+
+        SparkRequest IModelJsonSerializable<SparkRequest>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SparkRequest>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSparkRequest(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SparkRequest>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SparkRequest>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SparkRequest IModelSerializable<SparkRequest>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SparkRequest>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSparkRequest(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SparkRequest"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SparkRequest"/> to convert. </param>
+        public static implicit operator RequestContent(SparkRequest model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SparkRequest"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SparkRequest(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSparkRequest(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

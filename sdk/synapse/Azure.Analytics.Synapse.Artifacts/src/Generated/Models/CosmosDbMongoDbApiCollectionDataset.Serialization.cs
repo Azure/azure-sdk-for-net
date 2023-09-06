@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(CosmosDbMongoDbApiCollectionDatasetConverter))]
-    public partial class CosmosDbMongoDbApiCollectionDataset : IUtf8JsonSerializable
+    public partial class CosmosDbMongoDbApiCollectionDataset : IUtf8JsonSerializable, IModelJsonSerializable<CosmosDbMongoDbApiCollectionDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CosmosDbMongoDbApiCollectionDataset>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CosmosDbMongoDbApiCollectionDataset>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDbMongoDbApiCollectionDataset>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -37,7 +43,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteObjectValue(Schema);
             }
             writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue(LinkedServiceName);
+            if (LinkedServiceName is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<LinkedServiceReference>)LinkedServiceName).Serialize(writer, options);
+            }
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
@@ -45,7 +58,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ParameterSpecification>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -67,7 +87,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                if (Folder is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DatasetFolder>)Folder).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
@@ -82,8 +109,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static CosmosDbMongoDbApiCollectionDataset DeserializeCosmosDbMongoDbApiCollectionDataset(JsonElement element)
+        internal static CosmosDbMongoDbApiCollectionDataset DeserializeCosmosDbMongoDbApiCollectionDataset(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -199,6 +228,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new CosmosDbMongoDbApiCollectionDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, collection);
+        }
+
+        CosmosDbMongoDbApiCollectionDataset IModelJsonSerializable<CosmosDbMongoDbApiCollectionDataset>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDbMongoDbApiCollectionDataset>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDbMongoDbApiCollectionDataset(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CosmosDbMongoDbApiCollectionDataset>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDbMongoDbApiCollectionDataset>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CosmosDbMongoDbApiCollectionDataset IModelSerializable<CosmosDbMongoDbApiCollectionDataset>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDbMongoDbApiCollectionDataset>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCosmosDbMongoDbApiCollectionDataset(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CosmosDbMongoDbApiCollectionDataset"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CosmosDbMongoDbApiCollectionDataset"/> to convert. </param>
+        public static implicit operator RequestContent(CosmosDbMongoDbApiCollectionDataset model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CosmosDbMongoDbApiCollectionDataset"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CosmosDbMongoDbApiCollectionDataset(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCosmosDbMongoDbApiCollectionDataset(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class CosmosDbMongoDbApiCollectionDatasetConverter : JsonConverter<CosmosDbMongoDbApiCollectionDataset>

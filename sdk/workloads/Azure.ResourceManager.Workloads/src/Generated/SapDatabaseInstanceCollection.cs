@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapDatabaseInstanceSapDatabaseInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sapDatabaseInstanceSapDatabaseInstancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapDatabaseInstanceResource(Client, SapDatabaseInstanceData.DeserializeSapDatabaseInstanceData(e)), _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics, Pipeline, "SapDatabaseInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SapDatabaseInstanceResource(Client, SapDatabaseInstanceData.DeserializeSapDatabaseInstanceData(e)), _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics, Pipeline, "SapDatabaseInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapDatabaseInstanceSapDatabaseInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sapDatabaseInstanceSapDatabaseInstancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapDatabaseInstanceResource(Client, SapDatabaseInstanceData.DeserializeSapDatabaseInstanceData(e)), _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics, Pipeline, "SapDatabaseInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SapDatabaseInstanceResource(Client, SapDatabaseInstanceData.DeserializeSapDatabaseInstanceData(e)), _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics, Pipeline, "SapDatabaseInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

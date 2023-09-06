@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The list of supported SKUs for different resources which are part of SAP deployment. </summary>
     public partial class SapSupportedResourceSkusResult
     {
-        /// <summary> Initializes a new instance of SapSupportedResourceSkusResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapSupportedResourceSkusResult"/>. </summary>
         internal SapSupportedResourceSkusResult()
         {
             SupportedSkus = new ChangeTrackingList<SapSupportedSku>();
         }
 
-        /// <summary> Initializes a new instance of SapSupportedResourceSkusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapSupportedResourceSkusResult"/>. </summary>
         /// <param name="supportedSkus"> Gets the list of SAP supported SKUs. </param>
-        internal SapSupportedResourceSkusResult(IReadOnlyList<SapSupportedSku> supportedSkus)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapSupportedResourceSkusResult(IReadOnlyList<SapSupportedSku> supportedSkus, Dictionary<string, BinaryData> rawData)
         {
             SupportedSkus = supportedSkus;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the list of SAP supported SKUs. </summary>

@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DistcpSettingsConverter))]
-    public partial class DistcpSettings : IUtf8JsonSerializable
+    public partial class DistcpSettings : IUtf8JsonSerializable, IModelJsonSerializable<DistcpSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DistcpSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DistcpSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DistcpSettings>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("resourceManagerEndpoint"u8);
             writer.WriteObjectValue(ResourceManagerEndpoint);
@@ -27,11 +34,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("distcpOptions"u8);
                 writer.WriteObjectValue(DistcpOptions);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DistcpSettings DeserializeDistcpSettings(JsonElement element)
+        internal static DistcpSettings DeserializeDistcpSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             object resourceManagerEndpoint = default;
             object tempScriptPath = default;
             Optional<object> distcpOptions = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceManagerEndpoint"u8))
@@ -60,8 +82,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     distcpOptions = property.Value.GetObject();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DistcpSettings(resourceManagerEndpoint, tempScriptPath, distcpOptions.Value);
+            return new DistcpSettings(resourceManagerEndpoint, tempScriptPath, distcpOptions.Value, rawData);
+        }
+
+        DistcpSettings IModelJsonSerializable<DistcpSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DistcpSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDistcpSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DistcpSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DistcpSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DistcpSettings IModelSerializable<DistcpSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DistcpSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDistcpSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DistcpSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DistcpSettings"/> to convert. </param>
+        public static implicit operator RequestContent(DistcpSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DistcpSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DistcpSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDistcpSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class DistcpSettingsConverter : JsonConverter<DistcpSettings>

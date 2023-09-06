@@ -5,22 +5,79 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Monitoring.Models
 {
-    public partial class SparkJobListViewResponse
+    public partial class SparkJobListViewResponse : IUtf8JsonSerializable, IModelJsonSerializable<SparkJobListViewResponse>
     {
-        internal static SparkJobListViewResponse DeserializeSparkJobListViewResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SparkJobListViewResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SparkJobListViewResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SparkJobListViewResponse>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NJobs))
+            {
+                writer.WritePropertyName("nJobs"u8);
+                writer.WriteNumberValue(NJobs.Value);
+            }
+            if (Optional.IsCollectionDefined(SparkJobs))
+            {
+                if (SparkJobs != null)
+                {
+                    writer.WritePropertyName("sparkJobs"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in SparkJobs)
+                    {
+                        if (item is null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IModelJsonSerializable<SparkJob>)item).Serialize(writer, options);
+                        }
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("sparkJobs");
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SparkJobListViewResponse DeserializeSparkJobListViewResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> nJobs = default;
             Optional<IReadOnlyList<SparkJob>> sparkJobs = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nJobs"u8))
@@ -46,8 +103,61 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                     sparkJobs = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SparkJobListViewResponse(Optional.ToNullable(nJobs), Optional.ToList(sparkJobs));
+            return new SparkJobListViewResponse(Optional.ToNullable(nJobs), Optional.ToList(sparkJobs), rawData);
+        }
+
+        SparkJobListViewResponse IModelJsonSerializable<SparkJobListViewResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SparkJobListViewResponse>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSparkJobListViewResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SparkJobListViewResponse>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SparkJobListViewResponse>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SparkJobListViewResponse IModelSerializable<SparkJobListViewResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SparkJobListViewResponse>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSparkJobListViewResponse(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SparkJobListViewResponse"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SparkJobListViewResponse"/> to convert. </param>
+        public static implicit operator RequestContent(SparkJobListViewResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SparkJobListViewResponse"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SparkJobListViewResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSparkJobListViewResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

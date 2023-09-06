@@ -5,31 +5,66 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class CognitiveServicesVisionProcessor : IUtf8JsonSerializable
+    public partial class CognitiveServicesVisionProcessor : IUtf8JsonSerializable, IModelJsonSerializable<CognitiveServicesVisionProcessor>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CognitiveServicesVisionProcessor>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CognitiveServicesVisionProcessor>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CognitiveServicesVisionProcessor>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
-            writer.WriteObjectValue(Endpoint);
+            if (Endpoint is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<EndpointBase>)Endpoint).Serialize(writer, options);
+            }
             if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
-                writer.WriteObjectValue(Image);
+                if (Image is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ImageProperties>)Image).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(SamplingOptions))
             {
                 writer.WritePropertyName("samplingOptions"u8);
-                writer.WriteObjectValue(SamplingOptions);
+                if (SamplingOptions is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SamplingOptions>)SamplingOptions).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("operation"u8);
-            writer.WriteObjectValue(Operation);
+            if (Operation is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<SpatialAnalysisOperationBase>)Operation).Serialize(writer, options);
+            }
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("name"u8);
@@ -38,14 +73,35 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<NodeInput>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CognitiveServicesVisionProcessor DeserializeCognitiveServicesVisionProcessor(JsonElement element)
+        internal static CognitiveServicesVisionProcessor DeserializeCognitiveServicesVisionProcessor(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +113,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             string type = default;
             string name = default;
             IList<NodeInput> inputs = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpoint"u8))
@@ -107,8 +164,61 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     inputs = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CognitiveServicesVisionProcessor(type, name, inputs, endpoint, image.Value, samplingOptions.Value, operation);
+            return new CognitiveServicesVisionProcessor(type, name, inputs, endpoint, image.Value, samplingOptions.Value, operation, rawData);
+        }
+
+        CognitiveServicesVisionProcessor IModelJsonSerializable<CognitiveServicesVisionProcessor>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CognitiveServicesVisionProcessor>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCognitiveServicesVisionProcessor(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CognitiveServicesVisionProcessor>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CognitiveServicesVisionProcessor>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CognitiveServicesVisionProcessor IModelSerializable<CognitiveServicesVisionProcessor>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CognitiveServicesVisionProcessor>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCognitiveServicesVisionProcessor(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CognitiveServicesVisionProcessor"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CognitiveServicesVisionProcessor"/> to convert. </param>
+        public static implicit operator RequestContent(CognitiveServicesVisionProcessor model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CognitiveServicesVisionProcessor"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CognitiveServicesVisionProcessor(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCognitiveServicesVisionProcessor(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

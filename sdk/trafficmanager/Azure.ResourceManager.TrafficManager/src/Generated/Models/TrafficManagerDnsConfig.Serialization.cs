@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    public partial class TrafficManagerDnsConfig : IUtf8JsonSerializable
+    public partial class TrafficManagerDnsConfig : IUtf8JsonSerializable, IModelJsonSerializable<TrafficManagerDnsConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TrafficManagerDnsConfig>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TrafficManagerDnsConfig>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TrafficManagerDnsConfig>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RelativeName))
             {
@@ -25,11 +33,25 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 writer.WritePropertyName("ttl"u8);
                 writer.WriteNumberValue(Ttl.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TrafficManagerDnsConfig DeserializeTrafficManagerDnsConfig(JsonElement element)
+        internal static TrafficManagerDnsConfig DeserializeTrafficManagerDnsConfig(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +59,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             Optional<string> relativeName = default;
             Optional<string> fqdn = default;
             Optional<long> ttl = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("relativeName"u8))
@@ -58,8 +81,61 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     ttl = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TrafficManagerDnsConfig(relativeName.Value, fqdn.Value, Optional.ToNullable(ttl));
+            return new TrafficManagerDnsConfig(relativeName.Value, fqdn.Value, Optional.ToNullable(ttl), rawData);
+        }
+
+        TrafficManagerDnsConfig IModelJsonSerializable<TrafficManagerDnsConfig>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrafficManagerDnsConfig>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrafficManagerDnsConfig(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TrafficManagerDnsConfig>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrafficManagerDnsConfig>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TrafficManagerDnsConfig IModelSerializable<TrafficManagerDnsConfig>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrafficManagerDnsConfig>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTrafficManagerDnsConfig(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TrafficManagerDnsConfig"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TrafficManagerDnsConfig"/> to convert. </param>
+        public static implicit operator RequestContent(TrafficManagerDnsConfig model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TrafficManagerDnsConfig"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TrafficManagerDnsConfig(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTrafficManagerDnsConfig(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

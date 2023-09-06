@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    public partial class JobDefinitionPatch : IUtf8JsonSerializable
+    public partial class JobDefinitionPatch : IUtf8JsonSerializable, IModelJsonSerializable<JobDefinitionPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JobDefinitionPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<JobDefinitionPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<JobDefinitionPatch>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -33,7 +41,121 @@ namespace Azure.ResourceManager.StorageMover.Models
                 writer.WriteStringValue(AgentName);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static JobDefinitionPatch DeserializeJobDefinitionPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> description = default;
+            Optional<StorageMoverCopyMode> copyMode = default;
+            Optional<string> agentName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("description"u8))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("copyMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            copyMode = new StorageMoverCopyMode(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("agentName"u8))
+                        {
+                            agentName = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new JobDefinitionPatch(description.Value, Optional.ToNullable(copyMode), agentName.Value, rawData);
+        }
+
+        JobDefinitionPatch IModelJsonSerializable<JobDefinitionPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JobDefinitionPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJobDefinitionPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<JobDefinitionPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JobDefinitionPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        JobDefinitionPatch IModelSerializable<JobDefinitionPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JobDefinitionPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeJobDefinitionPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="JobDefinitionPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="JobDefinitionPatch"/> to convert. </param>
+        public static implicit operator RequestContent(JobDefinitionPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="JobDefinitionPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator JobDefinitionPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeJobDefinitionPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

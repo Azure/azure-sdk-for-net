@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StoragePool.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> LUN to expose the Azure Managed Disk. </summary>
     public partial class ManagedDiskIscsiLun
     {
-        /// <summary> Initializes a new instance of ManagedDiskIscsiLun. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedDiskIscsiLun"/>. </summary>
         /// <param name="name"> User defined name for iSCSI LUN; example: "lun0". </param>
         /// <param name="managedDiskAzureResourceId"> Azure Resource ID of the Managed Disk. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="managedDiskAzureResourceId"/> is null. </exception>
@@ -26,15 +30,22 @@ namespace Azure.ResourceManager.StoragePool.Models
             ManagedDiskAzureResourceId = managedDiskAzureResourceId;
         }
 
-        /// <summary> Initializes a new instance of ManagedDiskIscsiLun. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedDiskIscsiLun"/>. </summary>
         /// <param name="name"> User defined name for iSCSI LUN; example: "lun0". </param>
         /// <param name="managedDiskAzureResourceId"> Azure Resource ID of the Managed Disk. </param>
         /// <param name="lun"> Specifies the Logical Unit Number of the iSCSI LUN. </param>
-        internal ManagedDiskIscsiLun(string name, ResourceIdentifier managedDiskAzureResourceId, int? lun)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedDiskIscsiLun(string name, ResourceIdentifier managedDiskAzureResourceId, int? lun, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             ManagedDiskAzureResourceId = managedDiskAzureResourceId;
             Lun = lun;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedDiskIscsiLun"/> for deserialization. </summary>
+        internal ManagedDiskIscsiLun()
+        {
         }
 
         /// <summary> User defined name for iSCSI LUN; example: "lun0". </summary>

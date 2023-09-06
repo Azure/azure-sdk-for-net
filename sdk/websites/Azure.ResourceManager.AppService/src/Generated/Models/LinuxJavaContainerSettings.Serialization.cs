@@ -6,15 +6,42 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class LinuxJavaContainerSettings
+    public partial class LinuxJavaContainerSettings : IUtf8JsonSerializable, IModelJsonSerializable<LinuxJavaContainerSettings>
     {
-        internal static LinuxJavaContainerSettings DeserializeLinuxJavaContainerSettings(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LinuxJavaContainerSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LinuxJavaContainerSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LinuxJavaContainerSettings>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static LinuxJavaContainerSettings DeserializeLinuxJavaContainerSettings(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<DateTimeOffset> endOfLifeDate = default;
             Optional<bool> isAutoUpdate = default;
             Optional<bool> isEarlyAccess = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("java11Runtime"u8))
@@ -93,8 +121,61 @@ namespace Azure.ResourceManager.AppService.Models
                     isEarlyAccess = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LinuxJavaContainerSettings(java11Runtime.Value, java8Runtime.Value, Optional.ToNullable(isPreview), Optional.ToNullable(isDeprecated), Optional.ToNullable(isHidden), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(isAutoUpdate), Optional.ToNullable(isEarlyAccess));
+            return new LinuxJavaContainerSettings(java11Runtime.Value, java8Runtime.Value, Optional.ToNullable(isPreview), Optional.ToNullable(isDeprecated), Optional.ToNullable(isHidden), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(isAutoUpdate), Optional.ToNullable(isEarlyAccess), rawData);
+        }
+
+        LinuxJavaContainerSettings IModelJsonSerializable<LinuxJavaContainerSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinuxJavaContainerSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinuxJavaContainerSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LinuxJavaContainerSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinuxJavaContainerSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LinuxJavaContainerSettings IModelSerializable<LinuxJavaContainerSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinuxJavaContainerSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLinuxJavaContainerSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LinuxJavaContainerSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LinuxJavaContainerSettings"/> to convert. </param>
+        public static implicit operator RequestContent(LinuxJavaContainerSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LinuxJavaContainerSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LinuxJavaContainerSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLinuxJavaContainerSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

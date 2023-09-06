@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class StorageSyncPrivateLinkServiceConnectionState : IUtf8JsonSerializable
+    public partial class StorageSyncPrivateLinkServiceConnectionState : IUtf8JsonSerializable, IModelJsonSerializable<StorageSyncPrivateLinkServiceConnectionState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageSyncPrivateLinkServiceConnectionState>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageSyncPrivateLinkServiceConnectionState>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StorageSyncPrivateLinkServiceConnectionState>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("actionsRequired"u8);
                 writer.WriteStringValue(ActionsRequired);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StorageSyncPrivateLinkServiceConnectionState DeserializeStorageSyncPrivateLinkServiceConnectionState(JsonElement element)
+        internal static StorageSyncPrivateLinkServiceConnectionState DeserializeStorageSyncPrivateLinkServiceConnectionState(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             Optional<StorageSyncPrivateEndpointServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -63,8 +86,61 @@ namespace Azure.ResourceManager.StorageSync.Models
                     actionsRequired = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageSyncPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value);
+            return new StorageSyncPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value, rawData);
+        }
+
+        StorageSyncPrivateLinkServiceConnectionState IModelJsonSerializable<StorageSyncPrivateLinkServiceConnectionState>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageSyncPrivateLinkServiceConnectionState>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageSyncPrivateLinkServiceConnectionState(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageSyncPrivateLinkServiceConnectionState>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageSyncPrivateLinkServiceConnectionState>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageSyncPrivateLinkServiceConnectionState IModelSerializable<StorageSyncPrivateLinkServiceConnectionState>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageSyncPrivateLinkServiceConnectionState>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageSyncPrivateLinkServiceConnectionState(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageSyncPrivateLinkServiceConnectionState"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageSyncPrivateLinkServiceConnectionState"/> to convert. </param>
+        public static implicit operator RequestContent(StorageSyncPrivateLinkServiceConnectionState model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageSyncPrivateLinkServiceConnectionState"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageSyncPrivateLinkServiceConnectionState(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageSyncPrivateLinkServiceConnectionState(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

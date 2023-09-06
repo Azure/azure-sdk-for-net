@@ -5,13 +5,150 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class TypesBatchResponse
+    internal partial class TypesBatchResponse : IUtf8JsonSerializable, IModelJsonSerializable<TypesBatchResponse>
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TypesBatchResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TypesBatchResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TypesBatchResponse>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TypesBatchResponse DeserializeTypesBatchResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<TimeSeriesTypeOperationResult>> @get = default;
+            Optional<IReadOnlyList<TimeSeriesTypeOperationResult>> put = default;
+            Optional<IReadOnlyList<TimeSeriesOperationError>> delete = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("get"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<TimeSeriesTypeOperationResult> array = new List<TimeSeriesTypeOperationResult>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TimeSeriesTypeOperationResult.DeserializeTimeSeriesTypeOperationResult(item));
+                    }
+                    @get = array;
+                    continue;
+                }
+                if (property.NameEquals("put"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<TimeSeriesTypeOperationResult> array = new List<TimeSeriesTypeOperationResult>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TimeSeriesTypeOperationResult.DeserializeTimeSeriesTypeOperationResult(item));
+                    }
+                    put = array;
+                    continue;
+                }
+                if (property.NameEquals("delete"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<TimeSeriesOperationError> array = new List<TimeSeriesOperationError>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TimeSeriesOperationError.DeserializeTimeSeriesOperationError(item));
+                    }
+                    delete = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new TypesBatchResponse(Optional.ToList(@get), Optional.ToList(put), Optional.ToList(delete), rawData);
+        }
+
+        TypesBatchResponse IModelJsonSerializable<TypesBatchResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TypesBatchResponse>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTypesBatchResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TypesBatchResponse>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TypesBatchResponse>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TypesBatchResponse IModelSerializable<TypesBatchResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TypesBatchResponse>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTypesBatchResponse(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TypesBatchResponse"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TypesBatchResponse"/> to convert. </param>
+        public static implicit operator RequestContent(TypesBatchResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TypesBatchResponse"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TypesBatchResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTypesBatchResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
     }
 }

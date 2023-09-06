@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The list of the SKU descriptions. </summary>
     internal partial class KustoPoolSkuDescriptionListResult
     {
-        /// <summary> Initializes a new instance of KustoPoolSkuDescriptionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoPoolSkuDescriptionListResult"/>. </summary>
         internal KustoPoolSkuDescriptionListResult()
         {
             Value = new ChangeTrackingList<KustoPoolSkuDescription>();
         }
 
-        /// <summary> Initializes a new instance of KustoPoolSkuDescriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPoolSkuDescriptionListResult"/>. </summary>
         /// <param name="value"> SKU descriptions. </param>
-        internal KustoPoolSkuDescriptionListResult(IReadOnlyList<KustoPoolSkuDescription> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoPoolSkuDescriptionListResult(IReadOnlyList<KustoPoolSkuDescription> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> SKU descriptions. </summary>

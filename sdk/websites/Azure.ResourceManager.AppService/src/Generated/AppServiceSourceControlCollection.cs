@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceSourceControlRestClient.CreateListSourceControlsRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceSourceControlRestClient.CreateListSourceControlsNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppServiceSourceControlResource(Client, AppServiceSourceControlData.DeserializeAppServiceSourceControlData(e)), _appServiceSourceControlClientDiagnostics, Pipeline, "AppServiceSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AppServiceSourceControlResource(Client, AppServiceSourceControlData.DeserializeAppServiceSourceControlData(e)), _appServiceSourceControlClientDiagnostics, Pipeline, "AppServiceSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceSourceControlRestClient.CreateListSourceControlsRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceSourceControlRestClient.CreateListSourceControlsNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppServiceSourceControlResource(Client, AppServiceSourceControlData.DeserializeAppServiceSourceControlData(e)), _appServiceSourceControlClientDiagnostics, Pipeline, "AppServiceSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AppServiceSourceControlResource(Client, AppServiceSourceControlData.DeserializeAppServiceSourceControlData(e)), _appServiceSourceControlClientDiagnostics, Pipeline, "AppServiceSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

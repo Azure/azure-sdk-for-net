@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ArcConfiguration : IUtf8JsonSerializable
+    public partial class ArcConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<ArcConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ArcConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ArcConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ArcConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ArtifactsStorageType))
             {
@@ -43,18 +51,39 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(FrontEndServiceConfiguration))
             {
                 writer.WritePropertyName("frontEndServiceConfiguration"u8);
-                writer.WriteObjectValue(FrontEndServiceConfiguration);
+                if (FrontEndServiceConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<FrontEndConfiguration>)FrontEndServiceConfiguration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(KubeConfig))
             {
                 writer.WritePropertyName("kubeConfig"u8);
                 writer.WriteStringValue(KubeConfig);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ArcConfiguration DeserializeArcConfiguration(JsonElement element)
+        internal static ArcConfiguration DeserializeArcConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,6 +95,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> artifactStorageAccessMode = default;
             Optional<FrontEndConfiguration> frontEndServiceConfiguration = default;
             Optional<string> kubeConfig = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("artifactsStorageType"u8))
@@ -111,8 +141,61 @@ namespace Azure.ResourceManager.AppService.Models
                     kubeConfig = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ArcConfiguration(Optional.ToNullable(artifactsStorageType), artifactStorageClassName.Value, artifactStorageMountPath.Value, artifactStorageNodeName.Value, artifactStorageAccessMode.Value, frontEndServiceConfiguration.Value, kubeConfig.Value);
+            return new ArcConfiguration(Optional.ToNullable(artifactsStorageType), artifactStorageClassName.Value, artifactStorageMountPath.Value, artifactStorageNodeName.Value, artifactStorageAccessMode.Value, frontEndServiceConfiguration.Value, kubeConfig.Value, rawData);
+        }
+
+        ArcConfiguration IModelJsonSerializable<ArcConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArcConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeArcConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ArcConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArcConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ArcConfiguration IModelSerializable<ArcConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArcConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeArcConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ArcConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ArcConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(ArcConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ArcConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ArcConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeArcConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.StorageSync;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Array of Workflow. </summary>
     internal partial class WorkflowArray
     {
-        /// <summary> Initializes a new instance of WorkflowArray. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkflowArray"/>. </summary>
         internal WorkflowArray()
         {
             Value = new ChangeTrackingList<StorageSyncWorkflowData>();
         }
 
-        /// <summary> Initializes a new instance of WorkflowArray. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkflowArray"/>. </summary>
         /// <param name="value"> Collection of workflow items. </param>
-        internal WorkflowArray(IReadOnlyList<StorageSyncWorkflowData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkflowArray(IReadOnlyList<StorageSyncWorkflowData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Collection of workflow items. </summary>

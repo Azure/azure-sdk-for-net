@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> List of iSCSI Targets. </summary>
     internal partial class DiskPoolIscsiTargetList
     {
-        /// <summary> Initializes a new instance of DiskPoolIscsiTargetList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiskPoolIscsiTargetList"/>. </summary>
         /// <param name="value"> An array of iSCSI Targets in a Disk Pool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DiskPoolIscsiTargetList(IEnumerable<DiskPoolIscsiTargetData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.StoragePool.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DiskPoolIscsiTargetList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskPoolIscsiTargetList"/>. </summary>
         /// <param name="value"> An array of iSCSI Targets in a Disk Pool. </param>
         /// <param name="nextLink"> URI to fetch the next section of the paginated response. </param>
-        internal DiskPoolIscsiTargetList(IReadOnlyList<DiskPoolIscsiTargetData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiskPoolIscsiTargetList(IReadOnlyList<DiskPoolIscsiTargetData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiskPoolIscsiTargetList"/> for deserialization. </summary>
+        internal DiskPoolIscsiTargetList()
+        {
         }
 
         /// <summary> An array of iSCSI Targets in a Disk Pool. </summary>

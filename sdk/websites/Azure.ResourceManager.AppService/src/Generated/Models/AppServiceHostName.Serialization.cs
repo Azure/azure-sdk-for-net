@@ -5,16 +5,78 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceHostName
+    public partial class AppServiceHostName : IUtf8JsonSerializable, IModelJsonSerializable<AppServiceHostName>
     {
-        internal static AppServiceHostName DeserializeAppServiceHostName(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppServiceHostName>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppServiceHostName>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceHostName>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsCollectionDefined(SiteNames))
+            {
+                writer.WritePropertyName("siteNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in SiteNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(AzureResourceName))
+            {
+                writer.WritePropertyName("azureResourceName"u8);
+                writer.WriteStringValue(AzureResourceName);
+            }
+            if (Optional.IsDefined(AzureResourceType))
+            {
+                writer.WritePropertyName("azureResourceType"u8);
+                writer.WriteStringValue(AzureResourceType.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(CustomHostNameDnsRecordType))
+            {
+                writer.WritePropertyName("customHostNameDnsRecordType"u8);
+                writer.WriteStringValue(CustomHostNameDnsRecordType.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(HostNameType))
+            {
+                writer.WritePropertyName("hostNameType"u8);
+                writer.WriteStringValue(HostNameType.Value.ToSerialString());
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AppServiceHostName DeserializeAppServiceHostName(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<AppServiceResourceType> azureResourceType = default;
             Optional<CustomHostNameDnsRecordType> customHostNameDnsRecordType = default;
             Optional<AppServiceHostNameType> hostNameType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -78,8 +141,61 @@ namespace Azure.ResourceManager.AppService.Models
                     hostNameType = property.Value.GetString().ToAppServiceHostNameType();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppServiceHostName(name.Value, Optional.ToList(siteNames), azureResourceName.Value, Optional.ToNullable(azureResourceType), Optional.ToNullable(customHostNameDnsRecordType), Optional.ToNullable(hostNameType));
+            return new AppServiceHostName(name.Value, Optional.ToList(siteNames), azureResourceName.Value, Optional.ToNullable(azureResourceType), Optional.ToNullable(customHostNameDnsRecordType), Optional.ToNullable(hostNameType), rawData);
+        }
+
+        AppServiceHostName IModelJsonSerializable<AppServiceHostName>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceHostName>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceHostName(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppServiceHostName>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceHostName>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppServiceHostName IModelSerializable<AppServiceHostName>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceHostName>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppServiceHostName(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppServiceHostName"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppServiceHostName"/> to convert. </param>
+        public static implicit operator RequestContent(AppServiceHostName model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppServiceHostName"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppServiceHostName(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppServiceHostName(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

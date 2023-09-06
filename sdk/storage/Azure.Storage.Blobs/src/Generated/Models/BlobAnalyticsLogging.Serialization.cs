@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobAnalyticsLogging : IXmlSerializable
+    public partial class BlobAnalyticsLogging : IXmlSerializable, IModelSerializable<BlobAnalyticsLogging>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "Logging");
             writer.WriteStartElement("Version");
@@ -32,8 +36,11 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
         }
 
-        internal static BlobAnalyticsLogging DeserializeBlobAnalyticsLogging(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static BlobAnalyticsLogging DeserializeBlobAnalyticsLogging(XElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             string version = default;
             bool delete = default;
             bool read = default;
@@ -59,7 +66,57 @@ namespace Azure.Storage.Blobs.Models
             {
                 retentionPolicy = BlobRetentionPolicy.DeserializeBlobRetentionPolicy(retentionPolicyElement);
             }
-            return new BlobAnalyticsLogging(version, delete, read, write, retentionPolicy);
+            return new BlobAnalyticsLogging(version, delete, read, write, retentionPolicy, default);
+        }
+
+        BinaryData IModelSerializable<BlobAnalyticsLogging>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlobAnalyticsLogging>(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        BlobAnalyticsLogging IModelSerializable<BlobAnalyticsLogging>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlobAnalyticsLogging>(this, options.Format);
+
+            return DeserializeBlobAnalyticsLogging(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="BlobAnalyticsLogging"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BlobAnalyticsLogging"/> to convert. </param>
+        public static implicit operator RequestContent(BlobAnalyticsLogging model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BlobAnalyticsLogging"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BlobAnalyticsLogging(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeBlobAnalyticsLogging(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

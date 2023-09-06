@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class DB2ProviderInstanceProperties : IUtf8JsonSerializable
+    public partial class DB2ProviderInstanceProperties : IUtf8JsonSerializable, IModelJsonSerializable<DB2ProviderInstanceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DB2ProviderInstanceProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DB2ProviderInstanceProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DB2ProviderInstanceProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Hostname))
             {
@@ -63,11 +70,25 @@ namespace Azure.ResourceManager.Workloads.Models
             }
             writer.WritePropertyName("providerType"u8);
             writer.WriteStringValue(ProviderType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DB2ProviderInstanceProperties DeserializeDB2ProviderInstanceProperties(JsonElement element)
+        internal static DB2ProviderInstanceProperties DeserializeDB2ProviderInstanceProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -82,6 +103,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<SapSslPreference> sslPreference = default;
             Optional<Uri> sslCertificateUri = default;
             string providerType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostname"u8))
@@ -146,8 +168,61 @@ namespace Azure.ResourceManager.Workloads.Models
                     providerType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DB2ProviderInstanceProperties(providerType, hostname.Value, dbName.Value, dbPort.Value, dbUsername.Value, dbPassword.Value, dbPasswordUri.Value, sapSid.Value, Optional.ToNullable(sslPreference), sslCertificateUri.Value);
+            return new DB2ProviderInstanceProperties(providerType, hostname.Value, dbName.Value, dbPort.Value, dbUsername.Value, dbPassword.Value, dbPasswordUri.Value, sapSid.Value, Optional.ToNullable(sslPreference), sslCertificateUri.Value, rawData);
+        }
+
+        DB2ProviderInstanceProperties IModelJsonSerializable<DB2ProviderInstanceProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DB2ProviderInstanceProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDB2ProviderInstanceProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DB2ProviderInstanceProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DB2ProviderInstanceProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DB2ProviderInstanceProperties IModelSerializable<DB2ProviderInstanceProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DB2ProviderInstanceProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDB2ProviderInstanceProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DB2ProviderInstanceProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DB2ProviderInstanceProperties"/> to convert. </param>
+        public static implicit operator RequestContent(DB2ProviderInstanceProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DB2ProviderInstanceProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DB2ProviderInstanceProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDB2ProviderInstanceProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

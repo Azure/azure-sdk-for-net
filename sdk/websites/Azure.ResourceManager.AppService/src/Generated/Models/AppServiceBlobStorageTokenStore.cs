@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the storage of the tokens if blob storage is used. </summary>
     internal partial class AppServiceBlobStorageTokenStore
     {
-        /// <summary> Initializes a new instance of AppServiceBlobStorageTokenStore. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceBlobStorageTokenStore"/>. </summary>
         public AppServiceBlobStorageTokenStore()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceBlobStorageTokenStore. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceBlobStorageTokenStore"/>. </summary>
         /// <param name="sasUrlSettingName"> The name of the app setting containing the SAS URL of the blob storage containing the tokens. </param>
-        internal AppServiceBlobStorageTokenStore(string sasUrlSettingName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceBlobStorageTokenStore(string sasUrlSettingName, Dictionary<string, BinaryData> rawData)
         {
             SasUrlSettingName = sasUrlSettingName;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the app setting containing the SAS URL of the blob storage containing the tokens. </summary>

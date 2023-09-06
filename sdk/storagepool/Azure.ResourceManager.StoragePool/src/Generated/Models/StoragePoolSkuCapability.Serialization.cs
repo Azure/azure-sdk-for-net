@@ -5,21 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
-    public partial class StoragePoolSkuCapability
+    public partial class StoragePoolSkuCapability : IUtf8JsonSerializable, IModelJsonSerializable<StoragePoolSkuCapability>
     {
-        internal static StoragePoolSkuCapability DeserializeStoragePoolSkuCapability(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StoragePoolSkuCapability>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StoragePoolSkuCapability>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StoragePoolSkuCapability>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static StoragePoolSkuCapability DeserializeStoragePoolSkuCapability(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> name = default;
             Optional<string> value = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -32,8 +61,61 @@ namespace Azure.ResourceManager.StoragePool.Models
                     value = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StoragePoolSkuCapability(name.Value, value.Value);
+            return new StoragePoolSkuCapability(name.Value, value.Value, rawData);
+        }
+
+        StoragePoolSkuCapability IModelJsonSerializable<StoragePoolSkuCapability>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StoragePoolSkuCapability>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStoragePoolSkuCapability(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StoragePoolSkuCapability>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StoragePoolSkuCapability>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StoragePoolSkuCapability IModelSerializable<StoragePoolSkuCapability>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StoragePoolSkuCapability>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStoragePoolSkuCapability(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StoragePoolSkuCapability"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StoragePoolSkuCapability"/> to convert. </param>
+        public static implicit operator RequestContent(StoragePoolSkuCapability model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StoragePoolSkuCapability"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StoragePoolSkuCapability(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStoragePoolSkuCapability(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

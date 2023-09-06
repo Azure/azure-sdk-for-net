@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The LinkTableResource. </summary>
     public partial class LinkTableResource
     {
-        /// <summary> Initializes a new instance of LinkTableResource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkTableResource"/>. </summary>
         internal LinkTableResource()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkTableResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkTableResource"/>. </summary>
         /// <param name="id"> Link table id. </param>
         /// <param name="name"> Link table name. </param>
         /// <param name="source"> Source table properties for link table request. </param>
         /// <param name="target"> Target table properties for link table request. </param>
-        internal LinkTableResource(string id, string name, LinkTableRequestSource source, LinkTableRequestTarget target)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkTableResource(string id, string name, LinkTableRequestSource source, LinkTableRequestTarget target, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
             Source = source;
             Target = target;
+            _rawData = rawData;
         }
 
         /// <summary> Link table id. </summary>

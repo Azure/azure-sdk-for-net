@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebPubSubSharedPrivateLinkResource(Client, WebPubSubSharedPrivateLinkData.DeserializeWebPubSubSharedPrivateLinkData(e)), _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics, Pipeline, "WebPubSubSharedPrivateLinkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new WebPubSubSharedPrivateLinkResource(Client, WebPubSubSharedPrivateLinkData.DeserializeWebPubSubSharedPrivateLinkData(e)), _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics, Pipeline, "WebPubSubSharedPrivateLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebPubSubSharedPrivateLinkResource(Client, WebPubSubSharedPrivateLinkData.DeserializeWebPubSubSharedPrivateLinkData(e)), _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics, Pipeline, "WebPubSubSharedPrivateLinkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new WebPubSubSharedPrivateLinkResource(Client, WebPubSubSharedPrivateLinkData.DeserializeWebPubSubSharedPrivateLinkData(e)), _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics, Pipeline, "WebPubSubSharedPrivateLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

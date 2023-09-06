@@ -5,37 +5,72 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.AI.TextAnalytics;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class PreBuiltResult : IUtf8JsonSerializable
+    internal partial class PreBuiltResult : IUtf8JsonSerializable, IModelJsonSerializable<PreBuiltResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PreBuiltResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PreBuiltResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PreBuiltResult>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("errors"u8);
             writer.WriteStartArray();
             foreach (var item in Errors)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DocumentError>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics);
+                if (Statistics is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TextDocumentBatchStatistics>)Statistics).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("modelVersion"u8);
             writer.WriteStringValue(ModelVersion);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PreBuiltResult DeserializePreBuiltResult(JsonElement element)
+        internal static PreBuiltResult DeserializePreBuiltResult(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +78,7 @@ namespace Azure.AI.TextAnalytics.Models
             IList<DocumentError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
             string modelVersion = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errors"u8))
@@ -69,8 +105,61 @@ namespace Azure.AI.TextAnalytics.Models
                     modelVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PreBuiltResult(errors, statistics.Value, modelVersion);
+            return new PreBuiltResult(errors, statistics.Value, modelVersion, rawData);
+        }
+
+        PreBuiltResult IModelJsonSerializable<PreBuiltResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PreBuiltResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePreBuiltResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PreBuiltResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PreBuiltResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PreBuiltResult IModelSerializable<PreBuiltResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PreBuiltResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePreBuiltResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PreBuiltResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PreBuiltResult"/> to convert. </param>
+        public static implicit operator RequestContent(PreBuiltResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PreBuiltResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PreBuiltResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePreBuiltResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

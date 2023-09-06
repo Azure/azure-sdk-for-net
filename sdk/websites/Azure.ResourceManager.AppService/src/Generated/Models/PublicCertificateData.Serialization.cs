@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class PublicCertificateData : IUtf8JsonSerializable
+    public partial class PublicCertificateData : IUtf8JsonSerializable, IModelJsonSerializable<PublicCertificateData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PublicCertificateData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PublicCertificateData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PublicCertificateData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
@@ -36,11 +43,25 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStringValue(PublicCertificateLocation.Value.ToSerialString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PublicCertificateData DeserializePublicCertificateData(JsonElement element)
+        internal static PublicCertificateData DeserializePublicCertificateData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,6 +74,7 @@ namespace Azure.ResourceManager.AppService
             Optional<byte[]> blob = default;
             Optional<PublicCertificateLocation> publicCertificateLocation = default;
             Optional<string> thumbprint = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -119,8 +141,61 @@ namespace Azure.ResourceManager.AppService
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PublicCertificateData(id, name, type, systemData.Value, blob.Value, Optional.ToNullable(publicCertificateLocation), thumbprint.Value, kind.Value);
+            return new PublicCertificateData(id, name, type, systemData.Value, blob.Value, Optional.ToNullable(publicCertificateLocation), thumbprint.Value, kind.Value, rawData);
+        }
+
+        PublicCertificateData IModelJsonSerializable<PublicCertificateData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PublicCertificateData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePublicCertificateData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PublicCertificateData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PublicCertificateData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PublicCertificateData IModelSerializable<PublicCertificateData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PublicCertificateData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePublicCertificateData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PublicCertificateData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PublicCertificateData"/> to convert. </param>
+        public static implicit operator RequestContent(PublicCertificateData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PublicCertificateData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PublicCertificateData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePublicCertificateData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

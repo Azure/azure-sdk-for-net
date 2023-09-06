@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotProcessModuleWebAppsRestClient.CreateListProcessModulesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotProcessModuleWebAppsRestClient.CreateListProcessModulesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteSlotProcessModuleResource(Client, ProcessModuleInfoData.DeserializeProcessModuleInfoData(e)), _siteSlotProcessModuleWebAppsClientDiagnostics, Pipeline, "SiteSlotProcessModuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SiteSlotProcessModuleResource(Client, ProcessModuleInfoData.DeserializeProcessModuleInfoData(e)), _siteSlotProcessModuleWebAppsClientDiagnostics, Pipeline, "SiteSlotProcessModuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotProcessModuleWebAppsRestClient.CreateListProcessModulesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotProcessModuleWebAppsRestClient.CreateListProcessModulesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteSlotProcessModuleResource(Client, ProcessModuleInfoData.DeserializeProcessModuleInfoData(e)), _siteSlotProcessModuleWebAppsClientDiagnostics, Pipeline, "SiteSlotProcessModuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SiteSlotProcessModuleResource(Client, ProcessModuleInfoData.DeserializeProcessModuleInfoData(e)), _siteSlotProcessModuleWebAppsClientDiagnostics, Pipeline, "SiteSlotProcessModuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

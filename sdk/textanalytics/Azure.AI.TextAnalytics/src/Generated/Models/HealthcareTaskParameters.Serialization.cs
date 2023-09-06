@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class HealthcareTaskParameters : IUtf8JsonSerializable
+    internal partial class HealthcareTaskParameters : IUtf8JsonSerializable, IModelJsonSerializable<HealthcareTaskParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HealthcareTaskParameters>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HealthcareTaskParameters>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareTaskParameters>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(StringIndexType))
             {
@@ -30,11 +38,25 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HealthcareTaskParameters DeserializeHealthcareTaskParameters(JsonElement element)
+        internal static HealthcareTaskParameters DeserializeHealthcareTaskParameters(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<StringIndexType> stringIndexType = default;
             Optional<string> modelVersion = default;
             Optional<bool> loggingOptOut = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("stringIndexType"u8))
@@ -67,8 +90,61 @@ namespace Azure.AI.TextAnalytics.Models
                     loggingOptOut = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HealthcareTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value, Optional.ToNullable(stringIndexType));
+            return new HealthcareTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value, Optional.ToNullable(stringIndexType), rawData);
+        }
+
+        HealthcareTaskParameters IModelJsonSerializable<HealthcareTaskParameters>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareTaskParameters>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHealthcareTaskParameters(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HealthcareTaskParameters>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareTaskParameters>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HealthcareTaskParameters IModelSerializable<HealthcareTaskParameters>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareTaskParameters>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHealthcareTaskParameters(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HealthcareTaskParameters"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HealthcareTaskParameters"/> to convert. </param>
+        public static implicit operator RequestContent(HealthcareTaskParameters model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HealthcareTaskParameters"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HealthcareTaskParameters(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHealthcareTaskParameters(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

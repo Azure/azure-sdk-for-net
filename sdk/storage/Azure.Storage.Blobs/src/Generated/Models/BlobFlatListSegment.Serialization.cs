@@ -5,16 +5,34 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class BlobFlatListSegment
+    internal partial class BlobFlatListSegment : IXmlSerializable, IModelSerializable<BlobFlatListSegment>
     {
-        internal static BlobFlatListSegment DeserializeBlobFlatListSegment(XElement element)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
+            writer.WriteStartElement(nameHint ?? "Blobs");
+            foreach (var item in BlobItems)
+            {
+                writer.WriteObjectValue(item, "Blob");
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static BlobFlatListSegment DeserializeBlobFlatListSegment(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             IReadOnlyList<BlobItemInternal> blobItems = default;
             var array = new List<BlobItemInternal>();
             foreach (var e in element.Elements("Blob"))
@@ -22,7 +40,57 @@ namespace Azure.Storage.Blobs.Models
                 array.Add(BlobItemInternal.DeserializeBlobItemInternal(e));
             }
             blobItems = array;
-            return new BlobFlatListSegment(blobItems);
+            return new BlobFlatListSegment(blobItems, default);
+        }
+
+        BinaryData IModelSerializable<BlobFlatListSegment>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlobFlatListSegment>(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        BlobFlatListSegment IModelSerializable<BlobFlatListSegment>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlobFlatListSegment>(this, options.Format);
+
+            return DeserializeBlobFlatListSegment(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="BlobFlatListSegment"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BlobFlatListSegment"/> to convert. </param>
+        public static implicit operator RequestContent(BlobFlatListSegment model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BlobFlatListSegment"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BlobFlatListSegment(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeBlobFlatListSegment(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

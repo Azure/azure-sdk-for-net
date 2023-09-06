@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceValidateContent : IUtf8JsonSerializable
+    public partial class AppServiceValidateContent : IUtf8JsonSerializable, IModelJsonSerializable<AppServiceValidateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppServiceValidateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppServiceValidateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceValidateContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -91,10 +99,239 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(AppServiceEnvironment))
             {
                 writer.WritePropertyName("appServiceEnvironment"u8);
-                writer.WriteObjectValue(AppServiceEnvironment);
+                if (AppServiceEnvironment is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AppServiceEnvironmentProperties>)AppServiceEnvironment).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static AppServiceValidateContent DeserializeAppServiceValidateContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string name = default;
+            ValidateResourceType type = default;
+            AzureLocation location = default;
+            Optional<ResourceIdentifier> serverFarmId = default;
+            Optional<string> skuName = default;
+            Optional<bool> needLinuxWorkers = default;
+            Optional<bool> isSpot = default;
+            Optional<int> capacity = default;
+            Optional<string> hostingEnvironment = default;
+            Optional<bool> isXenon = default;
+            Optional<Uri> containerRegistryBaseUrl = default;
+            Optional<string> containerRegistryUsername = default;
+            Optional<string> containerRegistryPassword = default;
+            Optional<string> containerImageRepository = default;
+            Optional<string> containerImageTag = default;
+            Optional<string> containerImagePlatform = default;
+            Optional<AppServiceEnvironmentProperties> appServiceEnvironment = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ValidateResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("serverFarmId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            serverFarmId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("skuName"u8))
+                        {
+                            skuName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("needLinuxWorkers"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            needLinuxWorkers = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("isSpot"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isSpot = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("capacity"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            capacity = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("hostingEnvironment"u8))
+                        {
+                            hostingEnvironment = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("isXenon"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isXenon = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("containerRegistryBaseUrl"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            containerRegistryBaseUrl = new Uri(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("containerRegistryUsername"u8))
+                        {
+                            containerRegistryUsername = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("containerRegistryPassword"u8))
+                        {
+                            containerRegistryPassword = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("containerImageRepository"u8))
+                        {
+                            containerImageRepository = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("containerImageTag"u8))
+                        {
+                            containerImageTag = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("containerImagePlatform"u8))
+                        {
+                            containerImagePlatform = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("appServiceEnvironment"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            appServiceEnvironment = AppServiceEnvironmentProperties.DeserializeAppServiceEnvironmentProperties(property0.Value);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new AppServiceValidateContent(name, type, location, serverFarmId.Value, skuName.Value, Optional.ToNullable(needLinuxWorkers), Optional.ToNullable(isSpot), Optional.ToNullable(capacity), hostingEnvironment.Value, Optional.ToNullable(isXenon), containerRegistryBaseUrl.Value, containerRegistryUsername.Value, containerRegistryPassword.Value, containerImageRepository.Value, containerImageTag.Value, containerImagePlatform.Value, appServiceEnvironment.Value, rawData);
+        }
+
+        AppServiceValidateContent IModelJsonSerializable<AppServiceValidateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceValidateContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceValidateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppServiceValidateContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceValidateContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppServiceValidateContent IModelSerializable<AppServiceValidateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppServiceValidateContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppServiceValidateContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppServiceValidateContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppServiceValidateContent"/> to convert. </param>
+        public static implicit operator RequestContent(AppServiceValidateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppServiceValidateContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppServiceValidateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppServiceValidateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

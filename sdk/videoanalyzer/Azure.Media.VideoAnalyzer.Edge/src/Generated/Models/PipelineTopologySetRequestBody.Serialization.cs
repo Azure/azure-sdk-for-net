@@ -5,38 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    internal partial class PipelineTopologySetRequestBody : IUtf8JsonSerializable
+    internal partial class PipelineTopologySetRequestBody : IUtf8JsonSerializable, IModelJsonSerializable<PipelineTopologySetRequestBody>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PipelineTopologySetRequestBody>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PipelineTopologySetRequestBody>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PipelineTopologySetRequestBody>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
-                writer.WriteObjectValue(SystemData);
+                if (SystemData is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SystemData>)SystemData).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                if (Properties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PipelineTopologyProperties>)Properties).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("@apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PipelineTopologySetRequestBody DeserializePipelineTopologySetRequestBody(JsonElement element)
+        internal static PipelineTopologySetRequestBody DeserializePipelineTopologySetRequestBody(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +82,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<PipelineTopologyProperties> properties = default;
             string methodName = default;
             Optional<string> apiVersion = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -81,8 +118,61 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     apiVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PipelineTopologySetRequestBody(methodName, apiVersion.Value, name, systemData.Value, properties.Value);
+            return new PipelineTopologySetRequestBody(methodName, apiVersion.Value, name, systemData.Value, properties.Value, rawData);
+        }
+
+        PipelineTopologySetRequestBody IModelJsonSerializable<PipelineTopologySetRequestBody>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PipelineTopologySetRequestBody>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePipelineTopologySetRequestBody(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PipelineTopologySetRequestBody>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PipelineTopologySetRequestBody>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PipelineTopologySetRequestBody IModelSerializable<PipelineTopologySetRequestBody>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PipelineTopologySetRequestBody>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePipelineTopologySetRequestBody(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PipelineTopologySetRequestBody"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PipelineTopologySetRequestBody"/> to convert. </param>
+        public static implicit operator RequestContent(PipelineTopologySetRequestBody model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PipelineTopologySetRequestBody"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PipelineTopologySetRequestBody(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePipelineTopologySetRequestBody(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

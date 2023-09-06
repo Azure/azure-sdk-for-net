@@ -9,25 +9,45 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DeleteActivityConverter))]
-    public partial class DeleteActivity : IUtf8JsonSerializable
+    public partial class DeleteActivity : IUtf8JsonSerializable, IModelJsonSerializable<DeleteActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DeleteActivity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DeleteActivity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DeleteActivity>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
-                writer.WriteObjectValue(LinkedServiceName);
+                if (LinkedServiceName is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LinkedServiceReference>)LinkedServiceName).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                if (Policy is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ActivityPolicy>)Policy).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -54,7 +74,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ActivityDependency>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +91,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<UserProperty>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,14 +122,35 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LogStorageSettings))
             {
                 writer.WritePropertyName("logStorageSettings"u8);
-                writer.WriteObjectValue(LogStorageSettings);
+                if (LogStorageSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LogStorageSettings>)LogStorageSettings).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("dataset"u8);
-            writer.WriteObjectValue(Dataset);
+            if (Dataset is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<DatasetReference>)Dataset).Serialize(writer, options);
+            }
             if (Optional.IsDefined(StoreSettings))
             {
                 writer.WritePropertyName("storeSettings"u8);
-                writer.WriteObjectValue(StoreSettings);
+                if (StoreSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StoreReadSettings>)StoreSettings).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -106,8 +161,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static DeleteActivity DeserializeDeleteActivity(JsonElement element)
+        internal static DeleteActivity DeserializeDeleteActivity(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -276,6 +333,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DeleteActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, recursive.Value, Optional.ToNullable(maxConcurrentConnections), enableLogging.Value, logStorageSettings.Value, dataset, storeSettings.Value);
+        }
+
+        DeleteActivity IModelJsonSerializable<DeleteActivity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeleteActivity>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeleteActivity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DeleteActivity>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeleteActivity>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DeleteActivity IModelSerializable<DeleteActivity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeleteActivity>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDeleteActivity(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DeleteActivity"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DeleteActivity"/> to convert. </param>
+        public static implicit operator RequestContent(DeleteActivity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DeleteActivity"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DeleteActivity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDeleteActivity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class DeleteActivityConverter : JsonConverter<DeleteActivity>

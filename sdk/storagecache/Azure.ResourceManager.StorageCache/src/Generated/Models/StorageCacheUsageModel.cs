@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> A usage model. </summary>
     public partial class StorageCacheUsageModel
     {
-        /// <summary> Initializes a new instance of StorageCacheUsageModel. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageCacheUsageModel"/>. </summary>
         internal StorageCacheUsageModel()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageCacheUsageModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheUsageModel"/>. </summary>
         /// <param name="display"> Localized information describing this usage model. </param>
         /// <param name="modelName"> Non-localized keyword name for this usage model. </param>
         /// <param name="targetType"> The type of Storage Target to which this model is applicable (only nfs3 as of this version). </param>
-        internal StorageCacheUsageModel(StorageCacheUsageModelDisplay display, string modelName, string targetType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageCacheUsageModel(StorageCacheUsageModelDisplay display, string modelName, string targetType, Dictionary<string, BinaryData> rawData)
         {
             Display = display;
             ModelName = modelName;
             TargetType = targetType;
+            _rawData = rawData;
         }
 
         /// <summary> Localized information describing this usage model. </summary>

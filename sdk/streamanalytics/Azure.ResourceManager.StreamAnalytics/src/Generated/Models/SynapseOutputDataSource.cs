@@ -5,18 +5,21 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes an Azure Synapse output data source. </summary>
     public partial class SynapseOutputDataSource : StreamingJobOutputDataSource
     {
-        /// <summary> Initializes a new instance of SynapseOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseOutputDataSource"/>. </summary>
         public SynapseOutputDataSource()
         {
             OutputDataSourceType = "Microsoft.Sql/Server/DataWarehouse";
         }
 
-        /// <summary> Initializes a new instance of SynapseOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseOutputDataSource"/>. </summary>
         /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="server"> The name of the SQL server containing the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="database"> The name of the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
@@ -24,7 +27,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="user"> The user name that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="password"> The password that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="authenticationMode"> Authentication Mode. </param>
-        internal SynapseOutputDataSource(string outputDataSourceType, string server, string database, string table, string user, string password, StreamAnalyticsAuthenticationMode? authenticationMode) : base(outputDataSourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseOutputDataSource(string outputDataSourceType, string server, string database, string table, string user, string password, StreamAnalyticsAuthenticationMode? authenticationMode, Dictionary<string, BinaryData> rawData) : base(outputDataSourceType, rawData)
         {
             Server = server;
             Database = database;

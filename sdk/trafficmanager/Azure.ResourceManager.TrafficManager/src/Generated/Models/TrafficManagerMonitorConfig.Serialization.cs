@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    public partial class TrafficManagerMonitorConfig : IUtf8JsonSerializable
+    public partial class TrafficManagerMonitorConfig : IUtf8JsonSerializable, IModelJsonSerializable<TrafficManagerMonitorConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TrafficManagerMonitorConfig>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TrafficManagerMonitorConfig>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TrafficManagerMonitorConfig>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ProfileMonitorStatus))
             {
@@ -57,7 +64,14 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomHeaders)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<TrafficManagerMonitorConfigCustomHeaderInfo>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -67,15 +81,36 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 writer.WriteStartArray();
                 foreach (var item in ExpectedStatusCodeRanges)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ExpectedStatusCodeRangeInfo>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static TrafficManagerMonitorConfig DeserializeTrafficManagerMonitorConfig(JsonElement element)
+        internal static TrafficManagerMonitorConfig DeserializeTrafficManagerMonitorConfig(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,6 +124,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             Optional<long> toleratedNumberOfFailures = default;
             Optional<IList<TrafficManagerMonitorConfigCustomHeaderInfo>> customHeaders = default;
             Optional<IList<ExpectedStatusCodeRangeInfo>> expectedStatusCodeRanges = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profileMonitorStatus"u8))
@@ -178,8 +214,61 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     expectedStatusCodeRanges = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TrafficManagerMonitorConfig(Optional.ToNullable(profileMonitorStatus), Optional.ToNullable(protocol), Optional.ToNullable(port), path.Value, Optional.ToNullable(intervalInSeconds), Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(toleratedNumberOfFailures), Optional.ToList(customHeaders), Optional.ToList(expectedStatusCodeRanges));
+            return new TrafficManagerMonitorConfig(Optional.ToNullable(profileMonitorStatus), Optional.ToNullable(protocol), Optional.ToNullable(port), path.Value, Optional.ToNullable(intervalInSeconds), Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(toleratedNumberOfFailures), Optional.ToList(customHeaders), Optional.ToList(expectedStatusCodeRanges), rawData);
+        }
+
+        TrafficManagerMonitorConfig IModelJsonSerializable<TrafficManagerMonitorConfig>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrafficManagerMonitorConfig>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrafficManagerMonitorConfig(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TrafficManagerMonitorConfig>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrafficManagerMonitorConfig>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TrafficManagerMonitorConfig IModelSerializable<TrafficManagerMonitorConfig>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrafficManagerMonitorConfig>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTrafficManagerMonitorConfig(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TrafficManagerMonitorConfig"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TrafficManagerMonitorConfig"/> to convert. </param>
+        public static implicit operator RequestContent(TrafficManagerMonitorConfig model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TrafficManagerMonitorConfig"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TrafficManagerMonitorConfig(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTrafficManagerMonitorConfig(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

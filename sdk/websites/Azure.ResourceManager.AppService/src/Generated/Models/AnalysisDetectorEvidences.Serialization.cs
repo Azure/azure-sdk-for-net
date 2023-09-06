@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AnalysisDetectorEvidences : IUtf8JsonSerializable
+    public partial class AnalysisDetectorEvidences : IUtf8JsonSerializable, IModelJsonSerializable<AnalysisDetectorEvidences>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AnalysisDetectorEvidences>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AnalysisDetectorEvidences>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AnalysisDetectorEvidences>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Source))
             {
@@ -24,7 +31,14 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(DetectorDefinition))
             {
                 writer.WritePropertyName("detectorDefinition"u8);
-                writer.WriteObjectValue(DetectorDefinition);
+                if (DetectorDefinition is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DetectorDefinition>)DetectorDefinition).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Metrics))
             {
@@ -32,7 +46,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DiagnosticMetricSet>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +71,14 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteStartArray();
                     foreach (var item0 in item)
                     {
-                        writer.WriteObjectValue(item0);
+                        if (item0 is null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IModelJsonSerializable<AppServiceNameValuePair>)item0).Serialize(writer, options);
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -59,13 +87,34 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(DetectorMetaData))
             {
                 writer.WritePropertyName("detectorMetaData"u8);
-                writer.WriteObjectValue(DetectorMetaData);
+                if (DetectorMetaData is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DetectorMetadata>)DetectorMetaData).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static AnalysisDetectorEvidences DeserializeAnalysisDetectorEvidences(JsonElement element)
+        internal static AnalysisDetectorEvidences DeserializeAnalysisDetectorEvidences(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -75,6 +124,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<IList<DiagnosticMetricSet>> metrics = default;
             Optional<IList<IList<AppServiceNameValuePair>>> data = default;
             Optional<DetectorMetadata> detectorMetaData = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"u8))
@@ -140,8 +190,61 @@ namespace Azure.ResourceManager.AppService.Models
                     detectorMetaData = DetectorMetadata.DeserializeDetectorMetadata(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AnalysisDetectorEvidences(source.Value, detectorDefinition.Value, Optional.ToList(metrics), Optional.ToList(data), detectorMetaData.Value);
+            return new AnalysisDetectorEvidences(source.Value, detectorDefinition.Value, Optional.ToList(metrics), Optional.ToList(data), detectorMetaData.Value, rawData);
+        }
+
+        AnalysisDetectorEvidences IModelJsonSerializable<AnalysisDetectorEvidences>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnalysisDetectorEvidences>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalysisDetectorEvidences(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AnalysisDetectorEvidences>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnalysisDetectorEvidences>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AnalysisDetectorEvidences IModelSerializable<AnalysisDetectorEvidences>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnalysisDetectorEvidences>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAnalysisDetectorEvidences(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AnalysisDetectorEvidences"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AnalysisDetectorEvidences"/> to convert. </param>
+        public static implicit operator RequestContent(AnalysisDetectorEvidences model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AnalysisDetectorEvidences"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AnalysisDetectorEvidences(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAnalysisDetectorEvidences(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

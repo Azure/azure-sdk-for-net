@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Synapse;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The response to a list data masking rules request. </summary>
     internal partial class SynapseDataMaskingRuleListResult
     {
-        /// <summary> Initializes a new instance of SynapseDataMaskingRuleListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseDataMaskingRuleListResult"/>. </summary>
         internal SynapseDataMaskingRuleListResult()
         {
             Value = new ChangeTrackingList<SynapseDataMaskingRuleData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseDataMaskingRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataMaskingRuleListResult"/>. </summary>
         /// <param name="value"> The list of Sql pool data masking rules. </param>
-        internal SynapseDataMaskingRuleListResult(IReadOnlyList<SynapseDataMaskingRuleData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseDataMaskingRuleListResult(IReadOnlyList<SynapseDataMaskingRuleData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The list of Sql pool data masking rules. </summary>

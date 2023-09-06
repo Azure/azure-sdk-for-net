@@ -5,11 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The PageRange. </summary>
     internal readonly partial struct PageRange
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private readonly Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PageRange"/>. </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PageRange(long start, long end, Dictionary<string, BinaryData> rawData)
+        {
+            Start = start;
+            End = end;
+            _rawData = rawData;
+        }
+
         /// <summary> Gets the start. </summary>
         public long Start { get; }
         /// <summary> Gets the end. </summary>

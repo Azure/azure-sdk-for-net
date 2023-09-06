@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseExtendedSqlPoolBlobAuditingPolicyData : IUtf8JsonSerializable
+    public partial class SynapseExtendedSqlPoolBlobAuditingPolicyData : IUtf8JsonSerializable, IModelJsonSerializable<SynapseExtendedSqlPoolBlobAuditingPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseExtendedSqlPoolBlobAuditingPolicyData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseExtendedSqlPoolBlobAuditingPolicyData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseExtendedSqlPoolBlobAuditingPolicyData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -77,11 +83,25 @@ namespace Azure.ResourceManager.Synapse
                 writer.WriteNumberValue(QueueDelayMs.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SynapseExtendedSqlPoolBlobAuditingPolicyData DeserializeSynapseExtendedSqlPoolBlobAuditingPolicyData(JsonElement element)
+        internal static SynapseExtendedSqlPoolBlobAuditingPolicyData DeserializeSynapseExtendedSqlPoolBlobAuditingPolicyData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -100,6 +120,7 @@ namespace Azure.ResourceManager.Synapse
             Optional<bool> isStorageSecondaryKeyInUse = default;
             Optional<bool> isAzureMonitorTargetEnabled = default;
             Optional<int> queueDelayMs = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -221,8 +242,61 @@ namespace Azure.ResourceManager.Synapse
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SynapseExtendedSqlPoolBlobAuditingPolicyData(id, name, type, systemData.Value, predicateExpression.Value, Optional.ToNullable(state), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), Optional.ToList(auditActionsAndGroups), Optional.ToNullable(storageAccountSubscriptionId), Optional.ToNullable(isStorageSecondaryKeyInUse), Optional.ToNullable(isAzureMonitorTargetEnabled), Optional.ToNullable(queueDelayMs));
+            return new SynapseExtendedSqlPoolBlobAuditingPolicyData(id, name, type, systemData.Value, predicateExpression.Value, Optional.ToNullable(state), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), Optional.ToList(auditActionsAndGroups), Optional.ToNullable(storageAccountSubscriptionId), Optional.ToNullable(isStorageSecondaryKeyInUse), Optional.ToNullable(isAzureMonitorTargetEnabled), Optional.ToNullable(queueDelayMs), rawData);
+        }
+
+        SynapseExtendedSqlPoolBlobAuditingPolicyData IModelJsonSerializable<SynapseExtendedSqlPoolBlobAuditingPolicyData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseExtendedSqlPoolBlobAuditingPolicyData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseExtendedSqlPoolBlobAuditingPolicyData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseExtendedSqlPoolBlobAuditingPolicyData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseExtendedSqlPoolBlobAuditingPolicyData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseExtendedSqlPoolBlobAuditingPolicyData IModelSerializable<SynapseExtendedSqlPoolBlobAuditingPolicyData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SynapseExtendedSqlPoolBlobAuditingPolicyData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseExtendedSqlPoolBlobAuditingPolicyData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyData"/> to convert. </param>
+        public static implicit operator RequestContent(SynapseExtendedSqlPoolBlobAuditingPolicyData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapseExtendedSqlPoolBlobAuditingPolicyData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseExtendedSqlPoolBlobAuditingPolicyData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

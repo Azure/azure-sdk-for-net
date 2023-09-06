@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The Tar compression read settings. </summary>
     public partial class TarReadSettings : CompressionReadSettings
     {
-        /// <summary> Initializes a new instance of TarReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TarReadSettings"/>. </summary>
         public TarReadSettings()
         {
             Type = "TarReadSettings";
         }
 
-        /// <summary> Initializes a new instance of TarReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TarReadSettings"/>. </summary>
         /// <param name="type"> The Compression setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="preserveCompressionFileNameAsFolder"> Preserve the compression file name as folder path. Type: boolean (or Expression with resultType boolean). </param>

@@ -5,60 +5,76 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    internal partial class UnknownEndpointBase : IUtf8JsonSerializable
+    internal partial class UnknownEndpointBase : IUtf8JsonSerializable, IModelJsonSerializable<EndpointBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EndpointBase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EndpointBase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EndpointBase>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                if (Credentials is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CredentialsBase>)Credentials).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Url);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownEndpointBase DeserializeUnknownEndpointBase(JsonElement element)
+        internal static EndpointBase DeserializeUnknownEndpointBase(JsonElement element, ModelSerializerOptions options = default) => DeserializeEndpointBase(element, options);
+
+        EndpointBase IModelJsonSerializable<EndpointBase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string type = "Unknown";
-            Optional<CredentialsBase> credentials = default;
-            string url = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("credentials"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    credentials = CredentialsBase.DeserializeCredentialsBase(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("url"u8))
-                {
-                    url = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownEndpointBase(type, credentials.Value, url);
+            Core.ModelSerializerHelper.ValidateFormat<EndpointBase>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownEndpointBase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EndpointBase>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EndpointBase>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EndpointBase IModelSerializable<EndpointBase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EndpointBase>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEndpointBase(doc.RootElement, options);
         }
     }
 }

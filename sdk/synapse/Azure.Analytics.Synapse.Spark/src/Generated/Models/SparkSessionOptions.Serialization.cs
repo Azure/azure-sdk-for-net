@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
-    public partial class SparkSessionOptions : IUtf8JsonSerializable
+    public partial class SparkSessionOptions : IUtf8JsonSerializable, IModelJsonSerializable<SparkSessionOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SparkSessionOptions>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SparkSessionOptions>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SparkSessionOptions>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -129,7 +137,258 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 writer.WritePropertyName("numExecutors"u8);
                 writer.WriteNumberValue(ExecutorCount.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static SparkSessionOptions DeserializeSparkSessionOptions(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> artifactId = default;
+            string name = default;
+            Optional<string> file = default;
+            Optional<string> className = default;
+            Optional<IList<string>> args = default;
+            Optional<IList<string>> jars = default;
+            Optional<IList<string>> pyFiles = default;
+            Optional<IList<string>> files = default;
+            Optional<IList<string>> archives = default;
+            Optional<IDictionary<string, string>> conf = default;
+            Optional<string> driverMemory = default;
+            Optional<int> driverCores = default;
+            Optional<string> executorMemory = default;
+            Optional<int> executorCores = default;
+            Optional<int> numExecutors = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("artifactId"u8))
+                {
+                    artifactId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("file"u8))
+                {
+                    file = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("className"u8))
+                {
+                    className = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("args"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    args = array;
+                    continue;
+                }
+                if (property.NameEquals("jars"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    jars = array;
+                    continue;
+                }
+                if (property.NameEquals("pyFiles"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    pyFiles = array;
+                    continue;
+                }
+                if (property.NameEquals("files"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    files = array;
+                    continue;
+                }
+                if (property.NameEquals("archives"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    archives = array;
+                    continue;
+                }
+                if (property.NameEquals("conf"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    conf = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("driverMemory"u8))
+                {
+                    driverMemory = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("driverCores"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    driverCores = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("executorMemory"u8))
+                {
+                    executorMemory = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("executorCores"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    executorCores = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("numExecutors"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    numExecutors = property.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new SparkSessionOptions(Optional.ToDictionary(tags), artifactId.Value, name, file.Value, className.Value, Optional.ToList(args), Optional.ToList(jars), Optional.ToList(pyFiles), Optional.ToList(files), Optional.ToList(archives), Optional.ToDictionary(conf), driverMemory.Value, Optional.ToNullable(driverCores), executorMemory.Value, Optional.ToNullable(executorCores), Optional.ToNullable(numExecutors), rawData);
+        }
+
+        SparkSessionOptions IModelJsonSerializable<SparkSessionOptions>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SparkSessionOptions>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSparkSessionOptions(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SparkSessionOptions>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SparkSessionOptions>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SparkSessionOptions IModelSerializable<SparkSessionOptions>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SparkSessionOptions>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSparkSessionOptions(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SparkSessionOptions"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SparkSessionOptions"/> to convert. </param>
+        public static implicit operator RequestContent(SparkSessionOptions model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SparkSessionOptions"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SparkSessionOptions(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSparkSessionOptions(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

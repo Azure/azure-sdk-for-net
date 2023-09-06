@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Specification for a Kubernetes Environment to use for this resource. </summary>
     public partial class KubeEnvironmentProfile
     {
-        /// <summary> Initializes a new instance of KubeEnvironmentProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubeEnvironmentProfile"/>. </summary>
         public KubeEnvironmentProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of KubeEnvironmentProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubeEnvironmentProfile"/>. </summary>
         /// <param name="id"> Resource ID of the Kubernetes Environment. </param>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
         /// <param name="resourceType"> Resource type of the Kubernetes Environment. </param>
-        internal KubeEnvironmentProfile(ResourceIdentifier id, string name, ResourceType? resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubeEnvironmentProfile(ResourceIdentifier id, string name, ResourceType? resourceType, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
             ResourceType = resourceType;
+            _rawData = rawData;
         }
 
         /// <summary> Resource ID of the Kubernetes Environment. </summary>

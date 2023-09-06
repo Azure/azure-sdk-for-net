@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> An on-premises file system dataset. </summary>
     public partial class FileShareDataset : Dataset
     {
-        /// <summary> Initializes a new instance of FileShareDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public FileShareDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "FileShare";
         }
 
-        /// <summary> Initializes a new instance of FileShareDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -55,6 +55,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             FileFilter = fileFilter;
             Compression = compression;
             Type = type ?? "FileShare";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FileShareDataset"/> for deserialization. </summary>
+        internal FileShareDataset()
+        {
         }
 
         /// <summary> The path of the on-premises file system. Type: string (or Expression with resultType string). </summary>

@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(RunNotebookSparkSessionOptionsConverter))]
-    public partial class RunNotebookSparkSessionOptions : IUtf8JsonSerializable
+    public partial class RunNotebookSparkSessionOptions : IUtf8JsonSerializable, IModelJsonSerializable<RunNotebookSparkSessionOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RunNotebookSparkSessionOptions>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RunNotebookSparkSessionOptions>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RunNotebookSparkSessionOptions>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -136,11 +142,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("heartbeatTimeoutInSecond"u8);
                 writer.WriteNumberValue(HeartbeatTimeoutInSecond.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RunNotebookSparkSessionOptions DeserializeRunNotebookSparkSessionOptions(JsonElement element)
+        internal static RunNotebookSparkSessionOptions DeserializeRunNotebookSparkSessionOptions(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -162,6 +182,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<int> numExecutors = default;
             Optional<bool> isQueueable = default;
             Optional<int> heartbeatTimeoutInSecond = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -327,8 +348,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     heartbeatTimeoutInSecond = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RunNotebookSparkSessionOptions(Optional.ToDictionary(tags), kind.Value, proxyUser.Value, name.Value, Optional.ToList(jars), Optional.ToList(pyFiles), Optional.ToList(files), Optional.ToList(archives), queue.Value, Optional.ToDictionary(conf), driverMemory.Value, Optional.ToNullable(driverCores), executorMemory.Value, Optional.ToNullable(executorCores), Optional.ToNullable(numExecutors), Optional.ToNullable(isQueueable), Optional.ToNullable(heartbeatTimeoutInSecond));
+            return new RunNotebookSparkSessionOptions(Optional.ToDictionary(tags), kind.Value, proxyUser.Value, name.Value, Optional.ToList(jars), Optional.ToList(pyFiles), Optional.ToList(files), Optional.ToList(archives), queue.Value, Optional.ToDictionary(conf), driverMemory.Value, Optional.ToNullable(driverCores), executorMemory.Value, Optional.ToNullable(executorCores), Optional.ToNullable(numExecutors), Optional.ToNullable(isQueueable), Optional.ToNullable(heartbeatTimeoutInSecond), rawData);
+        }
+
+        RunNotebookSparkSessionOptions IModelJsonSerializable<RunNotebookSparkSessionOptions>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RunNotebookSparkSessionOptions>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRunNotebookSparkSessionOptions(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RunNotebookSparkSessionOptions>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RunNotebookSparkSessionOptions>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RunNotebookSparkSessionOptions IModelSerializable<RunNotebookSparkSessionOptions>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RunNotebookSparkSessionOptions>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRunNotebookSparkSessionOptions(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RunNotebookSparkSessionOptions"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RunNotebookSparkSessionOptions"/> to convert. </param>
+        public static implicit operator RequestContent(RunNotebookSparkSessionOptions model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RunNotebookSparkSessionOptions"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RunNotebookSparkSessionOptions(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRunNotebookSparkSessionOptions(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class RunNotebookSparkSessionOptionsConverter : JsonConverter<RunNotebookSparkSessionOptions>

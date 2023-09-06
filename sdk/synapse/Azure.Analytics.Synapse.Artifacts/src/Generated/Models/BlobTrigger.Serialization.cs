@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(BlobTriggerConverter))]
-    public partial class BlobTrigger : IUtf8JsonSerializable
+    public partial class BlobTrigger : IUtf8JsonSerializable, IModelJsonSerializable<BlobTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BlobTrigger>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BlobTrigger>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BlobTrigger>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Pipelines))
             {
@@ -25,7 +31,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Pipelines)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<TriggerPipelineReference>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -58,7 +71,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("maxConcurrency"u8);
             writer.WriteNumberValue(MaxConcurrency);
             writer.WritePropertyName("linkedService"u8);
-            writer.WriteObjectValue(LinkedService);
+            if (LinkedService is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<LinkedServiceReference>)LinkedService).Serialize(writer, options);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -68,8 +88,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static BlobTrigger DeserializeBlobTrigger(JsonElement element)
+        internal static BlobTrigger DeserializeBlobTrigger(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -171,6 +193,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new BlobTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties, Optional.ToList(pipelines), folderPath, maxConcurrency, linkedService);
+        }
+
+        BlobTrigger IModelJsonSerializable<BlobTrigger>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlobTrigger>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBlobTrigger(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BlobTrigger>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlobTrigger>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BlobTrigger IModelSerializable<BlobTrigger>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlobTrigger>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBlobTrigger(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BlobTrigger"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BlobTrigger"/> to convert. </param>
+        public static implicit operator RequestContent(BlobTrigger model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BlobTrigger"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BlobTrigger(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBlobTrigger(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class BlobTriggerConverter : JsonConverter<BlobTrigger>

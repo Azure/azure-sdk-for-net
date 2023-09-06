@@ -5,10 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Live trace category configuration of a Microsoft.SignalRService resource. </summary>
     public partial class LiveTraceCategory
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LiveTraceCategory"/>. </summary>
+        /// <param name="name">
+        /// Gets or sets the live trace category's name.
+        /// Available values: ConnectivityLogs, MessagingLogs.
+        /// Case insensitive.
+        /// </param>
+        /// <param name="enabled">
+        /// Indicates whether or the live trace category is enabled.
+        /// Available values: true, false.
+        /// Case insensitive.
+        /// </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LiveTraceCategory(string name, string enabled, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            Enabled = enabled;
+            _rawData = rawData;
+        }
     }
 }

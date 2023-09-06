@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,12 +14,28 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> The BlockLookupList. </summary>
     internal partial class BlockLookupList
     {
-        /// <summary> Initializes a new instance of BlockLookupList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlockLookupList"/>. </summary>
         public BlockLookupList()
         {
             Committed = new ChangeTrackingList<string>();
             Uncommitted = new ChangeTrackingList<string>();
             Latest = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BlockLookupList"/>. </summary>
+        /// <param name="committed"></param>
+        /// <param name="uncommitted"></param>
+        /// <param name="latest"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlockLookupList(IList<string> committed, IList<string> uncommitted, IList<string> latest, Dictionary<string, BinaryData> rawData)
+        {
+            Committed = committed;
+            Uncommitted = uncommitted;
+            Latest = latest;
+            _rawData = rawData;
         }
     }
 }

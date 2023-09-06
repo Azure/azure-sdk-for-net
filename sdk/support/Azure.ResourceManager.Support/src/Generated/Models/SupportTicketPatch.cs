@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Support.Models
 {
     /// <summary> Updates severity, ticket status, and contact details in the support ticket. </summary>
     public partial class SupportTicketPatch
     {
-        /// <summary> Initializes a new instance of SupportTicketPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SupportTicketPatch"/>. </summary>
         public SupportTicketPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SupportTicketPatch"/>. </summary>
+        /// <param name="severity"> Severity level. </param>
+        /// <param name="status"> Status to be updated on the ticket. </param>
+        /// <param name="contactDetails"> Contact details to be updated on the support ticket. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SupportTicketPatch(SupportSeverityLevel? severity, SupportTicketStatus? status, SupportContactProfileContent contactDetails, Dictionary<string, BinaryData> rawData)
+        {
+            Severity = severity;
+            Status = status;
+            ContactDetails = contactDetails;
+            _rawData = rawData;
         }
 
         /// <summary> Severity level. </summary>

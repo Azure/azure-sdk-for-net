@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    public partial class AmlFileSystemData : IUtf8JsonSerializable
+    public partial class AmlFileSystemData : IUtf8JsonSerializable, IModelJsonSerializable<AmlFileSystemData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AmlFileSystemData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AmlFileSystemData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AmlFileSystemData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -26,7 +33,14 @@ namespace Azure.ResourceManager.StorageCache
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StorageCacheSkuName>)Sku).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -66,24 +80,59 @@ namespace Azure.ResourceManager.StorageCache
             if (Optional.IsDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
-                writer.WriteObjectValue(EncryptionSettings);
+                if (EncryptionSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AmlFileSystemEncryptionSettings>)EncryptionSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue(MaintenanceWindow);
+                if (MaintenanceWindow is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AmlFileSystemPropertiesMaintenanceWindow>)MaintenanceWindow).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Hsm))
             {
                 writer.WritePropertyName("hsm"u8);
-                writer.WriteObjectValue(Hsm);
+                if (Hsm is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AmlFileSystemPropertiesHsm>)Hsm).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AmlFileSystemData DeserializeAmlFileSystemData(JsonElement element)
+        internal static AmlFileSystemData DeserializeAmlFileSystemData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -106,6 +155,7 @@ namespace Azure.ResourceManager.StorageCache
             Optional<AmlFileSystemEncryptionSettings> encryptionSettings = default;
             Optional<AmlFileSystemPropertiesMaintenanceWindow> maintenanceWindow = default;
             Optional<AmlFileSystemPropertiesHsm> hsm = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -272,8 +322,61 @@ namespace Azure.ResourceManager.StorageCache
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AmlFileSystemData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, Optional.ToList(zones), Optional.ToNullable(storageCapacityTiB), health.Value, Optional.ToNullable(provisioningState), filesystemSubnet.Value, clientInfo.Value, Optional.ToNullable(throughputProvisionedMBps), encryptionSettings.Value, maintenanceWindow.Value, hsm.Value);
+            return new AmlFileSystemData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, Optional.ToList(zones), Optional.ToNullable(storageCapacityTiB), health.Value, Optional.ToNullable(provisioningState), filesystemSubnet.Value, clientInfo.Value, Optional.ToNullable(throughputProvisionedMBps), encryptionSettings.Value, maintenanceWindow.Value, hsm.Value, rawData);
+        }
+
+        AmlFileSystemData IModelJsonSerializable<AmlFileSystemData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AmlFileSystemData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAmlFileSystemData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AmlFileSystemData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AmlFileSystemData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AmlFileSystemData IModelSerializable<AmlFileSystemData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AmlFileSystemData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAmlFileSystemData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AmlFileSystemData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AmlFileSystemData"/> to convert. </param>
+        public static implicit operator RequestContent(AmlFileSystemData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AmlFileSystemData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AmlFileSystemData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAmlFileSystemData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }
