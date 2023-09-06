@@ -11,9 +11,8 @@
 ### Breaking Changes
 
 - Renamed softDeleteRetentionPeriod to softDeleteRetentionPeriodInDays
-### Bugs Fixed
-
-### Other Changes
+- Removed incorrect protectable item type and discriminator for HSR container protectable item
+- Added correct protectable item type and discriminator for HSR container protectable item
 
 ## 1.1.0-beta.1 (2023-05-31)
 
