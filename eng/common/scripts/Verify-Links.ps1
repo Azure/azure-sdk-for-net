@@ -187,7 +187,7 @@ function ParseLinks([string]$baseUri, [string]$htmlContent)
   #$hrefs | Foreach-Object { Write-Host $_ }
 
   Write-Verbose "Found $($hrefs.Count) raw href's in page $baseUri";
-  $links = $hrefs | ForEach-Object { ResolveUri $baseUri $_.Groups["href"].Value }
+  [string[]] $links = $hrefs | ForEach-Object { ResolveUri $baseUri $_.Groups["href"].Value }
 
   #$links | Foreach-Object { Write-Host $_ }
 
@@ -270,13 +270,25 @@ function CheckLink ([System.Uri]$linkUri, $allowRetry=$true)
         $linkValid = $false
       }
       else {
+
         if ($null -ne $statusCode) {
+
           # For 429 rate-limiting try to pause if possible
           if ($allowRetry -and $responsePresent -and $statusCode -eq 429) {
-            $retryAfter = $_.Exception.Response.Headers.RetryAfter.Delta.TotalSeconds
+
+            $retryAfterPresent = $_.Exception.Headers.psobject.Properties.name -contains "RetryAfter"
+            $retryAfterDeltaPresent = $false
+
+            if ($retryAfterPresent) {
+              $retryAfterDeltaPresent = $_.Exception.Headers.RetryAfter.psobject.Properties.name -contains "Delta"
+            }
+
+            if ($retryAfterDeltaPresent) {
+              $retryAfter = $_.Exception.Response.Headers.RetryAfter.Delta.TotalSeconds
+            }
 
             # Default retry after 60 (arbitrary) seconds if no header given
-            if (!$retryAfter -or $retryAfter -gt 60) { $retryAfter = 60 }
+            if (!$retryAfterDeltaPresent -or $retryAfter -gt 60) { $retryAfter = 60 }
             Write-Host "Rate-Limited for $retryAfter seconds while requesting $linkUri"
 
             Start-Sleep -Seconds $retryAfter
@@ -379,7 +391,7 @@ function GetLinks([System.Uri]$pageUri)
     LogError "Don't know how to process uri $pageUri"
   }
 
-  $links = ParseLinks $pageUri $content
+  [string[]] $links = ParseLinks $pageUri $content
 
   return ,$links;
 }
@@ -451,7 +463,7 @@ while ($pageUrisToCheck.Count -ne 0)
     if ($checkedPages.ContainsKey($pageUri)) { continue }
     $checkedPages[$pageUri] = $true;
 
-    $linkUris = GetLinks $pageUri
+    [string[]] $linkUris = GetLinks $pageUri
     Write-Host "Checking $($linkUris.Count) links found on page $pageUri";
     $badLinksPerPage = @();
     foreach ($linkUri in $linkUris) {
