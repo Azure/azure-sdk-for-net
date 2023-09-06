@@ -4,19 +4,16 @@
 
 ### Features Added
 
+- Upgraded API version to 2023-04-01
 - Added SecureScore as part of VaultProperties
 - Added MultiUserAuthorization as part of vaultProperties
 - Added SoftDeleteSettings as part of vaultproperties
 - Added CrossSubscriptionRestoresettings
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Removed incorrect protectable item type and discriminator for HSR container protectable item
 - Added correct protectable item type and discriminator for HSR container protectable item
-
-### Other Changes
 
 ## 1.1.0-beta.1 (2023-05-31)
 
