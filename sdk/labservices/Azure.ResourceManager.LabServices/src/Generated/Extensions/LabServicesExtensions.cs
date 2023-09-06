@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.LabServices.Mocking;
 using Azure.ResourceManager.LabServices.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,38 +20,30 @@ namespace Azure.ResourceManager.LabServices
     /// <summary> A class to add extension methods to Azure.ResourceManager.LabServices. </summary>
     public static partial class LabServicesExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static LabServicesArmClientMockingExtension GetLabServicesArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new LabServicesArmClientMockingExtension(client);
+            });
+        }
+
+        private static LabServicesResourceGroupMockingExtension GetLabServicesResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new LabServicesResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static LabServicesSubscriptionMockingExtension GetLabServicesSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new LabServicesSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region LabVirtualMachineImageResource
         /// <summary>
         /// Gets an object representing a <see cref="LabVirtualMachineImageResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="LabVirtualMachineImageResource.CreateResourceIdentifier" /> to create a <see cref="LabVirtualMachineImageResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -60,16 +53,9 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> Returns a <see cref="LabVirtualMachineImageResource" /> object. </returns>
         public static LabVirtualMachineImageResource GetLabVirtualMachineImageResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                LabVirtualMachineImageResource.ValidateResourceId(id);
-                return new LabVirtualMachineImageResource(client, id);
-            }
-            );
+            return GetLabServicesArmClientMockingExtension(client).GetLabVirtualMachineImageResource(id);
         }
-        #endregion
 
-        #region LabPlanResource
         /// <summary>
         /// Gets an object representing a <see cref="LabPlanResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="LabPlanResource.CreateResourceIdentifier" /> to create a <see cref="LabPlanResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -79,16 +65,9 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> Returns a <see cref="LabPlanResource" /> object. </returns>
         public static LabPlanResource GetLabPlanResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                LabPlanResource.ValidateResourceId(id);
-                return new LabPlanResource(client, id);
-            }
-            );
+            return GetLabServicesArmClientMockingExtension(client).GetLabPlanResource(id);
         }
-        #endregion
 
-        #region LabResource
         /// <summary>
         /// Gets an object representing a <see cref="LabResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="LabResource.CreateResourceIdentifier" /> to create a <see cref="LabResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -98,16 +77,9 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> Returns a <see cref="LabResource" /> object. </returns>
         public static LabResource GetLabResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                LabResource.ValidateResourceId(id);
-                return new LabResource(client, id);
-            }
-            );
+            return GetLabServicesArmClientMockingExtension(client).GetLabResource(id);
         }
-        #endregion
 
-        #region LabServicesScheduleResource
         /// <summary>
         /// Gets an object representing a <see cref="LabServicesScheduleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="LabServicesScheduleResource.CreateResourceIdentifier" /> to create a <see cref="LabServicesScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -117,16 +89,9 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> Returns a <see cref="LabServicesScheduleResource" /> object. </returns>
         public static LabServicesScheduleResource GetLabServicesScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                LabServicesScheduleResource.ValidateResourceId(id);
-                return new LabServicesScheduleResource(client, id);
-            }
-            );
+            return GetLabServicesArmClientMockingExtension(client).GetLabServicesScheduleResource(id);
         }
-        #endregion
 
-        #region LabUserResource
         /// <summary>
         /// Gets an object representing a <see cref="LabUserResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="LabUserResource.CreateResourceIdentifier" /> to create a <see cref="LabUserResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -136,16 +101,9 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> Returns a <see cref="LabUserResource" /> object. </returns>
         public static LabUserResource GetLabUserResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                LabUserResource.ValidateResourceId(id);
-                return new LabUserResource(client, id);
-            }
-            );
+            return GetLabServicesArmClientMockingExtension(client).GetLabUserResource(id);
         }
-        #endregion
 
-        #region LabVirtualMachineResource
         /// <summary>
         /// Gets an object representing a <see cref="LabVirtualMachineResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="LabVirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="LabVirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -155,21 +113,15 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> Returns a <see cref="LabVirtualMachineResource" /> object. </returns>
         public static LabVirtualMachineResource GetLabVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                LabVirtualMachineResource.ValidateResourceId(id);
-                return new LabVirtualMachineResource(client, id);
-            }
-            );
+            return GetLabServicesArmClientMockingExtension(client).GetLabVirtualMachineResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of LabPlanResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of LabPlanResources and their operations over a LabPlanResource. </returns>
         public static LabPlanCollection GetLabPlans(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLabPlans();
+            return GetLabServicesResourceGroupMockingExtension(resourceGroupResource).GetLabPlans();
         }
 
         /// <summary>
@@ -193,7 +145,7 @@ namespace Azure.ResourceManager.LabServices
         [ForwardsClientCalls]
         public static async Task<Response<LabPlanResource>> GetLabPlanAsync(this ResourceGroupResource resourceGroupResource, string labPlanName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetLabPlans().GetAsync(labPlanName, cancellationToken).ConfigureAwait(false);
+            return await GetLabServicesResourceGroupMockingExtension(resourceGroupResource).GetLabPlanAsync(labPlanName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -217,7 +169,7 @@ namespace Azure.ResourceManager.LabServices
         [ForwardsClientCalls]
         public static Response<LabPlanResource> GetLabPlan(this ResourceGroupResource resourceGroupResource, string labPlanName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetLabPlans().Get(labPlanName, cancellationToken);
+            return GetLabServicesResourceGroupMockingExtension(resourceGroupResource).GetLabPlan(labPlanName, cancellationToken);
         }
 
         /// <summary> Gets a collection of LabResources in the ResourceGroupResource. </summary>
@@ -225,7 +177,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> An object representing collection of LabResources and their operations over a LabResource. </returns>
         public static LabCollection GetLabs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLabs();
+            return GetLabServicesResourceGroupMockingExtension(resourceGroupResource).GetLabs();
         }
 
         /// <summary>
@@ -249,7 +201,7 @@ namespace Azure.ResourceManager.LabServices
         [ForwardsClientCalls]
         public static async Task<Response<LabResource>> GetLabAsync(this ResourceGroupResource resourceGroupResource, string labName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetLabs().GetAsync(labName, cancellationToken).ConfigureAwait(false);
+            return await GetLabServicesResourceGroupMockingExtension(resourceGroupResource).GetLabAsync(labName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -273,7 +225,7 @@ namespace Azure.ResourceManager.LabServices
         [ForwardsClientCalls]
         public static Response<LabResource> GetLab(this ResourceGroupResource resourceGroupResource, string labName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetLabs().Get(labName, cancellationToken);
+            return GetLabServicesResourceGroupMockingExtension(resourceGroupResource).GetLab(labName, cancellationToken);
         }
 
         /// <summary>
@@ -295,7 +247,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> An async collection of <see cref="LabPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LabPlanResource> GetLabPlansAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLabPlansAsync(filter, cancellationToken);
+            return GetLabServicesSubscriptionMockingExtension(subscriptionResource).GetLabPlansAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -317,7 +269,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> A collection of <see cref="LabPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LabPlanResource> GetLabPlans(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLabPlans(filter, cancellationToken);
+            return GetLabServicesSubscriptionMockingExtension(subscriptionResource).GetLabPlans(filter, cancellationToken);
         }
 
         /// <summary>
@@ -339,7 +291,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> An async collection of <see cref="LabResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LabResource> GetLabsAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLabsAsync(filter, cancellationToken);
+            return GetLabServicesSubscriptionMockingExtension(subscriptionResource).GetLabsAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -361,7 +313,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> A collection of <see cref="LabResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LabResource> GetLabs(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLabs(filter, cancellationToken);
+            return GetLabServicesSubscriptionMockingExtension(subscriptionResource).GetLabs(filter, cancellationToken);
         }
 
         /// <summary>
@@ -383,7 +335,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> An async collection of <see cref="AvailableLabServicesSku" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableLabServicesSku> GetSkusAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkusAsync(filter, cancellationToken);
+            return GetLabServicesSubscriptionMockingExtension(subscriptionResource).GetSkusAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -405,7 +357,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> A collection of <see cref="AvailableLabServicesSku" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableLabServicesSku> GetSkus(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkus(filter, cancellationToken);
+            return GetLabServicesSubscriptionMockingExtension(subscriptionResource).GetSkus(filter, cancellationToken);
         }
 
         /// <summary>
@@ -428,7 +380,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> An async collection of <see cref="LabServicesUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LabServicesUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesAsync(location, filter, cancellationToken);
+            return GetLabServicesSubscriptionMockingExtension(subscriptionResource).GetUsagesAsync(location, filter, cancellationToken);
         }
 
         /// <summary>
@@ -451,7 +403,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> A collection of <see cref="LabServicesUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LabServicesUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsages(location, filter, cancellationToken);
+            return GetLabServicesSubscriptionMockingExtension(subscriptionResource).GetUsages(location, filter, cancellationToken);
         }
     }
 }

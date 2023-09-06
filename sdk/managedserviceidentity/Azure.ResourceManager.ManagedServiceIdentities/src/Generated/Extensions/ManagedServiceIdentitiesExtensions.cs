@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedServiceIdentities.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities
@@ -18,54 +19,47 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     /// <summary> A class to add extension methods to Azure.ResourceManager.ManagedServiceIdentities. </summary>
     public static partial class ManagedServiceIdentitiesExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static ManagedServiceIdentitiesArmClientMockingExtension GetManagedServiceIdentitiesArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new ManagedServiceIdentitiesArmClientMockingExtension(client);
+            });
+        }
+
+        private static ManagedServiceIdentitiesArmMockingExtension GetManagedServiceIdentitiesArmMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new ManagedServiceIdentitiesArmMockingExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ArmResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ManagedServiceIdentitiesResourceGroupMockingExtension GetManagedServiceIdentitiesResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ManagedServiceIdentitiesResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ManagedServiceIdentitiesSubscriptionMockingExtension GetManagedServiceIdentitiesSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ManagedServiceIdentitiesSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        /// <summary> Gets an object representing a SystemAssignedIdentityResource along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="SystemAssignedIdentityResource" /> object. </returns>
+        public static SystemAssignedIdentityResource GetSystemAssignedIdentity(this ArmClient client, ResourceIdentifier scope)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
+            return GetManagedServiceIdentitiesArmClientMockingExtension(client).GetSystemAssignedIdentity(scope);
         }
-        #region SystemAssignedIdentityResource
+
         /// <summary>
         /// Gets an object representing a <see cref="SystemAssignedIdentityResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SystemAssignedIdentityResource.CreateResourceIdentifier" /> to create a <see cref="SystemAssignedIdentityResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -75,16 +69,9 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> Returns a <see cref="SystemAssignedIdentityResource" /> object. </returns>
         public static SystemAssignedIdentityResource GetSystemAssignedIdentityResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SystemAssignedIdentityResource.ValidateResourceId(id);
-                return new SystemAssignedIdentityResource(client, id);
-            }
-            );
+            return GetManagedServiceIdentitiesArmClientMockingExtension(client).GetSystemAssignedIdentityResource(id);
         }
-        #endregion
 
-        #region UserAssignedIdentityResource
         /// <summary>
         /// Gets an object representing an <see cref="UserAssignedIdentityResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="UserAssignedIdentityResource.CreateResourceIdentifier" /> to create an <see cref="UserAssignedIdentityResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -94,16 +81,9 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> Returns a <see cref="UserAssignedIdentityResource" /> object. </returns>
         public static UserAssignedIdentityResource GetUserAssignedIdentityResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                UserAssignedIdentityResource.ValidateResourceId(id);
-                return new UserAssignedIdentityResource(client, id);
-            }
-            );
+            return GetManagedServiceIdentitiesArmClientMockingExtension(client).GetUserAssignedIdentityResource(id);
         }
-        #endregion
 
-        #region FederatedIdentityCredentialResource
         /// <summary>
         /// Gets an object representing a <see cref="FederatedIdentityCredentialResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="FederatedIdentityCredentialResource.CreateResourceIdentifier" /> to create a <see cref="FederatedIdentityCredentialResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -113,30 +93,15 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> Returns a <see cref="FederatedIdentityCredentialResource" /> object. </returns>
         public static FederatedIdentityCredentialResource GetFederatedIdentityCredentialResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FederatedIdentityCredentialResource.ValidateResourceId(id);
-                return new FederatedIdentityCredentialResource(client, id);
-            }
-            );
+            return GetManagedServiceIdentitiesArmClientMockingExtension(client).GetFederatedIdentityCredentialResource(id);
         }
-        #endregion
 
         /// <summary> Gets an object representing a SystemAssignedIdentityResource along with the instance operations that can be performed on it in the ArmResource. </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="SystemAssignedIdentityResource" /> object. </returns>
         public static SystemAssignedIdentityResource GetSystemAssignedIdentity(this ArmResource armResource)
         {
-            return GetArmResourceExtensionClient(armResource).GetSystemAssignedIdentity();
-        }
-
-        /// <summary> Gets an object representing a SystemAssignedIdentityResource along with the instance operations that can be performed on it in the ArmResource. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="SystemAssignedIdentityResource" /> object. </returns>
-        public static SystemAssignedIdentityResource GetSystemAssignedIdentity(this ArmClient client, ResourceIdentifier scope)
-        {
-            return GetArmResourceExtensionClient(client, scope).GetSystemAssignedIdentity();
+            return GetManagedServiceIdentitiesArmMockingExtension(armResource).GetSystemAssignedIdentity();
         }
 
         /// <summary> Gets a collection of UserAssignedIdentityResources in the ResourceGroupResource. </summary>
@@ -144,7 +109,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> An object representing collection of UserAssignedIdentityResources and their operations over a UserAssignedIdentityResource. </returns>
         public static UserAssignedIdentityCollection GetUserAssignedIdentities(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetUserAssignedIdentities();
+            return GetManagedServiceIdentitiesResourceGroupMockingExtension(resourceGroupResource).GetUserAssignedIdentities();
         }
 
         /// <summary>
@@ -168,7 +133,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         [ForwardsClientCalls]
         public static async Task<Response<UserAssignedIdentityResource>> GetUserAssignedIdentityAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetUserAssignedIdentities().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetManagedServiceIdentitiesResourceGroupMockingExtension(resourceGroupResource).GetUserAssignedIdentityAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -192,7 +157,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         [ForwardsClientCalls]
         public static Response<UserAssignedIdentityResource> GetUserAssignedIdentity(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetUserAssignedIdentities().Get(resourceName, cancellationToken);
+            return GetManagedServiceIdentitiesResourceGroupMockingExtension(resourceGroupResource).GetUserAssignedIdentity(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -213,7 +178,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> An async collection of <see cref="UserAssignedIdentityResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<UserAssignedIdentityResource> GetUserAssignedIdentitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUserAssignedIdentitiesAsync(cancellationToken);
+            return GetManagedServiceIdentitiesSubscriptionMockingExtension(subscriptionResource).GetUserAssignedIdentitiesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -234,7 +199,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> A collection of <see cref="UserAssignedIdentityResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<UserAssignedIdentityResource> GetUserAssignedIdentities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUserAssignedIdentities(cancellationToken);
+            return GetManagedServiceIdentitiesSubscriptionMockingExtension(subscriptionResource).GetUserAssignedIdentities(cancellationToken);
         }
     }
 }

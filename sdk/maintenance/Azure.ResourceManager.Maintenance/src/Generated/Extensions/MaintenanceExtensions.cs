@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Maintenance.Mocking;
 using Azure.ResourceManager.Maintenance.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,38 +20,30 @@ namespace Azure.ResourceManager.Maintenance
     /// <summary> A class to add extension methods to Azure.ResourceManager.Maintenance. </summary>
     public static partial class MaintenanceExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MaintenanceArmClientMockingExtension GetMaintenanceArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new MaintenanceArmClientMockingExtension(client);
+            });
+        }
+
+        private static MaintenanceResourceGroupMockingExtension GetMaintenanceResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new MaintenanceResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MaintenanceSubscriptionMockingExtension GetMaintenanceSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new MaintenanceSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region MaintenancePublicConfigurationResource
         /// <summary>
         /// Gets an object representing a <see cref="MaintenancePublicConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MaintenancePublicConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MaintenancePublicConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -60,16 +53,9 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> Returns a <see cref="MaintenancePublicConfigurationResource" /> object. </returns>
         public static MaintenancePublicConfigurationResource GetMaintenancePublicConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MaintenancePublicConfigurationResource.ValidateResourceId(id);
-                return new MaintenancePublicConfigurationResource(client, id);
-            }
-            );
+            return GetMaintenanceArmClientMockingExtension(client).GetMaintenancePublicConfigurationResource(id);
         }
-        #endregion
 
-        #region MaintenanceConfigurationResource
         /// <summary>
         /// Gets an object representing a <see cref="MaintenanceConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MaintenanceConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -79,16 +65,9 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> Returns a <see cref="MaintenanceConfigurationResource" /> object. </returns>
         public static MaintenanceConfigurationResource GetMaintenanceConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MaintenanceConfigurationResource.ValidateResourceId(id);
-                return new MaintenanceConfigurationResource(client, id);
-            }
-            );
+            return GetMaintenanceArmClientMockingExtension(client).GetMaintenanceConfigurationResource(id);
         }
-        #endregion
 
-        #region MaintenanceApplyUpdateResource
         /// <summary>
         /// Gets an object representing a <see cref="MaintenanceApplyUpdateResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MaintenanceApplyUpdateResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceApplyUpdateResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -98,21 +77,15 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> Returns a <see cref="MaintenanceApplyUpdateResource" /> object. </returns>
         public static MaintenanceApplyUpdateResource GetMaintenanceApplyUpdateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MaintenanceApplyUpdateResource.ValidateResourceId(id);
-                return new MaintenanceApplyUpdateResource(client, id);
-            }
-            );
+            return GetMaintenanceArmClientMockingExtension(client).GetMaintenanceApplyUpdateResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of MaintenanceConfigurationResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MaintenanceConfigurationResources and their operations over a MaintenanceConfigurationResource. </returns>
         public static MaintenanceConfigurationCollection GetMaintenanceConfigurations(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMaintenanceConfigurations();
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).GetMaintenanceConfigurations();
         }
 
         /// <summary>
@@ -136,7 +109,7 @@ namespace Azure.ResourceManager.Maintenance
         [ForwardsClientCalls]
         public static async Task<Response<MaintenanceConfigurationResource>> GetMaintenanceConfigurationAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetMaintenanceConfigurations().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).GetMaintenanceConfigurationAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -160,7 +133,7 @@ namespace Azure.ResourceManager.Maintenance
         [ForwardsClientCalls]
         public static Response<MaintenanceConfigurationResource> GetMaintenanceConfiguration(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetMaintenanceConfigurations().Get(resourceName, cancellationToken);
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).GetMaintenanceConfiguration(resourceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of MaintenanceApplyUpdateResources in the ResourceGroupResource. </summary>
@@ -168,7 +141,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> An object representing collection of MaintenanceApplyUpdateResources and their operations over a MaintenanceApplyUpdateResource. </returns>
         public static MaintenanceApplyUpdateCollection GetMaintenanceApplyUpdates(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMaintenanceApplyUpdates();
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).GetMaintenanceApplyUpdates();
         }
 
         /// <summary>
@@ -195,7 +168,7 @@ namespace Azure.ResourceManager.Maintenance
         [ForwardsClientCalls]
         public static async Task<Response<MaintenanceApplyUpdateResource>> GetMaintenanceApplyUpdateAsync(this ResourceGroupResource resourceGroupResource, string providerName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetMaintenanceApplyUpdates().GetAsync(providerName, resourceType, resourceName, applyUpdateName, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).GetMaintenanceApplyUpdateAsync(providerName, resourceType, resourceName, applyUpdateName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -222,7 +195,7 @@ namespace Azure.ResourceManager.Maintenance
         [ForwardsClientCalls]
         public static Response<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdate(this ResourceGroupResource resourceGroupResource, string providerName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetMaintenanceApplyUpdates().Get(providerName, resourceType, resourceName, applyUpdateName, cancellationToken);
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).GetMaintenanceApplyUpdate(providerName, resourceType, resourceName, applyUpdateName, cancellationToken);
         }
 
         /// <summary>
@@ -244,9 +217,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public static async Task<Response<MaintenanceApplyUpdateResource>> GetApplyUpdatesByParentAsync(this ResourceGroupResource resourceGroupResource, ResourceGroupResourceGetApplyUpdatesByParentOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetApplyUpdatesByParentAsync(options, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).GetApplyUpdatesByParentAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -268,9 +239,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public static Response<MaintenanceApplyUpdateResource> GetApplyUpdatesByParent(this ResourceGroupResource resourceGroupResource, ResourceGroupResourceGetApplyUpdatesByParentOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetApplyUpdatesByParent(options, cancellationToken);
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).GetApplyUpdatesByParent(options, cancellationToken);
         }
 
         /// <summary>
@@ -297,13 +266,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         public static async Task<Response<MaintenanceApplyUpdateResource>> CreateOrUpdateApplyUpdateByParentAsync(this ResourceGroupResource resourceGroupResource, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateApplyUpdateByParentAsync(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).CreateOrUpdateApplyUpdateByParentAsync(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -330,13 +293,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         public static Response<MaintenanceApplyUpdateResource> CreateOrUpdateApplyUpdateByParent(this ResourceGroupResource resourceGroupResource, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateApplyUpdateByParent(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).CreateOrUpdateApplyUpdateByParent(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -361,11 +318,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         public static async Task<Response<MaintenanceApplyUpdateResource>> CreateOrUpdateApplyUpdateAsync(this ResourceGroupResource resourceGroupResource, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateApplyUpdateAsync(providerName, resourceType, resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).CreateOrUpdateApplyUpdateAsync(providerName, resourceType, resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -390,11 +343,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         public static Response<MaintenanceApplyUpdateResource> CreateOrUpdateApplyUpdate(this ResourceGroupResource resourceGroupResource, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateApplyUpdate(providerName, resourceType, resourceName, cancellationToken);
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).CreateOrUpdateApplyUpdate(providerName, resourceType, resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -416,9 +365,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public static async Task<Response<MaintenanceConfigurationAssignmentData>> GetConfigurationAssignmentByParentAsync(this ResourceGroupResource resourceGroupResource, ResourceGroupResourceGetConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignmentByParentAsync(options, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).GetConfigurationAssignmentByParentAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -440,9 +387,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public static Response<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentByParent(this ResourceGroupResource resourceGroupResource, ResourceGroupResourceGetConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignmentByParent(options, cancellationToken);
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).GetConfigurationAssignmentByParent(options, cancellationToken);
         }
 
         /// <summary>
@@ -464,9 +409,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public static async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentByParentAsync(this ResourceGroupResource resourceGroupResource, ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateConfigurationAssignmentByParentAsync(options, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).CreateOrUpdateConfigurationAssignmentByParentAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -488,9 +431,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public static Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentByParent(this ResourceGroupResource resourceGroupResource, ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateConfigurationAssignmentByParent(options, cancellationToken);
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).CreateOrUpdateConfigurationAssignmentByParent(options, cancellationToken);
         }
 
         /// <summary>
@@ -512,9 +453,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public static async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentByParentAsync(this ResourceGroupResource resourceGroupResource, ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteConfigurationAssignmentByParentAsync(options, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).DeleteConfigurationAssignmentByParentAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -536,9 +475,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public static Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentByParent(this ResourceGroupResource resourceGroupResource, ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteConfigurationAssignmentByParent(options, cancellationToken);
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).DeleteConfigurationAssignmentByParent(options, cancellationToken);
         }
 
         /// <summary>
@@ -564,12 +501,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is null. </exception>
         public static async Task<Response<MaintenanceConfigurationAssignmentData>> GetConfigurationAssignmentAsync(this ResourceGroupResource resourceGroupResource, string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignmentAsync(providerName, resourceType, resourceName, configurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).GetConfigurationAssignmentAsync(providerName, resourceType, resourceName, configurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -595,12 +527,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is null. </exception>
         public static Response<MaintenanceConfigurationAssignmentData> GetConfigurationAssignment(this ResourceGroupResource resourceGroupResource, string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignment(providerName, resourceType, resourceName, configurationAssignmentName, cancellationToken);
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).GetConfigurationAssignment(providerName, resourceType, resourceName, configurationAssignmentName, cancellationToken);
         }
 
         /// <summary>
@@ -627,13 +554,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public static async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentAsync(this ResourceGroupResource resourceGroupResource, string providerName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateConfigurationAssignmentAsync(providerName, resourceType, resourceName, configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).CreateOrUpdateConfigurationAssignmentAsync(providerName, resourceType, resourceName, configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -660,13 +581,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public static Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignment(this ResourceGroupResource resourceGroupResource, string providerName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateConfigurationAssignment(providerName, resourceType, resourceName, configurationAssignmentName, data, cancellationToken);
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).CreateOrUpdateConfigurationAssignment(providerName, resourceType, resourceName, configurationAssignmentName, data, cancellationToken);
         }
 
         /// <summary>
@@ -692,12 +607,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is null. </exception>
         public static async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentAsync(this ResourceGroupResource resourceGroupResource, string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteConfigurationAssignmentAsync(providerName, resourceType, resourceName, configurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).DeleteConfigurationAssignmentAsync(providerName, resourceType, resourceName, configurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -723,12 +633,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is null. </exception>
         public static Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignment(this ResourceGroupResource resourceGroupResource, string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteConfigurationAssignment(providerName, resourceType, resourceName, configurationAssignmentName, cancellationToken);
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).DeleteConfigurationAssignment(providerName, resourceType, resourceName, configurationAssignmentName, cancellationToken);
         }
 
         /// <summary>
@@ -756,13 +661,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> An async collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsByParentAsync(this ResourceGroupResource resourceGroupResource, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignmentsByParentAsync(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).GetConfigurationAssignmentsByParentAsync(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -790,13 +689,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsByParent(this ResourceGroupResource resourceGroupResource, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignmentsByParent(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).GetConfigurationAssignmentsByParent(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -822,11 +715,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> An async collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsAsync(this ResourceGroupResource resourceGroupResource, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignmentsAsync(providerName, resourceType, resourceName, cancellationToken);
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).GetConfigurationAssignmentsAsync(providerName, resourceType, resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -852,11 +741,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignments(this ResourceGroupResource resourceGroupResource, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignments(providerName, resourceType, resourceName, cancellationToken);
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).GetConfigurationAssignments(providerName, resourceType, resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -877,7 +762,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> An async collection of <see cref="MaintenanceApplyUpdateResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdatesAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMaintenanceApplyUpdatesAsync(cancellationToken);
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).GetMaintenanceApplyUpdatesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -898,7 +783,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> A collection of <see cref="MaintenanceApplyUpdateResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdates(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMaintenanceApplyUpdates(cancellationToken);
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).GetMaintenanceApplyUpdates(cancellationToken);
         }
 
         /// <summary>
@@ -921,9 +806,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         public static async Task<Response<MaintenanceConfigurationAssignmentData>> GetConfigurationAssignmentByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignmentByResourceGroupAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).GetConfigurationAssignmentByResourceGroupAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -946,9 +829,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         public static Response<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentByResourceGroup(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignmentByResourceGroup(configurationAssignmentName, cancellationToken);
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).GetConfigurationAssignmentByResourceGroup(configurationAssignmentName, cancellationToken);
         }
 
         /// <summary>
@@ -972,10 +853,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public static async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateConfigurationAssignmentByResourceGroupAsync(configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).CreateOrUpdateConfigurationAssignmentByResourceGroupAsync(configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -999,10 +877,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public static Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentByResourceGroup(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateConfigurationAssignmentByResourceGroup(configurationAssignmentName, data, cancellationToken);
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).CreateOrUpdateConfigurationAssignmentByResourceGroup(configurationAssignmentName, data, cancellationToken);
         }
 
         /// <summary>
@@ -1026,10 +901,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public static async Task<Response<MaintenanceConfigurationAssignmentData>> UpdateConfigurationAssignmentByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).UpdateConfigurationAssignmentByResourceGroupAsync(configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).UpdateConfigurationAssignmentByResourceGroupAsync(configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1053,10 +925,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public static Response<MaintenanceConfigurationAssignmentData> UpdateConfigurationAssignmentByResourceGroup(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).UpdateConfigurationAssignmentByResourceGroup(configurationAssignmentName, data, cancellationToken);
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).UpdateConfigurationAssignmentByResourceGroup(configurationAssignmentName, data, cancellationToken);
         }
 
         /// <summary>
@@ -1079,9 +948,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         public static async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteConfigurationAssignmentByResourceGroupAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).DeleteConfigurationAssignmentByResourceGroupAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1104,9 +971,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         public static Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentByResourceGroup(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteConfigurationAssignmentByResourceGroup(configurationAssignmentName, cancellationToken);
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).DeleteConfigurationAssignmentByResourceGroup(configurationAssignmentName, cancellationToken);
         }
 
         /// <summary>
@@ -1134,13 +999,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> An async collection of <see cref="MaintenanceUpdate" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MaintenanceUpdate> GetUpdatesByParentAsync(this ResourceGroupResource resourceGroupResource, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetUpdatesByParentAsync(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).GetUpdatesByParentAsync(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1168,13 +1027,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> A collection of <see cref="MaintenanceUpdate" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MaintenanceUpdate> GetUpdatesByParent(this ResourceGroupResource resourceGroupResource, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetUpdatesByParent(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).GetUpdatesByParent(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1200,11 +1053,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> An async collection of <see cref="MaintenanceUpdate" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MaintenanceUpdate> GetUpdatesAsync(this ResourceGroupResource resourceGroupResource, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetUpdatesAsync(providerName, resourceType, resourceName, cancellationToken);
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).GetUpdatesAsync(providerName, resourceType, resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1230,11 +1079,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> A collection of <see cref="MaintenanceUpdate" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MaintenanceUpdate> GetUpdates(this ResourceGroupResource resourceGroupResource, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetUpdates(providerName, resourceType, resourceName, cancellationToken);
+            return GetMaintenanceResourceGroupMockingExtension(resourceGroupResource).GetUpdates(providerName, resourceType, resourceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of MaintenancePublicConfigurationResources in the SubscriptionResource. </summary>
@@ -1242,7 +1087,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> An object representing collection of MaintenancePublicConfigurationResources and their operations over a MaintenancePublicConfigurationResource. </returns>
         public static MaintenancePublicConfigurationCollection GetMaintenancePublicConfigurations(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMaintenancePublicConfigurations();
+            return GetMaintenanceSubscriptionMockingExtension(subscriptionResource).GetMaintenancePublicConfigurations();
         }
 
         /// <summary>
@@ -1266,7 +1111,7 @@ namespace Azure.ResourceManager.Maintenance
         [ForwardsClientCalls]
         public static async Task<Response<MaintenancePublicConfigurationResource>> GetMaintenancePublicConfigurationAsync(this SubscriptionResource subscriptionResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetMaintenancePublicConfigurations().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenanceSubscriptionMockingExtension(subscriptionResource).GetMaintenancePublicConfigurationAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1290,7 +1135,7 @@ namespace Azure.ResourceManager.Maintenance
         [ForwardsClientCalls]
         public static Response<MaintenancePublicConfigurationResource> GetMaintenancePublicConfiguration(this SubscriptionResource subscriptionResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetMaintenancePublicConfigurations().Get(resourceName, cancellationToken);
+            return GetMaintenanceSubscriptionMockingExtension(subscriptionResource).GetMaintenancePublicConfiguration(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -1311,7 +1156,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> An async collection of <see cref="MaintenanceApplyUpdateResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdatesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMaintenanceApplyUpdatesAsync(cancellationToken);
+            return GetMaintenanceSubscriptionMockingExtension(subscriptionResource).GetMaintenanceApplyUpdatesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1332,7 +1177,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> A collection of <see cref="MaintenanceApplyUpdateResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdates(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMaintenanceApplyUpdates(cancellationToken);
+            return GetMaintenanceSubscriptionMockingExtension(subscriptionResource).GetMaintenanceApplyUpdates(cancellationToken);
         }
 
         /// <summary>
@@ -1353,7 +1198,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> An async collection of <see cref="MaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MaintenanceConfigurationResource> GetMaintenanceConfigurationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMaintenanceConfigurationsAsync(cancellationToken);
+            return GetMaintenanceSubscriptionMockingExtension(subscriptionResource).GetMaintenanceConfigurationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1374,7 +1219,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> A collection of <see cref="MaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MaintenanceConfigurationResource> GetMaintenanceConfigurations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMaintenanceConfigurations(cancellationToken);
+            return GetMaintenanceSubscriptionMockingExtension(subscriptionResource).GetMaintenanceConfigurations(cancellationToken);
         }
 
         /// <summary>
@@ -1395,7 +1240,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> An async collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfigurationAssignmentsBySubscriptionAsync(cancellationToken);
+            return GetMaintenanceSubscriptionMockingExtension(subscriptionResource).GetConfigurationAssignmentsBySubscriptionAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1416,7 +1261,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfigurationAssignmentsBySubscription(cancellationToken);
+            return GetMaintenanceSubscriptionMockingExtension(subscriptionResource).GetConfigurationAssignmentsBySubscription(cancellationToken);
         }
 
         /// <summary>
@@ -1439,9 +1284,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         public static async Task<Response<MaintenanceConfigurationAssignmentData>> GetConfigurationAssignmentBySubscriptionAsync(this SubscriptionResource subscriptionResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfigurationAssignmentBySubscriptionAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenanceSubscriptionMockingExtension(subscriptionResource).GetConfigurationAssignmentBySubscriptionAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1464,9 +1307,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         public static Response<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentBySubscription(this SubscriptionResource subscriptionResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfigurationAssignmentBySubscription(configurationAssignmentName, cancellationToken);
+            return GetMaintenanceSubscriptionMockingExtension(subscriptionResource).GetConfigurationAssignmentBySubscription(configurationAssignmentName, cancellationToken);
         }
 
         /// <summary>
@@ -1490,10 +1331,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public static async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentBySubscriptionAsync(this SubscriptionResource subscriptionResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CreateOrUpdateConfigurationAssignmentBySubscriptionAsync(configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenanceSubscriptionMockingExtension(subscriptionResource).CreateOrUpdateConfigurationAssignmentBySubscriptionAsync(configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1517,10 +1355,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public static Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentBySubscription(this SubscriptionResource subscriptionResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CreateOrUpdateConfigurationAssignmentBySubscription(configurationAssignmentName, data, cancellationToken);
+            return GetMaintenanceSubscriptionMockingExtension(subscriptionResource).CreateOrUpdateConfigurationAssignmentBySubscription(configurationAssignmentName, data, cancellationToken);
         }
 
         /// <summary>
@@ -1544,10 +1379,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public static async Task<Response<MaintenanceConfigurationAssignmentData>> UpdateConfigurationAssignmentBySubscriptionAsync(this SubscriptionResource subscriptionResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).UpdateConfigurationAssignmentBySubscriptionAsync(configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenanceSubscriptionMockingExtension(subscriptionResource).UpdateConfigurationAssignmentBySubscriptionAsync(configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1571,10 +1403,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public static Response<MaintenanceConfigurationAssignmentData> UpdateConfigurationAssignmentBySubscription(this SubscriptionResource subscriptionResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).UpdateConfigurationAssignmentBySubscription(configurationAssignmentName, data, cancellationToken);
+            return GetMaintenanceSubscriptionMockingExtension(subscriptionResource).UpdateConfigurationAssignmentBySubscription(configurationAssignmentName, data, cancellationToken);
         }
 
         /// <summary>
@@ -1597,9 +1426,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         public static async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentBySubscriptionAsync(this SubscriptionResource subscriptionResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).DeleteConfigurationAssignmentBySubscriptionAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenanceSubscriptionMockingExtension(subscriptionResource).DeleteConfigurationAssignmentBySubscriptionAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1622,9 +1449,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         public static Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentBySubscription(this SubscriptionResource subscriptionResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).DeleteConfigurationAssignmentBySubscription(configurationAssignmentName, cancellationToken);
+            return GetMaintenanceSubscriptionMockingExtension(subscriptionResource).DeleteConfigurationAssignmentBySubscription(configurationAssignmentName, cancellationToken);
         }
     }
 }

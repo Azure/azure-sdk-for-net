@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MachineLearning.Mocking;
 using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,38 +20,30 @@ namespace Azure.ResourceManager.MachineLearning
     /// <summary> A class to add extension methods to Azure.ResourceManager.MachineLearning. </summary>
     public static partial class MachineLearningExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MachineLearningArmClientMockingExtension GetMachineLearningArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new MachineLearningArmClientMockingExtension(client);
+            });
+        }
+
+        private static MachineLearningResourceGroupMockingExtension GetMachineLearningResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new MachineLearningResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MachineLearningSubscriptionMockingExtension GetMachineLearningSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new MachineLearningSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region MachineLearningWorkspaceResource
         /// <summary>
         /// Gets an object representing a <see cref="MachineLearningWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -60,16 +53,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> Returns a <see cref="MachineLearningWorkspaceResource" /> object. </returns>
         public static MachineLearningWorkspaceResource GetMachineLearningWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningWorkspaceResource.ValidateResourceId(id);
-                return new MachineLearningWorkspaceResource(client, id);
-            }
-            );
+            return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningWorkspaceResource(id);
         }
-        #endregion
 
-        #region MachineLearningComputeResource
         /// <summary>
         /// Gets an object representing a <see cref="MachineLearningComputeResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningComputeResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningComputeResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -79,16 +65,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> Returns a <see cref="MachineLearningComputeResource" /> object. </returns>
         public static MachineLearningComputeResource GetMachineLearningComputeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningComputeResource.ValidateResourceId(id);
-                return new MachineLearningComputeResource(client, id);
-            }
-            );
+            return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningComputeResource(id);
         }
-        #endregion
 
-        #region MachineLearningPrivateEndpointConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="MachineLearningPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -98,16 +77,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> Returns a <see cref="MachineLearningPrivateEndpointConnectionResource" /> object. </returns>
         public static MachineLearningPrivateEndpointConnectionResource GetMachineLearningPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new MachineLearningPrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningPrivateEndpointConnectionResource(id);
         }
-        #endregion
 
-        #region MachineLearningWorkspaceConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="MachineLearningWorkspaceConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningWorkspaceConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningWorkspaceConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -117,16 +89,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> Returns a <see cref="MachineLearningWorkspaceConnectionResource" /> object. </returns>
         public static MachineLearningWorkspaceConnectionResource GetMachineLearningWorkspaceConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningWorkspaceConnectionResource.ValidateResourceId(id);
-                return new MachineLearningWorkspaceConnectionResource(client, id);
-            }
-            );
+            return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningWorkspaceConnectionResource(id);
         }
-        #endregion
 
-        #region MachineLearningBatchEndpointResource
         /// <summary>
         /// Gets an object representing a <see cref="MachineLearningBatchEndpointResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningBatchEndpointResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningBatchEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -136,16 +101,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> Returns a <see cref="MachineLearningBatchEndpointResource" /> object. </returns>
         public static MachineLearningBatchEndpointResource GetMachineLearningBatchEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningBatchEndpointResource.ValidateResourceId(id);
-                return new MachineLearningBatchEndpointResource(client, id);
-            }
-            );
+            return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningBatchEndpointResource(id);
         }
-        #endregion
 
-        #region MachineLearningBatchDeploymentResource
         /// <summary>
         /// Gets an object representing a <see cref="MachineLearningBatchDeploymentResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningBatchDeploymentResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningBatchDeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -155,16 +113,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> Returns a <see cref="MachineLearningBatchDeploymentResource" /> object. </returns>
         public static MachineLearningBatchDeploymentResource GetMachineLearningBatchDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningBatchDeploymentResource.ValidateResourceId(id);
-                return new MachineLearningBatchDeploymentResource(client, id);
-            }
-            );
+            return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningBatchDeploymentResource(id);
         }
-        #endregion
 
-        #region MachineLearningCodeContainerResource
         /// <summary>
         /// Gets an object representing a <see cref="MachineLearningCodeContainerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningCodeContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningCodeContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -174,16 +125,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> Returns a <see cref="MachineLearningCodeContainerResource" /> object. </returns>
         public static MachineLearningCodeContainerResource GetMachineLearningCodeContainerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningCodeContainerResource.ValidateResourceId(id);
-                return new MachineLearningCodeContainerResource(client, id);
-            }
-            );
+            return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningCodeContainerResource(id);
         }
-        #endregion
 
-        #region MachineLearningCodeVersionResource
         /// <summary>
         /// Gets an object representing a <see cref="MachineLearningCodeVersionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningCodeVersionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningCodeVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -193,16 +137,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> Returns a <see cref="MachineLearningCodeVersionResource" /> object. </returns>
         public static MachineLearningCodeVersionResource GetMachineLearningCodeVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningCodeVersionResource.ValidateResourceId(id);
-                return new MachineLearningCodeVersionResource(client, id);
-            }
-            );
+            return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningCodeVersionResource(id);
         }
-        #endregion
 
-        #region MachineLearningComponentContainerResource
         /// <summary>
         /// Gets an object representing a <see cref="MachineLearningComponentContainerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningComponentContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningComponentContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -212,16 +149,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> Returns a <see cref="MachineLearningComponentContainerResource" /> object. </returns>
         public static MachineLearningComponentContainerResource GetMachineLearningComponentContainerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningComponentContainerResource.ValidateResourceId(id);
-                return new MachineLearningComponentContainerResource(client, id);
-            }
-            );
+            return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningComponentContainerResource(id);
         }
-        #endregion
 
-        #region MachineLearningComponentVersionResource
         /// <summary>
         /// Gets an object representing a <see cref="MachineLearningComponentVersionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningComponentVersionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningComponentVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -231,16 +161,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> Returns a <see cref="MachineLearningComponentVersionResource" /> object. </returns>
         public static MachineLearningComponentVersionResource GetMachineLearningComponentVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningComponentVersionResource.ValidateResourceId(id);
-                return new MachineLearningComponentVersionResource(client, id);
-            }
-            );
+            return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningComponentVersionResource(id);
         }
-        #endregion
 
-        #region MachineLearningDataContainerResource
         /// <summary>
         /// Gets an object representing a <see cref="MachineLearningDataContainerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningDataContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningDataContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -250,16 +173,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> Returns a <see cref="MachineLearningDataContainerResource" /> object. </returns>
         public static MachineLearningDataContainerResource GetMachineLearningDataContainerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningDataContainerResource.ValidateResourceId(id);
-                return new MachineLearningDataContainerResource(client, id);
-            }
-            );
+            return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningDataContainerResource(id);
         }
-        #endregion
 
-        #region MachineLearningDataVersionResource
         /// <summary>
         /// Gets an object representing a <see cref="MachineLearningDataVersionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningDataVersionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningDataVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -269,16 +185,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> Returns a <see cref="MachineLearningDataVersionResource" /> object. </returns>
         public static MachineLearningDataVersionResource GetMachineLearningDataVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningDataVersionResource.ValidateResourceId(id);
-                return new MachineLearningDataVersionResource(client, id);
-            }
-            );
+            return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningDataVersionResource(id);
         }
-        #endregion
 
-        #region MachineLearningDatastoreResource
         /// <summary>
         /// Gets an object representing a <see cref="MachineLearningDatastoreResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningDatastoreResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningDatastoreResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -288,16 +197,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> Returns a <see cref="MachineLearningDatastoreResource" /> object. </returns>
         public static MachineLearningDatastoreResource GetMachineLearningDatastoreResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningDatastoreResource.ValidateResourceId(id);
-                return new MachineLearningDatastoreResource(client, id);
-            }
-            );
+            return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningDatastoreResource(id);
         }
-        #endregion
 
-        #region MachineLearningEnvironmentContainerResource
         /// <summary>
         /// Gets an object representing a <see cref="MachineLearningEnvironmentContainerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningEnvironmentContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningEnvironmentContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -307,16 +209,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> Returns a <see cref="MachineLearningEnvironmentContainerResource" /> object. </returns>
         public static MachineLearningEnvironmentContainerResource GetMachineLearningEnvironmentContainerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningEnvironmentContainerResource.ValidateResourceId(id);
-                return new MachineLearningEnvironmentContainerResource(client, id);
-            }
-            );
+            return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningEnvironmentContainerResource(id);
         }
-        #endregion
 
-        #region MachineLearningEnvironmentVersionResource
         /// <summary>
         /// Gets an object representing a <see cref="MachineLearningEnvironmentVersionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningEnvironmentVersionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningEnvironmentVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -326,16 +221,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> Returns a <see cref="MachineLearningEnvironmentVersionResource" /> object. </returns>
         public static MachineLearningEnvironmentVersionResource GetMachineLearningEnvironmentVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningEnvironmentVersionResource.ValidateResourceId(id);
-                return new MachineLearningEnvironmentVersionResource(client, id);
-            }
-            );
+            return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningEnvironmentVersionResource(id);
         }
-        #endregion
 
-        #region MachineLearningJobResource
         /// <summary>
         /// Gets an object representing a <see cref="MachineLearningJobResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningJobResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningJobResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -345,16 +233,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> Returns a <see cref="MachineLearningJobResource" /> object. </returns>
         public static MachineLearningJobResource GetMachineLearningJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningJobResource.ValidateResourceId(id);
-                return new MachineLearningJobResource(client, id);
-            }
-            );
+            return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningJobResource(id);
         }
-        #endregion
 
-        #region MachineLearningModelContainerResource
         /// <summary>
         /// Gets an object representing a <see cref="MachineLearningModelContainerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningModelContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningModelContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -364,16 +245,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> Returns a <see cref="MachineLearningModelContainerResource" /> object. </returns>
         public static MachineLearningModelContainerResource GetMachineLearningModelContainerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningModelContainerResource.ValidateResourceId(id);
-                return new MachineLearningModelContainerResource(client, id);
-            }
-            );
+            return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningModelContainerResource(id);
         }
-        #endregion
 
-        #region MachineLearningModelVersionResource
         /// <summary>
         /// Gets an object representing a <see cref="MachineLearningModelVersionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningModelVersionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningModelVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -383,16 +257,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> Returns a <see cref="MachineLearningModelVersionResource" /> object. </returns>
         public static MachineLearningModelVersionResource GetMachineLearningModelVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningModelVersionResource.ValidateResourceId(id);
-                return new MachineLearningModelVersionResource(client, id);
-            }
-            );
+            return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningModelVersionResource(id);
         }
-        #endregion
 
-        #region MachineLearningOnlineEndpointResource
         /// <summary>
         /// Gets an object representing a <see cref="MachineLearningOnlineEndpointResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningOnlineEndpointResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningOnlineEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -402,16 +269,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> Returns a <see cref="MachineLearningOnlineEndpointResource" /> object. </returns>
         public static MachineLearningOnlineEndpointResource GetMachineLearningOnlineEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningOnlineEndpointResource.ValidateResourceId(id);
-                return new MachineLearningOnlineEndpointResource(client, id);
-            }
-            );
+            return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningOnlineEndpointResource(id);
         }
-        #endregion
 
-        #region MachineLearningOnlineDeploymentResource
         /// <summary>
         /// Gets an object representing a <see cref="MachineLearningOnlineDeploymentResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningOnlineDeploymentResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningOnlineDeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -421,16 +281,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> Returns a <see cref="MachineLearningOnlineDeploymentResource" /> object. </returns>
         public static MachineLearningOnlineDeploymentResource GetMachineLearningOnlineDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningOnlineDeploymentResource.ValidateResourceId(id);
-                return new MachineLearningOnlineDeploymentResource(client, id);
-            }
-            );
+            return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningOnlineDeploymentResource(id);
         }
-        #endregion
 
-        #region MachineLearningScheduleResource
         /// <summary>
         /// Gets an object representing a <see cref="MachineLearningScheduleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningScheduleResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -440,21 +293,15 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> Returns a <see cref="MachineLearningScheduleResource" /> object. </returns>
         public static MachineLearningScheduleResource GetMachineLearningScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MachineLearningScheduleResource.ValidateResourceId(id);
-                return new MachineLearningScheduleResource(client, id);
-            }
-            );
+            return GetMachineLearningArmClientMockingExtension(client).GetMachineLearningScheduleResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of MachineLearningWorkspaceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MachineLearningWorkspaceResources and their operations over a MachineLearningWorkspaceResource. </returns>
         public static MachineLearningWorkspaceCollection GetMachineLearningWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMachineLearningWorkspaces();
+            return GetMachineLearningResourceGroupMockingExtension(resourceGroupResource).GetMachineLearningWorkspaces();
         }
 
         /// <summary>
@@ -478,7 +325,7 @@ namespace Azure.ResourceManager.MachineLearning
         [ForwardsClientCalls]
         public static async Task<Response<MachineLearningWorkspaceResource>> GetMachineLearningWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetMachineLearningWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetMachineLearningResourceGroupMockingExtension(resourceGroupResource).GetMachineLearningWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -502,7 +349,7 @@ namespace Azure.ResourceManager.MachineLearning
         [ForwardsClientCalls]
         public static Response<MachineLearningWorkspaceResource> GetMachineLearningWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetMachineLearningWorkspaces().Get(workspaceName, cancellationToken);
+            return GetMachineLearningResourceGroupMockingExtension(resourceGroupResource).GetMachineLearningWorkspace(workspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -524,7 +371,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An async collection of <see cref="MachineLearningWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspacesAsync(this SubscriptionResource subscriptionResource, string skip = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMachineLearningWorkspacesAsync(skip, cancellationToken);
+            return GetMachineLearningSubscriptionMockingExtension(subscriptionResource).GetMachineLearningWorkspacesAsync(skip, cancellationToken);
         }
 
         /// <summary>
@@ -546,7 +393,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> A collection of <see cref="MachineLearningWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspaces(this SubscriptionResource subscriptionResource, string skip = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMachineLearningWorkspaces(skip, cancellationToken);
+            return GetMachineLearningSubscriptionMockingExtension(subscriptionResource).GetMachineLearningWorkspaces(skip, cancellationToken);
         }
 
         /// <summary>
@@ -568,7 +415,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An async collection of <see cref="MachineLearningUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MachineLearningUsage> GetMachineLearningUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMachineLearningUsagesAsync(location, cancellationToken);
+            return GetMachineLearningSubscriptionMockingExtension(subscriptionResource).GetMachineLearningUsagesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -590,7 +437,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> A collection of <see cref="MachineLearningUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MachineLearningUsage> GetMachineLearningUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMachineLearningUsages(location, cancellationToken);
+            return GetMachineLearningSubscriptionMockingExtension(subscriptionResource).GetMachineLearningUsages(location, cancellationToken);
         }
 
         /// <summary>
@@ -612,7 +459,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An async collection of <see cref="MachineLearningVmSize" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MachineLearningVmSize> GetMachineLearningVmSizesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMachineLearningVmSizesAsync(location, cancellationToken);
+            return GetMachineLearningSubscriptionMockingExtension(subscriptionResource).GetMachineLearningVmSizesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -634,7 +481,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> A collection of <see cref="MachineLearningVmSize" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MachineLearningVmSize> GetMachineLearningVmSizes(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMachineLearningVmSizes(location, cancellationToken);
+            return GetMachineLearningSubscriptionMockingExtension(subscriptionResource).GetMachineLearningVmSizes(location, cancellationToken);
         }
 
         /// <summary>
@@ -658,9 +505,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An async collection of <see cref="MachineLearningWorkspaceQuotaUpdate" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MachineLearningWorkspaceQuotaUpdate> UpdateMachineLearningQuotasAsync(this SubscriptionResource subscriptionResource, AzureLocation location, MachineLearningQuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).UpdateMachineLearningQuotasAsync(location, content, cancellationToken);
+            return GetMachineLearningSubscriptionMockingExtension(subscriptionResource).UpdateMachineLearningQuotasAsync(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -684,9 +529,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> A collection of <see cref="MachineLearningWorkspaceQuotaUpdate" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MachineLearningWorkspaceQuotaUpdate> UpdateMachineLearningQuotas(this SubscriptionResource subscriptionResource, AzureLocation location, MachineLearningQuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).UpdateMachineLearningQuotas(location, content, cancellationToken);
+            return GetMachineLearningSubscriptionMockingExtension(subscriptionResource).UpdateMachineLearningQuotas(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -708,7 +551,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An async collection of <see cref="MachineLearningResourceQuota" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MachineLearningResourceQuota> GetMachineLearningQuotasAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMachineLearningQuotasAsync(location, cancellationToken);
+            return GetMachineLearningSubscriptionMockingExtension(subscriptionResource).GetMachineLearningQuotasAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -730,7 +573,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> A collection of <see cref="MachineLearningResourceQuota" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MachineLearningResourceQuota> GetMachineLearningQuotas(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMachineLearningQuotas(location, cancellationToken);
+            return GetMachineLearningSubscriptionMockingExtension(subscriptionResource).GetMachineLearningQuotas(location, cancellationToken);
         }
     }
 }
