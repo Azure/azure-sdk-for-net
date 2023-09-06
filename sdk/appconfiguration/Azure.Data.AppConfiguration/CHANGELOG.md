@@ -1,18 +1,14 @@
 # Release History
 
-## 1.3.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.2.1 (2023-09-13)
 
 ### Bugs Fixed
 
+- `FeatureFlagConfigurationSetting` and `SecretReferenceConfigurationSetting` will now retain custom attributes in the setting value.  Previously, only attributes that were defined in the associated JSON schema were allowed and unknown attributes were discarded.  
+
+- Added the ability to create `FeatureFlagConfigurationSetting` and `SecretReferenceConfigurationSetting` instances with an ETag, matching `ConfigurationSetting`.  This allows all setting types to use the [GetConfigurationSettingAsync](https://learn.microsoft.com/dotnet/api/azure.data.appconfiguration.configurationclient.getconfigurationsettingasync?view=azure-dotnet#azure-data-appconfiguration-configurationclient-getconfigurationsettingasync(azure-data-appconfiguration-configurationsetting-system-boolean-system-threading-cancellationtoken)) overload that accepts `onlyIfUnchanged.`  Previously, this was not possible for specialized settings types.
+
 - Added the ability to create `FeatureFlagConfigurationSetting` and `SecretReferenceConfigurationSetting` instances for testing purposes using the `ConfigurationModelFactory`. It was previously not possible to populate service-owned fields when testing.
-
-- Marked a constructor overload of `ConfigurationSetting` that was intended for testing purposes as non-visible, as the `ConfigurationModelFactory` should instead be used.
-
-### Other Changes
 
 ## 1.3.0-beta.2 (2023-07-11)
 

@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.Reservations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateGetCatalogRequest(Id.SubscriptionId, options.ReservedResourceType, options.Location, options.PublisherId, options.OfferId, options.PlanId, options.Filter, options.Skip, options.Take);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateGetCatalogNextPageRequest(nextLink, Id.SubscriptionId, options.ReservedResourceType, options.Location, options.PublisherId, options.OfferId, options.PlanId, options.Filter, options.Skip, options.Take);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReservationCatalog.DeserializeReservationCatalog, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCatalog", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReservationCatalog.DeserializeReservationCatalog, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCatalog", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Reservations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateGetCatalogRequest(Id.SubscriptionId, options.ReservedResourceType, options.Location, options.PublisherId, options.OfferId, options.PlanId, options.Filter, options.Skip, options.Take);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateGetCatalogNextPageRequest(nextLink, Id.SubscriptionId, options.ReservedResourceType, options.Location, options.PublisherId, options.OfferId, options.PlanId, options.Filter, options.Skip, options.Take);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReservationCatalog.DeserializeReservationCatalog, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCatalog", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReservationCatalog.DeserializeReservationCatalog, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCatalog", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

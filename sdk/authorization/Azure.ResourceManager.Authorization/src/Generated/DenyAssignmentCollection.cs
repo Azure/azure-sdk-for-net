@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -164,25 +165,25 @@ namespace Azure.ResourceManager.Authorization
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _denyAssignmentRestClient.CreateListForResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _denyAssignmentRestClient.CreateListForResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter);
-                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+                return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == SubscriptionResource.ResourceType)
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _denyAssignmentRestClient.CreateListRequest(Id.SubscriptionId, filter);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _denyAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter);
-                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+                return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == "")
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _denyAssignmentRestClient.CreateListForScopeRequest(Id, filter);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _denyAssignmentRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
-                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+                return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _denyAssignmentRestClient.CreateListForResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _denyAssignmentRestClient.CreateListForResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter);
-                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+                return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
         }
 
@@ -232,25 +233,25 @@ namespace Azure.ResourceManager.Authorization
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _denyAssignmentRestClient.CreateListForResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _denyAssignmentRestClient.CreateListForResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter);
-                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+                return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == SubscriptionResource.ResourceType)
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _denyAssignmentRestClient.CreateListRequest(Id.SubscriptionId, filter);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _denyAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter);
-                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+                return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == "")
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _denyAssignmentRestClient.CreateListForScopeRequest(Id, filter);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _denyAssignmentRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
-                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+                return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else
             {
                 HttpMessage FirstPageRequest(int? pageSizeHint) => _denyAssignmentRestClient.CreateListForResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter);
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _denyAssignmentRestClient.CreateListForResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter);
-                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+                return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
         }
 

@@ -295,7 +295,8 @@
         "Ipvs",
         "Keda",
         "Kata",
-        "Mshv"
+        "Mshv",
+        "Fips"
       ]
     },
     {
@@ -492,8 +493,11 @@
       "filename": "**/sdk/hdinsight/**/*.cs",
       "words": [
         "aadds",
+        "flink",
         "ldaps",
-        "oaep"
+        "llap",
+        "oaep",
+        "trino"
       ]
     },
     {
