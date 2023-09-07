@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = await _dataBoxEdgeTriggerTriggersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeTriggerResource>(new DataBoxEdgeTriggerOperationSource(Client), _dataBoxEdgeTriggerTriggersClientDiagnostics, Pipeline, _dataBoxEdgeTriggerTriggersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeTriggerResource>(new DataBoxEdgeTriggerOperationSource(Client), _dataBoxEdgeTriggerTriggersClientDiagnostics, Pipeline, _dataBoxEdgeTriggerTriggersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = _dataBoxEdgeTriggerTriggersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeTriggerResource>(new DataBoxEdgeTriggerOperationSource(Client), _dataBoxEdgeTriggerTriggersClientDiagnostics, Pipeline, _dataBoxEdgeTriggerTriggersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeTriggerResource>(new DataBoxEdgeTriggerOperationSource(Client), _dataBoxEdgeTriggerTriggersClientDiagnostics, Pipeline, _dataBoxEdgeTriggerTriggersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeTriggerTriggersRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeTriggerTriggersRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeTriggerResource(Client, DataBoxEdgeTriggerData.DeserializeDataBoxEdgeTriggerData(e)), _dataBoxEdgeTriggerTriggersClientDiagnostics, Pipeline, "DataBoxEdgeTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeTriggerResource(Client, DataBoxEdgeTriggerData.DeserializeDataBoxEdgeTriggerData(e)), _dataBoxEdgeTriggerTriggersClientDiagnostics, Pipeline, "DataBoxEdgeTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +251,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeTriggerTriggersRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeTriggerTriggersRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeTriggerResource(Client, DataBoxEdgeTriggerData.DeserializeDataBoxEdgeTriggerData(e)), _dataBoxEdgeTriggerTriggersClientDiagnostics, Pipeline, "DataBoxEdgeTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeTriggerResource(Client, DataBoxEdgeTriggerData.DeserializeDataBoxEdgeTriggerData(e)), _dataBoxEdgeTriggerTriggersClientDiagnostics, Pipeline, "DataBoxEdgeTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

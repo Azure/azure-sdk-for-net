@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = await _profileResourceFormatProfilesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomerInsightsArmOperation<ProfileResourceFormatResource>(new ProfileResourceFormatOperationSource(Client), _profileResourceFormatProfilesClientDiagnostics, Pipeline, _profileResourceFormatProfilesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CustomerInsightsArmOperation<ProfileResourceFormatResource>(new ProfileResourceFormatOperationSource(Client), _profileResourceFormatProfilesClientDiagnostics, Pipeline, _profileResourceFormatProfilesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = _profileResourceFormatProfilesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, data, cancellationToken);
-                var operation = new CustomerInsightsArmOperation<ProfileResourceFormatResource>(new ProfileResourceFormatOperationSource(Client), _profileResourceFormatProfilesClientDiagnostics, Pipeline, _profileResourceFormatProfilesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CustomerInsightsArmOperation<ProfileResourceFormatResource>(new ProfileResourceFormatOperationSource(Client), _profileResourceFormatProfilesClientDiagnostics, Pipeline, _profileResourceFormatProfilesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -231,7 +230,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _profileResourceFormatProfilesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _profileResourceFormatProfilesRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProfileResourceFormatResource(Client, ProfileResourceFormatData.DeserializeProfileResourceFormatData(e)), _profileResourceFormatProfilesClientDiagnostics, Pipeline, "ProfileResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProfileResourceFormatResource(Client, ProfileResourceFormatData.DeserializeProfileResourceFormatData(e)), _profileResourceFormatProfilesClientDiagnostics, Pipeline, "ProfileResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +253,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _profileResourceFormatProfilesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _profileResourceFormatProfilesRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProfileResourceFormatResource(Client, ProfileResourceFormatData.DeserializeProfileResourceFormatData(e)), _profileResourceFormatProfilesClientDiagnostics, Pipeline, "ProfileResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProfileResourceFormatResource(Client, ProfileResourceFormatData.DeserializeProfileResourceFormatData(e)), _profileResourceFormatProfilesClientDiagnostics, Pipeline, "ProfileResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesByBillingAccountId", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesByBillingAccountId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -157,7 +156,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesByBillingAccountId", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesByBillingAccountId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -183,7 +182,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdRequest(billingAccountId, billingProfileId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdNextPageRequest(nextLink, billingAccountId, billingProfileId, grainParameter, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesByBillingProfileId", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesByBillingProfileId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -209,7 +208,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdRequest(billingAccountId, billingProfileId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdNextPageRequest(nextLink, billingAccountId, billingProfileId, grainParameter, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesByBillingProfileId", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesByBillingProfileId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -234,7 +233,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderRequest(savingsPlanOrderId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderNextPageRequest(nextLink, savingsPlanOrderId, filter, grainParameter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesBySavingsPlanOrder", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesBySavingsPlanOrder", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -259,7 +258,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderRequest(savingsPlanOrderId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderNextPageRequest(nextLink, savingsPlanOrderId, filter, grainParameter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesBySavingsPlanOrder", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesBySavingsPlanOrder", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -285,7 +284,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, filter, grainParameter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesBySavingsPlanId", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesBySavingsPlanId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -311,7 +310,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, filter, grainParameter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesBySavingsPlanId", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBenefitUtilizationSummariesBySavingsPlanId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -338,7 +337,7 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = await BillingAccountScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(billingAccountId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingAccountScopeClientDiagnostics, Pipeline, BillingAccountScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingAccountScopeClientDiagnostics, Pipeline, BillingAccountScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -374,7 +373,7 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = BillingAccountScopeRestClient.GenerateBenefitUtilizationSummariesReport(billingAccountId, content, cancellationToken);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingAccountScopeClientDiagnostics, Pipeline, BillingAccountScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingAccountScopeClientDiagnostics, Pipeline, BillingAccountScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -411,7 +410,7 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = await BillingProfileScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(billingAccountId, billingProfileId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingProfileScopeClientDiagnostics, Pipeline, BillingProfileScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, billingProfileId, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingProfileScopeClientDiagnostics, Pipeline, BillingProfileScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, billingProfileId, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -448,7 +447,7 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = BillingProfileScopeRestClient.GenerateBenefitUtilizationSummariesReport(billingAccountId, billingProfileId, content, cancellationToken);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingProfileScopeClientDiagnostics, Pipeline, BillingProfileScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, billingProfileId, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), BillingProfileScopeClientDiagnostics, Pipeline, BillingProfileScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, billingProfileId, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -484,7 +483,7 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = await ReservationOrderScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(reservationOrderId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationOrderScopeClientDiagnostics, Pipeline, ReservationOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationOrderScopeClientDiagnostics, Pipeline, ReservationOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -520,7 +519,7 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = ReservationOrderScopeRestClient.GenerateBenefitUtilizationSummariesReport(reservationOrderId, content, cancellationToken);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationOrderScopeClientDiagnostics, Pipeline, ReservationOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationOrderScopeClientDiagnostics, Pipeline, ReservationOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -557,7 +556,7 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = await ReservationScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(reservationOrderId, reservationId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationScopeClientDiagnostics, Pipeline, ReservationScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, reservationId, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationScopeClientDiagnostics, Pipeline, ReservationScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, reservationId, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -594,7 +593,7 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = ReservationScopeRestClient.GenerateBenefitUtilizationSummariesReport(reservationOrderId, reservationId, content, cancellationToken);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationScopeClientDiagnostics, Pipeline, ReservationScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, reservationId, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), ReservationScopeClientDiagnostics, Pipeline, ReservationScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(reservationOrderId, reservationId, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -630,7 +629,7 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = await SavingsPlanOrderScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(savingsPlanOrderId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanOrderScopeClientDiagnostics, Pipeline, SavingsPlanOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(savingsPlanOrderId, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanOrderScopeClientDiagnostics, Pipeline, SavingsPlanOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(savingsPlanOrderId, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -666,7 +665,7 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = SavingsPlanOrderScopeRestClient.GenerateBenefitUtilizationSummariesReport(savingsPlanOrderId, content, cancellationToken);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanOrderScopeClientDiagnostics, Pipeline, SavingsPlanOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(savingsPlanOrderId, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanOrderScopeClientDiagnostics, Pipeline, SavingsPlanOrderScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportRequest(savingsPlanOrderId, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -703,7 +702,7 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = await SavingsPlanScopeRestClient.GenerateBenefitUtilizationSummariesReportAsyncAsync(savingsPlanOrderId, savingsPlanId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanScopeClientDiagnostics, Pipeline, SavingsPlanScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(savingsPlanOrderId, savingsPlanId, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanScopeClientDiagnostics, Pipeline, SavingsPlanScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(savingsPlanOrderId, savingsPlanId, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -740,7 +739,7 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = SavingsPlanScopeRestClient.GenerateBenefitUtilizationSummariesReportAsync(savingsPlanOrderId, savingsPlanId, content, cancellationToken);
-                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanScopeClientDiagnostics, Pipeline, SavingsPlanScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(savingsPlanOrderId, savingsPlanId, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(new BenefitUtilizationSummariesOperationStatusOperationSource(), SavingsPlanScopeClientDiagnostics, Pipeline, SavingsPlanScopeRestClient.CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(savingsPlanOrderId, savingsPlanId, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -772,7 +771,7 @@ namespace Azure.ResourceManager.CostManagement
         public virtual AsyncPageable<CostManagementAlertResource> GetCostManagementAlertsAsync(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CostManagementAlertAlertsRestClient.CreateListExternalRequest(externalCloudProviderType, externalCloudProviderId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), CostManagementAlertAlertsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetCostManagementAlerts", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), CostManagementAlertAlertsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetCostManagementAlerts", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -795,7 +794,7 @@ namespace Azure.ResourceManager.CostManagement
         public virtual Pageable<CostManagementAlertResource> GetCostManagementAlerts(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CostManagementAlertAlertsRestClient.CreateListExternalRequest(externalCloudProviderType, externalCloudProviderId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), CostManagementAlertAlertsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetCostManagementAlerts", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), CostManagementAlertAlertsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetCostManagementAlerts", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -885,7 +884,7 @@ namespace Azure.ResourceManager.CostManagement
         public virtual AsyncPageable<CostManagementDimension> ByExternalCloudProviderTypeDimensionsAsync(TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateByExternalCloudProviderTypeRequest(options.ExternalCloudProviderType, options.ExternalCloudProviderId, options.Filter, options.Expand, options.Skiptoken, options.Top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -907,7 +906,7 @@ namespace Azure.ResourceManager.CostManagement
         public virtual Pageable<CostManagementDimension> ByExternalCloudProviderTypeDimensions(TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateByExternalCloudProviderTypeRequest(options.ExternalCloudProviderType, options.ExternalCloudProviderId, options.Filter, options.Expand, options.Skiptoken, options.Top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1001,7 +1000,7 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = await GenerateReservationDetailsReportRestClient.ByBillingAccountIdAsync(billingAccountId, startDate, endDate, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<OperationStatus>(new OperationStatusOperationSource(), GenerateReservationDetailsReportClientDiagnostics, Pipeline, GenerateReservationDetailsReportRestClient.CreateByBillingAccountIdRequest(billingAccountId, startDate, endDate).Request, response, OperationFinalStateVia.Location);
+                var operation = new CostManagementArmOperation<OperationStatus>(new OperationStatusOperationSource(), GenerateReservationDetailsReportClientDiagnostics, Pipeline, GenerateReservationDetailsReportRestClient.CreateByBillingAccountIdRequest(billingAccountId, startDate, endDate).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1038,7 +1037,7 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = GenerateReservationDetailsReportRestClient.ByBillingAccountId(billingAccountId, startDate, endDate, cancellationToken);
-                var operation = new CostManagementArmOperation<OperationStatus>(new OperationStatusOperationSource(), GenerateReservationDetailsReportClientDiagnostics, Pipeline, GenerateReservationDetailsReportRestClient.CreateByBillingAccountIdRequest(billingAccountId, startDate, endDate).Request, response, OperationFinalStateVia.Location);
+                var operation = new CostManagementArmOperation<OperationStatus>(new OperationStatusOperationSource(), GenerateReservationDetailsReportClientDiagnostics, Pipeline, GenerateReservationDetailsReportRestClient.CreateByBillingAccountIdRequest(billingAccountId, startDate, endDate).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1076,7 +1075,7 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = await GenerateReservationDetailsReportRestClient.ByBillingProfileIdAsync(billingAccountId, billingProfileId, startDate, endDate, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<OperationStatus>(new OperationStatusOperationSource(), GenerateReservationDetailsReportClientDiagnostics, Pipeline, GenerateReservationDetailsReportRestClient.CreateByBillingProfileIdRequest(billingAccountId, billingProfileId, startDate, endDate).Request, response, OperationFinalStateVia.Location);
+                var operation = new CostManagementArmOperation<OperationStatus>(new OperationStatusOperationSource(), GenerateReservationDetailsReportClientDiagnostics, Pipeline, GenerateReservationDetailsReportRestClient.CreateByBillingProfileIdRequest(billingAccountId, billingProfileId, startDate, endDate).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1114,7 +1113,7 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = GenerateReservationDetailsReportRestClient.ByBillingProfileId(billingAccountId, billingProfileId, startDate, endDate, cancellationToken);
-                var operation = new CostManagementArmOperation<OperationStatus>(new OperationStatusOperationSource(), GenerateReservationDetailsReportClientDiagnostics, Pipeline, GenerateReservationDetailsReportRestClient.CreateByBillingProfileIdRequest(billingAccountId, billingProfileId, startDate, endDate).Request, response, OperationFinalStateVia.Location);
+                var operation = new CostManagementArmOperation<OperationStatus>(new OperationStatusOperationSource(), GenerateReservationDetailsReportClientDiagnostics, Pipeline, GenerateReservationDetailsReportRestClient.CreateByBillingProfileIdRequest(billingAccountId, billingProfileId, startDate, endDate).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1151,7 +1150,7 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = await PriceSheetRestClient.DownloadAsync(billingAccountName, billingProfileName, invoiceName, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<DownloadURL>(new DownloadURLOperationSource(), PriceSheetClientDiagnostics, Pipeline, PriceSheetRestClient.CreateDownloadRequest(billingAccountName, billingProfileName, invoiceName).Request, response, OperationFinalStateVia.Location);
+                var operation = new CostManagementArmOperation<DownloadURL>(new DownloadURLOperationSource(), PriceSheetClientDiagnostics, Pipeline, PriceSheetRestClient.CreateDownloadRequest(billingAccountName, billingProfileName, invoiceName).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1188,7 +1187,7 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = PriceSheetRestClient.Download(billingAccountName, billingProfileName, invoiceName, cancellationToken);
-                var operation = new CostManagementArmOperation<DownloadURL>(new DownloadURLOperationSource(), PriceSheetClientDiagnostics, Pipeline, PriceSheetRestClient.CreateDownloadRequest(billingAccountName, billingProfileName, invoiceName).Request, response, OperationFinalStateVia.Location);
+                var operation = new CostManagementArmOperation<DownloadURL>(new DownloadURLOperationSource(), PriceSheetClientDiagnostics, Pipeline, PriceSheetRestClient.CreateDownloadRequest(billingAccountName, billingProfileName, invoiceName).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1224,7 +1223,7 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = await PriceSheetRestClient.DownloadByBillingProfileAsync(billingAccountName, billingProfileName, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<DownloadURL>(new DownloadURLOperationSource(), PriceSheetClientDiagnostics, Pipeline, PriceSheetRestClient.CreateDownloadByBillingProfileRequest(billingAccountName, billingProfileName).Request, response, OperationFinalStateVia.Location);
+                var operation = new CostManagementArmOperation<DownloadURL>(new DownloadURLOperationSource(), PriceSheetClientDiagnostics, Pipeline, PriceSheetRestClient.CreateDownloadByBillingProfileRequest(billingAccountName, billingProfileName).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1260,7 +1259,7 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = PriceSheetRestClient.DownloadByBillingProfile(billingAccountName, billingProfileName, cancellationToken);
-                var operation = new CostManagementArmOperation<DownloadURL>(new DownloadURLOperationSource(), PriceSheetClientDiagnostics, Pipeline, PriceSheetRestClient.CreateDownloadByBillingProfileRequest(billingAccountName, billingProfileName).Request, response, OperationFinalStateVia.Location);
+                var operation = new CostManagementArmOperation<DownloadURL>(new DownloadURLOperationSource(), PriceSheetClientDiagnostics, Pipeline, PriceSheetRestClient.CreateDownloadByBillingProfileRequest(billingAccountName, billingProfileName).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             try
             {
                 var response = await _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlFirewallRuleResource>(new CosmosDBForPostgreSqlFirewallRuleOperationSource(Client), _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlFirewallRuleResource>(new CosmosDBForPostgreSqlFirewallRuleOperationSource(Client), _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             try
             {
                 var response = _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data, cancellationToken);
-                var operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlFirewallRuleResource>(new CosmosDBForPostgreSqlFirewallRuleOperationSource(Client), _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlFirewallRuleResource>(new CosmosDBForPostgreSqlFirewallRuleOperationSource(Client), _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         public virtual AsyncPageable<CosmosDBForPostgreSqlFirewallRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBForPostgreSqlFirewallRuleResource(Client, CosmosDBForPostgreSqlFirewallRuleData.DeserializeCosmosDBForPostgreSqlFirewallRuleData(e)), _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBForPostgreSqlFirewallRuleResource(Client, CosmosDBForPostgreSqlFirewallRuleData.DeserializeCosmosDBForPostgreSqlFirewallRuleData(e)), _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +247,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         public virtual Pageable<CosmosDBForPostgreSqlFirewallRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBForPostgreSqlFirewallRuleResource(Client, CosmosDBForPostgreSqlFirewallRuleData.DeserializeCosmosDBForPostgreSqlFirewallRuleData(e)), _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBForPostgreSqlFirewallRuleResource(Client, CosmosDBForPostgreSqlFirewallRuleData.DeserializeCosmosDBForPostgreSqlFirewallRuleData(e)), _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             try
             {
                 var response = await _cosmosDBForPostgreSqlRoleRolesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBForPostgreSqlArmOperation(_cosmosDBForPostgreSqlRoleRolesClientDiagnostics, Pipeline, _cosmosDBForPostgreSqlRoleRolesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBForPostgreSqlArmOperation(_cosmosDBForPostgreSqlRoleRolesClientDiagnostics, Pipeline, _cosmosDBForPostgreSqlRoleRolesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             try
             {
                 var response = _cosmosDBForPostgreSqlRoleRolesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CosmosDBForPostgreSqlArmOperation(_cosmosDBForPostgreSqlRoleRolesClientDiagnostics, Pipeline, _cosmosDBForPostgreSqlRoleRolesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBForPostgreSqlArmOperation(_cosmosDBForPostgreSqlRoleRolesClientDiagnostics, Pipeline, _cosmosDBForPostgreSqlRoleRolesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             try
             {
                 var response = await _cosmosDBForPostgreSqlRoleRolesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlRoleResource>(new CosmosDBForPostgreSqlRoleOperationSource(Client), _cosmosDBForPostgreSqlRoleRolesClientDiagnostics, Pipeline, _cosmosDBForPostgreSqlRoleRolesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlRoleResource>(new CosmosDBForPostgreSqlRoleOperationSource(Client), _cosmosDBForPostgreSqlRoleRolesClientDiagnostics, Pipeline, _cosmosDBForPostgreSqlRoleRolesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             try
             {
                 var response = _cosmosDBForPostgreSqlRoleRolesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlRoleResource>(new CosmosDBForPostgreSqlRoleOperationSource(Client), _cosmosDBForPostgreSqlRoleRolesClientDiagnostics, Pipeline, _cosmosDBForPostgreSqlRoleRolesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlRoleResource>(new CosmosDBForPostgreSqlRoleOperationSource(Client), _cosmosDBForPostgreSqlRoleRolesClientDiagnostics, Pipeline, _cosmosDBForPostgreSqlRoleRolesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

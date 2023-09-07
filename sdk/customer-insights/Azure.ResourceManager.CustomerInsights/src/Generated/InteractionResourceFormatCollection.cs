@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = await _interactionResourceFormatInteractionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, interactionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomerInsightsArmOperation<InteractionResourceFormatResource>(new InteractionResourceFormatOperationSource(Client), _interactionResourceFormatInteractionsClientDiagnostics, Pipeline, _interactionResourceFormatInteractionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, interactionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CustomerInsightsArmOperation<InteractionResourceFormatResource>(new InteractionResourceFormatOperationSource(Client), _interactionResourceFormatInteractionsClientDiagnostics, Pipeline, _interactionResourceFormatInteractionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, interactionName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = _interactionResourceFormatInteractionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, interactionName, data, cancellationToken);
-                var operation = new CustomerInsightsArmOperation<InteractionResourceFormatResource>(new InteractionResourceFormatOperationSource(Client), _interactionResourceFormatInteractionsClientDiagnostics, Pipeline, _interactionResourceFormatInteractionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, interactionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CustomerInsightsArmOperation<InteractionResourceFormatResource>(new InteractionResourceFormatOperationSource(Client), _interactionResourceFormatInteractionsClientDiagnostics, Pipeline, _interactionResourceFormatInteractionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, interactionName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -231,7 +230,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _interactionResourceFormatInteractionsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _interactionResourceFormatInteractionsRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new InteractionResourceFormatResource(Client, InteractionResourceFormatData.DeserializeInteractionResourceFormatData(e)), _interactionResourceFormatInteractionsClientDiagnostics, Pipeline, "InteractionResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new InteractionResourceFormatResource(Client, InteractionResourceFormatData.DeserializeInteractionResourceFormatData(e)), _interactionResourceFormatInteractionsClientDiagnostics, Pipeline, "InteractionResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +253,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _interactionResourceFormatInteractionsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _interactionResourceFormatInteractionsRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new InteractionResourceFormatResource(Client, InteractionResourceFormatData.DeserializeInteractionResourceFormatData(e)), _interactionResourceFormatInteractionsClientDiagnostics, Pipeline, "InteractionResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new InteractionResourceFormatResource(Client, InteractionResourceFormatData.DeserializeInteractionResourceFormatData(e)), _interactionResourceFormatInteractionsClientDiagnostics, Pipeline, "InteractionResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cassandraTableThroughputSettingCassandraResourcesRestClient.UpdateCassandraTableThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CassandraTableThroughputSettingResource>(new CassandraTableThroughputSettingOperationSource(Client), _cassandraTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _cassandraTableThroughputSettingCassandraResourcesRestClient.CreateUpdateCassandraTableThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CassandraTableThroughputSettingResource>(new CassandraTableThroughputSettingOperationSource(Client), _cassandraTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _cassandraTableThroughputSettingCassandraResourcesRestClient.CreateUpdateCassandraTableThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cassandraTableThroughputSettingCassandraResourcesRestClient.UpdateCassandraTableThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken);
-                var operation = new CosmosDBArmOperation<CassandraTableThroughputSettingResource>(new CassandraTableThroughputSettingOperationSource(Client), _cassandraTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _cassandraTableThroughputSettingCassandraResourcesRestClient.CreateUpdateCassandraTableThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CassandraTableThroughputSettingResource>(new CassandraTableThroughputSettingOperationSource(Client), _cassandraTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _cassandraTableThroughputSettingCassandraResourcesRestClient.CreateUpdateCassandraTableThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cassandraTableThroughputSettingCassandraResourcesRestClient.MigrateCassandraTableToAutoscaleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CassandraTableThroughputSettingResource>(new CassandraTableThroughputSettingOperationSource(Client), _cassandraTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _cassandraTableThroughputSettingCassandraResourcesRestClient.CreateMigrateCassandraTableToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CassandraTableThroughputSettingResource>(new CassandraTableThroughputSettingOperationSource(Client), _cassandraTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _cassandraTableThroughputSettingCassandraResourcesRestClient.CreateMigrateCassandraTableToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cassandraTableThroughputSettingCassandraResourcesRestClient.MigrateCassandraTableToAutoscale(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation<CassandraTableThroughputSettingResource>(new CassandraTableThroughputSettingOperationSource(Client), _cassandraTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _cassandraTableThroughputSettingCassandraResourcesRestClient.CreateMigrateCassandraTableToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CassandraTableThroughputSettingResource>(new CassandraTableThroughputSettingOperationSource(Client), _cassandraTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _cassandraTableThroughputSettingCassandraResourcesRestClient.CreateMigrateCassandraTableToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cassandraTableThroughputSettingCassandraResourcesRestClient.MigrateCassandraTableToManualThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CassandraTableThroughputSettingResource>(new CassandraTableThroughputSettingOperationSource(Client), _cassandraTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _cassandraTableThroughputSettingCassandraResourcesRestClient.CreateMigrateCassandraTableToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CassandraTableThroughputSettingResource>(new CassandraTableThroughputSettingOperationSource(Client), _cassandraTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _cassandraTableThroughputSettingCassandraResourcesRestClient.CreateMigrateCassandraTableToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cassandraTableThroughputSettingCassandraResourcesRestClient.MigrateCassandraTableToManualThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation<CassandraTableThroughputSettingResource>(new CassandraTableThroughputSettingOperationSource(Client), _cassandraTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _cassandraTableThroughputSettingCassandraResourcesRestClient.CreateMigrateCassandraTableToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CassandraTableThroughputSettingResource>(new CassandraTableThroughputSettingOperationSource(Client), _cassandraTableThroughputSettingCassandraResourcesClientDiagnostics, Pipeline, _cassandraTableThroughputSettingCassandraResourcesRestClient.CreateMigrateCassandraTableToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

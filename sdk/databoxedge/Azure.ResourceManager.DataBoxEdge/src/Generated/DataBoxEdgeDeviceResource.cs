@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -690,7 +689,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = await _dataBoxEdgeDeviceDevicesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -724,7 +723,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = _dataBoxEdgeDeviceDevicesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -826,7 +825,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = await _dataBoxEdgeDeviceDevicesRestClient.DownloadUpdatesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateDownloadUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateDownloadUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -860,7 +859,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = _dataBoxEdgeDeviceDevicesRestClient.DownloadUpdates(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateDownloadUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateDownloadUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1014,7 +1013,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = await _dataBoxEdgeDeviceDevicesRestClient.InstallUpdatesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateInstallUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateInstallUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1048,7 +1047,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = _dataBoxEdgeDeviceDevicesRestClient.InstallUpdates(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateInstallUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateInstallUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1142,7 +1141,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = await _dataBoxEdgeDeviceDevicesRestClient.ScanForUpdatesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateScanForUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateScanForUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1176,7 +1175,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = _dataBoxEdgeDeviceDevicesRestClient.ScanForUpdates(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateScanForUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateScanForUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1214,7 +1213,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = await _dataBoxEdgeDeviceDevicesRestClient.CreateOrUpdateSecuritySettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securitySettings, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateCreateOrUpdateSecuritySettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securitySettings).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateCreateOrUpdateSecuritySettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securitySettings).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1252,7 +1251,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = _dataBoxEdgeDeviceDevicesRestClient.CreateOrUpdateSecuritySettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securitySettings, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateCreateOrUpdateSecuritySettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securitySettings).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, _dataBoxEdgeDeviceDevicesRestClient.CreateCreateOrUpdateSecuritySettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securitySettings).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1487,7 +1486,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = await _deviceCapacityCheckRestClient.CheckResourceCreationFeasibilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, capacityName, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation(_deviceCapacityCheckClientDiagnostics, Pipeline, _deviceCapacityCheckRestClient.CreateCheckResourceCreationFeasibilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, capacityName).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DataBoxEdgeArmOperation(_deviceCapacityCheckClientDiagnostics, Pipeline, _deviceCapacityCheckRestClient.CreateCheckResourceCreationFeasibilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, capacityName).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1526,7 +1525,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = _deviceCapacityCheckRestClient.CheckResourceCreationFeasibility(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, capacityName, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation(_deviceCapacityCheckClientDiagnostics, Pipeline, _deviceCapacityCheckRestClient.CreateCheckResourceCreationFeasibilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, capacityName).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DataBoxEdgeArmOperation(_deviceCapacityCheckClientDiagnostics, Pipeline, _deviceCapacityCheckRestClient.CreateCheckResourceCreationFeasibilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, capacityName).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1617,7 +1616,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nodesRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nodesRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataBoxEdgeNode.DeserializeDataBoxEdgeNode, _nodesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceResource.GetEdgeNodes", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataBoxEdgeNode.DeserializeDataBoxEdgeNode, _nodesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceResource.GetEdgeNodes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1639,7 +1638,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nodesRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nodesRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataBoxEdgeNode.DeserializeDataBoxEdgeNode, _nodesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceResource.GetEdgeNodes", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataBoxEdgeNode.DeserializeDataBoxEdgeNode, _nodesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceResource.GetEdgeNodes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1668,7 +1667,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = await _supportPackagesRestClient.TriggerSupportPackageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation(_supportPackagesClientDiagnostics, Pipeline, _supportPackagesRestClient.CreateTriggerSupportPackageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxEdgeArmOperation(_supportPackagesClientDiagnostics, Pipeline, _supportPackagesRestClient.CreateTriggerSupportPackageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1706,7 +1705,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = _supportPackagesRestClient.TriggerSupportPackage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation(_supportPackagesClientDiagnostics, Pipeline, _supportPackagesRestClient.CreateTriggerSupportPackageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxEdgeArmOperation(_supportPackagesClientDiagnostics, Pipeline, _supportPackagesRestClient.CreateTriggerSupportPackageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

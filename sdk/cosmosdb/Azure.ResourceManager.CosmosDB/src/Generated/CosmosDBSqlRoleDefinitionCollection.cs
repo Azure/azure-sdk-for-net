@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cosmosDBSqlRoleDefinitionSqlResourcesRestClient.CreateUpdateSqlRoleDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlRoleDefinitionResource>(new CosmosDBSqlRoleDefinitionOperationSource(Client), _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlRoleDefinitionSqlResourcesRestClient.CreateCreateUpdateSqlRoleDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CosmosDBSqlRoleDefinitionResource>(new CosmosDBSqlRoleDefinitionOperationSource(Client), _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlRoleDefinitionSqlResourcesRestClient.CreateCreateUpdateSqlRoleDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cosmosDBSqlRoleDefinitionSqlResourcesRestClient.CreateUpdateSqlRoleDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlRoleDefinitionResource>(new CosmosDBSqlRoleDefinitionOperationSource(Client), _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlRoleDefinitionSqlResourcesRestClient.CreateCreateUpdateSqlRoleDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CosmosDBSqlRoleDefinitionResource>(new CosmosDBSqlRoleDefinitionOperationSource(Client), _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlRoleDefinitionSqlResourcesRestClient.CreateCreateUpdateSqlRoleDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CosmosDBSqlRoleDefinitionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlRoleDefinitionSqlResourcesRestClient.CreateListSqlRoleDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlRoleDefinitionResource(Client, CosmosDBSqlRoleDefinitionData.DeserializeCosmosDBSqlRoleDefinitionData(e)), _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlRoleDefinitionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlRoleDefinitionResource(Client, CosmosDBSqlRoleDefinitionData.DeserializeCosmosDBSqlRoleDefinitionData(e)), _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlRoleDefinitionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CosmosDBSqlRoleDefinitionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlRoleDefinitionSqlResourcesRestClient.CreateListSqlRoleDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlRoleDefinitionResource(Client, CosmosDBSqlRoleDefinitionData.DeserializeCosmosDBSqlRoleDefinitionData(e)), _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlRoleDefinitionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlRoleDefinitionResource(Client, CosmosDBSqlRoleDefinitionData.DeserializeCosmosDBSqlRoleDefinitionData(e)), _cosmosDBSqlRoleDefinitionSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlRoleDefinitionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

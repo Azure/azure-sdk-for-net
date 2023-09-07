@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Datadog
             try
             {
                 var response = await _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DatadogArmOperation<DatadogSingleSignOnResource>(new DatadogSingleSignOnResourceOperationSource(Client), _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics, Pipeline, _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DatadogArmOperation<DatadogSingleSignOnResource>(new DatadogSingleSignOnResourceOperationSource(Client), _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics, Pipeline, _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Datadog
             try
             {
                 var response = _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new DatadogArmOperation<DatadogSingleSignOnResource>(new DatadogSingleSignOnResourceOperationSource(Client), _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics, Pipeline, _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DatadogArmOperation<DatadogSingleSignOnResource>(new DatadogSingleSignOnResourceOperationSource(Client), _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics, Pipeline, _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

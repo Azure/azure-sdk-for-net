@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cosmosDBSqlStoredProcedureSqlResourcesRestClient.CreateUpdateSqlStoredProcedureAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlStoredProcedureResource>(new CosmosDBSqlStoredProcedureOperationSource(Client), _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlStoredProcedureSqlResourcesRestClient.CreateCreateUpdateSqlStoredProcedureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CosmosDBSqlStoredProcedureResource>(new CosmosDBSqlStoredProcedureOperationSource(Client), _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlStoredProcedureSqlResourcesRestClient.CreateCreateUpdateSqlStoredProcedureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cosmosDBSqlStoredProcedureSqlResourcesRestClient.CreateUpdateSqlStoredProcedure(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlStoredProcedureResource>(new CosmosDBSqlStoredProcedureOperationSource(Client), _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlStoredProcedureSqlResourcesRestClient.CreateCreateUpdateSqlStoredProcedureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CosmosDBSqlStoredProcedureResource>(new CosmosDBSqlStoredProcedureOperationSource(Client), _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlStoredProcedureSqlResourcesRestClient.CreateCreateUpdateSqlStoredProcedureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CosmosDBSqlStoredProcedureResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlStoredProcedureSqlResourcesRestClient.CreateListSqlStoredProceduresRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlStoredProcedureResource(Client, CosmosDBSqlStoredProcedureData.DeserializeCosmosDBSqlStoredProcedureData(e)), _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlStoredProcedureCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlStoredProcedureResource(Client, CosmosDBSqlStoredProcedureData.DeserializeCosmosDBSqlStoredProcedureData(e)), _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlStoredProcedureCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CosmosDBSqlStoredProcedureResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlStoredProcedureSqlResourcesRestClient.CreateListSqlStoredProceduresRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlStoredProcedureResource(Client, CosmosDBSqlStoredProcedureData.DeserializeCosmosDBSqlStoredProcedureData(e)), _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlStoredProcedureCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlStoredProcedureResource(Client, CosmosDBSqlStoredProcedureData.DeserializeCosmosDBSqlStoredProcedureData(e)), _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlStoredProcedureCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

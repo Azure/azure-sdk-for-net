@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.DataBox
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataBoxJobJobsRestClient.CreateListRequest(Id.SubscriptionId, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataBoxJobJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxJobResource(Client, DataBoxJobData.DeserializeDataBoxJobData(e)), DataBoxJobJobsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataBoxJobs", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxJobResource(Client, DataBoxJobData.DeserializeDataBoxJobData(e)), DataBoxJobJobsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataBoxJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.DataBox
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataBoxJobJobsRestClient.CreateListRequest(Id.SubscriptionId, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataBoxJobJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxJobResource(Client, DataBoxJobData.DeserializeDataBoxJobData(e)), DataBoxJobJobsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataBoxJobs", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxJobResource(Client, DataBoxJobData.DeserializeDataBoxJobData(e)), DataBoxJobJobsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataBoxJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

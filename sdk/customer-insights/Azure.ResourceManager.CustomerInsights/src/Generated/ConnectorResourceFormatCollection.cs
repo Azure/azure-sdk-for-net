@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = await _connectorResourceFormatConnectorsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectorName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomerInsightsArmOperation<ConnectorResourceFormatResource>(new ConnectorResourceFormatOperationSource(Client), _connectorResourceFormatConnectorsClientDiagnostics, Pipeline, _connectorResourceFormatConnectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectorName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CustomerInsightsArmOperation<ConnectorResourceFormatResource>(new ConnectorResourceFormatOperationSource(Client), _connectorResourceFormatConnectorsClientDiagnostics, Pipeline, _connectorResourceFormatConnectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectorName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = _connectorResourceFormatConnectorsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectorName, data, cancellationToken);
-                var operation = new CustomerInsightsArmOperation<ConnectorResourceFormatResource>(new ConnectorResourceFormatOperationSource(Client), _connectorResourceFormatConnectorsClientDiagnostics, Pipeline, _connectorResourceFormatConnectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectorName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CustomerInsightsArmOperation<ConnectorResourceFormatResource>(new ConnectorResourceFormatOperationSource(Client), _connectorResourceFormatConnectorsClientDiagnostics, Pipeline, _connectorResourceFormatConnectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectorName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectorResourceFormatConnectorsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectorResourceFormatConnectorsRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConnectorResourceFormatResource(Client, ConnectorResourceFormatData.DeserializeConnectorResourceFormatData(e)), _connectorResourceFormatConnectorsClientDiagnostics, Pipeline, "ConnectorResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConnectorResourceFormatResource(Client, ConnectorResourceFormatData.DeserializeConnectorResourceFormatData(e)), _connectorResourceFormatConnectorsClientDiagnostics, Pipeline, "ConnectorResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectorResourceFormatConnectorsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectorResourceFormatConnectorsRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConnectorResourceFormatResource(Client, ConnectorResourceFormatData.DeserializeConnectorResourceFormatData(e)), _connectorResourceFormatConnectorsClientDiagnostics, Pipeline, "ConnectorResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConnectorResourceFormatResource(Client, ConnectorResourceFormatData.DeserializeConnectorResourceFormatData(e)), _connectorResourceFormatConnectorsClientDiagnostics, Pipeline, "ConnectorResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

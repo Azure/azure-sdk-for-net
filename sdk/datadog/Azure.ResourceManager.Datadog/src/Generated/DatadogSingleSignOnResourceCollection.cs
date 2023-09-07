@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.Datadog
             try
             {
                 var response = await _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DatadogArmOperation<DatadogSingleSignOnResource>(new DatadogSingleSignOnResourceOperationSource(Client), _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics, Pipeline, _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DatadogArmOperation<DatadogSingleSignOnResource>(new DatadogSingleSignOnResourceOperationSource(Client), _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics, Pipeline, _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Datadog
             try
             {
                 var response = _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data, cancellationToken);
-                var operation = new DatadogArmOperation<DatadogSingleSignOnResource>(new DatadogSingleSignOnResourceOperationSource(Client), _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics, Pipeline, _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DatadogArmOperation<DatadogSingleSignOnResource>(new DatadogSingleSignOnResourceOperationSource(Client), _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics, Pipeline, _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.Datadog
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DatadogSingleSignOnResource(Client, DatadogSingleSignOnResourceData.DeserializeDatadogSingleSignOnResourceData(e)), _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics, Pipeline, "DatadogSingleSignOnResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DatadogSingleSignOnResource(Client, DatadogSingleSignOnResourceData.DeserializeDatadogSingleSignOnResourceData(e)), _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics, Pipeline, "DatadogSingleSignOnResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.Datadog
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DatadogSingleSignOnResource(Client, DatadogSingleSignOnResourceData.DeserializeDatadogSingleSignOnResourceData(e)), _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics, Pipeline, "DatadogSingleSignOnResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DatadogSingleSignOnResource(Client, DatadogSingleSignOnResourceData.DeserializeDatadogSingleSignOnResourceData(e)), _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics, Pipeline, "DatadogSingleSignOnResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

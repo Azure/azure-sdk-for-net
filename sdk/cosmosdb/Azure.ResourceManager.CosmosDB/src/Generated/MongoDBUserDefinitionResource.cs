@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _mongoDBUserDefinitionMongoDBResourcesRestClient.DeleteMongoUserDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation(_mongoDBUserDefinitionMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBUserDefinitionMongoDBResourcesRestClient.CreateDeleteMongoUserDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_mongoDBUserDefinitionMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBUserDefinitionMongoDBResourcesRestClient.CreateDeleteMongoUserDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _mongoDBUserDefinitionMongoDBResourcesRestClient.DeleteMongoUserDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation(_mongoDBUserDefinitionMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBUserDefinitionMongoDBResourcesRestClient.CreateDeleteMongoUserDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_mongoDBUserDefinitionMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBUserDefinitionMongoDBResourcesRestClient.CreateDeleteMongoUserDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _mongoDBUserDefinitionMongoDBResourcesRestClient.CreateUpdateMongoUserDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<MongoDBUserDefinitionResource>(new MongoDBUserDefinitionOperationSource(Client), _mongoDBUserDefinitionMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBUserDefinitionMongoDBResourcesRestClient.CreateCreateUpdateMongoUserDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<MongoDBUserDefinitionResource>(new MongoDBUserDefinitionOperationSource(Client), _mongoDBUserDefinitionMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBUserDefinitionMongoDBResourcesRestClient.CreateCreateUpdateMongoUserDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _mongoDBUserDefinitionMongoDBResourcesRestClient.CreateUpdateMongoUserDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<MongoDBUserDefinitionResource>(new MongoDBUserDefinitionOperationSource(Client), _mongoDBUserDefinitionMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBUserDefinitionMongoDBResourcesRestClient.CreateCreateUpdateMongoUserDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<MongoDBUserDefinitionResource>(new MongoDBUserDefinitionOperationSource(Client), _mongoDBUserDefinitionMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBUserDefinitionMongoDBResourcesRestClient.CreateCreateUpdateMongoUserDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

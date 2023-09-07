@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -182,7 +181,7 @@ namespace Azure.ResourceManager.DataBox
             try
             {
                 var response = await _dataBoxJobJobsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxArmOperation(_dataBoxJobJobsClientDiagnostics, Pipeline, _dataBoxJobJobsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxArmOperation(_dataBoxJobJobsClientDiagnostics, Pipeline, _dataBoxJobJobsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -216,7 +215,7 @@ namespace Azure.ResourceManager.DataBox
             try
             {
                 var response = _dataBoxJobJobsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DataBoxArmOperation(_dataBoxJobJobsClientDiagnostics, Pipeline, _dataBoxJobJobsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxArmOperation(_dataBoxJobJobsClientDiagnostics, Pipeline, _dataBoxJobJobsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -255,7 +254,7 @@ namespace Azure.ResourceManager.DataBox
             try
             {
                 var response = await _dataBoxJobJobsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxArmOperation<DataBoxJobResource>(new DataBoxJobOperationSource(Client), _dataBoxJobJobsClientDiagnostics, Pipeline, _dataBoxJobJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxArmOperation<DataBoxJobResource>(new DataBoxJobOperationSource(Client), _dataBoxJobJobsClientDiagnostics, Pipeline, _dataBoxJobJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.DataBox
             try
             {
                 var response = _dataBoxJobJobsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken);
-                var operation = new DataBoxArmOperation<DataBoxJobResource>(new DataBoxJobOperationSource(Client), _dataBoxJobJobsClientDiagnostics, Pipeline, _dataBoxJobJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxArmOperation<DataBoxJobResource>(new DataBoxJobOperationSource(Client), _dataBoxJobJobsClientDiagnostics, Pipeline, _dataBoxJobJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -528,7 +527,7 @@ namespace Azure.ResourceManager.DataBox
         public virtual AsyncPageable<UnencryptedCredentials> GetCredentialsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxJobJobsRestClient.CreateListCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, UnencryptedCredentials.DeserializeUnencryptedCredentials, _dataBoxJobJobsClientDiagnostics, Pipeline, "DataBoxJobResource.GetCredentials", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, UnencryptedCredentials.DeserializeUnencryptedCredentials, _dataBoxJobJobsClientDiagnostics, Pipeline, "DataBoxJobResource.GetCredentials", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -549,7 +548,7 @@ namespace Azure.ResourceManager.DataBox
         public virtual Pageable<UnencryptedCredentials> GetCredentials(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxJobJobsRestClient.CreateListCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, UnencryptedCredentials.DeserializeUnencryptedCredentials, _dataBoxJobJobsClientDiagnostics, Pipeline, "DataBoxJobResource.GetCredentials", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, UnencryptedCredentials.DeserializeUnencryptedCredentials, _dataBoxJobJobsClientDiagnostics, Pipeline, "DataBoxJobResource.GetCredentials", "value", null, cancellationToken);
         }
 
         /// <summary>

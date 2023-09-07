@@ -10,7 +10,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -218,7 +217,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementViewsViewsRestClient.CreateListByScopeRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _costManagementViewsViewsRestClient.CreateListByScopeNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CostManagementViewsResource(Client, CostManagementViewData.DeserializeCostManagementViewData(e)), _costManagementViewsViewsClientDiagnostics, Pipeline, "CostManagementViewsCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CostManagementViewsResource(Client, CostManagementViewData.DeserializeCostManagementViewData(e)), _costManagementViewsViewsClientDiagnostics, Pipeline, "CostManagementViewsCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -240,7 +239,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementViewsViewsRestClient.CreateListByScopeRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _costManagementViewsViewsRestClient.CreateListByScopeNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CostManagementViewsResource(Client, CostManagementViewData.DeserializeCostManagementViewData(e)), _costManagementViewsViewsClientDiagnostics, Pipeline, "CostManagementViewsCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CostManagementViewsResource(Client, CostManagementViewData.DeserializeCostManagementViewData(e)), _costManagementViewsViewsClientDiagnostics, Pipeline, "CostManagementViewsCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
