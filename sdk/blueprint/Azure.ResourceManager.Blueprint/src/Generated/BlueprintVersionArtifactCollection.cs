@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -146,7 +145,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintVersionArtifactPublishedArtifactsRestClient.CreateListRequest(Id.Parent.Parent, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blueprintVersionArtifactPublishedArtifactsRestClient.CreateListNextPageRequest(nextLink, Id.Parent.Parent, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BlueprintVersionArtifactResource(Client, ArtifactData.DeserializeArtifactData(e)), _blueprintVersionArtifactPublishedArtifactsClientDiagnostics, Pipeline, "BlueprintVersionArtifactCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BlueprintVersionArtifactResource(Client, ArtifactData.DeserializeArtifactData(e)), _blueprintVersionArtifactPublishedArtifactsClientDiagnostics, Pipeline, "BlueprintVersionArtifactCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +167,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintVersionArtifactPublishedArtifactsRestClient.CreateListRequest(Id.Parent.Parent, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blueprintVersionArtifactPublishedArtifactsRestClient.CreateListNextPageRequest(nextLink, Id.Parent.Parent, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BlueprintVersionArtifactResource(Client, ArtifactData.DeserializeArtifactData(e)), _blueprintVersionArtifactPublishedArtifactsClientDiagnostics, Pipeline, "BlueprintVersionArtifactCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BlueprintVersionArtifactResource(Client, ArtifactData.DeserializeArtifactData(e)), _blueprintVersionArtifactPublishedArtifactsClientDiagnostics, Pipeline, "BlueprintVersionArtifactCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

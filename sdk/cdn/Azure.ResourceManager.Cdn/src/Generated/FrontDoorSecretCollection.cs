@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _frontDoorSecretRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<FrontDoorSecretResource>(new FrontDoorSecretOperationSource(Client), _frontDoorSecretClientDiagnostics, Pipeline, _frontDoorSecretRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CdnArmOperation<FrontDoorSecretResource>(new FrontDoorSecretOperationSource(Client), _frontDoorSecretClientDiagnostics, Pipeline, _frontDoorSecretRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _frontDoorSecretRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, data, cancellationToken);
-                var operation = new CdnArmOperation<FrontDoorSecretResource>(new FrontDoorSecretOperationSource(Client), _frontDoorSecretClientDiagnostics, Pipeline, _frontDoorSecretRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CdnArmOperation<FrontDoorSecretResource>(new FrontDoorSecretOperationSource(Client), _frontDoorSecretClientDiagnostics, Pipeline, _frontDoorSecretRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.Cdn
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorSecretRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorSecretRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorSecretResource(Client, FrontDoorSecretData.DeserializeFrontDoorSecretData(e)), _frontDoorSecretClientDiagnostics, Pipeline, "FrontDoorSecretCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorSecretResource(Client, FrontDoorSecretData.DeserializeFrontDoorSecretData(e)), _frontDoorSecretClientDiagnostics, Pipeline, "FrontDoorSecretCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.Cdn
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorSecretRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorSecretRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorSecretResource(Client, FrontDoorSecretData.DeserializeFrontDoorSecretData(e)), _frontDoorSecretClientDiagnostics, Pipeline, "FrontDoorSecretCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorSecretResource(Client, FrontDoorSecretData.DeserializeFrontDoorSecretData(e)), _frontDoorSecretClientDiagnostics, Pipeline, "FrontDoorSecretCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
