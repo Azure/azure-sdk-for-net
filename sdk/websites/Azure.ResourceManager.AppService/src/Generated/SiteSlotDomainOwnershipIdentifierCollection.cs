@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotDomainOwnershipIdentifierWebAppsRestClient.CreateListDomainOwnershipIdentifiersSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotDomainOwnershipIdentifierWebAppsRestClient.CreateListDomainOwnershipIdentifiersSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteSlotDomainOwnershipIdentifierResource(Client, AppServiceIdentifierData.DeserializeAppServiceIdentifierData(e)), _siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics, Pipeline, "SiteSlotDomainOwnershipIdentifierCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteSlotDomainOwnershipIdentifierResource(Client, AppServiceIdentifierData.DeserializeAppServiceIdentifierData(e)), _siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics, Pipeline, "SiteSlotDomainOwnershipIdentifierCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotDomainOwnershipIdentifierWebAppsRestClient.CreateListDomainOwnershipIdentifiersSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotDomainOwnershipIdentifierWebAppsRestClient.CreateListDomainOwnershipIdentifiersSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteSlotDomainOwnershipIdentifierResource(Client, AppServiceIdentifierData.DeserializeAppServiceIdentifierData(e)), _siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics, Pipeline, "SiteSlotDomainOwnershipIdentifierCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteSlotDomainOwnershipIdentifierResource(Client, AppServiceIdentifierData.DeserializeAppServiceIdentifierData(e)), _siteSlotDomainOwnershipIdentifierWebAppsClientDiagnostics, Pipeline, "SiteSlotDomainOwnershipIdentifierCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

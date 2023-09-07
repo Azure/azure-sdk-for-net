@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -372,7 +371,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsClusterClustersRestClient.CreateListStreamingJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamAnalyticsClusterClustersRestClient.CreateListStreamingJobsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StreamAnalyticsClusterJob.DeserializeStreamAnalyticsClusterJob, _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, "StreamAnalyticsClusterResource.GetStreamingJobs", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StreamAnalyticsClusterJob.DeserializeStreamAnalyticsClusterJob, _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, "StreamAnalyticsClusterResource.GetStreamingJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -394,7 +393,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsClusterClustersRestClient.CreateListStreamingJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamAnalyticsClusterClustersRestClient.CreateListStreamingJobsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StreamAnalyticsClusterJob.DeserializeStreamAnalyticsClusterJob, _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, "StreamAnalyticsClusterResource.GetStreamingJobs", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StreamAnalyticsClusterJob.DeserializeStreamAnalyticsClusterJob, _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, "StreamAnalyticsClusterResource.GetStreamingJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
