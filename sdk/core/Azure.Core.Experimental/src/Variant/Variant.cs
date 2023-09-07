@@ -1392,32 +1392,37 @@ namespace Azure
         /// <inheritdoc/>
         public override string? ToString()
         {
+            string? result;
+
             if (_object == null)
             {
-                return "null";
+                result = "null";
             }
-
-            if (_object is TypeFlag flag)
+            else if (_object is TypeFlag flag)
             {
                 if (Type == typeof(bool))
                 {
-                    return flag.ToObject(this).ToString()!.ToLowerInvariant();
+                    result = flag.ToObject(this).ToString()!.ToLowerInvariant();
                 }
-
-                return flag.ToObject(this).ToString();
+                else
+                {
+                    result = flag.ToObject(this).ToString();
+                }
             }
-
-            if (Type == typeof(ArraySegment<byte>))
+            else if (Type == typeof(ArraySegment<byte>))
             {
-                return ((ArraySegment<byte>)this).ToString();
+                result = ((ArraySegment<byte>)this).ToString();
             }
-
-            if (Type == typeof(ArraySegment<char>))
+            else if (Type == typeof(ArraySegment<char>))
             {
-                return ((ArraySegment<char>)this).ToString();
+                result = ((ArraySegment<char>)this).ToString();
+            }
+            else
+            {
+                result = _object.ToString();
             }
 
-            return _object.ToString();
+            return result;
         }
     }
 }
