@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         public virtual AsyncPageable<ReplicationEligibilityResultResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationEligibilityResultRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _virtualMachineName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ReplicationEligibilityResultResource(Client, ReplicationEligibilityResultData.DeserializeReplicationEligibilityResultData(e)), _replicationEligibilityResultClientDiagnostics, Pipeline, "ReplicationEligibilityResultCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ReplicationEligibilityResultResource(Client, ReplicationEligibilityResultData.DeserializeReplicationEligibilityResultData(e)), _replicationEligibilityResultClientDiagnostics, Pipeline, "ReplicationEligibilityResultCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -162,7 +161,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         public virtual Pageable<ReplicationEligibilityResultResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationEligibilityResultRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _virtualMachineName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ReplicationEligibilityResultResource(Client, ReplicationEligibilityResultData.DeserializeReplicationEligibilityResultData(e)), _replicationEligibilityResultClientDiagnostics, Pipeline, "ReplicationEligibilityResultCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ReplicationEligibilityResultResource(Client, ReplicationEligibilityResultData.DeserializeReplicationEligibilityResultData(e)), _replicationEligibilityResultClientDiagnostics, Pipeline, "ReplicationEligibilityResultCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

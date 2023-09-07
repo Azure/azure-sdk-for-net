@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -536,7 +535,7 @@ namespace Azure.ResourceManager.RecoveryServices
         public virtual AsyncPageable<ReplicationUsage> GetReplicationUsagesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ReplicationUsage.DeserializeReplicationUsage, _replicationUsagesClientDiagnostics, Pipeline, "RecoveryServicesVaultResource.GetReplicationUsages", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ReplicationUsage.DeserializeReplicationUsage, _replicationUsagesClientDiagnostics, Pipeline, "RecoveryServicesVaultResource.GetReplicationUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -557,7 +556,7 @@ namespace Azure.ResourceManager.RecoveryServices
         public virtual Pageable<ReplicationUsage> GetReplicationUsages(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ReplicationUsage.DeserializeReplicationUsage, _replicationUsagesClientDiagnostics, Pipeline, "RecoveryServicesVaultResource.GetReplicationUsages", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ReplicationUsage.DeserializeReplicationUsage, _replicationUsagesClientDiagnostics, Pipeline, "RecoveryServicesVaultResource.GetReplicationUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -578,7 +577,7 @@ namespace Azure.ResourceManager.RecoveryServices
         public virtual AsyncPageable<VaultUsage> GetUsagesByVaultsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListByVaultsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VaultUsage.DeserializeVaultUsage, _usagesClientDiagnostics, Pipeline, "RecoveryServicesVaultResource.GetUsagesByVaults", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VaultUsage.DeserializeVaultUsage, _usagesClientDiagnostics, Pipeline, "RecoveryServicesVaultResource.GetUsagesByVaults", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -599,7 +598,7 @@ namespace Azure.ResourceManager.RecoveryServices
         public virtual Pageable<VaultUsage> GetUsagesByVaults(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListByVaultsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, VaultUsage.DeserializeVaultUsage, _usagesClientDiagnostics, Pipeline, "RecoveryServicesVaultResource.GetUsagesByVaults", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, VaultUsage.DeserializeVaultUsage, _usagesClientDiagnostics, Pipeline, "RecoveryServicesVaultResource.GetUsagesByVaults", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsAlertRuleActionActionsRestClient.CreateListByAlertRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsAlertRuleActionActionsRestClient.CreateListByAlertRuleNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsAlertRuleActionResource(Client, SecurityInsightsAlertRuleActionData.DeserializeSecurityInsightsAlertRuleActionData(e)), _securityInsightsAlertRuleActionActionsClientDiagnostics, Pipeline, "SecurityInsightsAlertRuleActionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsAlertRuleActionResource(Client, SecurityInsightsAlertRuleActionData.DeserializeSecurityInsightsAlertRuleActionData(e)), _securityInsightsAlertRuleActionActionsClientDiagnostics, Pipeline, "SecurityInsightsAlertRuleActionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +250,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsAlertRuleActionActionsRestClient.CreateListByAlertRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsAlertRuleActionActionsRestClient.CreateListByAlertRuleNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsAlertRuleActionResource(Client, SecurityInsightsAlertRuleActionData.DeserializeSecurityInsightsAlertRuleActionData(e)), _securityInsightsAlertRuleActionActionsClientDiagnostics, Pipeline, "SecurityInsightsAlertRuleActionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsAlertRuleActionResource(Client, SecurityInsightsAlertRuleActionData.DeserializeSecurityInsightsAlertRuleActionData(e)), _securityInsightsAlertRuleActionActionsClientDiagnostics, Pipeline, "SecurityInsightsAlertRuleActionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
