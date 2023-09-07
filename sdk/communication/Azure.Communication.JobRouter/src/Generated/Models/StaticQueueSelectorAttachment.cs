@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -13,7 +14,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> Describes a queue selector that will be attached to the job. </summary>
     public partial class StaticQueueSelectorAttachment : QueueSelectorAttachment
     {
-        /// <summary> Initializes a new instance of StaticQueueSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticQueueSelectorAttachment"/>. </summary>
         /// <param name="queueSelector"> Describes a condition that must be met against a set of labels for queue selection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueSelector"/> is null. </exception>
         public StaticQueueSelectorAttachment(RouterQueueSelector queueSelector)
@@ -24,13 +25,19 @@ namespace Azure.Communication.JobRouter
             Kind = "static";
         }
 
-        /// <summary> Initializes a new instance of StaticQueueSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticQueueSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing the type of queue selector attachment. </param>
         /// <param name="queueSelector"> Describes a condition that must be met against a set of labels for queue selection. </param>
-        internal StaticQueueSelectorAttachment(string kind, RouterQueueSelector queueSelector) : base(kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StaticQueueSelectorAttachment(string kind, RouterQueueSelector queueSelector, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
         {
             QueueSelector = queueSelector;
             Kind = kind ?? "static";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StaticQueueSelectorAttachment"/> for deserialization. </summary>
+        internal StaticQueueSelectorAttachment()
+        {
         }
 
         /// <summary> Describes a condition that must be met against a set of labels for queue selection. </summary>

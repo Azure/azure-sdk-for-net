@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.CustomerInsights.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    public partial class RoleAssignmentResourceFormatData : IUtf8JsonSerializable
+    public partial class RoleAssignmentResourceFormatData : IUtf8JsonSerializable, IModelJsonSerializable<RoleAssignmentResourceFormatData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RoleAssignmentResourceFormatData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RoleAssignmentResourceFormatData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RoleAssignmentResourceFormatData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -54,81 +60,193 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in Principals)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AssignmentPrincipal>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Profiles))
             {
                 writer.WritePropertyName("profiles"u8);
-                writer.WriteObjectValue(Profiles);
+                if (Profiles is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourceSetDescription>)Profiles).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Interactions))
             {
                 writer.WritePropertyName("interactions"u8);
-                writer.WriteObjectValue(Interactions);
+                if (Interactions is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourceSetDescription>)Interactions).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
-                writer.WriteObjectValue(Links);
+                if (Links is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourceSetDescription>)Links).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Kpis))
             {
                 writer.WritePropertyName("kpis"u8);
-                writer.WriteObjectValue(Kpis);
+                if (Kpis is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourceSetDescription>)Kpis).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(SasPolicies))
             {
                 writer.WritePropertyName("sasPolicies"u8);
-                writer.WriteObjectValue(SasPolicies);
+                if (SasPolicies is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourceSetDescription>)SasPolicies).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Connectors))
             {
                 writer.WritePropertyName("connectors"u8);
-                writer.WriteObjectValue(Connectors);
+                if (Connectors is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourceSetDescription>)Connectors).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Views))
             {
                 writer.WritePropertyName("views"u8);
-                writer.WriteObjectValue(Views);
+                if (Views is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourceSetDescription>)Views).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(RelationshipLinks))
             {
                 writer.WritePropertyName("relationshipLinks"u8);
-                writer.WriteObjectValue(RelationshipLinks);
+                if (RelationshipLinks is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourceSetDescription>)RelationshipLinks).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Relationships))
             {
                 writer.WritePropertyName("relationships"u8);
-                writer.WriteObjectValue(Relationships);
+                if (Relationships is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourceSetDescription>)Relationships).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(WidgetTypes))
             {
                 writer.WritePropertyName("widgetTypes"u8);
-                writer.WriteObjectValue(WidgetTypes);
+                if (WidgetTypes is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourceSetDescription>)WidgetTypes).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(RoleAssignments))
             {
                 writer.WritePropertyName("roleAssignments"u8);
-                writer.WriteObjectValue(RoleAssignments);
+                if (RoleAssignments is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourceSetDescription>)RoleAssignments).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ConflationPolicies))
             {
                 writer.WritePropertyName("conflationPolicies"u8);
-                writer.WriteObjectValue(ConflationPolicies);
+                if (ConflationPolicies is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourceSetDescription>)ConflationPolicies).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Segments))
             {
                 writer.WritePropertyName("segments"u8);
-                writer.WriteObjectValue(Segments);
+                if (Segments is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourceSetDescription>)Segments).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RoleAssignmentResourceFormatData DeserializeRoleAssignmentResourceFormatData(JsonElement element)
+        internal static RoleAssignmentResourceFormatData DeserializeRoleAssignmentResourceFormatData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -157,6 +275,7 @@ namespace Azure.ResourceManager.CustomerInsights
             Optional<ResourceSetDescription> roleAssignments = default;
             Optional<ResourceSetDescription> conflationPolicies = default;
             Optional<ResourceSetDescription> segments = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -386,8 +505,61 @@ namespace Azure.ResourceManager.CustomerInsights
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RoleAssignmentResourceFormatData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), assignmentName.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), Optional.ToNullable(provisioningState), Optional.ToNullable(role), Optional.ToList(principals), profiles.Value, interactions.Value, links.Value, kpis.Value, sasPolicies.Value, connectors.Value, views.Value, relationshipLinks.Value, relationships.Value, widgetTypes.Value, roleAssignments.Value, conflationPolicies.Value, segments.Value);
+            return new RoleAssignmentResourceFormatData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), assignmentName.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), Optional.ToNullable(provisioningState), Optional.ToNullable(role), Optional.ToList(principals), profiles.Value, interactions.Value, links.Value, kpis.Value, sasPolicies.Value, connectors.Value, views.Value, relationshipLinks.Value, relationships.Value, widgetTypes.Value, roleAssignments.Value, conflationPolicies.Value, segments.Value, serializedAdditionalRawData);
+        }
+
+        RoleAssignmentResourceFormatData IModelJsonSerializable<RoleAssignmentResourceFormatData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RoleAssignmentResourceFormatData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoleAssignmentResourceFormatData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RoleAssignmentResourceFormatData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RoleAssignmentResourceFormatData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RoleAssignmentResourceFormatData IModelSerializable<RoleAssignmentResourceFormatData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RoleAssignmentResourceFormatData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRoleAssignmentResourceFormatData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RoleAssignmentResourceFormatData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RoleAssignmentResourceFormatData"/> to convert. </param>
+        public static implicit operator RequestContent(RoleAssignmentResourceFormatData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RoleAssignmentResourceFormatData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RoleAssignmentResourceFormatData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRoleAssignmentResourceFormatData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

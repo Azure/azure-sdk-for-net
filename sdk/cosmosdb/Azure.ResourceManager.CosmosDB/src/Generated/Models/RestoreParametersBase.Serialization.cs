@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class RestoreParametersBase : IUtf8JsonSerializable
+    public partial class RestoreParametersBase : IUtf8JsonSerializable, IModelJsonSerializable<RestoreParametersBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RestoreParametersBase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RestoreParametersBase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RestoreParametersBase>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RestoreSource))
             {
@@ -26,17 +33,32 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("restoreTimestampInUtc"u8);
                 writer.WriteStringValue(RestoreTimestampInUtc.Value, "O");
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RestoreParametersBase DeserializeRestoreParametersBase(JsonElement element)
+        internal static RestoreParametersBase DeserializeRestoreParametersBase(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> restoreSource = default;
             Optional<DateTimeOffset> restoreTimestampInUtc = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("restoreSource"u8))
@@ -53,8 +75,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     restoreTimestampInUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RestoreParametersBase(restoreSource.Value, Optional.ToNullable(restoreTimestampInUtc));
+            return new RestoreParametersBase(restoreSource.Value, Optional.ToNullable(restoreTimestampInUtc), serializedAdditionalRawData);
+        }
+
+        RestoreParametersBase IModelJsonSerializable<RestoreParametersBase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RestoreParametersBase>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRestoreParametersBase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RestoreParametersBase>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RestoreParametersBase>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RestoreParametersBase IModelSerializable<RestoreParametersBase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RestoreParametersBase>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRestoreParametersBase(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RestoreParametersBase"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RestoreParametersBase"/> to convert. </param>
+        public static implicit operator RequestContent(RestoreParametersBase model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RestoreParametersBase"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RestoreParametersBase(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRestoreParametersBase(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

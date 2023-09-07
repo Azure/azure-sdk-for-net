@@ -5,21 +5,35 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppDiagnosticsProperties : IUtf8JsonSerializable
+    public partial class ContainerAppDiagnosticsProperties : IUtf8JsonSerializable, IModelJsonSerializable<ContainerAppDiagnosticsProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerAppDiagnosticsProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerAppDiagnosticsProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppDiagnosticsProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                if (Metadata is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerAppDiagnosticsMetadata>)Metadata).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Dataset))
             {
@@ -27,25 +41,60 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Dataset)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ContainerAppDiagnosticsDataApiResult>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                if (Status is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerAppDiagnosticsStatus>)Status).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DataProviderMetadata))
             {
                 writer.WritePropertyName("dataProviderMetadata"u8);
-                writer.WriteObjectValue(DataProviderMetadata);
+                if (DataProviderMetadata is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerAppDiagnosticDataProviderMetadata>)DataProviderMetadata).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppDiagnosticsProperties DeserializeContainerAppDiagnosticsProperties(JsonElement element)
+        internal static ContainerAppDiagnosticsProperties DeserializeContainerAppDiagnosticsProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +103,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<IList<ContainerAppDiagnosticsDataApiResult>> dataset = default;
             Optional<ContainerAppDiagnosticsStatus> status = default;
             Optional<ContainerAppDiagnosticDataProviderMetadata> dataProviderMetadata = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metadata"u8))
@@ -97,8 +147,61 @@ namespace Azure.ResourceManager.AppContainers.Models
                     dataProviderMetadata = ContainerAppDiagnosticDataProviderMetadata.DeserializeContainerAppDiagnosticDataProviderMetadata(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerAppDiagnosticsProperties(metadata.Value, Optional.ToList(dataset), status.Value, dataProviderMetadata.Value);
+            return new ContainerAppDiagnosticsProperties(metadata.Value, Optional.ToList(dataset), status.Value, dataProviderMetadata.Value, serializedAdditionalRawData);
+        }
+
+        ContainerAppDiagnosticsProperties IModelJsonSerializable<ContainerAppDiagnosticsProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppDiagnosticsProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppDiagnosticsProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerAppDiagnosticsProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppDiagnosticsProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerAppDiagnosticsProperties IModelSerializable<ContainerAppDiagnosticsProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppDiagnosticsProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerAppDiagnosticsProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerAppDiagnosticsProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerAppDiagnosticsProperties"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerAppDiagnosticsProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerAppDiagnosticsProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerAppDiagnosticsProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerAppDiagnosticsProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

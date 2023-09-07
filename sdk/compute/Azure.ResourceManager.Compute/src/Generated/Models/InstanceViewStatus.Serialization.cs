@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class InstanceViewStatus : IUtf8JsonSerializable
+    public partial class InstanceViewStatus : IUtf8JsonSerializable, IModelJsonSerializable<InstanceViewStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InstanceViewStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InstanceViewStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<InstanceViewStatus>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Code))
             {
@@ -41,11 +48,25 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time.Value, "O");
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static InstanceViewStatus DeserializeInstanceViewStatus(JsonElement element)
+        internal static InstanceViewStatus DeserializeInstanceViewStatus(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +76,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> displayStatus = default;
             Optional<string> message = default;
             Optional<DateTimeOffset> time = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -90,8 +112,61 @@ namespace Azure.ResourceManager.Compute.Models
                     time = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InstanceViewStatus(code.Value, Optional.ToNullable(level), displayStatus.Value, message.Value, Optional.ToNullable(time));
+            return new InstanceViewStatus(code.Value, Optional.ToNullable(level), displayStatus.Value, message.Value, Optional.ToNullable(time), serializedAdditionalRawData);
+        }
+
+        InstanceViewStatus IModelJsonSerializable<InstanceViewStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InstanceViewStatus>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInstanceViewStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InstanceViewStatus>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InstanceViewStatus>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InstanceViewStatus IModelSerializable<InstanceViewStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InstanceViewStatus>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInstanceViewStatus(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InstanceViewStatus"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InstanceViewStatus"/> to convert. </param>
+        public static implicit operator RequestContent(InstanceViewStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InstanceViewStatus"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InstanceViewStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInstanceViewStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -15,7 +15,10 @@ namespace Azure.Communication.JobRouter.Models
     /// <summary> A paged collection of exception policies. </summary>
     internal partial class ExceptionPolicyCollection
     {
-        /// <summary> Initializes a new instance of ExceptionPolicyCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExceptionPolicyCollection"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ExceptionPolicyCollection(IEnumerable<ExceptionPolicyItem> value)
@@ -25,13 +28,20 @@ namespace Azure.Communication.JobRouter.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ExceptionPolicyCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExceptionPolicyCollection"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal ExceptionPolicyCollection(IReadOnlyList<ExceptionPolicyItem> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExceptionPolicyCollection(IReadOnlyList<ExceptionPolicyItem> value, string nextLink, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExceptionPolicyCollection"/> for deserialization. </summary>
+        internal ExceptionPolicyCollection()
+        {
         }
 
         /// <summary> Gets the value. </summary>

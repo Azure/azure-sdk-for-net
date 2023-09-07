@@ -8,14 +8,47 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeOrderStatus
+    public partial class DataBoxEdgeOrderStatus : IUtf8JsonSerializable, IModelJsonSerializable<DataBoxEdgeOrderStatus>
     {
-        internal static DataBoxEdgeOrderStatus DeserializeDataBoxEdgeOrderStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataBoxEdgeOrderStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataBoxEdgeOrderStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeOrderStatus>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToString());
+            if (Optional.IsDefined(Comments))
+            {
+                writer.WritePropertyName("comments"u8);
+                writer.WriteStringValue(Comments);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DataBoxEdgeOrderStatus DeserializeDataBoxEdgeOrderStatus(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +58,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<string> comments = default;
             Optional<DataBoxEdgeTrackingInfo> trackingInformation = default;
             Optional<IReadOnlyDictionary<string, string>> additionalOrderDetails = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -69,8 +103,61 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     additionalOrderDetails = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataBoxEdgeOrderStatus(status, Optional.ToNullable(updateDateTime), comments.Value, trackingInformation.Value, Optional.ToDictionary(additionalOrderDetails));
+            return new DataBoxEdgeOrderStatus(status, Optional.ToNullable(updateDateTime), comments.Value, trackingInformation.Value, Optional.ToDictionary(additionalOrderDetails), serializedAdditionalRawData);
+        }
+
+        DataBoxEdgeOrderStatus IModelJsonSerializable<DataBoxEdgeOrderStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeOrderStatus>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeOrderStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataBoxEdgeOrderStatus>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeOrderStatus>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataBoxEdgeOrderStatus IModelSerializable<DataBoxEdgeOrderStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeOrderStatus>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataBoxEdgeOrderStatus(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataBoxEdgeOrderStatus"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataBoxEdgeOrderStatus"/> to convert. </param>
+        public static implicit operator RequestContent(DataBoxEdgeOrderStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataBoxEdgeOrderStatus"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataBoxEdgeOrderStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataBoxEdgeOrderStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

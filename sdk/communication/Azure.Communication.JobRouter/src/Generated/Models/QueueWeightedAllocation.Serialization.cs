@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class QueueWeightedAllocation : IUtf8JsonSerializable
+    public partial class QueueWeightedAllocation : IUtf8JsonSerializable, IModelJsonSerializable<QueueWeightedAllocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<QueueWeightedAllocation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<QueueWeightedAllocation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<QueueWeightedAllocation>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("weight"u8);
             writer.WriteNumberValue(Weight);
@@ -22,20 +29,42 @@ namespace Azure.Communication.JobRouter
             writer.WriteStartArray();
             foreach (var item in QueueSelectors)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RouterQueueSelector>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static QueueWeightedAllocation DeserializeQueueWeightedAllocation(JsonElement element)
+        internal static QueueWeightedAllocation DeserializeQueueWeightedAllocation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             double weight = default;
             IList<RouterQueueSelector> queueSelectors = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("weight"u8))
@@ -53,8 +82,61 @@ namespace Azure.Communication.JobRouter
                     queueSelectors = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new QueueWeightedAllocation(weight, queueSelectors);
+            return new QueueWeightedAllocation(weight, queueSelectors, serializedAdditionalRawData);
+        }
+
+        QueueWeightedAllocation IModelJsonSerializable<QueueWeightedAllocation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QueueWeightedAllocation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeQueueWeightedAllocation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<QueueWeightedAllocation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QueueWeightedAllocation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        QueueWeightedAllocation IModelSerializable<QueueWeightedAllocation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QueueWeightedAllocation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeQueueWeightedAllocation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="QueueWeightedAllocation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="QueueWeightedAllocation"/> to convert. </param>
+        public static implicit operator RequestContent(QueueWeightedAllocation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="QueueWeightedAllocation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator QueueWeightedAllocation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeQueueWeightedAllocation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerGroupPatch : IUtf8JsonSerializable
+    public partial class ContainerGroupPatch : IUtf8JsonSerializable, IModelJsonSerializable<ContainerGroupPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerGroupPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerGroupPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerGroupPatch>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -40,11 +47,25 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerGroupPatch DeserializeContainerGroupPatch(JsonElement element)
+        internal static ContainerGroupPatch DeserializeContainerGroupPatch(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -56,6 +77,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zones"u8))
@@ -115,8 +137,61 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerGroupPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones));
+            return new ContainerGroupPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), serializedAdditionalRawData);
+        }
+
+        ContainerGroupPatch IModelJsonSerializable<ContainerGroupPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerGroupPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerGroupPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerGroupPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerGroupPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerGroupPatch IModelSerializable<ContainerGroupPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerGroupPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerGroupPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerGroupPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerGroupPatch"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerGroupPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerGroupPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerGroupPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerGroupPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

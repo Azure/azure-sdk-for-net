@@ -6,15 +6,44 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlMISyncTaskOutputMigrationLevel
+    public partial class MigrateSqlServerSqlMISyncTaskOutputMigrationLevel : IUtf8JsonSerializable, IModelJsonSerializable<MigrateSqlServerSqlMISyncTaskOutputMigrationLevel>
     {
-        internal static MigrateSqlServerSqlMISyncTaskOutputMigrationLevel DeserializeMigrateSqlServerSqlMISyncTaskOutputMigrationLevel(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MigrateSqlServerSqlMISyncTaskOutputMigrationLevel>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MigrateSqlServerSqlMISyncTaskOutputMigrationLevel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateSqlServerSqlMISyncTaskOutputMigrationLevel>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MigrateSqlServerSqlMISyncTaskOutputMigrationLevel DeserializeMigrateSqlServerSqlMISyncTaskOutputMigrationLevel(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +61,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<int> databaseErrorCount = default;
             Optional<string> id = default;
             string resultType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseCount"u8))
@@ -119,8 +149,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     resultType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MigrateSqlServerSqlMISyncTaskOutputMigrationLevel(id.Value, resultType, Optional.ToNullable(databaseCount), Optional.ToNullable(state), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceServerName.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, targetServerName.Value, targetServerVersion.Value, targetServerBrandVersion.Value, Optional.ToNullable(databaseErrorCount));
+            return new MigrateSqlServerSqlMISyncTaskOutputMigrationLevel(id.Value, resultType, Optional.ToNullable(databaseCount), Optional.ToNullable(state), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceServerName.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, targetServerName.Value, targetServerVersion.Value, targetServerBrandVersion.Value, Optional.ToNullable(databaseErrorCount), serializedAdditionalRawData);
+        }
+
+        MigrateSqlServerSqlMISyncTaskOutputMigrationLevel IModelJsonSerializable<MigrateSqlServerSqlMISyncTaskOutputMigrationLevel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateSqlServerSqlMISyncTaskOutputMigrationLevel>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateSqlServerSqlMISyncTaskOutputMigrationLevel(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MigrateSqlServerSqlMISyncTaskOutputMigrationLevel>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateSqlServerSqlMISyncTaskOutputMigrationLevel>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MigrateSqlServerSqlMISyncTaskOutputMigrationLevel IModelSerializable<MigrateSqlServerSqlMISyncTaskOutputMigrationLevel>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateSqlServerSqlMISyncTaskOutputMigrationLevel>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMigrateSqlServerSqlMISyncTaskOutputMigrationLevel(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MigrateSqlServerSqlMISyncTaskOutputMigrationLevel"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MigrateSqlServerSqlMISyncTaskOutputMigrationLevel"/> to convert. </param>
+        public static implicit operator RequestContent(MigrateSqlServerSqlMISyncTaskOutputMigrationLevel model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MigrateSqlServerSqlMISyncTaskOutputMigrationLevel"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MigrateSqlServerSqlMISyncTaskOutputMigrationLevel(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMigrateSqlServerSqlMISyncTaskOutputMigrationLevel(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

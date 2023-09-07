@@ -5,18 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionTagsResult : IUtf8JsonSerializable
+    public partial class ConsumptionTagsResult : IUtf8JsonSerializable, IModelJsonSerializable<ConsumptionTagsResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConsumptionTagsResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConsumptionTagsResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ConsumptionTagsResult>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
@@ -31,16 +37,37 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in Tags)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ConsumptionTag>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConsumptionTagsResult DeserializeConsumptionTagsResult(JsonElement element)
+        internal static ConsumptionTagsResult DeserializeConsumptionTagsResult(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,6 +80,7 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<IList<ConsumptionTag>> tags = default;
             Optional<string> nextLink = default;
             Optional<string> previousLink = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -124,8 +152,61 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConsumptionTagsResult(id, name, type, systemData.Value, Optional.ToList(tags), nextLink.Value, previousLink.Value, Optional.ToNullable(eTag));
+            return new ConsumptionTagsResult(id, name, type, systemData.Value, Optional.ToList(tags), nextLink.Value, previousLink.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+        }
+
+        ConsumptionTagsResult IModelJsonSerializable<ConsumptionTagsResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConsumptionTagsResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionTagsResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConsumptionTagsResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConsumptionTagsResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConsumptionTagsResult IModelSerializable<ConsumptionTagsResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConsumptionTagsResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConsumptionTagsResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConsumptionTagsResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConsumptionTagsResult"/> to convert. </param>
+        public static implicit operator RequestContent(ConsumptionTagsResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConsumptionTagsResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConsumptionTagsResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConsumptionTagsResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

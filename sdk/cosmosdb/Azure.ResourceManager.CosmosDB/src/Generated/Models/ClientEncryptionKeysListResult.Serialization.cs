@@ -5,22 +5,50 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class ClientEncryptionKeysListResult
+    internal partial class ClientEncryptionKeysListResult : IUtf8JsonSerializable, IModelJsonSerializable<ClientEncryptionKeysListResult>
     {
-        internal static ClientEncryptionKeysListResult DeserializeClientEncryptionKeysListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ClientEncryptionKeysListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ClientEncryptionKeysListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ClientEncryptionKeysListResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ClientEncryptionKeysListResult DeserializeClientEncryptionKeysListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<CosmosDBSqlClientEncryptionKeyData>> value = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,8 +65,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     value = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ClientEncryptionKeysListResult(Optional.ToList(value));
+            return new ClientEncryptionKeysListResult(Optional.ToList(value), serializedAdditionalRawData);
+        }
+
+        ClientEncryptionKeysListResult IModelJsonSerializable<ClientEncryptionKeysListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClientEncryptionKeysListResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeClientEncryptionKeysListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ClientEncryptionKeysListResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClientEncryptionKeysListResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ClientEncryptionKeysListResult IModelSerializable<ClientEncryptionKeysListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClientEncryptionKeysListResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeClientEncryptionKeysListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ClientEncryptionKeysListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ClientEncryptionKeysListResult"/> to convert. </param>
+        public static implicit operator RequestContent(ClientEncryptionKeysListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ClientEncryptionKeysListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ClientEncryptionKeysListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeClientEncryptionKeysListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

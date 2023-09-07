@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Data flow flowlet. </summary>
     public partial class DataFactoryFlowletProperties : DataFactoryDataFlowProperties
     {
-        /// <summary> Initializes a new instance of DataFactoryFlowletProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryFlowletProperties"/>. </summary>
         public DataFactoryFlowletProperties()
         {
             Sources = new ChangeTrackingList<DataFlowSource>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFlowType = "Flowlet";
         }
 
-        /// <summary> Initializes a new instance of DataFactoryFlowletProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryFlowletProperties"/>. </summary>
         /// <param name="dataFlowType"> Type of data flow. </param>
         /// <param name="description"> The description of the data flow. </param>
         /// <param name="annotations"> List of tags that can be used for describing the data flow. </param>
@@ -34,7 +34,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="transformations"> List of transformations in Flowlet. </param>
         /// <param name="script"> Flowlet script. </param>
         /// <param name="scriptLines"> Flowlet script lines. </param>
-        internal DataFactoryFlowletProperties(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, IList<DataFlowSource> sources, IList<DataFlowSink> sinks, IList<DataFlowTransformation> transformations, string script, IList<string> scriptLines) : base(dataFlowType, description, annotations, folder)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryFlowletProperties(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, IList<DataFlowSource> sources, IList<DataFlowSink> sinks, IList<DataFlowTransformation> transformations, string script, IList<string> scriptLines, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(dataFlowType, description, annotations, folder, serializedAdditionalRawData)
         {
             Sources = sources;
             Sinks = sinks;

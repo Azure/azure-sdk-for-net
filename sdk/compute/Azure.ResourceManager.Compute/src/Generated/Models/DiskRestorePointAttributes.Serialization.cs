@@ -5,32 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DiskRestorePointAttributes : IUtf8JsonSerializable
+    public partial class DiskRestorePointAttributes : IUtf8JsonSerializable, IModelJsonSerializable<DiskRestorePointAttributes>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DiskRestorePointAttributes>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DiskRestorePointAttributes>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DiskRestorePointAttributes>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                if (Encryption is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RestorePointEncryption>)Encryption).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(SourceDiskRestorePoint))
             {
                 writer.WritePropertyName("sourceDiskRestorePoint"u8);
                 JsonSerializer.Serialize(writer, SourceDiskRestorePoint);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DiskRestorePointAttributes DeserializeDiskRestorePointAttributes(JsonElement element)
+        internal static DiskRestorePointAttributes DeserializeDiskRestorePointAttributes(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,6 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<RestorePointEncryption> encryption = default;
             Optional<WritableSubResource> sourceDiskRestorePoint = default;
             Optional<ResourceIdentifier> id = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encryption"u8))
@@ -67,8 +97,61 @@ namespace Azure.ResourceManager.Compute.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DiskRestorePointAttributes(id.Value, encryption.Value, sourceDiskRestorePoint);
+            return new DiskRestorePointAttributes(id.Value, encryption.Value, sourceDiskRestorePoint, serializedAdditionalRawData);
+        }
+
+        DiskRestorePointAttributes IModelJsonSerializable<DiskRestorePointAttributes>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DiskRestorePointAttributes>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDiskRestorePointAttributes(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DiskRestorePointAttributes>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DiskRestorePointAttributes>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DiskRestorePointAttributes IModelSerializable<DiskRestorePointAttributes>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DiskRestorePointAttributes>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDiskRestorePointAttributes(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DiskRestorePointAttributes"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DiskRestorePointAttributes"/> to convert. </param>
+        public static implicit operator RequestContent(DiskRestorePointAttributes model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DiskRestorePointAttributes"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DiskRestorePointAttributes(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDiskRestorePointAttributes(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

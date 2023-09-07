@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionModernChargeSummary : IUtf8JsonSerializable
+    public partial class ConsumptionModernChargeSummary : IUtf8JsonSerializable, IModelJsonSerializable<ConsumptionModernChargeSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConsumptionModernChargeSummary>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConsumptionModernChargeSummary>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ConsumptionModernChargeSummary>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -27,11 +34,25 @@ namespace Azure.ResourceManager.Consumption.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConsumptionModernChargeSummary DeserializeConsumptionModernChargeSummary(JsonElement element)
+        internal static ConsumptionModernChargeSummary DeserializeConsumptionModernChargeSummary(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,6 +74,7 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<string> invoiceSectionId = default;
             Optional<string> customerId = default;
             Optional<bool> isInvoiced = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -176,8 +198,61 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConsumptionModernChargeSummary(id, name, type, systemData.Value, kind, Optional.ToNullable(eTag), billingPeriodId.Value, usageStart.Value, usageEnd.Value, azureCharges.Value, chargesBilledSeparately.Value, marketplaceCharges.Value, billingAccountId.Value, billingProfileId.Value, invoiceSectionId.Value, customerId.Value, Optional.ToNullable(isInvoiced));
+            return new ConsumptionModernChargeSummary(id, name, type, systemData.Value, kind, Optional.ToNullable(eTag), billingPeriodId.Value, usageStart.Value, usageEnd.Value, azureCharges.Value, chargesBilledSeparately.Value, marketplaceCharges.Value, billingAccountId.Value, billingProfileId.Value, invoiceSectionId.Value, customerId.Value, Optional.ToNullable(isInvoiced), serializedAdditionalRawData);
+        }
+
+        ConsumptionModernChargeSummary IModelJsonSerializable<ConsumptionModernChargeSummary>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConsumptionModernChargeSummary>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionModernChargeSummary(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConsumptionModernChargeSummary>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConsumptionModernChargeSummary>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConsumptionModernChargeSummary IModelSerializable<ConsumptionModernChargeSummary>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConsumptionModernChargeSummary>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConsumptionModernChargeSummary(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConsumptionModernChargeSummary"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConsumptionModernChargeSummary"/> to convert. </param>
+        public static implicit operator RequestContent(ConsumptionModernChargeSummary model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConsumptionModernChargeSummary"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConsumptionModernChargeSummary(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConsumptionModernChargeSummary(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

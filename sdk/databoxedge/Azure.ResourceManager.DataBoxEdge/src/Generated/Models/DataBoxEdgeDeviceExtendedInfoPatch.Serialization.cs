@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeDeviceExtendedInfoPatch : IUtf8JsonSerializable
+    public partial class DataBoxEdgeDeviceExtendedInfoPatch : IUtf8JsonSerializable, IModelJsonSerializable<DataBoxEdgeDeviceExtendedInfoPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataBoxEdgeDeviceExtendedInfoPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataBoxEdgeDeviceExtendedInfoPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeDeviceExtendedInfoPatch>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientSecretStoreId))
             {
@@ -40,7 +48,129 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("syncStatus"u8);
                 writer.WriteStringValue(SyncStatus.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static DataBoxEdgeDeviceExtendedInfoPatch DeserializeDataBoxEdgeDeviceExtendedInfoPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceIdentifier> clientSecretStoreId = default;
+            Optional<Uri> clientSecretStoreUrl = default;
+            Optional<string> channelIntegrityKeyName = default;
+            Optional<string> channelIntegrityKeyVersion = default;
+            Optional<EdgeKeyVaultSyncStatus> syncStatus = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("clientSecretStoreId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientSecretStoreId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("clientSecretStoreUrl"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientSecretStoreUrl = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("channelIntegrityKeyName"u8))
+                {
+                    channelIntegrityKeyName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("channelIntegrityKeyVersion"u8))
+                {
+                    channelIntegrityKeyVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("syncStatus"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    syncStatus = new EdgeKeyVaultSyncStatus(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new DataBoxEdgeDeviceExtendedInfoPatch(clientSecretStoreId.Value, clientSecretStoreUrl.Value, channelIntegrityKeyName.Value, channelIntegrityKeyVersion.Value, Optional.ToNullable(syncStatus), serializedAdditionalRawData);
+        }
+
+        DataBoxEdgeDeviceExtendedInfoPatch IModelJsonSerializable<DataBoxEdgeDeviceExtendedInfoPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeDeviceExtendedInfoPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeDeviceExtendedInfoPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataBoxEdgeDeviceExtendedInfoPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeDeviceExtendedInfoPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataBoxEdgeDeviceExtendedInfoPatch IModelSerializable<DataBoxEdgeDeviceExtendedInfoPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeDeviceExtendedInfoPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataBoxEdgeDeviceExtendedInfoPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataBoxEdgeDeviceExtendedInfoPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataBoxEdgeDeviceExtendedInfoPatch"/> to convert. </param>
+        public static implicit operator RequestContent(DataBoxEdgeDeviceExtendedInfoPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataBoxEdgeDeviceExtendedInfoPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataBoxEdgeDeviceExtendedInfoPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataBoxEdgeDeviceExtendedInfoPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -8,19 +8,32 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class BinaryReadSettings : IUtf8JsonSerializable
+    public partial class BinaryReadSettings : IUtf8JsonSerializable, IModelJsonSerializable<BinaryReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BinaryReadSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BinaryReadSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BinaryReadSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CompressionProperties))
             {
                 writer.WritePropertyName("compressionProperties"u8);
-                writer.WriteObjectValue(CompressionProperties);
+                if (CompressionProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CompressionReadSettings>)CompressionProperties).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FormatReadSettingsType);
@@ -36,8 +49,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static BinaryReadSettings DeserializeBinaryReadSettings(JsonElement element)
+        internal static BinaryReadSettings DeserializeBinaryReadSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,6 +81,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new BinaryReadSettings(type, additionalProperties, compressionProperties.Value);
+        }
+
+        BinaryReadSettings IModelJsonSerializable<BinaryReadSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BinaryReadSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBinaryReadSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BinaryReadSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BinaryReadSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BinaryReadSettings IModelSerializable<BinaryReadSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BinaryReadSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBinaryReadSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BinaryReadSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BinaryReadSettings"/> to convert. </param>
+        public static implicit operator RequestContent(BinaryReadSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BinaryReadSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BinaryReadSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBinaryReadSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

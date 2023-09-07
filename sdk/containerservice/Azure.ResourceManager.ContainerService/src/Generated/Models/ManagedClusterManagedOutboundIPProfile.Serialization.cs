@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    internal partial class ManagedClusterManagedOutboundIPProfile : IUtf8JsonSerializable
+    internal partial class ManagedClusterManagedOutboundIPProfile : IUtf8JsonSerializable, IModelJsonSerializable<ManagedClusterManagedOutboundIPProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedClusterManagedOutboundIPProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedClusterManagedOutboundIPProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedClusterManagedOutboundIPProfile>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedClusterManagedOutboundIPProfile DeserializeManagedClusterManagedOutboundIPProfile(JsonElement element)
+        internal static ManagedClusterManagedOutboundIPProfile DeserializeManagedClusterManagedOutboundIPProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> count = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -41,8 +64,61 @@ namespace Azure.ResourceManager.ContainerService.Models
                     count = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedClusterManagedOutboundIPProfile(Optional.ToNullable(count));
+            return new ManagedClusterManagedOutboundIPProfile(Optional.ToNullable(count), serializedAdditionalRawData);
+        }
+
+        ManagedClusterManagedOutboundIPProfile IModelJsonSerializable<ManagedClusterManagedOutboundIPProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedClusterManagedOutboundIPProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedClusterManagedOutboundIPProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedClusterManagedOutboundIPProfile>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedClusterManagedOutboundIPProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedClusterManagedOutboundIPProfile IModelSerializable<ManagedClusterManagedOutboundIPProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedClusterManagedOutboundIPProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedClusterManagedOutboundIPProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagedClusterManagedOutboundIPProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagedClusterManagedOutboundIPProfile"/> to convert. </param>
+        public static implicit operator RequestContent(ManagedClusterManagedOutboundIPProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagedClusterManagedOutboundIPProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagedClusterManagedOutboundIPProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedClusterManagedOutboundIPProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    public partial class ManagedCcfProperties : IUtf8JsonSerializable
+    public partial class ManagedCcfProperties : IUtf8JsonSerializable, IModelJsonSerializable<ManagedCcfProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedCcfProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedCcfProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedCcfProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(MemberIdentityCertificates))
             {
@@ -23,25 +29,53 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 writer.WriteStartArray();
                 foreach (var item in MemberIdentityCertificates)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ConfidentialLedgerMemberIdentityCertificate>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DeploymentType))
             {
                 writer.WritePropertyName("deploymentType"u8);
-                writer.WriteObjectValue(DeploymentType);
+                if (DeploymentType is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ConfidentialLedgerDeploymentType>)DeploymentType).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(NodeCount))
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedCcfProperties DeserializeManagedCcfProperties(JsonElement element)
+        internal static ManagedCcfProperties DeserializeManagedCcfProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,6 +87,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             Optional<ConfidentialLedgerDeploymentType> deploymentType = default;
             Optional<ConfidentialLedgerProvisioningState> provisioningState = default;
             Optional<int> nodeCount = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appName"u8))
@@ -119,8 +154,61 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     nodeCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedCcfProperties(appName.Value, appUri.Value, identityServiceUri.Value, Optional.ToList(memberIdentityCertificates), deploymentType.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(nodeCount));
+            return new ManagedCcfProperties(appName.Value, appUri.Value, identityServiceUri.Value, Optional.ToList(memberIdentityCertificates), deploymentType.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(nodeCount), serializedAdditionalRawData);
+        }
+
+        ManagedCcfProperties IModelJsonSerializable<ManagedCcfProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedCcfProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedCcfProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedCcfProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedCcfProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedCcfProperties IModelSerializable<ManagedCcfProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedCcfProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedCcfProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagedCcfProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagedCcfProperties"/> to convert. </param>
+        public static implicit operator RequestContent(ManagedCcfProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagedCcfProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagedCcfProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedCcfProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -15,7 +15,10 @@ namespace Azure.Communication.JobRouter.Models
     /// <summary> A paged collection of workers. </summary>
     internal partial class RouterWorkerCollection
     {
-        /// <summary> Initializes a new instance of RouterWorkerCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouterWorkerCollection"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RouterWorkerCollection(IEnumerable<RouterWorkerItem> value)
@@ -25,13 +28,20 @@ namespace Azure.Communication.JobRouter.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of RouterWorkerCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterWorkerCollection"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal RouterWorkerCollection(IReadOnlyList<RouterWorkerItem> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouterWorkerCollection(IReadOnlyList<RouterWorkerItem> value, string nextLink, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouterWorkerCollection"/> for deserialization. </summary>
+        internal RouterWorkerCollection()
+        {
         }
 
         /// <summary> Gets the value. </summary>

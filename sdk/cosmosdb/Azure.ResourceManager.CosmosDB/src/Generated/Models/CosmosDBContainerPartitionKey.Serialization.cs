@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBContainerPartitionKey : IUtf8JsonSerializable
+    public partial class CosmosDBContainerPartitionKey : IUtf8JsonSerializable, IModelJsonSerializable<CosmosDBContainerPartitionKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CosmosDBContainerPartitionKey>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CosmosDBContainerPartitionKey>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBContainerPartitionKey>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Paths))
             {
@@ -36,11 +43,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CosmosDBContainerPartitionKey DeserializeCosmosDBContainerPartitionKey(JsonElement element)
+        internal static CosmosDBContainerPartitionKey DeserializeCosmosDBContainerPartitionKey(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<CosmosDBPartitionKind> kind = default;
             Optional<int> version = default;
             Optional<bool> systemKey = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("paths"u8))
@@ -92,8 +114,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     systemKey = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CosmosDBContainerPartitionKey(Optional.ToList(paths), Optional.ToNullable(kind), Optional.ToNullable(version), Optional.ToNullable(systemKey));
+            return new CosmosDBContainerPartitionKey(Optional.ToList(paths), Optional.ToNullable(kind), Optional.ToNullable(version), Optional.ToNullable(systemKey), serializedAdditionalRawData);
+        }
+
+        CosmosDBContainerPartitionKey IModelJsonSerializable<CosmosDBContainerPartitionKey>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBContainerPartitionKey>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBContainerPartitionKey(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CosmosDBContainerPartitionKey>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBContainerPartitionKey>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CosmosDBContainerPartitionKey IModelSerializable<CosmosDBContainerPartitionKey>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBContainerPartitionKey>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCosmosDBContainerPartitionKey(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CosmosDBContainerPartitionKey"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CosmosDBContainerPartitionKey"/> to convert. </param>
+        public static implicit operator RequestContent(CosmosDBContainerPartitionKey model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CosmosDBContainerPartitionKey"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CosmosDBContainerPartitionKey(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCosmosDBContainerPartitionKey(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,17 +5,59 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class RestorableSqlResourceData
+    public partial class RestorableSqlResourceData : IUtf8JsonSerializable, IModelJsonSerializable<RestorableSqlResourceData>
     {
-        internal static RestorableSqlResourceData DeserializeRestorableSqlResourceData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RestorableSqlResourceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RestorableSqlResourceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RestorableSqlResourceData>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DatabaseName))
+            {
+                writer.WritePropertyName("databaseName"u8);
+                writer.WriteStringValue(DatabaseName);
+            }
+            if (Optional.IsCollectionDefined(CollectionNames))
+            {
+                writer.WritePropertyName("collectionNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in CollectionNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RestorableSqlResourceData DeserializeRestorableSqlResourceData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +68,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -71,8 +114,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RestorableSqlResourceData(id, name, type, systemData.Value, databaseName.Value, Optional.ToList(collectionNames));
+            return new RestorableSqlResourceData(id, name, type, systemData.Value, databaseName.Value, Optional.ToList(collectionNames), serializedAdditionalRawData);
+        }
+
+        RestorableSqlResourceData IModelJsonSerializable<RestorableSqlResourceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RestorableSqlResourceData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRestorableSqlResourceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RestorableSqlResourceData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RestorableSqlResourceData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RestorableSqlResourceData IModelSerializable<RestorableSqlResourceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RestorableSqlResourceData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRestorableSqlResourceData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RestorableSqlResourceData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RestorableSqlResourceData"/> to convert. </param>
+        public static implicit operator RequestContent(RestorableSqlResourceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RestorableSqlResourceData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RestorableSqlResourceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRestorableSqlResourceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

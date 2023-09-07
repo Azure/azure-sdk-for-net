@@ -5,25 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    public partial class CosmosDBForPostgreSqlServerRoleGroupConfiguration : IUtf8JsonSerializable
+    public partial class CosmosDBForPostgreSqlServerRoleGroupConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<CosmosDBForPostgreSqlServerRoleGroupConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CosmosDBForPostgreSqlServerRoleGroupConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CosmosDBForPostgreSqlServerRoleGroupConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBForPostgreSqlServerRoleGroupConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role.ToString());
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CosmosDBForPostgreSqlServerRoleGroupConfiguration DeserializeCosmosDBForPostgreSqlServerRoleGroupConfiguration(JsonElement element)
+        internal static CosmosDBForPostgreSqlServerRoleGroupConfiguration DeserializeCosmosDBForPostgreSqlServerRoleGroupConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +54,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             string value = default;
             Optional<string> defaultValue = default;
             Optional<string> source = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("role"u8))
@@ -54,8 +77,61 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     source = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CosmosDBForPostgreSqlServerRoleGroupConfiguration(role, value, defaultValue.Value, source.Value);
+            return new CosmosDBForPostgreSqlServerRoleGroupConfiguration(role, value, defaultValue.Value, source.Value, serializedAdditionalRawData);
+        }
+
+        CosmosDBForPostgreSqlServerRoleGroupConfiguration IModelJsonSerializable<CosmosDBForPostgreSqlServerRoleGroupConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBForPostgreSqlServerRoleGroupConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBForPostgreSqlServerRoleGroupConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CosmosDBForPostgreSqlServerRoleGroupConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBForPostgreSqlServerRoleGroupConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CosmosDBForPostgreSqlServerRoleGroupConfiguration IModelSerializable<CosmosDBForPostgreSqlServerRoleGroupConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBForPostgreSqlServerRoleGroupConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCosmosDBForPostgreSqlServerRoleGroupConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CosmosDBForPostgreSqlServerRoleGroupConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CosmosDBForPostgreSqlServerRoleGroupConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(CosmosDBForPostgreSqlServerRoleGroupConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CosmosDBForPostgreSqlServerRoleGroupConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CosmosDBForPostgreSqlServerRoleGroupConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCosmosDBForPostgreSqlServerRoleGroupConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

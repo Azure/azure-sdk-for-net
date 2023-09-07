@@ -772,7 +772,7 @@ namespace Azure.ResourceManager.CostManagement
         public virtual AsyncPageable<CostManagementAlertResource> GetCostManagementAlertsAsync(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CostManagementAlertAlertsRestClient.CreateListExternalRequest(externalCloudProviderType, externalCloudProviderId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), CostManagementAlertAlertsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetCostManagementAlerts", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), CostManagementAlertAlertsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetCostManagementAlerts", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.CostManagement
         public virtual Pageable<CostManagementAlertResource> GetCostManagementAlerts(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CostManagementAlertAlertsRestClient.CreateListExternalRequest(externalCloudProviderType, externalCloudProviderId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), CostManagementAlertAlertsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetCostManagementAlerts", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), CostManagementAlertAlertsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetCostManagementAlerts", "value", null, cancellationToken);
         }
 
         /// <summary>

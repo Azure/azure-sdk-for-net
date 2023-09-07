@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The MigrateSqlServerSqlMITaskOutputAgentJobLevel. </summary>
     public partial class MigrateSqlServerSqlMITaskOutputAgentJobLevel : MigrateSqlServerSqlMITaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutputAgentJobLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskOutputAgentJobLevel"/>. </summary>
         internal MigrateSqlServerSqlMITaskOutputAgentJobLevel()
         {
             ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();
             ResultType = "AgentJobLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutputAgentJobLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskOutputAgentJobLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="name"> Agent Job name. </param>
@@ -31,7 +31,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="endedOn"> Migration end time. </param>
         /// <param name="message"> Migration progress message. </param>
         /// <param name="exceptionsAndWarnings"> Migration errors and warnings per job. </param>
-        internal MigrateSqlServerSqlMITaskOutputAgentJobLevel(string id, string resultType, string name, bool? isEnabled, MigrationState? state, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string message, IReadOnlyList<ReportableException> exceptionsAndWarnings) : base(id, resultType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateSqlServerSqlMITaskOutputAgentJobLevel(string id, string resultType, string name, bool? isEnabled, MigrationState? state, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string message, IReadOnlyList<ReportableException> exceptionsAndWarnings, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, resultType, serializedAdditionalRawData)
         {
             Name = name;
             IsEnabled = isEnabled;

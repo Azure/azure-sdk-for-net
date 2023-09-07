@@ -5,22 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary> An action that marks a job as cancelled. </summary>
     public partial class CancelExceptionAction : ExceptionAction
     {
-        /// <summary> Initializes a new instance of CancelExceptionAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancelExceptionAction"/>. </summary>
         public CancelExceptionAction()
         {
             Kind = "cancel";
         }
 
-        /// <summary> Initializes a new instance of CancelExceptionAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancelExceptionAction"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
         /// <param name="note"> (Optional) A note that will be appended to the jobs' Notes collection with th current timestamp. </param>
         /// <param name="dispositionCode"> (Optional) Indicates the outcome of the job, populate this field with your own custom values. </param>
-        internal CancelExceptionAction(string kind, string note, string dispositionCode) : base(kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CancelExceptionAction(string kind, string note, string dispositionCode, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
         {
             Note = note;
             DispositionCode = dispositionCode;

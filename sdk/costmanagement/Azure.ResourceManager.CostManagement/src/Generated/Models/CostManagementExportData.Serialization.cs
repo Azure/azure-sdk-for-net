@@ -6,18 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.CostManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    public partial class CostManagementExportData : IUtf8JsonSerializable
+    public partial class CostManagementExportData : IUtf8JsonSerializable, IModelJsonSerializable<CostManagementExportData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CostManagementExportData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CostManagementExportData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CostManagementExportData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
@@ -34,17 +40,38 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(DeliveryInfo))
             {
                 writer.WritePropertyName("deliveryInfo"u8);
-                writer.WriteObjectValue(DeliveryInfo);
+                if (DeliveryInfo is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ExportDeliveryInfo>)DeliveryInfo).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
-                writer.WriteObjectValue(Definition);
+                if (Definition is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ExportDefinition>)Definition).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(RunHistory))
             {
                 writer.WritePropertyName("runHistory"u8);
-                writer.WriteObjectValue(RunHistory);
+                if (RunHistory is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ExportExecutionListResult>)RunHistory).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(PartitionData))
             {
@@ -54,10 +81,217 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule);
+                if (Schedule is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ExportSchedule>)Schedule).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static CostManagementExportData DeserializeCostManagementExportData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ETag> eTag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
+            Optional<SystemData> systemData = default;
+            Optional<ExportFormatType> format = default;
+            Optional<ExportDeliveryInfo> deliveryInfo = default;
+            Optional<ExportDefinition> definition = default;
+            Optional<ExportExecutionListResult> runHistory = default;
+            Optional<bool> partitionData = default;
+            Optional<DateTimeOffset> nextRunTimeEstimate = default;
+            Optional<ExportSchedule> schedule = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("eTag"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("format"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            format = new ExportFormatType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("deliveryInfo"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            deliveryInfo = ExportDeliveryInfo.DeserializeExportDeliveryInfo(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("definition"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            definition = ExportDefinition.DeserializeExportDefinition(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("runHistory"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            runHistory = ExportExecutionListResult.DeserializeExportExecutionListResult(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("partitionData"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            partitionData = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("nextRunTimeEstimate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            nextRunTimeEstimate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("schedule"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            schedule = ExportSchedule.DeserializeExportSchedule(property0.Value);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new CostManagementExportData(id, name, type, systemData.Value, Optional.ToNullable(format), deliveryInfo.Value, definition.Value, runHistory.Value, Optional.ToNullable(partitionData), Optional.ToNullable(nextRunTimeEstimate), schedule.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+        }
+
+        CostManagementExportData IModelJsonSerializable<CostManagementExportData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CostManagementExportData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCostManagementExportData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CostManagementExportData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CostManagementExportData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CostManagementExportData IModelSerializable<CostManagementExportData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CostManagementExportData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCostManagementExportData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CostManagementExportData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CostManagementExportData"/> to convert. </param>
+        public static implicit operator RequestContent(CostManagementExportData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CostManagementExportData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CostManagementExportData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCostManagementExportData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

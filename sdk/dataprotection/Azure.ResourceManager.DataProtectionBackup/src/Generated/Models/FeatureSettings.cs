@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Class containing feature settings of vault. </summary>
     internal partial class FeatureSettings
     {
-        /// <summary> Initializes a new instance of FeatureSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FeatureSettings"/>. </summary>
         public FeatureSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of FeatureSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureSettings"/>. </summary>
         /// <param name="crossSubscriptionRestoreSettings"> CrossSubscriptionRestore Settings. </param>
-        internal FeatureSettings(CrossSubscriptionRestoreSettings crossSubscriptionRestoreSettings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FeatureSettings(CrossSubscriptionRestoreSettings crossSubscriptionRestoreSettings, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CrossSubscriptionRestoreSettings = crossSubscriptionRestoreSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> CrossSubscriptionRestore Settings. </summary>

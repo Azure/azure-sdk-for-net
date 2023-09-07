@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CassandraClusterProperties : IUtf8JsonSerializable
+    public partial class CassandraClusterProperties : IUtf8JsonSerializable, IModelJsonSerializable<CassandraClusterProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CassandraClusterProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CassandraClusterProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CassandraClusterProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -54,7 +61,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(PrometheusEndpoint))
             {
                 writer.WritePropertyName("prometheusEndpoint"u8);
-                writer.WriteObjectValue(PrometheusEndpoint);
+                if (PrometheusEndpoint is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CassandraDataCenterSeedNode>)PrometheusEndpoint).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(IsRepairEnabled))
             {
@@ -67,7 +81,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in ClientCertificates)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<CassandraCertificate>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +98,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in ExternalGossipCertificates)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<CassandraCertificate>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +115,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in ExternalSeedNodes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<CassandraDataCenterSeedNode>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -109,13 +144,34 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(ProvisionError))
             {
                 writer.WritePropertyName("provisionError"u8);
-                writer.WriteObjectValue(ProvisionError);
+                if (ProvisionError is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CassandraError>)ProvisionError).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static CassandraClusterProperties DeserializeCassandraClusterProperties(JsonElement element)
+        internal static CassandraClusterProperties DeserializeCassandraClusterProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -138,6 +194,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<bool> deallocated = default;
             Optional<bool> cassandraAuditLoggingEnabled = default;
             Optional<CassandraError> provisionError = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -311,8 +368,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     provisionError = CassandraError.DeserializeCassandraError(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CassandraClusterProperties(Optional.ToNullable(provisioningState), restoreFromBackupId.Value, delegatedManagementSubnetId.Value, cassandraVersion.Value, clusterNameOverride.Value, Optional.ToNullable(authenticationMethod), initialCassandraAdminPassword.Value, prometheusEndpoint.Value, Optional.ToNullable(repairEnabled), Optional.ToList(clientCertificates), Optional.ToList(externalGossipCertificates), Optional.ToList(gossipCertificates), Optional.ToList(externalSeedNodes), Optional.ToList(seedNodes), Optional.ToNullable(hoursBetweenBackups), Optional.ToNullable(deallocated), Optional.ToNullable(cassandraAuditLoggingEnabled), provisionError.Value);
+            return new CassandraClusterProperties(Optional.ToNullable(provisioningState), restoreFromBackupId.Value, delegatedManagementSubnetId.Value, cassandraVersion.Value, clusterNameOverride.Value, Optional.ToNullable(authenticationMethod), initialCassandraAdminPassword.Value, prometheusEndpoint.Value, Optional.ToNullable(repairEnabled), Optional.ToList(clientCertificates), Optional.ToList(externalGossipCertificates), Optional.ToList(gossipCertificates), Optional.ToList(externalSeedNodes), Optional.ToList(seedNodes), Optional.ToNullable(hoursBetweenBackups), Optional.ToNullable(deallocated), Optional.ToNullable(cassandraAuditLoggingEnabled), provisionError.Value, serializedAdditionalRawData);
+        }
+
+        CassandraClusterProperties IModelJsonSerializable<CassandraClusterProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CassandraClusterProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCassandraClusterProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CassandraClusterProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CassandraClusterProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CassandraClusterProperties IModelSerializable<CassandraClusterProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CassandraClusterProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCassandraClusterProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CassandraClusterProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CassandraClusterProperties"/> to convert. </param>
+        public static implicit operator RequestContent(CassandraClusterProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CassandraClusterProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CassandraClusterProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCassandraClusterProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

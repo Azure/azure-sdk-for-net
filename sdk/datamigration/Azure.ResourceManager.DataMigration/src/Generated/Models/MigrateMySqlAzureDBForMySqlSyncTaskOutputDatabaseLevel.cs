@@ -6,19 +6,20 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel. </summary>
     public partial class MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel : MigrateMySqlAzureDBForMySqlSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel"/>. </summary>
         internal MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel()
         {
             ResultType = "DatabaseLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="databaseName"> Name of the database. </param>
@@ -36,7 +37,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="fullLoadErroredTables"> Number of tables errored in full load. </param>
         /// <param name="initializationCompleted"> Indicates if initial load (full load) has been completed. </param>
         /// <param name="latency"> CDC apply latency. </param>
-        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel(string id, string resultType, string databaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, SyncDatabaseMigrationReportingState? migrationState, long? incomingChanges, long? appliedChanges, long? cdcInsertCounter, long? cdcDeleteCounter, long? cdcUpdateCounter, long? fullLoadCompletedTables, long? fullLoadLoadingTables, long? fullLoadQueuedTables, long? fullLoadErroredTables, bool? initializationCompleted, long? latency) : base(id, resultType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel(string id, string resultType, string databaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, SyncDatabaseMigrationReportingState? migrationState, long? incomingChanges, long? appliedChanges, long? cdcInsertCounter, long? cdcDeleteCounter, long? cdcUpdateCounter, long? fullLoadCompletedTables, long? fullLoadLoadingTables, long? fullLoadQueuedTables, long? fullLoadErroredTables, bool? initializationCompleted, long? latency, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, resultType, serializedAdditionalRawData)
         {
             DatabaseName = databaseName;
             StartedOn = startedOn;

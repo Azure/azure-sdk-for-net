@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A copy activity Dynamics AX source. </summary>
     public partial class DynamicsAXSource : TabularSource
     {
-        /// <summary> Initializes a new instance of DynamicsAXSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicsAXSource"/>. </summary>
         public DynamicsAXSource()
         {
             CopySourceType = "DynamicsAXSource";
         }
 
-        /// <summary> Initializes a new instance of DynamicsAXSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicsAXSource"/>. </summary>
         /// <param name="copySourceType"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>

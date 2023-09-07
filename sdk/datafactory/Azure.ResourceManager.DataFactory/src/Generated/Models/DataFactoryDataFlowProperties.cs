@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -16,25 +17,31 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Please note <see cref="DataFactoryDataFlowProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DataFactoryFlowletProperties"/>, <see cref="DataFactoryMappingDataFlowProperties"/> and <see cref="DataFactoryWranglingDataFlowProperties"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownDataFlow))]
     public abstract partial class DataFactoryDataFlowProperties
     {
-        /// <summary> Initializes a new instance of DataFactoryDataFlowProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowProperties"/>. </summary>
         protected DataFactoryDataFlowProperties()
         {
             Annotations = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryDataFlowProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowProperties"/>. </summary>
         /// <param name="dataFlowType"> Type of data flow. </param>
         /// <param name="description"> The description of the data flow. </param>
         /// <param name="annotations"> List of tags that can be used for describing the data flow. </param>
         /// <param name="folder"> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </param>
-        internal DataFactoryDataFlowProperties(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryDataFlowProperties(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataFlowType = dataFlowType;
             Description = description;
             Annotations = annotations;
             Folder = folder;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of data flow. </summary>

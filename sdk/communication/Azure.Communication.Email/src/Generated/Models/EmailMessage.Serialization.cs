@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.Email
 {
-    public partial class EmailMessage : IUtf8JsonSerializable
+    public partial class EmailMessage : IUtf8JsonSerializable, IModelJsonSerializable<EmailMessage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EmailMessage>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EmailMessage>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EmailMessage>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Headers))
             {
@@ -29,16 +37,37 @@ namespace Azure.Communication.Email
             writer.WritePropertyName("senderAddress"u8);
             writer.WriteStringValue(SenderAddress);
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue(Content);
+            if (Content is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<EmailContent>)Content).Serialize(writer, options);
+            }
             writer.WritePropertyName("recipients"u8);
-            writer.WriteObjectValue(Recipients);
+            if (Recipients is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<EmailRecipients>)Recipients).Serialize(writer, options);
+            }
             if (Optional.IsCollectionDefined(Attachments))
             {
                 writer.WritePropertyName("attachments"u8);
                 writer.WriteStartArray();
                 foreach (var item in Attachments)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<EmailAttachment>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -48,7 +77,14 @@ namespace Azure.Communication.Email
                 writer.WriteStartArray();
                 foreach (var item in ReplyTo)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<EmailAddress>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +93,160 @@ namespace Azure.Communication.Email
                 writer.WritePropertyName("userEngagementTrackingDisabled"u8);
                 writer.WriteBooleanValue(UserEngagementTrackingDisabled.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static EmailMessage DeserializeEmailMessage(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> headers = default;
+            string senderAddress = default;
+            EmailContent content = default;
+            EmailRecipients recipients = default;
+            Optional<IList<EmailAttachment>> attachments = default;
+            Optional<IList<EmailAddress>> replyTo = default;
+            Optional<bool> userEngagementTrackingDisabled = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("headers"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    headers = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("senderAddress"u8))
+                {
+                    senderAddress = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("content"u8))
+                {
+                    content = EmailContent.DeserializeEmailContent(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("recipients"u8))
+                {
+                    recipients = EmailRecipients.DeserializeEmailRecipients(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("attachments"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<EmailAttachment> array = new List<EmailAttachment>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(EmailAttachment.DeserializeEmailAttachment(item));
+                    }
+                    attachments = array;
+                    continue;
+                }
+                if (property.NameEquals("replyTo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<EmailAddress> array = new List<EmailAddress>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(EmailAddress.DeserializeEmailAddress(item));
+                    }
+                    replyTo = array;
+                    continue;
+                }
+                if (property.NameEquals("userEngagementTrackingDisabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    userEngagementTrackingDisabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new EmailMessage(Optional.ToDictionary(headers), senderAddress, content, recipients, Optional.ToList(attachments), Optional.ToList(replyTo), Optional.ToNullable(userEngagementTrackingDisabled), serializedAdditionalRawData);
+        }
+
+        EmailMessage IModelJsonSerializable<EmailMessage>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EmailMessage>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEmailMessage(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EmailMessage>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EmailMessage>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EmailMessage IModelSerializable<EmailMessage>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EmailMessage>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEmailMessage(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EmailMessage"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EmailMessage"/> to convert. </param>
+        public static implicit operator RequestContent(EmailMessage model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EmailMessage"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EmailMessage(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEmailMessage(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class PeriodicModeProperties : IUtf8JsonSerializable
+    public partial class PeriodicModeProperties : IUtf8JsonSerializable, IModelJsonSerializable<PeriodicModeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PeriodicModeProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PeriodicModeProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PeriodicModeProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BackupIntervalInMinutes))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("backupStorageRedundancy"u8);
                 writer.WriteStringValue(BackupStorageRedundancy.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PeriodicModeProperties DeserializePeriodicModeProperties(JsonElement element)
+        internal static PeriodicModeProperties DeserializePeriodicModeProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<int> backupIntervalInMinutes = default;
             Optional<int> backupRetentionIntervalInHours = default;
             Optional<CosmosDBBackupStorageRedundancy> backupStorageRedundancy = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backupIntervalInMinutes"u8))
@@ -71,8 +94,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     backupStorageRedundancy = new CosmosDBBackupStorageRedundancy(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PeriodicModeProperties(Optional.ToNullable(backupIntervalInMinutes), Optional.ToNullable(backupRetentionIntervalInHours), Optional.ToNullable(backupStorageRedundancy));
+            return new PeriodicModeProperties(Optional.ToNullable(backupIntervalInMinutes), Optional.ToNullable(backupRetentionIntervalInHours), Optional.ToNullable(backupStorageRedundancy), serializedAdditionalRawData);
+        }
+
+        PeriodicModeProperties IModelJsonSerializable<PeriodicModeProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PeriodicModeProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePeriodicModeProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PeriodicModeProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PeriodicModeProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PeriodicModeProperties IModelSerializable<PeriodicModeProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PeriodicModeProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePeriodicModeProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PeriodicModeProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PeriodicModeProperties"/> to convert. </param>
+        public static implicit operator RequestContent(PeriodicModeProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PeriodicModeProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PeriodicModeProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePeriodicModeProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,13 +5,148 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    internal partial class PhoneNumberLocalities
+    internal partial class PhoneNumberLocalities : IUtf8JsonSerializable, IModelJsonSerializable<PhoneNumberLocalities>
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PhoneNumberLocalities>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PhoneNumberLocalities>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PhoneNumberLocalities>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(PhoneNumberLocalitiesValue))
+            {
+                writer.WritePropertyName("phoneNumberLocalities"u8);
+                writer.WriteStartArray();
+                foreach (var item in PhoneNumberLocalitiesValue)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<PhoneNumberLocality>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PhoneNumberLocalities DeserializePhoneNumberLocalities(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<PhoneNumberLocality>> phoneNumberLocalities = default;
+            Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("phoneNumberLocalities"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<PhoneNumberLocality> array = new List<PhoneNumberLocality>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(PhoneNumberLocality.DeserializePhoneNumberLocality(item));
+                    }
+                    phoneNumberLocalities = array;
+                    continue;
+                }
+                if (property.NameEquals("nextLink"u8))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new PhoneNumberLocalities(Optional.ToList(phoneNumberLocalities), nextLink.Value, serializedAdditionalRawData);
+        }
+
+        PhoneNumberLocalities IModelJsonSerializable<PhoneNumberLocalities>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PhoneNumberLocalities>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePhoneNumberLocalities(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PhoneNumberLocalities>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PhoneNumberLocalities>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PhoneNumberLocalities IModelSerializable<PhoneNumberLocalities>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PhoneNumberLocalities>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePhoneNumberLocalities(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PhoneNumberLocalities"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PhoneNumberLocalities"/> to convert. </param>
+        public static implicit operator RequestContent(PhoneNumberLocalities model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PhoneNumberLocalities"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PhoneNumberLocalities(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePhoneNumberLocalities(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
     }
 }

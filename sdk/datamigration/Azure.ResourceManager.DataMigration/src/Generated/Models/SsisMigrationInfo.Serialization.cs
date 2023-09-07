@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class SsisMigrationInfo : IUtf8JsonSerializable
+    public partial class SsisMigrationInfo : IUtf8JsonSerializable, IModelJsonSerializable<SsisMigrationInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SsisMigrationInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SsisMigrationInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SsisMigrationInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SsisStoreType))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("environmentOverwriteOption"u8);
                 writer.WriteStringValue(EnvironmentOverwriteOption.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SsisMigrationInfo DeserializeSsisMigrationInfo(JsonElement element)
+        internal static SsisMigrationInfo DeserializeSsisMigrationInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<SsisStoreType> ssisStoreType = default;
             Optional<SsisMigrationOverwriteOption> projectOverwriteOption = default;
             Optional<SsisMigrationOverwriteOption> environmentOverwriteOption = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ssisStoreType"u8))
@@ -71,8 +94,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     environmentOverwriteOption = new SsisMigrationOverwriteOption(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SsisMigrationInfo(Optional.ToNullable(ssisStoreType), Optional.ToNullable(projectOverwriteOption), Optional.ToNullable(environmentOverwriteOption));
+            return new SsisMigrationInfo(Optional.ToNullable(ssisStoreType), Optional.ToNullable(projectOverwriteOption), Optional.ToNullable(environmentOverwriteOption), serializedAdditionalRawData);
+        }
+
+        SsisMigrationInfo IModelJsonSerializable<SsisMigrationInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SsisMigrationInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSsisMigrationInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SsisMigrationInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SsisMigrationInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SsisMigrationInfo IModelSerializable<SsisMigrationInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SsisMigrationInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSsisMigrationInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SsisMigrationInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SsisMigrationInfo"/> to convert. </param>
+        public static implicit operator RequestContent(SsisMigrationInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SsisMigrationInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SsisMigrationInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSsisMigrationInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

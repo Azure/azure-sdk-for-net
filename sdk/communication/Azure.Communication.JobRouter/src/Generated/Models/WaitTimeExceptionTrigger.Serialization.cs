@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class WaitTimeExceptionTrigger : IUtf8JsonSerializable
+    public partial class WaitTimeExceptionTrigger : IUtf8JsonSerializable, IModelJsonSerializable<WaitTimeExceptionTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WaitTimeExceptionTrigger>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WaitTimeExceptionTrigger>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<WaitTimeExceptionTrigger>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("thresholdSeconds"u8);
             writer.WriteNumberValue(_thresholdSeconds);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WaitTimeExceptionTrigger DeserializeWaitTimeExceptionTrigger(JsonElement element)
+        internal static WaitTimeExceptionTrigger DeserializeWaitTimeExceptionTrigger(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             double thresholdSeconds = default;
             string kind = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("thresholdSeconds"u8))
@@ -42,8 +65,61 @@ namespace Azure.Communication.JobRouter
                     kind = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WaitTimeExceptionTrigger(kind, thresholdSeconds);
+            return new WaitTimeExceptionTrigger(kind, thresholdSeconds, serializedAdditionalRawData);
+        }
+
+        WaitTimeExceptionTrigger IModelJsonSerializable<WaitTimeExceptionTrigger>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WaitTimeExceptionTrigger>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWaitTimeExceptionTrigger(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WaitTimeExceptionTrigger>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WaitTimeExceptionTrigger>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WaitTimeExceptionTrigger IModelSerializable<WaitTimeExceptionTrigger>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WaitTimeExceptionTrigger>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWaitTimeExceptionTrigger(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WaitTimeExceptionTrigger"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WaitTimeExceptionTrigger"/> to convert. </param>
+        public static implicit operator RequestContent(WaitTimeExceptionTrigger model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WaitTimeExceptionTrigger"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WaitTimeExceptionTrigger(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWaitTimeExceptionTrigger(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that migrates MySQL databases to Azure Database for MySQL for online migrations. </summary>
     public partial class MigrateMySqlAzureDBForMySqlSyncTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlSyncTaskProperties"/>. </summary>
         public MigrateMySqlAzureDBForMySqlSyncTaskProperties()
         {
             Output = new ChangeTrackingList<MigrateMySqlAzureDBForMySqlSyncTaskOutput>();
             TaskType = TaskType.MigrateMySqlAzureDBForMySqlSync;
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlSyncTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
@@ -36,7 +37,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// Please note <see cref="MigrateMySqlAzureDBForMySqlSyncTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError"/>, <see cref="MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel"/>, <see cref="MigrateMySqlAzureDBForMySqlSyncTaskOutputError"/>, <see cref="MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel"/> and <see cref="MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel"/>.
         /// </param>
-        internal MigrateMySqlAzureDBForMySqlSyncTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, MigrateMySqlAzureDBForMySqlSyncTaskInput input, IReadOnlyList<MigrateMySqlAzureDBForMySqlSyncTaskOutput> output) : base(taskType, errors, state, commands, clientData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateMySqlAzureDBForMySqlSyncTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, MigrateMySqlAzureDBForMySqlSyncTaskInput input, IReadOnlyList<MigrateMySqlAzureDBForMySqlSyncTaskOutput> output, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(taskType, errors, state, commands, clientData, serializedAdditionalRawData)
         {
             Input = input;
             Output = output;

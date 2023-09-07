@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class EncryptionSettingsGroup : IUtf8JsonSerializable
+    public partial class EncryptionSettingsGroup : IUtf8JsonSerializable, IModelJsonSerializable<EncryptionSettingsGroup>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EncryptionSettingsGroup>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EncryptionSettingsGroup>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EncryptionSettingsGroup>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(Enabled);
@@ -24,7 +31,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in EncryptionSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<EncryptionSettingsElement>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -33,11 +47,25 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("encryptionSettingsVersion"u8);
                 writer.WriteStringValue(EncryptionSettingsVersion);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EncryptionSettingsGroup DeserializeEncryptionSettingsGroup(JsonElement element)
+        internal static EncryptionSettingsGroup DeserializeEncryptionSettingsGroup(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
             bool enabled = default;
             Optional<IList<EncryptionSettingsElement>> encryptionSettings = default;
             Optional<string> encryptionSettingsVersion = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -71,8 +100,61 @@ namespace Azure.ResourceManager.Compute.Models
                     encryptionSettingsVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EncryptionSettingsGroup(enabled, Optional.ToList(encryptionSettings), encryptionSettingsVersion.Value);
+            return new EncryptionSettingsGroup(enabled, Optional.ToList(encryptionSettings), encryptionSettingsVersion.Value, serializedAdditionalRawData);
+        }
+
+        EncryptionSettingsGroup IModelJsonSerializable<EncryptionSettingsGroup>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EncryptionSettingsGroup>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEncryptionSettingsGroup(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EncryptionSettingsGroup>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EncryptionSettingsGroup>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EncryptionSettingsGroup IModelSerializable<EncryptionSettingsGroup>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EncryptionSettingsGroup>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEncryptionSettingsGroup(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EncryptionSettingsGroup"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EncryptionSettingsGroup"/> to convert. </param>
+        public static implicit operator RequestContent(EncryptionSettingsGroup model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EncryptionSettingsGroup"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EncryptionSettingsGroup(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEncryptionSettingsGroup(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

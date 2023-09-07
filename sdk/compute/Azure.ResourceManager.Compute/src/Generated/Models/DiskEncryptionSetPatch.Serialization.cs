@@ -5,15 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DiskEncryptionSetPatch : IUtf8JsonSerializable
+    public partial class DiskEncryptionSetPatch : IUtf8JsonSerializable, IModelJsonSerializable<DiskEncryptionSetPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DiskEncryptionSetPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DiskEncryptionSetPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DiskEncryptionSetPatch>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -41,7 +50,14 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ActiveKey))
             {
                 writer.WritePropertyName("activeKey"u8);
-                writer.WriteObjectValue(ActiveKey);
+                if (ActiveKey is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<KeyForDiskEncryptionSet>)ActiveKey).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(RotationToLatestKeyVersionEnabled))
             {
@@ -54,7 +70,160 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStringValue(FederatedClientId);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static DiskEncryptionSetPatch DeserializeDiskEncryptionSetPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<DiskEncryptionSetType> encryptionType = default;
+            Optional<KeyForDiskEncryptionSet> activeKey = default;
+            Optional<bool> rotationToLatestKeyVersionEnabled = default;
+            Optional<string> federatedClientId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("encryptionType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryptionType = new DiskEncryptionSetType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("activeKey"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            activeKey = KeyForDiskEncryptionSet.DeserializeKeyForDiskEncryptionSet(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("rotationToLatestKeyVersionEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            rotationToLatestKeyVersionEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("federatedClientId"u8))
+                        {
+                            federatedClientId = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new DiskEncryptionSetPatch(Optional.ToDictionary(tags), identity, Optional.ToNullable(encryptionType), activeKey.Value, Optional.ToNullable(rotationToLatestKeyVersionEnabled), federatedClientId.Value, serializedAdditionalRawData);
+        }
+
+        DiskEncryptionSetPatch IModelJsonSerializable<DiskEncryptionSetPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DiskEncryptionSetPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDiskEncryptionSetPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DiskEncryptionSetPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DiskEncryptionSetPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DiskEncryptionSetPatch IModelSerializable<DiskEncryptionSetPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DiskEncryptionSetPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDiskEncryptionSetPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DiskEncryptionSetPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DiskEncryptionSetPatch"/> to convert. </param>
+        public static implicit operator RequestContent(DiskEncryptionSetPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DiskEncryptionSetPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DiskEncryptionSetPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDiskEncryptionSetPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

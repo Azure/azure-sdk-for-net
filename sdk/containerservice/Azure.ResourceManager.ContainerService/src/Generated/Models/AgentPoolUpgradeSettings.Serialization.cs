@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    internal partial class AgentPoolUpgradeSettings : IUtf8JsonSerializable
+    internal partial class AgentPoolUpgradeSettings : IUtf8JsonSerializable, IModelJsonSerializable<AgentPoolUpgradeSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AgentPoolUpgradeSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AgentPoolUpgradeSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AgentPoolUpgradeSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxSurge))
             {
                 writer.WritePropertyName("maxSurge"u8);
                 writer.WriteStringValue(MaxSurge);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AgentPoolUpgradeSettings DeserializeAgentPoolUpgradeSettings(JsonElement element)
+        internal static AgentPoolUpgradeSettings DeserializeAgentPoolUpgradeSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> maxSurge = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxSurge"u8))
@@ -37,8 +60,61 @@ namespace Azure.ResourceManager.ContainerService.Models
                     maxSurge = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AgentPoolUpgradeSettings(maxSurge.Value);
+            return new AgentPoolUpgradeSettings(maxSurge.Value, serializedAdditionalRawData);
+        }
+
+        AgentPoolUpgradeSettings IModelJsonSerializable<AgentPoolUpgradeSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AgentPoolUpgradeSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAgentPoolUpgradeSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AgentPoolUpgradeSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AgentPoolUpgradeSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AgentPoolUpgradeSettings IModelSerializable<AgentPoolUpgradeSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AgentPoolUpgradeSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAgentPoolUpgradeSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AgentPoolUpgradeSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AgentPoolUpgradeSettings"/> to convert. </param>
+        public static implicit operator RequestContent(AgentPoolUpgradeSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AgentPoolUpgradeSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AgentPoolUpgradeSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAgentPoolUpgradeSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

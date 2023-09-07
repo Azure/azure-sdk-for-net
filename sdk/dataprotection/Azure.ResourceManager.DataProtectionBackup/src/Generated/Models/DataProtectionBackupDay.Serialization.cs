@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBackupDay : IUtf8JsonSerializable
+    public partial class DataProtectionBackupDay : IUtf8JsonSerializable, IModelJsonSerializable<DataProtectionBackupDay>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataProtectionBackupDay>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataProtectionBackupDay>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBackupDay>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Date))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("isLast"u8);
                 writer.WriteBooleanValue(IsLast.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataProtectionBackupDay DeserializeDataProtectionBackupDay(JsonElement element)
+        internal static DataProtectionBackupDay DeserializeDataProtectionBackupDay(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> date = default;
             Optional<bool> isLast = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("date"u8))
@@ -56,8 +79,61 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     isLast = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataProtectionBackupDay(Optional.ToNullable(date), Optional.ToNullable(isLast));
+            return new DataProtectionBackupDay(Optional.ToNullable(date), Optional.ToNullable(isLast), serializedAdditionalRawData);
+        }
+
+        DataProtectionBackupDay IModelJsonSerializable<DataProtectionBackupDay>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBackupDay>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataProtectionBackupDay(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataProtectionBackupDay>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBackupDay>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataProtectionBackupDay IModelSerializable<DataProtectionBackupDay>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBackupDay>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataProtectionBackupDay(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataProtectionBackupDay"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataProtectionBackupDay"/> to convert. </param>
+        public static implicit operator RequestContent(DataProtectionBackupDay model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataProtectionBackupDay"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataProtectionBackupDay(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataProtectionBackupDay(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

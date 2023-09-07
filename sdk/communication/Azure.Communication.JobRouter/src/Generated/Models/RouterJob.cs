@@ -15,7 +15,10 @@ namespace Azure.Communication.JobRouter.Models
     /// <summary> A unit of work to be routed. </summary>
     public partial class RouterJob
     {
-        /// <summary> Initializes a new instance of RouterJob. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouterJob"/>. </summary>
         /// <param name="id"> The id of the job. </param>
         /// <param name="channelReference"> Reference to an external parent context, eg. call ID. </param>
         /// <param name="status"> The status of the Job. </param>
@@ -36,7 +39,8 @@ namespace Azure.Communication.JobRouter.Models
         /// <param name="notes"> Notes attached to a job, sorted by timestamp. </param>
         /// <param name="scheduledAt"> If set, job will be scheduled to be enqueued at a given time. </param>
         /// <param name="matchingMode"></param>
-        internal RouterJob(string id, string channelReference, RouterJobStatus? status, DateTimeOffset? enqueuedAt, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<RouterWorkerSelector> requestedWorkerSelectors, IReadOnlyList<RouterWorkerSelector> attachedWorkerSelectors, IDictionary<string, object> labels, IReadOnlyDictionary<string, RouterJobAssignment> assignments, IDictionary<string, object> tags, IDictionary<string, string> notes, DateTimeOffset? scheduledAt, JobMatchingMode matchingMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouterJob(string id, string channelReference, RouterJobStatus? status, DateTimeOffset? enqueuedAt, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<RouterWorkerSelector> requestedWorkerSelectors, IReadOnlyList<RouterWorkerSelector> attachedWorkerSelectors, IDictionary<string, object> labels, IReadOnlyDictionary<string, RouterJobAssignment> assignments, IDictionary<string, object> tags, IDictionary<string, string> notes, DateTimeOffset? scheduledAt, JobMatchingMode matchingMode, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ChannelReference = channelReference;
@@ -55,6 +59,7 @@ namespace Azure.Communication.JobRouter.Models
             _notes = notes;
             ScheduledAt = scheduledAt;
             MatchingMode = matchingMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The id of the job. </summary>

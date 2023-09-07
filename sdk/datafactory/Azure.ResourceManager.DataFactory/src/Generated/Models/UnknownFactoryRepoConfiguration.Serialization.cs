@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class UnknownFactoryRepoConfiguration : IUtf8JsonSerializable
+    internal partial class UnknownFactoryRepoConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<FactoryRepoConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FactoryRepoConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FactoryRepoConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FactoryRepoConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FactoryRepoConfigurationType);
@@ -35,65 +41,44 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("disablePublish"u8);
                 writer.WriteBooleanValue(DisablePublish.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownFactoryRepoConfiguration DeserializeUnknownFactoryRepoConfiguration(JsonElement element)
+        internal static FactoryRepoConfiguration DeserializeUnknownFactoryRepoConfiguration(JsonElement element, ModelSerializerOptions options = default) => DeserializeFactoryRepoConfiguration(element, options);
+
+        FactoryRepoConfiguration IModelJsonSerializable<FactoryRepoConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string type = "Unknown";
-            string accountName = default;
-            string repositoryName = default;
-            string collaborationBranch = default;
-            string rootFolder = default;
-            Optional<string> lastCommitId = default;
-            Optional<bool> disablePublish = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("accountName"u8))
-                {
-                    accountName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("repositoryName"u8))
-                {
-                    repositoryName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("collaborationBranch"u8))
-                {
-                    collaborationBranch = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("rootFolder"u8))
-                {
-                    rootFolder = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("lastCommitId"u8))
-                {
-                    lastCommitId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("disablePublish"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    disablePublish = property.Value.GetBoolean();
-                    continue;
-                }
-            }
-            return new UnknownFactoryRepoConfiguration(type, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId.Value, Optional.ToNullable(disablePublish));
+            Core.ModelSerializerHelper.ValidateFormat<FactoryRepoConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownFactoryRepoConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FactoryRepoConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FactoryRepoConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FactoryRepoConfiguration IModelSerializable<FactoryRepoConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FactoryRepoConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFactoryRepoConfiguration(doc.RootElement, options);
         }
     }
 }

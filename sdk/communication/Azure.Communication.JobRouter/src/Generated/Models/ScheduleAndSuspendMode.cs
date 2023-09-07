@@ -6,11 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.JobRouter
 {
     /// <summary> The ScheduleAndSuspendMode. </summary>
     public partial class ScheduleAndSuspendMode
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScheduleAndSuspendMode"/>. </summary>
+        /// <param name="scheduleAt"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScheduleAndSuspendMode(DateTimeOffset scheduleAt, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ScheduleAt = scheduleAt;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
     }
 }

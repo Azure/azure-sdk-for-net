@@ -5,27 +5,49 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class GremlinGraphResourceInfo : IUtf8JsonSerializable
+    public partial class GremlinGraphResourceInfo : IUtf8JsonSerializable, IModelJsonSerializable<GremlinGraphResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GremlinGraphResourceInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GremlinGraphResourceInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<GremlinGraphResourceInfo>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(GraphName);
             if (Optional.IsDefined(IndexingPolicy))
             {
                 writer.WritePropertyName("indexingPolicy"u8);
-                writer.WriteObjectValue(IndexingPolicy);
+                if (IndexingPolicy is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CosmosDBIndexingPolicy>)IndexingPolicy).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(PartitionKey))
             {
                 writer.WritePropertyName("partitionKey"u8);
-                writer.WriteObjectValue(PartitionKey);
+                if (PartitionKey is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CosmosDBContainerPartitionKey>)PartitionKey).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DefaultTtl))
             {
@@ -35,12 +57,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(UniqueKeyPolicy))
             {
                 writer.WritePropertyName("uniqueKeyPolicy"u8);
-                writer.WriteObjectValue(UniqueKeyPolicy);
+                if (UniqueKeyPolicy is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CosmosDBUniqueKeyPolicy>)UniqueKeyPolicy).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ConflictResolutionPolicy))
             {
                 writer.WritePropertyName("conflictResolutionPolicy"u8);
-                writer.WriteObjectValue(ConflictResolutionPolicy);
+                if (ConflictResolutionPolicy is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ConflictResolutionPolicy>)ConflictResolutionPolicy).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(AnalyticalStorageTtl))
             {
@@ -50,18 +86,39 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
-                writer.WriteObjectValue(RestoreParameters);
+                if (RestoreParameters is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourceRestoreParameters>)RestoreParameters).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GremlinGraphResourceInfo DeserializeGremlinGraphResourceInfo(JsonElement element)
+        internal static GremlinGraphResourceInfo DeserializeGremlinGraphResourceInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -75,6 +132,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<long> analyticalStorageTtl = default;
             Optional<ResourceRestoreParameters> restoreParameters = default;
             Optional<CosmosDBAccountCreateMode> createMode = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -154,8 +212,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     createMode = new CosmosDBAccountCreateMode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GremlinGraphResourceInfo(id, indexingPolicy.Value, partitionKey.Value, Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, Optional.ToNullable(analyticalStorageTtl), restoreParameters.Value, Optional.ToNullable(createMode));
+            return new GremlinGraphResourceInfo(id, indexingPolicy.Value, partitionKey.Value, Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, Optional.ToNullable(analyticalStorageTtl), restoreParameters.Value, Optional.ToNullable(createMode), serializedAdditionalRawData);
+        }
+
+        GremlinGraphResourceInfo IModelJsonSerializable<GremlinGraphResourceInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GremlinGraphResourceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGremlinGraphResourceInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GremlinGraphResourceInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GremlinGraphResourceInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GremlinGraphResourceInfo IModelSerializable<GremlinGraphResourceInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GremlinGraphResourceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGremlinGraphResourceInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GremlinGraphResourceInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GremlinGraphResourceInfo"/> to convert. </param>
+        public static implicit operator RequestContent(GremlinGraphResourceInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GremlinGraphResourceInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GremlinGraphResourceInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGremlinGraphResourceInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

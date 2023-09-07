@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> SAP Table Linked Service. </summary>
     public partial class SapTableLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of SapTableLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapTableLinkedService"/>. </summary>
         public SapTableLinkedService()
         {
             LinkedServiceType = "SapTable";
         }
 
-        /// <summary> Initializes a new instance of SapTableLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapTableLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

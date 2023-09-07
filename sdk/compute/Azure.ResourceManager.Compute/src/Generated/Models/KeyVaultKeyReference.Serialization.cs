@@ -6,31 +6,53 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class KeyVaultKeyReference : IUtf8JsonSerializable
+    public partial class KeyVaultKeyReference : IUtf8JsonSerializable, IModelJsonSerializable<KeyVaultKeyReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KeyVaultKeyReference>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KeyVaultKeyReference>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KeyVaultKeyReference>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("keyUrl"u8);
             writer.WriteStringValue(KeyUri.AbsoluteUri);
             writer.WritePropertyName("sourceVault"u8);
-            JsonSerializer.Serialize(writer, SourceVault); writer.WriteEndObject();
+            JsonSerializer.Serialize(writer, SourceVault); if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
         }
 
-        internal static KeyVaultKeyReference DeserializeKeyVaultKeyReference(JsonElement element)
+        internal static KeyVaultKeyReference DeserializeKeyVaultKeyReference(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Uri keyUrl = default;
             WritableSubResource sourceVault = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyUrl"u8))
@@ -43,8 +65,61 @@ namespace Azure.ResourceManager.Compute.Models
                     sourceVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KeyVaultKeyReference(keyUrl, sourceVault);
+            return new KeyVaultKeyReference(keyUrl, sourceVault, serializedAdditionalRawData);
+        }
+
+        KeyVaultKeyReference IModelJsonSerializable<KeyVaultKeyReference>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KeyVaultKeyReference>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKeyVaultKeyReference(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KeyVaultKeyReference>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KeyVaultKeyReference>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KeyVaultKeyReference IModelSerializable<KeyVaultKeyReference>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KeyVaultKeyReference>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKeyVaultKeyReference(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KeyVaultKeyReference"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KeyVaultKeyReference"/> to convert. </param>
+        public static implicit operator RequestContent(KeyVaultKeyReference model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KeyVaultKeyReference"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KeyVaultKeyReference(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKeyVaultKeyReference(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

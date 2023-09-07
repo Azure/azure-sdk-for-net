@@ -6,19 +6,20 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel. </summary>
     public partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel : MigrateOracleAzureDBPostgreSqlSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel"/>. </summary>
         internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel()
         {
             ResultType = "MigrationLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="startedOn"> Migration start time. </param>
@@ -27,7 +28,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourceServer"> Source server name. </param>
         /// <param name="targetServerVersion"> Target server version. </param>
         /// <param name="targetServer"> Target server name. </param>
-        internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel(string id, string resultType, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string sourceServerVersion, string sourceServer, string targetServerVersion, string targetServer) : base(id, resultType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel(string id, string resultType, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string sourceServerVersion, string sourceServer, string targetServerVersion, string targetServer, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, resultType, serializedAdditionalRawData)
         {
             StartedOn = startedOn;
             EndedOn = endedOn;

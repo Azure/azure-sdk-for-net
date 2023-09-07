@@ -8,25 +8,45 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class JsonSink : IUtf8JsonSerializable
+    public partial class JsonSink : IUtf8JsonSerializable, IModelJsonSerializable<JsonSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JsonSink>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<JsonSink>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<JsonSink>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(StoreSettings))
             {
                 writer.WritePropertyName("storeSettings"u8);
-                writer.WriteObjectValue(StoreSettings);
+                if (StoreSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StoreWriteSettings>)StoreSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(FormatSettings))
             {
                 writer.WritePropertyName("formatSettings"u8);
-                writer.WriteObjectValue(FormatSettings);
+                if (FormatSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<JsonWriteSettings>)FormatSettings).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
@@ -72,8 +92,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static JsonSink DeserializeJsonSink(JsonElement element)
+        internal static JsonSink DeserializeJsonSink(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -172,6 +194,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new JsonSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, storeSettings.Value, formatSettings.Value);
+        }
+
+        JsonSink IModelJsonSerializable<JsonSink>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JsonSink>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJsonSink(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<JsonSink>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JsonSink>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        JsonSink IModelSerializable<JsonSink>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JsonSink>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeJsonSink(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="JsonSink"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="JsonSink"/> to convert. </param>
+        public static implicit operator RequestContent(JsonSink model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="JsonSink"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator JsonSink(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeJsonSink(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

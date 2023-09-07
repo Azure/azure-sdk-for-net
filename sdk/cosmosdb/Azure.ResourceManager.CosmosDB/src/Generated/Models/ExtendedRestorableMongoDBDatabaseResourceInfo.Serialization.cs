@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ExtendedRestorableMongoDBDatabaseResourceInfo
+    public partial class ExtendedRestorableMongoDBDatabaseResourceInfo : IUtf8JsonSerializable, IModelJsonSerializable<ExtendedRestorableMongoDBDatabaseResourceInfo>
     {
-        internal static ExtendedRestorableMongoDBDatabaseResourceInfo DeserializeExtendedRestorableMongoDBDatabaseResourceInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExtendedRestorableMongoDBDatabaseResourceInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExtendedRestorableMongoDBDatabaseResourceInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ExtendedRestorableMongoDBDatabaseResourceInfo>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ExtendedRestorableMongoDBDatabaseResourceInfo DeserializeExtendedRestorableMongoDBDatabaseResourceInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +51,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> eventTimestamp = default;
             Optional<string> ownerId = default;
             Optional<string> ownerResourceId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_rid"u8))
@@ -54,8 +83,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     ownerResourceId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExtendedRestorableMongoDBDatabaseResourceInfo(rid.Value, Optional.ToNullable(operationType), eventTimestamp.Value, ownerId.Value, ownerResourceId.Value);
+            return new ExtendedRestorableMongoDBDatabaseResourceInfo(rid.Value, Optional.ToNullable(operationType), eventTimestamp.Value, ownerId.Value, ownerResourceId.Value, serializedAdditionalRawData);
+        }
+
+        ExtendedRestorableMongoDBDatabaseResourceInfo IModelJsonSerializable<ExtendedRestorableMongoDBDatabaseResourceInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExtendedRestorableMongoDBDatabaseResourceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExtendedRestorableMongoDBDatabaseResourceInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExtendedRestorableMongoDBDatabaseResourceInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExtendedRestorableMongoDBDatabaseResourceInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExtendedRestorableMongoDBDatabaseResourceInfo IModelSerializable<ExtendedRestorableMongoDBDatabaseResourceInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExtendedRestorableMongoDBDatabaseResourceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExtendedRestorableMongoDBDatabaseResourceInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExtendedRestorableMongoDBDatabaseResourceInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExtendedRestorableMongoDBDatabaseResourceInfo"/> to convert. </param>
+        public static implicit operator RequestContent(ExtendedRestorableMongoDBDatabaseResourceInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExtendedRestorableMongoDBDatabaseResourceInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExtendedRestorableMongoDBDatabaseResourceInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExtendedRestorableMongoDBDatabaseResourceInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

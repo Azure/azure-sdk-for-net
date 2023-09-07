@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.JobRouter.Models
 {
     /// <summary> Paged instance of ExceptionPolicy. </summary>
     public partial class ExceptionPolicyItem
     {
-        /// <summary> Initializes a new instance of ExceptionPolicyItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExceptionPolicyItem"/>. </summary>
         internal ExceptionPolicyItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ExceptionPolicyItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExceptionPolicyItem"/>. </summary>
         /// <param name="exceptionPolicy"> A policy that defines actions to execute when exception are triggered. </param>
         /// <param name="etag"> (Optional) The Concurrency Token. </param>
-        internal ExceptionPolicyItem(ExceptionPolicy exceptionPolicy, string etag)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExceptionPolicyItem(ExceptionPolicy exceptionPolicy, string etag, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExceptionPolicy = exceptionPolicy;
             _etag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A policy that defines actions to execute when exception are triggered. </summary>

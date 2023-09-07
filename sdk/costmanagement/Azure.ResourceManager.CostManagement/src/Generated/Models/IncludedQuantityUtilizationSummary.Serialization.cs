@@ -6,16 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class IncludedQuantityUtilizationSummary : IUtf8JsonSerializable
+    public partial class IncludedQuantityUtilizationSummary : IUtf8JsonSerializable, IModelJsonSerializable<IncludedQuantityUtilizationSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IncludedQuantityUtilizationSummary>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IncludedQuantityUtilizationSummary>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IncludedQuantityUtilizationSummary>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -27,11 +34,25 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStringValue(BenefitType.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IncludedQuantityUtilizationSummary DeserializeIncludedQuantityUtilizationSummary(JsonElement element)
+        internal static IncludedQuantityUtilizationSummary DeserializeIncludedQuantityUtilizationSummary(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -47,6 +68,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             Optional<BillingAccountBenefitKind> benefitType = default;
             Optional<DateTimeOffset> usageDate = default;
             Optional<decimal> utilizationPercentage = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -132,8 +154,61 @@ namespace Azure.ResourceManager.CostManagement.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IncludedQuantityUtilizationSummary(id, name, type, systemData.Value, kind, armSkuName.Value, benefitId.Value, benefitOrderId.Value, Optional.ToNullable(benefitType), Optional.ToNullable(usageDate), Optional.ToNullable(utilizationPercentage));
+            return new IncludedQuantityUtilizationSummary(id, name, type, systemData.Value, kind, armSkuName.Value, benefitId.Value, benefitOrderId.Value, Optional.ToNullable(benefitType), Optional.ToNullable(usageDate), Optional.ToNullable(utilizationPercentage), serializedAdditionalRawData);
+        }
+
+        IncludedQuantityUtilizationSummary IModelJsonSerializable<IncludedQuantityUtilizationSummary>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IncludedQuantityUtilizationSummary>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIncludedQuantityUtilizationSummary(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IncludedQuantityUtilizationSummary>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IncludedQuantityUtilizationSummary>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IncludedQuantityUtilizationSummary IModelSerializable<IncludedQuantityUtilizationSummary>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IncludedQuantityUtilizationSummary>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIncludedQuantityUtilizationSummary(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IncludedQuantityUtilizationSummary"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IncludedQuantityUtilizationSummary"/> to convert. </param>
+        public static implicit operator RequestContent(IncludedQuantityUtilizationSummary model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IncludedQuantityUtilizationSummary"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IncludedQuantityUtilizationSummary(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIncludedQuantityUtilizationSummary(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

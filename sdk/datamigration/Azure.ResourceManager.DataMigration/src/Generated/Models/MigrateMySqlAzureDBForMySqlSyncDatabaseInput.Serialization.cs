@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateMySqlAzureDBForMySqlSyncDatabaseInput : IUtf8JsonSerializable
+    public partial class MigrateMySqlAzureDBForMySqlSyncDatabaseInput : IUtf8JsonSerializable, IModelJsonSerializable<MigrateMySqlAzureDBForMySqlSyncDatabaseInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MigrateMySqlAzureDBForMySqlSyncDatabaseInput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MigrateMySqlAzureDBForMySqlSyncDatabaseInput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateMySqlAzureDBForMySqlSyncDatabaseInput>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -70,11 +77,25 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MigrateMySqlAzureDBForMySqlSyncDatabaseInput DeserializeMigrateMySqlAzureDBForMySqlSyncDatabaseInput(JsonElement element)
+        internal static MigrateMySqlAzureDBForMySqlSyncDatabaseInput DeserializeMigrateMySqlAzureDBForMySqlSyncDatabaseInput(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -85,6 +106,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IDictionary<string, string>> sourceSetting = default;
             Optional<IDictionary<string, string>> targetSetting = default;
             Optional<IDictionary<string, string>> tableMap = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -153,8 +175,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     tableMap = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MigrateMySqlAzureDBForMySqlSyncDatabaseInput(name.Value, targetDatabaseName.Value, Optional.ToDictionary(migrationSetting), Optional.ToDictionary(sourceSetting), Optional.ToDictionary(targetSetting), Optional.ToDictionary(tableMap));
+            return new MigrateMySqlAzureDBForMySqlSyncDatabaseInput(name.Value, targetDatabaseName.Value, Optional.ToDictionary(migrationSetting), Optional.ToDictionary(sourceSetting), Optional.ToDictionary(targetSetting), Optional.ToDictionary(tableMap), serializedAdditionalRawData);
+        }
+
+        MigrateMySqlAzureDBForMySqlSyncDatabaseInput IModelJsonSerializable<MigrateMySqlAzureDBForMySqlSyncDatabaseInput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateMySqlAzureDBForMySqlSyncDatabaseInput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateMySqlAzureDBForMySqlSyncDatabaseInput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MigrateMySqlAzureDBForMySqlSyncDatabaseInput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateMySqlAzureDBForMySqlSyncDatabaseInput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MigrateMySqlAzureDBForMySqlSyncDatabaseInput IModelSerializable<MigrateMySqlAzureDBForMySqlSyncDatabaseInput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateMySqlAzureDBForMySqlSyncDatabaseInput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMigrateMySqlAzureDBForMySqlSyncDatabaseInput(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MigrateMySqlAzureDBForMySqlSyncDatabaseInput"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MigrateMySqlAzureDBForMySqlSyncDatabaseInput"/> to convert. </param>
+        public static implicit operator RequestContent(MigrateMySqlAzureDBForMySqlSyncDatabaseInput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MigrateMySqlAzureDBForMySqlSyncDatabaseInput"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MigrateMySqlAzureDBForMySqlSyncDatabaseInput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMigrateMySqlAzureDBForMySqlSyncDatabaseInput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,21 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    public partial class PhoneNumberAdministrativeDivision
+    public partial class PhoneNumberAdministrativeDivision : IUtf8JsonSerializable, IModelJsonSerializable<PhoneNumberAdministrativeDivision>
     {
-        internal static PhoneNumberAdministrativeDivision DeserializePhoneNumberAdministrativeDivision(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PhoneNumberAdministrativeDivision>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PhoneNumberAdministrativeDivision>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PhoneNumberAdministrativeDivision>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("localizedName"u8);
+            writer.WriteStringValue(LocalizedName);
+            writer.WritePropertyName("abbreviatedName"u8);
+            writer.WriteStringValue(AbbreviatedName);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PhoneNumberAdministrativeDivision DeserializePhoneNumberAdministrativeDivision(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string localizedName = default;
             string abbreviatedName = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("localizedName"u8))
@@ -32,8 +65,61 @@ namespace Azure.Communication.PhoneNumbers
                     abbreviatedName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PhoneNumberAdministrativeDivision(localizedName, abbreviatedName);
+            return new PhoneNumberAdministrativeDivision(localizedName, abbreviatedName, serializedAdditionalRawData);
+        }
+
+        PhoneNumberAdministrativeDivision IModelJsonSerializable<PhoneNumberAdministrativeDivision>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PhoneNumberAdministrativeDivision>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePhoneNumberAdministrativeDivision(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PhoneNumberAdministrativeDivision>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PhoneNumberAdministrativeDivision>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PhoneNumberAdministrativeDivision IModelSerializable<PhoneNumberAdministrativeDivision>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PhoneNumberAdministrativeDivision>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePhoneNumberAdministrativeDivision(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PhoneNumberAdministrativeDivision"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PhoneNumberAdministrativeDivision"/> to convert. </param>
+        public static implicit operator RequestContent(PhoneNumberAdministrativeDivision model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PhoneNumberAdministrativeDivision"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PhoneNumberAdministrativeDivision(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePhoneNumberAdministrativeDivision(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

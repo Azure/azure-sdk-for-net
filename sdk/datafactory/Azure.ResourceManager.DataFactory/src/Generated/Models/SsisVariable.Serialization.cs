@@ -5,15 +5,78 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SsisVariable
+    public partial class SsisVariable : IUtf8JsonSerializable, IModelJsonSerializable<SsisVariable>
     {
-        internal static SsisVariable DeserializeSsisVariable(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SsisVariable>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SsisVariable>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SsisVariable>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteNumberValue(Id.Value);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(DataType))
+            {
+                writer.WritePropertyName("dataType"u8);
+                writer.WriteStringValue(DataType);
+            }
+            if (Optional.IsDefined(IsSensitive))
+            {
+                writer.WritePropertyName("sensitive"u8);
+                writer.WriteBooleanValue(IsSensitive.Value);
+            }
+            if (Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(Value);
+            }
+            if (Optional.IsDefined(SensitiveValue))
+            {
+                writer.WritePropertyName("sensitiveValue"u8);
+                writer.WriteStringValue(SensitiveValue);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SsisVariable DeserializeSsisVariable(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<bool> sensitive = default;
             Optional<string> value = default;
             Optional<string> sensitiveValue = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -70,8 +134,61 @@ namespace Azure.ResourceManager.DataFactory.Models
                     sensitiveValue = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SsisVariable(Optional.ToNullable(id), name.Value, description.Value, dataType.Value, Optional.ToNullable(sensitive), value.Value, sensitiveValue.Value);
+            return new SsisVariable(Optional.ToNullable(id), name.Value, description.Value, dataType.Value, Optional.ToNullable(sensitive), value.Value, sensitiveValue.Value, serializedAdditionalRawData);
+        }
+
+        SsisVariable IModelJsonSerializable<SsisVariable>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SsisVariable>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSsisVariable(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SsisVariable>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SsisVariable>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SsisVariable IModelSerializable<SsisVariable>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SsisVariable>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSsisVariable(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SsisVariable"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SsisVariable"/> to convert. </param>
+        public static implicit operator RequestContent(SsisVariable model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SsisVariable"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SsisVariable(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSsisVariable(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

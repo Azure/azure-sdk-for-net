@@ -6,18 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     [JsonConverter(typeof(DatasetDataElementConverter))]
-    public partial class DatasetDataElement : IUtf8JsonSerializable
+    public partial class DatasetDataElement : IUtf8JsonSerializable, IModelJsonSerializable<DatasetDataElement>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DatasetDataElement>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DatasetDataElement>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DatasetDataElement>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ColumnName))
             {
@@ -29,17 +36,32 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("type"u8);
                 JsonSerializer.Serialize(writer, ColumnType);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DatasetDataElement DeserializeDatasetDataElement(JsonElement element)
+        internal static DatasetDataElement DeserializeDatasetDataElement(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DataFactoryElement<string>> name = default;
             Optional<DataFactoryElement<string>> type = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -60,8 +82,61 @@ namespace Azure.ResourceManager.DataFactory.Models
                     type = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DatasetDataElement(name.Value, type.Value);
+            return new DatasetDataElement(name.Value, type.Value, serializedAdditionalRawData);
+        }
+
+        DatasetDataElement IModelJsonSerializable<DatasetDataElement>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DatasetDataElement>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatasetDataElement(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DatasetDataElement>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DatasetDataElement>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DatasetDataElement IModelSerializable<DatasetDataElement>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DatasetDataElement>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDatasetDataElement(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DatasetDataElement"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DatasetDataElement"/> to convert. </param>
+        public static implicit operator RequestContent(DatasetDataElement model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DatasetDataElement"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DatasetDataElement(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDatasetDataElement(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class DatasetDataElementConverter : JsonConverter<DatasetDataElement>

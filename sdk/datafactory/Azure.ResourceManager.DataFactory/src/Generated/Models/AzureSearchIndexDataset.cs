@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The Azure Search Index. </summary>
     public partial class AzureSearchIndexDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of AzureSearchIndexDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSearchIndexDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="indexName"> The name of the Azure Search Index. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="indexName"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "AzureSearchIndex";
         }
 
-        /// <summary> Initializes a new instance of AzureSearchIndexDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSearchIndexDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             IndexName = indexName;
             DatasetType = datasetType ?? "AzureSearchIndex";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureSearchIndexDataset"/> for deserialization. </summary>
+        internal AzureSearchIndexDataset()
+        {
         }
 
         /// <summary> The name of the Azure Search Index. Type: string (or Expression with resultType string). </summary>

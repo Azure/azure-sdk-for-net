@@ -6,16 +6,20 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class UnknownImportSettings : IUtf8JsonSerializable
+    internal partial class UnknownImportSettings : IUtf8JsonSerializable, IModelJsonSerializable<ImportSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ImportSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ImportSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ImportSettings>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ImportSettingsType);
@@ -31,26 +35,29 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownImportSettings DeserializeUnknownImportSettings(JsonElement element)
+        internal static ImportSettings DeserializeUnknownImportSettings(JsonElement element, ModelSerializerOptions options = default) => DeserializeImportSettings(element, options);
+
+        ImportSettings IModelJsonSerializable<ImportSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string type = "Unknown";
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new UnknownImportSettings(type, additionalProperties);
+            Core.ModelSerializerHelper.ValidateFormat<ImportSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownImportSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ImportSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ImportSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ImportSettings IModelSerializable<ImportSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ImportSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeImportSettings(doc.RootElement, options);
         }
     }
 }

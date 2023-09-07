@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.CustomerInsights.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    public partial class ConnectorMappingResourceFormatData : IUtf8JsonSerializable
+    public partial class ConnectorMappingResourceFormatData : IUtf8JsonSerializable, IModelJsonSerializable<ConnectorMappingResourceFormatData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConnectorMappingResourceFormatData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConnectorMappingResourceFormatData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectorMappingResourceFormatData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -48,14 +55,35 @@ namespace Azure.ResourceManager.CustomerInsights
             if (Optional.IsDefined(MappingProperties))
             {
                 writer.WritePropertyName("mappingProperties"u8);
-                writer.WriteObjectValue(MappingProperties);
+                if (MappingProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ConnectorMappingProperties>)MappingProperties).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConnectorMappingResourceFormatData DeserializeConnectorMappingResourceFormatData(JsonElement element)
+        internal static ConnectorMappingResourceFormatData DeserializeConnectorMappingResourceFormatData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -79,6 +107,7 @@ namespace Azure.ResourceManager.CustomerInsights
             Optional<string> runId = default;
             Optional<ConnectorMappingState> state = default;
             Optional<Guid> tenantId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -224,8 +253,61 @@ namespace Azure.ResourceManager.CustomerInsights
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConnectorMappingResourceFormatData(id, name, type, systemData.Value, connectorName.Value, Optional.ToNullable(connectorType), Optional.ToNullable(created), Optional.ToNullable(lastModified), Optional.ToNullable(entityType), entityTypeName.Value, connectorMappingName.Value, displayName.Value, description.Value, dataFormatId.Value, mappingProperties.Value, Optional.ToNullable(nextRunTime), runId.Value, Optional.ToNullable(state), Optional.ToNullable(tenantId));
+            return new ConnectorMappingResourceFormatData(id, name, type, systemData.Value, connectorName.Value, Optional.ToNullable(connectorType), Optional.ToNullable(created), Optional.ToNullable(lastModified), Optional.ToNullable(entityType), entityTypeName.Value, connectorMappingName.Value, displayName.Value, description.Value, dataFormatId.Value, mappingProperties.Value, Optional.ToNullable(nextRunTime), runId.Value, Optional.ToNullable(state), Optional.ToNullable(tenantId), serializedAdditionalRawData);
+        }
+
+        ConnectorMappingResourceFormatData IModelJsonSerializable<ConnectorMappingResourceFormatData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectorMappingResourceFormatData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectorMappingResourceFormatData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConnectorMappingResourceFormatData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectorMappingResourceFormatData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConnectorMappingResourceFormatData IModelSerializable<ConnectorMappingResourceFormatData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectorMappingResourceFormatData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConnectorMappingResourceFormatData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConnectorMappingResourceFormatData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConnectorMappingResourceFormatData"/> to convert. </param>
+        public static implicit operator RequestContent(ConnectorMappingResourceFormatData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConnectorMappingResourceFormatData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConnectorMappingResourceFormatData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConnectorMappingResourceFormatData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

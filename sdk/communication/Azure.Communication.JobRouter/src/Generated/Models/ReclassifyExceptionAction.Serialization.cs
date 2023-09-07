@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class ReclassifyExceptionAction : IUtf8JsonSerializable
+    public partial class ReclassifyExceptionAction : IUtf8JsonSerializable, IModelJsonSerializable<ReclassifyExceptionAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ReclassifyExceptionAction>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ReclassifyExceptionAction>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ReclassifyExceptionAction>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ClassificationPolicyId))
             {
@@ -39,11 +46,25 @@ namespace Azure.Communication.JobRouter
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ReclassifyExceptionAction DeserializeReclassifyExceptionAction(JsonElement element)
+        internal static ReclassifyExceptionAction DeserializeReclassifyExceptionAction(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +72,7 @@ namespace Azure.Communication.JobRouter
             Optional<string> classificationPolicyId = default;
             Optional<IDictionary<string, object>> labelsToUpsert = default;
             string kind = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("classificationPolicyId"u8))
@@ -84,8 +106,61 @@ namespace Azure.Communication.JobRouter
                     kind = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ReclassifyExceptionAction(kind, classificationPolicyId.Value, Optional.ToDictionary(labelsToUpsert));
+            return new ReclassifyExceptionAction(kind, classificationPolicyId.Value, Optional.ToDictionary(labelsToUpsert), serializedAdditionalRawData);
+        }
+
+        ReclassifyExceptionAction IModelJsonSerializable<ReclassifyExceptionAction>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReclassifyExceptionAction>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeReclassifyExceptionAction(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ReclassifyExceptionAction>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReclassifyExceptionAction>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ReclassifyExceptionAction IModelSerializable<ReclassifyExceptionAction>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReclassifyExceptionAction>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeReclassifyExceptionAction(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ReclassifyExceptionAction"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ReclassifyExceptionAction"/> to convert. </param>
+        public static implicit operator RequestContent(ReclassifyExceptionAction model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ReclassifyExceptionAction"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ReclassifyExceptionAction(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeReclassifyExceptionAction(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

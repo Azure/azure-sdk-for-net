@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter
 {
-    internal partial class CloseJobRequest : IUtf8JsonSerializable
+    internal partial class CloseJobRequest : IUtf8JsonSerializable, IModelJsonSerializable<CloseJobRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CloseJobRequest>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CloseJobRequest>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CloseJobRequest>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("assignmentId"u8);
             writer.WriteStringValue(AssignmentId);
@@ -32,7 +40,115 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("note"u8);
                 writer.WriteStringValue(Note);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static CloseJobRequest DeserializeCloseJobRequest(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string assignmentId = default;
+            Optional<string> dispositionCode = default;
+            Optional<DateTimeOffset> closeAt = default;
+            Optional<string> note = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("assignmentId"u8))
+                {
+                    assignmentId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dispositionCode"u8))
+                {
+                    dispositionCode = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("closeAt"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    closeAt = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("note"u8))
+                {
+                    note = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new CloseJobRequest(assignmentId, dispositionCode.Value, Optional.ToNullable(closeAt), note.Value, serializedAdditionalRawData);
+        }
+
+        CloseJobRequest IModelJsonSerializable<CloseJobRequest>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CloseJobRequest>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloseJobRequest(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CloseJobRequest>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CloseJobRequest>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CloseJobRequest IModelSerializable<CloseJobRequest>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CloseJobRequest>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCloseJobRequest(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CloseJobRequest"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CloseJobRequest"/> to convert. </param>
+        public static implicit operator RequestContent(CloseJobRequest model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CloseJobRequest"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CloseJobRequest(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCloseJobRequest(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

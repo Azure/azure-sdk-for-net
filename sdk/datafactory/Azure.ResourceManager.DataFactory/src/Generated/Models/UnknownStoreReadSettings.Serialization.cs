@@ -6,17 +6,20 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class UnknownStoreReadSettings : IUtf8JsonSerializable
+    internal partial class UnknownStoreReadSettings : IUtf8JsonSerializable, IModelJsonSerializable<StoreReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StoreReadSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StoreReadSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StoreReadSettings>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StoreReadSettingsType);
@@ -42,46 +45,29 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownStoreReadSettings DeserializeUnknownStoreReadSettings(JsonElement element)
+        internal static StoreReadSettings DeserializeUnknownStoreReadSettings(JsonElement element, ModelSerializerOptions options = default) => DeserializeStoreReadSettings(element, options);
+
+        StoreReadSettings IModelJsonSerializable<StoreReadSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string type = "Unknown";
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("maxConcurrentConnections"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("disableMetricsCollection"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new UnknownStoreReadSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties);
+            Core.ModelSerializerHelper.ValidateFormat<StoreReadSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownStoreReadSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StoreReadSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StoreReadSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StoreReadSettings IModelSerializable<StoreReadSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StoreReadSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStoreReadSettings(doc.RootElement, options);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DeviceCapacityRequestContent : IUtf8JsonSerializable
+    public partial class DeviceCapacityRequestContent : IUtf8JsonSerializable, IModelJsonSerializable<DeviceCapacityRequestContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DeviceCapacityRequestContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DeviceCapacityRequestContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DeviceCapacityRequestContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -40,12 +48,149 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in VmPlacementResults)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<VmPlacementRequestResult>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static DeviceCapacityRequestContent DeserializeDeviceCapacityRequestContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<IList<string>> vmPlacementQuery = default;
+            Optional<IList<VmPlacementRequestResult>> vmPlacementResults = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("vmPlacementQuery"u8))
+                        {
+                            List<IList<string>> array = new List<IList<string>>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    List<string> array0 = new List<string>();
+                                    foreach (var item0 in item.EnumerateArray())
+                                    {
+                                        array0.Add(item0.GetString());
+                                    }
+                                    array.Add(array0);
+                                }
+                            }
+                            vmPlacementQuery = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("vmPlacementResults"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<VmPlacementRequestResult> array = new List<VmPlacementRequestResult>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(VmPlacementRequestResult.DeserializeVmPlacementRequestResult(item));
+                            }
+                            vmPlacementResults = array;
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new DeviceCapacityRequestContent(vmPlacementQuery, Optional.ToList(vmPlacementResults), serializedAdditionalRawData);
+        }
+
+        DeviceCapacityRequestContent IModelJsonSerializable<DeviceCapacityRequestContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeviceCapacityRequestContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeviceCapacityRequestContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DeviceCapacityRequestContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeviceCapacityRequestContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DeviceCapacityRequestContent IModelSerializable<DeviceCapacityRequestContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeviceCapacityRequestContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDeviceCapacityRequestContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DeviceCapacityRequestContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DeviceCapacityRequestContent"/> to convert. </param>
+        public static implicit operator RequestContent(DeviceCapacityRequestContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DeviceCapacityRequestContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DeviceCapacityRequestContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDeviceCapacityRequestContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

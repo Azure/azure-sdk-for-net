@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary>
@@ -12,22 +16,28 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// Please note <see cref="ConnectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MISqlConnectionInfo"/>, <see cref="MongoDBConnectionInfo"/>, <see cref="MySqlConnectionInfo"/>, <see cref="OracleConnectionInfo"/>, <see cref="PostgreSqlConnectionInfo"/> and <see cref="SqlConnectionInfo"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownConnectionInfo))]
     public abstract partial class ConnectionInfo
     {
-        /// <summary> Initializes a new instance of ConnectionInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionInfo"/>. </summary>
         protected ConnectionInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionInfo"/>. </summary>
         /// <param name="connectionInfoType"> Type of connection info. </param>
         /// <param name="userName"> User name. </param>
         /// <param name="password"> Password credential. </param>
-        internal ConnectionInfo(string connectionInfoType, string userName, string password)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionInfo(string connectionInfoType, string userName, string password, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectionInfoType = connectionInfoType;
             UserName = userName;
             Password = password;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of connection info. </summary>

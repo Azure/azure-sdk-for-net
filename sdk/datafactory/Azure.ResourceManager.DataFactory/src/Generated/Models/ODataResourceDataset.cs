@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The Open Data Protocol (OData) resource dataset. </summary>
     public partial class ODataResourceDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of ODataResourceDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="ODataResourceDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public ODataResourceDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "ODataResource";
         }
 
-        /// <summary> Initializes a new instance of ODataResourceDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="ODataResourceDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Path = path;
             DatasetType = datasetType ?? "ODataResource";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ODataResourceDataset"/> for deserialization. </summary>
+        internal ODataResourceDataset()
+        {
         }
 
         /// <summary> The OData resource path. Type: string (or Expression with resultType string). </summary>

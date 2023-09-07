@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary> The UnknownExceptionTrigger. </summary>
     internal partial class UnknownExceptionTrigger : ExceptionTrigger
     {
-        /// <summary> Initializes a new instance of UnknownExceptionTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownExceptionTrigger"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionTrigger. </param>
-        internal UnknownExceptionTrigger(string kind) : base(kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownExceptionTrigger(string kind, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
         {
             Kind = kind ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownExceptionTrigger"/> for deserialization. </summary>
+        internal UnknownExceptionTrigger()
+        {
         }
     }
 }

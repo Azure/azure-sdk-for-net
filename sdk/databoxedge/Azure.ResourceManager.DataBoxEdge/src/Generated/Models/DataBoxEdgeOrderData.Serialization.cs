@@ -5,30 +5,51 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DataBoxEdge.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    public partial class DataBoxEdgeOrderData : IUtf8JsonSerializable
+    public partial class DataBoxEdgeOrderData : IUtf8JsonSerializable, IModelJsonSerializable<DataBoxEdgeOrderData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataBoxEdgeOrderData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataBoxEdgeOrderData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeOrderData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ContactInformation))
             {
                 writer.WritePropertyName("contactInformation"u8);
-                writer.WriteObjectValue(ContactInformation);
+                if (ContactInformation is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DataBoxEdgeContactDetails>)ContactInformation).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress);
+                if (ShippingAddress is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DataBoxEdgeShippingAddress>)ShippingAddress).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ShipmentType))
             {
@@ -36,11 +57,25 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStringValue(ShipmentType.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataBoxEdgeOrderData DeserializeDataBoxEdgeOrderData(JsonElement element)
+        internal static DataBoxEdgeOrderData DeserializeDataBoxEdgeOrderData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -59,6 +94,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             Optional<IReadOnlyList<DataBoxEdgeTrackingInfo>> deliveryTrackingInfo = default;
             Optional<IReadOnlyList<DataBoxEdgeTrackingInfo>> returnTrackingInfo = default;
             Optional<DataBoxEdgeShipmentType> shipmentType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -190,8 +226,61 @@ namespace Azure.ResourceManager.DataBoxEdge
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataBoxEdgeOrderData(id, name, type, systemData.Value, kind.Value, orderId.Value, contactInformation.Value, shippingAddress.Value, currentStatus.Value, Optional.ToList(orderHistory), serialNumber.Value, Optional.ToList(deliveryTrackingInfo), Optional.ToList(returnTrackingInfo), Optional.ToNullable(shipmentType));
+            return new DataBoxEdgeOrderData(id, name, type, systemData.Value, kind.Value, orderId.Value, contactInformation.Value, shippingAddress.Value, currentStatus.Value, Optional.ToList(orderHistory), serialNumber.Value, Optional.ToList(deliveryTrackingInfo), Optional.ToList(returnTrackingInfo), Optional.ToNullable(shipmentType), serializedAdditionalRawData);
+        }
+
+        DataBoxEdgeOrderData IModelJsonSerializable<DataBoxEdgeOrderData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeOrderData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeOrderData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataBoxEdgeOrderData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeOrderData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataBoxEdgeOrderData IModelSerializable<DataBoxEdgeOrderData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeOrderData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataBoxEdgeOrderData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataBoxEdgeOrderData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataBoxEdgeOrderData"/> to convert. </param>
+        public static implicit operator RequestContent(DataBoxEdgeOrderData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataBoxEdgeOrderData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataBoxEdgeOrderData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataBoxEdgeOrderData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

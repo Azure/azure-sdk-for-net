@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class DedicatedHostGroupPropertiesAdditionalCapabilities : IUtf8JsonSerializable
+    internal partial class DedicatedHostGroupPropertiesAdditionalCapabilities : IUtf8JsonSerializable, IModelJsonSerializable<DedicatedHostGroupPropertiesAdditionalCapabilities>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DedicatedHostGroupPropertiesAdditionalCapabilities>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DedicatedHostGroupPropertiesAdditionalCapabilities>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DedicatedHostGroupPropertiesAdditionalCapabilities>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(UltraSsdEnabled))
             {
                 writer.WritePropertyName("ultraSSDEnabled"u8);
                 writer.WriteBooleanValue(UltraSsdEnabled.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DedicatedHostGroupPropertiesAdditionalCapabilities DeserializeDedicatedHostGroupPropertiesAdditionalCapabilities(JsonElement element)
+        internal static DedicatedHostGroupPropertiesAdditionalCapabilities DeserializeDedicatedHostGroupPropertiesAdditionalCapabilities(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> ultraSsdEnabled = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ultraSSDEnabled"u8))
@@ -41,8 +64,61 @@ namespace Azure.ResourceManager.Compute.Models
                     ultraSsdEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DedicatedHostGroupPropertiesAdditionalCapabilities(Optional.ToNullable(ultraSsdEnabled));
+            return new DedicatedHostGroupPropertiesAdditionalCapabilities(Optional.ToNullable(ultraSsdEnabled), serializedAdditionalRawData);
+        }
+
+        DedicatedHostGroupPropertiesAdditionalCapabilities IModelJsonSerializable<DedicatedHostGroupPropertiesAdditionalCapabilities>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DedicatedHostGroupPropertiesAdditionalCapabilities>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDedicatedHostGroupPropertiesAdditionalCapabilities(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DedicatedHostGroupPropertiesAdditionalCapabilities>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DedicatedHostGroupPropertiesAdditionalCapabilities>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DedicatedHostGroupPropertiesAdditionalCapabilities IModelSerializable<DedicatedHostGroupPropertiesAdditionalCapabilities>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DedicatedHostGroupPropertiesAdditionalCapabilities>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDedicatedHostGroupPropertiesAdditionalCapabilities(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DedicatedHostGroupPropertiesAdditionalCapabilities"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DedicatedHostGroupPropertiesAdditionalCapabilities"/> to convert. </param>
+        public static implicit operator RequestContent(DedicatedHostGroupPropertiesAdditionalCapabilities model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DedicatedHostGroupPropertiesAdditionalCapabilities"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DedicatedHostGroupPropertiesAdditionalCapabilities(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDedicatedHostGroupPropertiesAdditionalCapabilities(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

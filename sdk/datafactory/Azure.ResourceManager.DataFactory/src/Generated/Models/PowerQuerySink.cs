@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Power query sink. </summary>
     public partial class PowerQuerySink : DataFlowSink
     {
-        /// <summary> Initializes a new instance of PowerQuerySink. </summary>
+        /// <summary> Initializes a new instance of <see cref="PowerQuerySink"/>. </summary>
         /// <param name="name"> Transformation name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PowerQuerySink(string name) : base(name)
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(name, nameof(name));
         }
 
-        /// <summary> Initializes a new instance of PowerQuerySink. </summary>
+        /// <summary> Initializes a new instance of <see cref="PowerQuerySink"/>. </summary>
         /// <param name="name"> Transformation name. </param>
         /// <param name="description"> Transformation description. </param>
         /// <param name="dataset"> Dataset reference. </param>
@@ -31,9 +32,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="schemaLinkedService"> Schema linked service reference. </param>
         /// <param name="rejectedDataLinkedService"> Rejected data linked service reference. </param>
         /// <param name="script"> sink script. </param>
-        internal PowerQuerySink(string name, string description, DatasetReference dataset, DataFactoryLinkedServiceReference linkedService, DataFlowReference flowlet, DataFactoryLinkedServiceReference schemaLinkedService, DataFactoryLinkedServiceReference rejectedDataLinkedService, string script) : base(name, description, dataset, linkedService, flowlet, schemaLinkedService, rejectedDataLinkedService)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PowerQuerySink(string name, string description, DatasetReference dataset, DataFactoryLinkedServiceReference linkedService, DataFlowReference flowlet, DataFactoryLinkedServiceReference schemaLinkedService, DataFactoryLinkedServiceReference rejectedDataLinkedService, string script, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(name, description, dataset, linkedService, flowlet, schemaLinkedService, rejectedDataLinkedService, serializedAdditionalRawData)
         {
             Script = script;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PowerQuerySink"/> for deserialization. </summary>
+        internal PowerQuerySink()
+        {
         }
 
         /// <summary> sink script. </summary>

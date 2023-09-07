@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DiskScheduleAvailabilityContent : IUtf8JsonSerializable
+    public partial class DiskScheduleAvailabilityContent : IUtf8JsonSerializable, IModelJsonSerializable<DiskScheduleAvailabilityContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DiskScheduleAvailabilityContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DiskScheduleAvailabilityContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DiskScheduleAvailabilityContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("expectedDataSizeInTeraBytes"u8);
             writer.WriteNumberValue(ExpectedDataSizeInTerabytes);
@@ -26,7 +34,111 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static DiskScheduleAvailabilityContent DeserializeDiskScheduleAvailabilityContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int expectedDataSizeInTerabytes = default;
+            AzureLocation storageLocation = default;
+            DataBoxSkuName skuName = default;
+            Optional<string> country = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("expectedDataSizeInTeraBytes"u8))
+                {
+                    expectedDataSizeInTerabytes = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("storageLocation"u8))
+                {
+                    storageLocation = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("skuName"u8))
+                {
+                    skuName = property.Value.GetString().ToDataBoxSkuName();
+                    continue;
+                }
+                if (property.NameEquals("country"u8))
+                {
+                    country = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new DiskScheduleAvailabilityContent(storageLocation, skuName, country.Value, expectedDataSizeInTerabytes, serializedAdditionalRawData);
+        }
+
+        DiskScheduleAvailabilityContent IModelJsonSerializable<DiskScheduleAvailabilityContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DiskScheduleAvailabilityContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDiskScheduleAvailabilityContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DiskScheduleAvailabilityContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DiskScheduleAvailabilityContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DiskScheduleAvailabilityContent IModelSerializable<DiskScheduleAvailabilityContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DiskScheduleAvailabilityContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDiskScheduleAvailabilityContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DiskScheduleAvailabilityContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DiskScheduleAvailabilityContent"/> to convert. </param>
+        public static implicit operator RequestContent(DiskScheduleAvailabilityContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DiskScheduleAvailabilityContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DiskScheduleAvailabilityContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDiskScheduleAvailabilityContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

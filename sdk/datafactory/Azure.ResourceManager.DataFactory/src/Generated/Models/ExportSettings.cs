@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// </summary>
     public partial class ExportSettings
     {
-        /// <summary> Initializes a new instance of ExportSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportSettings"/>. </summary>
         public ExportSettings()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ExportSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportSettings"/>. </summary>
         /// <param name="exportSettingsType"> The export setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal ExportSettings(string exportSettingsType, IDictionary<string, BinaryData> additionalProperties)

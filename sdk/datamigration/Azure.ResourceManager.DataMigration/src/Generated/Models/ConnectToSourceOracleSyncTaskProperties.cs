@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that validates Oracle database connection. </summary>
     public partial class ConnectToSourceOracleSyncTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of ConnectToSourceOracleSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceOracleSyncTaskProperties"/>. </summary>
         public ConnectToSourceOracleSyncTaskProperties()
         {
             Output = new ChangeTrackingList<ConnectToSourceOracleSyncTaskOutput>();
             TaskType = TaskType.ConnectToSourceOracleSync;
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceOracleSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceOracleSyncTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
@@ -32,7 +33,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
-        internal ConnectToSourceOracleSyncTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, ConnectToSourceOracleSyncTaskInput input, IReadOnlyList<ConnectToSourceOracleSyncTaskOutput> output) : base(taskType, errors, state, commands, clientData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectToSourceOracleSyncTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, ConnectToSourceOracleSyncTaskInput input, IReadOnlyList<ConnectToSourceOracleSyncTaskOutput> output, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(taskType, errors, state, commands, clientData, serializedAdditionalRawData)
         {
             Input = input;
             Output = output;

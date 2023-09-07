@@ -5,17 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxDiskCopyProgress
+    public partial class DataBoxDiskCopyProgress : IUtf8JsonSerializable, IModelJsonSerializable<DataBoxDiskCopyProgress>
     {
-        internal static DataBoxDiskCopyProgress DeserializeDataBoxDiskCopyProgress(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataBoxDiskCopyProgress>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataBoxDiskCopyProgress>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxDiskCopyProgress>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DataBoxDiskCopyProgress DeserializeDataBoxDiskCopyProgress(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +52,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<DataBoxCopyStatus> status = default;
             Optional<ResponseError> error = default;
             Optional<IReadOnlyList<CustomerResolutionCode>> actions = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serialNumber"u8))
@@ -83,8 +110,61 @@ namespace Azure.ResourceManager.DataBox.Models
                     actions = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataBoxDiskCopyProgress(serialNumber.Value, Optional.ToNullable(bytesCopied), Optional.ToNullable(percentComplete), Optional.ToNullable(status), error.Value, Optional.ToList(actions));
+            return new DataBoxDiskCopyProgress(serialNumber.Value, Optional.ToNullable(bytesCopied), Optional.ToNullable(percentComplete), Optional.ToNullable(status), error.Value, Optional.ToList(actions), serializedAdditionalRawData);
+        }
+
+        DataBoxDiskCopyProgress IModelJsonSerializable<DataBoxDiskCopyProgress>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxDiskCopyProgress>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxDiskCopyProgress(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataBoxDiskCopyProgress>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxDiskCopyProgress>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataBoxDiskCopyProgress IModelSerializable<DataBoxDiskCopyProgress>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxDiskCopyProgress>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataBoxDiskCopyProgress(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataBoxDiskCopyProgress"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataBoxDiskCopyProgress"/> to convert. </param>
+        public static implicit operator RequestContent(DataBoxDiskCopyProgress model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataBoxDiskCopyProgress"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataBoxDiskCopyProgress(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataBoxDiskCopyProgress(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

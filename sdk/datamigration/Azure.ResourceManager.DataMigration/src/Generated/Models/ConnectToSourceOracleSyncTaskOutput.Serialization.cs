@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToSourceOracleSyncTaskOutput
+    public partial class ConnectToSourceOracleSyncTaskOutput : IUtf8JsonSerializable, IModelJsonSerializable<ConnectToSourceOracleSyncTaskOutput>
     {
-        internal static ConnectToSourceOracleSyncTaskOutput DeserializeConnectToSourceOracleSyncTaskOutput(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConnectToSourceOracleSyncTaskOutput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConnectToSourceOracleSyncTaskOutput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectToSourceOracleSyncTaskOutput>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ConnectToSourceOracleSyncTaskOutput DeserializeConnectToSourceOracleSyncTaskOutput(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +50,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IReadOnlyList<string>> databases = default;
             Optional<string> sourceServerBrandVersion = default;
             Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceServerVersion"u8))
@@ -63,8 +91,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     validationErrors = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConnectToSourceOracleSyncTaskOutput(sourceServerVersion.Value, Optional.ToList(databases), sourceServerBrandVersion.Value, Optional.ToList(validationErrors));
+            return new ConnectToSourceOracleSyncTaskOutput(sourceServerVersion.Value, Optional.ToList(databases), sourceServerBrandVersion.Value, Optional.ToList(validationErrors), serializedAdditionalRawData);
+        }
+
+        ConnectToSourceOracleSyncTaskOutput IModelJsonSerializable<ConnectToSourceOracleSyncTaskOutput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectToSourceOracleSyncTaskOutput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectToSourceOracleSyncTaskOutput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConnectToSourceOracleSyncTaskOutput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectToSourceOracleSyncTaskOutput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConnectToSourceOracleSyncTaskOutput IModelSerializable<ConnectToSourceOracleSyncTaskOutput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectToSourceOracleSyncTaskOutput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConnectToSourceOracleSyncTaskOutput(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConnectToSourceOracleSyncTaskOutput"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConnectToSourceOracleSyncTaskOutput"/> to convert. </param>
+        public static implicit operator RequestContent(ConnectToSourceOracleSyncTaskOutput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConnectToSourceOracleSyncTaskOutput"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConnectToSourceOracleSyncTaskOutput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConnectToSourceOracleSyncTaskOutput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

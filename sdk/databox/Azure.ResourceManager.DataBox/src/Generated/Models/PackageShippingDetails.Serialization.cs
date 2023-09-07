@@ -6,15 +6,42 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class PackageShippingDetails
+    public partial class PackageShippingDetails : IUtf8JsonSerializable, IModelJsonSerializable<PackageShippingDetails>
     {
-        internal static PackageShippingDetails DeserializePackageShippingDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PackageShippingDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PackageShippingDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PackageShippingDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PackageShippingDetails DeserializePackageShippingDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +49,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<Uri> trackingUrl = default;
             Optional<string> carrierName = default;
             Optional<string> trackingId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trackingUrl"u8))
@@ -43,8 +71,61 @@ namespace Azure.ResourceManager.DataBox.Models
                     trackingId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PackageShippingDetails(trackingUrl.Value, carrierName.Value, trackingId.Value);
+            return new PackageShippingDetails(trackingUrl.Value, carrierName.Value, trackingId.Value, serializedAdditionalRawData);
+        }
+
+        PackageShippingDetails IModelJsonSerializable<PackageShippingDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PackageShippingDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePackageShippingDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PackageShippingDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PackageShippingDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PackageShippingDetails IModelSerializable<PackageShippingDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PackageShippingDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePackageShippingDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PackageShippingDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PackageShippingDetails"/> to convert. </param>
+        public static implicit operator RequestContent(PackageShippingDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PackageShippingDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PackageShippingDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePackageShippingDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

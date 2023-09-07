@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class UnknownLinkedIntegrationRuntimeType : IUtf8JsonSerializable
+    internal partial class UnknownLinkedIntegrationRuntimeType : IUtf8JsonSerializable, IModelJsonSerializable<LinkedIntegrationRuntimeType>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LinkedIntegrationRuntimeType>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LinkedIntegrationRuntimeType>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LinkedIntegrationRuntimeType>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("authorizationType"u8);
             writer.WriteStringValue(AuthorizationType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownLinkedIntegrationRuntimeType DeserializeUnknownLinkedIntegrationRuntimeType(JsonElement element)
+        internal static LinkedIntegrationRuntimeType DeserializeUnknownLinkedIntegrationRuntimeType(JsonElement element, ModelSerializerOptions options = default) => DeserializeLinkedIntegrationRuntimeType(element, options);
+
+        LinkedIntegrationRuntimeType IModelJsonSerializable<LinkedIntegrationRuntimeType>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string authorizationType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("authorizationType"u8))
-                {
-                    authorizationType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownLinkedIntegrationRuntimeType(authorizationType);
+            Core.ModelSerializerHelper.ValidateFormat<LinkedIntegrationRuntimeType>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownLinkedIntegrationRuntimeType(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LinkedIntegrationRuntimeType>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinkedIntegrationRuntimeType>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LinkedIntegrationRuntimeType IModelSerializable<LinkedIntegrationRuntimeType>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinkedIntegrationRuntimeType>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLinkedIntegrationRuntimeType(doc.RootElement, options);
         }
     }
 }

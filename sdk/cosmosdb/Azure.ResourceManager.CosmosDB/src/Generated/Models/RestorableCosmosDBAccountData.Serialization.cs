@@ -8,16 +8,70 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    public partial class RestorableCosmosDBAccountData
+    public partial class RestorableCosmosDBAccountData : IUtf8JsonSerializable, IModelJsonSerializable<RestorableCosmosDBAccountData>
     {
-        internal static RestorableCosmosDBAccountData DeserializeRestorableCosmosDBAccountData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RestorableCosmosDBAccountData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RestorableCosmosDBAccountData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RestorableCosmosDBAccountData>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AccountName))
+            {
+                writer.WritePropertyName("accountName"u8);
+                writer.WriteStringValue(AccountName);
+            }
+            if (Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("creationTime"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (Optional.IsDefined(OldestRestorableOn))
+            {
+                writer.WritePropertyName("oldestRestorableTime"u8);
+                writer.WriteStringValue(OldestRestorableOn.Value, "O");
+            }
+            if (Optional.IsDefined(DeletedOn))
+            {
+                writer.WritePropertyName("deletionTime"u8);
+                writer.WriteStringValue(DeletedOn.Value, "O");
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RestorableCosmosDBAccountData DeserializeRestorableCosmosDBAccountData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +87,7 @@ namespace Azure.ResourceManager.CosmosDB
             Optional<DateTimeOffset> deletionTime = default;
             Optional<CosmosDBApiType> apiType = default;
             Optional<IReadOnlyList<RestorableLocationResourceInfo>> restorableLocations = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -135,8 +190,61 @@ namespace Azure.ResourceManager.CosmosDB
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RestorableCosmosDBAccountData(id, name, type, systemData.Value, Optional.ToNullable(location), accountName.Value, Optional.ToNullable(creationTime), Optional.ToNullable(oldestRestorableTime), Optional.ToNullable(deletionTime), Optional.ToNullable(apiType), Optional.ToList(restorableLocations));
+            return new RestorableCosmosDBAccountData(id, name, type, systemData.Value, Optional.ToNullable(location), accountName.Value, Optional.ToNullable(creationTime), Optional.ToNullable(oldestRestorableTime), Optional.ToNullable(deletionTime), Optional.ToNullable(apiType), Optional.ToList(restorableLocations), serializedAdditionalRawData);
+        }
+
+        RestorableCosmosDBAccountData IModelJsonSerializable<RestorableCosmosDBAccountData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RestorableCosmosDBAccountData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRestorableCosmosDBAccountData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RestorableCosmosDBAccountData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RestorableCosmosDBAccountData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RestorableCosmosDBAccountData IModelSerializable<RestorableCosmosDBAccountData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RestorableCosmosDBAccountData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRestorableCosmosDBAccountData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RestorableCosmosDBAccountData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RestorableCosmosDBAccountData"/> to convert. </param>
+        public static implicit operator RequestContent(RestorableCosmosDBAccountData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RestorableCosmosDBAccountData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RestorableCosmosDBAccountData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRestorableCosmosDBAccountData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

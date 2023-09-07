@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ServicePrincipalCredential : IUtf8JsonSerializable
+    public partial class ServicePrincipalCredential : IUtf8JsonSerializable, IModelJsonSerializable<ServicePrincipalCredential>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServicePrincipalCredential>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServicePrincipalCredential>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ServicePrincipalCredential>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CredentialType);
@@ -82,8 +88,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static ServicePrincipalCredential DeserializeServicePrincipalCredential(JsonElement element)
+        internal static ServicePrincipalCredential DeserializeServicePrincipalCredential(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -172,6 +180,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ServicePrincipalCredential(type, description.Value, Optional.ToList(annotations), additionalProperties, servicePrincipalId.Value, servicePrincipalKey, tenant.Value);
+        }
+
+        ServicePrincipalCredential IModelJsonSerializable<ServicePrincipalCredential>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServicePrincipalCredential>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServicePrincipalCredential(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServicePrincipalCredential>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServicePrincipalCredential>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServicePrincipalCredential IModelSerializable<ServicePrincipalCredential>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServicePrincipalCredential>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServicePrincipalCredential(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ServicePrincipalCredential"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ServicePrincipalCredential"/> to convert. </param>
+        public static implicit operator RequestContent(ServicePrincipalCredential model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ServicePrincipalCredential"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ServicePrincipalCredential(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServicePrincipalCredential(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

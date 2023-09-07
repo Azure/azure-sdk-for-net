@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A copy activity Salesforce Marketing Cloud source. </summary>
     public partial class SalesforceMarketingCloudSource : TabularSource
     {
-        /// <summary> Initializes a new instance of SalesforceMarketingCloudSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SalesforceMarketingCloudSource"/>. </summary>
         public SalesforceMarketingCloudSource()
         {
             CopySourceType = "SalesforceMarketingCloudSource";
         }
 
-        /// <summary> Initializes a new instance of SalesforceMarketingCloudSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SalesforceMarketingCloudSource"/>. </summary>
         /// <param name="copySourceType"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>

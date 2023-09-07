@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RegionalReplicationStatus
+    public partial class RegionalReplicationStatus : IUtf8JsonSerializable, IModelJsonSerializable<RegionalReplicationStatus>
     {
-        internal static RegionalReplicationStatus DeserializeRegionalReplicationStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RegionalReplicationStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RegionalReplicationStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RegionalReplicationStatus>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RegionalReplicationStatus DeserializeRegionalReplicationStatus(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<RegionalReplicationState> state = default;
             Optional<string> details = default;
             Optional<int> progress = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("region"u8))
@@ -52,8 +81,61 @@ namespace Azure.ResourceManager.Compute.Models
                     progress = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RegionalReplicationStatus(region.Value, Optional.ToNullable(state), details.Value, Optional.ToNullable(progress));
+            return new RegionalReplicationStatus(region.Value, Optional.ToNullable(state), details.Value, Optional.ToNullable(progress), serializedAdditionalRawData);
+        }
+
+        RegionalReplicationStatus IModelJsonSerializable<RegionalReplicationStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RegionalReplicationStatus>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRegionalReplicationStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RegionalReplicationStatus>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RegionalReplicationStatus>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RegionalReplicationStatus IModelSerializable<RegionalReplicationStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RegionalReplicationStatus>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRegionalReplicationStatus(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RegionalReplicationStatus"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RegionalReplicationStatus"/> to convert. </param>
+        public static implicit operator RequestContent(RegionalReplicationStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RegionalReplicationStatus"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RegionalReplicationStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRegionalReplicationStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

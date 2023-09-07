@@ -5,19 +5,113 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class RegionForOnlineOffline : IUtf8JsonSerializable
+    public partial class RegionForOnlineOffline : IUtf8JsonSerializable, IModelJsonSerializable<RegionForOnlineOffline>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RegionForOnlineOffline>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RegionForOnlineOffline>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RegionForOnlineOffline>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("region"u8);
             writer.WriteStringValue(Region);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static RegionForOnlineOffline DeserializeRegionForOnlineOffline(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string region = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("region"u8))
+                {
+                    region = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new RegionForOnlineOffline(region, serializedAdditionalRawData);
+        }
+
+        RegionForOnlineOffline IModelJsonSerializable<RegionForOnlineOffline>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RegionForOnlineOffline>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRegionForOnlineOffline(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RegionForOnlineOffline>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RegionForOnlineOffline>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RegionForOnlineOffline IModelSerializable<RegionForOnlineOffline>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RegionForOnlineOffline>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRegionForOnlineOffline(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RegionForOnlineOffline"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RegionForOnlineOffline"/> to convert. </param>
+        public static implicit operator RequestContent(RegionForOnlineOffline model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RegionForOnlineOffline"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RegionForOnlineOffline(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRegionForOnlineOffline(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

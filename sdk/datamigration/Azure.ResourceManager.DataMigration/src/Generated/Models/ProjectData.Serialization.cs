@@ -10,15 +10,20 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DataMigration.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    public partial class ProjectData : IUtf8JsonSerializable
+    public partial class ProjectData : IUtf8JsonSerializable, IModelJsonSerializable<ProjectData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProjectData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ProjectData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ProjectData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
@@ -48,7 +53,14 @@ namespace Azure.ResourceManager.DataMigration
             if (Optional.IsDefined(AzureAuthenticationInfo))
             {
                 writer.WritePropertyName("azureAuthenticationInfo"u8);
-                writer.WriteObjectValue(AzureAuthenticationInfo);
+                if (AzureAuthenticationInfo is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AzureActiveDirectoryApp>)AzureAuthenticationInfo).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(TargetPlatform))
             {
@@ -58,12 +70,26 @@ namespace Azure.ResourceManager.DataMigration
             if (Optional.IsDefined(SourceConnectionInfo))
             {
                 writer.WritePropertyName("sourceConnectionInfo"u8);
-                writer.WriteObjectValue(SourceConnectionInfo);
+                if (SourceConnectionInfo is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ConnectionInfo>)SourceConnectionInfo).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(TargetConnectionInfo))
             {
                 writer.WritePropertyName("targetConnectionInfo"u8);
-                writer.WriteObjectValue(TargetConnectionInfo);
+                if (TargetConnectionInfo is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ConnectionInfo>)TargetConnectionInfo).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(DatabasesInfo))
             {
@@ -71,16 +97,37 @@ namespace Azure.ResourceManager.DataMigration
                 writer.WriteStartArray();
                 foreach (var item in DatabasesInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DatabaseInfo>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ProjectData DeserializeProjectData(JsonElement element)
+        internal static ProjectData DeserializeProjectData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -100,6 +147,7 @@ namespace Azure.ResourceManager.DataMigration
             Optional<ConnectionInfo> targetConnectionInfo = default;
             Optional<IList<DatabaseInfo>> databasesInfo = default;
             Optional<ProjectProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -243,8 +291,61 @@ namespace Azure.ResourceManager.DataMigration
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ProjectData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(sourcePlatform), azureAuthenticationInfo.Value, Optional.ToNullable(targetPlatform), Optional.ToNullable(creationTime), sourceConnectionInfo.Value, targetConnectionInfo.Value, Optional.ToList(databasesInfo), Optional.ToNullable(provisioningState));
+            return new ProjectData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(sourcePlatform), azureAuthenticationInfo.Value, Optional.ToNullable(targetPlatform), Optional.ToNullable(creationTime), sourceConnectionInfo.Value, targetConnectionInfo.Value, Optional.ToList(databasesInfo), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+        }
+
+        ProjectData IModelJsonSerializable<ProjectData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProjectData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeProjectData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ProjectData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProjectData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ProjectData IModelSerializable<ProjectData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProjectData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeProjectData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ProjectData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ProjectData"/> to convert. </param>
+        public static implicit operator RequestContent(ProjectData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ProjectData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ProjectData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeProjectData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDBForPostgreSql.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     /// </summary>
     public partial class ServerConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServerConfigurationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServerConfigurationData"/>. </summary>
         public ServerConfigurationData()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +40,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="allowedValues"> Allowed values of the configuration. </param>
         /// <param name="isRestartRequired"> If configuration change requires restart. </param>
         /// <param name="provisioningState"> Provisioning state of the configuration. </param>
-        internal ServerConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, string source, string description, string defaultValue, CosmosDBForPostgreSqlConfigurationDataType? dataType, string allowedValues, bool? isRestartRequired, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, string source, string description, string defaultValue, CosmosDBForPostgreSqlConfigurationDataType? dataType, string allowedValues, bool? isRestartRequired, ProvisioningState? provisioningState, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Value = value;
             Source = source;
@@ -45,6 +51,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             AllowedValues = allowedValues;
             IsRestartRequired = isRestartRequired;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Value of the configuration. </summary>

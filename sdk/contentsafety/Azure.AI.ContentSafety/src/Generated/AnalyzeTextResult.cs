@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,9 @@ namespace Azure.AI.ContentSafety
     /// <summary> The analysis response of the text. </summary>
     public partial class AnalyzeTextResult
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of AnalyzeTextResult. </summary>
         internal AnalyzeTextResult()
         {
@@ -25,13 +29,15 @@ namespace Azure.AI.ContentSafety
         /// <param name="selfHarmResult"> Analysis result for SelfHarm category. </param>
         /// <param name="sexualResult"> Analysis result for Sexual category. </param>
         /// <param name="violenceResult"> Analysis result for Violence category. </param>
-        internal AnalyzeTextResult(IReadOnlyList<TextBlocklistMatchResult> blocklistsMatchResults, TextAnalyzeSeverityResult hateResult, TextAnalyzeSeverityResult selfHarmResult, TextAnalyzeSeverityResult sexualResult, TextAnalyzeSeverityResult violenceResult)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalyzeTextResult(IReadOnlyList<TextBlocklistMatchResult> blocklistsMatchResults, TextAnalyzeSeverityResult hateResult, TextAnalyzeSeverityResult selfHarmResult, TextAnalyzeSeverityResult sexualResult, TextAnalyzeSeverityResult violenceResult, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BlocklistsMatchResults = blocklistsMatchResults;
             HateResult = hateResult;
             SelfHarmResult = selfHarmResult;
             SexualResult = sexualResult;
             ViolenceResult = violenceResult;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The details of blocklist match. </summary>

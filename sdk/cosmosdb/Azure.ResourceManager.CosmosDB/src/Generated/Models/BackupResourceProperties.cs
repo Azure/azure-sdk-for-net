@@ -6,22 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The BackupResourceProperties. </summary>
     internal partial class BackupResourceProperties
     {
-        /// <summary> Initializes a new instance of BackupResourceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupResourceProperties"/>. </summary>
         public BackupResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupResourceProperties"/>. </summary>
         /// <param name="timestamp"> The time this backup was taken, formatted like 2021-01-21T17:35:21. </param>
-        internal BackupResourceProperties(DateTimeOffset? timestamp)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupResourceProperties(DateTimeOffset? timestamp, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Timestamp = timestamp;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The time this backup was taken, formatted like 2021-01-21T17:35:21. </summary>

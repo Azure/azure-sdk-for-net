@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class IntegrationRuntimeSsisCatalogInfo : IUtf8JsonSerializable
+    public partial class IntegrationRuntimeSsisCatalogInfo : IUtf8JsonSerializable, IModelJsonSerializable<IntegrationRuntimeSsisCatalogInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IntegrationRuntimeSsisCatalogInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IntegrationRuntimeSsisCatalogInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationRuntimeSsisCatalogInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CatalogServerEndpoint))
             {
@@ -55,8 +61,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static IntegrationRuntimeSsisCatalogInfo DeserializeIntegrationRuntimeSsisCatalogInfo(JsonElement element)
+        internal static IntegrationRuntimeSsisCatalogInfo DeserializeIntegrationRuntimeSsisCatalogInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -107,6 +115,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new IntegrationRuntimeSsisCatalogInfo(catalogServerEndpoint.Value, catalogAdminUserName.Value, catalogAdminPassword, Optional.ToNullable(catalogPricingTier), dualStandbyPairName.Value, additionalProperties);
+        }
+
+        IntegrationRuntimeSsisCatalogInfo IModelJsonSerializable<IntegrationRuntimeSsisCatalogInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationRuntimeSsisCatalogInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationRuntimeSsisCatalogInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IntegrationRuntimeSsisCatalogInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationRuntimeSsisCatalogInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IntegrationRuntimeSsisCatalogInfo IModelSerializable<IntegrationRuntimeSsisCatalogInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IntegrationRuntimeSsisCatalogInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIntegrationRuntimeSsisCatalogInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IntegrationRuntimeSsisCatalogInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IntegrationRuntimeSsisCatalogInfo"/> to convert. </param>
+        public static implicit operator RequestContent(IntegrationRuntimeSsisCatalogInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IntegrationRuntimeSsisCatalogInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IntegrationRuntimeSsisCatalogInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIntegrationRuntimeSsisCatalogInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

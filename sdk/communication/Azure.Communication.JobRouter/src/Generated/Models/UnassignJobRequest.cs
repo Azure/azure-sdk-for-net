@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Request payload for unassigning a job. </summary>
     internal partial class UnassignJobRequest
     {
-        /// <summary> Initializes a new instance of UnassignJobRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UnassignJobRequest"/>. </summary>
         public UnassignJobRequest()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnassignJobRequest"/>. </summary>
+        /// <param name="suspendMatching"> If WaitForActivation is true, then the job is not queued for re-matching with a worker. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnassignJobRequest(bool? suspendMatching, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SuspendMatching = suspendMatching;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> If WaitForActivation is true, then the job is not queued for re-matching with a worker. </summary>

@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataMapperMapping : IUtf8JsonSerializable
+    public partial class DataMapperMapping : IUtf8JsonSerializable, IModelJsonSerializable<DataMapperMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataMapperMapping>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataMapperMapping>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataMapperMapping>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TargetEntityName))
             {
@@ -29,12 +36,26 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SourceConnectionReference))
             {
                 writer.WritePropertyName("sourceConnectionReference"u8);
-                writer.WriteObjectValue(SourceConnectionReference);
+                if (SourceConnectionReference is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MapperConnectionReference>)SourceConnectionReference).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(AttributeMappingInfo))
             {
                 writer.WritePropertyName("attributeMappingInfo"u8);
-                writer.WriteObjectValue(AttributeMappingInfo);
+                if (AttributeMappingInfo is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MapperAttributeMappings>)AttributeMappingInfo).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(SourceDenormalizeInfo))
             {
@@ -45,11 +66,25 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceDenormalizeInfo.ToString()).RootElement);
 #endif
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataMapperMapping DeserializeDataMapperMapping(JsonElement element)
+        internal static DataMapperMapping DeserializeDataMapperMapping(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -59,6 +94,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<MapperConnectionReference> sourceConnectionReference = default;
             Optional<MapperAttributeMappings> attributeMappingInfo = default;
             Optional<BinaryData> sourceDenormalizeInfo = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetEntityName"u8))
@@ -98,8 +134,61 @@ namespace Azure.ResourceManager.DataFactory.Models
                     sourceDenormalizeInfo = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataMapperMapping(targetEntityName.Value, sourceEntityName.Value, sourceConnectionReference.Value, attributeMappingInfo.Value, sourceDenormalizeInfo.Value);
+            return new DataMapperMapping(targetEntityName.Value, sourceEntityName.Value, sourceConnectionReference.Value, attributeMappingInfo.Value, sourceDenormalizeInfo.Value, serializedAdditionalRawData);
+        }
+
+        DataMapperMapping IModelJsonSerializable<DataMapperMapping>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataMapperMapping>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataMapperMapping(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataMapperMapping>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataMapperMapping>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataMapperMapping IModelSerializable<DataMapperMapping>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataMapperMapping>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataMapperMapping(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataMapperMapping"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataMapperMapping"/> to convert. </param>
+        public static implicit operator RequestContent(DataMapperMapping model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataMapperMapping"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataMapperMapping(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataMapperMapping(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

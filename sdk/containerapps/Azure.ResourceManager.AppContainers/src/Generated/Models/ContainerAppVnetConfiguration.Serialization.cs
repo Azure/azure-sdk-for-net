@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppVnetConfiguration : IUtf8JsonSerializable
+    public partial class ContainerAppVnetConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<ContainerAppVnetConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerAppVnetConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerAppVnetConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppVnetConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsInternal))
             {
@@ -40,11 +48,25 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("platformReservedDnsIP"u8);
                 writer.WriteStringValue(PlatformReservedDnsIP);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppVnetConfiguration DeserializeContainerAppVnetConfiguration(JsonElement element)
+        internal static ContainerAppVnetConfiguration DeserializeContainerAppVnetConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +76,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> dockerBridgeCidr = default;
             Optional<string> platformReservedCidr = default;
             Optional<string> platformReservedDnsIP = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("internal"u8))
@@ -89,8 +112,61 @@ namespace Azure.ResourceManager.AppContainers.Models
                     platformReservedDnsIP = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerAppVnetConfiguration(Optional.ToNullable(@internal), infrastructureSubnetId.Value, dockerBridgeCidr.Value, platformReservedCidr.Value, platformReservedDnsIP.Value);
+            return new ContainerAppVnetConfiguration(Optional.ToNullable(@internal), infrastructureSubnetId.Value, dockerBridgeCidr.Value, platformReservedCidr.Value, platformReservedDnsIP.Value, serializedAdditionalRawData);
+        }
+
+        ContainerAppVnetConfiguration IModelJsonSerializable<ContainerAppVnetConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppVnetConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppVnetConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerAppVnetConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppVnetConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerAppVnetConfiguration IModelSerializable<ContainerAppVnetConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppVnetConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerAppVnetConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerAppVnetConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerAppVnetConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerAppVnetConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerAppVnetConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerAppVnetConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerAppVnetConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

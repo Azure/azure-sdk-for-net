@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Azure Data Lake Storage Gen2 linked service. </summary>
     public partial class AzureBlobFSLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of AzureBlobFSLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobFSLinkedService"/>. </summary>
         public AzureBlobFSLinkedService()
         {
             LinkedServiceType = "AzureBlobFS";
         }
 
-        /// <summary> Initializes a new instance of AzureBlobFSLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobFSLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

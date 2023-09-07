@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ContainerRegistry.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    public partial class ContainerRegistryRunData : IUtf8JsonSerializable
+    public partial class ContainerRegistryRunData : IUtf8JsonSerializable, IModelJsonSerializable<ContainerRegistryRunData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerRegistryRunData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerRegistryRunData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryRunData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -67,7 +73,14 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WriteStartArray();
                 foreach (var item in OutputImages)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ContainerRegistryImageDescriptor>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -79,27 +92,62 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(ImageUpdateTrigger))
             {
                 writer.WritePropertyName("imageUpdateTrigger"u8);
-                writer.WriteObjectValue(ImageUpdateTrigger);
+                if (ImageUpdateTrigger is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerRegistryImageUpdateTrigger>)ImageUpdateTrigger).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(SourceTrigger))
             {
                 writer.WritePropertyName("sourceTrigger"u8);
-                writer.WriteObjectValue(SourceTrigger);
+                if (SourceTrigger is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerRegistrySourceTriggerDescriptor>)SourceTrigger).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(TimerTrigger))
             {
                 writer.WritePropertyName("timerTrigger"u8);
-                writer.WriteObjectValue(TimerTrigger);
+                if (TimerTrigger is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerRegistryTimerTriggerDescriptor>)TimerTrigger).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
-                writer.WriteObjectValue(Platform);
+                if (Platform is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerRegistryPlatformProperties>)Platform).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
-                writer.WriteObjectValue(AgentConfiguration);
+                if (AgentConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerRegistryAgentProperties>)AgentConfiguration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(SourceRegistryAuth))
             {
@@ -132,11 +180,25 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WriteBooleanValue(IsArchiveEnabled.Value);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerRegistryRunData DeserializeContainerRegistryRunData(JsonElement element)
+        internal static ContainerRegistryRunData DeserializeContainerRegistryRunData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -167,6 +229,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             Optional<ContainerRegistryImageDescriptor> logArtifact = default;
             Optional<ContainerRegistryProvisioningState> provisioningState = default;
             Optional<bool> isArchiveEnabled = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -389,8 +452,61 @@ namespace Azure.ResourceManager.ContainerRegistry
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerRegistryRunData(id, name, type, systemData.Value, runId.Value, Optional.ToNullable(status), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(runType), agentPoolName.Value, Optional.ToNullable(createTime), Optional.ToNullable(startTime), Optional.ToNullable(finishTime), Optional.ToList(outputImages), task.Value, imageUpdateTrigger.Value, sourceTrigger.Value, timerTrigger.Value, platform.Value, agentConfiguration.Value, sourceRegistryAuth.Value, Optional.ToList(customRegistries), runErrorMessage.Value, updateTriggerToken.Value, logArtifact.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(isArchiveEnabled));
+            return new ContainerRegistryRunData(id, name, type, systemData.Value, runId.Value, Optional.ToNullable(status), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(runType), agentPoolName.Value, Optional.ToNullable(createTime), Optional.ToNullable(startTime), Optional.ToNullable(finishTime), Optional.ToList(outputImages), task.Value, imageUpdateTrigger.Value, sourceTrigger.Value, timerTrigger.Value, platform.Value, agentConfiguration.Value, sourceRegistryAuth.Value, Optional.ToList(customRegistries), runErrorMessage.Value, updateTriggerToken.Value, logArtifact.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(isArchiveEnabled), serializedAdditionalRawData);
+        }
+
+        ContainerRegistryRunData IModelJsonSerializable<ContainerRegistryRunData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryRunData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryRunData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerRegistryRunData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryRunData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerRegistryRunData IModelSerializable<ContainerRegistryRunData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryRunData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerRegistryRunData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerRegistryRunData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerRegistryRunData"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerRegistryRunData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerRegistryRunData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerRegistryRunData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerRegistryRunData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

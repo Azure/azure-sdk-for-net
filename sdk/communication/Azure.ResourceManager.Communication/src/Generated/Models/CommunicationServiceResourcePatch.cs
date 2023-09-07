@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,19 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> A class representing update parameters for CommunicationService resource. </summary>
     public partial class CommunicationServiceResourcePatch : CommunicationAcceptTags
     {
-        /// <summary> Initializes a new instance of CommunicationServiceResourcePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationServiceResourcePatch"/>. </summary>
         public CommunicationServiceResourcePatch()
         {
             LinkedDomains = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationServiceResourcePatch"/>. </summary>
+        /// <param name="tags"> Tags of the service which is a list of key value pairs that describe the resource. </param>
+        /// <param name="linkedDomains"> List of email Domain resource Ids. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationServiceResourcePatch(IDictionary<string, string> tags, IList<string> linkedDomains, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(tags, serializedAdditionalRawData)
+        {
+            LinkedDomains = linkedDomains;
         }
 
         /// <summary> List of email Domain resource Ids. </summary>

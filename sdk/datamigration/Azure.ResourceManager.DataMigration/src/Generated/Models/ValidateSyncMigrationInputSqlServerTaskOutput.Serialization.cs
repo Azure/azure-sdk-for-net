@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ValidateSyncMigrationInputSqlServerTaskOutput
+    public partial class ValidateSyncMigrationInputSqlServerTaskOutput : IUtf8JsonSerializable, IModelJsonSerializable<ValidateSyncMigrationInputSqlServerTaskOutput>
     {
-        internal static ValidateSyncMigrationInputSqlServerTaskOutput DeserializeValidateSyncMigrationInputSqlServerTaskOutput(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ValidateSyncMigrationInputSqlServerTaskOutput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ValidateSyncMigrationInputSqlServerTaskOutput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ValidateSyncMigrationInputSqlServerTaskOutput>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ValidateSyncMigrationInputSqlServerTaskOutput DeserializeValidateSyncMigrationInputSqlServerTaskOutput(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -48,8 +76,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     validationErrors = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ValidateSyncMigrationInputSqlServerTaskOutput(id.Value, name.Value, Optional.ToList(validationErrors));
+            return new ValidateSyncMigrationInputSqlServerTaskOutput(id.Value, name.Value, Optional.ToList(validationErrors), serializedAdditionalRawData);
+        }
+
+        ValidateSyncMigrationInputSqlServerTaskOutput IModelJsonSerializable<ValidateSyncMigrationInputSqlServerTaskOutput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ValidateSyncMigrationInputSqlServerTaskOutput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeValidateSyncMigrationInputSqlServerTaskOutput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ValidateSyncMigrationInputSqlServerTaskOutput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ValidateSyncMigrationInputSqlServerTaskOutput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ValidateSyncMigrationInputSqlServerTaskOutput IModelSerializable<ValidateSyncMigrationInputSqlServerTaskOutput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ValidateSyncMigrationInputSqlServerTaskOutput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeValidateSyncMigrationInputSqlServerTaskOutput(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ValidateSyncMigrationInputSqlServerTaskOutput"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ValidateSyncMigrationInputSqlServerTaskOutput"/> to convert. </param>
+        public static implicit operator RequestContent(ValidateSyncMigrationInputSqlServerTaskOutput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ValidateSyncMigrationInputSqlServerTaskOutput"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ValidateSyncMigrationInputSqlServerTaskOutput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeValidateSyncMigrationInputSqlServerTaskOutput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

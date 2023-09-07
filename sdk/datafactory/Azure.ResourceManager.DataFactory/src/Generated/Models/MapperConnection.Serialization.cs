@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class MapperConnection : IUtf8JsonSerializable
+    public partial class MapperConnection : IUtf8JsonSerializable, IModelJsonSerializable<MapperConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MapperConnection>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MapperConnection>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MapperConnection>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedService))
             {
@@ -40,15 +47,36 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in CommonDslConnectorProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MapperDslConnectorProperties>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static MapperConnection DeserializeMapperConnection(JsonElement element)
+        internal static MapperConnection DeserializeMapperConnection(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             MapperConnectionType type = default;
             Optional<bool> isInlineDataset = default;
             Optional<IList<MapperDslConnectorProperties>> commonDslConnectorProperties = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedService"u8))
@@ -102,8 +131,61 @@ namespace Azure.ResourceManager.DataFactory.Models
                     commonDslConnectorProperties = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MapperConnection(linkedService, linkedServiceType.Value, type, Optional.ToNullable(isInlineDataset), Optional.ToList(commonDslConnectorProperties));
+            return new MapperConnection(linkedService, linkedServiceType.Value, type, Optional.ToNullable(isInlineDataset), Optional.ToList(commonDslConnectorProperties), serializedAdditionalRawData);
+        }
+
+        MapperConnection IModelJsonSerializable<MapperConnection>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MapperConnection>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMapperConnection(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MapperConnection>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MapperConnection>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MapperConnection IModelSerializable<MapperConnection>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MapperConnection>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMapperConnection(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MapperConnection"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MapperConnection"/> to convert. </param>
+        public static implicit operator RequestContent(MapperConnection model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MapperConnection"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MapperConnection(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMapperConnection(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

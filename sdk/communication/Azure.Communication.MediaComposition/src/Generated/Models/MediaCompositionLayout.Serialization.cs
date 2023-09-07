@@ -5,23 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Communication.MediaComposition;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.MediaComposition.Models
 {
-    public partial class MediaCompositionLayout : IUtf8JsonSerializable
+    public partial class MediaCompositionLayout : IUtf8JsonSerializable, IModelJsonSerializable<MediaCompositionLayout>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MediaCompositionLayout>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MediaCompositionLayout>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MediaCompositionLayout>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
-                writer.WriteObjectValue(Resolution);
+                if (Resolution is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LayoutResolution>)Resolution).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(PlaceholderImageUri))
             {
@@ -33,11 +48,25 @@ namespace Azure.Communication.MediaComposition.Models
                 writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MediaCompositionLayout DeserializeMediaCompositionLayout(JsonElement element)
+        internal static MediaCompositionLayout DeserializeMediaCompositionLayout(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,7 +82,98 @@ namespace Azure.Communication.MediaComposition.Models
                     case "presenter": return PresenterLayout.DeserializePresenterLayout(element);
                 }
             }
-            return UnknownLayout.DeserializeUnknownLayout(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            LayoutType kind = default;
+            Optional<LayoutResolution> resolution = default;
+            Optional<string> placeholderImageUri = default;
+            Optional<ScalingMode> scalingMode = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new LayoutType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("resolution"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resolution = LayoutResolution.DeserializeLayoutResolution(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("placeholderImageUri"u8))
+                {
+                    placeholderImageUri = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("scalingMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scalingMode = new ScalingMode(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToNullable(scalingMode), serializedAdditionalRawData);
+        }
+
+        MediaCompositionLayout IModelJsonSerializable<MediaCompositionLayout>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaCompositionLayout>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaCompositionLayout(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MediaCompositionLayout>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaCompositionLayout>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MediaCompositionLayout IModelSerializable<MediaCompositionLayout>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaCompositionLayout>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMediaCompositionLayout(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MediaCompositionLayout"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MediaCompositionLayout"/> to convert. </param>
+        public static implicit operator RequestContent(MediaCompositionLayout model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MediaCompositionLayout"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MediaCompositionLayout(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMediaCompositionLayout(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

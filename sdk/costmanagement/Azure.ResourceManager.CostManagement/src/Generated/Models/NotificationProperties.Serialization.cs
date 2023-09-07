@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class NotificationProperties : IUtf8JsonSerializable
+    public partial class NotificationProperties : IUtf8JsonSerializable, IModelJsonSerializable<NotificationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NotificationProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NotificationProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NotificationProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("to"u8);
             writer.WriteStartArray();
@@ -40,11 +47,25 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             writer.WritePropertyName("subject"u8);
             writer.WriteStringValue(Subject);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NotificationProperties DeserializeNotificationProperties(JsonElement element)
+        internal static NotificationProperties DeserializeNotificationProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +75,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             Optional<string> message = default;
             Optional<string> regionalFormat = default;
             string subject = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("to"u8))
@@ -86,8 +108,61 @@ namespace Azure.ResourceManager.CostManagement.Models
                     subject = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NotificationProperties(to, language.Value, message.Value, regionalFormat.Value, subject);
+            return new NotificationProperties(to, language.Value, message.Value, regionalFormat.Value, subject, serializedAdditionalRawData);
+        }
+
+        NotificationProperties IModelJsonSerializable<NotificationProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NotificationProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNotificationProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NotificationProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NotificationProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NotificationProperties IModelSerializable<NotificationProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NotificationProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNotificationProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NotificationProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NotificationProperties"/> to convert. </param>
+        public static implicit operator RequestContent(NotificationProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NotificationProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NotificationProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNotificationProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

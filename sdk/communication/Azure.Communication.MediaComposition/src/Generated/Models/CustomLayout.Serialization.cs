@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class CustomLayout : IUtf8JsonSerializable
+    public partial class CustomLayout : IUtf8JsonSerializable, IModelJsonSerializable<CustomLayout>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CustomLayout>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CustomLayout>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CustomLayout>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Layers))
             {
@@ -24,7 +31,14 @@ namespace Azure.Communication.MediaComposition
                 foreach (var item in Layers)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<LayoutLayer>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -33,7 +47,14 @@ namespace Azure.Communication.MediaComposition
             foreach (var item in InputGroups)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                if (item.Value is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<InputGroup>)item.Value).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
             writer.WritePropertyName("kind"u8);
@@ -41,7 +62,14 @@ namespace Azure.Communication.MediaComposition
             if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
-                writer.WriteObjectValue(Resolution);
+                if (Resolution is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LayoutResolution>)Resolution).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(PlaceholderImageUri))
             {
@@ -53,11 +81,25 @@ namespace Azure.Communication.MediaComposition
                 writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CustomLayout DeserializeCustomLayout(JsonElement element)
+        internal static CustomLayout DeserializeCustomLayout(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -68,6 +110,7 @@ namespace Azure.Communication.MediaComposition
             Optional<LayoutResolution> resolution = default;
             Optional<string> placeholderImageUri = default;
             Optional<ScalingMode> scalingMode = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("layers"u8))
@@ -122,8 +165,61 @@ namespace Azure.Communication.MediaComposition
                     scalingMode = new ScalingMode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CustomLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToNullable(scalingMode), Optional.ToDictionary(layers), inputGroups);
+            return new CustomLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToNullable(scalingMode), Optional.ToDictionary(layers), inputGroups, serializedAdditionalRawData);
+        }
+
+        CustomLayout IModelJsonSerializable<CustomLayout>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomLayout>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomLayout(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CustomLayout>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomLayout>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CustomLayout IModelSerializable<CustomLayout>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomLayout>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCustomLayout(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CustomLayout"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CustomLayout"/> to convert. </param>
+        public static implicit operator RequestContent(CustomLayout model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CustomLayout"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CustomLayout(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCustomLayout(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

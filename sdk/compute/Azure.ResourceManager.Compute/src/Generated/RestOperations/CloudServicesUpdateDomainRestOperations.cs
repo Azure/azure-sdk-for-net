@@ -58,9 +58,7 @@ namespace Azure.ResourceManager.Compute
             if (updateDomainIdentifier != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(updateDomainIdentifier);
-                request.Content = content;
+                request.Content = updateDomainIdentifier;
             }
             _userAgent.Apply(message);
             return message;

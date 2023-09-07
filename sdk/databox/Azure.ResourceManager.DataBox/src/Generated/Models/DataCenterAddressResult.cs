@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -15,23 +17,29 @@ namespace Azure.ResourceManager.DataBox.Models
     /// Please note <see cref="DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DataCenterAddressInstructionResult"/> and <see cref="DataCenterAddressLocationResult"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownDataCenterAddressResponse))]
     public abstract partial class DataCenterAddressResult
     {
-        /// <summary> Initializes a new instance of DataCenterAddressResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataCenterAddressResult"/>. </summary>
         protected DataCenterAddressResult()
         {
             SupportedCarriersForReturnShipment = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DataCenterAddressResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCenterAddressResult"/>. </summary>
         /// <param name="dataCenterAddressType"> Data center address type. </param>
         /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
         /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>
-        internal DataCenterAddressResult(DataCenterAddressType dataCenterAddressType, IReadOnlyList<string> supportedCarriersForReturnShipment, AzureLocation? dataCenterAzureLocation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataCenterAddressResult(DataCenterAddressType dataCenterAddressType, IReadOnlyList<string> supportedCarriersForReturnShipment, AzureLocation? dataCenterAzureLocation, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataCenterAddressType = dataCenterAddressType;
             SupportedCarriersForReturnShipment = supportedCarriersForReturnShipment;
             DataCenterAzureLocation = dataCenterAzureLocation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Data center address type. </summary>

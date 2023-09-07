@@ -5,32 +5,130 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.ContentSafety
 {
-    public partial class AddBlockItemsOptions : IUtf8JsonSerializable
+    public partial class AddBlockItemsOptions : IUtf8JsonSerializable, IModelJsonSerializable<AddBlockItemsOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AddBlockItemsOptions>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AddBlockItemsOptions>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("blockItems"u8);
             writer.WriteStartArray();
             foreach (var item in BlockItems)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TextBlockItemInfo>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal static AddBlockItemsOptions DeserializeAddBlockItemsOptions(JsonElement element, ModelSerializerOptions options = default)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<TextBlockItemInfo> blockItems = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("blockItems"u8))
+                {
+                    List<TextBlockItemInfo> array = new List<TextBlockItemInfo>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TextBlockItemInfo.DeserializeTextBlockItemInfo(item));
+                    }
+                    blockItems = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new AddBlockItemsOptions(blockItems, serializedAdditionalRawData);
+        }
+
+        AddBlockItemsOptions IModelJsonSerializable<AddBlockItemsOptions>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAddBlockItemsOptions(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AddBlockItemsOptions>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AddBlockItemsOptions IModelSerializable<AddBlockItemsOptions>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAddBlockItemsOptions(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AddBlockItemsOptions"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AddBlockItemsOptions"/> to convert. </param>
+        public static implicit operator RequestContent(AddBlockItemsOptions model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AddBlockItemsOptions"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AddBlockItemsOptions(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAddBlockItemsOptions(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

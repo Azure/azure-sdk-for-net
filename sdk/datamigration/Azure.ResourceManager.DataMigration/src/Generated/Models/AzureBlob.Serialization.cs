@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class AzureBlob : IUtf8JsonSerializable
+    public partial class AzureBlob : IUtf8JsonSerializable, IModelJsonSerializable<AzureBlob>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzureBlob>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzureBlob>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AzureBlob>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccountResourceId))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("blobContainerName"u8);
                 writer.WriteStringValue(BlobContainerName);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureBlob DeserializeAzureBlob(JsonElement element)
+        internal static AzureBlob DeserializeAzureBlob(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> storageAccountResourceId = default;
             Optional<string> accountKey = default;
             Optional<string> blobContainerName = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountResourceId"u8))
@@ -59,8 +82,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     blobContainerName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AzureBlob(storageAccountResourceId.Value, accountKey.Value, blobContainerName.Value);
+            return new AzureBlob(storageAccountResourceId.Value, accountKey.Value, blobContainerName.Value, serializedAdditionalRawData);
+        }
+
+        AzureBlob IModelJsonSerializable<AzureBlob>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureBlob>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureBlob(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureBlob>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureBlob>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureBlob IModelSerializable<AzureBlob>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureBlob>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureBlob(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AzureBlob"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AzureBlob"/> to convert. </param>
+        public static implicit operator RequestContent(AzureBlob model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AzureBlob"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AzureBlob(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureBlob(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

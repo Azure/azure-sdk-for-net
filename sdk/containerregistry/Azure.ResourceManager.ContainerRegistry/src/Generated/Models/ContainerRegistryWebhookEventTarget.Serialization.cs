@@ -6,15 +6,87 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryWebhookEventTarget
+    public partial class ContainerRegistryWebhookEventTarget : IUtf8JsonSerializable, IModelJsonSerializable<ContainerRegistryWebhookEventTarget>
     {
-        internal static ContainerRegistryWebhookEventTarget DeserializeContainerRegistryWebhookEventTarget(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerRegistryWebhookEventTarget>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerRegistryWebhookEventTarget>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryWebhookEventTarget>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(MediaType))
+            {
+                writer.WritePropertyName("mediaType"u8);
+                writer.WriteStringValue(MediaType);
+            }
+            if (Optional.IsDefined(Size))
+            {
+                writer.WritePropertyName("size"u8);
+                writer.WriteNumberValue(Size.Value);
+            }
+            if (Optional.IsDefined(Digest))
+            {
+                writer.WritePropertyName("digest"u8);
+                writer.WriteStringValue(Digest);
+            }
+            if (Optional.IsDefined(Length))
+            {
+                writer.WritePropertyName("length"u8);
+                writer.WriteNumberValue(Length.Value);
+            }
+            if (Optional.IsDefined(Repository))
+            {
+                writer.WritePropertyName("repository"u8);
+                writer.WriteStringValue(Repository);
+            }
+            if (Optional.IsDefined(Uri))
+            {
+                writer.WritePropertyName("url"u8);
+                writer.WriteStringValue(Uri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(Tag))
+            {
+                writer.WritePropertyName("tag"u8);
+                writer.WriteStringValue(Tag);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ContainerRegistryWebhookEventTarget DeserializeContainerRegistryWebhookEventTarget(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +100,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<string> tag = default;
             Optional<string> name = default;
             Optional<string> version = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mediaType"u8))
@@ -87,8 +160,61 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     version = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerRegistryWebhookEventTarget(mediaType.Value, Optional.ToNullable(size), digest.Value, Optional.ToNullable(length), repository.Value, url.Value, tag.Value, name.Value, version.Value);
+            return new ContainerRegistryWebhookEventTarget(mediaType.Value, Optional.ToNullable(size), digest.Value, Optional.ToNullable(length), repository.Value, url.Value, tag.Value, name.Value, version.Value, serializedAdditionalRawData);
+        }
+
+        ContainerRegistryWebhookEventTarget IModelJsonSerializable<ContainerRegistryWebhookEventTarget>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryWebhookEventTarget>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryWebhookEventTarget(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerRegistryWebhookEventTarget>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryWebhookEventTarget>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerRegistryWebhookEventTarget IModelSerializable<ContainerRegistryWebhookEventTarget>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryWebhookEventTarget>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerRegistryWebhookEventTarget(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerRegistryWebhookEventTarget"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerRegistryWebhookEventTarget"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerRegistryWebhookEventTarget model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerRegistryWebhookEventTarget"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerRegistryWebhookEventTarget(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerRegistryWebhookEventTarget(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

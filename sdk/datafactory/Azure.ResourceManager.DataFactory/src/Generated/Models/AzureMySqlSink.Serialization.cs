@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureMySqlSink : IUtf8JsonSerializable
+    public partial class AzureMySqlSink : IUtf8JsonSerializable, IModelJsonSerializable<AzureMySqlSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzureMySqlSink>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzureMySqlSink>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AzureMySqlSink>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PreCopyScript))
             {
@@ -67,8 +73,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureMySqlSink DeserializeAzureMySqlSink(JsonElement element)
+        internal static AzureMySqlSink DeserializeAzureMySqlSink(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -157,6 +165,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureMySqlSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, preCopyScript.Value);
+        }
+
+        AzureMySqlSink IModelJsonSerializable<AzureMySqlSink>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureMySqlSink>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureMySqlSink(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureMySqlSink>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureMySqlSink>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureMySqlSink IModelSerializable<AzureMySqlSink>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureMySqlSink>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureMySqlSink(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AzureMySqlSink"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AzureMySqlSink"/> to convert. </param>
+        public static implicit operator RequestContent(AzureMySqlSink model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AzureMySqlSink"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AzureMySqlSink(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureMySqlSink(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

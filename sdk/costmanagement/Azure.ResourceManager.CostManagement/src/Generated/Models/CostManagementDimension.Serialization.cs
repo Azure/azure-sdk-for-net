@@ -10,11 +10,278 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class CostManagementDimension
+    public partial class CostManagementDimension : IUtf8JsonSerializable, IModelJsonSerializable<CostManagementDimension>
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CostManagementDimension>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CostManagementDimension>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CostManagementDimension>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Data))
+            {
+                writer.WritePropertyName("data"u8);
+                writer.WriteStartArray();
+                foreach (var item in Data)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CostManagementDimension DeserializeCostManagementDimension(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<AzureLocation> location = default;
+            Optional<string> sku = default;
+            Optional<ETag> eTag = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> description = default;
+            Optional<bool> filterEnabled = default;
+            Optional<bool> groupingEnabled = default;
+            Optional<IReadOnlyList<string>> data = default;
+            Optional<int> total = default;
+            Optional<string> category = default;
+            Optional<DateTimeOffset> usageStart = default;
+            Optional<DateTimeOffset> usageEnd = default;
+            Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sku"u8))
+                {
+                    sku = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("eTag"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("description"u8))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("filterEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            filterEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("groupingEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            groupingEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("data"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            data = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("total"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            total = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("category"u8))
+                        {
+                            category = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("usageStart"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            usageStart = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("usageEnd"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            usageEnd = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("nextLink"u8))
+                        {
+                            nextLink = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new CostManagementDimension(id, name, type, systemData.Value, description.Value, Optional.ToNullable(filterEnabled), Optional.ToNullable(groupingEnabled), Optional.ToList(data), Optional.ToNullable(total), category.Value, Optional.ToNullable(usageStart), Optional.ToNullable(usageEnd), nextLink.Value, Optional.ToNullable(location), sku.Value, Optional.ToNullable(eTag), Optional.ToDictionary(tags), serializedAdditionalRawData);
+        }
+
+        CostManagementDimension IModelJsonSerializable<CostManagementDimension>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CostManagementDimension>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCostManagementDimension(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CostManagementDimension>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CostManagementDimension>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CostManagementDimension IModelSerializable<CostManagementDimension>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CostManagementDimension>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCostManagementDimension(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CostManagementDimension"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CostManagementDimension"/> to convert. </param>
+        public static implicit operator RequestContent(CostManagementDimension model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CostManagementDimension"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CostManagementDimension(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCostManagementDimension(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
     }
 }

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlDBSyncDatabaseInput : IUtf8JsonSerializable
+    public partial class MigrateSqlServerSqlDBSyncDatabaseInput : IUtf8JsonSerializable, IModelJsonSerializable<MigrateSqlServerSqlDBSyncDatabaseInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MigrateSqlServerSqlDBSyncDatabaseInput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MigrateSqlServerSqlDBSyncDatabaseInput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateSqlServerSqlDBSyncDatabaseInput>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -80,11 +87,25 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MigrateSqlServerSqlDBSyncDatabaseInput DeserializeMigrateSqlServerSqlDBSyncDatabaseInput(JsonElement element)
+        internal static MigrateSqlServerSqlDBSyncDatabaseInput DeserializeMigrateSqlServerSqlDBSyncDatabaseInput(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -97,6 +118,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IDictionary<string, string>> migrationSetting = default;
             Optional<IDictionary<string, string>> sourceSetting = default;
             Optional<IDictionary<string, string>> targetSetting = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -175,8 +197,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     targetSetting = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MigrateSqlServerSqlDBSyncDatabaseInput(id.Value, name.Value, targetDatabaseName.Value, schemaName.Value, Optional.ToDictionary(tableMap), Optional.ToDictionary(migrationSetting), Optional.ToDictionary(sourceSetting), Optional.ToDictionary(targetSetting));
+            return new MigrateSqlServerSqlDBSyncDatabaseInput(id.Value, name.Value, targetDatabaseName.Value, schemaName.Value, Optional.ToDictionary(tableMap), Optional.ToDictionary(migrationSetting), Optional.ToDictionary(sourceSetting), Optional.ToDictionary(targetSetting), serializedAdditionalRawData);
+        }
+
+        MigrateSqlServerSqlDBSyncDatabaseInput IModelJsonSerializable<MigrateSqlServerSqlDBSyncDatabaseInput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateSqlServerSqlDBSyncDatabaseInput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateSqlServerSqlDBSyncDatabaseInput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MigrateSqlServerSqlDBSyncDatabaseInput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateSqlServerSqlDBSyncDatabaseInput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MigrateSqlServerSqlDBSyncDatabaseInput IModelSerializable<MigrateSqlServerSqlDBSyncDatabaseInput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateSqlServerSqlDBSyncDatabaseInput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMigrateSqlServerSqlDBSyncDatabaseInput(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MigrateSqlServerSqlDBSyncDatabaseInput"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MigrateSqlServerSqlDBSyncDatabaseInput"/> to convert. </param>
+        public static implicit operator RequestContent(MigrateSqlServerSqlDBSyncDatabaseInput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MigrateSqlServerSqlDBSyncDatabaseInput"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MigrateSqlServerSqlDBSyncDatabaseInput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMigrateSqlServerSqlDBSyncDatabaseInput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

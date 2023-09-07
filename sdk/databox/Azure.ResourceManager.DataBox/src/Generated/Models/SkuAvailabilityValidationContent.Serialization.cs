@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class SkuAvailabilityValidationContent : IUtf8JsonSerializable
+    public partial class SkuAvailabilityValidationContent : IUtf8JsonSerializable, IModelJsonSerializable<SkuAvailabilityValidationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SkuAvailabilityValidationContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SkuAvailabilityValidationContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SkuAvailabilityValidationContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("deviceType"u8);
             writer.WriteStringValue(DeviceType.ToSerialString());
@@ -25,7 +33,117 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("validationType"u8);
             writer.WriteStringValue(ValidationType.ToSerialString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static SkuAvailabilityValidationContent DeserializeSkuAvailabilityValidationContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DataBoxSkuName deviceType = default;
+            DataBoxJobTransferType transferType = default;
+            string country = default;
+            AzureLocation location = default;
+            DataBoxValidationInputDiscriminator validationType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("deviceType"u8))
+                {
+                    deviceType = property.Value.GetString().ToDataBoxSkuName();
+                    continue;
+                }
+                if (property.NameEquals("transferType"u8))
+                {
+                    transferType = property.Value.GetString().ToDataBoxJobTransferType();
+                    continue;
+                }
+                if (property.NameEquals("country"u8))
+                {
+                    country = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("validationType"u8))
+                {
+                    validationType = property.Value.GetString().ToDataBoxValidationInputDiscriminator();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new SkuAvailabilityValidationContent(validationType, deviceType, transferType, country, location, serializedAdditionalRawData);
+        }
+
+        SkuAvailabilityValidationContent IModelJsonSerializable<SkuAvailabilityValidationContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SkuAvailabilityValidationContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSkuAvailabilityValidationContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SkuAvailabilityValidationContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SkuAvailabilityValidationContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SkuAvailabilityValidationContent IModelSerializable<SkuAvailabilityValidationContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SkuAvailabilityValidationContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSkuAvailabilityValidationContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SkuAvailabilityValidationContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SkuAvailabilityValidationContent"/> to convert. </param>
+        public static implicit operator RequestContent(SkuAvailabilityValidationContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SkuAvailabilityValidationContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SkuAvailabilityValidationContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSkuAvailabilityValidationContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

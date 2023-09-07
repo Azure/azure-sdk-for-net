@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,7 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Returns the requested manifest file. </summary>
     internal partial class ManifestWrapper : Manifest
     {
-        /// <summary> Initializes a new instance of ManifestWrapper. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManifestWrapper"/>. </summary>
         internal ManifestWrapper()
         {
             Manifests = new ChangeTrackingList<ManifestListAttributes>();
@@ -23,7 +24,7 @@ namespace Azure.Containers.ContainerRegistry
             Signatures = new ChangeTrackingList<ImageSignature>();
         }
 
-        /// <summary> Initializes a new instance of ManifestWrapper. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManifestWrapper"/>. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
         /// <param name="mediaType"> Media type for this Manifest. </param>
         /// <param name="manifests"> (ManifestList, OCIIndex) List of V2 image layer information. </param>
@@ -36,7 +37,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="fsLayers"> (V1) List of layer information. </param>
         /// <param name="history"> (V1) Image history. </param>
         /// <param name="signatures"> (V1) Image signature. </param>
-        internal ManifestWrapper(int? schemaVersion, string mediaType, IReadOnlyList<ManifestListAttributes> manifests, OciDescriptor config, IReadOnlyList<OciDescriptor> layers, OciAnnotations annotations, string architecture, string name, string tag, IReadOnlyList<FsLayer> fsLayers, IReadOnlyList<History> history, IReadOnlyList<ImageSignature> signatures) : base(schemaVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManifestWrapper(int? schemaVersion, string mediaType, IReadOnlyList<ManifestListAttributes> manifests, OciDescriptor config, IReadOnlyList<OciDescriptor> layers, OciAnnotations annotations, string architecture, string name, string tag, IReadOnlyList<FsLayer> fsLayers, IReadOnlyList<History> history, IReadOnlyList<ImageSignature> signatures, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(schemaVersion, serializedAdditionalRawData)
         {
             MediaType = mediaType;
             Manifests = manifests;

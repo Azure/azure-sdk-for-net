@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    internal partial class UnknownAzureBackupRecoveryPoint : IUtf8JsonSerializable
+    internal partial class UnknownAzureBackupRecoveryPoint : IUtf8JsonSerializable, IModelJsonSerializable<DataProtectionBackupRecoveryPointProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataProtectionBackupRecoveryPointProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataProtectionBackupRecoveryPointProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBackupRecoveryPointProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownAzureBackupRecoveryPoint DeserializeUnknownAzureBackupRecoveryPoint(JsonElement element)
+        internal static DataProtectionBackupRecoveryPointProperties DeserializeUnknownAzureBackupRecoveryPoint(JsonElement element, ModelSerializerOptions options = default) => DeserializeDataProtectionBackupRecoveryPointProperties(element, options);
+
+        DataProtectionBackupRecoveryPointProperties IModelJsonSerializable<DataProtectionBackupRecoveryPointProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string objectType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("objectType"u8))
-                {
-                    objectType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownAzureBackupRecoveryPoint(objectType);
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBackupRecoveryPointProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownAzureBackupRecoveryPoint(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataProtectionBackupRecoveryPointProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBackupRecoveryPointProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataProtectionBackupRecoveryPointProperties IModelSerializable<DataProtectionBackupRecoveryPointProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBackupRecoveryPointProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataProtectionBackupRecoveryPointProperties(doc.RootElement, options);
         }
     }
 }

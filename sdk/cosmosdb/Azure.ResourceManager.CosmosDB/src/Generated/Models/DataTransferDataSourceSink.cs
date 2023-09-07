@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// Please note <see cref="DataTransferDataSourceSink"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureBlobDataTransferDataSourceSink"/>, <see cref="CosmosCassandraDataTransferDataSourceSink"/>, <see cref="CosmosMongoDataTransferDataSourceSink"/> and <see cref="CosmosSqlDataTransferDataSourceSink"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownDataTransferDataSourceSink))]
     public abstract partial class DataTransferDataSourceSink
     {
-        /// <summary> Initializes a new instance of DataTransferDataSourceSink. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataTransferDataSourceSink"/>. </summary>
         protected DataTransferDataSourceSink()
         {
         }
 
-        /// <summary> Initializes a new instance of DataTransferDataSourceSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataTransferDataSourceSink"/>. </summary>
         /// <param name="component"></param>
-        internal DataTransferDataSourceSink(DataTransferComponent component)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataTransferDataSourceSink(DataTransferComponent component, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Component = component;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the component. </summary>

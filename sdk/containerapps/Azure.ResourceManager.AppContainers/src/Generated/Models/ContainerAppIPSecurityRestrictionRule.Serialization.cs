@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppIPSecurityRestrictionRule : IUtf8JsonSerializable
+    public partial class ContainerAppIPSecurityRestrictionRule : IUtf8JsonSerializable, IModelJsonSerializable<ContainerAppIPSecurityRestrictionRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerAppIPSecurityRestrictionRule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerAppIPSecurityRestrictionRule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppIPSecurityRestrictionRule>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -26,11 +34,25 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStringValue(IPAddressRange);
             writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppIPSecurityRestrictionRule DeserializeContainerAppIPSecurityRestrictionRule(JsonElement element)
+        internal static ContainerAppIPSecurityRestrictionRule DeserializeContainerAppIPSecurityRestrictionRule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +61,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> description = default;
             string ipAddressRange = default;
             ContainerAppIPRuleAction action = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -61,8 +84,61 @@ namespace Azure.ResourceManager.AppContainers.Models
                     action = new ContainerAppIPRuleAction(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerAppIPSecurityRestrictionRule(name, description.Value, ipAddressRange, action);
+            return new ContainerAppIPSecurityRestrictionRule(name, description.Value, ipAddressRange, action, serializedAdditionalRawData);
+        }
+
+        ContainerAppIPSecurityRestrictionRule IModelJsonSerializable<ContainerAppIPSecurityRestrictionRule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppIPSecurityRestrictionRule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppIPSecurityRestrictionRule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerAppIPSecurityRestrictionRule>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppIPSecurityRestrictionRule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerAppIPSecurityRestrictionRule IModelSerializable<ContainerAppIPSecurityRestrictionRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppIPSecurityRestrictionRule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerAppIPSecurityRestrictionRule(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerAppIPSecurityRestrictionRule"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerAppIPSecurityRestrictionRule"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerAppIPSecurityRestrictionRule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerAppIPSecurityRestrictionRule"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerAppIPSecurityRestrictionRule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerAppIPSecurityRestrictionRule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

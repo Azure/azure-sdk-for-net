@@ -16,7 +16,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> The AutoGridInputGroup. </summary>
     public partial class AutoGridInputGroup : InputGroup
     {
-        /// <summary> Initializes a new instance of AutoGridInputGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoGridInputGroup"/>. </summary>
         /// <param name="inputIds"> Input and input group ids to be included in this input group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputIds"/> is null. </exception>
         public AutoGridInputGroup(IEnumerable<string> inputIds)
@@ -27,7 +27,7 @@ namespace Azure.Communication.MediaComposition
             Kind = InputGroupType.AutoGridBased;
         }
 
-        /// <summary> Initializes a new instance of AutoGridInputGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoGridInputGroup"/>. </summary>
         /// <param name="kind"> Kind of input group. </param>
         /// <param name="position"> The (x,y) position on scene or input group. </param>
         /// <param name="width"> The width of the input group container. Can be defined as pixels or percentage. </param>
@@ -35,10 +35,16 @@ namespace Azure.Communication.MediaComposition
         /// <param name="layer"> The layer this input group should appear on. </param>
         /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
         /// <param name="inputIds"> Input and input group ids to be included in this input group. </param>
-        internal AutoGridInputGroup(InputGroupType kind, InputPosition position, string width, string height, string layer, ScalingMode? scalingMode, IList<string> inputIds) : base(kind, position, width, height, layer, scalingMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoGridInputGroup(InputGroupType kind, InputPosition position, string width, string height, string layer, ScalingMode? scalingMode, IList<string> inputIds, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, position, width, height, layer, scalingMode, serializedAdditionalRawData)
         {
             InputIds = inputIds;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutoGridInputGroup"/> for deserialization. </summary>
+        internal AutoGridInputGroup()
+        {
         }
 
         /// <summary> Input and input group ids to be included in this input group. </summary>

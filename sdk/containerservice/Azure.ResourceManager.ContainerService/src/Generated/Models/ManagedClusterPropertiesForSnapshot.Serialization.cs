@@ -5,15 +5,65 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterPropertiesForSnapshot
+    public partial class ManagedClusterPropertiesForSnapshot : IUtf8JsonSerializable, IModelJsonSerializable<ManagedClusterPropertiesForSnapshot>
     {
-        internal static ManagedClusterPropertiesForSnapshot DeserializeManagedClusterPropertiesForSnapshot(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedClusterPropertiesForSnapshot>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedClusterPropertiesForSnapshot>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedClusterPropertiesForSnapshot>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(KubernetesVersion))
+            {
+                writer.WritePropertyName("kubernetesVersion"u8);
+                writer.WriteStringValue(KubernetesVersion);
+            }
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ManagedClusterSku>)Sku).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(EnableRbac))
+            {
+                writer.WritePropertyName("enableRbac"u8);
+                writer.WriteBooleanValue(EnableRbac.Value);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ManagedClusterPropertiesForSnapshot DeserializeManagedClusterPropertiesForSnapshot(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +72,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<ManagedClusterSku> sku = default;
             Optional<bool> enableRbac = default;
             Optional<ContainerServiceNetworkProfileForSnapshot> networkProfile = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kubernetesVersion"u8))
@@ -56,8 +107,61 @@ namespace Azure.ResourceManager.ContainerService.Models
                     networkProfile = ContainerServiceNetworkProfileForSnapshot.DeserializeContainerServiceNetworkProfileForSnapshot(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedClusterPropertiesForSnapshot(kubernetesVersion.Value, sku.Value, Optional.ToNullable(enableRbac), networkProfile.Value);
+            return new ManagedClusterPropertiesForSnapshot(kubernetesVersion.Value, sku.Value, Optional.ToNullable(enableRbac), networkProfile.Value, serializedAdditionalRawData);
+        }
+
+        ManagedClusterPropertiesForSnapshot IModelJsonSerializable<ManagedClusterPropertiesForSnapshot>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedClusterPropertiesForSnapshot>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedClusterPropertiesForSnapshot(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedClusterPropertiesForSnapshot>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedClusterPropertiesForSnapshot>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedClusterPropertiesForSnapshot IModelSerializable<ManagedClusterPropertiesForSnapshot>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedClusterPropertiesForSnapshot>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedClusterPropertiesForSnapshot(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagedClusterPropertiesForSnapshot"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagedClusterPropertiesForSnapshot"/> to convert. </param>
+        public static implicit operator RequestContent(ManagedClusterPropertiesForSnapshot model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagedClusterPropertiesForSnapshot"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagedClusterPropertiesForSnapshot(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedClusterPropertiesForSnapshot(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

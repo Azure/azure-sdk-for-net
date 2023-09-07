@@ -6,23 +6,44 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class PredictionModelStatus : IUtf8JsonSerializable
+    public partial class PredictionModelStatus : IUtf8JsonSerializable, IModelJsonSerializable<PredictionModelStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PredictionModelStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PredictionModelStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PredictionModelStatus>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PredictionModelStatus DeserializePredictionModelStatus(JsonElement element)
+        internal static PredictionModelStatus DeserializePredictionModelStatus(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,6 +59,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<decimal> trainingAccuracy = default;
             Optional<int> signalsUsed = default;
             Optional<string> modelVersion = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -119,8 +141,61 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     modelVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PredictionModelStatus(Optional.ToNullable(tenantId), predictionName.Value, predictionGuidId.Value, status, message.Value, Optional.ToNullable(trainingSetCount), Optional.ToNullable(testSetCount), Optional.ToNullable(validationSetCount), Optional.ToNullable(trainingAccuracy), Optional.ToNullable(signalsUsed), modelVersion.Value);
+            return new PredictionModelStatus(Optional.ToNullable(tenantId), predictionName.Value, predictionGuidId.Value, status, message.Value, Optional.ToNullable(trainingSetCount), Optional.ToNullable(testSetCount), Optional.ToNullable(validationSetCount), Optional.ToNullable(trainingAccuracy), Optional.ToNullable(signalsUsed), modelVersion.Value, serializedAdditionalRawData);
+        }
+
+        PredictionModelStatus IModelJsonSerializable<PredictionModelStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PredictionModelStatus>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePredictionModelStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PredictionModelStatus>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PredictionModelStatus>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PredictionModelStatus IModelSerializable<PredictionModelStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PredictionModelStatus>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePredictionModelStatus(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PredictionModelStatus"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PredictionModelStatus"/> to convert. </param>
+        public static implicit operator RequestContent(PredictionModelStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PredictionModelStatus"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PredictionModelStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePredictionModelStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

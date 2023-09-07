@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class PipelineVariableSpecification : IUtf8JsonSerializable
+    public partial class PipelineVariableSpecification : IUtf8JsonSerializable, IModelJsonSerializable<PipelineVariableSpecification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PipelineVariableSpecification>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PipelineVariableSpecification>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PipelineVariableSpecification>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(VariableType.ToString());
@@ -27,17 +34,32 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(DefaultValue.ToString()).RootElement);
 #endif
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PipelineVariableSpecification DeserializePipelineVariableSpecification(JsonElement element)
+        internal static PipelineVariableSpecification DeserializePipelineVariableSpecification(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             PipelineVariableType type = default;
             Optional<BinaryData> defaultValue = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -54,8 +76,61 @@ namespace Azure.ResourceManager.DataFactory.Models
                     defaultValue = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PipelineVariableSpecification(type, defaultValue.Value);
+            return new PipelineVariableSpecification(type, defaultValue.Value, serializedAdditionalRawData);
+        }
+
+        PipelineVariableSpecification IModelJsonSerializable<PipelineVariableSpecification>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PipelineVariableSpecification>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePipelineVariableSpecification(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PipelineVariableSpecification>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PipelineVariableSpecification>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PipelineVariableSpecification IModelSerializable<PipelineVariableSpecification>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PipelineVariableSpecification>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePipelineVariableSpecification(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PipelineVariableSpecification"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PipelineVariableSpecification"/> to convert. </param>
+        public static implicit operator RequestContent(PipelineVariableSpecification model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PipelineVariableSpecification"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PipelineVariableSpecification(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePipelineVariableSpecification(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

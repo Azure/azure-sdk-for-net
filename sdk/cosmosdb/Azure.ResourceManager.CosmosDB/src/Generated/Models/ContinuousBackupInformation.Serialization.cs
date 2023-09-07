@@ -6,20 +6,53 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class ContinuousBackupInformation
+    internal partial class ContinuousBackupInformation : IUtf8JsonSerializable, IModelJsonSerializable<ContinuousBackupInformation>
     {
-        internal static ContinuousBackupInformation DeserializeContinuousBackupInformation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContinuousBackupInformation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContinuousBackupInformation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContinuousBackupInformation>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(LatestRestorableTimestamp))
+            {
+                writer.WritePropertyName("latestRestorableTimestamp"u8);
+                writer.WriteStringValue(LatestRestorableTimestamp.Value, "O");
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ContinuousBackupInformation DeserializeContinuousBackupInformation(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DateTimeOffset> latestRestorableTimestamp = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("latestRestorableTimestamp"u8))
@@ -31,8 +64,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     latestRestorableTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContinuousBackupInformation(Optional.ToNullable(latestRestorableTimestamp));
+            return new ContinuousBackupInformation(Optional.ToNullable(latestRestorableTimestamp), serializedAdditionalRawData);
+        }
+
+        ContinuousBackupInformation IModelJsonSerializable<ContinuousBackupInformation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContinuousBackupInformation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContinuousBackupInformation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContinuousBackupInformation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContinuousBackupInformation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContinuousBackupInformation IModelSerializable<ContinuousBackupInformation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContinuousBackupInformation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContinuousBackupInformation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContinuousBackupInformation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContinuousBackupInformation"/> to convert. </param>
+        public static implicit operator RequestContent(ContinuousBackupInformation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContinuousBackupInformation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContinuousBackupInformation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContinuousBackupInformation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

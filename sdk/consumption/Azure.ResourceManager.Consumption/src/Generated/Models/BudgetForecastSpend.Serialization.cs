@@ -5,21 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class BudgetForecastSpend
+    public partial class BudgetForecastSpend : IUtf8JsonSerializable, IModelJsonSerializable<BudgetForecastSpend>
     {
-        internal static BudgetForecastSpend DeserializeBudgetForecastSpend(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BudgetForecastSpend>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BudgetForecastSpend>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BudgetForecastSpend>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static BudgetForecastSpend DeserializeBudgetForecastSpend(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<decimal> amount = default;
             Optional<string> unit = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("amount"u8))
@@ -36,8 +65,61 @@ namespace Azure.ResourceManager.Consumption.Models
                     unit = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BudgetForecastSpend(Optional.ToNullable(amount), unit.Value);
+            return new BudgetForecastSpend(Optional.ToNullable(amount), unit.Value, serializedAdditionalRawData);
+        }
+
+        BudgetForecastSpend IModelJsonSerializable<BudgetForecastSpend>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BudgetForecastSpend>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBudgetForecastSpend(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BudgetForecastSpend>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BudgetForecastSpend>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BudgetForecastSpend IModelSerializable<BudgetForecastSpend>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BudgetForecastSpend>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBudgetForecastSpend(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BudgetForecastSpend"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BudgetForecastSpend"/> to convert. </param>
+        public static implicit operator RequestContent(BudgetForecastSpend model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BudgetForecastSpend"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BudgetForecastSpend(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBudgetForecastSpend(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

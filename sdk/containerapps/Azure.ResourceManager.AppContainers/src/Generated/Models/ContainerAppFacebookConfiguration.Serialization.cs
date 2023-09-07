@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppFacebookConfiguration : IUtf8JsonSerializable
+    public partial class ContainerAppFacebookConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<ContainerAppFacebookConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerAppFacebookConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerAppFacebookConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppFacebookConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
@@ -23,7 +31,14 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
-                writer.WriteObjectValue(Registration);
+                if (Registration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerAppRegistration>)Registration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(GraphApiVersion))
             {
@@ -33,13 +48,34 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
-                writer.WriteObjectValue(Login);
+                if (Login is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LoginScopes>)Login).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppFacebookConfiguration DeserializeContainerAppFacebookConfiguration(JsonElement element)
+        internal static ContainerAppFacebookConfiguration DeserializeContainerAppFacebookConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +84,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<ContainerAppRegistration> registration = default;
             Optional<string> graphApiVersion = default;
             Optional<LoginScopes> login = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -82,8 +119,61 @@ namespace Azure.ResourceManager.AppContainers.Models
                     login = Models.LoginScopes.DeserializeLoginScopes(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerAppFacebookConfiguration(Optional.ToNullable(enabled), registration.Value, graphApiVersion.Value, login.Value);
+            return new ContainerAppFacebookConfiguration(Optional.ToNullable(enabled), registration.Value, graphApiVersion.Value, login.Value, serializedAdditionalRawData);
+        }
+
+        ContainerAppFacebookConfiguration IModelJsonSerializable<ContainerAppFacebookConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppFacebookConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppFacebookConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerAppFacebookConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppFacebookConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerAppFacebookConfiguration IModelSerializable<ContainerAppFacebookConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppFacebookConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerAppFacebookConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerAppFacebookConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerAppFacebookConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerAppFacebookConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerAppFacebookConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerAppFacebookConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerAppFacebookConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

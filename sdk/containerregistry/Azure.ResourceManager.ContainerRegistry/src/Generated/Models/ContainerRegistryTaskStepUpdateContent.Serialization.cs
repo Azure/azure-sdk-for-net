@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryTaskStepUpdateContent : IUtf8JsonSerializable
+    public partial class ContainerRegistryTaskStepUpdateContent : IUtf8JsonSerializable, IModelJsonSerializable<ContainerRegistryTaskStepUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerRegistryTaskStepUpdateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerRegistryTaskStepUpdateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryTaskStepUpdateContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StepType.ToString());
@@ -27,7 +35,116 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("contextAccessToken"u8);
                 writer.WriteStringValue(ContextAccessToken);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ContainerRegistryTaskStepUpdateContent DeserializeContainerRegistryTaskStepUpdateContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("type", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "Docker": return ContainerRegistryDockerBuildStepUpdateContent.DeserializeContainerRegistryDockerBuildStepUpdateContent(element);
+                    case "EncodedTask": return ContainerRegistryEncodedTaskStepUpdateContent.DeserializeContainerRegistryEncodedTaskStepUpdateContent(element);
+                    case "FileTask": return ContainerRegistryFileTaskStepUpdateContent.DeserializeContainerRegistryFileTaskStepUpdateContent(element);
+                }
+            }
+
+            // Unknown type found so we will deserialize the base properties only
+            ContainerRegistryTaskStepType type = default;
+            Optional<string> contextPath = default;
+            Optional<string> contextAccessToken = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ContainerRegistryTaskStepType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("contextPath"u8))
+                {
+                    contextPath = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("contextAccessToken"u8))
+                {
+                    contextAccessToken = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new Models.ContainerRegistryTaskStepUpdateContent(type, contextPath.Value, contextAccessToken.Value, serializedAdditionalRawData);
+        }
+
+        ContainerRegistryTaskStepUpdateContent IModelJsonSerializable<ContainerRegistryTaskStepUpdateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryTaskStepUpdateContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryTaskStepUpdateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerRegistryTaskStepUpdateContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryTaskStepUpdateContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerRegistryTaskStepUpdateContent IModelSerializable<ContainerRegistryTaskStepUpdateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryTaskStepUpdateContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerRegistryTaskStepUpdateContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerRegistryTaskStepUpdateContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerRegistryTaskStepUpdateContent"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerRegistryTaskStepUpdateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerRegistryTaskStepUpdateContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerRegistryTaskStepUpdateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerRegistryTaskStepUpdateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

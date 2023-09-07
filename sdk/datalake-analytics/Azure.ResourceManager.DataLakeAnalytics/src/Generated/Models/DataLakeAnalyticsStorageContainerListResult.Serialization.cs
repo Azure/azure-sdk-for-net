@@ -5,23 +5,51 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DataLakeAnalytics;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    internal partial class DataLakeAnalyticsStorageContainerListResult
+    internal partial class DataLakeAnalyticsStorageContainerListResult : IUtf8JsonSerializable, IModelJsonSerializable<DataLakeAnalyticsStorageContainerListResult>
     {
-        internal static DataLakeAnalyticsStorageContainerListResult DeserializeDataLakeAnalyticsStorageContainerListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataLakeAnalyticsStorageContainerListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataLakeAnalyticsStorageContainerListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataLakeAnalyticsStorageContainerListResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DataLakeAnalyticsStorageContainerListResult DeserializeDataLakeAnalyticsStorageContainerListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<DataLakeAnalyticsStorageContainerData>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +71,61 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataLakeAnalyticsStorageContainerListResult(Optional.ToList(value), nextLink.Value);
+            return new DataLakeAnalyticsStorageContainerListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+        }
+
+        DataLakeAnalyticsStorageContainerListResult IModelJsonSerializable<DataLakeAnalyticsStorageContainerListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataLakeAnalyticsStorageContainerListResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataLakeAnalyticsStorageContainerListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataLakeAnalyticsStorageContainerListResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataLakeAnalyticsStorageContainerListResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataLakeAnalyticsStorageContainerListResult IModelSerializable<DataLakeAnalyticsStorageContainerListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataLakeAnalyticsStorageContainerListResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataLakeAnalyticsStorageContainerListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataLakeAnalyticsStorageContainerListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataLakeAnalyticsStorageContainerListResult"/> to convert. </param>
+        public static implicit operator RequestContent(DataLakeAnalyticsStorageContainerListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataLakeAnalyticsStorageContainerListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataLakeAnalyticsStorageContainerListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataLakeAnalyticsStorageContainerListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

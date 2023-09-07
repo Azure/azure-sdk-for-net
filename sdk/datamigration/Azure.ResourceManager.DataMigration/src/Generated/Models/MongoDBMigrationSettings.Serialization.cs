@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBMigrationSettings : IUtf8JsonSerializable
+    public partial class MongoDBMigrationSettings : IUtf8JsonSerializable, IModelJsonSerializable<MongoDBMigrationSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MongoDBMigrationSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MongoDBMigrationSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBMigrationSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BoostRUs))
             {
@@ -26,7 +33,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             foreach (var item in Databases)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                if (item.Value is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MongoDBDatabaseSettings>)item.Value).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
             if (Optional.IsDefined(Replication))
@@ -35,19 +49,54 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStringValue(Replication.Value.ToString());
             }
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            if (Source is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<MongoDBConnectionInfo>)Source).Serialize(writer, options);
+            }
             writer.WritePropertyName("target"u8);
-            writer.WriteObjectValue(Target);
+            if (Target is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<MongoDBConnectionInfo>)Target).Serialize(writer, options);
+            }
             if (Optional.IsDefined(Throttling))
             {
                 writer.WritePropertyName("throttling"u8);
-                writer.WriteObjectValue(Throttling);
+                if (Throttling is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MongoDBThrottlingSettings>)Throttling).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static MongoDBMigrationSettings DeserializeMongoDBMigrationSettings(JsonElement element)
+        internal static MongoDBMigrationSettings DeserializeMongoDBMigrationSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +107,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             MongoDBConnectionInfo source = default;
             MongoDBConnectionInfo target = default;
             Optional<MongoDBThrottlingSettings> throttling = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("boostRUs"u8))
@@ -107,8 +157,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     throttling = MongoDBThrottlingSettings.DeserializeMongoDBThrottlingSettings(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MongoDBMigrationSettings(Optional.ToNullable(boostRUs), databases, Optional.ToNullable(replication), source, target, throttling.Value);
+            return new MongoDBMigrationSettings(Optional.ToNullable(boostRUs), databases, Optional.ToNullable(replication), source, target, throttling.Value, serializedAdditionalRawData);
+        }
+
+        MongoDBMigrationSettings IModelJsonSerializable<MongoDBMigrationSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBMigrationSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMongoDBMigrationSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MongoDBMigrationSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBMigrationSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MongoDBMigrationSettings IModelSerializable<MongoDBMigrationSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBMigrationSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMongoDBMigrationSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MongoDBMigrationSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MongoDBMigrationSettings"/> to convert. </param>
+        public static implicit operator RequestContent(MongoDBMigrationSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MongoDBMigrationSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MongoDBMigrationSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMongoDBMigrationSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

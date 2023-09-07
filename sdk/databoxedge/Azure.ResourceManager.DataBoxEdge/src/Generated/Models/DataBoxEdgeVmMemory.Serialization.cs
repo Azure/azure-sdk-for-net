@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeVmMemory : IUtf8JsonSerializable
+    public partial class DataBoxEdgeVmMemory : IUtf8JsonSerializable, IModelJsonSerializable<DataBoxEdgeVmMemory>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataBoxEdgeVmMemory>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataBoxEdgeVmMemory>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeVmMemory>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(StartupMemoryInMB))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("currentMemoryUsageMB"u8);
                 writer.WriteNumberValue(CurrentMemoryUsageInMB.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataBoxEdgeVmMemory DeserializeDataBoxEdgeVmMemory(JsonElement element)
+        internal static DataBoxEdgeVmMemory DeserializeDataBoxEdgeVmMemory(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<long> startupMemoryMB = default;
             Optional<long> currentMemoryUsageMB = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startupMemoryMB"u8))
@@ -56,8 +79,61 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     currentMemoryUsageMB = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataBoxEdgeVmMemory(Optional.ToNullable(startupMemoryMB), Optional.ToNullable(currentMemoryUsageMB));
+            return new DataBoxEdgeVmMemory(Optional.ToNullable(startupMemoryMB), Optional.ToNullable(currentMemoryUsageMB), serializedAdditionalRawData);
+        }
+
+        DataBoxEdgeVmMemory IModelJsonSerializable<DataBoxEdgeVmMemory>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeVmMemory>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeVmMemory(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataBoxEdgeVmMemory>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeVmMemory>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataBoxEdgeVmMemory IModelSerializable<DataBoxEdgeVmMemory>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeVmMemory>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataBoxEdgeVmMemory(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataBoxEdgeVmMemory"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataBoxEdgeVmMemory"/> to convert. </param>
+        public static implicit operator RequestContent(DataBoxEdgeVmMemory model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataBoxEdgeVmMemory"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataBoxEdgeVmMemory(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataBoxEdgeVmMemory(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ConsistencyPolicy : IUtf8JsonSerializable
+    public partial class ConsistencyPolicy : IUtf8JsonSerializable, IModelJsonSerializable<ConsistencyPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConsistencyPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConsistencyPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ConsistencyPolicy>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("defaultConsistencyLevel"u8);
             writer.WriteStringValue(DefaultConsistencyLevel.ToSerialString());
@@ -27,11 +35,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("maxIntervalInSeconds"u8);
                 writer.WriteNumberValue(MaxIntervalInSeconds.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConsistencyPolicy DeserializeConsistencyPolicy(JsonElement element)
+        internal static ConsistencyPolicy DeserializeConsistencyPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +61,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             DefaultConsistencyLevel defaultConsistencyLevel = default;
             Optional<long> maxStalenessPrefix = default;
             Optional<int> maxIntervalInSeconds = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultConsistencyLevel"u8))
@@ -64,8 +87,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     maxIntervalInSeconds = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConsistencyPolicy(defaultConsistencyLevel, Optional.ToNullable(maxStalenessPrefix), Optional.ToNullable(maxIntervalInSeconds));
+            return new ConsistencyPolicy(defaultConsistencyLevel, Optional.ToNullable(maxStalenessPrefix), Optional.ToNullable(maxIntervalInSeconds), serializedAdditionalRawData);
+        }
+
+        ConsistencyPolicy IModelJsonSerializable<ConsistencyPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConsistencyPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsistencyPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConsistencyPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConsistencyPolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConsistencyPolicy IModelSerializable<ConsistencyPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConsistencyPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConsistencyPolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConsistencyPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConsistencyPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(ConsistencyPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConsistencyPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConsistencyPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConsistencyPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

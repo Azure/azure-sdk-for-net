@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class PowerQuerySink : IUtf8JsonSerializable
+    public partial class PowerQuerySink : IUtf8JsonSerializable, IModelJsonSerializable<PowerQuerySink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PowerQuerySink>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PowerQuerySink>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PowerQuerySink>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Script))
             {
@@ -41,7 +49,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
-                writer.WriteObjectValue(Dataset);
+                if (Dataset is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DatasetReference>)Dataset).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(LinkedService))
             {
@@ -51,13 +66,34 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Flowlet))
             {
                 writer.WritePropertyName("flowlet"u8);
-                writer.WriteObjectValue(Flowlet);
+                if (Flowlet is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DataFlowReference>)Flowlet).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static PowerQuerySink DeserializePowerQuerySink(JsonElement element)
+        internal static PowerQuerySink DeserializePowerQuerySink(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -70,6 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DatasetReference> dataset = default;
             Optional<DataFactoryLinkedServiceReference> linkedService = default;
             Optional<DataFlowReference> flowlet = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("script"u8))
@@ -132,8 +169,61 @@ namespace Azure.ResourceManager.DataFactory.Models
                     flowlet = DataFlowReference.DeserializeDataFlowReference(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PowerQuerySink(name, description.Value, dataset.Value, linkedService, flowlet.Value, schemaLinkedService, rejectedDataLinkedService, script.Value);
+            return new PowerQuerySink(name, description.Value, dataset.Value, linkedService, flowlet.Value, schemaLinkedService, rejectedDataLinkedService, script.Value, serializedAdditionalRawData);
+        }
+
+        PowerQuerySink IModelJsonSerializable<PowerQuerySink>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PowerQuerySink>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePowerQuerySink(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PowerQuerySink>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PowerQuerySink>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PowerQuerySink IModelSerializable<PowerQuerySink>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PowerQuerySink>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePowerQuerySink(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PowerQuerySink"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PowerQuerySink"/> to convert. </param>
+        public static implicit operator RequestContent(PowerQuerySink model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PowerQuerySink"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PowerQuerySink(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePowerQuerySink(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

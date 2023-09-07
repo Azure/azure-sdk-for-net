@@ -8,14 +8,50 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeNetworkAdapter
+    public partial class DataBoxEdgeNetworkAdapter : IUtf8JsonSerializable, IModelJsonSerializable<DataBoxEdgeNetworkAdapter>
     {
-        internal static DataBoxEdgeNetworkAdapter DeserializeDataBoxEdgeNetworkAdapter(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataBoxEdgeNetworkAdapter>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataBoxEdgeNetworkAdapter>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeNetworkAdapter>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RdmaStatus))
+            {
+                writer.WritePropertyName("rdmaStatus"u8);
+                writer.WriteStringValue(RdmaStatus.Value.ToString());
+            }
+            if (Optional.IsDefined(DhcpStatus))
+            {
+                writer.WritePropertyName("dhcpStatus"u8);
+                writer.WriteStringValue(DhcpStatus.Value.ToString());
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DataBoxEdgeNetworkAdapter DeserializeDataBoxEdgeNetworkAdapter(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,6 +71,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<DataBoxEdgeIPv6Config> ipv6Configuration = default;
             Optional<string> ipv6LinkLocalAddress = default;
             Optional<IReadOnlyList<string>> dnsServers = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adapterId"u8))
@@ -157,8 +194,61 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     dnsServers = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataBoxEdgeNetworkAdapter(adapterId.Value, adapterPosition.Value, Optional.ToNullable(index), Optional.ToNullable(nodeId), networkAdapterName.Value, label.Value, macAddress.Value, Optional.ToNullable(linkSpeed), Optional.ToNullable(status), Optional.ToNullable(rdmaStatus), Optional.ToNullable(dhcpStatus), ipv4Configuration.Value, ipv6Configuration.Value, ipv6LinkLocalAddress.Value, Optional.ToList(dnsServers));
+            return new DataBoxEdgeNetworkAdapter(adapterId.Value, adapterPosition.Value, Optional.ToNullable(index), Optional.ToNullable(nodeId), networkAdapterName.Value, label.Value, macAddress.Value, Optional.ToNullable(linkSpeed), Optional.ToNullable(status), Optional.ToNullable(rdmaStatus), Optional.ToNullable(dhcpStatus), ipv4Configuration.Value, ipv6Configuration.Value, ipv6LinkLocalAddress.Value, Optional.ToList(dnsServers), serializedAdditionalRawData);
+        }
+
+        DataBoxEdgeNetworkAdapter IModelJsonSerializable<DataBoxEdgeNetworkAdapter>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeNetworkAdapter>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeNetworkAdapter(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataBoxEdgeNetworkAdapter>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeNetworkAdapter>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataBoxEdgeNetworkAdapter IModelSerializable<DataBoxEdgeNetworkAdapter>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeNetworkAdapter>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataBoxEdgeNetworkAdapter(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataBoxEdgeNetworkAdapter"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataBoxEdgeNetworkAdapter"/> to convert. </param>
+        public static implicit operator RequestContent(DataBoxEdgeNetworkAdapter model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataBoxEdgeNetworkAdapter"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataBoxEdgeNetworkAdapter(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataBoxEdgeNetworkAdapter(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

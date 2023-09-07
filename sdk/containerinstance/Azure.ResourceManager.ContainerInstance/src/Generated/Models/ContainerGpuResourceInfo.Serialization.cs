@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerGpuResourceInfo : IUtf8JsonSerializable
+    public partial class ContainerGpuResourceInfo : IUtf8JsonSerializable, IModelJsonSerializable<ContainerGpuResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerGpuResourceInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerGpuResourceInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerGpuResourceInfo>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("count"u8);
             writer.WriteNumberValue(Count);
             writer.WritePropertyName("sku"u8);
             writer.WriteStringValue(Sku.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerGpuResourceInfo DeserializeContainerGpuResourceInfo(JsonElement element)
+        internal static ContainerGpuResourceInfo DeserializeContainerGpuResourceInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int count = default;
             ContainerGpuSku sku = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -42,8 +65,61 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     sku = new ContainerGpuSku(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerGpuResourceInfo(count, sku);
+            return new ContainerGpuResourceInfo(count, sku, serializedAdditionalRawData);
+        }
+
+        ContainerGpuResourceInfo IModelJsonSerializable<ContainerGpuResourceInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerGpuResourceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerGpuResourceInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerGpuResourceInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerGpuResourceInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerGpuResourceInfo IModelSerializable<ContainerGpuResourceInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerGpuResourceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerGpuResourceInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerGpuResourceInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerGpuResourceInfo"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerGpuResourceInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerGpuResourceInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerGpuResourceInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerGpuResourceInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

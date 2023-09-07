@@ -5,29 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SsisExecutionParameter : IUtf8JsonSerializable
+    public partial class SsisExecutionParameter : IUtf8JsonSerializable, IModelJsonSerializable<SsisExecutionParameter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SsisExecutionParameter>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SsisExecutionParameter>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SsisExecutionParameter>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             JsonSerializer.Serialize(writer, Value);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SsisExecutionParameter DeserializeSsisExecutionParameter(JsonElement element)
+        internal static SsisExecutionParameter DeserializeSsisExecutionParameter(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DataFactoryElement<string> value = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -35,8 +58,61 @@ namespace Azure.ResourceManager.DataFactory.Models
                     value = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SsisExecutionParameter(value);
+            return new SsisExecutionParameter(value, serializedAdditionalRawData);
+        }
+
+        SsisExecutionParameter IModelJsonSerializable<SsisExecutionParameter>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SsisExecutionParameter>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSsisExecutionParameter(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SsisExecutionParameter>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SsisExecutionParameter>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SsisExecutionParameter IModelSerializable<SsisExecutionParameter>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SsisExecutionParameter>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSsisExecutionParameter(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SsisExecutionParameter"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SsisExecutionParameter"/> to convert. </param>
+        public static implicit operator RequestContent(SsisExecutionParameter model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SsisExecutionParameter"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SsisExecutionParameter(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSsisExecutionParameter(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

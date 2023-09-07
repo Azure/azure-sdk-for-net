@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary>
@@ -12,20 +16,26 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// Please note <see cref="ConnectToSourceSqlServerTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ConnectToSourceSqlServerTaskOutputAgentJobLevel"/>, <see cref="ConnectToSourceSqlServerTaskOutputDatabaseLevel"/>, <see cref="ConnectToSourceSqlServerTaskOutputLoginLevel"/> and <see cref="ConnectToSourceSqlServerTaskOutputTaskLevel"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownConnectToSourceSqlServerTaskOutput))]
     public abstract partial class ConnectToSourceSqlServerTaskOutput
     {
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskOutput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskOutput"/>. </summary>
         protected ConnectToSourceSqlServerTaskOutput()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Type of result - database level or task level. </param>
-        internal ConnectToSourceSqlServerTaskOutput(string id, string resultType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectToSourceSqlServerTaskOutput(string id, string resultType, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ResultType = resultType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Result identifier. </summary>

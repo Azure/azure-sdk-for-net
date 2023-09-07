@@ -5,45 +5,64 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    internal partial class UnknownBasePolicyRule : IUtf8JsonSerializable
+    internal partial class UnknownBasePolicyRule : IUtf8JsonSerializable, IModelJsonSerializable<DataProtectionBasePolicyRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataProtectionBasePolicyRule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataProtectionBasePolicyRule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBasePolicyRule>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownBasePolicyRule DeserializeUnknownBasePolicyRule(JsonElement element)
+        internal static DataProtectionBasePolicyRule DeserializeUnknownBasePolicyRule(JsonElement element, ModelSerializerOptions options = default) => DeserializeDataProtectionBasePolicyRule(element, options);
+
+        DataProtectionBasePolicyRule IModelJsonSerializable<DataProtectionBasePolicyRule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string name = default;
-            string objectType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("objectType"u8))
-                {
-                    objectType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownBasePolicyRule(name, objectType);
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBasePolicyRule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownBasePolicyRule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataProtectionBasePolicyRule>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBasePolicyRule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataProtectionBasePolicyRule IModelSerializable<DataProtectionBasePolicyRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBasePolicyRule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataProtectionBasePolicyRule(doc.RootElement, options);
         }
     }
 }

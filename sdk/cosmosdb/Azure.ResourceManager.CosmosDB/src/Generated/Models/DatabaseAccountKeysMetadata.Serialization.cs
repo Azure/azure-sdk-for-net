@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class DatabaseAccountKeysMetadata
+    public partial class DatabaseAccountKeysMetadata : IUtf8JsonSerializable, IModelJsonSerializable<DatabaseAccountKeysMetadata>
     {
-        internal static DatabaseAccountKeysMetadata DeserializeDatabaseAccountKeysMetadata(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DatabaseAccountKeysMetadata>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DatabaseAccountKeysMetadata>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DatabaseAccountKeysMetadata>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DatabaseAccountKeysMetadata DeserializeDatabaseAccountKeysMetadata(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<AccountKeyMetadata> secondaryMasterKey = default;
             Optional<AccountKeyMetadata> primaryReadonlyMasterKey = default;
             Optional<AccountKeyMetadata> secondaryReadonlyMasterKey = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryMasterKey"u8))
@@ -60,8 +89,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     secondaryReadonlyMasterKey = AccountKeyMetadata.DeserializeAccountKeyMetadata(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DatabaseAccountKeysMetadata(primaryMasterKey.Value, secondaryMasterKey.Value, primaryReadonlyMasterKey.Value, secondaryReadonlyMasterKey.Value);
+            return new DatabaseAccountKeysMetadata(primaryMasterKey.Value, secondaryMasterKey.Value, primaryReadonlyMasterKey.Value, secondaryReadonlyMasterKey.Value, serializedAdditionalRawData);
+        }
+
+        DatabaseAccountKeysMetadata IModelJsonSerializable<DatabaseAccountKeysMetadata>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DatabaseAccountKeysMetadata>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatabaseAccountKeysMetadata(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DatabaseAccountKeysMetadata>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DatabaseAccountKeysMetadata>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DatabaseAccountKeysMetadata IModelSerializable<DatabaseAccountKeysMetadata>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DatabaseAccountKeysMetadata>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDatabaseAccountKeysMetadata(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DatabaseAccountKeysMetadata"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DatabaseAccountKeysMetadata"/> to convert. </param>
+        public static implicit operator RequestContent(DatabaseAccountKeysMetadata model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DatabaseAccountKeysMetadata"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DatabaseAccountKeysMetadata(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDatabaseAccountKeysMetadata(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

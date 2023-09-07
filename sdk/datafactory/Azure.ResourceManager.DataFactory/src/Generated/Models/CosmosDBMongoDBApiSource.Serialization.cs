@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class CosmosDBMongoDBApiSource : IUtf8JsonSerializable
+    public partial class CosmosDBMongoDBApiSource : IUtf8JsonSerializable, IModelJsonSerializable<CosmosDBMongoDBApiSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CosmosDBMongoDBApiSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CosmosDBMongoDBApiSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBMongoDBApiSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Filter))
             {
@@ -26,7 +32,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CursorMethods))
             {
                 writer.WritePropertyName("cursorMethods"u8);
-                writer.WriteObjectValue(CursorMethods);
+                if (CursorMethods is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MongoDBCursorMethodsProperties>)CursorMethods).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(BatchSize))
             {
@@ -81,8 +94,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static CosmosDBMongoDBApiSource DeserializeCosmosDBMongoDBApiSource(JsonElement element)
+        internal static CosmosDBMongoDBApiSource DeserializeCosmosDBMongoDBApiSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -191,6 +206,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new CosmosDBMongoDBApiSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, filter.Value, cursorMethods.Value, batchSize.Value, queryTimeout.Value, additionalColumns.Value);
+        }
+
+        CosmosDBMongoDBApiSource IModelJsonSerializable<CosmosDBMongoDBApiSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBMongoDBApiSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBMongoDBApiSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CosmosDBMongoDBApiSource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBMongoDBApiSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CosmosDBMongoDBApiSource IModelSerializable<CosmosDBMongoDBApiSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBMongoDBApiSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCosmosDBMongoDBApiSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CosmosDBMongoDBApiSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CosmosDBMongoDBApiSource"/> to convert. </param>
+        public static implicit operator RequestContent(CosmosDBMongoDBApiSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CosmosDBMongoDBApiSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CosmosDBMongoDBApiSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCosmosDBMongoDBApiSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

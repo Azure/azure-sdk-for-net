@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that validates connection to SQL Server and also validates source server requirements. </summary>
     public partial class ConnectToSourceSqlServerTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskProperties"/>. </summary>
         public ConnectToSourceSqlServerTaskProperties()
         {
             Output = new ChangeTrackingList<ConnectToSourceSqlServerTaskOutput>();
             TaskType = TaskType.ConnectToSourceSqlServer;
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// The available derived classes include <see cref="ConnectToSourceSqlServerTaskOutputAgentJobLevel"/>, <see cref="ConnectToSourceSqlServerTaskOutputDatabaseLevel"/>, <see cref="ConnectToSourceSqlServerTaskOutputLoginLevel"/> and <see cref="ConnectToSourceSqlServerTaskOutputTaskLevel"/>.
         /// </param>
         /// <param name="taskId"> Task id. </param>
-        internal ConnectToSourceSqlServerTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, ConnectToSourceSqlServerTaskInput input, IReadOnlyList<ConnectToSourceSqlServerTaskOutput> output, string taskId) : base(taskType, errors, state, commands, clientData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectToSourceSqlServerTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, ConnectToSourceSqlServerTaskInput input, IReadOnlyList<ConnectToSourceSqlServerTaskOutput> output, string taskId, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(taskType, errors, state, commands, clientData, serializedAdditionalRawData)
         {
             Input = input;
             Output = output;

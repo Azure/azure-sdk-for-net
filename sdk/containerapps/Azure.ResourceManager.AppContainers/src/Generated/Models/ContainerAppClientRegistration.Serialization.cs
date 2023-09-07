@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppClientRegistration : IUtf8JsonSerializable
+    public partial class ContainerAppClientRegistration : IUtf8JsonSerializable, IModelJsonSerializable<ContainerAppClientRegistration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerAppClientRegistration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerAppClientRegistration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppClientRegistration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientId))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("clientSecretSettingName"u8);
                 writer.WriteStringValue(ClientSecretSettingName);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppClientRegistration DeserializeContainerAppClientRegistration(JsonElement element)
+        internal static ContainerAppClientRegistration DeserializeContainerAppClientRegistration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> clientId = default;
             Optional<string> clientSecretSettingName = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientId"u8))
@@ -48,8 +71,61 @@ namespace Azure.ResourceManager.AppContainers.Models
                     clientSecretSettingName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerAppClientRegistration(clientId.Value, clientSecretSettingName.Value);
+            return new ContainerAppClientRegistration(clientId.Value, clientSecretSettingName.Value, serializedAdditionalRawData);
+        }
+
+        ContainerAppClientRegistration IModelJsonSerializable<ContainerAppClientRegistration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppClientRegistration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppClientRegistration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerAppClientRegistration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppClientRegistration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerAppClientRegistration IModelSerializable<ContainerAppClientRegistration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppClientRegistration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerAppClientRegistration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerAppClientRegistration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerAppClientRegistration"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerAppClientRegistration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerAppClientRegistration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerAppClientRegistration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerAppClientRegistration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

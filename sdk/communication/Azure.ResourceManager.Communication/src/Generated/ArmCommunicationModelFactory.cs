@@ -17,25 +17,25 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmCommunicationModelFactory
     {
-        /// <summary> Initializes a new instance of CommunicationNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
         /// <returns> A new <see cref="Models.CommunicationNameAvailabilityResult"/> instance for mocking. </returns>
         public static CommunicationNameAvailabilityResult CommunicationNameAvailabilityResult(bool? isNameAvailable = null, CommunicationNameAvailabilityReason? reason = null, string message = null)
         {
-            return new CommunicationNameAvailabilityResult(isNameAvailable, reason, message);
+            return new CommunicationNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
-        /// <summary> Initializes a new instance of LinkedNotificationHub. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedNotificationHub"/>. </summary>
         /// <param name="resourceId"> The resource ID of the notification hub. </param>
         /// <returns> A new <see cref="Models.LinkedNotificationHub"/> instance for mocking. </returns>
         public static LinkedNotificationHub LinkedNotificationHub(ResourceIdentifier resourceId = null)
         {
-            return new LinkedNotificationHub(resourceId);
+            return new LinkedNotificationHub(resourceId, default);
         }
 
-        /// <summary> Initializes a new instance of CommunicationServiceResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationServiceResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.Communication.Models
             tags ??= new Dictionary<string, string>();
             linkedDomains ??= new List<string>();
 
-            return new CommunicationServiceResourceData(id, name, resourceType, systemData, tags, location, provisioningState, hostName, dataLocation, notificationHubId, version, immutableResourceId, linkedDomains?.ToList());
+            return new CommunicationServiceResourceData(id, name, resourceType, systemData, tags, location, provisioningState, hostName, dataLocation, notificationHubId, version, immutableResourceId, linkedDomains?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of CommunicationServiceKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationServiceKeys"/>. </summary>
         /// <param name="primaryKey"> The primary access key. </param>
         /// <param name="secondaryKey"> The secondary access key. </param>
         /// <param name="primaryConnectionString"> CommunicationService connection string constructed via the primaryKey. </param>
@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.Communication.Models
         /// <returns> A new <see cref="Models.CommunicationServiceKeys"/> instance for mocking. </returns>
         public static CommunicationServiceKeys CommunicationServiceKeys(string primaryKey = null, string secondaryKey = null, string primaryConnectionString = null, string secondaryConnectionString = null)
         {
-            return new CommunicationServiceKeys(primaryKey, secondaryKey, primaryConnectionString, secondaryConnectionString);
+            return new CommunicationServiceKeys(primaryKey, secondaryKey, primaryConnectionString, secondaryConnectionString, default);
         }
 
-        /// <summary> Initializes a new instance of CommunicationDomainResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationDomainResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Communication.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CommunicationDomainResourceData(id, name, resourceType, systemData, tags, location, provisioningState, dataLocation, fromSenderDomain, mailFromSenderDomain, domainManagement, verificationStates, verificationRecords, userEngagementTracking);
+            return new CommunicationDomainResourceData(id, name, resourceType, systemData, tags, location, provisioningState, dataLocation, fromSenderDomain, mailFromSenderDomain, domainManagement, verificationStates, verificationRecords, userEngagementTracking, default);
         }
 
-        /// <summary> Initializes a new instance of DomainPropertiesVerificationStates. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainPropertiesVerificationStates"/>. </summary>
         /// <param name="domain"> A class that represents a VerificationStatus record. </param>
         /// <param name="spf"> A class that represents a VerificationStatus record. </param>
         /// <param name="dkim"> A class that represents a VerificationStatus record. </param>
@@ -101,19 +101,19 @@ namespace Azure.ResourceManager.Communication.Models
         /// <returns> A new <see cref="Models.DomainPropertiesVerificationStates"/> instance for mocking. </returns>
         public static DomainPropertiesVerificationStates DomainPropertiesVerificationStates(DomainVerificationStatusRecord domain = null, DomainVerificationStatusRecord spf = null, DomainVerificationStatusRecord dkim = null, DomainVerificationStatusRecord dkim2 = null, DomainVerificationStatusRecord dmarc = null)
         {
-            return new DomainPropertiesVerificationStates(domain, spf, dkim, dkim2, dmarc);
+            return new DomainPropertiesVerificationStates(domain, spf, dkim, dkim2, dmarc, default);
         }
 
-        /// <summary> Initializes a new instance of DomainVerificationStatusRecord. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainVerificationStatusRecord"/>. </summary>
         /// <param name="status"> Status of the verification operation. </param>
         /// <param name="errorCode"> Error code. This property will only be present if the status is UnableToVerify. </param>
         /// <returns> A new <see cref="Models.DomainVerificationStatusRecord"/> instance for mocking. </returns>
         public static DomainVerificationStatusRecord DomainVerificationStatusRecord(DomainRecordVerificationStatus? status = null, string errorCode = null)
         {
-            return new DomainVerificationStatusRecord(status, errorCode);
+            return new DomainVerificationStatusRecord(status, errorCode, default);
         }
 
-        /// <summary> Initializes a new instance of DomainPropertiesVerificationRecords. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainPropertiesVerificationRecords"/>. </summary>
         /// <param name="domain"> A class that represents a VerificationStatus record. </param>
         /// <param name="spf"> A class that represents a VerificationStatus record. </param>
         /// <param name="dkim"> A class that represents a VerificationStatus record. </param>
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.Communication.Models
         /// <returns> A new <see cref="Models.DomainPropertiesVerificationRecords"/> instance for mocking. </returns>
         public static DomainPropertiesVerificationRecords DomainPropertiesVerificationRecords(VerificationDnsRecord domain = null, VerificationDnsRecord spf = null, VerificationDnsRecord dkim = null, VerificationDnsRecord dkim2 = null, VerificationDnsRecord dmarc = null)
         {
-            return new DomainPropertiesVerificationRecords(domain, spf, dkim, dkim2, dmarc);
+            return new DomainPropertiesVerificationRecords(domain, spf, dkim, dkim2, dmarc, default);
         }
 
-        /// <summary> Initializes a new instance of VerificationDnsRecord. </summary>
+        /// <summary> Initializes a new instance of <see cref="VerificationDnsRecord"/>. </summary>
         /// <param name="dnsRecordType"> Type of the DNS record. Example: TXT. </param>
         /// <param name="name"> Name of the DNS record. </param>
         /// <param name="value"> Value of the DNS record. </param>
@@ -133,10 +133,10 @@ namespace Azure.ResourceManager.Communication.Models
         /// <returns> A new <see cref="Models.VerificationDnsRecord"/> instance for mocking. </returns>
         public static VerificationDnsRecord VerificationDnsRecord(string dnsRecordType = null, string name = null, string value = null, int? timeToLiveInSeconds = null)
         {
-            return new VerificationDnsRecord(dnsRecordType, name, value, timeToLiveInSeconds);
+            return new VerificationDnsRecord(dnsRecordType, name, value, timeToLiveInSeconds, default);
         }
 
-        /// <summary> Initializes a new instance of EmailServiceResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailServiceResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Communication.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new EmailServiceResourceData(id, name, resourceType, systemData, tags, location, provisioningState, dataLocation);
+            return new EmailServiceResourceData(id, name, resourceType, systemData, tags, location, provisioningState, dataLocation, default);
         }
 
-        /// <summary> Initializes a new instance of SenderUsernameResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SenderUsernameResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <returns> A new <see cref="Communication.SenderUsernameResourceData"/> instance for mocking. </returns>
         public static SenderUsernameResourceData SenderUsernameResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string dataLocation = null, string username = null, string displayName = null, CommunicationServiceProvisioningState? provisioningState = null)
         {
-            return new SenderUsernameResourceData(id, name, resourceType, systemData, dataLocation, username, displayName, provisioningState);
+            return new SenderUsernameResourceData(id, name, resourceType, systemData, dataLocation, username, displayName, provisioningState, default);
         }
     }
 }

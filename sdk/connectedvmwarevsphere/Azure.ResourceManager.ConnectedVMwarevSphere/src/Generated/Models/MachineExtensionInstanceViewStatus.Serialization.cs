@@ -6,21 +6,42 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class MachineExtensionInstanceViewStatus : IUtf8JsonSerializable
+    public partial class MachineExtensionInstanceViewStatus : IUtf8JsonSerializable, IModelJsonSerializable<MachineExtensionInstanceViewStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineExtensionInstanceViewStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineExtensionInstanceViewStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineExtensionInstanceViewStatus>(this, options.Format);
+
             writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineExtensionInstanceViewStatus DeserializeMachineExtensionInstanceViewStatus(JsonElement element)
+        internal static MachineExtensionInstanceViewStatus DeserializeMachineExtensionInstanceViewStatus(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +51,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Optional<string> displayStatus = default;
             Optional<string> message = default;
             Optional<DateTimeOffset> time = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -65,8 +87,61 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     time = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineExtensionInstanceViewStatus(code.Value, Optional.ToNullable(level), displayStatus.Value, message.Value, Optional.ToNullable(time));
+            return new MachineExtensionInstanceViewStatus(code.Value, Optional.ToNullable(level), displayStatus.Value, message.Value, Optional.ToNullable(time), serializedAdditionalRawData);
+        }
+
+        MachineExtensionInstanceViewStatus IModelJsonSerializable<MachineExtensionInstanceViewStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineExtensionInstanceViewStatus>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineExtensionInstanceViewStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineExtensionInstanceViewStatus>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineExtensionInstanceViewStatus>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineExtensionInstanceViewStatus IModelSerializable<MachineExtensionInstanceViewStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineExtensionInstanceViewStatus>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineExtensionInstanceViewStatus(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineExtensionInstanceViewStatus"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineExtensionInstanceViewStatus"/> to convert. </param>
+        public static implicit operator RequestContent(MachineExtensionInstanceViewStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineExtensionInstanceViewStatus"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineExtensionInstanceViewStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineExtensionInstanceViewStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

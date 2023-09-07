@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -17,9 +18,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// Please note <see cref="DataProtectionBackupPolicyPropertiesBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="RuleBasedBackupPolicy"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownBaseBackupPolicy))]
     public abstract partial class DataProtectionBackupPolicyPropertiesBase
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupPolicyPropertiesBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupPolicyPropertiesBase"/>. </summary>
         /// <param name="dataSourceTypes"> Type of datasource for the backup management. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceTypes"/> is null. </exception>
         protected DataProtectionBackupPolicyPropertiesBase(IEnumerable<string> dataSourceTypes)
@@ -29,13 +34,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             DataSourceTypes = dataSourceTypes.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupPolicyPropertiesBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupPolicyPropertiesBase"/>. </summary>
         /// <param name="dataSourceTypes"> Type of datasource for the backup management. </param>
         /// <param name="objectType"></param>
-        internal DataProtectionBackupPolicyPropertiesBase(IList<string> dataSourceTypes, string objectType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupPolicyPropertiesBase(IList<string> dataSourceTypes, string objectType, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataSourceTypes = dataSourceTypes;
             ObjectType = objectType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupPolicyPropertiesBase"/> for deserialization. </summary>
+        internal DataProtectionBackupPolicyPropertiesBase()
+        {
         }
 
         /// <summary> Type of datasource for the backup management. </summary>

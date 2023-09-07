@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppCustomOpenIdConnectProviderConfiguration : IUtf8JsonSerializable
+    public partial class ContainerAppCustomOpenIdConnectProviderConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<ContainerAppCustomOpenIdConnectProviderConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerAppCustomOpenIdConnectProviderConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerAppCustomOpenIdConnectProviderConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppCustomOpenIdConnectProviderConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
@@ -23,18 +31,46 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
-                writer.WriteObjectValue(Registration);
+                if (Registration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerAppOpenIdConnectRegistration>)Registration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
-                writer.WriteObjectValue(Login);
+                if (Login is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerAppOpenIdConnectLogin>)Login).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppCustomOpenIdConnectProviderConfiguration DeserializeContainerAppCustomOpenIdConnectProviderConfiguration(JsonElement element)
+        internal static ContainerAppCustomOpenIdConnectProviderConfiguration DeserializeContainerAppCustomOpenIdConnectProviderConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +78,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<bool> enabled = default;
             Optional<ContainerAppOpenIdConnectRegistration> registration = default;
             Optional<ContainerAppOpenIdConnectLogin> login = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -71,8 +108,61 @@ namespace Azure.ResourceManager.AppContainers.Models
                     login = ContainerAppOpenIdConnectLogin.DeserializeContainerAppOpenIdConnectLogin(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerAppCustomOpenIdConnectProviderConfiguration(Optional.ToNullable(enabled), registration.Value, login.Value);
+            return new ContainerAppCustomOpenIdConnectProviderConfiguration(Optional.ToNullable(enabled), registration.Value, login.Value, serializedAdditionalRawData);
+        }
+
+        ContainerAppCustomOpenIdConnectProviderConfiguration IModelJsonSerializable<ContainerAppCustomOpenIdConnectProviderConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppCustomOpenIdConnectProviderConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppCustomOpenIdConnectProviderConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerAppCustomOpenIdConnectProviderConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppCustomOpenIdConnectProviderConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerAppCustomOpenIdConnectProviderConfiguration IModelSerializable<ContainerAppCustomOpenIdConnectProviderConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppCustomOpenIdConnectProviderConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerAppCustomOpenIdConnectProviderConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerAppCustomOpenIdConnectProviderConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerAppCustomOpenIdConnectProviderConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerAppCustomOpenIdConnectProviderConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerAppCustomOpenIdConnectProviderConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerAppCustomOpenIdConnectProviderConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerAppCustomOpenIdConnectProviderConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

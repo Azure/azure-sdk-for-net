@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Modern reservation recommendation. </summary>
     public partial class ConsumptionModernReservationRecommendation : ConsumptionReservationRecommendation
     {
-        /// <summary> Initializes a new instance of ConsumptionModernReservationRecommendation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionModernReservationRecommendation"/>. </summary>
         internal ConsumptionModernReservationRecommendation()
         {
             SkuProperties = new ChangeTrackingList<ConsumptionSkuProperty>();
             Kind = ReservationRecommendationKind.Modern;
         }
 
-        /// <summary> Initializes a new instance of ConsumptionModernReservationRecommendation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionModernReservationRecommendation"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -49,7 +49,8 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="scope"> Shared or single recommendation. </param>
         /// <param name="skuProperties"> List of sku properties. </param>
         /// <param name="skuName"> This is the ARM Sku name. </param>
-        internal ConsumptionModernReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReservationRecommendationKind kind, ETag? etag, IReadOnlyDictionary<string, string> tags, AzureLocation? location, string sku, string locationPropertiesLocation, int? lookBackPeriod, float? instanceFlexibilityRatio, string instanceFlexibilityGroup, string normalizedSize, float? recommendedQuantityNormalized, Guid? meterId, string term, ConsumptionAmount costWithNoReservedInstances, decimal? recommendedQuantity, ConsumptionAmount totalCostWithReservedInstances, ConsumptionAmount netSavings, DateTimeOffset? firstUsageOn, string scope, IReadOnlyList<ConsumptionSkuProperty> skuProperties, string skuName) : base(id, name, resourceType, systemData, kind, etag, tags, location, sku)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionModernReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReservationRecommendationKind kind, ETag? etag, IReadOnlyDictionary<string, string> tags, AzureLocation? location, string sku, string locationPropertiesLocation, int? lookBackPeriod, float? instanceFlexibilityRatio, string instanceFlexibilityGroup, string normalizedSize, float? recommendedQuantityNormalized, Guid? meterId, string term, ConsumptionAmount costWithNoReservedInstances, decimal? recommendedQuantity, ConsumptionAmount totalCostWithReservedInstances, ConsumptionAmount netSavings, DateTimeOffset? firstUsageOn, string scope, IReadOnlyList<ConsumptionSkuProperty> skuProperties, string skuName, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, etag, tags, location, sku, serializedAdditionalRawData)
         {
             LocationPropertiesLocation = locationPropertiesLocation;
             LookBackPeriod = lookBackPeriod;

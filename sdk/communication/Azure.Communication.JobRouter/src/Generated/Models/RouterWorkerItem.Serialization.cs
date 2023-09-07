@@ -5,21 +5,67 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter.Models
 {
-    public partial class RouterWorkerItem
+    public partial class RouterWorkerItem : IUtf8JsonSerializable, IModelJsonSerializable<RouterWorkerItem>
     {
-        internal static RouterWorkerItem DeserializeRouterWorkerItem(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RouterWorkerItem>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RouterWorkerItem>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RouterWorkerItem>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Worker))
+            {
+                writer.WritePropertyName("worker"u8);
+                if (Worker is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RouterWorker>)Worker).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(_etag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(_etag);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RouterWorkerItem DeserializeRouterWorkerItem(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<RouterWorker> worker = default;
             Optional<string> etag = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("worker"u8))
@@ -36,8 +82,61 @@ namespace Azure.Communication.JobRouter.Models
                     etag = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RouterWorkerItem(worker.Value, etag.Value);
+            return new RouterWorkerItem(worker.Value, etag.Value, serializedAdditionalRawData);
+        }
+
+        RouterWorkerItem IModelJsonSerializable<RouterWorkerItem>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RouterWorkerItem>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouterWorkerItem(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RouterWorkerItem>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RouterWorkerItem>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RouterWorkerItem IModelSerializable<RouterWorkerItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RouterWorkerItem>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRouterWorkerItem(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RouterWorkerItem"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RouterWorkerItem"/> to convert. </param>
+        public static implicit operator RequestContent(RouterWorkerItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RouterWorkerItem"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RouterWorkerItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRouterWorkerItem(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

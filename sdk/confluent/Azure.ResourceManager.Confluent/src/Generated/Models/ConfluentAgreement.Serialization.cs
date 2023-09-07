@@ -6,16 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    public partial class ConfluentAgreement : IUtf8JsonSerializable
+    public partial class ConfluentAgreement : IUtf8JsonSerializable, IModelJsonSerializable<ConfluentAgreement>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConfluentAgreement>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConfluentAgreement>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ConfluentAgreement>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -60,11 +67,25 @@ namespace Azure.ResourceManager.Confluent.Models
                 writer.WriteBooleanValue(IsAccepted.Value);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConfluentAgreement DeserializeConfluentAgreement(JsonElement element)
+        internal static ConfluentAgreement DeserializeConfluentAgreement(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -81,6 +102,7 @@ namespace Azure.ResourceManager.Confluent.Models
             Optional<DateTimeOffset> retrieveDatetime = default;
             Optional<string> signature = default;
             Optional<bool> accepted = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -167,8 +189,61 @@ namespace Azure.ResourceManager.Confluent.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConfluentAgreement(id, name, type, systemData.Value, publisher.Value, product.Value, plan.Value, licenseTextLink.Value, privacyPolicyLink.Value, Optional.ToNullable(retrieveDatetime), signature.Value, Optional.ToNullable(accepted));
+            return new ConfluentAgreement(id, name, type, systemData.Value, publisher.Value, product.Value, plan.Value, licenseTextLink.Value, privacyPolicyLink.Value, Optional.ToNullable(retrieveDatetime), signature.Value, Optional.ToNullable(accepted), serializedAdditionalRawData);
+        }
+
+        ConfluentAgreement IModelJsonSerializable<ConfluentAgreement>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConfluentAgreement>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConfluentAgreement(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConfluentAgreement>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConfluentAgreement>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConfluentAgreement IModelSerializable<ConfluentAgreement>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConfluentAgreement>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConfluentAgreement(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConfluentAgreement"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConfluentAgreement"/> to convert. </param>
+        public static implicit operator RequestContent(ConfluentAgreement model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConfluentAgreement"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConfluentAgreement(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConfluentAgreement(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementViewsViewsRestClient.CreateListByScopeRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _costManagementViewsViewsRestClient.CreateListByScopeNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CostManagementViewsResource(Client, CostManagementViewData.DeserializeCostManagementViewData(e)), _costManagementViewsViewsClientDiagnostics, Pipeline, "CostManagementViewsCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new CostManagementViewsResource(Client, CostManagementViewData.DeserializeCostManagementViewData(e)), _costManagementViewsViewsClientDiagnostics, Pipeline, "CostManagementViewsCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementViewsViewsRestClient.CreateListByScopeRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _costManagementViewsViewsRestClient.CreateListByScopeNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CostManagementViewsResource(Client, CostManagementViewData.DeserializeCostManagementViewData(e)), _costManagementViewsViewsClientDiagnostics, Pipeline, "CostManagementViewsCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new CostManagementViewsResource(Client, CostManagementViewData.DeserializeCostManagementViewData(e)), _costManagementViewsViewsClientDiagnostics, Pipeline, "CostManagementViewsCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

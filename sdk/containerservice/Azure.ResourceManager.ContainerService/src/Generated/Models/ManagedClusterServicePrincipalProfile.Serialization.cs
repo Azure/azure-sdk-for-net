@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterServicePrincipalProfile : IUtf8JsonSerializable
+    public partial class ManagedClusterServicePrincipalProfile : IUtf8JsonSerializable, IModelJsonSerializable<ManagedClusterServicePrincipalProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedClusterServicePrincipalProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedClusterServicePrincipalProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedClusterServicePrincipalProfile>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("clientId"u8);
             writer.WriteStringValue(ClientId);
@@ -22,17 +30,32 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("secret"u8);
                 writer.WriteStringValue(Secret);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedClusterServicePrincipalProfile DeserializeManagedClusterServicePrincipalProfile(JsonElement element)
+        internal static ManagedClusterServicePrincipalProfile DeserializeManagedClusterServicePrincipalProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string clientId = default;
             Optional<string> secret = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientId"u8))
@@ -45,8 +68,61 @@ namespace Azure.ResourceManager.ContainerService.Models
                     secret = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedClusterServicePrincipalProfile(clientId, secret.Value);
+            return new ManagedClusterServicePrincipalProfile(clientId, secret.Value, serializedAdditionalRawData);
+        }
+
+        ManagedClusterServicePrincipalProfile IModelJsonSerializable<ManagedClusterServicePrincipalProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedClusterServicePrincipalProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedClusterServicePrincipalProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedClusterServicePrincipalProfile>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedClusterServicePrincipalProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedClusterServicePrincipalProfile IModelSerializable<ManagedClusterServicePrincipalProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedClusterServicePrincipalProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedClusterServicePrincipalProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagedClusterServicePrincipalProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagedClusterServicePrincipalProfile"/> to convert. </param>
+        public static implicit operator RequestContent(ManagedClusterServicePrincipalProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagedClusterServicePrincipalProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagedClusterServicePrincipalProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedClusterServicePrincipalProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

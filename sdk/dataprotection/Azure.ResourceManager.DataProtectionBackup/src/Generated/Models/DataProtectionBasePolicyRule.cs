@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -15,9 +17,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// Please note <see cref="DataProtectionBasePolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DataProtectionBackupRule"/> and <see cref="DataProtectionRetentionRule"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownBasePolicyRule))]
     public abstract partial class DataProtectionBasePolicyRule
     {
-        /// <summary> Initializes a new instance of DataProtectionBasePolicyRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBasePolicyRule"/>. </summary>
         /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         protected DataProtectionBasePolicyRule(string name)
@@ -27,13 +33,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBasePolicyRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBasePolicyRule"/>. </summary>
         /// <param name="name"></param>
         /// <param name="objectType"></param>
-        internal DataProtectionBasePolicyRule(string name, string objectType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBasePolicyRule(string name, string objectType, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ObjectType = objectType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBasePolicyRule"/> for deserialization. </summary>
+        internal DataProtectionBasePolicyRule()
+        {
         }
 
         /// <summary> Gets or sets the name. </summary>

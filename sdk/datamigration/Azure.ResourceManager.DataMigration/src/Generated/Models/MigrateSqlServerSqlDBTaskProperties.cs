@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that migrates on-prem SQL Server databases to Azure SQL Database. </summary>
     public partial class MigrateSqlServerSqlDBTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBTaskProperties"/>. </summary>
         public MigrateSqlServerSqlDBTaskProperties()
         {
             Output = new ChangeTrackingList<MigrateSqlServerSqlDBTaskOutput>();
             TaskType = TaskType.MigrateSqlServerSqlDB;
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
@@ -39,7 +40,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="taskId"> task id. </param>
         /// <param name="isCloneable"> whether the task can be cloned or not. </param>
         /// <param name="createdOn"> DateTime in UTC when the task was created. </param>
-        internal MigrateSqlServerSqlDBTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, MigrateSqlServerSqlDBTaskInput input, IReadOnlyList<MigrateSqlServerSqlDBTaskOutput> output, string taskId, bool? isCloneable, string createdOn) : base(taskType, errors, state, commands, clientData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateSqlServerSqlDBTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, MigrateSqlServerSqlDBTaskInput input, IReadOnlyList<MigrateSqlServerSqlDBTaskOutput> output, string taskId, bool? isCloneable, string createdOn, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(taskType, errors, state, commands, clientData, serializedAdditionalRawData)
         {
             Input = input;
             Output = output;

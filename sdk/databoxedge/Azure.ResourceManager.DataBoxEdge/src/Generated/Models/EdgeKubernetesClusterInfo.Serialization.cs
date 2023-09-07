@@ -5,24 +5,45 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeKubernetesClusterInfo : IUtf8JsonSerializable
+    public partial class EdgeKubernetesClusterInfo : IUtf8JsonSerializable, IModelJsonSerializable<EdgeKubernetesClusterInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EdgeKubernetesClusterInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EdgeKubernetesClusterInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeKubernetesClusterInfo>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("version"u8);
             writer.WriteStringValue(Version);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EdgeKubernetesClusterInfo DeserializeEdgeKubernetesClusterInfo(JsonElement element)
+        internal static EdgeKubernetesClusterInfo DeserializeEdgeKubernetesClusterInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +51,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<DataBoxEdgeEtcdInfo> etcdInfo = default;
             Optional<IReadOnlyList<EdgeKubernetesNodeInfo>> nodes = default;
             string version = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etcdInfo"u8))
@@ -60,8 +82,61 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     version = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EdgeKubernetesClusterInfo(etcdInfo.Value, Optional.ToList(nodes), version);
+            return new EdgeKubernetesClusterInfo(etcdInfo.Value, Optional.ToList(nodes), version, serializedAdditionalRawData);
+        }
+
+        EdgeKubernetesClusterInfo IModelJsonSerializable<EdgeKubernetesClusterInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeKubernetesClusterInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeKubernetesClusterInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EdgeKubernetesClusterInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeKubernetesClusterInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EdgeKubernetesClusterInfo IModelSerializable<EdgeKubernetesClusterInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeKubernetesClusterInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEdgeKubernetesClusterInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EdgeKubernetesClusterInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EdgeKubernetesClusterInfo"/> to convert. </param>
+        public static implicit operator RequestContent(EdgeKubernetesClusterInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EdgeKubernetesClusterInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EdgeKubernetesClusterInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEdgeKubernetesClusterInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

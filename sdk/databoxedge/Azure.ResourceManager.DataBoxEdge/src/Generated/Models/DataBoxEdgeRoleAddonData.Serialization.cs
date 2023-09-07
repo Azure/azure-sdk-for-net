@@ -5,25 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DataBoxEdge.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    public partial class DataBoxEdgeRoleAddonData : IUtf8JsonSerializable
+    public partial class DataBoxEdgeRoleAddonData : IUtf8JsonSerializable, IModelJsonSerializable<DataBoxEdgeRoleAddonData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataBoxEdgeRoleAddonData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataBoxEdgeRoleAddonData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeRoleAddonData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataBoxEdgeRoleAddonData DeserializeDataBoxEdgeRoleAddonData(JsonElement element)
+        internal static DataBoxEdgeRoleAddonData DeserializeDataBoxEdgeRoleAddonData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,11 +58,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                     case "IotEdge": return EdgeIotAddon.DeserializeEdgeIotAddon(element);
                 }
             }
+
+            // Unknown type found so we will deserialize the base properties only
             AddonType kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -72,8 +97,61 @@ namespace Azure.ResourceManager.DataBoxEdge
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataBoxEdgeRoleAddonData(id, name, type, systemData.Value, kind);
+            return new DataBoxEdgeRoleAddonData(id, name, type, systemData.Value, kind, serializedAdditionalRawData);
+        }
+
+        DataBoxEdgeRoleAddonData IModelJsonSerializable<DataBoxEdgeRoleAddonData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeRoleAddonData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeRoleAddonData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataBoxEdgeRoleAddonData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeRoleAddonData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataBoxEdgeRoleAddonData IModelSerializable<DataBoxEdgeRoleAddonData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeRoleAddonData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataBoxEdgeRoleAddonData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataBoxEdgeRoleAddonData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataBoxEdgeRoleAddonData"/> to convert. </param>
+        public static implicit operator RequestContent(DataBoxEdgeRoleAddonData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataBoxEdgeRoleAddonData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataBoxEdgeRoleAddonData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataBoxEdgeRoleAddonData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

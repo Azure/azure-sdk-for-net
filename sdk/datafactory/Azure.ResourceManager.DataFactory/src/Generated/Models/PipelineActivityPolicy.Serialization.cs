@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class PipelineActivityPolicy : IUtf8JsonSerializable
+    public partial class PipelineActivityPolicy : IUtf8JsonSerializable, IModelJsonSerializable<PipelineActivityPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PipelineActivityPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PipelineActivityPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PipelineActivityPolicy>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Timeout))
             {
@@ -55,8 +61,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static PipelineActivityPolicy DeserializePipelineActivityPolicy(JsonElement element)
+        internal static PipelineActivityPolicy DeserializePipelineActivityPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -119,6 +127,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new PipelineActivityPolicy(timeout.Value, retry.Value, Optional.ToNullable(retryIntervalInSeconds), Optional.ToNullable(secureInput), Optional.ToNullable(secureOutput), additionalProperties);
+        }
+
+        PipelineActivityPolicy IModelJsonSerializable<PipelineActivityPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PipelineActivityPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePipelineActivityPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PipelineActivityPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PipelineActivityPolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PipelineActivityPolicy IModelSerializable<PipelineActivityPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PipelineActivityPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePipelineActivityPolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PipelineActivityPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PipelineActivityPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(PipelineActivityPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PipelineActivityPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PipelineActivityPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePipelineActivityPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

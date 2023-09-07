@@ -5,31 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToTargetSqlDBSyncTaskInput : IUtf8JsonSerializable
+    public partial class ConnectToTargetSqlDBSyncTaskInput : IUtf8JsonSerializable, IModelJsonSerializable<ConnectToTargetSqlDBSyncTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConnectToTargetSqlDBSyncTaskInput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConnectToTargetSqlDBSyncTaskInput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectToTargetSqlDBSyncTaskInput>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo);
+            if (SourceConnectionInfo is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<SqlConnectionInfo>)SourceConnectionInfo).Serialize(writer, options);
+            }
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue(TargetConnectionInfo);
+            if (TargetConnectionInfo is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<SqlConnectionInfo>)TargetConnectionInfo).Serialize(writer, options);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConnectToTargetSqlDBSyncTaskInput DeserializeConnectToTargetSqlDBSyncTaskInput(JsonElement element)
+        internal static ConnectToTargetSqlDBSyncTaskInput DeserializeConnectToTargetSqlDBSyncTaskInput(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             SqlConnectionInfo sourceConnectionInfo = default;
             SqlConnectionInfo targetConnectionInfo = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceConnectionInfo"u8))
@@ -42,8 +79,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConnectToTargetSqlDBSyncTaskInput(sourceConnectionInfo, targetConnectionInfo);
+            return new ConnectToTargetSqlDBSyncTaskInput(sourceConnectionInfo, targetConnectionInfo, serializedAdditionalRawData);
+        }
+
+        ConnectToTargetSqlDBSyncTaskInput IModelJsonSerializable<ConnectToTargetSqlDBSyncTaskInput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectToTargetSqlDBSyncTaskInput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectToTargetSqlDBSyncTaskInput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConnectToTargetSqlDBSyncTaskInput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectToTargetSqlDBSyncTaskInput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConnectToTargetSqlDBSyncTaskInput IModelSerializable<ConnectToTargetSqlDBSyncTaskInput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectToTargetSqlDBSyncTaskInput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConnectToTargetSqlDBSyncTaskInput(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConnectToTargetSqlDBSyncTaskInput"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConnectToTargetSqlDBSyncTaskInput"/> to convert. </param>
+        public static implicit operator RequestContent(ConnectToTargetSqlDBSyncTaskInput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConnectToTargetSqlDBSyncTaskInput"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConnectToTargetSqlDBSyncTaskInput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConnectToTargetSqlDBSyncTaskInput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

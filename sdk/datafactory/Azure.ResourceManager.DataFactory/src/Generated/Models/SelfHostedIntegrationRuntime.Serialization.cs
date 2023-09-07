@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SelfHostedIntegrationRuntime : IUtf8JsonSerializable
+    public partial class SelfHostedIntegrationRuntime : IUtf8JsonSerializable, IModelJsonSerializable<SelfHostedIntegrationRuntime>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SelfHostedIntegrationRuntime>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SelfHostedIntegrationRuntime>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SelfHostedIntegrationRuntime>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IntegrationRuntimeType.ToString());
@@ -29,7 +35,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LinkedInfo))
             {
                 writer.WritePropertyName("linkedInfo"u8);
-                writer.WriteObjectValue(LinkedInfo);
+                if (LinkedInfo is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LinkedIntegrationRuntimeType>)LinkedInfo).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -44,8 +57,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static SelfHostedIntegrationRuntime DeserializeSelfHostedIntegrationRuntime(JsonElement element)
+        internal static SelfHostedIntegrationRuntime DeserializeSelfHostedIntegrationRuntime(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -92,6 +107,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SelfHostedIntegrationRuntime(type, description.Value, additionalProperties, linkedInfo.Value);
+        }
+
+        SelfHostedIntegrationRuntime IModelJsonSerializable<SelfHostedIntegrationRuntime>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SelfHostedIntegrationRuntime>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSelfHostedIntegrationRuntime(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SelfHostedIntegrationRuntime>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SelfHostedIntegrationRuntime>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SelfHostedIntegrationRuntime IModelSerializable<SelfHostedIntegrationRuntime>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SelfHostedIntegrationRuntime>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSelfHostedIntegrationRuntime(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SelfHostedIntegrationRuntime"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SelfHostedIntegrationRuntime"/> to convert. </param>
+        public static implicit operator RequestContent(SelfHostedIntegrationRuntime model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SelfHostedIntegrationRuntime"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SelfHostedIntegrationRuntime(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSelfHostedIntegrationRuntime(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

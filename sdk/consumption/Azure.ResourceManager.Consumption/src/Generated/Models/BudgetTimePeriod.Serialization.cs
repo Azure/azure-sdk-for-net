@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class BudgetTimePeriod : IUtf8JsonSerializable
+    public partial class BudgetTimePeriod : IUtf8JsonSerializable, IModelJsonSerializable<BudgetTimePeriod>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BudgetTimePeriod>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BudgetTimePeriod>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BudgetTimePeriod>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("startDate"u8);
             writer.WriteStringValue(StartOn, "O");
@@ -23,17 +30,32 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("endDate"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BudgetTimePeriod DeserializeBudgetTimePeriod(JsonElement element)
+        internal static BudgetTimePeriod DeserializeBudgetTimePeriod(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DateTimeOffset startDate = default;
             Optional<DateTimeOffset> endDate = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startDate"u8))
@@ -50,8 +72,61 @@ namespace Azure.ResourceManager.Consumption.Models
                     endDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BudgetTimePeriod(startDate, Optional.ToNullable(endDate));
+            return new BudgetTimePeriod(startDate, Optional.ToNullable(endDate), serializedAdditionalRawData);
+        }
+
+        BudgetTimePeriod IModelJsonSerializable<BudgetTimePeriod>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BudgetTimePeriod>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBudgetTimePeriod(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BudgetTimePeriod>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BudgetTimePeriod>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BudgetTimePeriod IModelSerializable<BudgetTimePeriod>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BudgetTimePeriod>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBudgetTimePeriod(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BudgetTimePeriod"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BudgetTimePeriod"/> to convert. </param>
+        public static implicit operator RequestContent(BudgetTimePeriod model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BudgetTimePeriod"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BudgetTimePeriod(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBudgetTimePeriod(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

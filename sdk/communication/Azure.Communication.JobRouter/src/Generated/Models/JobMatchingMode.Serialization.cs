@@ -5,15 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class JobMatchingMode : IUtf8JsonSerializable
+    public partial class JobMatchingMode : IUtf8JsonSerializable, IModelJsonSerializable<JobMatchingMode>
     {
-        internal static JobMatchingMode DeserializeJobMatchingMode(JsonElement element)
+        void IModelJsonSerializable<JobMatchingMode>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<JobMatchingMode>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ModeType))
+            {
+                writer.WritePropertyName("modeType"u8);
+                writer.WriteStringValue(ModeType.Value.ToString());
+            }
+            if (Optional.IsDefined(_queueAndMatchMode))
+            {
+                writer.WritePropertyName("queueAndMatchMode"u8);
+                writer.WriteObjectValue(_queueAndMatchMode);
+            }
+            if (Optional.IsDefined(ScheduleAndSuspendMode))
+            {
+                writer.WritePropertyName("scheduleAndSuspendMode"u8);
+                if (ScheduleAndSuspendMode is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ScheduleAndSuspendMode>)ScheduleAndSuspendMode).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(_suspendMode))
+            {
+                writer.WritePropertyName("suspendMode"u8);
+                writer.WriteObjectValue(_suspendMode);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static JobMatchingMode DeserializeJobMatchingMode(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +75,7 @@ namespace Azure.Communication.JobRouter
             Optional<object> queueAndMatchMode = default;
             Optional<ScheduleAndSuspendMode> scheduleAndSuspendMode = default;
             Optional<object> suspendMode = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modeType"u8))
@@ -60,8 +114,61 @@ namespace Azure.Communication.JobRouter
                     suspendMode = property.Value.GetObject();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new JobMatchingMode(Optional.ToNullable(modeType), queueAndMatchMode.Value, scheduleAndSuspendMode.Value, suspendMode.Value);
+            return new JobMatchingMode(Optional.ToNullable(modeType), queueAndMatchMode.Value, scheduleAndSuspendMode.Value, suspendMode.Value, serializedAdditionalRawData);
+        }
+
+        JobMatchingMode IModelJsonSerializable<JobMatchingMode>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JobMatchingMode>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJobMatchingMode(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<JobMatchingMode>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JobMatchingMode>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        JobMatchingMode IModelSerializable<JobMatchingMode>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JobMatchingMode>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeJobMatchingMode(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="JobMatchingMode"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="JobMatchingMode"/> to convert. </param>
+        public static implicit operator RequestContent(JobMatchingMode model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="JobMatchingMode"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator JobMatchingMode(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeJobMatchingMode(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

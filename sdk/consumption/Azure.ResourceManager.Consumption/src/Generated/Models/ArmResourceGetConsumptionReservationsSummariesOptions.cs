@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.Consumption.Models
             Grain = grain;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ArmResourceGetConsumptionReservationsSummariesOptions"/> for deserialization. </summary>
+        internal ArmResourceGetConsumptionReservationsSummariesOptions()
+        {
+        }
+
         /// <summary> Can be daily or monthly. </summary>
         public ReservationSummaryDataGrain Grain { get; }
         /// <summary> Start date. Only applicable when querying with billing profile. </summary>

@@ -6,15 +6,42 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    public partial class DataLakeStoreCapabilityInformation
+    public partial class DataLakeStoreCapabilityInformation : IUtf8JsonSerializable, IModelJsonSerializable<DataLakeStoreCapabilityInformation>
     {
-        internal static DataLakeStoreCapabilityInformation DeserializeDataLakeStoreCapabilityInformation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataLakeStoreCapabilityInformation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataLakeStoreCapabilityInformation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataLakeStoreCapabilityInformation>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DataLakeStoreCapabilityInformation DeserializeDataLakeStoreCapabilityInformation(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +51,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             Optional<int> maxAccountCount = default;
             Optional<int> accountCount = default;
             Optional<bool> migrationState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptionId"u8))
@@ -71,8 +99,61 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     migrationState = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataLakeStoreCapabilityInformation(Optional.ToNullable(subscriptionId), Optional.ToNullable(state), Optional.ToNullable(maxAccountCount), Optional.ToNullable(accountCount), Optional.ToNullable(migrationState));
+            return new DataLakeStoreCapabilityInformation(Optional.ToNullable(subscriptionId), Optional.ToNullable(state), Optional.ToNullable(maxAccountCount), Optional.ToNullable(accountCount), Optional.ToNullable(migrationState), serializedAdditionalRawData);
+        }
+
+        DataLakeStoreCapabilityInformation IModelJsonSerializable<DataLakeStoreCapabilityInformation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataLakeStoreCapabilityInformation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataLakeStoreCapabilityInformation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataLakeStoreCapabilityInformation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataLakeStoreCapabilityInformation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataLakeStoreCapabilityInformation IModelSerializable<DataLakeStoreCapabilityInformation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataLakeStoreCapabilityInformation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataLakeStoreCapabilityInformation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataLakeStoreCapabilityInformation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataLakeStoreCapabilityInformation"/> to convert. </param>
+        public static implicit operator RequestContent(DataLakeStoreCapabilityInformation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataLakeStoreCapabilityInformation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataLakeStoreCapabilityInformation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataLakeStoreCapabilityInformation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

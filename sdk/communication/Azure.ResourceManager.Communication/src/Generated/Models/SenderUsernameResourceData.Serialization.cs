@@ -5,17 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication
 {
-    public partial class SenderUsernameResourceData : IUtf8JsonSerializable
+    public partial class SenderUsernameResourceData : IUtf8JsonSerializable, IModelJsonSerializable<SenderUsernameResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SenderUsernameResourceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SenderUsernameResourceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SenderUsernameResourceData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.Communication
                 writer.WriteStringValue(DisplayName);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SenderUsernameResourceData DeserializeSenderUsernameResourceData(JsonElement element)
+        internal static SenderUsernameResourceData DeserializeSenderUsernameResourceData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -47,6 +69,7 @@ namespace Azure.ResourceManager.Communication
             Optional<string> username = default;
             Optional<string> displayName = default;
             Optional<CommunicationServiceProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -109,8 +132,61 @@ namespace Azure.ResourceManager.Communication
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SenderUsernameResourceData(id, name, type, systemData.Value, dataLocation.Value, username.Value, displayName.Value, Optional.ToNullable(provisioningState));
+            return new SenderUsernameResourceData(id, name, type, systemData.Value, dataLocation.Value, username.Value, displayName.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+        }
+
+        SenderUsernameResourceData IModelJsonSerializable<SenderUsernameResourceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SenderUsernameResourceData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSenderUsernameResourceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SenderUsernameResourceData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SenderUsernameResourceData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SenderUsernameResourceData IModelSerializable<SenderUsernameResourceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SenderUsernameResourceData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSenderUsernameResourceData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SenderUsernameResourceData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SenderUsernameResourceData"/> to convert. </param>
+        public static implicit operator RequestContent(SenderUsernameResourceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SenderUsernameResourceData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SenderUsernameResourceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSenderUsernameResourceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

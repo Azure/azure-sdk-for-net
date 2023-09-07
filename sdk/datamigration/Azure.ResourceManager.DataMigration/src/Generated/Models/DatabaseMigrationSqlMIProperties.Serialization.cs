@@ -6,25 +6,46 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class DatabaseMigrationSqlMIProperties : IUtf8JsonSerializable
+    public partial class DatabaseMigrationSqlMIProperties : IUtf8JsonSerializable, IModelJsonSerializable<DatabaseMigrationSqlMIProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DatabaseMigrationSqlMIProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DatabaseMigrationSqlMIProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DatabaseMigrationSqlMIProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BackupConfiguration))
             {
                 writer.WritePropertyName("backupConfiguration"u8);
-                writer.WriteObjectValue(BackupConfiguration);
+                if (BackupConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BackupConfiguration>)BackupConfiguration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(OfflineConfiguration))
             {
                 writer.WritePropertyName("offlineConfiguration"u8);
-                writer.WriteObjectValue(OfflineConfiguration);
+                if (OfflineConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<OfflineConfiguration>)OfflineConfiguration).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -36,7 +57,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(SourceSqlConnection))
             {
                 writer.WritePropertyName("sourceSqlConnection"u8);
-                writer.WriteObjectValue(SourceSqlConnection);
+                if (SourceSqlConnection is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SqlConnectionInformation>)SourceSqlConnection).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(SourceDatabaseName))
             {
@@ -63,11 +91,25 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("provisioningError"u8);
                 writer.WriteStringValue(ProvisioningError);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DatabaseMigrationSqlMIProperties DeserializeDatabaseMigrationSqlMIProperties(JsonElement element)
+        internal static DatabaseMigrationSqlMIProperties DeserializeDatabaseMigrationSqlMIProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,6 +131,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<ErrorInfo> migrationFailureError = default;
             Optional<string> targetDatabaseCollation = default;
             Optional<string> provisioningError = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("migrationStatusDetails"u8))
@@ -204,8 +247,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     provisioningError = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DatabaseMigrationSqlMIProperties(kind, scope.Value, provisioningState.Value, migrationStatus.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceSqlConnection.Value, sourceDatabaseName.Value, sourceServerName.Value, migrationService.Value, migrationOperationId.Value, migrationFailureError.Value, targetDatabaseCollation.Value, provisioningError.Value, migrationStatusDetails.Value, backupConfiguration.Value, offlineConfiguration.Value);
+            return new DatabaseMigrationSqlMIProperties(kind, scope.Value, provisioningState.Value, migrationStatus.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceSqlConnection.Value, sourceDatabaseName.Value, sourceServerName.Value, migrationService.Value, migrationOperationId.Value, migrationFailureError.Value, targetDatabaseCollation.Value, provisioningError.Value, migrationStatusDetails.Value, backupConfiguration.Value, offlineConfiguration.Value, serializedAdditionalRawData);
+        }
+
+        DatabaseMigrationSqlMIProperties IModelJsonSerializable<DatabaseMigrationSqlMIProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DatabaseMigrationSqlMIProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatabaseMigrationSqlMIProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DatabaseMigrationSqlMIProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DatabaseMigrationSqlMIProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DatabaseMigrationSqlMIProperties IModelSerializable<DatabaseMigrationSqlMIProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DatabaseMigrationSqlMIProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDatabaseMigrationSqlMIProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DatabaseMigrationSqlMIProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DatabaseMigrationSqlMIProperties"/> to convert. </param>
+        public static implicit operator RequestContent(DatabaseMigrationSqlMIProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DatabaseMigrationSqlMIProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DatabaseMigrationSqlMIProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDatabaseMigrationSqlMIProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

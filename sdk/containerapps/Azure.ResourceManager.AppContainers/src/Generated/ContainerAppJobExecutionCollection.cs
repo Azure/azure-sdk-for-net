@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppJobExecutionJobsExecutionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppJobExecutionJobsExecutionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppJobExecutionResource(Client, ContainerAppJobExecutionData.DeserializeContainerAppJobExecutionData(e)), _containerAppJobExecutionJobsExecutionsClientDiagnostics, Pipeline, "ContainerAppJobExecutionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ContainerAppJobExecutionResource(Client, ContainerAppJobExecutionData.DeserializeContainerAppJobExecutionData(e)), _containerAppJobExecutionJobsExecutionsClientDiagnostics, Pipeline, "ContainerAppJobExecutionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppJobExecutionJobsExecutionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppJobExecutionJobsExecutionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppJobExecutionResource(Client, ContainerAppJobExecutionData.DeserializeContainerAppJobExecutionData(e)), _containerAppJobExecutionJobsExecutionsClientDiagnostics, Pipeline, "ContainerAppJobExecutionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ContainerAppJobExecutionResource(Client, ContainerAppJobExecutionData.DeserializeContainerAppJobExecutionData(e)), _containerAppJobExecutionJobsExecutionsClientDiagnostics, Pipeline, "ContainerAppJobExecutionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

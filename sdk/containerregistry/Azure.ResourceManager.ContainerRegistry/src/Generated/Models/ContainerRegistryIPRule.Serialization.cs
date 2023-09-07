@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryIPRule : IUtf8JsonSerializable
+    public partial class ContainerRegistryIPRule : IUtf8JsonSerializable, IModelJsonSerializable<ContainerRegistryIPRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerRegistryIPRule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerRegistryIPRule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryIPRule>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Action))
             {
@@ -22,17 +30,32 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(IPAddressOrRange);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerRegistryIPRule DeserializeContainerRegistryIPRule(JsonElement element)
+        internal static ContainerRegistryIPRule DeserializeContainerRegistryIPRule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ContainerRegistryIPRuleAction> action = default;
             string value = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))
@@ -49,8 +72,61 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     value = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerRegistryIPRule(Optional.ToNullable(action), value);
+            return new ContainerRegistryIPRule(Optional.ToNullable(action), value, serializedAdditionalRawData);
+        }
+
+        ContainerRegistryIPRule IModelJsonSerializable<ContainerRegistryIPRule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryIPRule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryIPRule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerRegistryIPRule>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryIPRule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerRegistryIPRule IModelSerializable<ContainerRegistryIPRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryIPRule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerRegistryIPRule(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerRegistryIPRule"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerRegistryIPRule"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerRegistryIPRule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerRegistryIPRule"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerRegistryIPRule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerRegistryIPRule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,70 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class ManifestList
+    internal partial class ManifestList : IUtf8JsonSerializable, IModelJsonSerializable<ManifestList>
     {
-        internal static ManifestList DeserializeManifestList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManifestList>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManifestList>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManifestList>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(MediaType))
+            {
+                writer.WritePropertyName("mediaType"u8);
+                writer.WriteStringValue(MediaType);
+            }
+            if (Optional.IsCollectionDefined(Manifests))
+            {
+                writer.WritePropertyName("manifests"u8);
+                writer.WriteStartArray();
+                foreach (var item in Manifests)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ManifestListAttributes>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SchemaVersion))
+            {
+                writer.WritePropertyName("schemaVersion"u8);
+                writer.WriteNumberValue(SchemaVersion.Value);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ManifestList DeserializeManifestList(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +76,7 @@ namespace Azure.Containers.ContainerRegistry
             Optional<string> mediaType = default;
             Optional<IReadOnlyList<ManifestListAttributes>> manifests = default;
             Optional<int> schemaVersion = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mediaType"u8))
@@ -52,8 +107,61 @@ namespace Azure.Containers.ContainerRegistry
                     schemaVersion = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManifestList(Optional.ToNullable(schemaVersion), mediaType.Value, Optional.ToList(manifests));
+            return new ManifestList(Optional.ToNullable(schemaVersion), mediaType.Value, Optional.ToList(manifests), serializedAdditionalRawData);
+        }
+
+        ManifestList IModelJsonSerializable<ManifestList>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManifestList>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManifestList(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManifestList>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManifestList>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManifestList IModelSerializable<ManifestList>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManifestList>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManifestList(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManifestList"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManifestList"/> to convert. </param>
+        public static implicit operator RequestContent(ManifestList model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManifestList"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManifestList(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManifestList(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

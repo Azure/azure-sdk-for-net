@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,13 +15,13 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Included Quantity utilization summary resource. </summary>
     public partial class IncludedQuantityUtilizationSummary : BenefitUtilizationSummary
     {
-        /// <summary> Initializes a new instance of IncludedQuantityUtilizationSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncludedQuantityUtilizationSummary"/>. </summary>
         public IncludedQuantityUtilizationSummary()
         {
             Kind = BillingAccountBenefitKind.IncludedQuantity;
         }
 
-        /// <summary> Initializes a new instance of IncludedQuantityUtilizationSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncludedQuantityUtilizationSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +33,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="benefitType"> The benefit type. Supported values: 'SavingsPlan'. </param>
         /// <param name="usageOn"> Date corresponding to the utilization summary record. If the grain of data is monthly, value for this field will be first day of the month. </param>
         /// <param name="utilizationPercentage"> This is the utilized percentage for the benefit ID. </param>
-        internal IncludedQuantityUtilizationSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingAccountBenefitKind kind, string armSkuName, string benefitId, string benefitOrderId, BillingAccountBenefitKind? benefitType, DateTimeOffset? usageOn, decimal? utilizationPercentage) : base(id, name, resourceType, systemData, kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IncludedQuantityUtilizationSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingAccountBenefitKind kind, string armSkuName, string benefitId, string benefitOrderId, BillingAccountBenefitKind? benefitType, DateTimeOffset? usageOn, decimal? utilizationPercentage, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             ArmSkuName = armSkuName;
             BenefitId = benefitId;

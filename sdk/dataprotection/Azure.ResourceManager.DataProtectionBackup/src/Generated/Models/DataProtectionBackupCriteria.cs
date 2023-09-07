@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// Please note <see cref="DataProtectionBackupCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ScheduleBasedBackupCriteria"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownBackupCriteria))]
     public abstract partial class DataProtectionBackupCriteria
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupCriteria. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupCriteria"/>. </summary>
         protected DataProtectionBackupCriteria()
         {
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupCriteria"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        internal DataProtectionBackupCriteria(string objectType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupCriteria(string objectType, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ObjectType = objectType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of the specific object - used for deserializing. </summary>

@@ -5,37 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ComputeScheduledEventsProfile : IUtf8JsonSerializable
+    public partial class ComputeScheduledEventsProfile : IUtf8JsonSerializable, IModelJsonSerializable<ComputeScheduledEventsProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ComputeScheduledEventsProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ComputeScheduledEventsProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ComputeScheduledEventsProfile>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TerminateNotificationProfile))
             {
                 writer.WritePropertyName("terminateNotificationProfile"u8);
-                writer.WriteObjectValue(TerminateNotificationProfile);
+                if (TerminateNotificationProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TerminateNotificationProfile>)TerminateNotificationProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(OSImageNotificationProfile))
             {
                 writer.WritePropertyName("osImageNotificationProfile"u8);
-                writer.WriteObjectValue(OSImageNotificationProfile);
+                if (OSImageNotificationProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<OSImageNotificationProfile>)OSImageNotificationProfile).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ComputeScheduledEventsProfile DeserializeComputeScheduledEventsProfile(JsonElement element)
+        internal static ComputeScheduledEventsProfile DeserializeComputeScheduledEventsProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<TerminateNotificationProfile> terminateNotificationProfile = default;
             Optional<OSImageNotificationProfile> osImageNotificationProfile = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("terminateNotificationProfile"u8))
@@ -56,8 +93,61 @@ namespace Azure.ResourceManager.Compute.Models
                     osImageNotificationProfile = OSImageNotificationProfile.DeserializeOSImageNotificationProfile(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ComputeScheduledEventsProfile(terminateNotificationProfile.Value, osImageNotificationProfile.Value);
+            return new ComputeScheduledEventsProfile(terminateNotificationProfile.Value, osImageNotificationProfile.Value, serializedAdditionalRawData);
+        }
+
+        ComputeScheduledEventsProfile IModelJsonSerializable<ComputeScheduledEventsProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ComputeScheduledEventsProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeComputeScheduledEventsProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ComputeScheduledEventsProfile>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ComputeScheduledEventsProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ComputeScheduledEventsProfile IModelSerializable<ComputeScheduledEventsProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ComputeScheduledEventsProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeComputeScheduledEventsProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ComputeScheduledEventsProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ComputeScheduledEventsProfile"/> to convert. </param>
+        public static implicit operator RequestContent(ComputeScheduledEventsProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ComputeScheduledEventsProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ComputeScheduledEventsProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeComputeScheduledEventsProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

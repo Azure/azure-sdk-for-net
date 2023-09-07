@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerVolumeMount : IUtf8JsonSerializable
+    public partial class ContainerVolumeMount : IUtf8JsonSerializable, IModelJsonSerializable<ContainerVolumeMount>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerVolumeMount>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerVolumeMount>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerVolumeMount>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -24,11 +32,25 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("readOnly"u8);
                 writer.WriteBooleanValue(IsReadOnly.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerVolumeMount DeserializeContainerVolumeMount(JsonElement element)
+        internal static ContainerVolumeMount DeserializeContainerVolumeMount(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +58,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             string name = default;
             string mountPath = default;
             Optional<bool> readOnly = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -57,8 +80,61 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     readOnly = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerVolumeMount(name, mountPath, Optional.ToNullable(readOnly));
+            return new ContainerVolumeMount(name, mountPath, Optional.ToNullable(readOnly), serializedAdditionalRawData);
+        }
+
+        ContainerVolumeMount IModelJsonSerializable<ContainerVolumeMount>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerVolumeMount>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerVolumeMount(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerVolumeMount>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerVolumeMount>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerVolumeMount IModelSerializable<ContainerVolumeMount>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerVolumeMount>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerVolumeMount(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerVolumeMount"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerVolumeMount"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerVolumeMount model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerVolumeMount"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerVolumeMount(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerVolumeMount(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> Describes multiple sets of worker selectors, of which one will be selected and attached according to a weighting. </summary>
     public partial class WeightedAllocationWorkerSelectorAttachment : WorkerSelectorAttachment
     {
-        /// <summary> Initializes a new instance of WeightedAllocationWorkerSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="WeightedAllocationWorkerSelectorAttachment"/>. </summary>
         /// <param name="allocations"> A collection of percentage based weighted allocations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="allocations"/> is null. </exception>
         public WeightedAllocationWorkerSelectorAttachment(IEnumerable<WorkerWeightedAllocation> allocations)
@@ -26,13 +26,19 @@ namespace Azure.Communication.JobRouter
             Kind = "weighted-allocation-worker-selector";
         }
 
-        /// <summary> Initializes a new instance of WeightedAllocationWorkerSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="WeightedAllocationWorkerSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing the type of worker selector attachment. </param>
         /// <param name="allocations"> A collection of percentage based weighted allocations. </param>
-        internal WeightedAllocationWorkerSelectorAttachment(string kind, IList<WorkerWeightedAllocation> allocations) : base(kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WeightedAllocationWorkerSelectorAttachment(string kind, IList<WorkerWeightedAllocation> allocations, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
         {
             Allocations = allocations;
             Kind = kind ?? "weighted-allocation-worker-selector";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WeightedAllocationWorkerSelectorAttachment"/> for deserialization. </summary>
+        internal WeightedAllocationWorkerSelectorAttachment()
+        {
         }
 
         /// <summary> A collection of percentage based weighted allocations. </summary>

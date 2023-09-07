@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class KubernetesClusterBackupDataSourceSettings : IUtf8JsonSerializable
+    public partial class KubernetesClusterBackupDataSourceSettings : IUtf8JsonSerializable, IModelJsonSerializable<KubernetesClusterBackupDataSourceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KubernetesClusterBackupDataSourceSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KubernetesClusterBackupDataSourceSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesClusterBackupDataSourceSettings>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("snapshotVolumes"u8);
             writer.WriteBooleanValue(IsSnapshotVolumesEnabled);
@@ -72,11 +79,25 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KubernetesClusterBackupDataSourceSettings DeserializeKubernetesClusterBackupDataSourceSettings(JsonElement element)
+        internal static KubernetesClusterBackupDataSourceSettings DeserializeKubernetesClusterBackupDataSourceSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,6 +110,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<IList<string>> excludedResourceTypes = default;
             Optional<IList<string>> labelSelectors = default;
             string objectType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("snapshotVolumes"u8))
@@ -176,8 +198,61 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KubernetesClusterBackupDataSourceSettings(objectType, snapshotVolumes, includeClusterScopeResources, Optional.ToList(includedNamespaces), Optional.ToList(excludedNamespaces), Optional.ToList(includedResourceTypes), Optional.ToList(excludedResourceTypes), Optional.ToList(labelSelectors));
+            return new KubernetesClusterBackupDataSourceSettings(objectType, snapshotVolumes, includeClusterScopeResources, Optional.ToList(includedNamespaces), Optional.ToList(excludedNamespaces), Optional.ToList(includedResourceTypes), Optional.ToList(excludedResourceTypes), Optional.ToList(labelSelectors), serializedAdditionalRawData);
+        }
+
+        KubernetesClusterBackupDataSourceSettings IModelJsonSerializable<KubernetesClusterBackupDataSourceSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesClusterBackupDataSourceSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesClusterBackupDataSourceSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KubernetesClusterBackupDataSourceSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesClusterBackupDataSourceSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KubernetesClusterBackupDataSourceSettings IModelSerializable<KubernetesClusterBackupDataSourceSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesClusterBackupDataSourceSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKubernetesClusterBackupDataSourceSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KubernetesClusterBackupDataSourceSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KubernetesClusterBackupDataSourceSettings"/> to convert. </param>
+        public static implicit operator RequestContent(KubernetesClusterBackupDataSourceSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KubernetesClusterBackupDataSourceSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KubernetesClusterBackupDataSourceSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKubernetesClusterBackupDataSourceSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

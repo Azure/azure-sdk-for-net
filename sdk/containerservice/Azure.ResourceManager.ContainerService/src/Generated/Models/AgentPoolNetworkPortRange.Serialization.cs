@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class AgentPoolNetworkPortRange : IUtf8JsonSerializable
+    public partial class AgentPoolNetworkPortRange : IUtf8JsonSerializable, IModelJsonSerializable<AgentPoolNetworkPortRange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AgentPoolNetworkPortRange>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AgentPoolNetworkPortRange>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AgentPoolNetworkPortRange>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PortStart))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AgentPoolNetworkPortRange DeserializeAgentPoolNetworkPortRange(JsonElement element)
+        internal static AgentPoolNetworkPortRange DeserializeAgentPoolNetworkPortRange(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<int> portStart = default;
             Optional<int> portEnd = default;
             Optional<AgentPoolNetworkPortProtocol> protocol = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("portStart"u8))
@@ -71,8 +94,61 @@ namespace Azure.ResourceManager.ContainerService.Models
                     protocol = new AgentPoolNetworkPortProtocol(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AgentPoolNetworkPortRange(Optional.ToNullable(portStart), Optional.ToNullable(portEnd), Optional.ToNullable(protocol));
+            return new AgentPoolNetworkPortRange(Optional.ToNullable(portStart), Optional.ToNullable(portEnd), Optional.ToNullable(protocol), serializedAdditionalRawData);
+        }
+
+        AgentPoolNetworkPortRange IModelJsonSerializable<AgentPoolNetworkPortRange>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AgentPoolNetworkPortRange>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAgentPoolNetworkPortRange(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AgentPoolNetworkPortRange>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AgentPoolNetworkPortRange>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AgentPoolNetworkPortRange IModelSerializable<AgentPoolNetworkPortRange>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AgentPoolNetworkPortRange>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAgentPoolNetworkPortRange(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AgentPoolNetworkPortRange"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AgentPoolNetworkPortRange"/> to convert. </param>
+        public static implicit operator RequestContent(AgentPoolNetworkPortRange model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AgentPoolNetworkPortRange"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AgentPoolNetworkPortRange(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAgentPoolNetworkPortRange(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

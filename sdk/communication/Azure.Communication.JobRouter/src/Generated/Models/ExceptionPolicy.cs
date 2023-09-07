@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Communication.JobRouter;
 using Azure.Core;
@@ -14,15 +15,20 @@ namespace Azure.Communication.JobRouter.Models
     /// <summary> A policy that defines actions to execute when exception are triggered. </summary>
     public partial class ExceptionPolicy
     {
-        /// <summary> Initializes a new instance of ExceptionPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExceptionPolicy"/>. </summary>
         /// <param name="id"> The Id of the exception policy. </param>
         /// <param name="name"> (Optional) The name of the exception policy. </param>
         /// <param name="exceptionRules"> (Optional) A dictionary collection of exception rules on the exception policy. Key is the Id of each exception rule. </param>
-        internal ExceptionPolicy(string id, string name, IDictionary<string, ExceptionRule> exceptionRules)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExceptionPolicy(string id, string name, IDictionary<string, ExceptionRule> exceptionRules, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             _exceptionRules = exceptionRules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Id of the exception policy. </summary>

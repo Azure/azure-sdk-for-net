@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MISqlConnectionInfo : IUtf8JsonSerializable
+    public partial class MISqlConnectionInfo : IUtf8JsonSerializable, IModelJsonSerializable<MISqlConnectionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MISqlConnectionInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MISqlConnectionInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MISqlConnectionInfo>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("managedInstanceResourceId"u8);
             writer.WriteStringValue(ManagedInstanceResourceId);
@@ -29,11 +37,25 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MISqlConnectionInfo DeserializeMISqlConnectionInfo(JsonElement element)
+        internal static MISqlConnectionInfo DeserializeMISqlConnectionInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string type = default;
             Optional<string> userName = default;
             Optional<string> password = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedInstanceResourceId"u8))
@@ -64,8 +87,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     password = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MISqlConnectionInfo(type, userName.Value, password.Value, managedInstanceResourceId);
+            return new MISqlConnectionInfo(type, userName.Value, password.Value, managedInstanceResourceId, serializedAdditionalRawData);
+        }
+
+        MISqlConnectionInfo IModelJsonSerializable<MISqlConnectionInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MISqlConnectionInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMISqlConnectionInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MISqlConnectionInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MISqlConnectionInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MISqlConnectionInfo IModelSerializable<MISqlConnectionInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MISqlConnectionInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMISqlConnectionInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MISqlConnectionInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MISqlConnectionInfo"/> to convert. </param>
+        public static implicit operator RequestContent(MISqlConnectionInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MISqlConnectionInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MISqlConnectionInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMISqlConnectionInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

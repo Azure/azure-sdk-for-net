@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class NetworkInterfaceUpdate : IUtf8JsonSerializable
+    public partial class NetworkInterfaceUpdate : IUtf8JsonSerializable, IModelJsonSerializable<NetworkInterfaceUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkInterfaceUpdate>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkInterfaceUpdate>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkInterfaceUpdate>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -40,7 +48,129 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WritePropertyName("deviceKey"u8);
                 writer.WriteNumberValue(DeviceKey.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static NetworkInterfaceUpdate DeserializeNetworkInterfaceUpdate(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> name = default;
+            Optional<string> networkId = default;
+            Optional<NICType> nicType = default;
+            Optional<PowerOnBootOption> powerOnBoot = default;
+            Optional<int> deviceKey = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("networkId"u8))
+                {
+                    networkId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("nicType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nicType = new NICType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("powerOnBoot"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    powerOnBoot = new PowerOnBootOption(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("deviceKey"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deviceKey = property.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new NetworkInterfaceUpdate(name.Value, networkId.Value, Optional.ToNullable(nicType), Optional.ToNullable(powerOnBoot), Optional.ToNullable(deviceKey), serializedAdditionalRawData);
+        }
+
+        NetworkInterfaceUpdate IModelJsonSerializable<NetworkInterfaceUpdate>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkInterfaceUpdate>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkInterfaceUpdate(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkInterfaceUpdate>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkInterfaceUpdate>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkInterfaceUpdate IModelSerializable<NetworkInterfaceUpdate>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkInterfaceUpdate>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkInterfaceUpdate(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetworkInterfaceUpdate"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetworkInterfaceUpdate"/> to convert. </param>
+        public static implicit operator RequestContent(NetworkInterfaceUpdate model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetworkInterfaceUpdate"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetworkInterfaceUpdate(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkInterfaceUpdate(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -9,21 +9,34 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    public partial class ContainerAppData : IUtf8JsonSerializable
+    public partial class ContainerAppData : IUtf8JsonSerializable, IModelJsonSerializable<ContainerAppData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerAppData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerAppData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation);
+                if (ExtendedLocation is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerAppExtendedLocation>)ExtendedLocation).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Identity))
             {
@@ -69,19 +82,47 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration);
+                if (Configuration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerAppConfiguration>)Configuration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
-                writer.WriteObjectValue(Template);
+                if (Template is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerAppTemplate>)Template).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppData DeserializeContainerAppData(JsonElement element)
+        internal static ContainerAppData DeserializeContainerAppData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -107,6 +148,7 @@ namespace Azure.ResourceManager.AppContainers
             Optional<ContainerAppTemplate> template = default;
             Optional<IReadOnlyList<IPAddress>> outboundIPAddresses = default;
             Optional<Uri> eventStreamEndpoint = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -288,8 +330,61 @@ namespace Azure.ResourceManager.AppContainers
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerAppData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, identity, managedBy.Value, Optional.ToNullable(provisioningState), managedEnvironmentId.Value, environmentId.Value, workloadProfileName.Value, latestRevisionName.Value, latestReadyRevisionName.Value, latestRevisionFqdn.Value, customDomainVerificationId.Value, configuration.Value, template.Value, Optional.ToList(outboundIPAddresses), eventStreamEndpoint.Value);
+            return new ContainerAppData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, identity, managedBy.Value, Optional.ToNullable(provisioningState), managedEnvironmentId.Value, environmentId.Value, workloadProfileName.Value, latestRevisionName.Value, latestReadyRevisionName.Value, latestRevisionFqdn.Value, customDomainVerificationId.Value, configuration.Value, template.Value, Optional.ToList(outboundIPAddresses), eventStreamEndpoint.Value, serializedAdditionalRawData);
+        }
+
+        ContainerAppData IModelJsonSerializable<ContainerAppData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerAppData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerAppData IModelSerializable<ContainerAppData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerAppData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerAppData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerAppData"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerAppData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerAppData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerAppData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerAppData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

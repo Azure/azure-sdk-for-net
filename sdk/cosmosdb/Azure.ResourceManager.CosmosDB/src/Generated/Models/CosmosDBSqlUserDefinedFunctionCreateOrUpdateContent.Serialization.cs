@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent : IUtf8JsonSerializable, IModelJsonSerializable<CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -39,18 +46,46 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("resource"u8);
-            writer.WriteObjectValue(Resource);
+            if (Resource is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<CosmosDBSqlUserDefinedFunctionResourceInfo>)Resource).Serialize(writer, options);
+            }
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options);
+                if (Options is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CosmosDBCreateUpdateConfig>)Options).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent DeserializeCosmosDBSqlUserDefinedFunctionCreateOrUpdateContent(JsonElement element)
+        internal static CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent DeserializeCosmosDBSqlUserDefinedFunctionCreateOrUpdateContent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,6 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<SystemData> systemData = default;
             CosmosDBSqlUserDefinedFunctionResourceInfo resource = default;
             Optional<CosmosDBCreateUpdateConfig> options = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -145,8 +181,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource, options.Value, identity);
+            return new CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource, options.Value, identity, serializedAdditionalRawData);
+        }
+
+        CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent IModelJsonSerializable<CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBSqlUserDefinedFunctionCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent IModelSerializable<CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCosmosDBSqlUserDefinedFunctionCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent"/> to convert. </param>
+        public static implicit operator RequestContent(CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCosmosDBSqlUserDefinedFunctionCreateOrUpdateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

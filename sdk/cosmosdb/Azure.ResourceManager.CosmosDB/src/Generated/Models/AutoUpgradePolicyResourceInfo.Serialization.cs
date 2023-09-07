@@ -5,31 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class AutoUpgradePolicyResourceInfo : IUtf8JsonSerializable
+    internal partial class AutoUpgradePolicyResourceInfo : IUtf8JsonSerializable, IModelJsonSerializable<AutoUpgradePolicyResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AutoUpgradePolicyResourceInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AutoUpgradePolicyResourceInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AutoUpgradePolicyResourceInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ThroughputPolicy))
             {
                 writer.WritePropertyName("throughputPolicy"u8);
-                writer.WriteObjectValue(ThroughputPolicy);
+                if (ThroughputPolicy is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ThroughputPolicyResourceInfo>)ThroughputPolicy).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static AutoUpgradePolicyResourceInfo DeserializeAutoUpgradePolicyResourceInfo(JsonElement element)
+        internal static AutoUpgradePolicyResourceInfo DeserializeAutoUpgradePolicyResourceInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ThroughputPolicyResourceInfo> throughputPolicy = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("throughputPolicy"u8))
@@ -41,8 +71,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     throughputPolicy = ThroughputPolicyResourceInfo.DeserializeThroughputPolicyResourceInfo(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AutoUpgradePolicyResourceInfo(throughputPolicy.Value);
+            return new AutoUpgradePolicyResourceInfo(throughputPolicy.Value, serializedAdditionalRawData);
+        }
+
+        AutoUpgradePolicyResourceInfo IModelJsonSerializable<AutoUpgradePolicyResourceInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AutoUpgradePolicyResourceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutoUpgradePolicyResourceInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AutoUpgradePolicyResourceInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AutoUpgradePolicyResourceInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AutoUpgradePolicyResourceInfo IModelSerializable<AutoUpgradePolicyResourceInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AutoUpgradePolicyResourceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAutoUpgradePolicyResourceInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AutoUpgradePolicyResourceInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AutoUpgradePolicyResourceInfo"/> to convert. </param>
+        public static implicit operator RequestContent(AutoUpgradePolicyResourceInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AutoUpgradePolicyResourceInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AutoUpgradePolicyResourceInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAutoUpgradePolicyResourceInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

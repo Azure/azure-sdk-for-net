@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class RouterQueueSelector : IUtf8JsonSerializable
+    public partial class RouterQueueSelector : IUtf8JsonSerializable, IModelJsonSerializable<RouterQueueSelector>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RouterQueueSelector>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RouterQueueSelector>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RouterQueueSelector>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
@@ -24,11 +32,25 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("value"u8);
                 writer.WriteObjectValue(_value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RouterQueueSelector DeserializeRouterQueueSelector(JsonElement element)
+        internal static RouterQueueSelector DeserializeRouterQueueSelector(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +58,7 @@ namespace Azure.Communication.JobRouter
             string key = default;
             LabelOperator labelOperator = default;
             Optional<object> value = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
@@ -57,8 +80,61 @@ namespace Azure.Communication.JobRouter
                     value = property.Value.GetObject();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RouterQueueSelector(key, labelOperator, value.Value);
+            return new RouterQueueSelector(key, labelOperator, value.Value, serializedAdditionalRawData);
+        }
+
+        RouterQueueSelector IModelJsonSerializable<RouterQueueSelector>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RouterQueueSelector>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouterQueueSelector(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RouterQueueSelector>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RouterQueueSelector>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RouterQueueSelector IModelSerializable<RouterQueueSelector>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RouterQueueSelector>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRouterQueueSelector(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RouterQueueSelector"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RouterQueueSelector"/> to convert. </param>
+        public static implicit operator RequestContent(RouterQueueSelector model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RouterQueueSelector"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RouterQueueSelector(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRouterQueueSelector(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

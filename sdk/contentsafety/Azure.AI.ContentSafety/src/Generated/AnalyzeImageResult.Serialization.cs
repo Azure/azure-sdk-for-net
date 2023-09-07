@@ -5,16 +5,91 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.ContentSafety
 {
-    public partial class AnalyzeImageResult
+    public partial class AnalyzeImageResult : IUtf8JsonSerializable, IModelJsonSerializable<AnalyzeImageResult>
     {
-        internal static AnalyzeImageResult DeserializeAnalyzeImageResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AnalyzeImageResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AnalyzeImageResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(HateResult))
+            {
+                writer.WritePropertyName("hateResult"u8);
+                if (HateResult is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ImageAnalyzeSeverityResult>)HateResult).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(SelfHarmResult))
+            {
+                writer.WritePropertyName("selfHarmResult"u8);
+                if (SelfHarmResult is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ImageAnalyzeSeverityResult>)SelfHarmResult).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(SexualResult))
+            {
+                writer.WritePropertyName("sexualResult"u8);
+                if (SexualResult is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ImageAnalyzeSeverityResult>)SexualResult).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(ViolenceResult))
+            {
+                writer.WritePropertyName("violenceResult"u8);
+                if (ViolenceResult is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ImageAnalyzeSeverityResult>)ViolenceResult).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AnalyzeImageResult DeserializeAnalyzeImageResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +98,7 @@ namespace Azure.AI.ContentSafety
             Optional<ImageAnalyzeSeverityResult> selfHarmResult = default;
             Optional<ImageAnalyzeSeverityResult> sexualResult = default;
             Optional<ImageAnalyzeSeverityResult> violenceResult = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hateResult"u8))
@@ -61,16 +137,61 @@ namespace Azure.AI.ContentSafety
                     violenceResult = ImageAnalyzeSeverityResult.DeserializeImageAnalyzeSeverityResult(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AnalyzeImageResult(hateResult.Value, selfHarmResult.Value, sexualResult.Value, violenceResult.Value);
+            return new AnalyzeImageResult(hateResult.Value, selfHarmResult.Value, sexualResult.Value, violenceResult.Value, serializedAdditionalRawData);
         }
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AnalyzeImageResult FromResponse(Response response)
+        AnalyzeImageResult IModelJsonSerializable<AnalyzeImageResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAnalyzeImageResult(document.RootElement);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalyzeImageResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AnalyzeImageResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AnalyzeImageResult IModelSerializable<AnalyzeImageResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAnalyzeImageResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AnalyzeImageResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AnalyzeImageResult"/> to convert. </param>
+        public static implicit operator RequestContent(AnalyzeImageResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AnalyzeImageResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AnalyzeImageResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAnalyzeImageResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

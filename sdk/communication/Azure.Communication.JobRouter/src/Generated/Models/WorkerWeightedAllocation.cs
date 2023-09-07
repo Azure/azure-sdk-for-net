@@ -15,7 +15,10 @@ namespace Azure.Communication.JobRouter
     /// <summary> Contains the weight percentage and worker selectors to be applied if selected for weighted distributions. </summary>
     public partial class WorkerWeightedAllocation
     {
-        /// <summary> Initializes a new instance of WorkerWeightedAllocation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkerWeightedAllocation"/>. </summary>
         /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
         /// <param name="workerSelectors"> A collection of worker selectors that will be applied if this allocation is selected. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerSelectors"/> is null. </exception>
@@ -27,13 +30,20 @@ namespace Azure.Communication.JobRouter
             WorkerSelectors = workerSelectors.ToList();
         }
 
-        /// <summary> Initializes a new instance of WorkerWeightedAllocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkerWeightedAllocation"/>. </summary>
         /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
         /// <param name="workerSelectors"> A collection of worker selectors that will be applied if this allocation is selected. </param>
-        internal WorkerWeightedAllocation(double weight, IList<RouterWorkerSelector> workerSelectors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkerWeightedAllocation(double weight, IList<RouterWorkerSelector> workerSelectors, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Weight = weight;
             WorkerSelectors = workerSelectors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WorkerWeightedAllocation"/> for deserialization. </summary>
+        internal WorkerWeightedAllocation()
+        {
         }
 
         /// <summary> The percentage of this weight, expressed as a fraction of 1. </summary>

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BackupInstancePolicySettings : IUtf8JsonSerializable
+    public partial class BackupInstancePolicySettings : IUtf8JsonSerializable, IModelJsonSerializable<BackupInstancePolicySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BackupInstancePolicySettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BackupInstancePolicySettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BackupInstancePolicySettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DataStoreParametersList))
             {
@@ -22,7 +29,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in DataStoreParametersList)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DataStoreSettings>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -32,21 +46,43 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in BackupDataSourceParametersList)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<BackupDataSourceSettings>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static BackupInstancePolicySettings DeserializeBackupInstancePolicySettings(JsonElement element)
+        internal static BackupInstancePolicySettings DeserializeBackupInstancePolicySettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<DataStoreSettings>> dataStoreParametersList = default;
             Optional<IList<BackupDataSourceSettings>> backupDatasourceParametersList = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataStoreParametersList"u8))
@@ -77,8 +113,61 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     backupDatasourceParametersList = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BackupInstancePolicySettings(Optional.ToList(dataStoreParametersList), Optional.ToList(backupDatasourceParametersList));
+            return new BackupInstancePolicySettings(Optional.ToList(dataStoreParametersList), Optional.ToList(backupDatasourceParametersList), serializedAdditionalRawData);
+        }
+
+        BackupInstancePolicySettings IModelJsonSerializable<BackupInstancePolicySettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackupInstancePolicySettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupInstancePolicySettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BackupInstancePolicySettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackupInstancePolicySettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BackupInstancePolicySettings IModelSerializable<BackupInstancePolicySettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackupInstancePolicySettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBackupInstancePolicySettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BackupInstancePolicySettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BackupInstancePolicySettings"/> to convert. </param>
+        public static implicit operator RequestContent(BackupInstancePolicySettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BackupInstancePolicySettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BackupInstancePolicySettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBackupInstancePolicySettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

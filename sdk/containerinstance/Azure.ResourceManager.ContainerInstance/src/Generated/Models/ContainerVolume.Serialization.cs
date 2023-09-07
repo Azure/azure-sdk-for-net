@@ -8,21 +8,34 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerVolume : IUtf8JsonSerializable
+    public partial class ContainerVolume : IUtf8JsonSerializable, IModelJsonSerializable<ContainerVolume>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerVolume>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerVolume>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerVolume>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(AzureFile))
             {
                 writer.WritePropertyName("azureFile"u8);
-                writer.WriteObjectValue(AzureFile);
+                if (AzureFile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerInstanceAzureFileVolume>)AzureFile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(EmptyDir))
             {
@@ -47,13 +60,34 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(GitRepo))
             {
                 writer.WritePropertyName("gitRepo"u8);
-                writer.WriteObjectValue(GitRepo);
+                if (GitRepo is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerInstanceGitRepoVolume>)GitRepo).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ContainerVolume DeserializeContainerVolume(JsonElement element)
+        internal static ContainerVolume DeserializeContainerVolume(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -63,6 +97,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<BinaryData> emptyDir = default;
             Optional<IDictionary<string, string>> secret = default;
             Optional<ContainerInstanceGitRepoVolume> gitRepo = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -111,8 +146,61 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     gitRepo = ContainerInstanceGitRepoVolume.DeserializeContainerInstanceGitRepoVolume(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerVolume(name, azureFile.Value, emptyDir.Value, Optional.ToDictionary(secret), gitRepo.Value);
+            return new ContainerVolume(name, azureFile.Value, emptyDir.Value, Optional.ToDictionary(secret), gitRepo.Value, serializedAdditionalRawData);
+        }
+
+        ContainerVolume IModelJsonSerializable<ContainerVolume>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerVolume>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerVolume(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerVolume>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerVolume>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerVolume IModelSerializable<ContainerVolume>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerVolume>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerVolume(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerVolume"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerVolume"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerVolume model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerVolume"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerVolume(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerVolume(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

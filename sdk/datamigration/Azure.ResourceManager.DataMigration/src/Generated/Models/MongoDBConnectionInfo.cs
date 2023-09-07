@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Describes a connection to a MongoDB data source. </summary>
     public partial class MongoDBConnectionInfo : ConnectionInfo
     {
-        /// <summary> Initializes a new instance of MongoDBConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBConnectionInfo"/>. </summary>
         /// <param name="connectionString"> A MongoDB connection string or blob container URL. The user name and password can be specified here or in the userName and password properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public MongoDBConnectionInfo(string connectionString)
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             ConnectionInfoType = "MongoDbConnectionInfo";
         }
 
-        /// <summary> Initializes a new instance of MongoDBConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBConnectionInfo"/>. </summary>
         /// <param name="connectionInfoType"> Type of connection info. </param>
         /// <param name="userName"> User name. </param>
         /// <param name="password"> Password credential. </param>
@@ -39,7 +40,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="port"> port for server. </param>
         /// <param name="additionalSettings"> Additional connection settings. </param>
         /// <param name="authentication"> Authentication type to use for connection. </param>
-        internal MongoDBConnectionInfo(string connectionInfoType, string userName, string password, string connectionString, string dataSource, bool? encryptConnection, string serverBrandVersion, string serverVersion, string serverName, bool? trustServerCertificate, bool? enforceSSL, int? port, string additionalSettings, AuthenticationType? authentication) : base(connectionInfoType, userName, password)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBConnectionInfo(string connectionInfoType, string userName, string password, string connectionString, string dataSource, bool? encryptConnection, string serverBrandVersion, string serverVersion, string serverName, bool? trustServerCertificate, bool? enforceSSL, int? port, string additionalSettings, AuthenticationType? authentication, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(connectionInfoType, userName, password, serializedAdditionalRawData)
         {
             ConnectionString = connectionString;
             DataSource = dataSource;
@@ -53,6 +55,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             AdditionalSettings = additionalSettings;
             Authentication = authentication;
             ConnectionInfoType = connectionInfoType ?? "MongoDbConnectionInfo";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBConnectionInfo"/> for deserialization. </summary>
+        internal MongoDBConnectionInfo()
+        {
         }
 
         /// <summary> A MongoDB connection string or blob container URL. The user name and password can be specified here or in the userName and password properties. </summary>

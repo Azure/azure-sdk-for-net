@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Datasource to be backed up. </summary>
     public partial class DataSourceInfo
     {
-        /// <summary> Initializes a new instance of DataSourceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataSourceInfo"/>. </summary>
         /// <param name="resourceId"> Full ARM ID of the resource. For azure resources, this is ARM ID. For non azure resources, this will be the ID created by backup service via Fabric/Vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public DataSourceInfo(ResourceIdentifier resourceId)
@@ -23,7 +27,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ResourceId = resourceId;
         }
 
-        /// <summary> Initializes a new instance of DataSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataSourceInfo"/>. </summary>
         /// <param name="dataSourceType"> DatasourceType of the resource. </param>
         /// <param name="objectType"> Type of Datasource object, used to initialize the right inherited type. </param>
         /// <param name="resourceId"> Full ARM ID of the resource. For azure resources, this is ARM ID. For non azure resources, this will be the ID created by backup service via Fabric/Vault. </param>
@@ -31,7 +35,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="resourceName"> Unique identifier of the resource in the context of parent. </param>
         /// <param name="resourceType"> Resource Type of Datasource. </param>
         /// <param name="resourceUriString"> Uri of the resource. </param>
-        internal DataSourceInfo(string dataSourceType, string objectType, ResourceIdentifier resourceId, AzureLocation? resourceLocation, string resourceName, ResourceType? resourceType, string resourceUriString)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataSourceInfo(string dataSourceType, string objectType, ResourceIdentifier resourceId, AzureLocation? resourceLocation, string resourceName, ResourceType? resourceType, string resourceUriString, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataSourceType = dataSourceType;
             ObjectType = objectType;
@@ -40,6 +45,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ResourceName = resourceName;
             ResourceType = resourceType;
             ResourceUriString = resourceUriString;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataSourceInfo"/> for deserialization. </summary>
+        internal DataSourceInfo()
+        {
         }
 
         /// <summary> DatasourceType of the resource. </summary>

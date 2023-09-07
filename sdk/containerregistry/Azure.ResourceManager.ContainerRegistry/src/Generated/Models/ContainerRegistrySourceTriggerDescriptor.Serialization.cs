@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistrySourceTriggerDescriptor : IUtf8JsonSerializable
+    public partial class ContainerRegistrySourceTriggerDescriptor : IUtf8JsonSerializable, IModelJsonSerializable<ContainerRegistrySourceTriggerDescriptor>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerRegistrySourceTriggerDescriptor>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerRegistrySourceTriggerDescriptor>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistrySourceTriggerDescriptor>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -51,11 +58,25 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("providerType"u8);
                 writer.WriteStringValue(ProviderType);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerRegistrySourceTriggerDescriptor DeserializeContainerRegistrySourceTriggerDescriptor(JsonElement element)
+        internal static ContainerRegistrySourceTriggerDescriptor DeserializeContainerRegistrySourceTriggerDescriptor(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -67,6 +88,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<Uri> repositoryUrl = default;
             Optional<string> branchName = default;
             Optional<string> providerType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -112,8 +134,61 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     providerType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerRegistrySourceTriggerDescriptor(Optional.ToNullable(id), eventType.Value, commitId.Value, pullRequestId.Value, repositoryUrl.Value, branchName.Value, providerType.Value);
+            return new ContainerRegistrySourceTriggerDescriptor(Optional.ToNullable(id), eventType.Value, commitId.Value, pullRequestId.Value, repositoryUrl.Value, branchName.Value, providerType.Value, serializedAdditionalRawData);
+        }
+
+        ContainerRegistrySourceTriggerDescriptor IModelJsonSerializable<ContainerRegistrySourceTriggerDescriptor>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistrySourceTriggerDescriptor>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistrySourceTriggerDescriptor(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerRegistrySourceTriggerDescriptor>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistrySourceTriggerDescriptor>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerRegistrySourceTriggerDescriptor IModelSerializable<ContainerRegistrySourceTriggerDescriptor>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistrySourceTriggerDescriptor>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerRegistrySourceTriggerDescriptor(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerRegistrySourceTriggerDescriptor"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerRegistrySourceTriggerDescriptor"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerRegistrySourceTriggerDescriptor model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerRegistrySourceTriggerDescriptor"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerRegistrySourceTriggerDescriptor(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerRegistrySourceTriggerDescriptor(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

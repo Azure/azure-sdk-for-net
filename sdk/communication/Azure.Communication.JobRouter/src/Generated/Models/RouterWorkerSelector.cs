@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Communication.JobRouter.Models;
 using Azure.Core;
 
@@ -14,7 +15,10 @@ namespace Azure.Communication.JobRouter
     /// <summary> Describes a condition that must be met against a set of labels for worker selection. </summary>
     public partial class RouterWorkerSelector
     {
-        /// <summary> Initializes a new instance of RouterWorkerSelector. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouterWorkerSelector"/>. </summary>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value defined on the label selector. </param>
         /// <param name="value"> The value to compare against the actual label value with the given operator. </param>
@@ -22,7 +26,8 @@ namespace Azure.Communication.JobRouter
         /// <param name="expedite"> Pushes the job to the front of the queue as long as this selector is active. </param>
         /// <param name="status"> The status of the worker selector. </param>
         /// <param name="expiresAt"> The time at which this worker selector expires in UTC. </param>
-        internal RouterWorkerSelector(string key, LabelOperator labelOperator, object value, double? expiresAfterSeconds, bool? expedite, RouterWorkerSelectorStatus? status, DateTimeOffset? expiresAt)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouterWorkerSelector(string key, LabelOperator labelOperator, object value, double? expiresAfterSeconds, bool? expedite, RouterWorkerSelectorStatus? status, DateTimeOffset? expiresAt, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Key = key;
             LabelOperator = labelOperator;
@@ -31,6 +36,12 @@ namespace Azure.Communication.JobRouter
             Expedite = expedite;
             Status = status;
             ExpiresAt = expiresAt;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouterWorkerSelector"/> for deserialization. </summary>
+        internal RouterWorkerSelector()
+        {
         }
 
         /// <summary> The label key to query against. </summary>

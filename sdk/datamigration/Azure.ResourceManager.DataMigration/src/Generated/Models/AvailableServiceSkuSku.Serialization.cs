@@ -5,15 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class AvailableServiceSkuSku
+    public partial class AvailableServiceSkuSku : IUtf8JsonSerializable, IModelJsonSerializable<AvailableServiceSkuSku>
     {
-        internal static AvailableServiceSkuSku DeserializeAvailableServiceSkuSku(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AvailableServiceSkuSku>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AvailableServiceSkuSku>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AvailableServiceSkuSku>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Family))
+            {
+                writer.WritePropertyName("family"u8);
+                writer.WriteStringValue(Family);
+            }
+            if (Optional.IsDefined(Size))
+            {
+                writer.WritePropertyName("size"u8);
+                writer.WriteStringValue(Size);
+            }
+            if (Optional.IsDefined(Tier))
+            {
+                writer.WritePropertyName("tier"u8);
+                writer.WriteStringValue(Tier);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AvailableServiceSkuSku DeserializeAvailableServiceSkuSku(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +70,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> family = default;
             Optional<string> size = default;
             Optional<string> tier = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -44,8 +93,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     tier = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AvailableServiceSkuSku(name.Value, family.Value, size.Value, tier.Value);
+            return new AvailableServiceSkuSku(name.Value, family.Value, size.Value, tier.Value, serializedAdditionalRawData);
+        }
+
+        AvailableServiceSkuSku IModelJsonSerializable<AvailableServiceSkuSku>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AvailableServiceSkuSku>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAvailableServiceSkuSku(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AvailableServiceSkuSku>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AvailableServiceSkuSku>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AvailableServiceSkuSku IModelSerializable<AvailableServiceSkuSku>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AvailableServiceSkuSku>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAvailableServiceSkuSku(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AvailableServiceSkuSku"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AvailableServiceSkuSku"/> to convert. </param>
+        public static implicit operator RequestContent(AvailableServiceSkuSku model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AvailableServiceSkuSku"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AvailableServiceSkuSku(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAvailableServiceSkuSku(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

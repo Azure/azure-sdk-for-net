@@ -8,25 +8,45 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class JsonSource : IUtf8JsonSerializable
+    public partial class JsonSource : IUtf8JsonSerializable, IModelJsonSerializable<JsonSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JsonSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<JsonSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<JsonSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(StoreSettings))
             {
                 writer.WritePropertyName("storeSettings"u8);
-                writer.WriteObjectValue(StoreSettings);
+                if (StoreSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StoreReadSettings>)StoreSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(FormatSettings))
             {
                 writer.WritePropertyName("formatSettings"u8);
-                writer.WriteObjectValue(FormatSettings);
+                if (FormatSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<JsonReadSettings>)FormatSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
@@ -71,8 +91,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static JsonSource DeserializeJsonSource(JsonElement element)
+        internal static JsonSource DeserializeJsonSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -161,6 +183,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new JsonSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, storeSettings.Value, formatSettings.Value, additionalColumns.Value);
+        }
+
+        JsonSource IModelJsonSerializable<JsonSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JsonSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJsonSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<JsonSource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JsonSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        JsonSource IModelSerializable<JsonSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JsonSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeJsonSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="JsonSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="JsonSource"/> to convert. </param>
+        public static implicit operator RequestContent(JsonSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="JsonSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator JsonSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeJsonSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

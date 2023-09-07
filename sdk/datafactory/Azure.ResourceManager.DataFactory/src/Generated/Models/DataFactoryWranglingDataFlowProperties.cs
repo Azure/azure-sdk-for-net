@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Power Query data flow. </summary>
     public partial class DataFactoryWranglingDataFlowProperties : DataFactoryDataFlowProperties
     {
-        /// <summary> Initializes a new instance of DataFactoryWranglingDataFlowProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryWranglingDataFlowProperties"/>. </summary>
         public DataFactoryWranglingDataFlowProperties()
         {
             Sources = new ChangeTrackingList<PowerQuerySource>();
             DataFlowType = "WranglingDataFlow";
         }
 
-        /// <summary> Initializes a new instance of DataFactoryWranglingDataFlowProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryWranglingDataFlowProperties"/>. </summary>
         /// <param name="dataFlowType"> Type of data flow. </param>
         /// <param name="description"> The description of the data flow. </param>
         /// <param name="annotations"> List of tags that can be used for describing the data flow. </param>
@@ -29,7 +29,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sources"> List of sources in Power Query. </param>
         /// <param name="script"> Power query mashup script. </param>
         /// <param name="documentLocale"> Locale of the Power query mashup document. </param>
-        internal DataFactoryWranglingDataFlowProperties(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, IList<PowerQuerySource> sources, string script, string documentLocale) : base(dataFlowType, description, annotations, folder)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryWranglingDataFlowProperties(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, IList<PowerQuerySource> sources, string script, string documentLocale, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(dataFlowType, description, annotations, folder, serializedAdditionalRawData)
         {
             Sources = sources;
             Script = script;

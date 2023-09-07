@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ThroughputPolicyResourceInfo : IUtf8JsonSerializable
+    public partial class ThroughputPolicyResourceInfo : IUtf8JsonSerializable, IModelJsonSerializable<ThroughputPolicyResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ThroughputPolicyResourceInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ThroughputPolicyResourceInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ThroughputPolicyResourceInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("incrementPercent"u8);
                 writer.WriteNumberValue(IncrementPercent.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ThroughputPolicyResourceInfo DeserializeThroughputPolicyResourceInfo(JsonElement element)
+        internal static ThroughputPolicyResourceInfo DeserializeThroughputPolicyResourceInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> isEnabled = default;
             Optional<int> incrementPercent = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isEnabled"u8))
@@ -56,8 +79,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     incrementPercent = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ThroughputPolicyResourceInfo(Optional.ToNullable(isEnabled), Optional.ToNullable(incrementPercent));
+            return new ThroughputPolicyResourceInfo(Optional.ToNullable(isEnabled), Optional.ToNullable(incrementPercent), serializedAdditionalRawData);
+        }
+
+        ThroughputPolicyResourceInfo IModelJsonSerializable<ThroughputPolicyResourceInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ThroughputPolicyResourceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeThroughputPolicyResourceInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ThroughputPolicyResourceInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ThroughputPolicyResourceInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ThroughputPolicyResourceInfo IModelSerializable<ThroughputPolicyResourceInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ThroughputPolicyResourceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeThroughputPolicyResourceInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ThroughputPolicyResourceInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ThroughputPolicyResourceInfo"/> to convert. </param>
+        public static implicit operator RequestContent(ThroughputPolicyResourceInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ThroughputPolicyResourceInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ThroughputPolicyResourceInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeThroughputPolicyResourceInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

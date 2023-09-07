@@ -5,13 +5,148 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    internal partial class OfferingsResponse
+    internal partial class OfferingsResponse : IUtf8JsonSerializable, IModelJsonSerializable<OfferingsResponse>
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OfferingsResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OfferingsResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OfferingsResponse>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(PhoneNumberOfferings))
+            {
+                writer.WritePropertyName("phoneNumberOfferings"u8);
+                writer.WriteStartArray();
+                foreach (var item in PhoneNumberOfferings)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<PhoneNumberOffering>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static OfferingsResponse DeserializeOfferingsResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<PhoneNumberOffering>> phoneNumberOfferings = default;
+            Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("phoneNumberOfferings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<PhoneNumberOffering> array = new List<PhoneNumberOffering>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(PhoneNumberOffering.DeserializePhoneNumberOffering(item));
+                    }
+                    phoneNumberOfferings = array;
+                    continue;
+                }
+                if (property.NameEquals("nextLink"u8))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new OfferingsResponse(Optional.ToList(phoneNumberOfferings), nextLink.Value, serializedAdditionalRawData);
+        }
+
+        OfferingsResponse IModelJsonSerializable<OfferingsResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OfferingsResponse>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOfferingsResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OfferingsResponse>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OfferingsResponse>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OfferingsResponse IModelSerializable<OfferingsResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OfferingsResponse>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOfferingsResponse(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OfferingsResponse"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OfferingsResponse"/> to convert. </param>
+        public static implicit operator RequestContent(OfferingsResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OfferingsResponse"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OfferingsResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOfferingsResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
     }
 }

@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    public partial class ContainerAppJobData : IUtf8JsonSerializable
+    public partial class ContainerAppJobData : IUtf8JsonSerializable, IModelJsonSerializable<ContainerAppJobData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerAppJobData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerAppJobData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppJobData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -52,19 +59,47 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration);
+                if (Configuration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerAppJobConfiguration>)Configuration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
-                writer.WriteObjectValue(Template);
+                if (Template is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerAppJobTemplate>)Template).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppJobData DeserializeContainerAppJobData(JsonElement element)
+        internal static ContainerAppJobData DeserializeContainerAppJobData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -83,6 +118,7 @@ namespace Azure.ResourceManager.AppContainers
             Optional<ContainerAppJobTemplate> template = default;
             Optional<IReadOnlyList<string>> outboundIPAddresses = default;
             Optional<string> eventStreamEndpoint = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -206,8 +242,61 @@ namespace Azure.ResourceManager.AppContainers
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerAppJobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), environmentId.Value, workloadProfileName.Value, configuration.Value, template.Value, Optional.ToList(outboundIPAddresses), eventStreamEndpoint.Value);
+            return new ContainerAppJobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), environmentId.Value, workloadProfileName.Value, configuration.Value, template.Value, Optional.ToList(outboundIPAddresses), eventStreamEndpoint.Value, serializedAdditionalRawData);
+        }
+
+        ContainerAppJobData IModelJsonSerializable<ContainerAppJobData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppJobData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppJobData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerAppJobData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppJobData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerAppJobData IModelSerializable<ContainerAppJobData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppJobData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerAppJobData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerAppJobData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerAppJobData"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerAppJobData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerAppJobData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerAppJobData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerAppJobData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,23 +5,42 @@
 
 #nullable disable
 
-using System.Collections.Generic;
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownJobDetails : IUtf8JsonSerializable
+    internal partial class UnknownJobDetails : IUtf8JsonSerializable, IModelJsonSerializable<DataBoxBasicJobDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataBoxBasicJobDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataBoxBasicJobDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxBasicJobDetails>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("contactDetails"u8);
-            writer.WriteObjectValue(ContactDetails);
+            if (ContactDetails is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<DataBoxContactDetails>)ContactDetails).Serialize(writer, options);
+            }
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress);
+                if (ShippingAddress is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DataBoxShippingAddress>)ShippingAddress).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(DataImportDetails))
             {
@@ -29,7 +48,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in DataImportDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DataImportDetails>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -39,7 +65,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in DataExportDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DataExportDetails>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -48,245 +81,82 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
-                writer.WriteObjectValue(Preferences);
+                if (Preferences is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DataBoxOrderPreferences>)Preferences).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ReverseShippingDetails))
             {
                 writer.WritePropertyName("reverseShippingDetails"u8);
-                writer.WriteObjectValue(ReverseShippingDetails);
+                if (ReverseShippingDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ReverseShippingDetails>)ReverseShippingDetails).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
-                writer.WriteObjectValue(KeyEncryptionKey);
+                if (KeyEncryptionKey is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DataBoxKeyEncryptionKey>)KeyEncryptionKey).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ExpectedDataSizeInTerabytes))
             {
                 writer.WritePropertyName("expectedDataSizeInTeraBytes"u8);
                 writer.WriteNumberValue(ExpectedDataSizeInTerabytes.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownJobDetails DeserializeUnknownJobDetails(JsonElement element)
+        internal static DataBoxBasicJobDetails DeserializeUnknownJobDetails(JsonElement element, ModelSerializerOptions options = default) => DeserializeDataBoxBasicJobDetails(element, options);
+
+        DataBoxBasicJobDetails IModelJsonSerializable<DataBoxBasicJobDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<IReadOnlyList<DataBoxJobStage>> jobStages = default;
-            DataBoxContactDetails contactDetails = default;
-            Optional<DataBoxShippingAddress> shippingAddress = default;
-            Optional<PackageShippingDetails> deliveryPackage = default;
-            Optional<PackageShippingDetails> returnPackage = default;
-            Optional<IList<DataImportDetails>> dataImportDetails = default;
-            Optional<IList<DataExportDetails>> dataExportDetails = default;
-            DataBoxOrderType jobDetailsType = default;
-            Optional<DataBoxOrderPreferences> preferences = default;
-            Optional<ReverseShippingDetails> reverseShippingDetails = default;
-            Optional<IReadOnlyList<CopyLogDetails>> copyLogDetails = default;
-            Optional<string> reverseShipmentLabelSasKey = default;
-            Optional<string> chainOfCustodySasKey = default;
-            Optional<DeviceErasureDetails> deviceErasureDetails = default;
-            Optional<DataBoxKeyEncryptionKey> keyEncryptionKey = default;
-            Optional<int> expectedDataSizeInTerabytes = default;
-            Optional<IReadOnlyList<CustomerResolutionCode>> actions = default;
-            Optional<LastMitigationActionOnJob> lastMitigationActionOnJob = default;
-            Optional<DataCenterAddressResult> dataCenterAddress = default;
-            Optional<DataCenterCode> dataCenterCode = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("jobStages"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<DataBoxJobStage> array = new List<DataBoxJobStage>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(DataBoxJobStage.DeserializeDataBoxJobStage(item));
-                    }
-                    jobStages = array;
-                    continue;
-                }
-                if (property.NameEquals("contactDetails"u8))
-                {
-                    contactDetails = DataBoxContactDetails.DeserializeDataBoxContactDetails(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("shippingAddress"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    shippingAddress = DataBoxShippingAddress.DeserializeDataBoxShippingAddress(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("deliveryPackage"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deliveryPackage = PackageShippingDetails.DeserializePackageShippingDetails(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("returnPackage"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    returnPackage = PackageShippingDetails.DeserializePackageShippingDetails(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("dataImportDetails"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<DataImportDetails> array = new List<DataImportDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(Models.DataImportDetails.DeserializeDataImportDetails(item));
-                    }
-                    dataImportDetails = array;
-                    continue;
-                }
-                if (property.NameEquals("dataExportDetails"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<DataExportDetails> array = new List<DataExportDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(Models.DataExportDetails.DeserializeDataExportDetails(item));
-                    }
-                    dataExportDetails = array;
-                    continue;
-                }
-                if (property.NameEquals("jobDetailsType"u8))
-                {
-                    jobDetailsType = property.Value.GetString().ToDataBoxOrderType();
-                    continue;
-                }
-                if (property.NameEquals("preferences"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    preferences = DataBoxOrderPreferences.DeserializeDataBoxOrderPreferences(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("reverseShippingDetails"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    reverseShippingDetails = ReverseShippingDetails.DeserializeReverseShippingDetails(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("copyLogDetails"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<CopyLogDetails> array = new List<CopyLogDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(Models.CopyLogDetails.DeserializeCopyLogDetails(item));
-                    }
-                    copyLogDetails = array;
-                    continue;
-                }
-                if (property.NameEquals("reverseShipmentLabelSasKey"u8))
-                {
-                    reverseShipmentLabelSasKey = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("chainOfCustodySasKey"u8))
-                {
-                    chainOfCustodySasKey = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("deviceErasureDetails"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deviceErasureDetails = DeviceErasureDetails.DeserializeDeviceErasureDetails(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("keyEncryptionKey"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    keyEncryptionKey = DataBoxKeyEncryptionKey.DeserializeDataBoxKeyEncryptionKey(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("expectedDataSizeInTeraBytes"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    expectedDataSizeInTerabytes = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("actions"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<CustomerResolutionCode> array = new List<CustomerResolutionCode>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString().ToCustomerResolutionCode());
-                    }
-                    actions = array;
-                    continue;
-                }
-                if (property.NameEquals("lastMitigationActionOnJob"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    lastMitigationActionOnJob = LastMitigationActionOnJob.DeserializeLastMitigationActionOnJob(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("datacenterAddress"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dataCenterAddress = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("dataCenterCode"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dataCenterCode = new DataCenterCode(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownJobDetails(Optional.ToList(jobStages), contactDetails, shippingAddress.Value, deliveryPackage.Value, returnPackage.Value, Optional.ToList(dataImportDetails), Optional.ToList(dataExportDetails), jobDetailsType, preferences.Value, reverseShippingDetails.Value, Optional.ToList(copyLogDetails), reverseShipmentLabelSasKey.Value, chainOfCustodySasKey.Value, deviceErasureDetails.Value, keyEncryptionKey.Value, Optional.ToNullable(expectedDataSizeInTerabytes), Optional.ToList(actions), lastMitigationActionOnJob.Value, dataCenterAddress.Value, Optional.ToNullable(dataCenterCode));
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxBasicJobDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownJobDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataBoxBasicJobDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxBasicJobDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataBoxBasicJobDetails IModelSerializable<DataBoxBasicJobDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxBasicJobDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataBoxBasicJobDetails(doc.RootElement, options);
         }
     }
 }

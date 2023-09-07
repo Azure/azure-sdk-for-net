@@ -5,34 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBTablePropertiesResource : IUtf8JsonSerializable
+    public partial class CosmosDBTablePropertiesResource : IUtf8JsonSerializable, IModelJsonSerializable<CosmosDBTablePropertiesResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CosmosDBTablePropertiesResource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CosmosDBTablePropertiesResource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBTablePropertiesResource>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(TableName);
             if (Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
-                writer.WriteObjectValue(RestoreParameters);
+                if (RestoreParameters is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourceRestoreParameters>)RestoreParameters).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CosmosDBTablePropertiesResource DeserializeCosmosDBTablePropertiesResource(JsonElement element)
+        internal static CosmosDBTablePropertiesResource DeserializeCosmosDBTablePropertiesResource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +71,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string id = default;
             Optional<ResourceRestoreParameters> restoreParameters = default;
             Optional<CosmosDBAccountCreateMode> createMode = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_rid"u8))
@@ -91,8 +120,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     createMode = new CosmosDBAccountCreateMode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CosmosDBTablePropertiesResource(id, restoreParameters.Value, Optional.ToNullable(createMode), rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new CosmosDBTablePropertiesResource(id, restoreParameters.Value, Optional.ToNullable(createMode), rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag), serializedAdditionalRawData);
+        }
+
+        CosmosDBTablePropertiesResource IModelJsonSerializable<CosmosDBTablePropertiesResource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBTablePropertiesResource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBTablePropertiesResource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CosmosDBTablePropertiesResource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBTablePropertiesResource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CosmosDBTablePropertiesResource IModelSerializable<CosmosDBTablePropertiesResource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBTablePropertiesResource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCosmosDBTablePropertiesResource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CosmosDBTablePropertiesResource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CosmosDBTablePropertiesResource"/> to convert. </param>
+        public static implicit operator RequestContent(CosmosDBTablePropertiesResource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CosmosDBTablePropertiesResource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CosmosDBTablePropertiesResource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCosmosDBTablePropertiesResource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

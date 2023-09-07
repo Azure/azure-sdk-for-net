@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBServiceCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class CosmosDBServiceCreateOrUpdateContent : IUtf8JsonSerializable, IModelJsonSerializable<CosmosDBServiceCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CosmosDBServiceCreateOrUpdateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CosmosDBServiceCreateOrUpdateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBServiceCreateOrUpdateContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -33,7 +41,129 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStringValue(ServiceType.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static CosmosDBServiceCreateOrUpdateContent DeserializeCosmosDBServiceCreateOrUpdateContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<CosmosDBServiceSize> instanceSize = default;
+            Optional<int> instanceCount = default;
+            Optional<CosmosDBServiceType> serviceType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("instanceSize"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            instanceSize = new CosmosDBServiceSize(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("instanceCount"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            instanceCount = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("serviceType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            serviceType = new CosmosDBServiceType(property0.Value.GetString());
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new CosmosDBServiceCreateOrUpdateContent(Optional.ToNullable(instanceSize), Optional.ToNullable(instanceCount), Optional.ToNullable(serviceType), serializedAdditionalRawData);
+        }
+
+        CosmosDBServiceCreateOrUpdateContent IModelJsonSerializable<CosmosDBServiceCreateOrUpdateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBServiceCreateOrUpdateContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBServiceCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CosmosDBServiceCreateOrUpdateContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBServiceCreateOrUpdateContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CosmosDBServiceCreateOrUpdateContent IModelSerializable<CosmosDBServiceCreateOrUpdateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBServiceCreateOrUpdateContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCosmosDBServiceCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CosmosDBServiceCreateOrUpdateContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CosmosDBServiceCreateOrUpdateContent"/> to convert. </param>
+        public static implicit operator RequestContent(CosmosDBServiceCreateOrUpdateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CosmosDBServiceCreateOrUpdateContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CosmosDBServiceCreateOrUpdateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCosmosDBServiceCreateOrUpdateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

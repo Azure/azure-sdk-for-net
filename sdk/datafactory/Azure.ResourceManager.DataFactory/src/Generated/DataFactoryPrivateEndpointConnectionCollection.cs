@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryPrivateEndpointConnectionprivateEndPointConnectionsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataFactoryPrivateEndpointConnectionprivateEndPointConnectionsRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataFactoryPrivateEndpointConnectionResource(Client, DataFactoryPrivateEndpointConnectionData.DeserializeDataFactoryPrivateEndpointConnectionData(e)), _dataFactoryPrivateEndpointConnectionprivateEndPointConnectionsClientDiagnostics, Pipeline, "DataFactoryPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DataFactoryPrivateEndpointConnectionResource(Client, DataFactoryPrivateEndpointConnectionData.DeserializeDataFactoryPrivateEndpointConnectionData(e)), _dataFactoryPrivateEndpointConnectionprivateEndPointConnectionsClientDiagnostics, Pipeline, "DataFactoryPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryPrivateEndpointConnectionprivateEndPointConnectionsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataFactoryPrivateEndpointConnectionprivateEndPointConnectionsRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataFactoryPrivateEndpointConnectionResource(Client, DataFactoryPrivateEndpointConnectionData.DeserializeDataFactoryPrivateEndpointConnectionData(e)), _dataFactoryPrivateEndpointConnectionprivateEndPointConnectionsClientDiagnostics, Pipeline, "DataFactoryPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DataFactoryPrivateEndpointConnectionResource(Client, DataFactoryPrivateEndpointConnectionData.DeserializeDataFactoryPrivateEndpointConnectionData(e)), _dataFactoryPrivateEndpointConnectionprivateEndPointConnectionsClientDiagnostics, Pipeline, "DataFactoryPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

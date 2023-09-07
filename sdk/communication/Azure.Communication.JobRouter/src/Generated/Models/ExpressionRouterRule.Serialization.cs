@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class ExpressionRouterRule : IUtf8JsonSerializable
+    public partial class ExpressionRouterRule : IUtf8JsonSerializable, IModelJsonSerializable<ExpressionRouterRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExpressionRouterRule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExpressionRouterRule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressionRouterRule>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Language))
             {
@@ -24,11 +32,25 @@ namespace Azure.Communication.JobRouter
             writer.WriteStringValue(Expression);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExpressionRouterRule DeserializeExpressionRouterRule(JsonElement element)
+        internal static ExpressionRouterRule DeserializeExpressionRouterRule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +58,7 @@ namespace Azure.Communication.JobRouter
             Optional<string> language = default;
             string expression = default;
             string kind = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("language"u8))
@@ -53,8 +76,61 @@ namespace Azure.Communication.JobRouter
                     kind = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExpressionRouterRule(kind, language.Value, expression);
+            return new ExpressionRouterRule(kind, language.Value, expression, serializedAdditionalRawData);
+        }
+
+        ExpressionRouterRule IModelJsonSerializable<ExpressionRouterRule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressionRouterRule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExpressionRouterRule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExpressionRouterRule>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressionRouterRule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExpressionRouterRule IModelSerializable<ExpressionRouterRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressionRouterRule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExpressionRouterRule(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExpressionRouterRule"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExpressionRouterRule"/> to convert. </param>
+        public static implicit operator RequestContent(ExpressionRouterRule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExpressionRouterRule"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExpressionRouterRule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExpressionRouterRule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

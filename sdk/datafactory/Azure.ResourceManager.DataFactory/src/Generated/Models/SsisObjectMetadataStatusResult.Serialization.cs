@@ -5,15 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SsisObjectMetadataStatusResult
+    public partial class SsisObjectMetadataStatusResult : IUtf8JsonSerializable, IModelJsonSerializable<SsisObjectMetadataStatusResult>
     {
-        internal static SsisObjectMetadataStatusResult DeserializeSsisObjectMetadataStatusResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SsisObjectMetadataStatusResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SsisObjectMetadataStatusResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SsisObjectMetadataStatusResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteStringValue(Properties);
+            }
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteStringValue(Error);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SsisObjectMetadataStatusResult DeserializeSsisObjectMetadataStatusResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> name = default;
             Optional<string> properties = default;
             Optional<string> error = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -44,8 +93,61 @@ namespace Azure.ResourceManager.DataFactory.Models
                     error = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SsisObjectMetadataStatusResult(status.Value, name.Value, properties.Value, error.Value);
+            return new SsisObjectMetadataStatusResult(status.Value, name.Value, properties.Value, error.Value, serializedAdditionalRawData);
+        }
+
+        SsisObjectMetadataStatusResult IModelJsonSerializable<SsisObjectMetadataStatusResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SsisObjectMetadataStatusResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSsisObjectMetadataStatusResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SsisObjectMetadataStatusResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SsisObjectMetadataStatusResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SsisObjectMetadataStatusResult IModelSerializable<SsisObjectMetadataStatusResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SsisObjectMetadataStatusResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSsisObjectMetadataStatusResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SsisObjectMetadataStatusResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SsisObjectMetadataStatusResult"/> to convert. </param>
+        public static implicit operator RequestContent(SsisObjectMetadataStatusResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SsisObjectMetadataStatusResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SsisObjectMetadataStatusResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSsisObjectMetadataStatusResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

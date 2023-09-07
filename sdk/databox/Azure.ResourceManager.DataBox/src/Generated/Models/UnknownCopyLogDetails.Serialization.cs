@@ -5,29 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownCopyLogDetails
+    internal partial class UnknownCopyLogDetails : IUtf8JsonSerializable, IModelJsonSerializable<CopyLogDetails>
     {
-        internal static UnknownCopyLogDetails DeserializeUnknownCopyLogDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CopyLogDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CopyLogDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            Core.ModelSerializerHelper.ValidateFormat<CopyLogDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("copyLogDetailsType"u8);
+            writer.WriteStringValue(CopyLogDetailsType.ToSerialString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
             {
-                return null;
-            }
-            DataBoxOrderType copyLogDetailsType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("copyLogDetailsType"u8))
+                foreach (var property in _serializedAdditionalRawData)
                 {
-                    copyLogDetailsType = property.Value.GetString().ToDataBoxOrderType();
-                    continue;
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
                 }
             }
-            return new UnknownCopyLogDetails(copyLogDetailsType);
+            writer.WriteEndObject();
+        }
+
+        internal static CopyLogDetails DeserializeUnknownCopyLogDetails(JsonElement element, ModelSerializerOptions options = default) => DeserializeCopyLogDetails(element, options);
+
+        CopyLogDetails IModelJsonSerializable<CopyLogDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CopyLogDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownCopyLogDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CopyLogDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CopyLogDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CopyLogDetails IModelSerializable<CopyLogDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CopyLogDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCopyLogDetails(doc.RootElement, options);
         }
     }
 }

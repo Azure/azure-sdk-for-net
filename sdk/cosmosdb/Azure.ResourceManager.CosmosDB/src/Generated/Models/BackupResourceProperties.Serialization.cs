@@ -6,31 +6,53 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class BackupResourceProperties : IUtf8JsonSerializable
+    internal partial class BackupResourceProperties : IUtf8JsonSerializable, IModelJsonSerializable<BackupResourceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BackupResourceProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BackupResourceProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BackupResourceProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BackupResourceProperties DeserializeBackupResourceProperties(JsonElement element)
+        internal static BackupResourceProperties DeserializeBackupResourceProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DateTimeOffset> timestamp = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -42,8 +64,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BackupResourceProperties(Optional.ToNullable(timestamp));
+            return new BackupResourceProperties(Optional.ToNullable(timestamp), serializedAdditionalRawData);
+        }
+
+        BackupResourceProperties IModelJsonSerializable<BackupResourceProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackupResourceProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupResourceProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BackupResourceProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackupResourceProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BackupResourceProperties IModelSerializable<BackupResourceProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackupResourceProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBackupResourceProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BackupResourceProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BackupResourceProperties"/> to convert. </param>
+        public static implicit operator RequestContent(BackupResourceProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BackupResourceProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BackupResourceProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBackupResourceProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

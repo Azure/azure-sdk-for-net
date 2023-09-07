@@ -6,31 +6,53 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class ExportTimePeriod : IUtf8JsonSerializable
+    public partial class ExportTimePeriod : IUtf8JsonSerializable, IModelJsonSerializable<ExportTimePeriod>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExportTimePeriod>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExportTimePeriod>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ExportTimePeriod>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("from"u8);
             writer.WriteStringValue(From, "O");
             writer.WritePropertyName("to"u8);
             writer.WriteStringValue(To, "O");
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExportTimePeriod DeserializeExportTimePeriod(JsonElement element)
+        internal static ExportTimePeriod DeserializeExportTimePeriod(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DateTimeOffset @from = default;
             DateTimeOffset to = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("from"u8))
@@ -43,8 +65,61 @@ namespace Azure.ResourceManager.CostManagement.Models
                     to = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExportTimePeriod(@from, to);
+            return new ExportTimePeriod(@from, to, serializedAdditionalRawData);
+        }
+
+        ExportTimePeriod IModelJsonSerializable<ExportTimePeriod>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExportTimePeriod>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExportTimePeriod(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExportTimePeriod>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExportTimePeriod>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExportTimePeriod IModelSerializable<ExportTimePeriod>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExportTimePeriod>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExportTimePeriod(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExportTimePeriod"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExportTimePeriod"/> to convert. </param>
+        public static implicit operator RequestContent(ExportTimePeriod model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExportTimePeriod"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExportTimePeriod(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExportTimePeriod(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

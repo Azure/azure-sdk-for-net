@@ -5,33 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class TransferConfiguration : IUtf8JsonSerializable
+    public partial class TransferConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<TransferConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TransferConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TransferConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TransferConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("transferConfigurationType"u8);
             writer.WriteStringValue(TransferConfigurationType.ToSerialString());
             if (Optional.IsDefined(TransferFilterDetails))
             {
                 writer.WritePropertyName("transferFilterDetails"u8);
-                writer.WriteObjectValue(TransferFilterDetails);
+                if (TransferFilterDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TransferConfigurationTransferFilterDetails>)TransferFilterDetails).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(TransferAllDetails))
             {
                 writer.WritePropertyName("transferAllDetails"u8);
-                writer.WriteObjectValue(TransferAllDetails);
+                if (TransferAllDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TransferConfigurationTransferAllDetails>)TransferAllDetails).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static TransferConfiguration DeserializeTransferConfiguration(JsonElement element)
+        internal static TransferConfiguration DeserializeTransferConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +75,7 @@ namespace Azure.ResourceManager.DataBox.Models
             TransferConfigurationType transferConfigurationType = default;
             Optional<TransferConfigurationTransferFilterDetails> transferFilterDetails = default;
             Optional<TransferConfigurationTransferAllDetails> transferAllDetails = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("transferConfigurationType"u8))
@@ -64,8 +101,61 @@ namespace Azure.ResourceManager.DataBox.Models
                     transferAllDetails = TransferConfigurationTransferAllDetails.DeserializeTransferConfigurationTransferAllDetails(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TransferConfiguration(transferConfigurationType, transferFilterDetails.Value, transferAllDetails.Value);
+            return new TransferConfiguration(transferConfigurationType, transferFilterDetails.Value, transferAllDetails.Value, serializedAdditionalRawData);
+        }
+
+        TransferConfiguration IModelJsonSerializable<TransferConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TransferConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTransferConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TransferConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TransferConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TransferConfiguration IModelSerializable<TransferConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TransferConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTransferConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TransferConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TransferConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(TransferConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TransferConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TransferConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTransferConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

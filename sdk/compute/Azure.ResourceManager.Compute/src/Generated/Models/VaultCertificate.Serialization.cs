@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VaultCertificate : IUtf8JsonSerializable
+    public partial class VaultCertificate : IUtf8JsonSerializable, IModelJsonSerializable<VaultCertificate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VaultCertificate>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VaultCertificate>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VaultCertificate>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CertificateUri))
             {
@@ -26,17 +33,32 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("certificateStore"u8);
                 writer.WriteStringValue(CertificateStore);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VaultCertificate DeserializeVaultCertificate(JsonElement element)
+        internal static VaultCertificate DeserializeVaultCertificate(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<Uri> certificateUrl = default;
             Optional<string> certificateStore = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateUrl"u8))
@@ -53,8 +75,61 @@ namespace Azure.ResourceManager.Compute.Models
                     certificateStore = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VaultCertificate(certificateUrl.Value, certificateStore.Value);
+            return new VaultCertificate(certificateUrl.Value, certificateStore.Value, serializedAdditionalRawData);
+        }
+
+        VaultCertificate IModelJsonSerializable<VaultCertificate>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VaultCertificate>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVaultCertificate(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VaultCertificate>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VaultCertificate>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VaultCertificate IModelSerializable<VaultCertificate>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VaultCertificate>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVaultCertificate(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VaultCertificate"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VaultCertificate"/> to convert. </param>
+        public static implicit operator RequestContent(VaultCertificate model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VaultCertificate"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VaultCertificate(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVaultCertificate(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

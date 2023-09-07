@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB resource throughput object. Either throughput is required or autoscaleSettings is required, but not both. </summary>
     public partial class ThroughputSettingsResourceInfo
     {
-        /// <summary> Initializes a new instance of ThroughputSettingsResourceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ThroughputSettingsResourceInfo"/>. </summary>
         public ThroughputSettingsResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ThroughputSettingsResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThroughputSettingsResourceInfo"/>. </summary>
         /// <param name="throughput"> Value of the Cosmos DB resource throughput. Either throughput is required or autoscaleSettings is required, but not both. </param>
         /// <param name="autoscaleSettings"> Cosmos DB resource for autoscale settings. Either throughput is required or autoscaleSettings is required, but not both. </param>
         /// <param name="minimumThroughput"> The minimum throughput of the resource. </param>
         /// <param name="offerReplacePending"> The throughput replace is pending. </param>
-        internal ThroughputSettingsResourceInfo(int? throughput, AutoscaleSettingsResourceInfo autoscaleSettings, string minimumThroughput, string offerReplacePending)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ThroughputSettingsResourceInfo(int? throughput, AutoscaleSettingsResourceInfo autoscaleSettings, string minimumThroughput, string offerReplacePending, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Throughput = throughput;
             AutoscaleSettings = autoscaleSettings;
             MinimumThroughput = minimumThroughput;
             OfferReplacePending = offerReplacePending;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Value of the Cosmos DB resource throughput. Either throughput is required or autoscaleSettings is required, but not both. </summary>

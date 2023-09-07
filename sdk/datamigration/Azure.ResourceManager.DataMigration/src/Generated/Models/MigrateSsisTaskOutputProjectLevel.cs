@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The MigrateSsisTaskOutputProjectLevel. </summary>
     public partial class MigrateSsisTaskOutputProjectLevel : MigrateSsisTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSsisTaskOutputProjectLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSsisTaskOutputProjectLevel"/>. </summary>
         internal MigrateSsisTaskOutputProjectLevel()
         {
             ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();
             ResultType = "SsisProjectLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateSsisTaskOutputProjectLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSsisTaskOutputProjectLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="folderName"> Name of the folder. </param>
@@ -32,7 +32,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="endedOn"> Migration end time. </param>
         /// <param name="message"> Migration progress message. </param>
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
-        internal MigrateSsisTaskOutputProjectLevel(string id, string resultType, string folderName, string projectName, MigrationState? state, SsisMigrationStage? stage, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string message, IReadOnlyList<ReportableException> exceptionsAndWarnings) : base(id, resultType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateSsisTaskOutputProjectLevel(string id, string resultType, string folderName, string projectName, MigrationState? state, SsisMigrationStage? stage, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string message, IReadOnlyList<ReportableException> exceptionsAndWarnings, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, resultType, serializedAdditionalRawData)
         {
             FolderName = folderName;
             ProjectName = projectName;

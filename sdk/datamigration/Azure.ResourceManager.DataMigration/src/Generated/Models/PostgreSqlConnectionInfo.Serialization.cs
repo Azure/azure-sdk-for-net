@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class PostgreSqlConnectionInfo : IUtf8JsonSerializable
+    public partial class PostgreSqlConnectionInfo : IUtf8JsonSerializable, IModelJsonSerializable<PostgreSqlConnectionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PostgreSqlConnectionInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PostgreSqlConnectionInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlConnectionInfo>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("serverName"u8);
             writer.WriteStringValue(ServerName);
@@ -71,11 +79,25 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PostgreSqlConnectionInfo DeserializePostgreSqlConnectionInfo(JsonElement element)
+        internal static PostgreSqlConnectionInfo DeserializePostgreSqlConnectionInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -93,6 +115,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string type = default;
             Optional<string> userName = default;
             Optional<string> password = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serverName"u8))
@@ -172,8 +195,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     password = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PostgreSqlConnectionInfo(type, userName.Value, password.Value, serverName, dataSource.Value, serverVersion.Value, databaseName.Value, port, Optional.ToNullable(encryptConnection), Optional.ToNullable(trustServerCertificate), additionalSettings.Value, serverBrandVersion.Value, Optional.ToNullable(authentication));
+            return new PostgreSqlConnectionInfo(type, userName.Value, password.Value, serverName, dataSource.Value, serverVersion.Value, databaseName.Value, port, Optional.ToNullable(encryptConnection), Optional.ToNullable(trustServerCertificate), additionalSettings.Value, serverBrandVersion.Value, Optional.ToNullable(authentication), serializedAdditionalRawData);
+        }
+
+        PostgreSqlConnectionInfo IModelJsonSerializable<PostgreSqlConnectionInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlConnectionInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlConnectionInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PostgreSqlConnectionInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlConnectionInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PostgreSqlConnectionInfo IModelSerializable<PostgreSqlConnectionInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlConnectionInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePostgreSqlConnectionInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PostgreSqlConnectionInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PostgreSqlConnectionInfo"/> to convert. </param>
+        public static implicit operator RequestContent(PostgreSqlConnectionInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PostgreSqlConnectionInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PostgreSqlConnectionInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePostgreSqlConnectionInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

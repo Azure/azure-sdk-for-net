@@ -5,16 +5,69 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBDatabaseInfo
+    public partial class MongoDBDatabaseInfo : IUtf8JsonSerializable, IModelJsonSerializable<MongoDBDatabaseInfo>
     {
-        internal static MongoDBDatabaseInfo DeserializeMongoDBDatabaseInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MongoDBDatabaseInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MongoDBDatabaseInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBDatabaseInfo>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("collections"u8);
+            writer.WriteStartArray();
+            foreach (var item in Collections)
+            {
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MongoDBCollectionInfo>)item).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("supportsSharding"u8);
+            writer.WriteBooleanValue(SupportsSharding);
+            writer.WritePropertyName("averageDocumentSize"u8);
+            writer.WriteNumberValue(AverageDocumentSize);
+            writer.WritePropertyName("dataSize"u8);
+            writer.WriteNumberValue(DataSize);
+            writer.WritePropertyName("documentCount"u8);
+            writer.WriteNumberValue(DocumentCount);
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("qualifiedName"u8);
+            writer.WriteStringValue(QualifiedName);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MongoDBDatabaseInfo DeserializeMongoDBDatabaseInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +79,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             long documentCount = default;
             string name = default;
             string qualifiedName = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("collections"u8))
@@ -68,8 +122,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     qualifiedName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MongoDBDatabaseInfo(averageDocumentSize, dataSize, documentCount, name, qualifiedName, collections, supportsSharding);
+            return new MongoDBDatabaseInfo(averageDocumentSize, dataSize, documentCount, name, qualifiedName, collections, supportsSharding, serializedAdditionalRawData);
+        }
+
+        MongoDBDatabaseInfo IModelJsonSerializable<MongoDBDatabaseInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBDatabaseInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMongoDBDatabaseInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MongoDBDatabaseInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBDatabaseInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MongoDBDatabaseInfo IModelSerializable<MongoDBDatabaseInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBDatabaseInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMongoDBDatabaseInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MongoDBDatabaseInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MongoDBDatabaseInfo"/> to convert. </param>
+        public static implicit operator RequestContent(MongoDBDatabaseInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MongoDBDatabaseInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MongoDBDatabaseInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMongoDBDatabaseInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

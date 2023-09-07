@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeKubernetesRole : IUtf8JsonSerializable
+    public partial class EdgeKubernetesRole : IUtf8JsonSerializable, IModelJsonSerializable<EdgeKubernetesRole>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EdgeKubernetesRole>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EdgeKubernetesRole>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeKubernetesRole>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -28,12 +36,26 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(KubernetesClusterInfo))
             {
                 writer.WritePropertyName("kubernetesClusterInfo"u8);
-                writer.WriteObjectValue(KubernetesClusterInfo);
+                if (KubernetesClusterInfo is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<EdgeKubernetesClusterInfo>)KubernetesClusterInfo).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(KubernetesRoleResources))
             {
                 writer.WritePropertyName("kubernetesRoleResources"u8);
-                writer.WriteObjectValue(KubernetesRoleResources);
+                if (KubernetesRoleResources is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<EdgeKubernetesRoleResources>)KubernetesRoleResources).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(RoleStatus))
             {
@@ -41,11 +63,25 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStringValue(RoleStatus.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EdgeKubernetesRole DeserializeEdgeKubernetesRole(JsonElement element)
+        internal static EdgeKubernetesRole DeserializeEdgeKubernetesRole(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -61,6 +97,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<EdgeKubernetesClusterInfo> kubernetesClusterInfo = default;
             Optional<EdgeKubernetesRoleResources> kubernetesRoleResources = default;
             Optional<DataBoxEdgeRoleStatus> roleStatus = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -158,8 +195,61 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EdgeKubernetesRole(id, name, type, systemData.Value, kind, Optional.ToNullable(hostPlatform), Optional.ToNullable(provisioningState), Optional.ToNullable(hostPlatformType), kubernetesClusterInfo.Value, kubernetesRoleResources.Value, Optional.ToNullable(roleStatus));
+            return new EdgeKubernetesRole(id, name, type, systemData.Value, kind, Optional.ToNullable(hostPlatform), Optional.ToNullable(provisioningState), Optional.ToNullable(hostPlatformType), kubernetesClusterInfo.Value, kubernetesRoleResources.Value, Optional.ToNullable(roleStatus), serializedAdditionalRawData);
+        }
+
+        EdgeKubernetesRole IModelJsonSerializable<EdgeKubernetesRole>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeKubernetesRole>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeKubernetesRole(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EdgeKubernetesRole>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeKubernetesRole>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EdgeKubernetesRole IModelSerializable<EdgeKubernetesRole>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EdgeKubernetesRole>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEdgeKubernetesRole(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EdgeKubernetesRole"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EdgeKubernetesRole"/> to convert. </param>
+        public static implicit operator RequestContent(EdgeKubernetesRole model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EdgeKubernetesRole"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EdgeKubernetesRole(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEdgeKubernetesRole(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

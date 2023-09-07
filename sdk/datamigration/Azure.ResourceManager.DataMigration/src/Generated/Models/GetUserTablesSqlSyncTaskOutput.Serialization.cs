@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class GetUserTablesSqlSyncTaskOutput
+    public partial class GetUserTablesSqlSyncTaskOutput : IUtf8JsonSerializable, IModelJsonSerializable<GetUserTablesSqlSyncTaskOutput>
     {
-        internal static GetUserTablesSqlSyncTaskOutput DeserializeGetUserTablesSqlSyncTaskOutput(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GetUserTablesSqlSyncTaskOutput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GetUserTablesSqlSyncTaskOutput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<GetUserTablesSqlSyncTaskOutput>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static GetUserTablesSqlSyncTaskOutput DeserializeGetUserTablesSqlSyncTaskOutput(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +50,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> databasesToTargetTables = default;
             Optional<string> tableValidationErrors = default;
             Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databasesToSourceTables"u8))
@@ -54,8 +82,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     validationErrors = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GetUserTablesSqlSyncTaskOutput(databasesToSourceTables.Value, databasesToTargetTables.Value, tableValidationErrors.Value, Optional.ToList(validationErrors));
+            return new GetUserTablesSqlSyncTaskOutput(databasesToSourceTables.Value, databasesToTargetTables.Value, tableValidationErrors.Value, Optional.ToList(validationErrors), serializedAdditionalRawData);
+        }
+
+        GetUserTablesSqlSyncTaskOutput IModelJsonSerializable<GetUserTablesSqlSyncTaskOutput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GetUserTablesSqlSyncTaskOutput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGetUserTablesSqlSyncTaskOutput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GetUserTablesSqlSyncTaskOutput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GetUserTablesSqlSyncTaskOutput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GetUserTablesSqlSyncTaskOutput IModelSerializable<GetUserTablesSqlSyncTaskOutput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GetUserTablesSqlSyncTaskOutput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGetUserTablesSqlSyncTaskOutput(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GetUserTablesSqlSyncTaskOutput"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GetUserTablesSqlSyncTaskOutput"/> to convert. </param>
+        public static implicit operator RequestContent(GetUserTablesSqlSyncTaskOutput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GetUserTablesSqlSyncTaskOutput"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GetUserTablesSqlSyncTaskOutput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGetUserTablesSqlSyncTaskOutput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class ScheduleBasedBackupCriteria : IUtf8JsonSerializable
+    public partial class ScheduleBasedBackupCriteria : IUtf8JsonSerializable, IModelJsonSerializable<ScheduleBasedBackupCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ScheduleBasedBackupCriteria>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ScheduleBasedBackupCriteria>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ScheduleBasedBackupCriteria>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AbsoluteCriteria))
             {
@@ -33,7 +39,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in DaysOfMonth)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DataProtectionBackupDay>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -79,11 +92,25 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ScheduleBasedBackupCriteria DeserializeScheduleBasedBackupCriteria(JsonElement element)
+        internal static ScheduleBasedBackupCriteria DeserializeScheduleBasedBackupCriteria(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,6 +122,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<IList<DateTimeOffset>> scheduleTimes = default;
             Optional<IList<DataProtectionBackupWeekNumber>> weeksOfTheMonth = default;
             string objectType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("absoluteCriteria"u8))
@@ -186,8 +214,61 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ScheduleBasedBackupCriteria(objectType, Optional.ToList(absoluteCriteria), Optional.ToList(daysOfMonth), Optional.ToList(daysOfTheWeek), Optional.ToList(monthsOfYear), Optional.ToList(scheduleTimes), Optional.ToList(weeksOfTheMonth));
+            return new ScheduleBasedBackupCriteria(objectType, Optional.ToList(absoluteCriteria), Optional.ToList(daysOfMonth), Optional.ToList(daysOfTheWeek), Optional.ToList(monthsOfYear), Optional.ToList(scheduleTimes), Optional.ToList(weeksOfTheMonth), serializedAdditionalRawData);
+        }
+
+        ScheduleBasedBackupCriteria IModelJsonSerializable<ScheduleBasedBackupCriteria>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScheduleBasedBackupCriteria>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeScheduleBasedBackupCriteria(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ScheduleBasedBackupCriteria>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScheduleBasedBackupCriteria>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ScheduleBasedBackupCriteria IModelSerializable<ScheduleBasedBackupCriteria>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScheduleBasedBackupCriteria>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeScheduleBasedBackupCriteria(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ScheduleBasedBackupCriteria"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ScheduleBasedBackupCriteria"/> to convert. </param>
+        public static implicit operator RequestContent(ScheduleBasedBackupCriteria model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ScheduleBasedBackupCriteria"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ScheduleBasedBackupCriteria(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeScheduleBasedBackupCriteria(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

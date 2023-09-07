@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Agent Job level output for the task that validates connection to SQL Server and also validates source server requirements. </summary>
     public partial class ConnectToSourceSqlServerTaskOutputAgentJobLevel : ConnectToSourceSqlServerTaskOutput
     {
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskOutputAgentJobLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskOutputAgentJobLevel"/>. </summary>
         internal ConnectToSourceSqlServerTaskOutputAgentJobLevel()
         {
             ValidationErrors = new ChangeTrackingList<ReportableException>();
             ResultType = "AgentJobLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskOutputAgentJobLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskOutputAgentJobLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Type of result - database level or task level. </param>
         /// <param name="name"> Agent Job name. </param>
@@ -31,7 +31,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="lastExecutedOn"> UTC Date and time when the Agent Job was last executed. </param>
         /// <param name="validationErrors"> Validation errors. </param>
         /// <param name="migrationEligibility"> Information about eligibility of agent job for migration. </param>
-        internal ConnectToSourceSqlServerTaskOutputAgentJobLevel(string id, string resultType, string name, string jobCategory, bool? isEnabled, string jobOwner, DateTimeOffset? lastExecutedOn, IReadOnlyList<ReportableException> validationErrors, MigrationEligibilityInfo migrationEligibility) : base(id, resultType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectToSourceSqlServerTaskOutputAgentJobLevel(string id, string resultType, string name, string jobCategory, bool? isEnabled, string jobOwner, DateTimeOffset? lastExecutedOn, IReadOnlyList<ReportableException> validationErrors, MigrationEligibilityInfo migrationEligibility, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, resultType, serializedAdditionalRawData)
         {
             Name = name;
             JobCategory = jobCategory;

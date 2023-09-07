@@ -5,22 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
+using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class InputGroup : IUtf8JsonSerializable
+    public partial class InputGroup : IUtf8JsonSerializable, IModelJsonSerializable<InputGroup>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InputGroup>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InputGroup>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<InputGroup>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
-                writer.WriteObjectValue(Position);
+                if (Position is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<InputPosition>)Position).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Width))
             {
@@ -42,11 +58,25 @@ namespace Azure.Communication.MediaComposition
                 writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static InputGroup DeserializeInputGroup(JsonElement element)
+        internal static InputGroup DeserializeInputGroup(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -59,7 +89,110 @@ namespace Azure.Communication.MediaComposition
                     case "gridBased": return GridInputGroup.DeserializeGridInputGroup(element);
                 }
             }
-            return UnknownInputGroup.DeserializeUnknownInputGroup(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            InputGroupType kind = default;
+            Optional<InputPosition> position = default;
+            Optional<string> width = default;
+            Optional<string> height = default;
+            Optional<string> layer = default;
+            Optional<ScalingMode> scalingMode = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new InputGroupType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("position"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    position = InputPosition.DeserializeInputPosition(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("width"u8))
+                {
+                    width = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("height"u8))
+                {
+                    height = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("layer"u8))
+                {
+                    layer = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("scalingMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scalingMode = new ScalingMode(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownInputGroup(kind, position.Value, width.Value, height.Value, layer.Value, Optional.ToNullable(scalingMode), serializedAdditionalRawData);
+        }
+
+        InputGroup IModelJsonSerializable<InputGroup>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InputGroup>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInputGroup(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InputGroup>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InputGroup>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InputGroup IModelSerializable<InputGroup>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InputGroup>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInputGroup(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InputGroup"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InputGroup"/> to convert. </param>
+        public static implicit operator RequestContent(InputGroup model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InputGroup"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InputGroup(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInputGroup(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

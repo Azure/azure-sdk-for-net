@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the properties of a Run Command. </summary>
     public partial class RunCommandDocument : RunCommandDocumentBase
     {
-        /// <summary> Initializes a new instance of RunCommandDocument. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunCommandDocument"/>. </summary>
         /// <param name="schema"> The VM run command schema. </param>
         /// <param name="id"> The VM run command id. </param>
         /// <param name="osType"> The Operating System type. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
             Parameters = new ChangeTrackingList<RunCommandParameterDefinition>();
         }
 
-        /// <summary> Initializes a new instance of RunCommandDocument. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunCommandDocument"/>. </summary>
         /// <param name="schema"> The VM run command schema. </param>
         /// <param name="id"> The VM run command id. </param>
         /// <param name="osType"> The Operating System type. </param>
@@ -43,16 +43,16 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="description"> The VM run command description. </param>
         /// <param name="script"> The script to be executed. </param>
         /// <param name="parameters"> The parameters used by the script. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schema"/>, <paramref name="id"/>, <paramref name="label"/> or <paramref name="description"/> is null. </exception>
-        internal RunCommandDocument(string schema, string id, SupportedOperatingSystemType osType, string label, string description, IReadOnlyList<string> script, IReadOnlyList<RunCommandParameterDefinition> parameters) : base(schema, id, osType, label, description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RunCommandDocument(string schema, string id, SupportedOperatingSystemType osType, string label, string description, IReadOnlyList<string> script, IReadOnlyList<RunCommandParameterDefinition> parameters, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(schema, id, osType, label, description, serializedAdditionalRawData)
         {
-            Argument.AssertNotNull(schema, nameof(schema));
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(label, nameof(label));
-            Argument.AssertNotNull(description, nameof(description));
-
             Script = script;
             Parameters = parameters;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RunCommandDocument"/> for deserialization. </summary>
+        internal RunCommandDocument()
+        {
         }
 
         /// <summary> The script to be executed. </summary>

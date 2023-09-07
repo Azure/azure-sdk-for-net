@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class KpiThresholds : IUtf8JsonSerializable
+    public partial class KpiThresholds : IUtf8JsonSerializable, IModelJsonSerializable<KpiThresholds>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KpiThresholds>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KpiThresholds>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KpiThresholds>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("lowerLimit"u8);
             writer.WriteNumberValue(LowerLimit);
@@ -21,11 +29,25 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteNumberValue(UpperLimit);
             writer.WritePropertyName("increasingKpi"u8);
             writer.WriteBooleanValue(IncreasingKpi);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KpiThresholds DeserializeKpiThresholds(JsonElement element)
+        internal static KpiThresholds DeserializeKpiThresholds(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +55,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             decimal lowerLimit = default;
             decimal upperLimit = default;
             bool increasingKpi = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lowerLimit"u8))
@@ -50,8 +73,61 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     increasingKpi = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KpiThresholds(lowerLimit, upperLimit, increasingKpi);
+            return new KpiThresholds(lowerLimit, upperLimit, increasingKpi, serializedAdditionalRawData);
+        }
+
+        KpiThresholds IModelJsonSerializable<KpiThresholds>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KpiThresholds>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKpiThresholds(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KpiThresholds>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KpiThresholds>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KpiThresholds IModelSerializable<KpiThresholds>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KpiThresholds>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKpiThresholds(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KpiThresholds"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KpiThresholds"/> to convert. </param>
+        public static implicit operator RequestContent(KpiThresholds model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KpiThresholds"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KpiThresholds(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKpiThresholds(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

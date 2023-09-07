@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class ExportDiskDetails
+    public partial class ExportDiskDetails : IUtf8JsonSerializable, IModelJsonSerializable<ExportDiskDetails>
     {
-        internal static ExportDiskDetails DeserializeExportDiskDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExportDiskDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExportDiskDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ExportDiskDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ExportDiskDetails DeserializeExportDiskDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +49,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<string> manifestFile = default;
             Optional<string> manifestHash = default;
             Optional<string> backupManifestCloudPath = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("manifestFile"u8))
@@ -38,8 +67,61 @@ namespace Azure.ResourceManager.DataBox.Models
                     backupManifestCloudPath = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExportDiskDetails(manifestFile.Value, manifestHash.Value, backupManifestCloudPath.Value);
+            return new ExportDiskDetails(manifestFile.Value, manifestHash.Value, backupManifestCloudPath.Value, serializedAdditionalRawData);
+        }
+
+        ExportDiskDetails IModelJsonSerializable<ExportDiskDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExportDiskDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExportDiskDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExportDiskDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExportDiskDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExportDiskDetails IModelSerializable<ExportDiskDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExportDiskDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExportDiskDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExportDiskDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExportDiskDetails"/> to convert. </param>
+        public static implicit operator RequestContent(ExportDiskDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExportDiskDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExportDiskDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExportDiskDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

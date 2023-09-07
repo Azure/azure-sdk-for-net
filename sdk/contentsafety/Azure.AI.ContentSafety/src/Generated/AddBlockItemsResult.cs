@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,9 @@ namespace Azure.AI.ContentSafety
     /// <summary> The response of adding blockItems to text blocklist. </summary>
     public partial class AddBlockItemsResult
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of AddBlockItemsResult. </summary>
         internal AddBlockItemsResult()
         {
@@ -21,9 +25,11 @@ namespace Azure.AI.ContentSafety
 
         /// <summary> Initializes a new instance of AddBlockItemsResult. </summary>
         /// <param name="value"> Array of blockItems added. </param>
-        internal AddBlockItemsResult(IReadOnlyList<TextBlockItem> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AddBlockItemsResult(IReadOnlyList<TextBlockItem> value, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of blockItems added. </summary>

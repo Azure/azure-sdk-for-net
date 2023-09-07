@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CassandraKeyspaceCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class CassandraKeyspaceCreateOrUpdateContent : IUtf8JsonSerializable, IModelJsonSerializable<CassandraKeyspaceCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CassandraKeyspaceCreateOrUpdateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CassandraKeyspaceCreateOrUpdateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CassandraKeyspaceCreateOrUpdateContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -39,18 +46,46 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("resource"u8);
-            writer.WriteObjectValue(Resource);
+            if (Resource is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<CassandraKeyspaceResourceInfo>)Resource).Serialize(writer, options);
+            }
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options);
+                if (Options is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CosmosDBCreateUpdateConfig>)Options).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CassandraKeyspaceCreateOrUpdateContent DeserializeCassandraKeyspaceCreateOrUpdateContent(JsonElement element)
+        internal static CassandraKeyspaceCreateOrUpdateContent DeserializeCassandraKeyspaceCreateOrUpdateContent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,6 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<SystemData> systemData = default;
             CassandraKeyspaceResourceInfo resource = default;
             Optional<CosmosDBCreateUpdateConfig> options = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -145,8 +181,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CassandraKeyspaceCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource, options.Value, identity);
+            return new CassandraKeyspaceCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource, options.Value, identity, serializedAdditionalRawData);
+        }
+
+        CassandraKeyspaceCreateOrUpdateContent IModelJsonSerializable<CassandraKeyspaceCreateOrUpdateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CassandraKeyspaceCreateOrUpdateContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCassandraKeyspaceCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CassandraKeyspaceCreateOrUpdateContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CassandraKeyspaceCreateOrUpdateContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CassandraKeyspaceCreateOrUpdateContent IModelSerializable<CassandraKeyspaceCreateOrUpdateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CassandraKeyspaceCreateOrUpdateContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCassandraKeyspaceCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CassandraKeyspaceCreateOrUpdateContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CassandraKeyspaceCreateOrUpdateContent"/> to convert. </param>
+        public static implicit operator RequestContent(CassandraKeyspaceCreateOrUpdateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CassandraKeyspaceCreateOrUpdateContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CassandraKeyspaceCreateOrUpdateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCassandraKeyspaceCreateOrUpdateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

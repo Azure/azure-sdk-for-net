@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.DataBox.Models
     /// Please note <see cref="CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DataBoxAccountCopyLogDetails"/>, <see cref="DataBoxCustomerDiskCopyLogDetails"/>, <see cref="DataBoxDiskCopyLogDetails"/> and <see cref="DataBoxHeavyAccountCopyLogDetails"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownCopyLogDetails))]
     public abstract partial class CopyLogDetails
     {
-        /// <summary> Initializes a new instance of CopyLogDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CopyLogDetails"/>. </summary>
         protected CopyLogDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of CopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyLogDetails"/>. </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
-        internal CopyLogDetails(DataBoxOrderType copyLogDetailsType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CopyLogDetails(DataBoxOrderType copyLogDetailsType, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CopyLogDetailsType = copyLogDetailsType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates the type of job details. </summary>

@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.CosmosDBForPostgreSql.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
-    public partial class CosmosDBForPostgreSqlClusterData : IUtf8JsonSerializable
+    public partial class CosmosDBForPostgreSqlClusterData : IUtf8JsonSerializable, IModelJsonSerializable<CosmosDBForPostgreSqlClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CosmosDBForPostgreSqlClusterData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CosmosDBForPostgreSqlClusterData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBForPostgreSqlClusterData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -52,7 +58,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue(MaintenanceWindow);
+                if (MaintenanceWindow is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CosmosDBForPostgreSqlMaintenanceWindow>)MaintenanceWindow).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(PreferredPrimaryZone))
             {
@@ -130,11 +143,25 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 writer.WriteStringValue(PointInTimeUTC.Value, "O");
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CosmosDBForPostgreSqlClusterData DeserializeCosmosDBForPostgreSqlClusterData(JsonElement element)
+        internal static CosmosDBForPostgreSqlClusterData DeserializeCosmosDBForPostgreSqlClusterData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -171,6 +198,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             Optional<IReadOnlyList<string>> readReplicas = default;
             Optional<DateTimeOffset> earliestRestoreTime = default;
             Optional<IReadOnlyList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>> privateEndpointConnections = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -441,8 +469,61 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CosmosDBForPostgreSqlClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, administratorLogin.Value, administratorLoginPassword.Value, provisioningState.Value, state.Value, postgresqlVersion.Value, citusVersion.Value, maintenanceWindow.Value, preferredPrimaryZone.Value, Optional.ToNullable(enableShardsOnCoordinator), Optional.ToNullable(enableHa), coordinatorServerEdition.Value, Optional.ToNullable(coordinatorStorageQuotaInMb), Optional.ToNullable(coordinatorVCores), Optional.ToNullable(coordinatorEnablePublicIPAccess), nodeServerEdition.Value, Optional.ToNullable(nodeCount), Optional.ToNullable(nodeStorageQuotaInMb), Optional.ToNullable(nodeVCores), Optional.ToNullable(nodeEnablePublicIPAccess), Optional.ToList(serverNames), sourceResourceId.Value, Optional.ToNullable(sourceLocation), Optional.ToNullable(pointInTimeUTC), Optional.ToList(readReplicas), Optional.ToNullable(earliestRestoreTime), Optional.ToList(privateEndpointConnections));
+            return new CosmosDBForPostgreSqlClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, administratorLogin.Value, administratorLoginPassword.Value, provisioningState.Value, state.Value, postgresqlVersion.Value, citusVersion.Value, maintenanceWindow.Value, preferredPrimaryZone.Value, Optional.ToNullable(enableShardsOnCoordinator), Optional.ToNullable(enableHa), coordinatorServerEdition.Value, Optional.ToNullable(coordinatorStorageQuotaInMb), Optional.ToNullable(coordinatorVCores), Optional.ToNullable(coordinatorEnablePublicIPAccess), nodeServerEdition.Value, Optional.ToNullable(nodeCount), Optional.ToNullable(nodeStorageQuotaInMb), Optional.ToNullable(nodeVCores), Optional.ToNullable(nodeEnablePublicIPAccess), Optional.ToList(serverNames), sourceResourceId.Value, Optional.ToNullable(sourceLocation), Optional.ToNullable(pointInTimeUTC), Optional.ToList(readReplicas), Optional.ToNullable(earliestRestoreTime), Optional.ToList(privateEndpointConnections), serializedAdditionalRawData);
+        }
+
+        CosmosDBForPostgreSqlClusterData IModelJsonSerializable<CosmosDBForPostgreSqlClusterData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBForPostgreSqlClusterData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBForPostgreSqlClusterData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CosmosDBForPostgreSqlClusterData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBForPostgreSqlClusterData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CosmosDBForPostgreSqlClusterData IModelSerializable<CosmosDBForPostgreSqlClusterData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBForPostgreSqlClusterData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCosmosDBForPostgreSqlClusterData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CosmosDBForPostgreSqlClusterData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CosmosDBForPostgreSqlClusterData"/> to convert. </param>
+        public static implicit operator RequestContent(CosmosDBForPostgreSqlClusterData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CosmosDBForPostgreSqlClusterData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CosmosDBForPostgreSqlClusterData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCosmosDBForPostgreSqlClusterData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

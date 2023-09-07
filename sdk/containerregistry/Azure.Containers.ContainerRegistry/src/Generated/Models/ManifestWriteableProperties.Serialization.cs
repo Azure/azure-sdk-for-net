@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class ManifestWriteableProperties : IUtf8JsonSerializable
+    internal partial class ManifestWriteableProperties : IUtf8JsonSerializable, IModelJsonSerializable<ManifestWriteableProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManifestWriteableProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManifestWriteableProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManifestWriteableProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CanDelete))
             {
@@ -35,7 +43,127 @@ namespace Azure.Containers.ContainerRegistry
                 writer.WritePropertyName("readEnabled"u8);
                 writer.WriteBooleanValue(CanRead.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ManifestWriteableProperties DeserializeManifestWriteableProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<bool> deleteEnabled = default;
+            Optional<bool> writeEnabled = default;
+            Optional<bool> listEnabled = default;
+            Optional<bool> readEnabled = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("deleteEnabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deleteEnabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("writeEnabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    writeEnabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("listEnabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    listEnabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("readEnabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    readEnabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ManifestWriteableProperties(Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled), serializedAdditionalRawData);
+        }
+
+        ManifestWriteableProperties IModelJsonSerializable<ManifestWriteableProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManifestWriteableProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManifestWriteableProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManifestWriteableProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManifestWriteableProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManifestWriteableProperties IModelSerializable<ManifestWriteableProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManifestWriteableProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManifestWriteableProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManifestWriteableProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManifestWriteableProperties"/> to convert. </param>
+        public static implicit operator RequestContent(ManifestWriteableProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManifestWriteableProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManifestWriteableProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManifestWriteableProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,89 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class SchemaComparisonValidationResult
+    public partial class SchemaComparisonValidationResult : IUtf8JsonSerializable, IModelJsonSerializable<SchemaComparisonValidationResult>
     {
-        internal static SchemaComparisonValidationResult DeserializeSchemaComparisonValidationResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SchemaComparisonValidationResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SchemaComparisonValidationResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SchemaComparisonValidationResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SchemaDifferences))
+            {
+                writer.WritePropertyName("schemaDifferences"u8);
+                if (SchemaDifferences is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SchemaComparisonValidationResultType>)SchemaDifferences).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(ValidationErrors))
+            {
+                writer.WritePropertyName("validationErrors"u8);
+                if (ValidationErrors is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ValidationError>)ValidationErrors).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(SourceDatabaseObjectCount))
+            {
+                writer.WritePropertyName("sourceDatabaseObjectCount"u8);
+                writer.WriteStartObject();
+                foreach (var item in SourceDatabaseObjectCount)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteNumberValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(TargetDatabaseObjectCount))
+            {
+                writer.WritePropertyName("targetDatabaseObjectCount"u8);
+                writer.WriteStartObject();
+                foreach (var item in TargetDatabaseObjectCount)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteNumberValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SchemaComparisonValidationResult DeserializeSchemaComparisonValidationResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +96,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<ValidationError> validationErrors = default;
             Optional<IReadOnlyDictionary<string, long>> sourceDatabaseObjectCount = default;
             Optional<IReadOnlyDictionary<string, long>> targetDatabaseObjectCount = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaDifferences"u8))
@@ -71,8 +145,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     targetDatabaseObjectCount = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SchemaComparisonValidationResult(schemaDifferences.Value, validationErrors.Value, Optional.ToDictionary(sourceDatabaseObjectCount), Optional.ToDictionary(targetDatabaseObjectCount));
+            return new SchemaComparisonValidationResult(schemaDifferences.Value, validationErrors.Value, Optional.ToDictionary(sourceDatabaseObjectCount), Optional.ToDictionary(targetDatabaseObjectCount), serializedAdditionalRawData);
+        }
+
+        SchemaComparisonValidationResult IModelJsonSerializable<SchemaComparisonValidationResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SchemaComparisonValidationResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSchemaComparisonValidationResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SchemaComparisonValidationResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SchemaComparisonValidationResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SchemaComparisonValidationResult IModelSerializable<SchemaComparisonValidationResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SchemaComparisonValidationResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSchemaComparisonValidationResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SchemaComparisonValidationResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SchemaComparisonValidationResult"/> to convert. </param>
+        public static implicit operator RequestContent(SchemaComparisonValidationResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SchemaComparisonValidationResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SchemaComparisonValidationResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSchemaComparisonValidationResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

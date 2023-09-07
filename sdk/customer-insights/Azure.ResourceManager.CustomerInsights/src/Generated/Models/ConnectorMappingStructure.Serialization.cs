@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class ConnectorMappingStructure : IUtf8JsonSerializable
+    public partial class ConnectorMappingStructure : IUtf8JsonSerializable, IModelJsonSerializable<ConnectorMappingStructure>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConnectorMappingStructure>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConnectorMappingStructure>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectorMappingStructure>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("propertyName"u8);
             writer.WriteStringValue(PropertyName);
@@ -29,11 +37,25 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WritePropertyName("isEncrypted"u8);
                 writer.WriteBooleanValue(IsEncrypted.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConnectorMappingStructure DeserializeConnectorMappingStructure(JsonElement element)
+        internal static ConnectorMappingStructure DeserializeConnectorMappingStructure(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             string columnName = default;
             Optional<string> customFormatSpecifier = default;
             Optional<bool> isEncrypted = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("propertyName"u8))
@@ -68,8 +91,61 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     isEncrypted = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConnectorMappingStructure(propertyName, columnName, customFormatSpecifier.Value, Optional.ToNullable(isEncrypted));
+            return new ConnectorMappingStructure(propertyName, columnName, customFormatSpecifier.Value, Optional.ToNullable(isEncrypted), serializedAdditionalRawData);
+        }
+
+        ConnectorMappingStructure IModelJsonSerializable<ConnectorMappingStructure>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectorMappingStructure>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectorMappingStructure(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConnectorMappingStructure>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectorMappingStructure>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConnectorMappingStructure IModelSerializable<ConnectorMappingStructure>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectorMappingStructure>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConnectorMappingStructure(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConnectorMappingStructure"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConnectorMappingStructure"/> to convert. </param>
+        public static implicit operator RequestContent(ConnectorMappingStructure model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConnectorMappingStructure"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConnectorMappingStructure(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConnectorMappingStructure(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Communication.JobRouter;
 using Azure.Core;
@@ -14,7 +15,10 @@ namespace Azure.Communication.JobRouter.Models
     /// <summary> A container for the rules that govern how jobs are classified. </summary>
     public partial class ClassificationPolicy
     {
-        /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClassificationPolicy"/>. </summary>
         /// <param name="id"> Unique identifier of this policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
         /// <param name="fallbackQueueId"> The fallback queue to select if the queue selector doesn't find a match. </param>
@@ -39,7 +43,8 @@ namespace Azure.Communication.JobRouter.Models
         /// Please note <see cref="WorkerSelectorAttachment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ConditionalWorkerSelectorAttachment"/>, <see cref="PassThroughWorkerSelectorAttachment"/>, <see cref="RuleEngineWorkerSelectorAttachment"/>, <see cref="StaticWorkerSelectorAttachment"/> and <see cref="WeightedAllocationWorkerSelectorAttachment"/>.
         /// </param>
-        internal ClassificationPolicy(string id, string name, string fallbackQueueId, IList<QueueSelectorAttachment> queueSelectors, RouterRule prioritizationRule, IList<WorkerSelectorAttachment> workerSelectors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClassificationPolicy(string id, string name, string fallbackQueueId, IList<QueueSelectorAttachment> queueSelectors, RouterRule prioritizationRule, IList<WorkerSelectorAttachment> workerSelectors, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -47,6 +52,7 @@ namespace Azure.Communication.JobRouter.Models
             _queueSelectors = queueSelectors;
             PrioritizationRule = prioritizationRule;
             _workerSelectors = workerSelectors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unique identifier of this policy. </summary>

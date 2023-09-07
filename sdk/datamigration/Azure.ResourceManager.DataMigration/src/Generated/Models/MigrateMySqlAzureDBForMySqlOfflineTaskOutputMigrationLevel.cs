@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel. </summary>
     public partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel : MigrateMySqlAzureDBForMySqlOfflineTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel"/>. </summary>
         internal MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel()
         {
             ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();
             ResultType = "MigrationLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="startedOn"> Migration start time. </param>
@@ -39,7 +39,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
         /// <param name="lastStorageUpdate"> Last time the storage was updated. </param>
-        internal MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel(string id, string resultType, DateTimeOffset? startedOn, DateTimeOffset? endedOn, long? durationInSeconds, MigrationStatus? status, string statusMessage, string message, string databases, string databaseSummary, MigrationReportResult migrationReportResult, string sourceServerVersion, string sourceServerBrandVersion, string targetServerVersion, string targetServerBrandVersion, IReadOnlyList<ReportableException> exceptionsAndWarnings, DateTimeOffset? lastStorageUpdate) : base(id, resultType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel(string id, string resultType, DateTimeOffset? startedOn, DateTimeOffset? endedOn, long? durationInSeconds, MigrationStatus? status, string statusMessage, string message, string databases, string databaseSummary, MigrationReportResult migrationReportResult, string sourceServerVersion, string sourceServerBrandVersion, string targetServerVersion, string targetServerBrandVersion, IReadOnlyList<ReportableException> exceptionsAndWarnings, DateTimeOffset? lastStorageUpdate, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, resultType, serializedAdditionalRawData)
         {
             StartedOn = startedOn;
             EndedOn = endedOn;

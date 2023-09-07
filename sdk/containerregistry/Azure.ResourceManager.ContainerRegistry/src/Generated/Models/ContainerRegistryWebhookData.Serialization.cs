@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ContainerRegistry.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    public partial class ContainerRegistryWebhookData : IUtf8JsonSerializable
+    public partial class ContainerRegistryWebhookData : IUtf8JsonSerializable, IModelJsonSerializable<ContainerRegistryWebhookData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerRegistryWebhookData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerRegistryWebhookData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryWebhookData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -54,11 +61,25 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerRegistryWebhookData DeserializeContainerRegistryWebhookData(JsonElement element)
+        internal static ContainerRegistryWebhookData DeserializeContainerRegistryWebhookData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -73,6 +94,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             Optional<string> scope = default;
             Optional<IList<ContainerRegistryWebhookAction>> actions = default;
             Optional<ContainerRegistryProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -167,8 +189,61 @@ namespace Azure.ResourceManager.ContainerRegistry
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerRegistryWebhookData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(status), scope.Value, Optional.ToList(actions), Optional.ToNullable(provisioningState));
+            return new ContainerRegistryWebhookData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(status), scope.Value, Optional.ToList(actions), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+        }
+
+        ContainerRegistryWebhookData IModelJsonSerializable<ContainerRegistryWebhookData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryWebhookData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryWebhookData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerRegistryWebhookData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryWebhookData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerRegistryWebhookData IModelSerializable<ContainerRegistryWebhookData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryWebhookData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerRegistryWebhookData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerRegistryWebhookData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerRegistryWebhookData"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerRegistryWebhookData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerRegistryWebhookData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerRegistryWebhookData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerRegistryWebhookData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

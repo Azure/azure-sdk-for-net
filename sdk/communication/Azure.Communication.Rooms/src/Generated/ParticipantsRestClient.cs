@@ -132,9 +132,7 @@ namespace Azure.Communication.Rooms
                 }
             }
             var model = updateParticipantsRequest;
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
+            request.Content = model;
             return message;
         }
 

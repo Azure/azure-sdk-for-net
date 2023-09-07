@@ -5,15 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ReportableException
+    public partial class ReportableException : IUtf8JsonSerializable, IModelJsonSerializable<ReportableException>
     {
-        internal static ReportableException DeserializeReportableException(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ReportableException>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ReportableException>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ReportableException>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (Optional.IsDefined(ActionableMessage))
+            {
+                writer.WritePropertyName("actionableMessage"u8);
+                writer.WriteStringValue(ActionableMessage);
+            }
+            if (Optional.IsDefined(FilePath))
+            {
+                writer.WritePropertyName("filePath"u8);
+                writer.WriteStringValue(FilePath);
+            }
+            if (Optional.IsDefined(LineNumber))
+            {
+                writer.WritePropertyName("lineNumber"u8);
+                writer.WriteStringValue(LineNumber);
+            }
+            if (Optional.IsDefined(HResult))
+            {
+                writer.WritePropertyName("hResult"u8);
+                writer.WriteNumberValue(HResult.Value);
+            }
+            if (Optional.IsDefined(StackTrace))
+            {
+                writer.WritePropertyName("stackTrace"u8);
+                writer.WriteStringValue(StackTrace);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ReportableException DeserializeReportableException(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +82,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> lineNumber = default;
             Optional<int> hResult = default;
             Optional<string> stackTrace = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -60,8 +119,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     stackTrace = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ReportableException(message.Value, actionableMessage.Value, filePath.Value, lineNumber.Value, Optional.ToNullable(hResult), stackTrace.Value);
+            return new ReportableException(message.Value, actionableMessage.Value, filePath.Value, lineNumber.Value, Optional.ToNullable(hResult), stackTrace.Value, serializedAdditionalRawData);
+        }
+
+        ReportableException IModelJsonSerializable<ReportableException>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReportableException>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeReportableException(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ReportableException>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReportableException>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ReportableException IModelSerializable<ReportableException>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReportableException>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeReportableException(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ReportableException"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ReportableException"/> to convert. </param>
+        public static implicit operator RequestContent(ReportableException model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ReportableException"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ReportableException(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeReportableException(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,15 +6,68 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    public partial class ArtifactTagProperties
+    public partial class ArtifactTagProperties : IUtf8JsonSerializable, IModelJsonSerializable<ArtifactTagProperties>
     {
-        internal static ArtifactTagProperties DeserializeArtifactTagProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ArtifactTagProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ArtifactTagProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ArtifactTagProperties>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("tag"u8);
+            writer.WriteStartObject();
+            writer.WritePropertyName("changeableAttributes"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CanDelete))
+            {
+                writer.WritePropertyName("deleteEnabled"u8);
+                writer.WriteBooleanValue(CanDelete.Value);
+            }
+            if (Optional.IsDefined(CanWrite))
+            {
+                writer.WritePropertyName("writeEnabled"u8);
+                writer.WriteBooleanValue(CanWrite.Value);
+            }
+            if (Optional.IsDefined(CanList))
+            {
+                writer.WritePropertyName("listEnabled"u8);
+                writer.WriteBooleanValue(CanList.Value);
+            }
+            if (Optional.IsDefined(CanRead))
+            {
+                writer.WritePropertyName("readEnabled"u8);
+                writer.WriteBooleanValue(CanRead.Value);
+            }
+            writer.WriteEndObject();
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ArtifactTagProperties DeserializeArtifactTagProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +82,7 @@ namespace Azure.Containers.ContainerRegistry
             Optional<bool> writeEnabled = default;
             Optional<bool> listEnabled = default;
             Optional<bool> readEnabled = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registry"u8))
@@ -121,8 +175,61 @@ namespace Azure.Containers.ContainerRegistry
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ArtifactTagProperties(registry, imageName, name, digest, createdTime, lastUpdateTime, Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
+            return new ArtifactTagProperties(registry, imageName, name, digest, createdTime, lastUpdateTime, Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled), serializedAdditionalRawData);
+        }
+
+        ArtifactTagProperties IModelJsonSerializable<ArtifactTagProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArtifactTagProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeArtifactTagProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ArtifactTagProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArtifactTagProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ArtifactTagProperties IModelSerializable<ArtifactTagProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArtifactTagProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeArtifactTagProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ArtifactTagProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ArtifactTagProperties"/> to convert. </param>
+        public static implicit operator RequestContent(ArtifactTagProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ArtifactTagProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ArtifactTagProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeArtifactTagProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

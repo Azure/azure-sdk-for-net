@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class AsymmetricEncryptedSecret : IUtf8JsonSerializable
+    public partial class AsymmetricEncryptedSecret : IUtf8JsonSerializable, IModelJsonSerializable<AsymmetricEncryptedSecret>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AsymmetricEncryptedSecret>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AsymmetricEncryptedSecret>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AsymmetricEncryptedSecret>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
@@ -24,11 +32,25 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             writer.WritePropertyName("encryptionAlgorithm"u8);
             writer.WriteStringValue(EncryptionAlgorithm.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AsymmetricEncryptedSecret DeserializeAsymmetricEncryptedSecret(JsonElement element)
+        internal static AsymmetricEncryptedSecret DeserializeAsymmetricEncryptedSecret(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +58,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             string value = default;
             Optional<string> encryptionCertThumbprint = default;
             DataBoxEdgeEncryptionAlgorithm encryptionAlgorithm = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -53,8 +76,61 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     encryptionAlgorithm = new DataBoxEdgeEncryptionAlgorithm(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AsymmetricEncryptedSecret(value, encryptionCertThumbprint.Value, encryptionAlgorithm);
+            return new AsymmetricEncryptedSecret(value, encryptionCertThumbprint.Value, encryptionAlgorithm, serializedAdditionalRawData);
+        }
+
+        AsymmetricEncryptedSecret IModelJsonSerializable<AsymmetricEncryptedSecret>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AsymmetricEncryptedSecret>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAsymmetricEncryptedSecret(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AsymmetricEncryptedSecret>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AsymmetricEncryptedSecret>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AsymmetricEncryptedSecret IModelSerializable<AsymmetricEncryptedSecret>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AsymmetricEncryptedSecret>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAsymmetricEncryptedSecret(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AsymmetricEncryptedSecret"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AsymmetricEncryptedSecret"/> to convert. </param>
+        public static implicit operator RequestContent(AsymmetricEncryptedSecret model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AsymmetricEncryptedSecret"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AsymmetricEncryptedSecret(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAsymmetricEncryptedSecret(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary>
@@ -12,14 +16,18 @@ namespace Azure.Communication.JobRouter
     /// Please note <see cref="DistributionMode"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="BestWorkerMode"/>, <see cref="LongestIdleMode"/> and <see cref="RoundRobinMode"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownDistributionMode))]
     public abstract partial class DistributionMode
     {
-        /// <summary> Initializes a new instance of DistributionMode. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DistributionMode"/>. </summary>
         protected DistributionMode()
         {
         }
 
-        /// <summary> Initializes a new instance of DistributionMode. </summary>
+        /// <summary> Initializes a new instance of <see cref="DistributionMode"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of Mode. </param>
         /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>
         /// <param name="maxConcurrentOffers"> Governs the maximum number of active concurrent offers a job can have. </param>
@@ -30,12 +38,14 @@ namespace Azure.Communication.JobRouter
         /// variable to true. This flag is intended more for temporary usage.
         /// By default, set to false.
         /// </param>
-        internal DistributionMode(string kind, int minConcurrentOffers, int maxConcurrentOffers, bool? bypassSelectors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DistributionMode(string kind, int minConcurrentOffers, int maxConcurrentOffers, bool? bypassSelectors, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             MinConcurrentOffers = minConcurrentOffers;
             MaxConcurrentOffers = maxConcurrentOffers;
             BypassSelectors = bypassSelectors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type discriminator describing a sub-type of Mode. </summary>

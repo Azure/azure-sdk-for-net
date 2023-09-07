@@ -16,7 +16,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> Configure the grid layout. </summary>
     public partial class GridLayout : MediaCompositionLayout
     {
-        /// <summary> Initializes a new instance of GridLayout. </summary>
+        /// <summary> Initializes a new instance of <see cref="GridLayout"/>. </summary>
         /// <param name="rows"> Number of rows. </param>
         /// <param name="columns"> Number of columns. </param>
         /// <param name="inputIds"> Input ids to be included in the layout. </param>
@@ -31,7 +31,7 @@ namespace Azure.Communication.MediaComposition
             Kind = LayoutType.Grid;
         }
 
-        /// <summary> Initializes a new instance of GridLayout. </summary>
+        /// <summary> Initializes a new instance of <see cref="GridLayout"/>. </summary>
         /// <param name="kind"> Kind of layout. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>
@@ -39,12 +39,18 @@ namespace Azure.Communication.MediaComposition
         /// <param name="rows"> Number of rows. </param>
         /// <param name="columns"> Number of columns. </param>
         /// <param name="inputIds"> Input ids to be included in the layout. </param>
-        internal GridLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, ScalingMode? scalingMode, int rows, int columns, IList<IList<string>> inputIds) : base(kind, resolution, placeholderImageUri, scalingMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GridLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, ScalingMode? scalingMode, int rows, int columns, IList<IList<string>> inputIds, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, resolution, placeholderImageUri, scalingMode, serializedAdditionalRawData)
         {
             Rows = rows;
             Columns = columns;
             InputIds = inputIds;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GridLayout"/> for deserialization. </summary>
+        internal GridLayout()
+        {
         }
 
         /// <summary> Number of rows. </summary>

@@ -5,34 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class RestorableSqlDatabasePropertiesResourceDatabase : IUtf8JsonSerializable
+    public partial class RestorableSqlDatabasePropertiesResourceDatabase : IUtf8JsonSerializable, IModelJsonSerializable<RestorableSqlDatabasePropertiesResourceDatabase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RestorableSqlDatabasePropertiesResourceDatabase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RestorableSqlDatabasePropertiesResourceDatabase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RestorableSqlDatabasePropertiesResourceDatabase>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(DatabaseName);
             if (Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
-                writer.WriteObjectValue(RestoreParameters);
+                if (RestoreParameters is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourceRestoreParameters>)RestoreParameters).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RestorableSqlDatabasePropertiesResourceDatabase DeserializeRestorableSqlDatabasePropertiesResourceDatabase(JsonElement element)
+        internal static RestorableSqlDatabasePropertiesResourceDatabase DeserializeRestorableSqlDatabasePropertiesResourceDatabase(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string id = default;
             Optional<ResourceRestoreParameters> restoreParameters = default;
             Optional<CosmosDBAccountCreateMode> createMode = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_colls"u8))
@@ -109,8 +138,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     createMode = new CosmosDBAccountCreateMode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RestorableSqlDatabasePropertiesResourceDatabase(id, restoreParameters.Value, Optional.ToNullable(createMode), colls.Value, users.Value, self.Value, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new RestorableSqlDatabasePropertiesResourceDatabase(id, restoreParameters.Value, Optional.ToNullable(createMode), colls.Value, users.Value, self.Value, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag), serializedAdditionalRawData);
+        }
+
+        RestorableSqlDatabasePropertiesResourceDatabase IModelJsonSerializable<RestorableSqlDatabasePropertiesResourceDatabase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RestorableSqlDatabasePropertiesResourceDatabase>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRestorableSqlDatabasePropertiesResourceDatabase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RestorableSqlDatabasePropertiesResourceDatabase>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RestorableSqlDatabasePropertiesResourceDatabase>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RestorableSqlDatabasePropertiesResourceDatabase IModelSerializable<RestorableSqlDatabasePropertiesResourceDatabase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RestorableSqlDatabasePropertiesResourceDatabase>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRestorableSqlDatabasePropertiesResourceDatabase(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RestorableSqlDatabasePropertiesResourceDatabase"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RestorableSqlDatabasePropertiesResourceDatabase"/> to convert. </param>
+        public static implicit operator RequestContent(RestorableSqlDatabasePropertiesResourceDatabase model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RestorableSqlDatabasePropertiesResourceDatabase"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RestorableSqlDatabasePropertiesResourceDatabase(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRestorableSqlDatabasePropertiesResourceDatabase(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

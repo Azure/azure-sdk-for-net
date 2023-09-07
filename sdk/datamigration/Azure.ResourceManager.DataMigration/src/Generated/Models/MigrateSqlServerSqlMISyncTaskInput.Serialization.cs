@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlMISyncTaskInput : IUtf8JsonSerializable
+    public partial class MigrateSqlServerSqlMISyncTaskInput : IUtf8JsonSerializable, IModelJsonSerializable<MigrateSqlServerSqlMISyncTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MigrateSqlServerSqlMISyncTaskInput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MigrateSqlServerSqlMISyncTaskInput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateSqlServerSqlMISyncTaskInput>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(NumberOfParallelDatabaseMigrations))
             {
@@ -25,27 +32,76 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MigrateSqlServerSqlMIDatabaseInput>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(BackupFileShare))
             {
                 writer.WritePropertyName("backupFileShare"u8);
-                writer.WriteObjectValue(BackupFileShare);
+                if (BackupFileShare is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<FileShare>)BackupFileShare).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("storageResourceId"u8);
             writer.WriteStringValue(StorageResourceId);
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo);
+            if (SourceConnectionInfo is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<SqlConnectionInfo>)SourceConnectionInfo).Serialize(writer, options);
+            }
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue(TargetConnectionInfo);
+            if (TargetConnectionInfo is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<MISqlConnectionInfo>)TargetConnectionInfo).Serialize(writer, options);
+            }
             writer.WritePropertyName("azureApp"u8);
-            writer.WriteObjectValue(AzureApp);
+            if (AzureApp is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<AzureActiveDirectoryApp>)AzureApp).Serialize(writer, options);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MigrateSqlServerSqlMISyncTaskInput DeserializeMigrateSqlServerSqlMISyncTaskInput(JsonElement element)
+        internal static MigrateSqlServerSqlMISyncTaskInput DeserializeMigrateSqlServerSqlMISyncTaskInput(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +113,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SqlConnectionInfo sourceConnectionInfo = default;
             MISqlConnectionInfo targetConnectionInfo = default;
             AzureActiveDirectoryApp azureApp = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("numberOfParallelDatabaseMigrations"u8))
@@ -107,8 +164,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     azureApp = AzureActiveDirectoryApp.DeserializeAzureActiveDirectoryApp(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MigrateSqlServerSqlMISyncTaskInput(selectedDatabases, backupFileShare.Value, storageResourceId, sourceConnectionInfo, targetConnectionInfo, azureApp, Optional.ToNullable(numberOfParallelDatabaseMigrations));
+            return new MigrateSqlServerSqlMISyncTaskInput(selectedDatabases, backupFileShare.Value, storageResourceId, sourceConnectionInfo, targetConnectionInfo, azureApp, Optional.ToNullable(numberOfParallelDatabaseMigrations), serializedAdditionalRawData);
+        }
+
+        MigrateSqlServerSqlMISyncTaskInput IModelJsonSerializable<MigrateSqlServerSqlMISyncTaskInput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateSqlServerSqlMISyncTaskInput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateSqlServerSqlMISyncTaskInput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MigrateSqlServerSqlMISyncTaskInput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateSqlServerSqlMISyncTaskInput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MigrateSqlServerSqlMISyncTaskInput IModelSerializable<MigrateSqlServerSqlMISyncTaskInput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateSqlServerSqlMISyncTaskInput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMigrateSqlServerSqlMISyncTaskInput(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MigrateSqlServerSqlMISyncTaskInput"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MigrateSqlServerSqlMISyncTaskInput"/> to convert. </param>
+        public static implicit operator RequestContent(MigrateSqlServerSqlMISyncTaskInput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MigrateSqlServerSqlMISyncTaskInput"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MigrateSqlServerSqlMISyncTaskInput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMigrateSqlServerSqlMISyncTaskInput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

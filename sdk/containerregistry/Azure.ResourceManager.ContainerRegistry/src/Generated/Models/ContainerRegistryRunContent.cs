@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary>
@@ -12,24 +16,30 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// Please note <see cref="ContainerRegistryRunContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ContainerRegistryDockerBuildContent"/>, <see cref="ContainerRegistryEncodedTaskRunContent"/>, <see cref="ContainerRegistryFileTaskRunContent"/> and <see cref="ContainerRegistryTaskRunContent"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownRunRequest))]
     public abstract partial class ContainerRegistryRunContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryRunContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunContent"/>. </summary>
         protected ContainerRegistryRunContent()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryRunContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunContent"/>. </summary>
         /// <param name="runRequestType"> The type of the run request. </param>
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled for the run or not. </param>
         /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>
         /// <param name="logTemplate"> The template that describes the repository and tag information for run log artifact. </param>
-        internal ContainerRegistryRunContent(string runRequestType, bool? isArchiveEnabled, string agentPoolName, string logTemplate)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryRunContent(string runRequestType, bool? isArchiveEnabled, string agentPoolName, string logTemplate, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RunRequestType = runRequestType;
             IsArchiveEnabled = isArchiveEnabled;
             AgentPoolName = agentPoolName;
             LogTemplate = logTemplate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of the run request. </summary>

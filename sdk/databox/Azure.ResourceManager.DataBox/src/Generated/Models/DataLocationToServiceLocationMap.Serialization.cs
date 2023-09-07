@@ -5,21 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataLocationToServiceLocationMap
+    public partial class DataLocationToServiceLocationMap : IUtf8JsonSerializable, IModelJsonSerializable<DataLocationToServiceLocationMap>
     {
-        internal static DataLocationToServiceLocationMap DeserializeDataLocationToServiceLocationMap(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataLocationToServiceLocationMap>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataLocationToServiceLocationMap>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataLocationToServiceLocationMap>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DataLocationToServiceLocationMap DeserializeDataLocationToServiceLocationMap(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AzureLocation> dataLocation = default;
             Optional<AzureLocation> serviceLocation = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataLocation"u8))
@@ -40,8 +69,61 @@ namespace Azure.ResourceManager.DataBox.Models
                     serviceLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataLocationToServiceLocationMap(Optional.ToNullable(dataLocation), Optional.ToNullable(serviceLocation));
+            return new DataLocationToServiceLocationMap(Optional.ToNullable(dataLocation), Optional.ToNullable(serviceLocation), serializedAdditionalRawData);
+        }
+
+        DataLocationToServiceLocationMap IModelJsonSerializable<DataLocationToServiceLocationMap>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataLocationToServiceLocationMap>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataLocationToServiceLocationMap(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataLocationToServiceLocationMap>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataLocationToServiceLocationMap>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataLocationToServiceLocationMap IModelSerializable<DataLocationToServiceLocationMap>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataLocationToServiceLocationMap>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataLocationToServiceLocationMap(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataLocationToServiceLocationMap"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataLocationToServiceLocationMap"/> to convert. </param>
+        public static implicit operator RequestContent(DataLocationToServiceLocationMap model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataLocationToServiceLocationMap"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataLocationToServiceLocationMap(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataLocationToServiceLocationMap(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

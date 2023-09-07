@@ -6,28 +6,49 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DataBoxEdge.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    public partial class DataBoxEdgeStorageContainerData : IUtf8JsonSerializable
+    public partial class DataBoxEdgeStorageContainerData : IUtf8JsonSerializable, IModelJsonSerializable<DataBoxEdgeStorageContainerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataBoxEdgeStorageContainerData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataBoxEdgeStorageContainerData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeStorageContainerData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("dataFormat"u8);
             writer.WriteStringValue(DataFormat.ToString());
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataBoxEdgeStorageContainerData DeserializeDataBoxEdgeStorageContainerData(JsonElement element)
+        internal static DataBoxEdgeStorageContainerData DeserializeDataBoxEdgeStorageContainerData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +61,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             DataBoxEdgeStorageContainerDataFormat dataFormat = default;
             Optional<DataBoxEdgeRefreshDetails> refreshDetails = default;
             Optional<DateTimeOffset> createdDateTime = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -110,8 +132,61 @@ namespace Azure.ResourceManager.DataBoxEdge
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataBoxEdgeStorageContainerData(id, name, type, systemData.Value, Optional.ToNullable(containerStatus), dataFormat, refreshDetails.Value, Optional.ToNullable(createdDateTime));
+            return new DataBoxEdgeStorageContainerData(id, name, type, systemData.Value, Optional.ToNullable(containerStatus), dataFormat, refreshDetails.Value, Optional.ToNullable(createdDateTime), serializedAdditionalRawData);
+        }
+
+        DataBoxEdgeStorageContainerData IModelJsonSerializable<DataBoxEdgeStorageContainerData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeStorageContainerData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeStorageContainerData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataBoxEdgeStorageContainerData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeStorageContainerData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataBoxEdgeStorageContainerData IModelSerializable<DataBoxEdgeStorageContainerData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxEdgeStorageContainerData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataBoxEdgeStorageContainerData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataBoxEdgeStorageContainerData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataBoxEdgeStorageContainerData"/> to convert. </param>
+        public static implicit operator RequestContent(DataBoxEdgeStorageContainerData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataBoxEdgeStorageContainerData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataBoxEdgeStorageContainerData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataBoxEdgeStorageContainerData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

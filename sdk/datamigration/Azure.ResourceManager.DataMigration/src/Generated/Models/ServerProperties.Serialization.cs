@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ServerProperties
+    public partial class ServerProperties : IUtf8JsonSerializable, IModelJsonSerializable<ServerProperties>
     {
-        internal static ServerProperties DeserializeServerProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServerProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServerProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ServerProperties>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ServerProperties DeserializeServerProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +52,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> serverEdition = default;
             Optional<string> serverOperatingSystemVersion = default;
             Optional<int> serverDatabaseCount = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serverPlatform"u8))
@@ -60,8 +89,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     serverDatabaseCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServerProperties(serverPlatform.Value, serverName.Value, serverVersion.Value, serverEdition.Value, serverOperatingSystemVersion.Value, Optional.ToNullable(serverDatabaseCount));
+            return new ServerProperties(serverPlatform.Value, serverName.Value, serverVersion.Value, serverEdition.Value, serverOperatingSystemVersion.Value, Optional.ToNullable(serverDatabaseCount), serializedAdditionalRawData);
+        }
+
+        ServerProperties IModelJsonSerializable<ServerProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServerProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServerProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServerProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServerProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServerProperties IModelSerializable<ServerProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServerProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServerProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ServerProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ServerProperties"/> to convert. </param>
+        public static implicit operator RequestContent(ServerProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ServerProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ServerProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServerProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Parameters for Kubernetes Cluster Backup Datasource. </summary>
     public partial class KubernetesClusterBackupDataSourceSettings : BackupDataSourceSettings
     {
-        /// <summary> Initializes a new instance of KubernetesClusterBackupDataSourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterBackupDataSourceSettings"/>. </summary>
         /// <param name="isSnapshotVolumesEnabled"> Gets or sets the volume snapshot property. This property if enabled will take volume snapshots during restore. </param>
         /// <param name="isClusterScopeResourcesIncluded"> Gets or sets the include cluster resources property. This property if enabled will include cluster scope resources during restore. </param>
         public KubernetesClusterBackupDataSourceSettings(bool isSnapshotVolumesEnabled, bool isClusterScopeResourcesIncluded)
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ObjectType = "KubernetesClusterBackupDatasourceParameters";
         }
 
-        /// <summary> Initializes a new instance of KubernetesClusterBackupDataSourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterBackupDataSourceSettings"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <param name="isSnapshotVolumesEnabled"> Gets or sets the volume snapshot property. This property if enabled will take volume snapshots during restore. </param>
         /// <param name="isClusterScopeResourcesIncluded"> Gets or sets the include cluster resources property. This property if enabled will include cluster scope resources during restore. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="includedResourceTypes"> Gets or sets the include resource types property. This property sets the resource types to be included during restore. </param>
         /// <param name="excludedResourceTypes"> Gets or sets the exclude resource types property. This property sets the resource types to be excluded during restore. </param>
         /// <param name="labelSelectors"> Gets or sets the LabelSelectors property. This property sets the resource with such label selectors to be included during restore. </param>
-        internal KubernetesClusterBackupDataSourceSettings(string objectType, bool isSnapshotVolumesEnabled, bool isClusterScopeResourcesIncluded, IList<string> includedNamespaces, IList<string> excludedNamespaces, IList<string> includedResourceTypes, IList<string> excludedResourceTypes, IList<string> labelSelectors) : base(objectType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesClusterBackupDataSourceSettings(string objectType, bool isSnapshotVolumesEnabled, bool isClusterScopeResourcesIncluded, IList<string> includedNamespaces, IList<string> excludedNamespaces, IList<string> includedResourceTypes, IList<string> excludedResourceTypes, IList<string> labelSelectors, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(objectType, serializedAdditionalRawData)
         {
             IsSnapshotVolumesEnabled = isSnapshotVolumesEnabled;
             IsClusterScopeResourcesIncluded = isClusterScopeResourcesIncluded;
@@ -47,6 +49,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ExcludedResourceTypes = excludedResourceTypes;
             LabelSelectors = labelSelectors;
             ObjectType = objectType ?? "KubernetesClusterBackupDatasourceParameters";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterBackupDataSourceSettings"/> for deserialization. </summary>
+        internal KubernetesClusterBackupDataSourceSettings()
+        {
         }
 
         /// <summary> Gets or sets the volume snapshot property. This property if enabled will take volume snapshots during restore. </summary>

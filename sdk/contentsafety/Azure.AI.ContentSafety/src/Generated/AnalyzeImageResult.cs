@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.ContentSafety
 {
     /// <summary> The analysis response of the image. </summary>
     public partial class AnalyzeImageResult
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of AnalyzeImageResult. </summary>
         internal AnalyzeImageResult()
         {
@@ -20,12 +26,14 @@ namespace Azure.AI.ContentSafety
         /// <param name="selfHarmResult"> Analysis result for SelfHarm category. </param>
         /// <param name="sexualResult"> Analysis result for Sexual category. </param>
         /// <param name="violenceResult"> Analysis result for Violence category. </param>
-        internal AnalyzeImageResult(ImageAnalyzeSeverityResult hateResult, ImageAnalyzeSeverityResult selfHarmResult, ImageAnalyzeSeverityResult sexualResult, ImageAnalyzeSeverityResult violenceResult)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalyzeImageResult(ImageAnalyzeSeverityResult hateResult, ImageAnalyzeSeverityResult selfHarmResult, ImageAnalyzeSeverityResult sexualResult, ImageAnalyzeSeverityResult violenceResult, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HateResult = hateResult;
             SelfHarmResult = selfHarmResult;
             SexualResult = sexualResult;
             ViolenceResult = violenceResult;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Analysis result for Hate category. </summary>

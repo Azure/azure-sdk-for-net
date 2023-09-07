@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryPrivateEndpointConnectionProperties : IUtf8JsonSerializable
+    public partial class DataFactoryPrivateEndpointConnectionProperties : IUtf8JsonSerializable, IModelJsonSerializable<DataFactoryPrivateEndpointConnectionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataFactoryPrivateEndpointConnectionProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataFactoryPrivateEndpointConnectionProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataFactoryPrivateEndpointConnectionProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateEndpoint))
             {
@@ -24,13 +32,34 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState);
+                if (PrivateLinkServiceConnectionState is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PrivateLinkConnectionState>)PrivateLinkServiceConnectionState).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static DataFactoryPrivateEndpointConnectionProperties DeserializeDataFactoryPrivateEndpointConnectionProperties(JsonElement element)
+        internal static DataFactoryPrivateEndpointConnectionProperties DeserializeDataFactoryPrivateEndpointConnectionProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,6 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> provisioningState = default;
             Optional<SubResource> privateEndpoint = default;
             Optional<PrivateLinkConnectionState> privateLinkServiceConnectionState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -63,8 +93,61 @@ namespace Azure.ResourceManager.DataFactory.Models
                     privateLinkServiceConnectionState = PrivateLinkConnectionState.DeserializePrivateLinkConnectionState(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataFactoryPrivateEndpointConnectionProperties(provisioningState.Value, privateEndpoint, privateLinkServiceConnectionState.Value);
+            return new DataFactoryPrivateEndpointConnectionProperties(provisioningState.Value, privateEndpoint, privateLinkServiceConnectionState.Value, serializedAdditionalRawData);
+        }
+
+        DataFactoryPrivateEndpointConnectionProperties IModelJsonSerializable<DataFactoryPrivateEndpointConnectionProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataFactoryPrivateEndpointConnectionProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryPrivateEndpointConnectionProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataFactoryPrivateEndpointConnectionProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataFactoryPrivateEndpointConnectionProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataFactoryPrivateEndpointConnectionProperties IModelSerializable<DataFactoryPrivateEndpointConnectionProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataFactoryPrivateEndpointConnectionProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataFactoryPrivateEndpointConnectionProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataFactoryPrivateEndpointConnectionProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataFactoryPrivateEndpointConnectionProperties"/> to convert. </param>
+        public static implicit operator RequestContent(DataFactoryPrivateEndpointConnectionProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataFactoryPrivateEndpointConnectionProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataFactoryPrivateEndpointConnectionProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataFactoryPrivateEndpointConnectionProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

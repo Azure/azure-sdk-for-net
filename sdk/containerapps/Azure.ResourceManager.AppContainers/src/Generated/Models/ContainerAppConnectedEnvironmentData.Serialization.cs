@@ -5,24 +5,38 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    public partial class ContainerAppConnectedEnvironmentData : IUtf8JsonSerializable
+    public partial class ContainerAppConnectedEnvironmentData : IUtf8JsonSerializable, IModelJsonSerializable<ContainerAppConnectedEnvironmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerAppConnectedEnvironmentData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerAppConnectedEnvironmentData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppConnectedEnvironmentData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation);
+                if (ExtendedLocation is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerAppExtendedLocation>)ExtendedLocation).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -52,14 +66,35 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(CustomDomainConfiguration))
             {
                 writer.WritePropertyName("customDomainConfiguration"u8);
-                writer.WriteObjectValue(CustomDomainConfiguration);
+                if (CustomDomainConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerAppCustomDomainConfiguration>)CustomDomainConfiguration).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppConnectedEnvironmentData DeserializeContainerAppConnectedEnvironmentData(JsonElement element)
+        internal static ContainerAppConnectedEnvironmentData DeserializeContainerAppConnectedEnvironmentData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -77,6 +112,7 @@ namespace Azure.ResourceManager.AppContainers
             Optional<IPAddress> staticIP = default;
             Optional<string> daprAIConnectionString = default;
             Optional<ContainerAppCustomDomainConfiguration> customDomainConfiguration = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -185,8 +221,61 @@ namespace Azure.ResourceManager.AppContainers
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerAppConnectedEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, Optional.ToNullable(provisioningState), deploymentErrors.Value, defaultDomain.Value, staticIP.Value, daprAIConnectionString.Value, customDomainConfiguration.Value);
+            return new ContainerAppConnectedEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, Optional.ToNullable(provisioningState), deploymentErrors.Value, defaultDomain.Value, staticIP.Value, daprAIConnectionString.Value, customDomainConfiguration.Value, serializedAdditionalRawData);
+        }
+
+        ContainerAppConnectedEnvironmentData IModelJsonSerializable<ContainerAppConnectedEnvironmentData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppConnectedEnvironmentData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppConnectedEnvironmentData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerAppConnectedEnvironmentData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppConnectedEnvironmentData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerAppConnectedEnvironmentData IModelSerializable<ContainerAppConnectedEnvironmentData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppConnectedEnvironmentData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerAppConnectedEnvironmentData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerAppConnectedEnvironmentData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerAppConnectedEnvironmentData"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerAppConnectedEnvironmentData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerAppConnectedEnvironmentData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerAppConnectedEnvironmentData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerAppConnectedEnvironmentData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Information for connecting to Oracle server. </summary>
     public partial class OracleConnectionInfo : ConnectionInfo
     {
-        /// <summary> Initializes a new instance of OracleConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="OracleConnectionInfo"/>. </summary>
         /// <param name="dataSource"> EZConnect or TNSName connection string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
         public OracleConnectionInfo(string dataSource)
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             ConnectionInfoType = "OracleConnectionInfo";
         }
 
-        /// <summary> Initializes a new instance of OracleConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="OracleConnectionInfo"/>. </summary>
         /// <param name="connectionInfoType"> Type of connection info. </param>
         /// <param name="userName"> User name. </param>
         /// <param name="password"> Password credential. </param>
@@ -33,7 +34,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="serverVersion"> server version. </param>
         /// <param name="port"> port for server. </param>
         /// <param name="authentication"> Authentication type to use for connection. </param>
-        internal OracleConnectionInfo(string connectionInfoType, string userName, string password, string dataSource, string serverName, string serverVersion, int? port, AuthenticationType? authentication) : base(connectionInfoType, userName, password)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OracleConnectionInfo(string connectionInfoType, string userName, string password, string dataSource, string serverName, string serverVersion, int? port, AuthenticationType? authentication, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(connectionInfoType, userName, password, serializedAdditionalRawData)
         {
             DataSource = dataSource;
             ServerName = serverName;
@@ -41,6 +43,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             Port = port;
             Authentication = authentication;
             ConnectionInfoType = connectionInfoType ?? "OracleConnectionInfo";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OracleConnectionInfo"/> for deserialization. </summary>
+        internal OracleConnectionInfo()
+        {
         }
 
         /// <summary> EZConnect or TNSName connection string. </summary>

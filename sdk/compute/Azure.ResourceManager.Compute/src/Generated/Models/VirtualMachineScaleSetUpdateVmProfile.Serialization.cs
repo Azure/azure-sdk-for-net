@@ -5,45 +5,95 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetUpdateVmProfile : IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetUpdateVmProfile : IUtf8JsonSerializable, IModelJsonSerializable<VirtualMachineScaleSetUpdateVmProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualMachineScaleSetUpdateVmProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualMachineScaleSetUpdateVmProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualMachineScaleSetUpdateVmProfile>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                if (OSProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<VirtualMachineScaleSetUpdateOSProfile>)OSProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                if (StorageProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<VirtualMachineScaleSetUpdateStorageProfile>)StorageProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                if (NetworkProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<VirtualMachineScaleSetUpdateNetworkProfile>)NetworkProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                if (SecurityProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SecurityProfile>)SecurityProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DiagnosticsProfile))
             {
                 writer.WritePropertyName("diagnosticsProfile"u8);
-                writer.WriteObjectValue(DiagnosticsProfile);
+                if (DiagnosticsProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DiagnosticsProfile>)DiagnosticsProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ExtensionProfile))
             {
                 writer.WritePropertyName("extensionProfile"u8);
-                writer.WriteObjectValue(ExtensionProfile);
+                if (ExtensionProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<VirtualMachineScaleSetExtensionProfile>)ExtensionProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(LicenseType))
             {
@@ -53,12 +103,26 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(BillingProfile))
             {
                 writer.WritePropertyName("billingProfile"u8);
-                writer.WriteObjectValue(BillingProfile);
+                if (BillingProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BillingProfile>)BillingProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ScheduledEventsProfile))
             {
                 writer.WritePropertyName("scheduledEventsProfile"u8);
-                writer.WriteObjectValue(ScheduledEventsProfile);
+                if (ScheduledEventsProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ComputeScheduledEventsProfile>)ScheduledEventsProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(UserData))
             {
@@ -68,9 +132,198 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile);
+                if (HardwareProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<VirtualMachineScaleSetHardwareProfile>)HardwareProfile).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
+        }
+
+        internal static VirtualMachineScaleSetUpdateVmProfile DeserializeVirtualMachineScaleSetUpdateVmProfile(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<VirtualMachineScaleSetUpdateOSProfile> osProfile = default;
+            Optional<VirtualMachineScaleSetUpdateStorageProfile> storageProfile = default;
+            Optional<VirtualMachineScaleSetUpdateNetworkProfile> networkProfile = default;
+            Optional<SecurityProfile> securityProfile = default;
+            Optional<DiagnosticsProfile> diagnosticsProfile = default;
+            Optional<VirtualMachineScaleSetExtensionProfile> extensionProfile = default;
+            Optional<string> licenseType = default;
+            Optional<BillingProfile> billingProfile = default;
+            Optional<ComputeScheduledEventsProfile> scheduledEventsProfile = default;
+            Optional<string> userData = default;
+            Optional<VirtualMachineScaleSetHardwareProfile> hardwareProfile = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("osProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    osProfile = VirtualMachineScaleSetUpdateOSProfile.DeserializeVirtualMachineScaleSetUpdateOSProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("storageProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageProfile = VirtualMachineScaleSetUpdateStorageProfile.DeserializeVirtualMachineScaleSetUpdateStorageProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("networkProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkProfile = VirtualMachineScaleSetUpdateNetworkProfile.DeserializeVirtualMachineScaleSetUpdateNetworkProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("securityProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    securityProfile = SecurityProfile.DeserializeSecurityProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("diagnosticsProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diagnosticsProfile = DiagnosticsProfile.DeserializeDiagnosticsProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("extensionProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    extensionProfile = VirtualMachineScaleSetExtensionProfile.DeserializeVirtualMachineScaleSetExtensionProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("licenseType"u8))
+                {
+                    licenseType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("billingProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingProfile = BillingProfile.DeserializeBillingProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("scheduledEventsProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scheduledEventsProfile = ComputeScheduledEventsProfile.DeserializeComputeScheduledEventsProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("userData"u8))
+                {
+                    userData = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("hardwareProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hardwareProfile = VirtualMachineScaleSetHardwareProfile.DeserializeVirtualMachineScaleSetHardwareProfile(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new VirtualMachineScaleSetUpdateVmProfile(osProfile.Value, storageProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, extensionProfile.Value, licenseType.Value, billingProfile.Value, scheduledEventsProfile.Value, userData.Value, hardwareProfile.Value, serializedAdditionalRawData);
+        }
+
+        VirtualMachineScaleSetUpdateVmProfile IModelJsonSerializable<VirtualMachineScaleSetUpdateVmProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualMachineScaleSetUpdateVmProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineScaleSetUpdateVmProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualMachineScaleSetUpdateVmProfile>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualMachineScaleSetUpdateVmProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualMachineScaleSetUpdateVmProfile IModelSerializable<VirtualMachineScaleSetUpdateVmProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualMachineScaleSetUpdateVmProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualMachineScaleSetUpdateVmProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VirtualMachineScaleSetUpdateVmProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VirtualMachineScaleSetUpdateVmProfile"/> to convert. </param>
+        public static implicit operator RequestContent(VirtualMachineScaleSetUpdateVmProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualMachineScaleSetUpdateVmProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VirtualMachineScaleSetUpdateVmProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualMachineScaleSetUpdateVmProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

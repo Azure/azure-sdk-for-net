@@ -5,24 +5,45 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBackupRetentionTag : IUtf8JsonSerializable
+    public partial class DataProtectionBackupRetentionTag : IUtf8JsonSerializable, IModelJsonSerializable<DataProtectionBackupRetentionTag>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataProtectionBackupRetentionTag>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataProtectionBackupRetentionTag>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBackupRetentionTag>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("tagName"u8);
             writer.WriteStringValue(TagName);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataProtectionBackupRetentionTag DeserializeDataProtectionBackupRetentionTag(JsonElement element)
+        internal static DataProtectionBackupRetentionTag DeserializeDataProtectionBackupRetentionTag(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +51,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<ETag> eTag = default;
             Optional<string> id = default;
             string tagName = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -51,8 +73,61 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     tagName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataProtectionBackupRetentionTag(Optional.ToNullable(eTag), id.Value, tagName);
+            return new DataProtectionBackupRetentionTag(Optional.ToNullable(eTag), id.Value, tagName, serializedAdditionalRawData);
+        }
+
+        DataProtectionBackupRetentionTag IModelJsonSerializable<DataProtectionBackupRetentionTag>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBackupRetentionTag>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataProtectionBackupRetentionTag(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataProtectionBackupRetentionTag>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBackupRetentionTag>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataProtectionBackupRetentionTag IModelSerializable<DataProtectionBackupRetentionTag>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBackupRetentionTag>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataProtectionBackupRetentionTag(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataProtectionBackupRetentionTag"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataProtectionBackupRetentionTag"/> to convert. </param>
+        public static implicit operator RequestContent(DataProtectionBackupRetentionTag model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataProtectionBackupRetentionTag"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataProtectionBackupRetentionTag(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataProtectionBackupRetentionTag(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

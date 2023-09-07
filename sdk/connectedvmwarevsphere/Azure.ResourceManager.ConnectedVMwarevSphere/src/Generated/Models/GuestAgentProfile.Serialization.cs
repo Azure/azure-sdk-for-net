@@ -10,19 +10,38 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class GuestAgentProfile : IUtf8JsonSerializable
+    public partial class GuestAgentProfile : IUtf8JsonSerializable, IModelJsonSerializable<GuestAgentProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GuestAgentProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GuestAgentProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<GuestAgentProfile>(this, options.Format);
+
             writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GuestAgentProfile DeserializeGuestAgentProfile(JsonElement element)
+        internal static GuestAgentProfile DeserializeGuestAgentProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +51,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Optional<DateTimeOffset> lastStatusChange = default;
             Optional<string> agentVersion = default;
             Optional<IReadOnlyList<ResponseError>> errorDetails = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmUuid"u8))
@@ -76,8 +96,61 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     errorDetails = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GuestAgentProfile(vmUuid.Value, Optional.ToNullable(status), Optional.ToNullable(lastStatusChange), agentVersion.Value, Optional.ToList(errorDetails));
+            return new GuestAgentProfile(vmUuid.Value, Optional.ToNullable(status), Optional.ToNullable(lastStatusChange), agentVersion.Value, Optional.ToList(errorDetails), serializedAdditionalRawData);
+        }
+
+        GuestAgentProfile IModelJsonSerializable<GuestAgentProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GuestAgentProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGuestAgentProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GuestAgentProfile>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GuestAgentProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GuestAgentProfile IModelSerializable<GuestAgentProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GuestAgentProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGuestAgentProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GuestAgentProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GuestAgentProfile"/> to convert. </param>
+        public static implicit operator RequestContent(GuestAgentProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GuestAgentProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GuestAgentProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGuestAgentProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

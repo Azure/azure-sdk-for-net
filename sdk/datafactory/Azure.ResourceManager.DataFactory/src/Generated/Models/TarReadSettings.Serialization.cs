@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class TarReadSettings : IUtf8JsonSerializable
+    public partial class TarReadSettings : IUtf8JsonSerializable, IModelJsonSerializable<TarReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TarReadSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TarReadSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TarReadSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PreserveCompressionFileNameAsFolder))
             {
@@ -37,8 +43,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static TarReadSettings DeserializeTarReadSettings(JsonElement element)
+        internal static TarReadSettings DeserializeTarReadSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -67,6 +75,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new TarReadSettings(type, additionalProperties, preserveCompressionFileNameAsFolder.Value);
+        }
+
+        TarReadSettings IModelJsonSerializable<TarReadSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TarReadSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTarReadSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TarReadSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TarReadSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TarReadSettings IModelSerializable<TarReadSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TarReadSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTarReadSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TarReadSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TarReadSettings"/> to convert. </param>
+        public static implicit operator RequestContent(TarReadSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TarReadSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TarReadSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTarReadSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

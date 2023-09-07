@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class QueryFilter : IUtf8JsonSerializable
+    public partial class QueryFilter : IUtf8JsonSerializable, IModelJsonSerializable<QueryFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<QueryFilter>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<QueryFilter>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<QueryFilter>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(And))
             {
@@ -21,7 +29,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in And)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<QueryFilter>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -31,21 +46,172 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Or)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<QueryFilter>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
-                writer.WriteObjectValue(Dimensions);
+                if (Dimensions is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<QueryComparisonExpression>)Dimensions).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
-                writer.WriteObjectValue(Tags);
+                if (Tags is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<QueryComparisonExpression>)Tags).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
+        }
+
+        internal static QueryFilter DeserializeQueryFilter(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<QueryFilter>> and = default;
+            Optional<IList<QueryFilter>> or = default;
+            Optional<QueryComparisonExpression> dimensions = default;
+            Optional<QueryComparisonExpression> tags = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("and"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<QueryFilter> array = new List<QueryFilter>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DeserializeQueryFilter(item));
+                    }
+                    and = array;
+                    continue;
+                }
+                if (property.NameEquals("or"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<QueryFilter> array = new List<QueryFilter>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DeserializeQueryFilter(item));
+                    }
+                    or = array;
+                    continue;
+                }
+                if (property.NameEquals("dimensions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dimensions = QueryComparisonExpression.DeserializeQueryComparisonExpression(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tags = QueryComparisonExpression.DeserializeQueryComparisonExpression(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new QueryFilter(Optional.ToList(and), Optional.ToList(or), dimensions.Value, tags.Value, serializedAdditionalRawData);
+        }
+
+        QueryFilter IModelJsonSerializable<QueryFilter>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QueryFilter>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeQueryFilter(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<QueryFilter>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QueryFilter>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        QueryFilter IModelSerializable<QueryFilter>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QueryFilter>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeQueryFilter(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="QueryFilter"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="QueryFilter"/> to convert. </param>
+        public static implicit operator RequestContent(QueryFilter model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="QueryFilter"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator QueryFilter(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeQueryFilter(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

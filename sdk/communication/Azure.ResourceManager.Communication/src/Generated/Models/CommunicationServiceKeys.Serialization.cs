@@ -5,15 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class CommunicationServiceKeys
+    public partial class CommunicationServiceKeys : IUtf8JsonSerializable, IModelJsonSerializable<CommunicationServiceKeys>
     {
-        internal static CommunicationServiceKeys DeserializeCommunicationServiceKeys(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CommunicationServiceKeys>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CommunicationServiceKeys>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CommunicationServiceKeys>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PrimaryKey))
+            {
+                writer.WritePropertyName("primaryKey"u8);
+                writer.WriteStringValue(PrimaryKey);
+            }
+            if (Optional.IsDefined(SecondaryKey))
+            {
+                writer.WritePropertyName("secondaryKey"u8);
+                writer.WriteStringValue(SecondaryKey);
+            }
+            if (Optional.IsDefined(PrimaryConnectionString))
+            {
+                writer.WritePropertyName("primaryConnectionString"u8);
+                writer.WriteStringValue(PrimaryConnectionString);
+            }
+            if (Optional.IsDefined(SecondaryConnectionString))
+            {
+                writer.WritePropertyName("secondaryConnectionString"u8);
+                writer.WriteStringValue(SecondaryConnectionString);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CommunicationServiceKeys DeserializeCommunicationServiceKeys(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +70,7 @@ namespace Azure.ResourceManager.Communication.Models
             Optional<string> secondaryKey = default;
             Optional<string> primaryConnectionString = default;
             Optional<string> secondaryConnectionString = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryKey"u8))
@@ -44,8 +93,61 @@ namespace Azure.ResourceManager.Communication.Models
                     secondaryConnectionString = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CommunicationServiceKeys(primaryKey.Value, secondaryKey.Value, primaryConnectionString.Value, secondaryConnectionString.Value);
+            return new CommunicationServiceKeys(primaryKey.Value, secondaryKey.Value, primaryConnectionString.Value, secondaryConnectionString.Value, serializedAdditionalRawData);
+        }
+
+        CommunicationServiceKeys IModelJsonSerializable<CommunicationServiceKeys>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CommunicationServiceKeys>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommunicationServiceKeys(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CommunicationServiceKeys>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CommunicationServiceKeys>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CommunicationServiceKeys IModelSerializable<CommunicationServiceKeys>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CommunicationServiceKeys>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCommunicationServiceKeys(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CommunicationServiceKeys"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CommunicationServiceKeys"/> to convert. </param>
+        public static implicit operator RequestContent(CommunicationServiceKeys model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CommunicationServiceKeys"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CommunicationServiceKeys(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCommunicationServiceKeys(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    public partial class ConfluentOfferDetail : IUtf8JsonSerializable
+    public partial class ConfluentOfferDetail : IUtf8JsonSerializable, IModelJsonSerializable<ConfluentOfferDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConfluentOfferDetail>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConfluentOfferDetail>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ConfluentOfferDetail>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("publisherId"u8);
             writer.WriteStringValue(PublisherId);
@@ -25,11 +33,25 @@ namespace Azure.ResourceManager.Confluent.Models
             writer.WriteStringValue(PlanName);
             writer.WritePropertyName("termUnit"u8);
             writer.WriteStringValue(TermUnit);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConfluentOfferDetail DeserializeConfluentOfferDetail(JsonElement element)
+        internal static ConfluentOfferDetail DeserializeConfluentOfferDetail(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +62,7 @@ namespace Azure.ResourceManager.Confluent.Models
             string planName = default;
             string termUnit = default;
             Optional<ConfluentSaaSOfferStatus> status = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publisherId"u8))
@@ -76,8 +99,61 @@ namespace Azure.ResourceManager.Confluent.Models
                     status = new ConfluentSaaSOfferStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConfluentOfferDetail(publisherId, id, planId, planName, termUnit, Optional.ToNullable(status));
+            return new ConfluentOfferDetail(publisherId, id, planId, planName, termUnit, Optional.ToNullable(status), serializedAdditionalRawData);
+        }
+
+        ConfluentOfferDetail IModelJsonSerializable<ConfluentOfferDetail>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConfluentOfferDetail>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConfluentOfferDetail(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConfluentOfferDetail>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConfluentOfferDetail>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConfluentOfferDetail IModelSerializable<ConfluentOfferDetail>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConfluentOfferDetail>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConfluentOfferDetail(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConfluentOfferDetail"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConfluentOfferDetail"/> to convert. </param>
+        public static implicit operator RequestContent(ConfluentOfferDetail model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConfluentOfferDetail"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConfluentOfferDetail(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConfluentOfferDetail(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

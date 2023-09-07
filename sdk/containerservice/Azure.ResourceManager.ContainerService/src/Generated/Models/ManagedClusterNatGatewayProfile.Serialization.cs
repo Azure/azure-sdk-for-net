@@ -5,22 +5,36 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterNatGatewayProfile : IUtf8JsonSerializable
+    public partial class ManagedClusterNatGatewayProfile : IUtf8JsonSerializable, IModelJsonSerializable<ManagedClusterNatGatewayProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedClusterNatGatewayProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedClusterNatGatewayProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedClusterNatGatewayProfile>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ManagedOutboundIPProfile))
             {
                 writer.WritePropertyName("managedOutboundIPProfile"u8);
-                writer.WriteObjectValue(ManagedOutboundIPProfile);
+                if (ManagedOutboundIPProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ManagedClusterManagedOutboundIPProfile>)ManagedOutboundIPProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(EffectiveOutboundIPs))
             {
@@ -37,11 +51,25 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("idleTimeoutInMinutes"u8);
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedClusterNatGatewayProfile DeserializeManagedClusterNatGatewayProfile(JsonElement element)
+        internal static ManagedClusterNatGatewayProfile DeserializeManagedClusterNatGatewayProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +77,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<ManagedClusterManagedOutboundIPProfile> managedOutboundIPProfile = default;
             Optional<IList<WritableSubResource>> effectiveOutboundIPs = default;
             Optional<int> idleTimeoutInMinutes = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedOutboundIPProfile"u8))
@@ -83,8 +112,61 @@ namespace Azure.ResourceManager.ContainerService.Models
                     idleTimeoutInMinutes = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedClusterNatGatewayProfile(managedOutboundIPProfile.Value, Optional.ToList(effectiveOutboundIPs), Optional.ToNullable(idleTimeoutInMinutes));
+            return new ManagedClusterNatGatewayProfile(managedOutboundIPProfile.Value, Optional.ToList(effectiveOutboundIPs), Optional.ToNullable(idleTimeoutInMinutes), serializedAdditionalRawData);
+        }
+
+        ManagedClusterNatGatewayProfile IModelJsonSerializable<ManagedClusterNatGatewayProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedClusterNatGatewayProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedClusterNatGatewayProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedClusterNatGatewayProfile>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedClusterNatGatewayProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedClusterNatGatewayProfile IModelSerializable<ManagedClusterNatGatewayProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedClusterNatGatewayProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedClusterNatGatewayProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagedClusterNatGatewayProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagedClusterNatGatewayProfile"/> to convert. </param>
+        public static implicit operator RequestContent(ManagedClusterNatGatewayProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagedClusterNatGatewayProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagedClusterNatGatewayProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedClusterNatGatewayProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

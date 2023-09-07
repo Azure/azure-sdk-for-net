@@ -5,40 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownValidationInputResponse
+    internal partial class UnknownValidationInputResponse : IUtf8JsonSerializable, IModelJsonSerializable<DataBoxValidationInputResult>
     {
-        internal static UnknownValidationInputResponse DeserializeUnknownValidationInputResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataBoxValidationInputResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataBoxValidationInputResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxValidationInputResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("validationType"u8);
+            writer.WriteStringValue(ValidationType.ToSerialString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
             {
-                return null;
-            }
-            DataBoxValidationInputDiscriminator validationType = default;
-            Optional<ResponseError> error = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("validationType"u8))
+                foreach (var property in _serializedAdditionalRawData)
                 {
-                    validationType = property.Value.GetString().ToDataBoxValidationInputDiscriminator();
-                    continue;
-                }
-                if (property.NameEquals("error"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
-                    continue;
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
                 }
             }
-            return new UnknownValidationInputResponse(validationType, error.Value);
+            writer.WriteEndObject();
+        }
+
+        internal static DataBoxValidationInputResult DeserializeUnknownValidationInputResponse(JsonElement element, ModelSerializerOptions options = default) => DeserializeDataBoxValidationInputResult(element, options);
+
+        DataBoxValidationInputResult IModelJsonSerializable<DataBoxValidationInputResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxValidationInputResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownValidationInputResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataBoxValidationInputResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxValidationInputResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataBoxValidationInputResult IModelSerializable<DataBoxValidationInputResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxValidationInputResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataBoxValidationInputResult(doc.RootElement, options);
         }
     }
 }

@@ -5,37 +5,66 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBClientEncryptionPolicy : IUtf8JsonSerializable
+    public partial class CosmosDBClientEncryptionPolicy : IUtf8JsonSerializable, IModelJsonSerializable<CosmosDBClientEncryptionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CosmosDBClientEncryptionPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CosmosDBClientEncryptionPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBClientEncryptionPolicy>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("includedPaths"u8);
             writer.WriteStartArray();
             foreach (var item in IncludedPaths)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CosmosDBClientEncryptionIncludedPath>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("policyFormatVersion"u8);
             writer.WriteNumberValue(PolicyFormatVersion);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CosmosDBClientEncryptionPolicy DeserializeCosmosDBClientEncryptionPolicy(JsonElement element)
+        internal static CosmosDBClientEncryptionPolicy DeserializeCosmosDBClientEncryptionPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<CosmosDBClientEncryptionIncludedPath> includedPaths = default;
             int policyFormatVersion = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("includedPaths"u8))
@@ -53,8 +82,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     policyFormatVersion = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CosmosDBClientEncryptionPolicy(includedPaths, policyFormatVersion);
+            return new CosmosDBClientEncryptionPolicy(includedPaths, policyFormatVersion, serializedAdditionalRawData);
+        }
+
+        CosmosDBClientEncryptionPolicy IModelJsonSerializable<CosmosDBClientEncryptionPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBClientEncryptionPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBClientEncryptionPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CosmosDBClientEncryptionPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBClientEncryptionPolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CosmosDBClientEncryptionPolicy IModelSerializable<CosmosDBClientEncryptionPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CosmosDBClientEncryptionPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCosmosDBClientEncryptionPolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CosmosDBClientEncryptionPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CosmosDBClientEncryptionPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(CosmosDBClientEncryptionPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CosmosDBClientEncryptionPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CosmosDBClientEncryptionPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCosmosDBClientEncryptionPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

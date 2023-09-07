@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The MigrateSqlServerSqlMITaskOutputDatabaseLevel. </summary>
     public partial class MigrateSqlServerSqlMITaskOutputDatabaseLevel : MigrateSqlServerSqlMITaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskOutputDatabaseLevel"/>. </summary>
         internal MigrateSqlServerSqlMITaskOutputDatabaseLevel()
         {
             ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();
             ResultType = "DatabaseLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutputDatabaseLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskOutputDatabaseLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="databaseName"> Name of the database. </param>
@@ -32,7 +32,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="endedOn"> Migration end time. </param>
         /// <param name="message"> Migration progress message. </param>
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
-        internal MigrateSqlServerSqlMITaskOutputDatabaseLevel(string id, string resultType, string databaseName, double? sizeMB, MigrationState? state, DatabaseMigrationStage? stage, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string message, IReadOnlyList<ReportableException> exceptionsAndWarnings) : base(id, resultType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateSqlServerSqlMITaskOutputDatabaseLevel(string id, string resultType, string databaseName, double? sizeMB, MigrationState? state, DatabaseMigrationStage? stage, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string message, IReadOnlyList<ReportableException> exceptionsAndWarnings, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, resultType, serializedAdditionalRawData)
         {
             DatabaseName = databaseName;
             SizeMB = sizeMB;

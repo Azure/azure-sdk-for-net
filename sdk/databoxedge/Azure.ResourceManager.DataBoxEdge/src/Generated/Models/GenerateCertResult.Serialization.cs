@@ -6,15 +6,57 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class GenerateCertResult
+    public partial class GenerateCertResult : IUtf8JsonSerializable, IModelJsonSerializable<GenerateCertResult>
     {
-        internal static GenerateCertResult DeserializeGenerateCertResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GenerateCertResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GenerateCertResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<GenerateCertResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PublicKey))
+            {
+                writer.WritePropertyName("publicKey"u8);
+                writer.WriteStringValue(PublicKey);
+            }
+            if (Optional.IsDefined(PrivateKey))
+            {
+                writer.WritePropertyName("privateKey"u8);
+                writer.WriteStringValue(PrivateKey);
+            }
+            if (Optional.IsDefined(ExpireOn))
+            {
+                writer.WritePropertyName("expiryTimeInUTC"u8);
+                writer.WriteStringValue(ExpireOn.Value, "O");
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static GenerateCertResult DeserializeGenerateCertResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +64,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<string> publicKey = default;
             Optional<string> privateKey = default;
             Optional<DateTimeOffset> expiryTimeInUtc = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicKey"u8))
@@ -43,8 +86,61 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     expiryTimeInUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GenerateCertResult(publicKey.Value, privateKey.Value, Optional.ToNullable(expiryTimeInUtc));
+            return new GenerateCertResult(publicKey.Value, privateKey.Value, Optional.ToNullable(expiryTimeInUtc), serializedAdditionalRawData);
+        }
+
+        GenerateCertResult IModelJsonSerializable<GenerateCertResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GenerateCertResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGenerateCertResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GenerateCertResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GenerateCertResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GenerateCertResult IModelSerializable<GenerateCertResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GenerateCertResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGenerateCertResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GenerateCertResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GenerateCertResult"/> to convert. </param>
+        public static implicit operator RequestContent(GenerateCertResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GenerateCertResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GenerateCertResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGenerateCertResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SapCloudForCustomerResourceDataset : IUtf8JsonSerializable
+    public partial class SapCloudForCustomerResourceDataset : IUtf8JsonSerializable, IModelJsonSerializable<SapCloudForCustomerResourceDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SapCloudForCustomerResourceDataset>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SapCloudForCustomerResourceDataset>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SapCloudForCustomerResourceDataset>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
@@ -43,7 +49,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<EntityParameterSpecification>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -69,7 +82,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                if (Folder is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DatasetFolder>)Folder).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
@@ -88,8 +108,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static SapCloudForCustomerResourceDataset DeserializeSapCloudForCustomerResourceDataset(JsonElement element)
+        internal static SapCloudForCustomerResourceDataset DeserializeSapCloudForCustomerResourceDataset(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -205,6 +227,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SapCloudForCustomerResourceDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, path);
+        }
+
+        SapCloudForCustomerResourceDataset IModelJsonSerializable<SapCloudForCustomerResourceDataset>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SapCloudForCustomerResourceDataset>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSapCloudForCustomerResourceDataset(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SapCloudForCustomerResourceDataset>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SapCloudForCustomerResourceDataset>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SapCloudForCustomerResourceDataset IModelSerializable<SapCloudForCustomerResourceDataset>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SapCloudForCustomerResourceDataset>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSapCloudForCustomerResourceDataset(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SapCloudForCustomerResourceDataset"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SapCloudForCustomerResourceDataset"/> to convert. </param>
+        public static implicit operator RequestContent(SapCloudForCustomerResourceDataset model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SapCloudForCustomerResourceDataset"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SapCloudForCustomerResourceDataset(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSapCloudForCustomerResourceDataset(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

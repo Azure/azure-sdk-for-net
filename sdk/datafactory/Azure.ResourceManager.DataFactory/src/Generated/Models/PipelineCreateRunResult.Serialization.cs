@@ -6,20 +6,50 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class PipelineCreateRunResult
+    public partial class PipelineCreateRunResult : IUtf8JsonSerializable, IModelJsonSerializable<PipelineCreateRunResult>
     {
-        internal static PipelineCreateRunResult DeserializePipelineCreateRunResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PipelineCreateRunResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PipelineCreateRunResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PipelineCreateRunResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("runId"u8);
+            writer.WriteStringValue(RunId);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PipelineCreateRunResult DeserializePipelineCreateRunResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Guid runId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("runId"u8))
@@ -27,8 +57,61 @@ namespace Azure.ResourceManager.DataFactory.Models
                     runId = property.Value.GetGuid();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PipelineCreateRunResult(runId);
+            return new PipelineCreateRunResult(runId, serializedAdditionalRawData);
+        }
+
+        PipelineCreateRunResult IModelJsonSerializable<PipelineCreateRunResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PipelineCreateRunResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePipelineCreateRunResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PipelineCreateRunResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PipelineCreateRunResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PipelineCreateRunResult IModelSerializable<PipelineCreateRunResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PipelineCreateRunResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePipelineCreateRunResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PipelineCreateRunResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PipelineCreateRunResult"/> to convert. </param>
+        public static implicit operator RequestContent(PipelineCreateRunResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PipelineCreateRunResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PipelineCreateRunResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePipelineCreateRunResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

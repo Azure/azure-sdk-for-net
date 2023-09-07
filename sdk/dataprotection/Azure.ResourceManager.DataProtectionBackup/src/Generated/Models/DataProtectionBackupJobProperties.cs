@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> AzureBackup Job Class. </summary>
     public partial class DataProtectionBackupJobProperties
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupJobProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupJobProperties"/>. </summary>
         /// <param name="activityId"> Job Activity Id. </param>
         /// <param name="backupInstanceFriendlyName"> Name of the Backup Instance. </param>
         /// <param name="dataSourceId"> ARM ID of the DataSource. </param>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             VaultName = vaultName;
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupJobProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupJobProperties"/>. </summary>
         /// <param name="activityId"> Job Activity Id. </param>
         /// <param name="backupInstanceFriendlyName"> Name of the Backup Instance. </param>
         /// <param name="backupInstanceId"> ARM ID of the Backup Instance. </param>
@@ -102,7 +105,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="eTag"></param>
         /// <param name="sourceDataStoreName"></param>
         /// <param name="destinationDataStoreName"></param>
-        internal DataProtectionBackupJobProperties(string activityId, string backupInstanceFriendlyName, ResourceIdentifier backupInstanceId, ResourceIdentifier dataSourceId, AzureLocation dataSourceLocation, string dataSourceName, string dataSourceSetName, string dataSourceType, TimeSpan? duration, DateTimeOffset? endOn, IReadOnlyList<ResponseError> errorDetails, BackupJobExtendedInfo extendedInfo, bool isUserTriggered, string operation, string operationCategory, ResourceIdentifier policyId, string policyName, bool isProgressEnabled, Uri progressUri, string restoreType, string sourceResourceGroup, string sourceSubscriptionId, DateTimeOffset startOn, string status, string subscriptionId, IList<string> supportedActions, string vaultName, ETag? eTag, string sourceDataStoreName, string destinationDataStoreName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupJobProperties(string activityId, string backupInstanceFriendlyName, ResourceIdentifier backupInstanceId, ResourceIdentifier dataSourceId, AzureLocation dataSourceLocation, string dataSourceName, string dataSourceSetName, string dataSourceType, TimeSpan? duration, DateTimeOffset? endOn, IReadOnlyList<ResponseError> errorDetails, BackupJobExtendedInfo extendedInfo, bool isUserTriggered, string operation, string operationCategory, ResourceIdentifier policyId, string policyName, bool isProgressEnabled, Uri progressUri, string restoreType, string sourceResourceGroup, string sourceSubscriptionId, DateTimeOffset startOn, string status, string subscriptionId, IList<string> supportedActions, string vaultName, ETag? eTag, string sourceDataStoreName, string destinationDataStoreName, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActivityId = activityId;
             BackupInstanceFriendlyName = backupInstanceFriendlyName;
@@ -134,6 +138,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ETag = eTag;
             SourceDataStoreName = sourceDataStoreName;
             DestinationDataStoreName = destinationDataStoreName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupJobProperties"/> for deserialization. </summary>
+        internal DataProtectionBackupJobProperties()
+        {
         }
 
         /// <summary> Job Activity Id. </summary>

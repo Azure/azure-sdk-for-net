@@ -5,22 +5,67 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class SharingStatus
+    public partial class SharingStatus : IUtf8JsonSerializable, IModelJsonSerializable<SharingStatus>
     {
-        internal static SharingStatus DeserializeSharingStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SharingStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SharingStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SharingStatus>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Summary))
+            {
+                writer.WritePropertyName("summary"u8);
+                writer.WriteStartArray();
+                foreach (var item in Summary)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<RegionalSharingStatus>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SharingStatus DeserializeSharingStatus(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<SharingState> aggregatedState = default;
             Optional<IReadOnlyList<RegionalSharingStatus>> summary = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aggregatedState"u8))
@@ -46,8 +91,61 @@ namespace Azure.ResourceManager.Compute.Models
                     summary = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SharingStatus(Optional.ToNullable(aggregatedState), Optional.ToList(summary));
+            return new SharingStatus(Optional.ToNullable(aggregatedState), Optional.ToList(summary), serializedAdditionalRawData);
+        }
+
+        SharingStatus IModelJsonSerializable<SharingStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SharingStatus>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSharingStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SharingStatus>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SharingStatus>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SharingStatus IModelSerializable<SharingStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SharingStatus>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSharingStatus(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SharingStatus"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SharingStatus"/> to convert. </param>
+        public static implicit operator RequestContent(SharingStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SharingStatus"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SharingStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSharingStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

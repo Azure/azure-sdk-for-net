@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBackupPolicyPropertiesBase : IUtf8JsonSerializable
+    public partial class DataProtectionBackupPolicyPropertiesBase : IUtf8JsonSerializable, IModelJsonSerializable<DataProtectionBackupPolicyPropertiesBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataProtectionBackupPolicyPropertiesBase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataProtectionBackupPolicyPropertiesBase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBackupPolicyPropertiesBase>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("datasourceTypes"u8);
             writer.WriteStartArray();
@@ -24,11 +32,25 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteEndArray();
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataProtectionBackupPolicyPropertiesBase DeserializeDataProtectionBackupPolicyPropertiesBase(JsonElement element)
+        internal static DataProtectionBackupPolicyPropertiesBase DeserializeDataProtectionBackupPolicyPropertiesBase(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,7 +62,83 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     case "BackupPolicy": return RuleBasedBackupPolicy.DeserializeRuleBasedBackupPolicy(element);
                 }
             }
-            return UnknownBaseBackupPolicy.DeserializeUnknownBaseBackupPolicy(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            IList<string> datasourceTypes = default;
+            string objectType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("datasourceTypes"u8))
+                {
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    datasourceTypes = array;
+                    continue;
+                }
+                if (property.NameEquals("objectType"u8))
+                {
+                    objectType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownBaseBackupPolicy(datasourceTypes, objectType, serializedAdditionalRawData);
+        }
+
+        DataProtectionBackupPolicyPropertiesBase IModelJsonSerializable<DataProtectionBackupPolicyPropertiesBase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBackupPolicyPropertiesBase>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataProtectionBackupPolicyPropertiesBase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataProtectionBackupPolicyPropertiesBase>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBackupPolicyPropertiesBase>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataProtectionBackupPolicyPropertiesBase IModelSerializable<DataProtectionBackupPolicyPropertiesBase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBackupPolicyPropertiesBase>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataProtectionBackupPolicyPropertiesBase(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataProtectionBackupPolicyPropertiesBase"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataProtectionBackupPolicyPropertiesBase"/> to convert. </param>
+        public static implicit operator RequestContent(DataProtectionBackupPolicyPropertiesBase model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataProtectionBackupPolicyPropertiesBase"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataProtectionBackupPolicyPropertiesBase(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataProtectionBackupPolicyPropertiesBase(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

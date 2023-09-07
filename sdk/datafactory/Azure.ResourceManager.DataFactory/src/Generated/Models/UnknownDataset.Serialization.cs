@@ -6,17 +6,20 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class UnknownDataset : IUtf8JsonSerializable
+    internal partial class UnknownDataset : IUtf8JsonSerializable, IModelJsonSerializable<DataFactoryDatasetProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataFactoryDatasetProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataFactoryDatasetProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataFactoryDatasetProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
@@ -43,7 +46,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<EntityParameterSpecification>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -69,7 +79,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                if (Folder is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DatasetFolder>)Folder).Serialize(writer, options);
+                }
             }
             foreach (var item in AdditionalProperties)
             {
@@ -83,105 +100,29 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownDataset DeserializeUnknownDataset(JsonElement element)
+        internal static DataFactoryDatasetProperties DeserializeUnknownDataset(JsonElement element, ModelSerializerOptions options = default) => DeserializeDataFactoryDatasetProperties(element, options);
+
+        DataFactoryDatasetProperties IModelJsonSerializable<DataFactoryDatasetProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string type = "Unknown";
-            Optional<string> description = default;
-            Optional<DataFactoryElement<IList<DatasetDataElement>>> structure = default;
-            Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
-            DataFactoryLinkedServiceReference linkedServiceName = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
-            Optional<DatasetFolder> folder = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("structure"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    structure = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetDataElement>>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("schema"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    schema = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetSchemaDataElement>>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("linkedServiceName"u8))
-                {
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("parameters"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
-                    }
-                    parameters = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("annotations"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<BinaryData> array = new List<BinaryData>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
-                        }
-                    }
-                    annotations = array;
-                    continue;
-                }
-                if (property.NameEquals("folder"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    folder = DatasetFolder.DeserializeDatasetFolder(property.Value);
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new UnknownDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties);
+            Core.ModelSerializerHelper.ValidateFormat<DataFactoryDatasetProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownDataset(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataFactoryDatasetProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataFactoryDatasetProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataFactoryDatasetProperties IModelSerializable<DataFactoryDatasetProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataFactoryDatasetProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataFactoryDatasetProperties(doc.RootElement, options);
         }
     }
 }

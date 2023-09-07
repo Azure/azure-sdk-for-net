@@ -5,15 +5,48 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionCalculatedSavingsProperties
+    public partial class ConsumptionCalculatedSavingsProperties : IUtf8JsonSerializable, IModelJsonSerializable<ConsumptionCalculatedSavingsProperties>
     {
-        internal static ConsumptionCalculatedSavingsProperties DeserializeConsumptionCalculatedSavingsProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConsumptionCalculatedSavingsProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConsumptionCalculatedSavingsProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ConsumptionCalculatedSavingsProperties>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ReservedUnitCount))
+            {
+                writer.WritePropertyName("reservedUnitCount"u8);
+                writer.WriteNumberValue(ReservedUnitCount.Value);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ConsumptionCalculatedSavingsProperties DeserializeConsumptionCalculatedSavingsProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +58,7 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<float> totalReservationCost = default;
             Optional<float> reservedUnitCount = default;
             Optional<float> savings = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("onDemandCost"u8))
@@ -90,8 +124,61 @@ namespace Azure.ResourceManager.Consumption.Models
                     savings = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConsumptionCalculatedSavingsProperties(Optional.ToNullable(onDemandCost), Optional.ToNullable(overageCost), Optional.ToNullable(quantity), Optional.ToNullable(reservationCost), Optional.ToNullable(totalReservationCost), Optional.ToNullable(reservedUnitCount), Optional.ToNullable(savings));
+            return new ConsumptionCalculatedSavingsProperties(Optional.ToNullable(onDemandCost), Optional.ToNullable(overageCost), Optional.ToNullable(quantity), Optional.ToNullable(reservationCost), Optional.ToNullable(totalReservationCost), Optional.ToNullable(reservedUnitCount), Optional.ToNullable(savings), serializedAdditionalRawData);
+        }
+
+        ConsumptionCalculatedSavingsProperties IModelJsonSerializable<ConsumptionCalculatedSavingsProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConsumptionCalculatedSavingsProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionCalculatedSavingsProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConsumptionCalculatedSavingsProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConsumptionCalculatedSavingsProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConsumptionCalculatedSavingsProperties IModelSerializable<ConsumptionCalculatedSavingsProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConsumptionCalculatedSavingsProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConsumptionCalculatedSavingsProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConsumptionCalculatedSavingsProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConsumptionCalculatedSavingsProperties"/> to convert. </param>
+        public static implicit operator RequestContent(ConsumptionCalculatedSavingsProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConsumptionCalculatedSavingsProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConsumptionCalculatedSavingsProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConsumptionCalculatedSavingsProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

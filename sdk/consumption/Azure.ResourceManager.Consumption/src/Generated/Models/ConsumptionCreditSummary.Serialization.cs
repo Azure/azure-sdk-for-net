@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionCreditSummary : IUtf8JsonSerializable
+    public partial class ConsumptionCreditSummary : IUtf8JsonSerializable, IModelJsonSerializable<ConsumptionCreditSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConsumptionCreditSummary>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConsumptionCreditSummary>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ConsumptionCreditSummary>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
@@ -25,11 +32,25 @@ namespace Azure.ResourceManager.Consumption.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConsumptionCreditSummary DeserializeConsumptionCreditSummary(JsonElement element)
+        internal static ConsumptionCreditSummary DeserializeConsumptionCreditSummary(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +67,7 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<string> creditCurrency = default;
             Optional<string> billingCurrency = default;
             Optional<ConsumptionReseller> reseller = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -148,8 +170,61 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConsumptionCreditSummary(id, name, type, systemData.Value, balanceSummary.Value, pendingCreditAdjustments.Value, expiredCredit.Value, pendingEligibleCharges.Value, creditCurrency.Value, billingCurrency.Value, reseller.Value, Optional.ToNullable(eTag));
+            return new ConsumptionCreditSummary(id, name, type, systemData.Value, balanceSummary.Value, pendingCreditAdjustments.Value, expiredCredit.Value, pendingEligibleCharges.Value, creditCurrency.Value, billingCurrency.Value, reseller.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+        }
+
+        ConsumptionCreditSummary IModelJsonSerializable<ConsumptionCreditSummary>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConsumptionCreditSummary>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionCreditSummary(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConsumptionCreditSummary>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConsumptionCreditSummary>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConsumptionCreditSummary IModelSerializable<ConsumptionCreditSummary>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConsumptionCreditSummary>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConsumptionCreditSummary(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConsumptionCreditSummary"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConsumptionCreditSummary"/> to convert. </param>
+        public static implicit operator RequestContent(ConsumptionCreditSummary model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConsumptionCreditSummary"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConsumptionCreditSummary(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConsumptionCreditSummary(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

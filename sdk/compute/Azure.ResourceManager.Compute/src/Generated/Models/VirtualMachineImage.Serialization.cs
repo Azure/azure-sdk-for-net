@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineImage : IUtf8JsonSerializable
+    public partial class VirtualMachineImage : IUtf8JsonSerializable, IModelJsonSerializable<VirtualMachineImage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualMachineImage>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualMachineImage>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualMachineImage>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -47,12 +54,26 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue(Plan);
+                if (Plan is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PurchasePlan>)Plan).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(OSDiskImage))
             {
                 writer.WritePropertyName("osDiskImage"u8);
-                writer.WriteObjectValue(OSDiskImage);
+                if (OSDiskImage is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<OSDiskImage>)OSDiskImage).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(DataDiskImages))
             {
@@ -60,14 +81,28 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDiskImages)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DataDiskImage>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AutomaticOSUpgradeProperties))
             {
                 writer.WritePropertyName("automaticOSUpgradeProperties"u8);
-                writer.WriteObjectValue(AutomaticOSUpgradeProperties);
+                if (AutomaticOSUpgradeProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AutomaticOSUpgradeProperties>)AutomaticOSUpgradeProperties).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(HyperVGeneration))
             {
@@ -77,7 +112,14 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Disallowed))
             {
                 writer.WritePropertyName("disallowed"u8);
-                writer.WriteObjectValue(Disallowed);
+                if (Disallowed is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DisallowedConfiguration>)Disallowed).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Features))
             {
@@ -85,7 +127,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Features)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<VirtualMachineImageFeature>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -97,14 +146,35 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ImageDeprecationStatus))
             {
                 writer.WritePropertyName("imageDeprecationStatus"u8);
-                writer.WriteObjectValue(ImageDeprecationStatus);
+                if (ImageDeprecationStatus is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ImageDeprecationStatus>)ImageDeprecationStatus).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachineImage DeserializeVirtualMachineImage(JsonElement element)
+        internal static VirtualMachineImage DeserializeVirtualMachineImage(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -123,6 +193,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IList<VirtualMachineImageFeature>> features = default;
             Optional<ArchitectureType> architecture = default;
             Optional<ImageDeprecationStatus> imageDeprecationStatus = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -270,8 +341,61 @@ namespace Azure.ResourceManager.Compute.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualMachineImage(id.Value, name, location, Optional.ToDictionary(tags), extendedLocation, plan.Value, osDiskImage.Value, Optional.ToList(dataDiskImages), automaticOSUpgradeProperties.Value, Optional.ToNullable(hyperVGeneration), disallowed.Value, Optional.ToList(features), Optional.ToNullable(architecture), imageDeprecationStatus.Value);
+            return new VirtualMachineImage(id.Value, name, location, Optional.ToDictionary(tags), extendedLocation, plan.Value, osDiskImage.Value, Optional.ToList(dataDiskImages), automaticOSUpgradeProperties.Value, Optional.ToNullable(hyperVGeneration), disallowed.Value, Optional.ToList(features), Optional.ToNullable(architecture), imageDeprecationStatus.Value, serializedAdditionalRawData);
+        }
+
+        VirtualMachineImage IModelJsonSerializable<VirtualMachineImage>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualMachineImage>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineImage(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualMachineImage>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualMachineImage>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualMachineImage IModelSerializable<VirtualMachineImage>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualMachineImage>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualMachineImage(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VirtualMachineImage"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VirtualMachineImage"/> to convert. </param>
+        public static implicit operator RequestContent(VirtualMachineImage model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualMachineImage"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VirtualMachineImage(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualMachineImage(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

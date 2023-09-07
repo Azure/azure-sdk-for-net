@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,12 @@ namespace Azure.Communication.JobRouter
     /// <summary> An action that modifies labels on a job and then reclassifies it. </summary>
     public partial class ReclassifyExceptionAction : ExceptionAction
     {
-        /// <summary> Initializes a new instance of ReclassifyExceptionAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReclassifyExceptionAction"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
         /// <param name="classificationPolicyId"> (optional) The new classification policy that will determine queue, priority and worker selectors. </param>
         /// <param name="labelsToUpsert"> (optional) Dictionary containing the labels to update (or add if not existing) in key-value pairs. </param>
-        internal ReclassifyExceptionAction(string kind, string classificationPolicyId, IDictionary<string, object> labelsToUpsert) : base(kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReclassifyExceptionAction(string kind, string classificationPolicyId, IDictionary<string, object> labelsToUpsert, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
         {
             ClassificationPolicyId = classificationPolicyId;
             _labelsToUpsert = labelsToUpsert;

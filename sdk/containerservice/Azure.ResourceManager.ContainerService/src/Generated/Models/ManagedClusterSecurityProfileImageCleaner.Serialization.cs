@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterSecurityProfileImageCleaner : IUtf8JsonSerializable
+    public partial class ManagedClusterSecurityProfileImageCleaner : IUtf8JsonSerializable, IModelJsonSerializable<ManagedClusterSecurityProfileImageCleaner>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedClusterSecurityProfileImageCleaner>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedClusterSecurityProfileImageCleaner>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedClusterSecurityProfileImageCleaner>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("intervalHours"u8);
                 writer.WriteNumberValue(IntervalHours.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedClusterSecurityProfileImageCleaner DeserializeManagedClusterSecurityProfileImageCleaner(JsonElement element)
+        internal static ManagedClusterSecurityProfileImageCleaner DeserializeManagedClusterSecurityProfileImageCleaner(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> enabled = default;
             Optional<int> intervalHours = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -56,8 +79,61 @@ namespace Azure.ResourceManager.ContainerService.Models
                     intervalHours = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedClusterSecurityProfileImageCleaner(Optional.ToNullable(enabled), Optional.ToNullable(intervalHours));
+            return new ManagedClusterSecurityProfileImageCleaner(Optional.ToNullable(enabled), Optional.ToNullable(intervalHours), serializedAdditionalRawData);
+        }
+
+        ManagedClusterSecurityProfileImageCleaner IModelJsonSerializable<ManagedClusterSecurityProfileImageCleaner>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedClusterSecurityProfileImageCleaner>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedClusterSecurityProfileImageCleaner(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedClusterSecurityProfileImageCleaner>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedClusterSecurityProfileImageCleaner>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedClusterSecurityProfileImageCleaner IModelSerializable<ManagedClusterSecurityProfileImageCleaner>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedClusterSecurityProfileImageCleaner>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedClusterSecurityProfileImageCleaner(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagedClusterSecurityProfileImageCleaner"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagedClusterSecurityProfileImageCleaner"/> to convert. </param>
+        public static implicit operator RequestContent(ManagedClusterSecurityProfileImageCleaner model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagedClusterSecurityProfileImageCleaner"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagedClusterSecurityProfileImageCleaner(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedClusterSecurityProfileImageCleaner(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }
