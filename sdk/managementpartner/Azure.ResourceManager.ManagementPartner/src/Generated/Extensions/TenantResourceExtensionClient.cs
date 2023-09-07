@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Threading;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.ManagementPartner
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OperationRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OperationRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, OperationResponse.DeserializeOperationResponse, OperationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetOperations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, OperationResponse.DeserializeOperationResponse, OperationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetOperations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.ManagementPartner
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OperationRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OperationRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, OperationResponse.DeserializeOperationResponse, OperationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetOperations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, OperationResponse.DeserializeOperationResponse, OperationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetOperations", "value", "nextLink", cancellationToken);
         }
     }
 }

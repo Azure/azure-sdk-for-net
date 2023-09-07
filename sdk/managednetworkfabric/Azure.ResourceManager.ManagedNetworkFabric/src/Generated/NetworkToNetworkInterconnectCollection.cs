@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = await _networkToNetworkInterconnectRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkToNetworkInterconnectName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkToNetworkInterconnectResource>(new NetworkToNetworkInterconnectOperationSource(Client), _networkToNetworkInterconnectClientDiagnostics, Pipeline, _networkToNetworkInterconnectRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkToNetworkInterconnectName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkToNetworkInterconnectResource>(new NetworkToNetworkInterconnectOperationSource(Client), _networkToNetworkInterconnectClientDiagnostics, Pipeline, _networkToNetworkInterconnectRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkToNetworkInterconnectName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = _networkToNetworkInterconnectRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkToNetworkInterconnectName, data, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkToNetworkInterconnectResource>(new NetworkToNetworkInterconnectOperationSource(Client), _networkToNetworkInterconnectClientDiagnostics, Pipeline, _networkToNetworkInterconnectRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkToNetworkInterconnectName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkToNetworkInterconnectResource>(new NetworkToNetworkInterconnectOperationSource(Client), _networkToNetworkInterconnectClientDiagnostics, Pipeline, _networkToNetworkInterconnectRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkToNetworkInterconnectName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkToNetworkInterconnectRestClient.CreateListByNetworkFabricRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkToNetworkInterconnectRestClient.CreateListByNetworkFabricNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkToNetworkInterconnectResource(Client, NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(e)), _networkToNetworkInterconnectClientDiagnostics, Pipeline, "NetworkToNetworkInterconnectCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkToNetworkInterconnectResource(Client, NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(e)), _networkToNetworkInterconnectClientDiagnostics, Pipeline, "NetworkToNetworkInterconnectCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkToNetworkInterconnectRestClient.CreateListByNetworkFabricRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkToNetworkInterconnectRestClient.CreateListByNetworkFabricNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkToNetworkInterconnectResource(Client, NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(e)), _networkToNetworkInterconnectClientDiagnostics, Pipeline, "NetworkToNetworkInterconnectCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkToNetworkInterconnectResource(Client, NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(e)), _networkToNetworkInterconnectClientDiagnostics, Pipeline, "NetworkToNetworkInterconnectCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

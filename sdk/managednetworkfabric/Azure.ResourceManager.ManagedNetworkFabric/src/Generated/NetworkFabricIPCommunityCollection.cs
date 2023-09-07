@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = await _networkFabricIPCommunityIPCommunitiesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, ipCommunityName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPCommunityResource>(new NetworkFabricIPCommunityOperationSource(Client), _networkFabricIPCommunityIPCommunitiesClientDiagnostics, Pipeline, _networkFabricIPCommunityIPCommunitiesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipCommunityName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPCommunityResource>(new NetworkFabricIPCommunityOperationSource(Client), _networkFabricIPCommunityIPCommunitiesClientDiagnostics, Pipeline, _networkFabricIPCommunityIPCommunitiesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipCommunityName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = _networkFabricIPCommunityIPCommunitiesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, ipCommunityName, data, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPCommunityResource>(new NetworkFabricIPCommunityOperationSource(Client), _networkFabricIPCommunityIPCommunitiesClientDiagnostics, Pipeline, _networkFabricIPCommunityIPCommunitiesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipCommunityName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPCommunityResource>(new NetworkFabricIPCommunityOperationSource(Client), _networkFabricIPCommunityIPCommunitiesClientDiagnostics, Pipeline, _networkFabricIPCommunityIPCommunitiesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipCommunityName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricIPCommunityIPCommunitiesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricIPCommunityIPCommunitiesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPCommunityResource(Client, NetworkFabricIPCommunityData.DeserializeNetworkFabricIPCommunityData(e)), _networkFabricIPCommunityIPCommunitiesClientDiagnostics, Pipeline, "NetworkFabricIPCommunityCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPCommunityResource(Client, NetworkFabricIPCommunityData.DeserializeNetworkFabricIPCommunityData(e)), _networkFabricIPCommunityIPCommunitiesClientDiagnostics, Pipeline, "NetworkFabricIPCommunityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +250,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricIPCommunityIPCommunitiesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricIPCommunityIPCommunitiesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPCommunityResource(Client, NetworkFabricIPCommunityData.DeserializeNetworkFabricIPCommunityData(e)), _networkFabricIPCommunityIPCommunitiesClientDiagnostics, Pipeline, "NetworkFabricIPCommunityCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPCommunityResource(Client, NetworkFabricIPCommunityData.DeserializeNetworkFabricIPCommunityData(e)), _networkFabricIPCommunityIPCommunitiesClientDiagnostics, Pipeline, "NetworkFabricIPCommunityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkDeviceSkuRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkDeviceSkuRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkDeviceSkuResource(Client, NetworkDeviceSkuData.DeserializeNetworkDeviceSkuData(e)), _networkDeviceSkuClientDiagnostics, Pipeline, "NetworkDeviceSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkDeviceSkuResource(Client, NetworkDeviceSkuData.DeserializeNetworkDeviceSkuData(e)), _networkDeviceSkuClientDiagnostics, Pipeline, "NetworkDeviceSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +168,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkDeviceSkuRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkDeviceSkuRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkDeviceSkuResource(Client, NetworkDeviceSkuData.DeserializeNetworkDeviceSkuData(e)), _networkDeviceSkuClientDiagnostics, Pipeline, "NetworkDeviceSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkDeviceSkuResource(Client, NetworkDeviceSkuData.DeserializeNetworkDeviceSkuData(e)), _networkDeviceSkuClientDiagnostics, Pipeline, "NetworkDeviceSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
