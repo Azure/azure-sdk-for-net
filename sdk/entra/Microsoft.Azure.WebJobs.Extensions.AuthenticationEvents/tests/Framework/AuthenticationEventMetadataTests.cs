@@ -34,12 +34,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
 
         private static IEnumerable<object[]> TestScenarios()
         {
-#region Invalid
+            #region Invalid
             yield return new TestCaseStructure()
             {
                 Test = Payload.TokenIssuanceStart.RequestWithoutSourcePayload,
                 Message = "Testing request payload without source field passed and verifies it throws an error",
                 ExceptionMessage = "TokenIssuanceStartRequest: The Source field is required."
+            }.ToArray;
+            yield return new TestCaseStructure()
+            {
+                Test = Payload.TokenIssuanceStart.RequestWithoutODataTypePayload,
+                Message = "Testing request payload without ODataType field passed and verifies it throws an error",
+                ExceptionMessage = "TokenIssuanceStartRequest: The ODataType field is required."
             }.ToArray;
 #endregion
 
