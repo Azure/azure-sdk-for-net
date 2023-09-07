@@ -26,7 +26,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of ServiceResourceDetails. </summary>
         /// <param name="customDocumentModels"> Details regarding custom document models. </param>
         /// <param name="customNeuralDocumentModelBuilds"> Quota used, limit, and next reset date/time. </param>
-        internal ServiceResourceDetails(CustomDocumentModelsDetails customDocumentModels, QuotaDetails customNeuralDocumentModelBuilds)
+        internal ServiceResourceDetails(CustomDocumentModelsDetails customDocumentModels, ResourceQuotaDetails customNeuralDocumentModelBuilds)
         {
             CustomDocumentModels = customDocumentModels;
             CustomNeuralDocumentModelBuilds = customNeuralDocumentModelBuilds;
@@ -35,6 +35,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Details regarding custom document models. </summary>
         public CustomDocumentModelsDetails CustomDocumentModels { get; }
         /// <summary> Quota used, limit, and next reset date/time. </summary>
-        public QuotaDetails CustomNeuralDocumentModelBuilds { get; }
+        public ResourceQuotaDetails CustomNeuralDocumentModelBuilds { get; }
     }
 }

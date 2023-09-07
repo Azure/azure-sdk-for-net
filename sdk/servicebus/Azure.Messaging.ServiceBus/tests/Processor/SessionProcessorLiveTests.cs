@@ -1961,13 +1961,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         [TestCase(1)]
         [TestCase(5)]
         [TestCase(10)]
+        [TestCase(50)]
         public async Task CanReleaseSession(int maxCallsPerSession)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
                 await using var client = CreateNoRetryClient();
                 var sender = client.CreateSender(scope.QueueName);
-                int messageCount = 10;
+                int messageCount = 100;
 
                 await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount, "sessionId"));
 
@@ -2016,8 +2017,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await tcs.Task;
                 await processor.CloseAsync();
 
-                Assert.AreEqual(10, receivedCount);
-                if (firstCloseCount < 10)
+                Assert.AreEqual(messageCount, receivedCount);
+                if (firstCloseCount < messageCount)
                 {
                     Assert.AreEqual(2, sessionCloseCount);
                 }

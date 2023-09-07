@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Concur Service dataset. </summary>
-    public partial class ConcurObjectDataset : DataFactoryDatasetDefinition
+    public partial class ConcurObjectDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of ConcurObjectDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

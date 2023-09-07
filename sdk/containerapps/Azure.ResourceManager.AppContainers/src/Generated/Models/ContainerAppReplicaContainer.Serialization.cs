@@ -54,6 +54,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<bool> ready = default;
             Optional<bool> started = default;
             Optional<int> restartCount = default;
+            Optional<ContainerAppContainerRunningState> runningState = default;
+            Optional<string> runningStateDetails = default;
             Optional<string> logStreamEndpoint = default;
             Optional<string> execEndpoint = default;
             foreach (var property in element.EnumerateObject())
@@ -95,6 +97,20 @@ namespace Azure.ResourceManager.AppContainers.Models
                     restartCount = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("runningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    runningState = new ContainerAppContainerRunningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("runningStateDetails"u8))
+                {
+                    runningStateDetails = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("logStreamEndpoint"u8))
                 {
                     logStreamEndpoint = property.Value.GetString();
@@ -106,7 +122,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppReplicaContainer(name.Value, containerId.Value, Optional.ToNullable(ready), Optional.ToNullable(started), Optional.ToNullable(restartCount), logStreamEndpoint.Value, execEndpoint.Value);
+            return new ContainerAppReplicaContainer(name.Value, containerId.Value, Optional.ToNullable(ready), Optional.ToNullable(started), Optional.ToNullable(restartCount), Optional.ToNullable(runningState), runningStateDetails.Value, logStreamEndpoint.Value, execEndpoint.Value);
         }
     }
 }

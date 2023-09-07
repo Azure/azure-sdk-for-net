@@ -97,11 +97,11 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
 {
     BlobContainerOptions = new BlobStorageResourceContainerOptions
     {
-        DirectoryPrefix = blobDirectoryPrefix
+        BlobDirectoryPrefix = blobDirectoryPrefix
     },
-    TransferOptions = new TransferOptions()
+    TransferOptions = new DataTransferOptions()
     {
-        CreateMode = StorageResourceCreateMode.Overwrite,
+        CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
     }
 };
 
@@ -130,11 +130,11 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
 {
     BlobContainerOptions = new BlobStorageResourceContainerOptions
     {
-        DirectoryPrefix = blobDirectoryPrefix
+        BlobDirectoryPrefix = blobDirectoryPrefix
     },
-    TransferOptions = new TransferOptions()
+    TransferOptions = new DataTransferOptions()
     {
-        CreateMode = StorageResourceCreateMode.Overwrite,
+        CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
     }
 };
 
@@ -159,7 +159,7 @@ Blob `StorageResource` objects can be constructed with optional "options" argume
 ```C# Snippet:ResourceConstruction_Blobs_WithOptions_VirtualDirectory
 BlobStorageResourceContainerOptions virtualDirectoryOptions = new()
 {
-    DirectoryPrefix = "blob/directory/prefix"
+    BlobDirectoryPrefix = "blob/directory/prefix"
 };
 
 StorageResource virtualDirectoryResource = new BlobStorageResourceContainer(
@@ -180,22 +180,7 @@ StorageResource leasedBlockBlobResource = new BlockBlobStorageResource(
     leasedResourceOptions);
 ```
 
-When resuming a transfer, a credential to Azure Storage is likely needed. Credentials are not persisted by the transfer manager. When using `BlobStorageResources.TryGetResourceProviders()` to recreate a `StorageResource` for resume, the returned provider can create the resource with a credential specified by the calling code. This allows for workflows like scoping generation of a Shared Access Signature to the given resource path. Your application should provide its own mechanism for getting the appropriate credential, represented by `GenerateMySasCredential()` in the sample below.
-
-```C# Snippet:RehydrateBlobResource
-StorageResource sourceResource = null;
-StorageResource destinationResource = null;
-if (BlobStorageResources.TryGetResourceProviders(
-    info,
-    out BlobStorageResourceProvider blobSrcProvider,
-    out BlobStorageResourceProvider blobDstProvider))
-{
-    sourceResource ??= await blobSrcProvider?.MakeResourceAsync(
-        GenerateMySasCredential(info.SourcePath));
-    destinationResource ??= await blobSrcProvider?.MakeResourceAsync(
-        GenerateMySasCredential(info.DestinationPath));
-}
-```
+***TODO (jaschrep-msft): Replace resume samples once resume refactor finished.***
 
 ### Upload
 
@@ -221,7 +206,7 @@ DataTransfer dataTransfer = await transferManager.StartTransferAsync(
         {
             // Block blobs are the default if not specified
             BlobType = BlobType.Block,
-            DirectoryPrefix = optionalDestinationPrefix,
+            BlobDirectoryPrefix = optionalDestinationPrefix,
         }),
     transferOptions: options);
 await dataTransfer.WaitForCompletionAsync();
@@ -248,7 +233,7 @@ DataTransfer dataTransfer = await transferManager.StartTransferAsync(
         blobContainerClient,
         new BlobStorageResourceContainerOptions()
         {
-            DirectoryPrefix = optionalSourcePrefix
+            BlobDirectoryPrefix = optionalSourcePrefix
         }),
     destinationResource: new LocalDirectoryStorageResourceContainer(downloadPath));
 await dataTransfer.WaitForCompletionAsync();
@@ -275,7 +260,7 @@ DataTransfer dataTransfer = await transferManager.StartTransferAsync(
         sourceContainer,
         new BlobStorageResourceContainerOptions()
         {
-            DirectoryPrefix = sourceDirectoryName
+            BlobDirectoryPrefix = sourceDirectoryName
         }),
     destinationResource: new BlobStorageResourceContainer(
         destinationContainer,
@@ -284,7 +269,7 @@ DataTransfer dataTransfer = await transferManager.StartTransferAsync(
             // all source blobs will be copied as a single type of destination blob
             // defaults to block blobs if unspecified
             BlobType = BlobType.Block,
-            DirectoryPrefix = downloadPath
+            BlobDirectoryPrefix = downloadPath
         }));
 ```
 

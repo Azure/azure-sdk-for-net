@@ -58,14 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specify what happens to the public IP address when the VM is deleted. </summary>
         public ComputeDeleteOption? DeleteOption { get; set; }
         /// <summary> The dns settings to be applied on the publicIP addresses . </summary>
-        internal VirtualMachinePublicIPAddressDnsSettingsConfiguration DnsSettings { get; set; }
-        /// <summary> The Domain name label prefix of the PublicIPAddress resources that will be created. The generated name label is the concatenation of the domain name label and vm network profile unique ID. </summary>
-        public string DnsDomainNameLabel
-        {
-            get => DnsSettings is null ? default : DnsSettings.DomainNameLabel;
-            set => DnsSettings = new VirtualMachinePublicIPAddressDnsSettingsConfiguration(value);
-        }
-
+        public VirtualMachinePublicIPAddressDnsSettingsConfiguration DnsSettings { get; set; }
         /// <summary> The list of IP tags associated with the public IP address. </summary>
         public IList<VirtualMachineIPTag> IPTags { get; }
         /// <summary> The PublicIPPrefix from which to allocate publicIP addresses. </summary>

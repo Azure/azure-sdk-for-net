@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Chaos
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ExperimentRestClient.CreateListAllRequest(Id.SubscriptionId, running, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ExperimentRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId, running, continuationToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExperimentResource(Client, ExperimentData.DeserializeExperimentData(e)), ExperimentClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetExperiments", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExperimentResource(Client, ExperimentData.DeserializeExperimentData(e)), ExperimentClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetExperiments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Chaos
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ExperimentRestClient.CreateListAllRequest(Id.SubscriptionId, running, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ExperimentRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId, running, continuationToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExperimentResource(Client, ExperimentData.DeserializeExperimentData(e)), ExperimentClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetExperiments", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExperimentResource(Client, ExperimentData.DeserializeExperimentData(e)), ExperimentClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetExperiments", "value", "nextLink", cancellationToken);
         }
     }
 }

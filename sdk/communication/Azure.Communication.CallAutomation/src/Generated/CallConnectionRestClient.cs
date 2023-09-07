@@ -583,7 +583,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="muteParticipantsRequest"> The participants to be muted from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="muteParticipantsRequest"/> is null. </exception>
-        public async Task<Response<MuteParticipantsResponse>> MuteAsync(string callConnectionId, MuteParticipantsRequestInternal muteParticipantsRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<MuteParticipantsResult>> MuteAsync(string callConnectionId, MuteParticipantsRequestInternal muteParticipantsRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -600,9 +600,9 @@ namespace Azure.Communication.CallAutomation
             {
                 case 202:
                     {
-                        MuteParticipantsResponse value = default;
+                        MuteParticipantsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MuteParticipantsResponse.DeserializeMuteParticipantsResponse(document.RootElement);
+                        value = MuteParticipantsResult.DeserializeMuteParticipantsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -615,7 +615,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="muteParticipantsRequest"> The participants to be muted from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="muteParticipantsRequest"/> is null. </exception>
-        public Response<MuteParticipantsResponse> Mute(string callConnectionId, MuteParticipantsRequestInternal muteParticipantsRequest, CancellationToken cancellationToken = default)
+        public Response<MuteParticipantsResult> Mute(string callConnectionId, MuteParticipantsRequestInternal muteParticipantsRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -632,9 +632,9 @@ namespace Azure.Communication.CallAutomation
             {
                 case 202:
                     {
-                        MuteParticipantsResponse value = default;
+                        MuteParticipantsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MuteParticipantsResponse.DeserializeMuteParticipantsResponse(document.RootElement);
+                        value = MuteParticipantsResult.DeserializeMuteParticipantsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -669,7 +669,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="unmuteParticipantsRequest"> The participants to be unmuted from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unmuteParticipantsRequest"/> is null. </exception>
-        public async Task<Response<UnmuteParticipantsResponse>> UnmuteAsync(string callConnectionId, UnmuteParticipantsRequestInternal unmuteParticipantsRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<UnmuteParticipantsResult>> UnmuteAsync(string callConnectionId, UnmuteParticipantsRequestInternal unmuteParticipantsRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -686,9 +686,9 @@ namespace Azure.Communication.CallAutomation
             {
                 case 202:
                     {
-                        UnmuteParticipantsResponse value = default;
+                        UnmuteParticipantsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UnmuteParticipantsResponse.DeserializeUnmuteParticipantsResponse(document.RootElement);
+                        value = UnmuteParticipantsResult.DeserializeUnmuteParticipantsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -701,7 +701,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="unmuteParticipantsRequest"> The participants to be unmuted from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unmuteParticipantsRequest"/> is null. </exception>
-        public Response<UnmuteParticipantsResponse> Unmute(string callConnectionId, UnmuteParticipantsRequestInternal unmuteParticipantsRequest, CancellationToken cancellationToken = default)
+        public Response<UnmuteParticipantsResult> Unmute(string callConnectionId, UnmuteParticipantsRequestInternal unmuteParticipantsRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -718,9 +718,9 @@ namespace Azure.Communication.CallAutomation
             {
                 case 202:
                     {
-                        UnmuteParticipantsResponse value = default;
+                        UnmuteParticipantsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UnmuteParticipantsResponse.DeserializeUnmuteParticipantsResponse(document.RootElement);
+                        value = UnmuteParticipantsResult.DeserializeUnmuteParticipantsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

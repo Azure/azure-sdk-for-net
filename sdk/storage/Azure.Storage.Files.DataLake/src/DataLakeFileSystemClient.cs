@@ -3334,6 +3334,7 @@ namespace Azure.Storage.Files.DataLake
                             marker: continuation,
                             maxResults: maxResults,
                             include: null,
+                            showonly: ListBlobsShowOnly.Deleted,
                             timeout: null,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -3346,6 +3347,7 @@ namespace Azure.Storage.Files.DataLake
                             marker: continuation,
                             maxResults: maxResults,
                             include: null,
+                            showonly: ListBlobsShowOnly.Deleted,
                             timeout: null,
                             cancellationToken: cancellationToken);
                     }

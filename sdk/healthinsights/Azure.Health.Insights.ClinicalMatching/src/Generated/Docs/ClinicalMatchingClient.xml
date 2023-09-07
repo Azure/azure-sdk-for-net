@@ -83,6 +83,7 @@ var trialMatcherData = new TrialMatcherData(new PatientRecord[]
                     AcceptedAgeRange = new AcceptedAgeRange()
 {
                         MinimumAge = new AcceptedAge(AgeUnit.Years, 3.14f),
+                        MaximumAge = new AcceptedAge(AgeUnit.Years, 3.14f),
                     },
                 },
             }
@@ -236,6 +237,7 @@ var trialMatcherData = new TrialMatcherData(new PatientRecord[]
                     AcceptedAgeRange = new AcceptedAgeRange()
 {
                         MinimumAge = new AcceptedAge(AgeUnit.Years, 3.14f),
+                        MaximumAge = new AcceptedAge(AgeUnit.Years, 3.14f),
                     },
                 },
             }

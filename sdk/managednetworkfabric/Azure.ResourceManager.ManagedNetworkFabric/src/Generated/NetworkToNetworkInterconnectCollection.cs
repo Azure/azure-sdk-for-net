@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="networkToNetworkInterconnectName"> Name of the NetworkToNetworkInterconnectName. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="networkToNetworkInterconnectName"> Name of the NetworkToNetworkInterconnectName. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkToNetworkInterconnectName"> Name of the NetworkToNetworkInterconnect. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkToNetworkInterconnectName"/> is null. </exception>
@@ -184,7 +185,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkToNetworkInterconnectName"> Name of the NetworkToNetworkInterconnect. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkToNetworkInterconnectName"/> is null. </exception>
@@ -217,7 +218,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkToNetworkInterconnects_List</description>
+        /// <description>NetworkToNetworkInterconnects_ListByNetworkFabric</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,9 +226,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="NetworkToNetworkInterconnectResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkToNetworkInterconnectResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkToNetworkInterconnectRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkToNetworkInterconnectRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkToNetworkInterconnectResource(Client, NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(e)), _networkToNetworkInterconnectClientDiagnostics, Pipeline, "NetworkToNetworkInterconnectCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkToNetworkInterconnectRestClient.CreateListByNetworkFabricRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkToNetworkInterconnectRestClient.CreateListByNetworkFabricNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkToNetworkInterconnectResource(Client, NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(e)), _networkToNetworkInterconnectClientDiagnostics, Pipeline, "NetworkToNetworkInterconnectCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +240,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkToNetworkInterconnects_List</description>
+        /// <description>NetworkToNetworkInterconnects_ListByNetworkFabric</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,9 +248,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkToNetworkInterconnectResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkToNetworkInterconnectResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkToNetworkInterconnectRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkToNetworkInterconnectRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkToNetworkInterconnectResource(Client, NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(e)), _networkToNetworkInterconnectClientDiagnostics, Pipeline, "NetworkToNetworkInterconnectCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkToNetworkInterconnectRestClient.CreateListByNetworkFabricRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkToNetworkInterconnectRestClient.CreateListByNetworkFabricNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkToNetworkInterconnectResource(Client, NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(e)), _networkToNetworkInterconnectClientDiagnostics, Pipeline, "NetworkToNetworkInterconnectCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -265,7 +266,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkToNetworkInterconnectName"> Name of the NetworkToNetworkInterconnect. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkToNetworkInterconnectName"/> is null. </exception>
@@ -300,7 +301,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkToNetworkInterconnectName"> Name of the NetworkToNetworkInterconnect. </param>
+        /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkToNetworkInterconnectName"/> is null. </exception>

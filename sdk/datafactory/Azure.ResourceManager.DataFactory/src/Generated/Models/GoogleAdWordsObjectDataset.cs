@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Google AdWords service dataset. </summary>
-    public partial class GoogleAdWordsObjectDataset : DataFactoryDatasetDefinition
+    public partial class GoogleAdWordsObjectDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of GoogleAdWordsObjectDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

@@ -12,7 +12,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The UnknownDataset. </summary>
-    internal partial class UnknownDataset : DataFactoryDatasetDefinition
+    internal partial class UnknownDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of UnknownDataset. </summary>
         /// <param name="datasetType"> Type of dataset. </param>

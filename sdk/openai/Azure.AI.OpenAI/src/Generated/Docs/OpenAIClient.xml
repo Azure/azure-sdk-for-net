@@ -104,86 +104,20 @@ var result = client.GetCompletions("<deploymentId>", completionsOptions);
     <member name="GetCompletions(string,RequestContent,RequestContext)">
     </member>
     <member name="GetChatCompletionsAsync(string,ChatCompletionsOptions,CancellationToken)">
-<example>
-This sample shows how to call GetChatCompletionsAsync with required parameters.
-<code><![CDATA[
-var client = new OpenAIClient("<openAIApiKey>");
-
-var chatCompletionsOptions = new ChatCompletionsOptions(new ChatMessage[] 
-{
-    new ChatMessage(ChatRole.System, "<content>")
-{
-        Name = "<Name>",
-        FunctionCall = new FunctionCall("<name>", "<arguments>"),
-    }
-})
-{
-    Functions = 
-{
-        new FunctionDefinition("<name>")
-{
-            Description = "<Description>",
-            Parameters = BinaryData.FromString("<your binary data content>"),
-        }
-    },
-    MaxTokens = 1234,
-    Temperature = 3.14f,
-    NucleusSamplingFactor = 3.14f,
-    User = "<User>",
-    ChoiceCount = 1234,
-    StopSequences = 
-{
-        "<null>"
-    },
-    PresencePenalty = 3.14f,
-    FrequencyPenalty = 3.14f,
-};
-var result = await client.GetChatCompletionsAsync("<deploymentId>", chatCompletionsOptions);
-]]></code>
-</example>
     </member>
     <member name="GetChatCompletions(string,ChatCompletionsOptions,CancellationToken)">
-<example>
-This sample shows how to call GetChatCompletions with required parameters.
-<code><![CDATA[
-var client = new OpenAIClient("<openAIApiKey>");
-
-var chatCompletionsOptions = new ChatCompletionsOptions(new ChatMessage[] 
-{
-    new ChatMessage(ChatRole.System, "<content>")
-{
-        Name = "<Name>",
-        FunctionCall = new FunctionCall("<name>", "<arguments>"),
-    }
-})
-{
-    Functions = 
-{
-        new FunctionDefinition("<name>")
-{
-            Description = "<Description>",
-            Parameters = BinaryData.FromString("<your binary data content>"),
-        }
-    },
-    MaxTokens = 1234,
-    Temperature = 3.14f,
-    NucleusSamplingFactor = 3.14f,
-    User = "<User>",
-    ChoiceCount = 1234,
-    StopSequences = 
-{
-        "<null>"
-    },
-    PresencePenalty = 3.14f,
-    FrequencyPenalty = 3.14f,
-};
-var result = client.GetChatCompletions("<deploymentId>", chatCompletionsOptions);
-]]></code>
-</example>
     </member>
     <member name="GetChatCompletionsAsync(string,RequestContent,RequestContext)">
     </member>
     <member name="GetChatCompletions(string,RequestContent,RequestContext)">
+    </member>
+    <member name="GetChatCompletionsWithAzureExtensionsAsync(string,ChatCompletionsOptions,CancellationToken)">
+    </member>
+    <member name="GetChatCompletionsWithAzureExtensions(string,ChatCompletionsOptions,CancellationToken)">
+    </member>
+    <member name="GetChatCompletionsWithAzureExtensionsAsync(string,RequestContent,RequestContext)">
+    </member>
+    <member name="GetChatCompletionsWithAzureExtensions(string,RequestContent,RequestContext)">
     </member>
     <member name="BeginAzureBatchImageGenerationAsync(WaitUntil,ImageGenerationOptions,CancellationToken)">
     </member>

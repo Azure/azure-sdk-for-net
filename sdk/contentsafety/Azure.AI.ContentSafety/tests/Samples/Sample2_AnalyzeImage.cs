@@ -23,7 +23,7 @@ namespace Azure.AI.ContentSafety.Tests.Samples
             #region Snippet:Azure_AI_ContentSafety_AnalyzeImage
 
             string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Samples", "sample_data", "image.jpg");
-            ImageData image = new ImageData() { Content = BinaryData.FromBytes(File.ReadAllBytes(datapath)) };
+            ContentSafetyImageData image = new ContentSafetyImageData() { Content = BinaryData.FromBytes(File.ReadAllBytes(datapath)) };
 
             var request = new AnalyzeImageOptions(image);
 
