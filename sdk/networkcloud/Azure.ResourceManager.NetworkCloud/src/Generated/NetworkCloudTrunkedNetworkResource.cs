@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudTrunkedNetworkTrunkedNetworksRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation(_networkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics, Pipeline, _networkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation(_networkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics, Pipeline, _networkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudTrunkedNetworkTrunkedNetworksRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkCloudArmOperation(_networkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics, Pipeline, _networkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation(_networkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics, Pipeline, _networkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

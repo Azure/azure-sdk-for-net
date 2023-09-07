@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudVirtualMachineVirtualMachinesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation(_networkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _networkCloudVirtualMachineVirtualMachinesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation(_networkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _networkCloudVirtualMachineVirtualMachinesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudVirtualMachineVirtualMachinesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkCloudArmOperation(_networkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _networkCloudVirtualMachineVirtualMachinesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation(_networkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _networkCloudVirtualMachineVirtualMachinesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudVirtualMachineVirtualMachinesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudVirtualMachineResource>(new NetworkCloudVirtualMachineOperationSource(Client), _networkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _networkCloudVirtualMachineVirtualMachinesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkCloudArmOperation<NetworkCloudVirtualMachineResource>(new NetworkCloudVirtualMachineOperationSource(Client), _networkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _networkCloudVirtualMachineVirtualMachinesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudVirtualMachineVirtualMachinesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudVirtualMachineResource>(new NetworkCloudVirtualMachineOperationSource(Client), _networkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _networkCloudVirtualMachineVirtualMachinesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkCloudArmOperation<NetworkCloudVirtualMachineResource>(new NetworkCloudVirtualMachineOperationSource(Client), _networkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _networkCloudVirtualMachineVirtualMachinesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudVirtualMachineVirtualMachinesRestClient.PowerOffAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _networkCloudVirtualMachineVirtualMachinesRestClient.CreatePowerOffRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _networkCloudVirtualMachineVirtualMachinesRestClient.CreatePowerOffRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudVirtualMachineVirtualMachinesRestClient.PowerOff(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _networkCloudVirtualMachineVirtualMachinesRestClient.CreatePowerOffRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _networkCloudVirtualMachineVirtualMachinesRestClient.CreatePowerOffRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudVirtualMachineVirtualMachinesRestClient.ReimageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _networkCloudVirtualMachineVirtualMachinesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _networkCloudVirtualMachineVirtualMachinesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudVirtualMachineVirtualMachinesRestClient.Reimage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _networkCloudVirtualMachineVirtualMachinesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _networkCloudVirtualMachineVirtualMachinesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudVirtualMachineVirtualMachinesRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _networkCloudVirtualMachineVirtualMachinesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _networkCloudVirtualMachineVirtualMachinesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudVirtualMachineVirtualMachinesRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _networkCloudVirtualMachineVirtualMachinesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _networkCloudVirtualMachineVirtualMachinesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudVirtualMachineVirtualMachinesRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _networkCloudVirtualMachineVirtualMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _networkCloudVirtualMachineVirtualMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudVirtualMachineVirtualMachinesRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _networkCloudVirtualMachineVirtualMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _networkCloudVirtualMachineVirtualMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             try
             {
                 var response = await _newRelicObservabilityTagRuleTagRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NewRelicObservabilityArmOperation<NewRelicObservabilityTagRuleResource>(new NewRelicObservabilityTagRuleOperationSource(Client), _newRelicObservabilityTagRuleTagRulesClientDiagnostics, Pipeline, _newRelicObservabilityTagRuleTagRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NewRelicObservabilityArmOperation<NewRelicObservabilityTagRuleResource>(new NewRelicObservabilityTagRuleOperationSource(Client), _newRelicObservabilityTagRuleTagRulesClientDiagnostics, Pipeline, _newRelicObservabilityTagRuleTagRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             try
             {
                 var response = _newRelicObservabilityTagRuleTagRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data, cancellationToken);
-                var operation = new NewRelicObservabilityArmOperation<NewRelicObservabilityTagRuleResource>(new NewRelicObservabilityTagRuleOperationSource(Client), _newRelicObservabilityTagRuleTagRulesClientDiagnostics, Pipeline, _newRelicObservabilityTagRuleTagRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NewRelicObservabilityArmOperation<NewRelicObservabilityTagRuleResource>(new NewRelicObservabilityTagRuleOperationSource(Client), _newRelicObservabilityTagRuleTagRulesClientDiagnostics, Pipeline, _newRelicObservabilityTagRuleTagRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicObservabilityTagRuleTagRulesRestClient.CreateListByNewRelicMonitorResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _newRelicObservabilityTagRuleTagRulesRestClient.CreateListByNewRelicMonitorResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NewRelicObservabilityTagRuleResource(Client, NewRelicObservabilityTagRuleData.DeserializeNewRelicObservabilityTagRuleData(e)), _newRelicObservabilityTagRuleTagRulesClientDiagnostics, Pipeline, "NewRelicObservabilityTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NewRelicObservabilityTagRuleResource(Client, NewRelicObservabilityTagRuleData.DeserializeNewRelicObservabilityTagRuleData(e)), _newRelicObservabilityTagRuleTagRulesClientDiagnostics, Pipeline, "NewRelicObservabilityTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicObservabilityTagRuleTagRulesRestClient.CreateListByNewRelicMonitorResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _newRelicObservabilityTagRuleTagRulesRestClient.CreateListByNewRelicMonitorResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NewRelicObservabilityTagRuleResource(Client, NewRelicObservabilityTagRuleData.DeserializeNewRelicObservabilityTagRuleData(e)), _newRelicObservabilityTagRuleTagRulesClientDiagnostics, Pipeline, "NewRelicObservabilityTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NewRelicObservabilityTagRuleResource(Client, NewRelicObservabilityTagRuleData.DeserializeNewRelicObservabilityTagRuleData(e)), _newRelicObservabilityTagRuleTagRulesClientDiagnostics, Pipeline, "NewRelicObservabilityTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

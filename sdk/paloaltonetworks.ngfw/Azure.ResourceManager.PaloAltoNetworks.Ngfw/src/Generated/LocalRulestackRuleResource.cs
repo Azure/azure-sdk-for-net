@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             try
             {
                 var response = await _localRulestackRuleLocalRulesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NgfwArmOperation(_localRulestackRuleLocalRulesClientDiagnostics, Pipeline, _localRulestackRuleLocalRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NgfwArmOperation(_localRulestackRuleLocalRulesClientDiagnostics, Pipeline, _localRulestackRuleLocalRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             try
             {
                 var response = _localRulestackRuleLocalRulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NgfwArmOperation(_localRulestackRuleLocalRulesClientDiagnostics, Pipeline, _localRulestackRuleLocalRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NgfwArmOperation(_localRulestackRuleLocalRulesClientDiagnostics, Pipeline, _localRulestackRuleLocalRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             try
             {
                 var response = await _localRulestackRuleLocalRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NgfwArmOperation<LocalRulestackRuleResource>(new LocalRulestackRuleOperationSource(Client), _localRulestackRuleLocalRulesClientDiagnostics, Pipeline, _localRulestackRuleLocalRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NgfwArmOperation<LocalRulestackRuleResource>(new LocalRulestackRuleOperationSource(Client), _localRulestackRuleLocalRulesClientDiagnostics, Pipeline, _localRulestackRuleLocalRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             try
             {
                 var response = _localRulestackRuleLocalRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new NgfwArmOperation<LocalRulestackRuleResource>(new LocalRulestackRuleOperationSource(Client), _localRulestackRuleLocalRulesClientDiagnostics, Pipeline, _localRulestackRuleLocalRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NgfwArmOperation<LocalRulestackRuleResource>(new LocalRulestackRuleOperationSource(Client), _localRulestackRuleLocalRulesClientDiagnostics, Pipeline, _localRulestackRuleLocalRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

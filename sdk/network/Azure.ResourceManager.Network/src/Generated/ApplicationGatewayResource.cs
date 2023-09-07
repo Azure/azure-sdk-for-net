@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _applicationGatewayRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -267,7 +266,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _applicationGatewayRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -369,7 +368,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _applicationGatewayRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -403,7 +402,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _applicationGatewayRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -437,7 +436,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _applicationGatewayRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -471,7 +470,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _applicationGatewayRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation(_applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -506,7 +505,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _applicationGatewayRestClient.BackendHealthAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<ApplicationGatewayBackendHealth>(new ApplicationGatewayBackendHealthOperationSource(), _applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateBackendHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<ApplicationGatewayBackendHealth>(new ApplicationGatewayBackendHealthOperationSource(), _applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateBackendHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -541,7 +540,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _applicationGatewayRestClient.BackendHealth(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
-                var operation = new NetworkArmOperation<ApplicationGatewayBackendHealth>(new ApplicationGatewayBackendHealthOperationSource(), _applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateBackendHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<ApplicationGatewayBackendHealth>(new ApplicationGatewayBackendHealthOperationSource(), _applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateBackendHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -580,7 +579,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _applicationGatewayRestClient.BackendHealthOnDemandAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, probeRequest, expand, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<ApplicationGatewayBackendHealthOnDemand>(new ApplicationGatewayBackendHealthOnDemandOperationSource(), _applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateBackendHealthOnDemandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, probeRequest, expand).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<ApplicationGatewayBackendHealthOnDemand>(new ApplicationGatewayBackendHealthOnDemandOperationSource(), _applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateBackendHealthOnDemandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, probeRequest, expand).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -619,7 +618,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _applicationGatewayRestClient.BackendHealthOnDemand(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, probeRequest, expand, cancellationToken);
-                var operation = new NetworkArmOperation<ApplicationGatewayBackendHealthOnDemand>(new ApplicationGatewayBackendHealthOnDemandOperationSource(), _applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateBackendHealthOnDemandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, probeRequest, expand).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<ApplicationGatewayBackendHealthOnDemand>(new ApplicationGatewayBackendHealthOnDemandOperationSource(), _applicationGatewayClientDiagnostics, Pipeline, _applicationGatewayRestClient.CreateBackendHealthOnDemandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, probeRequest, expand).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -650,7 +649,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationGatewayPrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ApplicationGatewayPrivateLinkResource.DeserializeApplicationGatewayPrivateLinkResource, _applicationGatewayPrivateLinkResourcesClientDiagnostics, Pipeline, "ApplicationGatewayResource.GetApplicationGatewayPrivateLinkResources", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ApplicationGatewayPrivateLinkResource.DeserializeApplicationGatewayPrivateLinkResource, _applicationGatewayPrivateLinkResourcesClientDiagnostics, Pipeline, "ApplicationGatewayResource.GetApplicationGatewayPrivateLinkResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -672,7 +671,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationGatewayPrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ApplicationGatewayPrivateLinkResource.DeserializeApplicationGatewayPrivateLinkResource, _applicationGatewayPrivateLinkResourcesClientDiagnostics, Pipeline, "ApplicationGatewayResource.GetApplicationGatewayPrivateLinkResources", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ApplicationGatewayPrivateLinkResource.DeserializeApplicationGatewayPrivateLinkResource, _applicationGatewayPrivateLinkResourcesClientDiagnostics, Pipeline, "ApplicationGatewayResource.GetApplicationGatewayPrivateLinkResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

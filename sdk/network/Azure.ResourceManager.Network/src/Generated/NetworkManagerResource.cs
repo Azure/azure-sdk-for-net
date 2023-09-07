@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -402,7 +401,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkManagerRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_networkManagerClientDiagnostics, Pipeline, _networkManagerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation(_networkManagerClientDiagnostics, Pipeline, _networkManagerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -437,7 +436,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkManagerRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force, cancellationToken);
-                var operation = new NetworkArmOperation(_networkManagerClientDiagnostics, Pipeline, _networkManagerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation(_networkManagerClientDiagnostics, Pipeline, _networkManagerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -540,7 +539,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListActiveConnectivityConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ActiveConnectivityConfiguration.DeserializeActiveConnectivityConfiguration, _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveConnectivityConfigurations", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ActiveConnectivityConfiguration.DeserializeActiveConnectivityConfiguration, _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveConnectivityConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -566,7 +565,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListActiveConnectivityConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ActiveConnectivityConfiguration.DeserializeActiveConnectivityConfiguration, _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveConnectivityConfigurations", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ActiveConnectivityConfiguration.DeserializeActiveConnectivityConfiguration, _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveConnectivityConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -592,7 +591,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListActiveSecurityAdminRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ActiveBaseSecurityAdminRule.DeserializeActiveBaseSecurityAdminRule, _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveSecurityAdminRules", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ActiveBaseSecurityAdminRule.DeserializeActiveBaseSecurityAdminRule, _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveSecurityAdminRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -618,7 +617,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListActiveSecurityAdminRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ActiveBaseSecurityAdminRule.DeserializeActiveBaseSecurityAdminRule, _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveSecurityAdminRules", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ActiveBaseSecurityAdminRule.DeserializeActiveBaseSecurityAdminRule, _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveSecurityAdminRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -647,7 +646,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkManagerCommitsRestClient.PostAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkManagerCommit, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<NetworkManagerCommit>(new NetworkManagerCommitOperationSource(), _networkManagerCommitsClientDiagnostics, Pipeline, _networkManagerCommitsRestClient.CreatePostRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkManagerCommit).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<NetworkManagerCommit>(new NetworkManagerCommitOperationSource(), _networkManagerCommitsClientDiagnostics, Pipeline, _networkManagerCommitsRestClient.CreatePostRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkManagerCommit).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -685,7 +684,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkManagerCommitsRestClient.Post(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkManagerCommit, cancellationToken);
-                var operation = new NetworkArmOperation<NetworkManagerCommit>(new NetworkManagerCommitOperationSource(), _networkManagerCommitsClientDiagnostics, Pipeline, _networkManagerCommitsRestClient.CreatePostRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkManagerCommit).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<NetworkManagerCommit>(new NetworkManagerCommitOperationSource(), _networkManagerCommitsClientDiagnostics, Pipeline, _networkManagerCommitsRestClient.CreatePostRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkManagerCommit).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -720,7 +719,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkManagerDeploymentStatusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetworkManagerDeploymentStatus.DeserializeNetworkManagerDeploymentStatus, _networkManagerDeploymentStatusClientDiagnostics, Pipeline, "NetworkManagerResource.GetNetworkManagerDeploymentStatus", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetworkManagerDeploymentStatus.DeserializeNetworkManagerDeploymentStatus, _networkManagerDeploymentStatusClientDiagnostics, Pipeline, "NetworkManagerResource.GetNetworkManagerDeploymentStatus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -746,7 +745,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkManagerDeploymentStatusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, NetworkManagerDeploymentStatus.DeserializeNetworkManagerDeploymentStatus, _networkManagerDeploymentStatusClientDiagnostics, Pipeline, "NetworkManagerResource.GetNetworkManagerDeploymentStatus", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, NetworkManagerDeploymentStatus.DeserializeNetworkManagerDeploymentStatus, _networkManagerDeploymentStatusClientDiagnostics, Pipeline, "NetworkManagerResource.GetNetworkManagerDeploymentStatus", "value", null, cancellationToken);
         }
 
         /// <summary>

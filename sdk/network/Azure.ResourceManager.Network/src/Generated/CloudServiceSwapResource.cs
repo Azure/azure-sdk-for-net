@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _cloudServiceSwapVipSwapRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_cloudServiceSwapVipSwapClientDiagnostics, Pipeline, _cloudServiceSwapVipSwapRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation(_cloudServiceSwapVipSwapClientDiagnostics, Pipeline, _cloudServiceSwapVipSwapRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _cloudServiceSwapVipSwapRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new NetworkArmOperation(_cloudServiceSwapVipSwapClientDiagnostics, Pipeline, _cloudServiceSwapVipSwapRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation(_cloudServiceSwapVipSwapClientDiagnostics, Pipeline, _cloudServiceSwapVipSwapRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

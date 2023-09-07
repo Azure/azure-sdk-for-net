@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = await _operationalInsightsTableTablesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsTableResource>(new OperationalInsightsTableOperationSource(Client), _operationalInsightsTableTablesClientDiagnostics, Pipeline, _operationalInsightsTableTablesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsTableResource>(new OperationalInsightsTableOperationSource(Client), _operationalInsightsTableTablesClientDiagnostics, Pipeline, _operationalInsightsTableTablesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = _operationalInsightsTableTablesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, data, cancellationToken);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsTableResource>(new OperationalInsightsTableOperationSource(Client), _operationalInsightsTableTablesClientDiagnostics, Pipeline, _operationalInsightsTableTablesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsTableResource>(new OperationalInsightsTableOperationSource(Client), _operationalInsightsTableTablesClientDiagnostics, Pipeline, _operationalInsightsTableTablesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tableName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual AsyncPageable<OperationalInsightsTableResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsTableTablesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new OperationalInsightsTableResource(Client, OperationalInsightsTableData.DeserializeOperationalInsightsTableData(e)), _operationalInsightsTableTablesClientDiagnostics, Pipeline, "OperationalInsightsTableCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new OperationalInsightsTableResource(Client, OperationalInsightsTableData.DeserializeOperationalInsightsTableData(e)), _operationalInsightsTableTablesClientDiagnostics, Pipeline, "OperationalInsightsTableCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +247,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual Pageable<OperationalInsightsTableResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsTableTablesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new OperationalInsightsTableResource(Client, OperationalInsightsTableData.DeserializeOperationalInsightsTableData(e)), _operationalInsightsTableTablesClientDiagnostics, Pipeline, "OperationalInsightsTableCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new OperationalInsightsTableResource(Client, OperationalInsightsTableData.DeserializeOperationalInsightsTableData(e)), _operationalInsightsTableTablesClientDiagnostics, Pipeline, "OperationalInsightsTableCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

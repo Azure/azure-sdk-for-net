@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.NetworkFunction
             try
             {
                 var response = await _collectorPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkFunctionArmOperation<CollectorPolicyResource>(new CollectorPolicyOperationSource(Client), _collectorPolicyClientDiagnostics, Pipeline, _collectorPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkFunctionArmOperation<CollectorPolicyResource>(new CollectorPolicyOperationSource(Client), _collectorPolicyClientDiagnostics, Pipeline, _collectorPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.NetworkFunction
             try
             {
                 var response = _collectorPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, data, cancellationToken);
-                var operation = new NetworkFunctionArmOperation<CollectorPolicyResource>(new CollectorPolicyOperationSource(Client), _collectorPolicyClientDiagnostics, Pipeline, _collectorPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkFunctionArmOperation<CollectorPolicyResource>(new CollectorPolicyOperationSource(Client), _collectorPolicyClientDiagnostics, Pipeline, _collectorPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.NetworkFunction
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectorPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _collectorPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CollectorPolicyResource(Client, CollectorPolicyData.DeserializeCollectorPolicyData(e)), _collectorPolicyClientDiagnostics, Pipeline, "CollectorPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CollectorPolicyResource(Client, CollectorPolicyData.DeserializeCollectorPolicyData(e)), _collectorPolicyClientDiagnostics, Pipeline, "CollectorPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.NetworkFunction
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectorPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _collectorPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CollectorPolicyResource(Client, CollectorPolicyData.DeserializeCollectorPolicyData(e)), _collectorPolicyClientDiagnostics, Pipeline, "CollectorPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CollectorPolicyResource(Client, CollectorPolicyData.DeserializeCollectorPolicyData(e)), _collectorPolicyClientDiagnostics, Pipeline, "CollectorPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

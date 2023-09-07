@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineResource>(new NetworkCloudBareMetalMachineOperationSource(Client), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineResource>(new NetworkCloudBareMetalMachineOperationSource(Client), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineResource>(new NetworkCloudBareMetalMachineOperationSource(Client), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineResource>(new NetworkCloudBareMetalMachineOperationSource(Client), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.CordonAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateCordonRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateCordonRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.Cordon(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateCordonRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateCordonRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.PowerOffAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreatePowerOffRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreatePowerOffRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.PowerOff(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreatePowerOffRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreatePowerOffRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.ReimageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.Reimage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.ReplaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.Replace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunCommandAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunCommand(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunDataExtractsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunDataExtractsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunDataExtractsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunDataExtracts(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunDataExtractsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunDataExtractsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunReadCommandsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunReadCommandsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunReadCommandsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunReadCommands(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunReadCommandsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunReadCommandsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -825,7 +825,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -859,7 +859,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.UncordonAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateUncordonRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateUncordonRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -927,7 +927,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.Uncordon(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateUncordonRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateUncordonRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

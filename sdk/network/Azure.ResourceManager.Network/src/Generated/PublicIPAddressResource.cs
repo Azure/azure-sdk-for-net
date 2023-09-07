@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _publicIPAddressRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_publicIPAddressClientDiagnostics, Pipeline, _publicIPAddressRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation(_publicIPAddressClientDiagnostics, Pipeline, _publicIPAddressRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _publicIPAddressRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation(_publicIPAddressClientDiagnostics, Pipeline, _publicIPAddressRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation(_publicIPAddressClientDiagnostics, Pipeline, _publicIPAddressRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _publicIPAddressRestClient.DdosProtectionStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<PublicIPDdosProtectionStatusResult>(new PublicIPDdosProtectionStatusResultOperationSource(), _publicIPAddressClientDiagnostics, Pipeline, _publicIPAddressRestClient.CreateDdosProtectionStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<PublicIPDdosProtectionStatusResult>(new PublicIPDdosProtectionStatusResultOperationSource(), _publicIPAddressClientDiagnostics, Pipeline, _publicIPAddressRestClient.CreateDdosProtectionStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _publicIPAddressRestClient.DdosProtectionStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation<PublicIPDdosProtectionStatusResult>(new PublicIPDdosProtectionStatusResultOperationSource(), _publicIPAddressClientDiagnostics, Pipeline, _publicIPAddressRestClient.CreateDdosProtectionStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<PublicIPDdosProtectionStatusResult>(new PublicIPDdosProtectionStatusResultOperationSource(), _publicIPAddressClientDiagnostics, Pipeline, _publicIPAddressRestClient.CreateDdosProtectionStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

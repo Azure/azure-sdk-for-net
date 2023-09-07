@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = await _mySqlServerServersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, serverName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new MySqlArmOperation<MySqlServerResource>(new MySqlServerOperationSource(Client), _mySqlServerServersClientDiagnostics, Pipeline, _mySqlServerServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation<MySqlServerResource>(new MySqlServerOperationSource(Client), _mySqlServerServersClientDiagnostics, Pipeline, _mySqlServerServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -129,7 +128,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = _mySqlServerServersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, serverName, content, cancellationToken);
-                var operation = new MySqlArmOperation<MySqlServerResource>(new MySqlServerOperationSource(Client), _mySqlServerServersClientDiagnostics, Pipeline, _mySqlServerServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation<MySqlServerResource>(new MySqlServerOperationSource(Client), _mySqlServerServersClientDiagnostics, Pipeline, _mySqlServerServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.MySql
         public virtual AsyncPageable<MySqlServerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlServerServersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), _mySqlServerServersClientDiagnostics, Pipeline, "MySqlServerCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), _mySqlServerServersClientDiagnostics, Pipeline, "MySqlServerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +253,7 @@ namespace Azure.ResourceManager.MySql
         public virtual Pageable<MySqlServerResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlServerServersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), _mySqlServerServersClientDiagnostics, Pipeline, "MySqlServerCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), _mySqlServerServersClientDiagnostics, Pipeline, "MySqlServerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -280,7 +279,7 @@ namespace Azure.ResourceManager.MySql
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicasRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), _replicasClientDiagnostics, Pipeline, "MySqlServerCollection.GetReplicas", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), _replicasClientDiagnostics, Pipeline, "MySqlServerCollection.GetReplicas", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -306,7 +305,7 @@ namespace Azure.ResourceManager.MySql
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicasRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), _replicasClientDiagnostics, Pipeline, "MySqlServerCollection.GetReplicas", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), _replicasClientDiagnostics, Pipeline, "MySqlServerCollection.GetReplicas", "value", null, cancellationToken);
         }
 
         /// <summary>

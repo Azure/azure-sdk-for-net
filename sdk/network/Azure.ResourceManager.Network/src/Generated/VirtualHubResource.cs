@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _virtualHubRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation(_virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _virtualHubRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation(_virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation(_virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _virtualHubRestClient.GetEffectiveVirtualHubRoutesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<VirtualHubEffectiveRouteList>(new VirtualHubEffectiveRouteListOperationSource(), _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetEffectiveVirtualHubRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<VirtualHubEffectiveRouteList>(new VirtualHubEffectiveRouteListOperationSource(), _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetEffectiveVirtualHubRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _virtualHubRestClient.GetEffectiveVirtualHubRoutes(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkArmOperation<VirtualHubEffectiveRouteList>(new VirtualHubEffectiveRouteListOperationSource(), _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetEffectiveVirtualHubRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<VirtualHubEffectiveRouteList>(new VirtualHubEffectiveRouteListOperationSource(), _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetEffectiveVirtualHubRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _virtualHubRestClient.GetInboundRoutesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<EffectiveRouteMapRouteList>(new EffectiveRouteMapRouteListOperationSource(), _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetInboundRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<EffectiveRouteMapRouteList>(new EffectiveRouteMapRouteListOperationSource(), _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetInboundRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -794,7 +794,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _virtualHubRestClient.GetInboundRoutes(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkArmOperation<EffectiveRouteMapRouteList>(new EffectiveRouteMapRouteListOperationSource(), _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetInboundRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<EffectiveRouteMapRouteList>(new EffectiveRouteMapRouteListOperationSource(), _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetInboundRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _virtualHubRestClient.GetOutboundRoutesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<EffectiveRouteMapRouteList>(new EffectiveRouteMapRouteListOperationSource(), _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetOutboundRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<EffectiveRouteMapRouteList>(new EffectiveRouteMapRouteListOperationSource(), _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetOutboundRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -870,7 +870,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _virtualHubRestClient.GetOutboundRoutes(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkArmOperation<EffectiveRouteMapRouteList>(new EffectiveRouteMapRouteListOperationSource(), _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetOutboundRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<EffectiveRouteMapRouteList>(new EffectiveRouteMapRouteListOperationSource(), _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetOutboundRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

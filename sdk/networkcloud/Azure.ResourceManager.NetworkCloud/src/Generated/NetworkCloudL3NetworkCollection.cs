@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudL3NetworkL3NetworksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, l3NetworkName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudL3NetworkResource>(new NetworkCloudL3NetworkOperationSource(Client), _networkCloudL3NetworkL3NetworksClientDiagnostics, Pipeline, _networkCloudL3NetworkL3NetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, l3NetworkName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkCloudArmOperation<NetworkCloudL3NetworkResource>(new NetworkCloudL3NetworkOperationSource(Client), _networkCloudL3NetworkL3NetworksClientDiagnostics, Pipeline, _networkCloudL3NetworkL3NetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, l3NetworkName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudL3NetworkL3NetworksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, l3NetworkName, data, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudL3NetworkResource>(new NetworkCloudL3NetworkOperationSource(Client), _networkCloudL3NetworkL3NetworksClientDiagnostics, Pipeline, _networkCloudL3NetworkL3NetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, l3NetworkName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkCloudArmOperation<NetworkCloudL3NetworkResource>(new NetworkCloudL3NetworkOperationSource(Client), _networkCloudL3NetworkL3NetworksClientDiagnostics, Pipeline, _networkCloudL3NetworkL3NetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, l3NetworkName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudL3NetworkL3NetworksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudL3NetworkL3NetworksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudL3NetworkResource(Client, NetworkCloudL3NetworkData.DeserializeNetworkCloudL3NetworkData(e)), _networkCloudL3NetworkL3NetworksClientDiagnostics, Pipeline, "NetworkCloudL3NetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudL3NetworkResource(Client, NetworkCloudL3NetworkData.DeserializeNetworkCloudL3NetworkData(e)), _networkCloudL3NetworkL3NetworksClientDiagnostics, Pipeline, "NetworkCloudL3NetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +250,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudL3NetworkL3NetworksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudL3NetworkL3NetworksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudL3NetworkResource(Client, NetworkCloudL3NetworkData.DeserializeNetworkCloudL3NetworkData(e)), _networkCloudL3NetworkL3NetworksClientDiagnostics, Pipeline, "NetworkCloudL3NetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudL3NetworkResource(Client, NetworkCloudL3NetworkData.DeserializeNetworkCloudL3NetworkData(e)), _networkCloudL3NetworkL3NetworksClientDiagnostics, Pipeline, "NetworkCloudL3NetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

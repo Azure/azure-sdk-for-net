@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = await _mySqlFlexibleServerDatabaseDatabasesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerDatabaseResource>(new MySqlFlexibleServerDatabaseOperationSource(Client), _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, _mySqlFlexibleServerDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerDatabaseResource>(new MySqlFlexibleServerDatabaseOperationSource(Client), _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, _mySqlFlexibleServerDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = _mySqlFlexibleServerDatabaseDatabasesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data, cancellationToken);
-                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerDatabaseResource>(new MySqlFlexibleServerDatabaseOperationSource(Client), _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, _mySqlFlexibleServerDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerDatabaseResource>(new MySqlFlexibleServerDatabaseOperationSource(Client), _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, _mySqlFlexibleServerDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerDatabaseDatabasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlFlexibleServerDatabaseDatabasesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerDatabaseResource(Client, MySqlFlexibleServerDatabaseData.DeserializeMySqlFlexibleServerDatabaseData(e)), _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, "MySqlFlexibleServerDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerDatabaseResource(Client, MySqlFlexibleServerDatabaseData.DeserializeMySqlFlexibleServerDatabaseData(e)), _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, "MySqlFlexibleServerDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerDatabaseDatabasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlFlexibleServerDatabaseDatabasesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerDatabaseResource(Client, MySqlFlexibleServerDatabaseData.DeserializeMySqlFlexibleServerDatabaseData(e)), _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, "MySqlFlexibleServerDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerDatabaseResource(Client, MySqlFlexibleServerDatabaseData.DeserializeMySqlFlexibleServerDatabaseData(e)), _mySqlFlexibleServerDatabaseDatabasesClientDiagnostics, Pipeline, "MySqlFlexibleServerDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

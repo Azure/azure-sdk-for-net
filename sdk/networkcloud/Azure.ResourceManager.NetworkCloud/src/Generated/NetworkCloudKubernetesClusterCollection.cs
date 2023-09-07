@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudKubernetesClusterKubernetesClustersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, kubernetesClusterName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudKubernetesClusterResource>(new NetworkCloudKubernetesClusterOperationSource(Client), _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics, Pipeline, _networkCloudKubernetesClusterKubernetesClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, kubernetesClusterName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkCloudArmOperation<NetworkCloudKubernetesClusterResource>(new NetworkCloudKubernetesClusterOperationSource(Client), _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics, Pipeline, _networkCloudKubernetesClusterKubernetesClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, kubernetesClusterName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudKubernetesClusterKubernetesClustersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, kubernetesClusterName, data, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudKubernetesClusterResource>(new NetworkCloudKubernetesClusterOperationSource(Client), _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics, Pipeline, _networkCloudKubernetesClusterKubernetesClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, kubernetesClusterName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkCloudArmOperation<NetworkCloudKubernetesClusterResource>(new NetworkCloudKubernetesClusterOperationSource(Client), _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics, Pipeline, _networkCloudKubernetesClusterKubernetesClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, kubernetesClusterName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudKubernetesClusterKubernetesClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudKubernetesClusterKubernetesClustersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudKubernetesClusterResource(Client, NetworkCloudKubernetesClusterData.DeserializeNetworkCloudKubernetesClusterData(e)), _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics, Pipeline, "NetworkCloudKubernetesClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudKubernetesClusterResource(Client, NetworkCloudKubernetesClusterData.DeserializeNetworkCloudKubernetesClusterData(e)), _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics, Pipeline, "NetworkCloudKubernetesClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +250,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudKubernetesClusterKubernetesClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudKubernetesClusterKubernetesClustersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudKubernetesClusterResource(Client, NetworkCloudKubernetesClusterData.DeserializeNetworkCloudKubernetesClusterData(e)), _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics, Pipeline, "NetworkCloudKubernetesClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudKubernetesClusterResource(Client, NetworkCloudKubernetesClusterData.DeserializeNetworkCloudKubernetesClusterData(e)), _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics, Pipeline, "NetworkCloudKubernetesClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineKeySetName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineKeySetResource>(new NetworkCloudBareMetalMachineKeySetOperationSource(Client), _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics, Pipeline, _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineKeySetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineKeySetResource>(new NetworkCloudBareMetalMachineKeySetOperationSource(Client), _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics, Pipeline, _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineKeySetName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineKeySetName, data, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineKeySetResource>(new NetworkCloudBareMetalMachineKeySetOperationSource(Client), _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics, Pipeline, _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineKeySetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineKeySetResource>(new NetworkCloudBareMetalMachineKeySetOperationSource(Client), _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics, Pipeline, _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bareMetalMachineKeySetName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudBareMetalMachineKeySetResource(Client, NetworkCloudBareMetalMachineKeySetData.DeserializeNetworkCloudBareMetalMachineKeySetData(e)), _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics, Pipeline, "NetworkCloudBareMetalMachineKeySetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudBareMetalMachineKeySetResource(Client, NetworkCloudBareMetalMachineKeySetData.DeserializeNetworkCloudBareMetalMachineKeySetData(e)), _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics, Pipeline, "NetworkCloudBareMetalMachineKeySetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudBareMetalMachineKeySetResource(Client, NetworkCloudBareMetalMachineKeySetData.DeserializeNetworkCloudBareMetalMachineKeySetData(e)), _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics, Pipeline, "NetworkCloudBareMetalMachineKeySetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudBareMetalMachineKeySetResource(Client, NetworkCloudBareMetalMachineKeySetData.DeserializeNetworkCloudBareMetalMachineKeySetData(e)), _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics, Pipeline, "NetworkCloudBareMetalMachineKeySetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
