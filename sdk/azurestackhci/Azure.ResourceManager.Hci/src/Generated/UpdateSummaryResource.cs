@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = await _updateSummaryRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HciArmOperation(_updateSummaryClientDiagnostics, Pipeline, _updateSummaryRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new HciArmOperation(_updateSummaryClientDiagnostics, Pipeline, _updateSummaryRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = _updateSummaryRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
-                var operation = new HciArmOperation(_updateSummaryClientDiagnostics, Pipeline, _updateSummaryRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new HciArmOperation(_updateSummaryClientDiagnostics, Pipeline, _updateSummaryRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

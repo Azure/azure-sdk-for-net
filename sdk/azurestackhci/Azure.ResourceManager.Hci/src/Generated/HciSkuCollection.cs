@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -149,7 +148,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hciSkuSkusRestClient.CreateListByOfferRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciSkuSkusRestClient.CreateListByOfferNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciSkuResource(Client, HciSkuData.DeserializeHciSkuData(e)), _hciSkuSkusClientDiagnostics, Pipeline, "HciSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciSkuResource(Client, HciSkuData.DeserializeHciSkuData(e)), _hciSkuSkusClientDiagnostics, Pipeline, "HciSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -172,7 +171,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hciSkuSkusRestClient.CreateListByOfferRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciSkuSkusRestClient.CreateListByOfferNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciSkuResource(Client, HciSkuData.DeserializeHciSkuData(e)), _hciSkuSkusClientDiagnostics, Pipeline, "HciSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciSkuResource(Client, HciSkuData.DeserializeHciSkuData(e)), _hciSkuSkusClientDiagnostics, Pipeline, "HciSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

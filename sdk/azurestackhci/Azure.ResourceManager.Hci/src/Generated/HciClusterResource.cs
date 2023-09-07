@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -347,7 +346,7 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = await _hciClusterClustersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HciArmOperation(_hciClusterClustersClientDiagnostics, Pipeline, _hciClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new HciArmOperation(_hciClusterClustersClientDiagnostics, Pipeline, _hciClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -381,7 +380,7 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = _hciClusterClustersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new HciArmOperation(_hciClusterClustersClientDiagnostics, Pipeline, _hciClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new HciArmOperation(_hciClusterClustersClientDiagnostics, Pipeline, _hciClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -487,7 +486,7 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = await _hciClusterClustersRestClient.UploadCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new HciArmOperation(_hciClusterClustersClientDiagnostics, Pipeline, _hciClusterClustersRestClient.CreateUploadCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new HciArmOperation(_hciClusterClustersClientDiagnostics, Pipeline, _hciClusterClustersRestClient.CreateUploadCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -525,7 +524,7 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = _hciClusterClustersRestClient.UploadCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new HciArmOperation(_hciClusterClustersClientDiagnostics, Pipeline, _hciClusterClustersRestClient.CreateUploadCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new HciArmOperation(_hciClusterClustersClientDiagnostics, Pipeline, _hciClusterClustersRestClient.CreateUploadCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -559,7 +558,7 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = await _hciClusterClustersRestClient.CreateIdentityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HciArmOperation<HciClusterIdentityResult>(new HciClusterIdentityResultOperationSource(), _hciClusterClustersClientDiagnostics, Pipeline, _hciClusterClustersRestClient.CreateCreateIdentityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new HciArmOperation<HciClusterIdentityResult>(new HciClusterIdentityResultOperationSource(), _hciClusterClustersClientDiagnostics, Pipeline, _hciClusterClustersRestClient.CreateCreateIdentityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -593,7 +592,7 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = _hciClusterClustersRestClient.CreateIdentity(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new HciArmOperation<HciClusterIdentityResult>(new HciClusterIdentityResultOperationSource(), _hciClusterClustersClientDiagnostics, Pipeline, _hciClusterClustersRestClient.CreateCreateIdentityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new HciArmOperation<HciClusterIdentityResult>(new HciClusterIdentityResultOperationSource(), _hciClusterClustersClientDiagnostics, Pipeline, _hciClusterClustersRestClient.CreateCreateIdentityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -631,7 +630,7 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = await _hciClusterClustersRestClient.ExtendSoftwareAssuranceBenefitAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new HciArmOperation<HciClusterResource>(new HciClusterOperationSource(Client), _hciClusterClustersClientDiagnostics, Pipeline, _hciClusterClustersRestClient.CreateExtendSoftwareAssuranceBenefitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new HciArmOperation<HciClusterResource>(new HciClusterOperationSource(Client), _hciClusterClustersClientDiagnostics, Pipeline, _hciClusterClustersRestClient.CreateExtendSoftwareAssuranceBenefitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -669,7 +668,7 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = _hciClusterClustersRestClient.ExtendSoftwareAssuranceBenefit(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new HciArmOperation<HciClusterResource>(new HciClusterOperationSource(Client), _hciClusterClustersClientDiagnostics, Pipeline, _hciClusterClustersRestClient.CreateExtendSoftwareAssuranceBenefitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new HciArmOperation<HciClusterResource>(new HciClusterOperationSource(Client), _hciClusterClustersClientDiagnostics, Pipeline, _hciClusterClustersRestClient.CreateExtendSoftwareAssuranceBenefitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -701,7 +700,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _offerRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _offerRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OfferResource(Client, OfferData.DeserializeOfferData(e)), _offerClientDiagnostics, Pipeline, "HciClusterResource.GetOffers", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OfferResource(Client, OfferData.DeserializeOfferData(e)), _offerClientDiagnostics, Pipeline, "HciClusterResource.GetOffers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -724,7 +723,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _offerRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _offerRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OfferResource(Client, OfferData.DeserializeOfferData(e)), _offerClientDiagnostics, Pipeline, "HciClusterResource.GetOffers", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OfferResource(Client, OfferData.DeserializeOfferData(e)), _offerClientDiagnostics, Pipeline, "HciClusterResource.GetOffers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

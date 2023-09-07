@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -230,7 +229,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridRunbookWorkerGroupRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridRunbookWorkerGroupRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridRunbookWorkerGroupResource(Client, HybridRunbookWorkerGroupData.DeserializeHybridRunbookWorkerGroupData(e)), _hybridRunbookWorkerGroupClientDiagnostics, Pipeline, "HybridRunbookWorkerGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridRunbookWorkerGroupResource(Client, HybridRunbookWorkerGroupData.DeserializeHybridRunbookWorkerGroupData(e)), _hybridRunbookWorkerGroupClientDiagnostics, Pipeline, "HybridRunbookWorkerGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +252,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridRunbookWorkerGroupRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridRunbookWorkerGroupRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridRunbookWorkerGroupResource(Client, HybridRunbookWorkerGroupData.DeserializeHybridRunbookWorkerGroupData(e)), _hybridRunbookWorkerGroupClientDiagnostics, Pipeline, "HybridRunbookWorkerGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridRunbookWorkerGroupResource(Client, HybridRunbookWorkerGroupData.DeserializeHybridRunbookWorkerGroupData(e)), _hybridRunbookWorkerGroupClientDiagnostics, Pipeline, "HybridRunbookWorkerGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

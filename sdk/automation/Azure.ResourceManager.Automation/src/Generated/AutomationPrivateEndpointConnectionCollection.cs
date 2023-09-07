@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _automationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<AutomationPrivateEndpointConnectionResource>(new AutomationPrivateEndpointConnectionOperationSource(Client), _automationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _automationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AutomationArmOperation<AutomationPrivateEndpointConnectionResource>(new AutomationPrivateEndpointConnectionOperationSource(Client), _automationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _automationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _automationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new AutomationArmOperation<AutomationPrivateEndpointConnectionResource>(new AutomationPrivateEndpointConnectionOperationSource(Client), _automationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _automationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AutomationArmOperation<AutomationPrivateEndpointConnectionResource>(new AutomationPrivateEndpointConnectionOperationSource(Client), _automationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _automationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.Automation
         public virtual AsyncPageable<AutomationPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutomationPrivateEndpointConnectionResource(Client, AutomationPrivateEndpointConnectionData.DeserializeAutomationPrivateEndpointConnectionData(e)), _automationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AutomationPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutomationPrivateEndpointConnectionResource(Client, AutomationPrivateEndpointConnectionData.DeserializeAutomationPrivateEndpointConnectionData(e)), _automationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AutomationPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +247,7 @@ namespace Azure.ResourceManager.Automation
         public virtual Pageable<AutomationPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutomationPrivateEndpointConnectionResource(Client, AutomationPrivateEndpointConnectionData.DeserializeAutomationPrivateEndpointConnectionData(e)), _automationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AutomationPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutomationPrivateEndpointConnectionResource(Client, AutomationPrivateEndpointConnectionData.DeserializeAutomationPrivateEndpointConnectionData(e)), _automationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AutomationPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Batch
             try
             {
                 var response = await _batchAccountCertificateCertificateRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new BatchArmOperation(_batchAccountCertificateCertificateClientDiagnostics, Pipeline, _batchAccountCertificateCertificateRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new BatchArmOperation(_batchAccountCertificateCertificateClientDiagnostics, Pipeline, _batchAccountCertificateCertificateRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Batch
             try
             {
                 var response = _batchAccountCertificateCertificateRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new BatchArmOperation(_batchAccountCertificateCertificateClientDiagnostics, Pipeline, _batchAccountCertificateCertificateRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new BatchArmOperation(_batchAccountCertificateCertificateClientDiagnostics, Pipeline, _batchAccountCertificateCertificateRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

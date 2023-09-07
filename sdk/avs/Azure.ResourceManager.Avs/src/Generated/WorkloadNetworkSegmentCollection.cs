@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = await _workloadNetworkSegmentWorkloadNetworksRestClient.CreateSegmentsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, segmentId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<WorkloadNetworkSegmentResource>(new WorkloadNetworkSegmentOperationSource(Client), _workloadNetworkSegmentWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkSegmentWorkloadNetworksRestClient.CreateCreateSegmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, segmentId, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<WorkloadNetworkSegmentResource>(new WorkloadNetworkSegmentOperationSource(Client), _workloadNetworkSegmentWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkSegmentWorkloadNetworksRestClient.CreateCreateSegmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, segmentId, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = _workloadNetworkSegmentWorkloadNetworksRestClient.CreateSegments(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, segmentId, data, cancellationToken);
-                var operation = new AvsArmOperation<WorkloadNetworkSegmentResource>(new WorkloadNetworkSegmentOperationSource(Client), _workloadNetworkSegmentWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkSegmentWorkloadNetworksRestClient.CreateCreateSegmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, segmentId, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<WorkloadNetworkSegmentResource>(new WorkloadNetworkSegmentOperationSource(Client), _workloadNetworkSegmentWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkSegmentWorkloadNetworksRestClient.CreateCreateSegmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, segmentId, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkSegmentWorkloadNetworksRestClient.CreateListSegmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkSegmentWorkloadNetworksRestClient.CreateListSegmentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkSegmentResource(Client, WorkloadNetworkSegmentData.DeserializeWorkloadNetworkSegmentData(e)), _workloadNetworkSegmentWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkSegmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkSegmentResource(Client, WorkloadNetworkSegmentData.DeserializeWorkloadNetworkSegmentData(e)), _workloadNetworkSegmentWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkSegmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkSegmentWorkloadNetworksRestClient.CreateListSegmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkSegmentWorkloadNetworksRestClient.CreateListSegmentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkSegmentResource(Client, WorkloadNetworkSegmentData.DeserializeWorkloadNetworkSegmentData(e)), _workloadNetworkSegmentWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkSegmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkSegmentResource(Client, WorkloadNetworkSegmentData.DeserializeWorkloadNetworkSegmentData(e)), _workloadNetworkSegmentWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkSegmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
