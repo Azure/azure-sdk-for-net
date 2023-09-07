@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storageClassificationMappingName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<StorageClassificationMappingResource>(new StorageClassificationMappingOperationSource(Client), _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storageClassificationMappingName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<StorageClassificationMappingResource>(new StorageClassificationMappingOperationSource(Client), _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storageClassificationMappingName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storageClassificationMappingName, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<StorageClassificationMappingResource>(new StorageClassificationMappingOperationSource(Client), _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storageClassificationMappingName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<StorageClassificationMappingResource>(new StorageClassificationMappingOperationSource(Client), _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storageClassificationMappingName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListByReplicationStorageClassificationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListByReplicationStorageClassificationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationMappingResource(Client, StorageClassificationMappingData.DeserializeStorageClassificationMappingData(e)), _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, "StorageClassificationMappingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationMappingResource(Client, StorageClassificationMappingData.DeserializeStorageClassificationMappingData(e)), _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, "StorageClassificationMappingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +250,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListByReplicationStorageClassificationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListByReplicationStorageClassificationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationMappingResource(Client, StorageClassificationMappingData.DeserializeStorageClassificationMappingData(e)), _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, "StorageClassificationMappingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationMappingResource(Client, StorageClassificationMappingData.DeserializeStorageClassificationMappingData(e)), _storageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, "StorageClassificationMappingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

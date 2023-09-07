@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = await _reservationQuotaQuotaRestClient.CreateOrUpdateAsync(Id.SubscriptionId, _providerId, new AzureLocation(_location), resourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<ReservationQuotaResource>(new ReservationQuotaOperationSource(Client), _reservationQuotaQuotaClientDiagnostics, Pipeline, _reservationQuotaQuotaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, _providerId, new AzureLocation(_location), resourceName, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var operation = new ReservationsArmOperation<ReservationQuotaResource>(new ReservationQuotaOperationSource(Client), _reservationQuotaQuotaClientDiagnostics, Pipeline, _reservationQuotaQuotaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, _providerId, new AzureLocation(_location), resourceName, data).Request, response, Core.OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,7 +141,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = _reservationQuotaQuotaRestClient.CreateOrUpdate(Id.SubscriptionId, _providerId, new AzureLocation(_location), resourceName, data, cancellationToken);
-                var operation = new ReservationsArmOperation<ReservationQuotaResource>(new ReservationQuotaOperationSource(Client), _reservationQuotaQuotaClientDiagnostics, Pipeline, _reservationQuotaQuotaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, _providerId, new AzureLocation(_location), resourceName, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var operation = new ReservationsArmOperation<ReservationQuotaResource>(new ReservationQuotaOperationSource(Client), _reservationQuotaQuotaClientDiagnostics, Pipeline, _reservationQuotaQuotaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, _providerId, new AzureLocation(_location), resourceName, data).Request, response, Core.OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -247,7 +246,7 @@ namespace Azure.ResourceManager.Reservations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationQuotaQuotaRestClient.CreateListRequest(Id.SubscriptionId, _providerId, new AzureLocation(_location));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationQuotaQuotaRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, _providerId, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReservationQuotaResource(Client, ReservationQuotaData.DeserializeReservationQuotaData(e)), _reservationQuotaQuotaClientDiagnostics, Pipeline, "ReservationQuotaCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReservationQuotaResource(Client, ReservationQuotaData.DeserializeReservationQuotaData(e)), _reservationQuotaQuotaClientDiagnostics, Pipeline, "ReservationQuotaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -269,7 +268,7 @@ namespace Azure.ResourceManager.Reservations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationQuotaQuotaRestClient.CreateListRequest(Id.SubscriptionId, _providerId, new AzureLocation(_location));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationQuotaQuotaRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, _providerId, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReservationQuotaResource(Client, ReservationQuotaData.DeserializeReservationQuotaData(e)), _reservationQuotaQuotaClientDiagnostics, Pipeline, "ReservationQuotaCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReservationQuotaResource(Client, ReservationQuotaData.DeserializeReservationQuotaData(e)), _reservationQuotaQuotaClientDiagnostics, Pipeline, "ReservationQuotaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

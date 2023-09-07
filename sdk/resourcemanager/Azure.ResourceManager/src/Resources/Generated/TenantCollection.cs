@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TenantResource(Client, TenantData.DeserializeTenantData(e)), _tenantClientDiagnostics, Pipeline, "TenantCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TenantResource(Client, TenantData.DeserializeTenantData(e)), _tenantClientDiagnostics, Pipeline, "TenantCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TenantResource(Client, TenantData.DeserializeTenantData(e)), _tenantClientDiagnostics, Pipeline, "TenantCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TenantResource(Client, TenantData.DeserializeTenantData(e)), _tenantClientDiagnostics, Pipeline, "TenantCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         IEnumerator<TenantResource> IEnumerable<TenantResource>.GetEnumerator()

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, providerName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryServicesProviderResource>(new SiteRecoveryServicesProviderOperationSource(Client), _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, providerName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryServicesProviderResource>(new SiteRecoveryServicesProviderOperationSource(Client), _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, providerName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, providerName, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryServicesProviderResource>(new SiteRecoveryServicesProviderOperationSource(Client), _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, providerName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryServicesProviderResource>(new SiteRecoveryServicesProviderOperationSource(Client), _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, providerName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryServicesProviderResource(Client, SiteRecoveryServicesProviderData.DeserializeSiteRecoveryServicesProviderData(e)), _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, "SiteRecoveryServicesProviderCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryServicesProviderResource(Client, SiteRecoveryServicesProviderData.DeserializeSiteRecoveryServicesProviderData(e)), _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, "SiteRecoveryServicesProviderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +250,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryServicesProviderResource(Client, SiteRecoveryServicesProviderData.DeserializeSiteRecoveryServicesProviderData(e)), _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, "SiteRecoveryServicesProviderCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryServicesProviderResource(Client, SiteRecoveryServicesProviderData.DeserializeSiteRecoveryServicesProviderData(e)), _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, "SiteRecoveryServicesProviderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

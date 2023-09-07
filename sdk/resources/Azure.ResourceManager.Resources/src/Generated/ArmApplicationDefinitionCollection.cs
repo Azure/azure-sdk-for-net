@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _armApplicationDefinitionApplicationDefinitionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<ArmApplicationDefinitionResource>(new ArmApplicationDefinitionOperationSource(Client), _armApplicationDefinitionApplicationDefinitionsClientDiagnostics, Pipeline, _armApplicationDefinitionApplicationDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<ArmApplicationDefinitionResource>(new ArmApplicationDefinitionOperationSource(Client), _armApplicationDefinitionApplicationDefinitionsClientDiagnostics, Pipeline, _armApplicationDefinitionApplicationDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _armApplicationDefinitionApplicationDefinitionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, data, cancellationToken);
-                var operation = new ResourcesArmOperation<ArmApplicationDefinitionResource>(new ArmApplicationDefinitionOperationSource(Client), _armApplicationDefinitionApplicationDefinitionsClientDiagnostics, Pipeline, _armApplicationDefinitionApplicationDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<ArmApplicationDefinitionResource>(new ArmApplicationDefinitionOperationSource(Client), _armApplicationDefinitionApplicationDefinitionsClientDiagnostics, Pipeline, _armApplicationDefinitionApplicationDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _armApplicationDefinitionApplicationDefinitionsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _armApplicationDefinitionApplicationDefinitionsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArmApplicationDefinitionResource(Client, ArmApplicationDefinitionData.DeserializeArmApplicationDefinitionData(e)), _armApplicationDefinitionApplicationDefinitionsClientDiagnostics, Pipeline, "ArmApplicationDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArmApplicationDefinitionResource(Client, ArmApplicationDefinitionData.DeserializeArmApplicationDefinitionData(e)), _armApplicationDefinitionApplicationDefinitionsClientDiagnostics, Pipeline, "ArmApplicationDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _armApplicationDefinitionApplicationDefinitionsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _armApplicationDefinitionApplicationDefinitionsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArmApplicationDefinitionResource(Client, ArmApplicationDefinitionData.DeserializeArmApplicationDefinitionData(e)), _armApplicationDefinitionApplicationDefinitionsClientDiagnostics, Pipeline, "ArmApplicationDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArmApplicationDefinitionResource(Client, ArmApplicationDefinitionData.DeserializeArmApplicationDefinitionData(e)), _armApplicationDefinitionApplicationDefinitionsClientDiagnostics, Pipeline, "ArmApplicationDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

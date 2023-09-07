@@ -10,7 +10,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -219,7 +218,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementLockRestClient.CreateListByScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementLockRestClient.CreateListByScopeNextPageRequest(nextLink, Id, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagementLockResource(Client, ManagementLockData.DeserializeManagementLockData(e)), _managementLockClientDiagnostics, Pipeline, "ManagementLockCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagementLockResource(Client, ManagementLockData.DeserializeManagementLockData(e)), _managementLockClientDiagnostics, Pipeline, "ManagementLockCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -242,7 +241,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementLockRestClient.CreateListByScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementLockRestClient.CreateListByScopeNextPageRequest(nextLink, Id, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagementLockResource(Client, ManagementLockData.DeserializeManagementLockData(e)), _managementLockClientDiagnostics, Pipeline, "ManagementLockCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagementLockResource(Client, ManagementLockData.DeserializeManagementLockData(e)), _managementLockClientDiagnostics, Pipeline, "ManagementLockCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

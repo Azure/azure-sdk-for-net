@@ -9,7 +9,6 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAdvisoryImpactedResourcesRestClient.CreateListBySubscriptionIdAndEventIdRequest(Id.SubscriptionId, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityAdvisoryImpactedResourcesRestClient.CreateListBySubscriptionIdAndEventIdNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceHealthEventImpactedResourceData.DeserializeResourceHealthEventImpactedResourceData, _securityAdvisoryImpactedResourcesClientDiagnostics, Pipeline, "ResourceHealthEventResource.GetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventId", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceHealthEventImpactedResourceData.DeserializeResourceHealthEventImpactedResourceData, _securityAdvisoryImpactedResourcesClientDiagnostics, Pipeline, "ResourceHealthEventResource.GetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +255,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAdvisoryImpactedResourcesRestClient.CreateListBySubscriptionIdAndEventIdRequest(Id.SubscriptionId, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityAdvisoryImpactedResourcesRestClient.CreateListBySubscriptionIdAndEventIdNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceHealthEventImpactedResourceData.DeserializeResourceHealthEventImpactedResourceData, _securityAdvisoryImpactedResourcesClientDiagnostics, Pipeline, "ResourceHealthEventResource.GetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventId", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceHealthEventImpactedResourceData.DeserializeResourceHealthEventImpactedResourceData, _securityAdvisoryImpactedResourcesClientDiagnostics, Pipeline, "ResourceHealthEventResource.GetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

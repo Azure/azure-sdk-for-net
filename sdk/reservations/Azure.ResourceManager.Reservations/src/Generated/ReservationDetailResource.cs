@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = await _reservationDetailReservationRestClient.UpdateAsync(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<ReservationDetailResource>(new ReservationDetailOperationSource(Client), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateUpdateRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ReservationsArmOperation<ReservationDetailResource>(new ReservationDetailOperationSource(Client), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateUpdateRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = _reservationDetailReservationRestClient.Update(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), patch, cancellationToken);
-                var operation = new ReservationsArmOperation<ReservationDetailResource>(new ReservationDetailOperationSource(Client), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateUpdateRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ReservationsArmOperation<ReservationDetailResource>(new ReservationDetailOperationSource(Client), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateUpdateRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = await _reservationDetailReservationRestClient.AvailableScopesAsync(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), content, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<AvailableScopesProperties>(new AvailableScopesPropertiesOperationSource(), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateAvailableScopesRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ReservationsArmOperation<AvailableScopesProperties>(new AvailableScopesPropertiesOperationSource(), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateAvailableScopesRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = _reservationDetailReservationRestClient.AvailableScopes(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), content, cancellationToken);
-                var operation = new ReservationsArmOperation<AvailableScopesProperties>(new AvailableScopesPropertiesOperationSource(), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateAvailableScopesRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ReservationsArmOperation<AvailableScopesProperties>(new AvailableScopesPropertiesOperationSource(), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateAvailableScopesRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

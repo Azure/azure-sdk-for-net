@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.Relay
             try
             {
                 var response = await _relayNamespaceNamespacesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RelayArmOperation<RelayNamespaceResource>(new RelayNamespaceOperationSource(Client), _relayNamespaceNamespacesClientDiagnostics, Pipeline, _relayNamespaceNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new RelayArmOperation<RelayNamespaceResource>(new RelayNamespaceOperationSource(Client), _relayNamespaceNamespacesClientDiagnostics, Pipeline, _relayNamespaceNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.Relay
             try
             {
                 var response = _relayNamespaceNamespacesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data, cancellationToken);
-                var operation = new RelayArmOperation<RelayNamespaceResource>(new RelayNamespaceOperationSource(Client), _relayNamespaceNamespacesClientDiagnostics, Pipeline, _relayNamespaceNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new RelayArmOperation<RelayNamespaceResource>(new RelayNamespaceOperationSource(Client), _relayNamespaceNamespacesClientDiagnostics, Pipeline, _relayNamespaceNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.Relay
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _relayNamespaceNamespacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _relayNamespaceNamespacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RelayNamespaceResource(Client, RelayNamespaceData.DeserializeRelayNamespaceData(e)), _relayNamespaceNamespacesClientDiagnostics, Pipeline, "RelayNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RelayNamespaceResource(Client, RelayNamespaceData.DeserializeRelayNamespaceData(e)), _relayNamespaceNamespacesClientDiagnostics, Pipeline, "RelayNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +250,7 @@ namespace Azure.ResourceManager.Relay
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _relayNamespaceNamespacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _relayNamespaceNamespacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RelayNamespaceResource(Client, RelayNamespaceData.DeserializeRelayNamespaceData(e)), _relayNamespaceNamespacesClientDiagnostics, Pipeline, "RelayNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RelayNamespaceResource(Client, RelayNamespaceData.DeserializeRelayNamespaceData(e)), _relayNamespaceNamespacesClientDiagnostics, Pipeline, "RelayNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

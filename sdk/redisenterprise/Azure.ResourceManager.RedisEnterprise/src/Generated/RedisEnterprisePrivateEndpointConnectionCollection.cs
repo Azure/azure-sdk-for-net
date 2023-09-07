@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             try
             {
                 var response = await _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RedisEnterpriseArmOperation<RedisEnterprisePrivateEndpointConnectionResource>(new RedisEnterprisePrivateEndpointConnectionOperationSource(Client), _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new RedisEnterpriseArmOperation<RedisEnterprisePrivateEndpointConnectionResource>(new RedisEnterprisePrivateEndpointConnectionOperationSource(Client), _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             try
             {
                 var response = _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new RedisEnterpriseArmOperation<RedisEnterprisePrivateEndpointConnectionResource>(new RedisEnterprisePrivateEndpointConnectionOperationSource(Client), _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new RedisEnterpriseArmOperation<RedisEnterprisePrivateEndpointConnectionResource>(new RedisEnterprisePrivateEndpointConnectionOperationSource(Client), _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         public virtual AsyncPageable<RedisEnterprisePrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new RedisEnterprisePrivateEndpointConnectionResource(Client, RedisEnterprisePrivateEndpointConnectionData.DeserializeRedisEnterprisePrivateEndpointConnectionData(e)), _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "RedisEnterprisePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new RedisEnterprisePrivateEndpointConnectionResource(Client, RedisEnterprisePrivateEndpointConnectionData.DeserializeRedisEnterprisePrivateEndpointConnectionData(e)), _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "RedisEnterprisePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +247,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         public virtual Pageable<RedisEnterprisePrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new RedisEnterprisePrivateEndpointConnectionResource(Client, RedisEnterprisePrivateEndpointConnectionData.DeserializeRedisEnterprisePrivateEndpointConnectionData(e)), _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "RedisEnterprisePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new RedisEnterprisePrivateEndpointConnectionResource(Client, RedisEnterprisePrivateEndpointConnectionData.DeserializeRedisEnterprisePrivateEndpointConnectionData(e)), _redisEnterprisePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "RedisEnterprisePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -363,7 +362,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateListAtTenantScopeRequest(expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceProviderProvidersRestClient.CreateListAtTenantScopeNextPageRequest(nextLink, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TenantResourceProvider.DeserializeTenantResourceProvider, _resourceProviderProvidersClientDiagnostics, Pipeline, "TenantResource.GetTenantResourceProviders", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TenantResourceProvider.DeserializeTenantResourceProvider, _resourceProviderProvidersClientDiagnostics, Pipeline, "TenantResource.GetTenantResourceProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -386,7 +385,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateListAtTenantScopeRequest(expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceProviderProvidersRestClient.CreateListAtTenantScopeNextPageRequest(nextLink, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TenantResourceProvider.DeserializeTenantResourceProvider, _resourceProviderProvidersClientDiagnostics, Pipeline, "TenantResource.GetTenantResourceProviders", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TenantResourceProvider.DeserializeTenantResourceProvider, _resourceProviderProvidersClientDiagnostics, Pipeline, "TenantResource.GetTenantResourceProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
