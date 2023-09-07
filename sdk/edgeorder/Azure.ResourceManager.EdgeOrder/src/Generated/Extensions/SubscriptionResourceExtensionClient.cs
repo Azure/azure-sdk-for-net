@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Threading;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeOrderAddressRestClient.CreateListAddressesAtSubscriptionLevelRequest(Id.SubscriptionId, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeOrderAddressRestClient.CreateListAddressesAtSubscriptionLevelNextPageRequest(nextLink, Id.SubscriptionId, filter, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), EdgeOrderAddressClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEdgeOrderAddresses", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), EdgeOrderAddressClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEdgeOrderAddresses", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeOrderAddressRestClient.CreateListAddressesAtSubscriptionLevelRequest(Id.SubscriptionId, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeOrderAddressRestClient.CreateListAddressesAtSubscriptionLevelNextPageRequest(nextLink, Id.SubscriptionId, filter, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), EdgeOrderAddressClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEdgeOrderAddresses", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderAddressResource(Client, EdgeOrderAddressData.DeserializeEdgeOrderAddressData(e)), EdgeOrderAddressClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEdgeOrderAddresses", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListProductFamiliesRequest(Id.SubscriptionId, content, expand, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListProductFamiliesNextPageRequest(nextLink, Id.SubscriptionId, content, expand, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProductFamily.DeserializeProductFamily, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProductFamilies", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProductFamily.DeserializeProductFamily, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProductFamilies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -145,7 +144,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListProductFamiliesRequest(Id.SubscriptionId, content, expand, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListProductFamiliesNextPageRequest(nextLink, Id.SubscriptionId, content, expand, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProductFamily.DeserializeProductFamily, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProductFamilies", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProductFamily.DeserializeProductFamily, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProductFamilies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +168,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListConfigurationsRequest(Id.SubscriptionId, content, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListConfigurationsNextPageRequest(nextLink, Id.SubscriptionId, content, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProductConfiguration.DeserializeProductConfiguration, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProductConfiguration.DeserializeProductConfiguration, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -193,7 +192,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListConfigurationsRequest(Id.SubscriptionId, content, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListConfigurationsNextPageRequest(nextLink, Id.SubscriptionId, content, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProductConfiguration.DeserializeProductConfiguration, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProductConfiguration.DeserializeProductConfiguration, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -216,7 +215,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListProductFamiliesMetadataRequest(Id.SubscriptionId, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListProductFamiliesMetadataNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProductFamiliesMetadata.DeserializeProductFamiliesMetadata, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProductFamiliesMetadata", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProductFamiliesMetadata.DeserializeProductFamiliesMetadata, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProductFamiliesMetadata", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +238,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListProductFamiliesMetadataRequest(Id.SubscriptionId, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListProductFamiliesMetadataNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProductFamiliesMetadata.DeserializeProductFamiliesMetadata, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProductFamiliesMetadata", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProductFamiliesMetadata.DeserializeProductFamiliesMetadata, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProductFamiliesMetadata", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -262,7 +261,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListOrderAtSubscriptionLevelRequest(Id.SubscriptionId, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListOrderAtSubscriptionLevelNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderResource(Client, EdgeOrderData.DeserializeEdgeOrderData(e)), DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEdgeOrders", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderResource(Client, EdgeOrderData.DeserializeEdgeOrderData(e)), DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEdgeOrders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -285,7 +284,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListOrderAtSubscriptionLevelRequest(Id.SubscriptionId, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListOrderAtSubscriptionLevelNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderResource(Client, EdgeOrderData.DeserializeEdgeOrderData(e)), DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEdgeOrders", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderResource(Client, EdgeOrderData.DeserializeEdgeOrderData(e)), DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEdgeOrders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -310,7 +309,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeOrderItemRestClient.CreateListOrderItemsAtSubscriptionLevelRequest(Id.SubscriptionId, filter, expand, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeOrderItemRestClient.CreateListOrderItemsAtSubscriptionLevelNextPageRequest(nextLink, Id.SubscriptionId, filter, expand, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderItemResource(Client, EdgeOrderItemData.DeserializeEdgeOrderItemData(e)), EdgeOrderItemClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEdgeOrderItems", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderItemResource(Client, EdgeOrderItemData.DeserializeEdgeOrderItemData(e)), EdgeOrderItemClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEdgeOrderItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -335,7 +334,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeOrderItemRestClient.CreateListOrderItemsAtSubscriptionLevelRequest(Id.SubscriptionId, filter, expand, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeOrderItemRestClient.CreateListOrderItemsAtSubscriptionLevelNextPageRequest(nextLink, Id.SubscriptionId, filter, expand, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderItemResource(Client, EdgeOrderItemData.DeserializeEdgeOrderItemData(e)), EdgeOrderItemClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEdgeOrderItems", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderItemResource(Client, EdgeOrderItemData.DeserializeEdgeOrderItemData(e)), EdgeOrderItemClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEdgeOrderItems", "value", "nextLink", cancellationToken);
         }
     }
 }

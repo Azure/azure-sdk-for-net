@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Elastic
             try
             {
                 var response = await _monitoringTagRuleTagRulesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticArmOperation(_monitoringTagRuleTagRulesClientDiagnostics, Pipeline, _monitoringTagRuleTagRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ElasticArmOperation(_monitoringTagRuleTagRulesClientDiagnostics, Pipeline, _monitoringTagRuleTagRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Elastic
             try
             {
                 var response = _monitoringTagRuleTagRulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ElasticArmOperation(_monitoringTagRuleTagRulesClientDiagnostics, Pipeline, _monitoringTagRuleTagRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ElasticArmOperation(_monitoringTagRuleTagRulesClientDiagnostics, Pipeline, _monitoringTagRuleTagRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

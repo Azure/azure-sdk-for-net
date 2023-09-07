@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.DnsResolver
             try
             {
                 var response = await _dnsResolverRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, dnsResolverName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsResolverArmOperation<DnsResolverResource>(new DnsResolverOperationSource(Client), _dnsResolverClientDiagnostics, Pipeline, _dnsResolverRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, dnsResolverName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new DnsResolverArmOperation<DnsResolverResource>(new DnsResolverOperationSource(Client), _dnsResolverClientDiagnostics, Pipeline, _dnsResolverRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, dnsResolverName, data, ifMatch, ifNoneMatch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.DnsResolver
             try
             {
                 var response = _dnsResolverRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, dnsResolverName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new DnsResolverArmOperation<DnsResolverResource>(new DnsResolverOperationSource(Client), _dnsResolverClientDiagnostics, Pipeline, _dnsResolverRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, dnsResolverName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new DnsResolverArmOperation<DnsResolverResource>(new DnsResolverOperationSource(Client), _dnsResolverClientDiagnostics, Pipeline, _dnsResolverRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, dnsResolverName, data, ifMatch, ifNoneMatch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -234,7 +233,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsResolverRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsResolverResource(Client, DnsResolverData.DeserializeDnsResolverData(e)), _dnsResolverClientDiagnostics, Pipeline, "DnsResolverCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsResolverResource(Client, DnsResolverData.DeserializeDnsResolverData(e)), _dnsResolverClientDiagnostics, Pipeline, "DnsResolverCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +256,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsResolverRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsResolverResource(Client, DnsResolverData.DeserializeDnsResolverData(e)), _dnsResolverClientDiagnostics, Pipeline, "DnsResolverCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsResolverResource(Client, DnsResolverData.DeserializeDnsResolverData(e)), _dnsResolverClientDiagnostics, Pipeline, "DnsResolverCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

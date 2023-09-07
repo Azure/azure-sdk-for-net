@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _partnerNamespaceChannelChannelsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation(_partnerNamespaceChannelChannelsClientDiagnostics, Pipeline, _partnerNamespaceChannelChannelsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation(_partnerNamespaceChannelChannelsClientDiagnostics, Pipeline, _partnerNamespaceChannelChannelsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _partnerNamespaceChannelChannelsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new EventGridArmOperation(_partnerNamespaceChannelChannelsClientDiagnostics, Pipeline, _partnerNamespaceChannelChannelsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation(_partnerNamespaceChannelChannelsClientDiagnostics, Pipeline, _partnerNamespaceChannelChannelsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

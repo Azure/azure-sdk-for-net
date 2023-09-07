@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.Dynatrace
             try
             {
                 var response = await _dynatraceSingleSignOnSingleSignOnRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DynatraceArmOperation<DynatraceSingleSignOnResource>(new DynatraceSingleSignOnOperationSource(Client), _dynatraceSingleSignOnSingleSignOnClientDiagnostics, Pipeline, _dynatraceSingleSignOnSingleSignOnRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DynatraceArmOperation<DynatraceSingleSignOnResource>(new DynatraceSingleSignOnOperationSource(Client), _dynatraceSingleSignOnSingleSignOnClientDiagnostics, Pipeline, _dynatraceSingleSignOnSingleSignOnRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Dynatrace
             try
             {
                 var response = _dynatraceSingleSignOnSingleSignOnRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data, cancellationToken);
-                var operation = new DynatraceArmOperation<DynatraceSingleSignOnResource>(new DynatraceSingleSignOnOperationSource(Client), _dynatraceSingleSignOnSingleSignOnClientDiagnostics, Pipeline, _dynatraceSingleSignOnSingleSignOnRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DynatraceArmOperation<DynatraceSingleSignOnResource>(new DynatraceSingleSignOnOperationSource(Client), _dynatraceSingleSignOnSingleSignOnClientDiagnostics, Pipeline, _dynatraceSingleSignOnSingleSignOnRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceSingleSignOnSingleSignOnRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceSingleSignOnSingleSignOnRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DynatraceSingleSignOnResource(Client, DynatraceSingleSignOnData.DeserializeDynatraceSingleSignOnData(e)), _dynatraceSingleSignOnSingleSignOnClientDiagnostics, Pipeline, "DynatraceSingleSignOnCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DynatraceSingleSignOnResource(Client, DynatraceSingleSignOnData.DeserializeDynatraceSingleSignOnData(e)), _dynatraceSingleSignOnSingleSignOnClientDiagnostics, Pipeline, "DynatraceSingleSignOnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceSingleSignOnSingleSignOnRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceSingleSignOnSingleSignOnRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DynatraceSingleSignOnResource(Client, DynatraceSingleSignOnData.DeserializeDynatraceSingleSignOnData(e)), _dynatraceSingleSignOnSingleSignOnClientDiagnostics, Pipeline, "DynatraceSingleSignOnCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DynatraceSingleSignOnResource(Client, DynatraceSingleSignOnData.DeserializeDynatraceSingleSignOnData(e)), _dynatraceSingleSignOnSingleSignOnClientDiagnostics, Pipeline, "DynatraceSingleSignOnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

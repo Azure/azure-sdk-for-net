@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.Dynatrace
             try
             {
                 var response = await _dynatraceTagRuleTagRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DynatraceArmOperation<DynatraceTagRuleResource>(new DynatraceTagRuleOperationSource(Client), _dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, _dynatraceTagRuleTagRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DynatraceArmOperation<DynatraceTagRuleResource>(new DynatraceTagRuleOperationSource(Client), _dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, _dynatraceTagRuleTagRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Dynatrace
             try
             {
                 var response = _dynatraceTagRuleTagRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data, cancellationToken);
-                var operation = new DynatraceArmOperation<DynatraceTagRuleResource>(new DynatraceTagRuleOperationSource(Client), _dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, _dynatraceTagRuleTagRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DynatraceArmOperation<DynatraceTagRuleResource>(new DynatraceTagRuleOperationSource(Client), _dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, _dynatraceTagRuleTagRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceTagRuleTagRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceTagRuleTagRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DynatraceTagRuleResource(Client, DynatraceTagRuleData.DeserializeDynatraceTagRuleData(e)), _dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, "DynatraceTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DynatraceTagRuleResource(Client, DynatraceTagRuleData.DeserializeDynatraceTagRuleData(e)), _dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, "DynatraceTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceTagRuleTagRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceTagRuleTagRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DynatraceTagRuleResource(Client, DynatraceTagRuleData.DeserializeDynatraceTagRuleData(e)), _dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, "DynatraceTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DynatraceTagRuleResource(Client, DynatraceTagRuleData.DeserializeDynatraceTagRuleData(e)), _dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, "DynatraceTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

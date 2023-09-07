@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -282,7 +281,7 @@ namespace Azure.ResourceManager.Dynatrace
             try
             {
                 var response = await _dynatraceMonitorMonitorsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DynatraceArmOperation(_dynatraceMonitorMonitorsClientDiagnostics, Pipeline, _dynatraceMonitorMonitorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DynatraceArmOperation(_dynatraceMonitorMonitorsClientDiagnostics, Pipeline, _dynatraceMonitorMonitorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.Dynatrace
             try
             {
                 var response = _dynatraceMonitorMonitorsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DynatraceArmOperation(_dynatraceMonitorMonitorsClientDiagnostics, Pipeline, _dynatraceMonitorMonitorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DynatraceArmOperation(_dynatraceMonitorMonitorsClientDiagnostics, Pipeline, _dynatraceMonitorMonitorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -475,7 +474,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceMonitorMonitorsRestClient.CreateListMonitoredResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceMonitorMonitorsRestClient.CreateListMonitoredResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DynatraceMonitoredResourceDetails.DeserializeDynatraceMonitoredResourceDetails, _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DynatraceMonitoredResourceDetails.DeserializeDynatraceMonitoredResourceDetails, _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -497,7 +496,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceMonitorMonitorsRestClient.CreateListMonitoredResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceMonitorMonitorsRestClient.CreateListMonitoredResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DynatraceMonitoredResourceDetails.DeserializeDynatraceMonitoredResourceDetails, _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DynatraceMonitoredResourceDetails.DeserializeDynatraceMonitoredResourceDetails, _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -579,7 +578,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceMonitorMonitorsRestClient.CreateListHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceMonitorMonitorsRestClient.CreateListHostsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DynatraceMonitorVmInfo.DeserializeDynatraceMonitorVmInfo, _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetHosts", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DynatraceMonitorVmInfo.DeserializeDynatraceMonitorVmInfo, _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetHosts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -601,7 +600,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceMonitorMonitorsRestClient.CreateListHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceMonitorMonitorsRestClient.CreateListHostsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DynatraceMonitorVmInfo.DeserializeDynatraceMonitorVmInfo, _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetHosts", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DynatraceMonitorVmInfo.DeserializeDynatraceMonitorVmInfo, _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetHosts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -623,7 +622,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceMonitorMonitorsRestClient.CreateListAppServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceMonitorMonitorsRestClient.CreateListAppServicesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DynatraceOneAgentEnabledAppServiceInfo.DeserializeDynatraceOneAgentEnabledAppServiceInfo, _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetAppServices", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DynatraceOneAgentEnabledAppServiceInfo.DeserializeDynatraceOneAgentEnabledAppServiceInfo, _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetAppServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -645,7 +644,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceMonitorMonitorsRestClient.CreateListAppServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceMonitorMonitorsRestClient.CreateListAppServicesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DynatraceOneAgentEnabledAppServiceInfo.DeserializeDynatraceOneAgentEnabledAppServiceInfo, _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetAppServices", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DynatraceOneAgentEnabledAppServiceInfo.DeserializeDynatraceOneAgentEnabledAppServiceInfo, _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetAppServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -733,7 +732,7 @@ namespace Azure.ResourceManager.Dynatrace
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceMonitorMonitorsRestClient.CreateListLinkableEnvironmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceMonitorMonitorsRestClient.CreateListLinkableEnvironmentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LinkableEnvironmentResult.DeserializeLinkableEnvironmentResult, _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetLinkableEnvironments", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LinkableEnvironmentResult.DeserializeLinkableEnvironmentResult, _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetLinkableEnvironments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -759,7 +758,7 @@ namespace Azure.ResourceManager.Dynatrace
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceMonitorMonitorsRestClient.CreateListLinkableEnvironmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceMonitorMonitorsRestClient.CreateListLinkableEnvironmentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LinkableEnvironmentResult.DeserializeLinkableEnvironmentResult, _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetLinkableEnvironments", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LinkableEnvironmentResult.DeserializeLinkableEnvironmentResult, _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorResource.GetLinkableEnvironments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

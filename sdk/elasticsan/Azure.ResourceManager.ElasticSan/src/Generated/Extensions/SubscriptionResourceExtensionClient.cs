@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Threading;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.ElasticSan
         public virtual AsyncPageable<ElasticSanSkuInformation> GetSkusAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ElasticSanSkuInformation.DeserializeElasticSanSkuInformation, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkus", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ElasticSanSkuInformation.DeserializeElasticSanSkuInformation, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.ElasticSan
         public virtual Pageable<ElasticSanSkuInformation> GetSkus(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ElasticSanSkuInformation.DeserializeElasticSanSkuInformation, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkus", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ElasticSanSkuInformation.DeserializeElasticSanSkuInformation, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.ElasticSan
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ElasticSanRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ElasticSanRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticSanResource(Client, ElasticSanData.DeserializeElasticSanData(e)), ElasticSanClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetElasticSans", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticSanResource(Client, ElasticSanData.DeserializeElasticSanData(e)), ElasticSanClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetElasticSans", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -131,7 +130,7 @@ namespace Azure.ResourceManager.ElasticSan
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ElasticSanRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ElasticSanRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticSanResource(Client, ElasticSanData.DeserializeElasticSanData(e)), ElasticSanClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetElasticSans", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticSanResource(Client, ElasticSanData.DeserializeElasticSanData(e)), ElasticSanClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetElasticSans", "value", "nextLink", cancellationToken);
         }
     }
 }

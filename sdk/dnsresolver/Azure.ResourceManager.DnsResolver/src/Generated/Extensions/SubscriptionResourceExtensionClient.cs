@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Threading;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DnsResolverRestClient.CreateListRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsResolverRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsResolverResource(Client, DnsResolverData.DeserializeDnsResolverData(e)), DnsResolverClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDnsResolvers", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsResolverResource(Client, DnsResolverData.DeserializeDnsResolverData(e)), DnsResolverClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDnsResolvers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DnsResolverRestClient.CreateListRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsResolverRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsResolverResource(Client, DnsResolverData.DeserializeDnsResolverData(e)), DnsResolverClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDnsResolvers", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsResolverResource(Client, DnsResolverData.DeserializeDnsResolverData(e)), DnsResolverClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDnsResolvers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DnsForwardingRulesetRestClient.CreateListRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsForwardingRulesetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsForwardingRulesetResource(Client, DnsForwardingRulesetData.DeserializeDnsForwardingRulesetData(e)), DnsForwardingRulesetClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDnsForwardingRulesets", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsForwardingRulesetResource(Client, DnsForwardingRulesetData.DeserializeDnsForwardingRulesetData(e)), DnsForwardingRulesetClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDnsForwardingRulesets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -134,7 +133,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DnsForwardingRulesetRestClient.CreateListRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsForwardingRulesetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsForwardingRulesetResource(Client, DnsForwardingRulesetData.DeserializeDnsForwardingRulesetData(e)), DnsForwardingRulesetClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDnsForwardingRulesets", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsForwardingRulesetResource(Client, DnsForwardingRulesetData.DeserializeDnsForwardingRulesetData(e)), DnsForwardingRulesetClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDnsForwardingRulesets", "value", "nextLink", cancellationToken);
         }
     }
 }

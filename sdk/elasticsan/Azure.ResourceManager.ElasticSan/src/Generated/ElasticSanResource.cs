@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -286,7 +285,7 @@ namespace Azure.ResourceManager.ElasticSan
             try
             {
                 var response = await _elasticSanRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticSanArmOperation(_elasticSanClientDiagnostics, Pipeline, _elasticSanRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ElasticSanArmOperation(_elasticSanClientDiagnostics, Pipeline, _elasticSanRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -320,7 +319,7 @@ namespace Azure.ResourceManager.ElasticSan
             try
             {
                 var response = _elasticSanRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ElasticSanArmOperation(_elasticSanClientDiagnostics, Pipeline, _elasticSanRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ElasticSanArmOperation(_elasticSanClientDiagnostics, Pipeline, _elasticSanRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -358,7 +357,7 @@ namespace Azure.ResourceManager.ElasticSan
             try
             {
                 var response = await _elasticSanRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticSanArmOperation<ElasticSanResource>(new ElasticSanOperationSource(Client), _elasticSanClientDiagnostics, Pipeline, _elasticSanRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ElasticSanArmOperation<ElasticSanResource>(new ElasticSanOperationSource(Client), _elasticSanClientDiagnostics, Pipeline, _elasticSanRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -396,7 +395,7 @@ namespace Azure.ResourceManager.ElasticSan
             try
             {
                 var response = _elasticSanRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new ElasticSanArmOperation<ElasticSanResource>(new ElasticSanOperationSource(Client), _elasticSanClientDiagnostics, Pipeline, _elasticSanRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ElasticSanArmOperation<ElasticSanResource>(new ElasticSanOperationSource(Client), _elasticSanClientDiagnostics, Pipeline, _elasticSanRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -426,7 +425,7 @@ namespace Azure.ResourceManager.ElasticSan
         public virtual AsyncPageable<ElasticSanPrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByElasticSanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ElasticSanPrivateLinkResource.DeserializeElasticSanPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "ElasticSanResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ElasticSanPrivateLinkResource.DeserializeElasticSanPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "ElasticSanResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -447,7 +446,7 @@ namespace Azure.ResourceManager.ElasticSan
         public virtual Pageable<ElasticSanPrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByElasticSanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ElasticSanPrivateLinkResource.DeserializeElasticSanPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "ElasticSanResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ElasticSanPrivateLinkResource.DeserializeElasticSanPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "ElasticSanResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>

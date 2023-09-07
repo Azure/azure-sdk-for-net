@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.DnsResolver
             try
             {
                 var response = await _dnsResolverInboundEndpointInboundEndpointsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsResolverArmOperation<DnsResolverInboundEndpointResource>(new DnsResolverInboundEndpointOperationSource(Client), _dnsResolverInboundEndpointInboundEndpointsClientDiagnostics, Pipeline, _dnsResolverInboundEndpointInboundEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new DnsResolverArmOperation<DnsResolverInboundEndpointResource>(new DnsResolverInboundEndpointOperationSource(Client), _dnsResolverInboundEndpointInboundEndpointsClientDiagnostics, Pipeline, _dnsResolverInboundEndpointInboundEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, data, ifMatch, ifNoneMatch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.DnsResolver
             try
             {
                 var response = _dnsResolverInboundEndpointInboundEndpointsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new DnsResolverArmOperation<DnsResolverInboundEndpointResource>(new DnsResolverInboundEndpointOperationSource(Client), _dnsResolverInboundEndpointInboundEndpointsClientDiagnostics, Pipeline, _dnsResolverInboundEndpointInboundEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new DnsResolverArmOperation<DnsResolverInboundEndpointResource>(new DnsResolverInboundEndpointOperationSource(Client), _dnsResolverInboundEndpointInboundEndpointsClientDiagnostics, Pipeline, _dnsResolverInboundEndpointInboundEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, data, ifMatch, ifNoneMatch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverInboundEndpointInboundEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsResolverInboundEndpointInboundEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsResolverInboundEndpointResource(Client, DnsResolverInboundEndpointData.DeserializeDnsResolverInboundEndpointData(e)), _dnsResolverInboundEndpointInboundEndpointsClientDiagnostics, Pipeline, "DnsResolverInboundEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsResolverInboundEndpointResource(Client, DnsResolverInboundEndpointData.DeserializeDnsResolverInboundEndpointData(e)), _dnsResolverInboundEndpointInboundEndpointsClientDiagnostics, Pipeline, "DnsResolverInboundEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +255,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverInboundEndpointInboundEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsResolverInboundEndpointInboundEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsResolverInboundEndpointResource(Client, DnsResolverInboundEndpointData.DeserializeDnsResolverInboundEndpointData(e)), _dnsResolverInboundEndpointInboundEndpointsClientDiagnostics, Pipeline, "DnsResolverInboundEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsResolverInboundEndpointResource(Client, DnsResolverInboundEndpointData.DeserializeDnsResolverInboundEndpointData(e)), _dnsResolverInboundEndpointInboundEndpointsClientDiagnostics, Pipeline, "DnsResolverInboundEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

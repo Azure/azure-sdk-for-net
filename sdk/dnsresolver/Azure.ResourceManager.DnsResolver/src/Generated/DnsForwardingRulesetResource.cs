@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.DnsResolver
             try
             {
                 var response = await _dnsForwardingRulesetRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsResolverArmOperation(_dnsForwardingRulesetClientDiagnostics, Pipeline, _dnsForwardingRulesetRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new DnsResolverArmOperation(_dnsForwardingRulesetClientDiagnostics, Pipeline, _dnsForwardingRulesetRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.DnsResolver
             try
             {
                 var response = _dnsForwardingRulesetRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, cancellationToken);
-                var operation = new DnsResolverArmOperation(_dnsForwardingRulesetClientDiagnostics, Pipeline, _dnsForwardingRulesetRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new DnsResolverArmOperation(_dnsForwardingRulesetClientDiagnostics, Pipeline, _dnsForwardingRulesetRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.DnsResolver
             try
             {
                 var response = await _dnsForwardingRulesetRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsResolverArmOperation<DnsForwardingRulesetResource>(new DnsForwardingRulesetOperationSource(Client), _dnsForwardingRulesetClientDiagnostics, Pipeline, _dnsForwardingRulesetRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new DnsResolverArmOperation<DnsForwardingRulesetResource>(new DnsForwardingRulesetOperationSource(Client), _dnsForwardingRulesetClientDiagnostics, Pipeline, _dnsForwardingRulesetRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.DnsResolver
             try
             {
                 var response = _dnsForwardingRulesetRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken);
-                var operation = new DnsResolverArmOperation<DnsForwardingRulesetResource>(new DnsForwardingRulesetOperationSource(Client), _dnsForwardingRulesetClientDiagnostics, Pipeline, _dnsForwardingRulesetRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new DnsResolverArmOperation<DnsForwardingRulesetResource>(new DnsForwardingRulesetOperationSource(Client), _dnsForwardingRulesetClientDiagnostics, Pipeline, _dnsForwardingRulesetRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
