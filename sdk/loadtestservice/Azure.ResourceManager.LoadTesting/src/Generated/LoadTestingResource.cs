@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -176,7 +175,7 @@ namespace Azure.ResourceManager.LoadTesting
             try
             {
                 var response = await _loadTestingResourceLoadTestsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new LoadTestingArmOperation(_loadTestingResourceLoadTestsClientDiagnostics, Pipeline, _loadTestingResourceLoadTestsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new LoadTestingArmOperation(_loadTestingResourceLoadTestsClientDiagnostics, Pipeline, _loadTestingResourceLoadTestsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -210,7 +209,7 @@ namespace Azure.ResourceManager.LoadTesting
             try
             {
                 var response = _loadTestingResourceLoadTestsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new LoadTestingArmOperation(_loadTestingResourceLoadTestsClientDiagnostics, Pipeline, _loadTestingResourceLoadTestsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new LoadTestingArmOperation(_loadTestingResourceLoadTestsClientDiagnostics, Pipeline, _loadTestingResourceLoadTestsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -248,7 +247,7 @@ namespace Azure.ResourceManager.LoadTesting
             try
             {
                 var response = await _loadTestingResourceLoadTestsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new LoadTestingArmOperation<LoadTestingResource>(new LoadTestingResourceOperationSource(Client), _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, _loadTestingResourceLoadTestsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new LoadTestingArmOperation<LoadTestingResource>(new LoadTestingResourceOperationSource(Client), _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, _loadTestingResourceLoadTestsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -286,7 +285,7 @@ namespace Azure.ResourceManager.LoadTesting
             try
             {
                 var response = _loadTestingResourceLoadTestsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new LoadTestingArmOperation<LoadTestingResource>(new LoadTestingResourceOperationSource(Client), _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, _loadTestingResourceLoadTestsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new LoadTestingArmOperation<LoadTestingResource>(new LoadTestingResourceOperationSource(Client), _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, _loadTestingResourceLoadTestsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -317,7 +316,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _loadTestingResourceLoadTestsRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _loadTestingResourceLoadTestsRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LoadTestingOutboundEnvironmentEndpoint.DeserializeLoadTestingOutboundEnvironmentEndpoint, _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, "LoadTestingResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LoadTestingOutboundEnvironmentEndpoint.DeserializeLoadTestingOutboundEnvironmentEndpoint, _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, "LoadTestingResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -339,7 +338,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _loadTestingResourceLoadTestsRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _loadTestingResourceLoadTestsRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LoadTestingOutboundEnvironmentEndpoint.DeserializeLoadTestingOutboundEnvironmentEndpoint, _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, "LoadTestingResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LoadTestingOutboundEnvironmentEndpoint.DeserializeLoadTestingOutboundEnvironmentEndpoint, _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, "LoadTestingResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

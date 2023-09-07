@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = await _kustoScriptScriptsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new KustoArmOperation<KustoScriptResource>(new KustoScriptOperationSource(Client), _kustoScriptScriptsClientDiagnostics, Pipeline, _kustoScriptScriptsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation<KustoScriptResource>(new KustoScriptOperationSource(Client), _kustoScriptScriptsClientDiagnostics, Pipeline, _kustoScriptScriptsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = _kustoScriptScriptsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, data, cancellationToken);
-                var operation = new KustoArmOperation<KustoScriptResource>(new KustoScriptOperationSource(Client), _kustoScriptScriptsClientDiagnostics, Pipeline, _kustoScriptScriptsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation<KustoScriptResource>(new KustoScriptOperationSource(Client), _kustoScriptScriptsClientDiagnostics, Pipeline, _kustoScriptScriptsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual AsyncPageable<KustoScriptResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoScriptScriptsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoScriptResource(Client, KustoScriptData.DeserializeKustoScriptData(e)), _kustoScriptScriptsClientDiagnostics, Pipeline, "KustoScriptCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoScriptResource(Client, KustoScriptData.DeserializeKustoScriptData(e)), _kustoScriptScriptsClientDiagnostics, Pipeline, "KustoScriptCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +247,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual Pageable<KustoScriptResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoScriptScriptsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoScriptResource(Client, KustoScriptData.DeserializeKustoScriptData(e)), _kustoScriptScriptsClientDiagnostics, Pipeline, "KustoScriptCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoScriptResource(Client, KustoScriptData.DeserializeKustoScriptData(e)), _kustoScriptScriptsClientDiagnostics, Pipeline, "KustoScriptCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

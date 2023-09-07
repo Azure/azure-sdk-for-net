@@ -798,7 +798,7 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = await _logicWorkflowWorkflowsRestClient.MoveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, move, cancellationToken).ConfigureAwait(false);
-                var operation = new LogicArmOperation(_logicWorkflowWorkflowsClientDiagnostics, Pipeline, _logicWorkflowWorkflowsRestClient.CreateMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, move).Request, response, OperationFinalStateVia.Location);
+                var operation = new LogicArmOperation(_logicWorkflowWorkflowsClientDiagnostics, Pipeline, _logicWorkflowWorkflowsRestClient.CreateMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, move).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -836,7 +836,7 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = _logicWorkflowWorkflowsRestClient.Move(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, move, cancellationToken);
-                var operation = new LogicArmOperation(_logicWorkflowWorkflowsClientDiagnostics, Pipeline, _logicWorkflowWorkflowsRestClient.CreateMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, move).Request, response, OperationFinalStateVia.Location);
+                var operation = new LogicArmOperation(_logicWorkflowWorkflowsClientDiagnostics, Pipeline, _logicWorkflowWorkflowsRestClient.CreateMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, move).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
