@@ -1398,10 +1398,6 @@ namespace Azure
             {
                 result = "null";
             }
-            else if (Type == typeof(bool))
-            {
-                result = ((bool)this) ? "true" : "false";
-            }
             else if (Type == typeof(byte))
             {
                 result = As<byte>().ToString();
@@ -1409,6 +1405,10 @@ namespace Azure
             else if (Type == typeof(sbyte))
             {
                 result = As<sbyte>().ToString();
+            }
+            else if (Type == typeof(bool))
+            {
+                result = ((bool)this) ? "true" : "false";
             }
             else if (Type == typeof(char))
             {
