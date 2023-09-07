@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -215,7 +214,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual AsyncPageable<PrivateStoreCollectionInfoResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateListRequest(Guid.Parse(Id.Name));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PrivateStoreCollectionInfoResource(Client, PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(e)), _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PrivateStoreCollectionInfoResource(Client, PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(e)), _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -236,7 +235,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Pageable<PrivateStoreCollectionInfoResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateListRequest(Guid.Parse(Id.Name));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new PrivateStoreCollectionInfoResource(Client, PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(e)), _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new PrivateStoreCollectionInfoResource(Client, PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(e)), _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

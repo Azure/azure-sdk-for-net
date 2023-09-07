@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -230,7 +229,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedNetworkGroupRestClient.CreateListByManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedNetworkGroupRestClient.CreateListByManagedNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkGroupResource(Client, ManagedNetworkGroupData.DeserializeManagedNetworkGroupData(e)), _managedNetworkGroupClientDiagnostics, Pipeline, "ManagedNetworkGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkGroupResource(Client, ManagedNetworkGroupData.DeserializeManagedNetworkGroupData(e)), _managedNetworkGroupClientDiagnostics, Pipeline, "ManagedNetworkGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +253,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedNetworkGroupRestClient.CreateListByManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedNetworkGroupRestClient.CreateListByManagedNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkGroupResource(Client, ManagedNetworkGroupData.DeserializeManagedNetworkGroupData(e)), _managedNetworkGroupClientDiagnostics, Pipeline, "ManagedNetworkGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkGroupResource(Client, ManagedNetworkGroupData.DeserializeManagedNetworkGroupData(e)), _managedNetworkGroupClientDiagnostics, Pipeline, "ManagedNetworkGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

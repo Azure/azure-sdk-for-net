@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.IotHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IotHubDescriptionIotHubResourceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotHubDescriptionIotHubResourceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotHubDescriptionResource(Client, IotHubDescriptionData.DeserializeIotHubDescriptionData(e)), IotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotHubDescriptions", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotHubDescriptionResource(Client, IotHubDescriptionData.DeserializeIotHubDescriptionData(e)), IotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotHubDescriptions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.IotHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IotHubDescriptionIotHubResourceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotHubDescriptionIotHubResourceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotHubDescriptionResource(Client, IotHubDescriptionData.DeserializeIotHubDescriptionData(e)), IotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotHubDescriptions", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotHubDescriptionResource(Client, IotHubDescriptionData.DeserializeIotHubDescriptionData(e)), IotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotHubDescriptions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -172,7 +171,7 @@ namespace Azure.ResourceManager.IotHub
         public virtual AsyncPageable<IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuotaAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceProviderCommonRestClient.CreateGetSubscriptionQuotaRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, IotHubUserSubscriptionQuota.DeserializeIotHubUserSubscriptionQuota, ResourceProviderCommonClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotHubUserSubscriptionQuota", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, IotHubUserSubscriptionQuota.DeserializeIotHubUserSubscriptionQuota, ResourceProviderCommonClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotHubUserSubscriptionQuota", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -193,7 +192,7 @@ namespace Azure.ResourceManager.IotHub
         public virtual Pageable<IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuota(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceProviderCommonRestClient.CreateGetSubscriptionQuotaRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, IotHubUserSubscriptionQuota.DeserializeIotHubUserSubscriptionQuota, ResourceProviderCommonClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotHubUserSubscriptionQuota", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, IotHubUserSubscriptionQuota.DeserializeIotHubUserSubscriptionQuota, ResourceProviderCommonClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIotHubUserSubscriptionQuota", "value", null, cancellationToken);
         }
     }
 }

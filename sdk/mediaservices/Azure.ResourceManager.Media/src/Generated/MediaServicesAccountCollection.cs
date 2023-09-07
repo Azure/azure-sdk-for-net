@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaServicesAccountMediaservicesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaServicesAccountMediaservicesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MediaServicesAccountResource(Client, MediaServicesAccountData.DeserializeMediaServicesAccountData(e)), _mediaServicesAccountMediaservicesClientDiagnostics, Pipeline, "MediaServicesAccountCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MediaServicesAccountResource(Client, MediaServicesAccountData.DeserializeMediaServicesAccountData(e)), _mediaServicesAccountMediaservicesClientDiagnostics, Pipeline, "MediaServicesAccountCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +250,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaServicesAccountMediaservicesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaServicesAccountMediaservicesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MediaServicesAccountResource(Client, MediaServicesAccountData.DeserializeMediaServicesAccountData(e)), _mediaServicesAccountMediaservicesClientDiagnostics, Pipeline, "MediaServicesAccountCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MediaServicesAccountResource(Client, MediaServicesAccountData.DeserializeMediaServicesAccountData(e)), _mediaServicesAccountMediaservicesClientDiagnostics, Pipeline, "MediaServicesAccountCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>

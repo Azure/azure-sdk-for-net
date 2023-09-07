@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual AsyncPageable<KustoDataConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDataConnectionDataConnectionsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoDataConnectionResource(Client, KustoDataConnectionData.DeserializeKustoDataConnectionData(e)), _kustoDataConnectionDataConnectionsClientDiagnostics, Pipeline, "KustoDataConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoDataConnectionResource(Client, KustoDataConnectionData.DeserializeKustoDataConnectionData(e)), _kustoDataConnectionDataConnectionsClientDiagnostics, Pipeline, "KustoDataConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +247,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual Pageable<KustoDataConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDataConnectionDataConnectionsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoDataConnectionResource(Client, KustoDataConnectionData.DeserializeKustoDataConnectionData(e)), _kustoDataConnectionDataConnectionsClientDiagnostics, Pipeline, "KustoDataConnectionCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoDataConnectionResource(Client, KustoDataConnectionData.DeserializeKustoDataConnectionData(e)), _kustoDataConnectionDataConnectionsClientDiagnostics, Pipeline, "KustoDataConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -317,7 +316,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningComputeComputeRestClient.CreateListNodesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningComputeComputeRestClient.CreateListNodesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AmlComputeNodeInformation.DeserializeAmlComputeNodeInformation, _machineLearningComputeComputeClientDiagnostics, Pipeline, "MachineLearningComputeResource.GetNodes", "nodes", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AmlComputeNodeInformation.DeserializeAmlComputeNodeInformation, _machineLearningComputeComputeClientDiagnostics, Pipeline, "MachineLearningComputeResource.GetNodes", "nodes", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -339,7 +338,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningComputeComputeRestClient.CreateListNodesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningComputeComputeRestClient.CreateListNodesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AmlComputeNodeInformation.DeserializeAmlComputeNodeInformation, _machineLearningComputeComputeClientDiagnostics, Pipeline, "MachineLearningComputeResource.GetNodes", "nodes", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AmlComputeNodeInformation.DeserializeAmlComputeNodeInformation, _machineLearningComputeComputeClientDiagnostics, Pipeline, "MachineLearningComputeResource.GetNodes", "nodes", "nextLink", cancellationToken);
         }
 
         /// <summary>
