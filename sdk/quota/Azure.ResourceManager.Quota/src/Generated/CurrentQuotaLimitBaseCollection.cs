@@ -10,7 +10,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.Quota
             try
             {
                 var response = await _currentQuotaLimitBaseQuotaRestClient.CreateOrUpdateAsync(Id, resourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBaseOperationSource(Client), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, _currentQuotaLimitBaseQuotaRestClient.CreateCreateOrUpdateRequest(Id, resourceName, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBaseOperationSource(Client), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, _currentQuotaLimitBaseQuotaRestClient.CreateCreateOrUpdateRequest(Id, resourceName, data).Request, response, Core.OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.Quota
             try
             {
                 var response = _currentQuotaLimitBaseQuotaRestClient.CreateOrUpdate(Id, resourceName, data, cancellationToken);
-                var operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBaseOperationSource(Client), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, _currentQuotaLimitBaseQuotaRestClient.CreateCreateOrUpdateRequest(Id, resourceName, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBaseOperationSource(Client), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, _currentQuotaLimitBaseQuotaRestClient.CreateCreateOrUpdateRequest(Id, resourceName, data).Request, response, Core.OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -242,7 +241,7 @@ namespace Azure.ResourceManager.Quota
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _currentQuotaLimitBaseQuotaRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _currentQuotaLimitBaseQuotaRestClient.CreateListNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CurrentQuotaLimitBaseResource(Client, CurrentQuotaLimitBaseData.DeserializeCurrentQuotaLimitBaseData(e)), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, "CurrentQuotaLimitBaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CurrentQuotaLimitBaseResource(Client, CurrentQuotaLimitBaseData.DeserializeCurrentQuotaLimitBaseData(e)), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, "CurrentQuotaLimitBaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -264,7 +263,7 @@ namespace Azure.ResourceManager.Quota
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _currentQuotaLimitBaseQuotaRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _currentQuotaLimitBaseQuotaRestClient.CreateListNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CurrentQuotaLimitBaseResource(Client, CurrentQuotaLimitBaseData.DeserializeCurrentQuotaLimitBaseData(e)), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, "CurrentQuotaLimitBaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CurrentQuotaLimitBaseResource(Client, CurrentQuotaLimitBaseData.DeserializeCurrentQuotaLimitBaseData(e)), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, "CurrentQuotaLimitBaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

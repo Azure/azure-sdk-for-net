@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = await _postgreSqlFirewallRuleFirewallRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PostgreSqlArmOperation<PostgreSqlFirewallRuleResource>(new PostgreSqlFirewallRuleOperationSource(Client), _postgreSqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, _postgreSqlFirewallRuleFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new PostgreSqlArmOperation<PostgreSqlFirewallRuleResource>(new PostgreSqlFirewallRuleOperationSource(Client), _postgreSqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, _postgreSqlFirewallRuleFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = _postgreSqlFirewallRuleFirewallRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data, cancellationToken);
-                var operation = new PostgreSqlArmOperation<PostgreSqlFirewallRuleResource>(new PostgreSqlFirewallRuleOperationSource(Client), _postgreSqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, _postgreSqlFirewallRuleFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new PostgreSqlArmOperation<PostgreSqlFirewallRuleResource>(new PostgreSqlFirewallRuleOperationSource(Client), _postgreSqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, _postgreSqlFirewallRuleFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.PostgreSql
         public virtual AsyncPageable<PostgreSqlFirewallRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFirewallRuleFirewallRulesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PostgreSqlFirewallRuleResource(Client, PostgreSqlFirewallRuleData.DeserializePostgreSqlFirewallRuleData(e)), _postgreSqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "PostgreSqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PostgreSqlFirewallRuleResource(Client, PostgreSqlFirewallRuleData.DeserializePostgreSqlFirewallRuleData(e)), _postgreSqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "PostgreSqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +247,7 @@ namespace Azure.ResourceManager.PostgreSql
         public virtual Pageable<PostgreSqlFirewallRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFirewallRuleFirewallRulesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new PostgreSqlFirewallRuleResource(Client, PostgreSqlFirewallRuleData.DeserializePostgreSqlFirewallRuleData(e)), _postgreSqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "PostgreSqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new PostgreSqlFirewallRuleResource(Client, PostgreSqlFirewallRuleData.DeserializePostgreSqlFirewallRuleData(e)), _postgreSqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "PostgreSqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.PostgreSql
         public virtual AsyncPageable<PostgreSqlServerResource> GetPostgreSqlServersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PostgreSqlServerServersRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PostgreSqlServerResource(Client, PostgreSqlServerData.DeserializePostgreSqlServerData(e)), PostgreSqlServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPostgreSqlServers", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PostgreSqlServerResource(Client, PostgreSqlServerData.DeserializePostgreSqlServerData(e)), PostgreSqlServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPostgreSqlServers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.PostgreSql
         public virtual Pageable<PostgreSqlServerResource> GetPostgreSqlServers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PostgreSqlServerServersRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new PostgreSqlServerResource(Client, PostgreSqlServerData.DeserializePostgreSqlServerData(e)), PostgreSqlServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPostgreSqlServers", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new PostgreSqlServerResource(Client, PostgreSqlServerData.DeserializePostgreSqlServerData(e)), PostgreSqlServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPostgreSqlServers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -113,7 +112,7 @@ namespace Azure.ResourceManager.PostgreSql
         public virtual AsyncPageable<PostgreSqlPerformanceTierProperties> GetLocationBasedPerformanceTiersAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationBasedPerformanceTierRestClient.CreateListRequest(Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PostgreSqlPerformanceTierProperties.DeserializePostgreSqlPerformanceTierProperties, LocationBasedPerformanceTierClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLocationBasedPerformanceTiers", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PostgreSqlPerformanceTierProperties.DeserializePostgreSqlPerformanceTierProperties, LocationBasedPerformanceTierClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLocationBasedPerformanceTiers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +134,7 @@ namespace Azure.ResourceManager.PostgreSql
         public virtual Pageable<PostgreSqlPerformanceTierProperties> GetLocationBasedPerformanceTiers(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationBasedPerformanceTierRestClient.CreateListRequest(Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PostgreSqlPerformanceTierProperties.DeserializePostgreSqlPerformanceTierProperties, LocationBasedPerformanceTierClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLocationBasedPerformanceTiers", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, PostgreSqlPerformanceTierProperties.DeserializePostgreSqlPerformanceTierProperties, LocationBasedPerformanceTierClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLocationBasedPerformanceTiers", "value", null, cancellationToken);
         }
 
         /// <summary>

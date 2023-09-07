@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Threading;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.PrivateDns
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateDnsZonePrivateZonesRestClient.CreateListRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateDnsZonePrivateZonesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PrivateDnsZoneResource(Client, PrivateDnsZoneData.DeserializePrivateDnsZoneData(e)), PrivateDnsZonePrivateZonesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPrivateDnsZones", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PrivateDnsZoneResource(Client, PrivateDnsZoneData.DeserializePrivateDnsZoneData(e)), PrivateDnsZonePrivateZonesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPrivateDnsZones", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.PrivateDns
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateDnsZonePrivateZonesRestClient.CreateListRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateDnsZonePrivateZonesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrivateDnsZoneResource(Client, PrivateDnsZoneData.DeserializePrivateDnsZoneData(e)), PrivateDnsZonePrivateZonesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPrivateDnsZones", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrivateDnsZoneResource(Client, PrivateDnsZoneData.DeserializePrivateDnsZoneData(e)), PrivateDnsZonePrivateZonesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPrivateDnsZones", "value", "nextLink", cancellationToken);
         }
     }
 }

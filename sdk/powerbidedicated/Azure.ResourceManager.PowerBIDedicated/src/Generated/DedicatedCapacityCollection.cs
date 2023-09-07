@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             try
             {
                 var response = await _dedicatedCapacityCapacitiesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PowerBIDedicatedArmOperation<DedicatedCapacityResource>(new DedicatedCapacityOperationSource(Client), _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, _dedicatedCapacityCapacitiesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new PowerBIDedicatedArmOperation<DedicatedCapacityResource>(new DedicatedCapacityOperationSource(Client), _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, _dedicatedCapacityCapacitiesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             try
             {
                 var response = _dedicatedCapacityCapacitiesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, data, cancellationToken);
-                var operation = new PowerBIDedicatedArmOperation<DedicatedCapacityResource>(new DedicatedCapacityOperationSource(Client), _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, _dedicatedCapacityCapacitiesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new PowerBIDedicatedArmOperation<DedicatedCapacityResource>(new DedicatedCapacityOperationSource(Client), _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, _dedicatedCapacityCapacitiesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         public virtual AsyncPageable<DedicatedCapacityResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedCapacityCapacitiesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DedicatedCapacityResource(Client, DedicatedCapacityData.DeserializeDedicatedCapacityData(e)), _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "DedicatedCapacityCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DedicatedCapacityResource(Client, DedicatedCapacityData.DeserializeDedicatedCapacityData(e)), _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "DedicatedCapacityCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +248,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         public virtual Pageable<DedicatedCapacityResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedCapacityCapacitiesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new DedicatedCapacityResource(Client, DedicatedCapacityData.DeserializeDedicatedCapacityData(e)), _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "DedicatedCapacityCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new DedicatedCapacityResource(Client, DedicatedCapacityData.DeserializeDedicatedCapacityData(e)), _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "DedicatedCapacityCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

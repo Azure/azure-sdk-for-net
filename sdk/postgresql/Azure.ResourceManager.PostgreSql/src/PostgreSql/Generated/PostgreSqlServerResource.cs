@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -619,7 +618,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = await _postgreSqlServerServersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new PostgreSqlArmOperation(_postgreSqlServerServersClientDiagnostics, Pipeline, _postgreSqlServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new PostgreSqlArmOperation(_postgreSqlServerServersClientDiagnostics, Pipeline, _postgreSqlServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -653,7 +652,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = _postgreSqlServerServersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new PostgreSqlArmOperation(_postgreSqlServerServersClientDiagnostics, Pipeline, _postgreSqlServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new PostgreSqlArmOperation(_postgreSqlServerServersClientDiagnostics, Pipeline, _postgreSqlServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -691,7 +690,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = await _postgreSqlServerServersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new PostgreSqlArmOperation<PostgreSqlServerResource>(new PostgreSqlServerOperationSource(Client), _postgreSqlServerServersClientDiagnostics, Pipeline, _postgreSqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new PostgreSqlArmOperation<PostgreSqlServerResource>(new PostgreSqlServerOperationSource(Client), _postgreSqlServerServersClientDiagnostics, Pipeline, _postgreSqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -729,7 +728,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = _postgreSqlServerServersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new PostgreSqlArmOperation<PostgreSqlServerResource>(new PostgreSqlServerOperationSource(Client), _postgreSqlServerServersClientDiagnostics, Pipeline, _postgreSqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new PostgreSqlArmOperation<PostgreSqlServerResource>(new PostgreSqlServerOperationSource(Client), _postgreSqlServerServersClientDiagnostics, Pipeline, _postgreSqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -763,7 +762,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = await _postgreSqlServerServersRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new PostgreSqlArmOperation(_postgreSqlServerServersClientDiagnostics, Pipeline, _postgreSqlServerServersRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new PostgreSqlArmOperation(_postgreSqlServerServersClientDiagnostics, Pipeline, _postgreSqlServerServersRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -797,7 +796,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = _postgreSqlServerServersRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new PostgreSqlArmOperation(_postgreSqlServerServersClientDiagnostics, Pipeline, _postgreSqlServerServersRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new PostgreSqlArmOperation(_postgreSqlServerServersClientDiagnostics, Pipeline, _postgreSqlServerServersRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -835,7 +834,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = await _serverParametersRestClient.ListUpdateConfigurationsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value, cancellationToken).ConfigureAwait(false);
-                var operation = new PostgreSqlArmOperation<PostgreSqlConfigurationList>(new PostgreSqlConfigurationListOperationSource(), _serverParametersClientDiagnostics, Pipeline, _serverParametersRestClient.CreateListUpdateConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new PostgreSqlArmOperation<PostgreSqlConfigurationList>(new PostgreSqlConfigurationListOperationSource(), _serverParametersClientDiagnostics, Pipeline, _serverParametersRestClient.CreateListUpdateConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -873,7 +872,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = _serverParametersRestClient.ListUpdateConfigurations(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value, cancellationToken);
-                var operation = new PostgreSqlArmOperation<PostgreSqlConfigurationList>(new PostgreSqlConfigurationListOperationSource(), _serverParametersClientDiagnostics, Pipeline, _serverParametersRestClient.CreateListUpdateConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new PostgreSqlArmOperation<PostgreSqlConfigurationList>(new PostgreSqlConfigurationListOperationSource(), _serverParametersClientDiagnostics, Pipeline, _serverParametersRestClient.CreateListUpdateConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -903,7 +902,7 @@ namespace Azure.ResourceManager.PostgreSql
         public virtual AsyncPageable<PostgreSqlLogFile> GetLogFilesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logFilesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PostgreSqlLogFile.DeserializePostgreSqlLogFile, _logFilesClientDiagnostics, Pipeline, "PostgreSqlServerResource.GetLogFiles", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PostgreSqlLogFile.DeserializePostgreSqlLogFile, _logFilesClientDiagnostics, Pipeline, "PostgreSqlServerResource.GetLogFiles", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -924,7 +923,7 @@ namespace Azure.ResourceManager.PostgreSql
         public virtual Pageable<PostgreSqlLogFile> GetLogFiles(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logFilesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PostgreSqlLogFile.DeserializePostgreSqlLogFile, _logFilesClientDiagnostics, Pipeline, "PostgreSqlServerResource.GetLogFiles", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, PostgreSqlLogFile.DeserializePostgreSqlLogFile, _logFilesClientDiagnostics, Pipeline, "PostgreSqlServerResource.GetLogFiles", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1005,7 +1004,7 @@ namespace Azure.ResourceManager.PostgreSql
         public virtual AsyncPageable<PostgreSqlPerformanceTierProperties> GetServerBasedPerformanceTiersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serverBasedPerformanceTierRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PostgreSqlPerformanceTierProperties.DeserializePostgreSqlPerformanceTierProperties, _serverBasedPerformanceTierClientDiagnostics, Pipeline, "PostgreSqlServerResource.GetServerBasedPerformanceTiers", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PostgreSqlPerformanceTierProperties.DeserializePostgreSqlPerformanceTierProperties, _serverBasedPerformanceTierClientDiagnostics, Pipeline, "PostgreSqlServerResource.GetServerBasedPerformanceTiers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1026,7 +1025,7 @@ namespace Azure.ResourceManager.PostgreSql
         public virtual Pageable<PostgreSqlPerformanceTierProperties> GetServerBasedPerformanceTiers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serverBasedPerformanceTierRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PostgreSqlPerformanceTierProperties.DeserializePostgreSqlPerformanceTierProperties, _serverBasedPerformanceTierClientDiagnostics, Pipeline, "PostgreSqlServerResource.GetServerBasedPerformanceTiers", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, PostgreSqlPerformanceTierProperties.DeserializePostgreSqlPerformanceTierProperties, _serverBasedPerformanceTierClientDiagnostics, Pipeline, "PostgreSqlServerResource.GetServerBasedPerformanceTiers", "value", null, cancellationToken);
         }
 
         /// <summary>

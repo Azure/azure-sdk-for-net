@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -245,7 +244,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupProtectionPolicyBackupPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupProtectionPolicyBackupPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionPolicyResource(Client, BackupProtectionPolicyData.DeserializeBackupProtectionPolicyData(e)), _backupProtectionPolicyBackupPoliciesClientDiagnostics, Pipeline, "BackupProtectionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionPolicyResource(Client, BackupProtectionPolicyData.DeserializeBackupProtectionPolicyData(e)), _backupProtectionPolicyBackupPoliciesClientDiagnostics, Pipeline, "BackupProtectionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -269,7 +268,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupProtectionPolicyBackupPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupProtectionPolicyBackupPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionPolicyResource(Client, BackupProtectionPolicyData.DeserializeBackupProtectionPolicyData(e)), _backupProtectionPolicyBackupPoliciesClientDiagnostics, Pipeline, "BackupProtectionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionPolicyResource(Client, BackupProtectionPolicyData.DeserializeBackupProtectionPolicyData(e)), _backupProtectionPolicyBackupPoliciesClientDiagnostics, Pipeline, "BackupProtectionPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
