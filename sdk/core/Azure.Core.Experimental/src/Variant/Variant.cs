@@ -1402,7 +1402,7 @@ namespace Azure
             {
                 if (Type == typeof(bool))
                 {
-                    result = flag.ToObject(this).ToString()!.ToLowerInvariant();
+                    result = ((bool)this) ? "true" : "false";
                 }
                 else
                 {
