@@ -34,7 +34,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
 
         private static IEnumerable<object[]> TestScenarios()
         {
-            #region Invalid
+#region Invalid
             yield return new TestCaseStructure()
             {
                 Test = Payload.TokenIssuanceStart.RequestWithoutSourcePayload,
