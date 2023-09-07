@@ -59,7 +59,7 @@ namespace Azure.Storage
             => throw new ArgumentException($"Could not initialize the LocalTransferCheckpointer because the folderPath passed does not exist. Please create the {directoryPath}, folder path first.");
 
         public static ArgumentException InvalidTransferIdFileName(string fileName)
-            => new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains a Transfer ID that is either too long or short: {fileName}");
+            => new ArgumentException($"Invalid Checkpoint File: The following checkpoint file contains a Transfer ID that is invalid {fileName}");
 
         public static ArgumentException InvalidJobPartFileName(string fileName)
             => new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Part Number: {fileName}");
