@@ -14,6 +14,9 @@ using Azure.ResourceManager.ResourceConnector.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
+using System.IO;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Azure.ResourceManager.ResourceConnector.Tests
 {
@@ -45,15 +48,14 @@ namespace Azure.ResourceManager.ResourceConnector.Tests
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
                 Distro = Distro.AKSEdge,
-                InfrastructureConfig = new AppliancePropertiesInfrastructureConfig("VMWare"),
-                PublicKey = ""
+                InfrastructureConfig = new AppliancePropertiesInfrastructureConfig("VMWare")
             };
             var appliance = (await LocationCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, parameters)).Value;
 
             Assert.AreEqual(appliance.Data.Name, resourceName);
             Assert.AreEqual(appliance.Data.ProvisioningState, "Succeeded");
-            // Assert.IsFalse(String.IsNullOrEmpty(appliance.Data.Identity.PrincipalId.ToString()));
-            // Assert.AreEqual(appliance.Data.Identity.ManagedServiceIdentityType, ManagedServiceIdentityType.SystemAssigned);
+            Assert.IsFalse(String.IsNullOrEmpty(appliance.Data.Identity.PrincipalId.ToString()));
+            Assert.AreEqual(appliance.Data.Identity.ManagedServiceIdentityType, ManagedServiceIdentityType.SystemAssigned);
 
             // GET ON CREATED APPLIANCE
             appliance = await LocationCollection.GetAsync(resourceName);
@@ -61,20 +63,21 @@ namespace Azure.ResourceManager.ResourceConnector.Tests
             // PATCH APPLIANCE
             var patchData = new AppliancePatch()
             {
-                Tags = { { "newkey", "newvalue"} }
+                Tags = { { "newkey", "newvalue" } }
             };
             appliance = await appliance.UpdateAsync(patchData);
             appliance = await appliance.GetAsync();
-
-            // // LIST BY SUBSCRIPTION
-            // var listResult = await DefaultSubscription.GetAppliancesAsync().ToEnumerableAsync();
-            // Assert.GreaterOrEqual(listResult.Count, 1);
+            Assert.AreEqual(appliance.Data.Tags, patchData.Tags);
 
             // // LIST BY RESOURCE GROUP
-            // listResult = await LocationCollection.GetAppliances().ToEnumerableAsync();
-            // Assert.GreaterOrEqual(listResult.Count, 1);
+            var listResult = await LocationCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.AreEqual(listResult.Count, 1);
+            foreach (ApplianceResource item in listResult)
+            {
+                Assert.AreEqual(item.Data.Name, resourceName);
+            }
 
-            // DELETE CREATED CL
+            // DELETE CREATED APPLIANCE
             await appliance.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await LocationCollection.ExistsAsync(resourceName)).Value;
             Assert.IsFalse(falseResult);

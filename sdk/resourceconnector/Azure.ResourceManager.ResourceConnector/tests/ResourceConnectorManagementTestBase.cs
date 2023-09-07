@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ResourceConnector.Tests
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
-         protected AzureLocation DefaultLocation => AzureLocation.EastUS;
+        protected AzureLocation DefaultLocation => AzureLocation.EastUS;
 
         protected ResourceConnectorManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -31,10 +31,7 @@ namespace Azure.ResourceManager.ResourceConnector.Tests
         [SetUp]
         public async Task CreateCommonClient()
         {
-            ArmClientOptions options = new ArmClientOptions();
-            options.Environment = new ArmEnvironment(new Uri("https://api-dogfood.resources.windows-int.net"), "https://api-dogfood.resources.windows-int.net");
-            Client = GetArmClient(options);
-
+            Client = GetArmClient();
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
