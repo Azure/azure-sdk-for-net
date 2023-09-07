@@ -9,27 +9,12 @@ Import-Module Pester
 BeforeAll {
     . $PSScriptRoot/../Docs-ToC.ps1
     . $PSScriptRoot/logging.ps1
-    function Backup-File($targetPath, $backupFolder) {
-        if (!(Test-Path $targetPath)) {
-            return $null
-        }
-        $fileName = (Split-Path $targetPath -leaf)
-        $backupFile = "$backupFolder/temp-$fileName"
-        $null = New-Item $backupFile -ItemType "file" -Force
-        $null = Copy-Item $targetPath -Destination $backupFile
-        return $backupFile
-    }
-    function Reset-File($targetPath, $backupFile) {
-        if ($backupFile) {
-            $null = Copy-Item $backupFile -Destination $targetPath
-        }
-    }
 }
 
 AfterAll {
     $tempLocation = (Join-Path ([System.IO.Path]::GetTempPath()) "extractNupkg")
-    Remove-Item "$tempLocation/*" -Recurse -Force
-    Remove-Item "$PSScriptRoot/outputs" -Recurse -Force
+    Remove-Item "$tempLocation/*" -Recurse -Force -ErrorAction Ignore
+    Remove-Item "$PSScriptRoot/outputs" -Recurse -Force -ErrorAction Ignore
 }
 # Test plan:
 # 1. Tests on Fetch-NamespacesFromNupkg from nuget source. 
