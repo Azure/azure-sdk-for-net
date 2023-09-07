@@ -29,7 +29,7 @@ format-by-name-rules:
   'synchronizationId': 'uuid'
   '*ResourceId': 'arm-id'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

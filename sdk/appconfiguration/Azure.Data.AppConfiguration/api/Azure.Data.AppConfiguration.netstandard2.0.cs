@@ -120,9 +120,9 @@ namespace Azure.Data.AppConfiguration
     {
         public ConfigurationSettingsSnapshot(System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SnapshotSettingFilter> filters) { }
         public Azure.Data.AppConfiguration.CompositionType? CompositionType { get { throw null; } set { } }
-        public System.DateTimeOffset? Created { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
-        public System.DateTimeOffset? Expires { get { throw null; } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Data.AppConfiguration.SnapshotSettingFilter> Filters { get { throw null; } }
         public long? ItemCount { get { throw null; } }
         public string Name { get { throw null; } }
@@ -203,9 +203,9 @@ namespace Azure.Data.AppConfiguration
         private readonly int _dummyPrimitive;
         public SnapshotFields(string value) { throw null; }
         public static Azure.Data.AppConfiguration.SnapshotFields CompositionType { get { throw null; } }
-        public static Azure.Data.AppConfiguration.SnapshotFields Created { get { throw null; } }
+        public static Azure.Data.AppConfiguration.SnapshotFields CreatedOn { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields ETag { get { throw null; } }
-        public static Azure.Data.AppConfiguration.SnapshotFields Expires { get { throw null; } }
+        public static Azure.Data.AppConfiguration.SnapshotFields ExpiresOn { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields Filters { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields ItemCount { get { throw null; } }
         public static Azure.Data.AppConfiguration.SnapshotFields Name { get { throw null; } }

@@ -59,7 +59,7 @@ prepend-rp-prefix:
   - UsageUnit
   - CatalogSyncState
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   VCPU: vCpu

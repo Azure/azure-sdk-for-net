@@ -32,7 +32,7 @@ format-by-name-rules:
   'sessionId': 'uuid'
   'dataFactoryLocation': 'azure-location'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

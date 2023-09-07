@@ -33,7 +33,7 @@ format-by-name-rules:
   'lastOperationId': 'uuid'
   'serverCertificate': 'any'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
