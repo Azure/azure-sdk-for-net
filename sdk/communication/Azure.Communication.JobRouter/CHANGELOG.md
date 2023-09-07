@@ -1,14 +1,10 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.0-beta.3 (2023-09-07)
 
 ### Bugs Fixed
 
-### Other Changes
+- Added getter for ScoringParameters in ScoringRuleOptions
 
 ## 1.0.0-beta.2 (2023-09-06)
 
