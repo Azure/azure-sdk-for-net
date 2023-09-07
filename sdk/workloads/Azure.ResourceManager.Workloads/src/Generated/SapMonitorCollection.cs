@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.Workloads
             try
             {
                 var response = await _sapMonitormonitorsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadsArmOperation<SapMonitorResource>(new SapMonitorOperationSource(Client), _sapMonitormonitorsClientDiagnostics, Pipeline, _sapMonitormonitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new WorkloadsArmOperation<SapMonitorResource>(new SapMonitorOperationSource(Client), _sapMonitormonitorsClientDiagnostics, Pipeline, _sapMonitormonitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.Workloads
             try
             {
                 var response = _sapMonitormonitorsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data, cancellationToken);
-                var operation = new WorkloadsArmOperation<SapMonitorResource>(new SapMonitorOperationSource(Client), _sapMonitormonitorsClientDiagnostics, Pipeline, _sapMonitormonitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new WorkloadsArmOperation<SapMonitorResource>(new SapMonitorOperationSource(Client), _sapMonitormonitorsClientDiagnostics, Pipeline, _sapMonitormonitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapMonitormonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sapMonitormonitorsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapMonitorResource(Client, SapMonitorData.DeserializeSapMonitorData(e)), _sapMonitormonitorsClientDiagnostics, Pipeline, "SapMonitorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapMonitorResource(Client, SapMonitorData.DeserializeSapMonitorData(e)), _sapMonitormonitorsClientDiagnostics, Pipeline, "SapMonitorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +250,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapMonitormonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sapMonitormonitorsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapMonitorResource(Client, SapMonitorData.DeserializeSapMonitorData(e)), _sapMonitormonitorsClientDiagnostics, Pipeline, "SapMonitorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapMonitorResource(Client, SapMonitorData.DeserializeSapMonitorData(e)), _sapMonitormonitorsClientDiagnostics, Pipeline, "SapMonitorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

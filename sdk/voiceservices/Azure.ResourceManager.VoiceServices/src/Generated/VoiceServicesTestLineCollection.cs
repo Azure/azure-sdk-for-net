@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.VoiceServices
             try
             {
                 var response = await _voiceServicesTestLineTestLinesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, testLineName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new VoiceServicesArmOperation<VoiceServicesTestLineResource>(new VoiceServicesTestLineOperationSource(Client), _voiceServicesTestLineTestLinesClientDiagnostics, Pipeline, _voiceServicesTestLineTestLinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, testLineName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new VoiceServicesArmOperation<VoiceServicesTestLineResource>(new VoiceServicesTestLineOperationSource(Client), _voiceServicesTestLineTestLinesClientDiagnostics, Pipeline, _voiceServicesTestLineTestLinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, testLineName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.VoiceServices
             try
             {
                 var response = _voiceServicesTestLineTestLinesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, testLineName, data, cancellationToken);
-                var operation = new VoiceServicesArmOperation<VoiceServicesTestLineResource>(new VoiceServicesTestLineOperationSource(Client), _voiceServicesTestLineTestLinesClientDiagnostics, Pipeline, _voiceServicesTestLineTestLinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, testLineName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new VoiceServicesArmOperation<VoiceServicesTestLineResource>(new VoiceServicesTestLineOperationSource(Client), _voiceServicesTestLineTestLinesClientDiagnostics, Pipeline, _voiceServicesTestLineTestLinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, testLineName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.VoiceServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _voiceServicesTestLineTestLinesRestClient.CreateListByCommunicationsGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _voiceServicesTestLineTestLinesRestClient.CreateListByCommunicationsGatewayNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VoiceServicesTestLineResource(Client, VoiceServicesTestLineData.DeserializeVoiceServicesTestLineData(e)), _voiceServicesTestLineTestLinesClientDiagnostics, Pipeline, "VoiceServicesTestLineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VoiceServicesTestLineResource(Client, VoiceServicesTestLineData.DeserializeVoiceServicesTestLineData(e)), _voiceServicesTestLineTestLinesClientDiagnostics, Pipeline, "VoiceServicesTestLineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.VoiceServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _voiceServicesTestLineTestLinesRestClient.CreateListByCommunicationsGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _voiceServicesTestLineTestLinesRestClient.CreateListByCommunicationsGatewayNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VoiceServicesTestLineResource(Client, VoiceServicesTestLineData.DeserializeVoiceServicesTestLineData(e)), _voiceServicesTestLineTestLinesClientDiagnostics, Pipeline, "VoiceServicesTestLineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VoiceServicesTestLineResource(Client, VoiceServicesTestLineData.DeserializeVoiceServicesTestLineData(e)), _voiceServicesTestLineTestLinesClientDiagnostics, Pipeline, "VoiceServicesTestLineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

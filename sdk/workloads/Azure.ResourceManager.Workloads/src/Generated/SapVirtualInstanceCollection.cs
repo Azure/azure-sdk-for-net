@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.Workloads
             try
             {
                 var response = await _sapVirtualInstanceSapVirtualInstancesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadsArmOperation<SapVirtualInstanceResource>(new SapVirtualInstanceOperationSource(Client), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSapVirtualInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new WorkloadsArmOperation<SapVirtualInstanceResource>(new SapVirtualInstanceOperationSource(Client), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSapVirtualInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.Workloads
             try
             {
                 var response = _sapVirtualInstanceSapVirtualInstancesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, data, cancellationToken);
-                var operation = new WorkloadsArmOperation<SapVirtualInstanceResource>(new SapVirtualInstanceOperationSource(Client), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSapVirtualInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new WorkloadsArmOperation<SapVirtualInstanceResource>(new SapVirtualInstanceOperationSource(Client), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSapVirtualInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapVirtualInstanceSapVirtualInstancesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sapVirtualInstanceSapVirtualInstancesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapVirtualInstanceResource(Client, SapVirtualInstanceData.DeserializeSapVirtualInstanceData(e)), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, "SapVirtualInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapVirtualInstanceResource(Client, SapVirtualInstanceData.DeserializeSapVirtualInstanceData(e)), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, "SapVirtualInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +250,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapVirtualInstanceSapVirtualInstancesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sapVirtualInstanceSapVirtualInstancesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapVirtualInstanceResource(Client, SapVirtualInstanceData.DeserializeSapVirtualInstanceData(e)), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, "SapVirtualInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapVirtualInstanceResource(Client, SapVirtualInstanceData.DeserializeSapVirtualInstanceData(e)), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, "SapVirtualInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _staticSiteCustomDomainOverviewStaticSitesRestClient.CreateOrUpdateStaticSiteCustomDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<StaticSiteCustomDomainOverviewResource>(new StaticSiteCustomDomainOverviewOperationSource(Client), _staticSiteCustomDomainOverviewStaticSitesClientDiagnostics, Pipeline, _staticSiteCustomDomainOverviewStaticSitesRestClient.CreateCreateOrUpdateStaticSiteCustomDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<StaticSiteCustomDomainOverviewResource>(new StaticSiteCustomDomainOverviewOperationSource(Client), _staticSiteCustomDomainOverviewStaticSitesClientDiagnostics, Pipeline, _staticSiteCustomDomainOverviewStaticSitesRestClient.CreateCreateOrUpdateStaticSiteCustomDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _staticSiteCustomDomainOverviewStaticSitesRestClient.CreateOrUpdateStaticSiteCustomDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, content, cancellationToken);
-                var operation = new AppServiceArmOperation<StaticSiteCustomDomainOverviewResource>(new StaticSiteCustomDomainOverviewOperationSource(Client), _staticSiteCustomDomainOverviewStaticSitesClientDiagnostics, Pipeline, _staticSiteCustomDomainOverviewStaticSitesRestClient.CreateCreateOrUpdateStaticSiteCustomDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<StaticSiteCustomDomainOverviewResource>(new StaticSiteCustomDomainOverviewOperationSource(Client), _staticSiteCustomDomainOverviewStaticSitesClientDiagnostics, Pipeline, _staticSiteCustomDomainOverviewStaticSitesRestClient.CreateCreateOrUpdateStaticSiteCustomDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteCustomDomainOverviewStaticSitesRestClient.CreateListStaticSiteCustomDomainsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteCustomDomainOverviewStaticSitesRestClient.CreateListStaticSiteCustomDomainsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StaticSiteCustomDomainOverviewResource(Client, StaticSiteCustomDomainOverviewData.DeserializeStaticSiteCustomDomainOverviewData(e)), _staticSiteCustomDomainOverviewStaticSitesClientDiagnostics, Pipeline, "StaticSiteCustomDomainOverviewCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StaticSiteCustomDomainOverviewResource(Client, StaticSiteCustomDomainOverviewData.DeserializeStaticSiteCustomDomainOverviewData(e)), _staticSiteCustomDomainOverviewStaticSitesClientDiagnostics, Pipeline, "StaticSiteCustomDomainOverviewCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +250,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteCustomDomainOverviewStaticSitesRestClient.CreateListStaticSiteCustomDomainsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteCustomDomainOverviewStaticSitesRestClient.CreateListStaticSiteCustomDomainsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StaticSiteCustomDomainOverviewResource(Client, StaticSiteCustomDomainOverviewData.DeserializeStaticSiteCustomDomainOverviewData(e)), _staticSiteCustomDomainOverviewStaticSitesClientDiagnostics, Pipeline, "StaticSiteCustomDomainOverviewCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StaticSiteCustomDomainOverviewResource(Client, StaticSiteCustomDomainOverviewData.DeserializeStaticSiteCustomDomainOverviewData(e)), _staticSiteCustomDomainOverviewStaticSitesClientDiagnostics, Pipeline, "StaticSiteCustomDomainOverviewCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
