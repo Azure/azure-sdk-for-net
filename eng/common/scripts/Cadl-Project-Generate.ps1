@@ -41,14 +41,14 @@ try {
             $emitterAdditionalOptions = " $emitterAdditionalOptions"
         }
     }
-    $cadlCompileCommand = "npx cadl compile $mainCadlFile --emit $emitterName$emitterAdditionalOptions"
+    $cadlCompileCommand = "npx --no cadl compile $mainCadlFile --emit $emitterName$emitterAdditionalOptions"
     if ($CadlAdditionalOptions) {
         $options = $CadlAdditionalOptions.Split(";");
         foreach ($option in $options) {
             $cadlCompileCommand += " --option $emitterName.$option"
         }
     }
-    Write-Host($cadlCompileCommand)
+
     Invoke-LoggedCommand $cadlCompileCommand
 
     if ($LASTEXITCODE) { exit $LASTEXITCODE }
