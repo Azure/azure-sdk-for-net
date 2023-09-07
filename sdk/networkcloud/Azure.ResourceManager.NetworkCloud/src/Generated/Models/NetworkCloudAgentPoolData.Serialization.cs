@@ -5,23 +5,37 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudAgentPoolData : IUtf8JsonSerializable
+    public partial class NetworkCloudAgentPoolData : IUtf8JsonSerializable, IModelJsonSerializable<NetworkCloudAgentPoolData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkCloudAgentPoolData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkCloudAgentPoolData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkCloudAgentPoolData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation);
+                if (ExtendedLocation is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ExtendedLocation>)ExtendedLocation).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -41,17 +55,38 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(AdministratorConfiguration))
             {
                 writer.WritePropertyName("administratorConfiguration"u8);
-                writer.WriteObjectValue(AdministratorConfiguration);
+                if (AdministratorConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AdministratorConfiguration>)AdministratorConfiguration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(AgentOptions))
             {
                 writer.WritePropertyName("agentOptions"u8);
-                writer.WriteObjectValue(AgentOptions);
+                if (AgentOptions is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<NetworkCloudAgentConfiguration>)AgentOptions).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(AttachedNetworkConfiguration))
             {
                 writer.WritePropertyName("attachedNetworkConfiguration"u8);
-                writer.WriteObjectValue(AttachedNetworkConfiguration);
+                if (AttachedNetworkConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AttachedNetworkConfiguration>)AttachedNetworkConfiguration).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(AvailabilityZones))
             {
@@ -71,7 +106,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in Labels)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<KubernetesLabel>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -83,23 +125,51 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in Taints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<KubernetesLabel>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(UpgradeSettings))
             {
                 writer.WritePropertyName("upgradeSettings"u8);
-                writer.WriteObjectValue(UpgradeSettings);
+                if (UpgradeSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AgentPoolUpgradeSettings>)UpgradeSettings).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("vmSkuName"u8);
             writer.WriteStringValue(VmSkuName);
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkCloudAgentPoolData DeserializeNetworkCloudAgentPoolData(JsonElement element)
+        internal static NetworkCloudAgentPoolData DeserializeNetworkCloudAgentPoolData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -125,6 +195,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Optional<IList<KubernetesLabel>> taints = default;
             Optional<AgentPoolUpgradeSettings> upgradeSettings = default;
             string vmSkuName = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -312,8 +383,61 @@ namespace Azure.ResourceManager.NetworkCloud
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkCloudAgentPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, administratorConfiguration.Value, agentOptions.Value, attachedNetworkConfiguration.Value, Optional.ToList(availabilityZones), count, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, kubernetesVersion.Value, Optional.ToList(labels), mode, Optional.ToNullable(provisioningState), Optional.ToList(taints), upgradeSettings.Value, vmSkuName);
+            return new NetworkCloudAgentPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, administratorConfiguration.Value, agentOptions.Value, attachedNetworkConfiguration.Value, Optional.ToList(availabilityZones), count, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, kubernetesVersion.Value, Optional.ToList(labels), mode, Optional.ToNullable(provisioningState), Optional.ToList(taints), upgradeSettings.Value, vmSkuName, serializedAdditionalRawData);
+        }
+
+        NetworkCloudAgentPoolData IModelJsonSerializable<NetworkCloudAgentPoolData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkCloudAgentPoolData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkCloudAgentPoolData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkCloudAgentPoolData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkCloudAgentPoolData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkCloudAgentPoolData IModelSerializable<NetworkCloudAgentPoolData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkCloudAgentPoolData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkCloudAgentPoolData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetworkCloudAgentPoolData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetworkCloudAgentPoolData"/> to convert. </param>
+        public static implicit operator RequestContent(NetworkCloudAgentPoolData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetworkCloudAgentPoolData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetworkCloudAgentPoolData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkCloudAgentPoolData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

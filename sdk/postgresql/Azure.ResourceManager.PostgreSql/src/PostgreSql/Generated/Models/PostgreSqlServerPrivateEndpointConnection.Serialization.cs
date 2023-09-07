@@ -5,21 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    public partial class PostgreSqlServerPrivateEndpointConnection
+    public partial class PostgreSqlServerPrivateEndpointConnection : IUtf8JsonSerializable, IModelJsonSerializable<PostgreSqlServerPrivateEndpointConnection>
     {
-        internal static PostgreSqlServerPrivateEndpointConnection DeserializePostgreSqlServerPrivateEndpointConnection(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PostgreSqlServerPrivateEndpointConnection>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PostgreSqlServerPrivateEndpointConnection>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlServerPrivateEndpointConnection>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PostgreSqlServerPrivateEndpointConnection DeserializePostgreSqlServerPrivateEndpointConnection(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceIdentifier> id = default;
             Optional<PostgreSqlServerPrivateEndpointConnectionProperties> properties = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -40,8 +69,61 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     properties = PostgreSqlServerPrivateEndpointConnectionProperties.DeserializePostgreSqlServerPrivateEndpointConnectionProperties(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PostgreSqlServerPrivateEndpointConnection(id.Value, properties.Value);
+            return new PostgreSqlServerPrivateEndpointConnection(id.Value, properties.Value, serializedAdditionalRawData);
+        }
+
+        PostgreSqlServerPrivateEndpointConnection IModelJsonSerializable<PostgreSqlServerPrivateEndpointConnection>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlServerPrivateEndpointConnection>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlServerPrivateEndpointConnection(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PostgreSqlServerPrivateEndpointConnection>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlServerPrivateEndpointConnection>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PostgreSqlServerPrivateEndpointConnection IModelSerializable<PostgreSqlServerPrivateEndpointConnection>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlServerPrivateEndpointConnection>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePostgreSqlServerPrivateEndpointConnection(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PostgreSqlServerPrivateEndpointConnection"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PostgreSqlServerPrivateEndpointConnection"/> to convert. </param>
+        public static implicit operator RequestContent(PostgreSqlServerPrivateEndpointConnection model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PostgreSqlServerPrivateEndpointConnection"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PostgreSqlServerPrivateEndpointConnection(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePostgreSqlServerPrivateEndpointConnection(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

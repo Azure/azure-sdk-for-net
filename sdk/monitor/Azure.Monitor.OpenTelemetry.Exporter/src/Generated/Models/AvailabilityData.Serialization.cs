@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class AvailabilityData : IUtf8JsonSerializable
+    internal partial class AvailabilityData : IUtf8JsonSerializable, IModelJsonSerializable<AvailabilityData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AvailabilityData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AvailabilityData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AvailabilityData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -63,6 +71,144 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
+        }
+
+        internal static AvailabilityData DeserializeAvailabilityData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string id = default;
+            string name = default;
+            string duration = default;
+            bool success = default;
+            Optional<string> runLocation = default;
+            Optional<string> message = default;
+            Optional<IDictionary<string, string>> properties = default;
+            Optional<IDictionary<string, double>> measurements = default;
+            int ver = default;
+            IDictionary<string, object> additionalProperties = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("duration"u8))
+                {
+                    duration = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("success"u8))
+                {
+                    success = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("runLocation"u8))
+                {
+                    runLocation = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("message"u8))
+                {
+                    message = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    properties = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("measurements"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, double> dictionary = new Dictionary<string, double>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetDouble());
+                    }
+                    measurements = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("ver"u8))
+                {
+                    ver = property.Value.GetInt32();
+                    continue;
+                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+            }
+            additionalProperties = additionalPropertiesDictionary;
+            return new AvailabilityData(ver, additionalProperties, id, name, duration, success, runLocation.Value, message.Value, Optional.ToDictionary(properties), Optional.ToDictionary(measurements));
+        }
+
+        AvailabilityData IModelJsonSerializable<AvailabilityData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AvailabilityData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAvailabilityData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AvailabilityData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AvailabilityData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AvailabilityData IModelSerializable<AvailabilityData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AvailabilityData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAvailabilityData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AvailabilityData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AvailabilityData"/> to convert. </param>
+        public static implicit operator RequestContent(AvailabilityData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AvailabilityData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AvailabilityData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAvailabilityData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

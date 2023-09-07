@@ -5,18 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayBackendHttpSettings : IUtf8JsonSerializable
+    public partial class ApplicationGatewayBackendHttpSettings : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationGatewayBackendHttpSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationGatewayBackendHttpSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationGatewayBackendHttpSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayBackendHttpSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -78,7 +84,14 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(ConnectionDraining))
             {
                 writer.WritePropertyName("connectionDraining"u8);
-                writer.WriteObjectValue(ConnectionDraining);
+                if (ConnectionDraining is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ApplicationGatewayConnectionDraining>)ConnectionDraining).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(HostName))
             {
@@ -106,11 +119,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(Path);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewayBackendHttpSettings DeserializeApplicationGatewayBackendHttpSettings(JsonElement element)
+        internal static ApplicationGatewayBackendHttpSettings DeserializeApplicationGatewayBackendHttpSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -133,6 +160,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<bool> probeEnabled = default;
             Optional<string> path = default;
             Optional<NetworkProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -303,8 +331,61 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationGatewayBackendHttpSettings(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(port), Optional.ToNullable(protocol), Optional.ToNullable(cookieBasedAffinity), Optional.ToNullable(requestTimeout), probe, Optional.ToList(authenticationCertificates), Optional.ToList(trustedRootCertificates), connectionDraining.Value, hostName.Value, Optional.ToNullable(pickHostNameFromBackendAddress), affinityCookieName.Value, Optional.ToNullable(probeEnabled), path.Value, Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayBackendHttpSettings(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(port), Optional.ToNullable(protocol), Optional.ToNullable(cookieBasedAffinity), Optional.ToNullable(requestTimeout), probe, Optional.ToList(authenticationCertificates), Optional.ToList(trustedRootCertificates), connectionDraining.Value, hostName.Value, Optional.ToNullable(pickHostNameFromBackendAddress), affinityCookieName.Value, Optional.ToNullable(probeEnabled), path.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+        }
+
+        ApplicationGatewayBackendHttpSettings IModelJsonSerializable<ApplicationGatewayBackendHttpSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayBackendHttpSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayBackendHttpSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationGatewayBackendHttpSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayBackendHttpSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationGatewayBackendHttpSettings IModelSerializable<ApplicationGatewayBackendHttpSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayBackendHttpSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationGatewayBackendHttpSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApplicationGatewayBackendHttpSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApplicationGatewayBackendHttpSettings"/> to convert. </param>
+        public static implicit operator RequestContent(ApplicationGatewayBackendHttpSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApplicationGatewayBackendHttpSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApplicationGatewayBackendHttpSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationGatewayBackendHttpSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

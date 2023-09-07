@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FirewallPolicyLogAnalyticsResources : IUtf8JsonSerializable
+    public partial class FirewallPolicyLogAnalyticsResources : IUtf8JsonSerializable, IModelJsonSerializable<FirewallPolicyLogAnalyticsResources>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FirewallPolicyLogAnalyticsResources>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FirewallPolicyLogAnalyticsResources>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallPolicyLogAnalyticsResources>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Workspaces))
             {
@@ -23,7 +30,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Workspaces)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<FirewallPolicyLogAnalyticsWorkspace>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -32,17 +46,32 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("defaultWorkspaceId"u8);
                 JsonSerializer.Serialize(writer, DefaultWorkspaceId);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FirewallPolicyLogAnalyticsResources DeserializeFirewallPolicyLogAnalyticsResources(JsonElement element)
+        internal static FirewallPolicyLogAnalyticsResources DeserializeFirewallPolicyLogAnalyticsResources(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<FirewallPolicyLogAnalyticsWorkspace>> workspaces = default;
             Optional<WritableSubResource> defaultWorkspaceId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workspaces"u8))
@@ -68,8 +97,61 @@ namespace Azure.ResourceManager.Network.Models
                     defaultWorkspaceId = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FirewallPolicyLogAnalyticsResources(Optional.ToList(workspaces), defaultWorkspaceId);
+            return new FirewallPolicyLogAnalyticsResources(Optional.ToList(workspaces), defaultWorkspaceId, serializedAdditionalRawData);
+        }
+
+        FirewallPolicyLogAnalyticsResources IModelJsonSerializable<FirewallPolicyLogAnalyticsResources>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallPolicyLogAnalyticsResources>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFirewallPolicyLogAnalyticsResources(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FirewallPolicyLogAnalyticsResources>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallPolicyLogAnalyticsResources>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FirewallPolicyLogAnalyticsResources IModelSerializable<FirewallPolicyLogAnalyticsResources>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallPolicyLogAnalyticsResources>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFirewallPolicyLogAnalyticsResources(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FirewallPolicyLogAnalyticsResources"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FirewallPolicyLogAnalyticsResources"/> to convert. </param>
+        public static implicit operator RequestContent(FirewallPolicyLogAnalyticsResources model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FirewallPolicyLogAnalyticsResources"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FirewallPolicyLogAnalyticsResources(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFirewallPolicyLogAnalyticsResources(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -14,13 +15,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> PrivateLinkServiceConnection resource. </summary>
     public partial class NetworkPrivateLinkServiceConnection : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of NetworkPrivateLinkServiceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkPrivateLinkServiceConnection"/>. </summary>
         public NetworkPrivateLinkServiceConnection()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NetworkPrivateLinkServiceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkPrivateLinkServiceConnection"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="groupIds"> The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to. </param>
         /// <param name="requestMessage"> A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars. </param>
         /// <param name="connectionState"> A collection of read-only information about the state of the connection to the remote resource. </param>
-        internal NetworkPrivateLinkServiceConnection(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, NetworkProvisioningState? provisioningState, ResourceIdentifier privateLinkServiceId, IList<string> groupIds, string requestMessage, NetworkPrivateLinkServiceConnectionState connectionState) : base(id, name, resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkPrivateLinkServiceConnection(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, NetworkProvisioningState? provisioningState, ResourceIdentifier privateLinkServiceId, IList<string> groupIds, string requestMessage, NetworkPrivateLinkServiceConnectionState connectionState, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             ProvisioningState = provisioningState;

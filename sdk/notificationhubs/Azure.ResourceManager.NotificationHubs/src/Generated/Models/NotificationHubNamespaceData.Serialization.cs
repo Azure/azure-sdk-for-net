@@ -8,21 +8,34 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NotificationHubs.Models;
 
 namespace Azure.ResourceManager.NotificationHubs
 {
-    public partial class NotificationHubNamespaceData : IUtf8JsonSerializable
+    public partial class NotificationHubNamespaceData : IUtf8JsonSerializable, IModelJsonSerializable<NotificationHubNamespaceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NotificationHubNamespaceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NotificationHubNamespaceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NotificationHubNamespaceData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<NotificationHubSku>)Sku).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -105,11 +118,25 @@ namespace Azure.ResourceManager.NotificationHubs
                 writer.WriteStringValue(NamespaceType.Value.ToSerialString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NotificationHubNamespaceData DeserializeNotificationHubNamespaceData(JsonElement element)
+        internal static NotificationHubNamespaceData DeserializeNotificationHubNamespaceData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -135,6 +162,7 @@ namespace Azure.ResourceManager.NotificationHubs
             Optional<bool> critical = default;
             Optional<string> dataCenter = default;
             Optional<NotificationHubNamespaceType> namespaceType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -295,8 +323,61 @@ namespace Azure.ResourceManager.NotificationHubs
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NotificationHubNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0.Value, provisioningState.Value, region.Value, metricId.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, subscriptionId.Value, scaleUnit.Value, Optional.ToNullable(enabled), Optional.ToNullable(critical), dataCenter.Value, Optional.ToNullable(namespaceType), sku.Value);
+            return new NotificationHubNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0.Value, provisioningState.Value, region.Value, metricId.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, subscriptionId.Value, scaleUnit.Value, Optional.ToNullable(enabled), Optional.ToNullable(critical), dataCenter.Value, Optional.ToNullable(namespaceType), sku.Value, serializedAdditionalRawData);
+        }
+
+        NotificationHubNamespaceData IModelJsonSerializable<NotificationHubNamespaceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NotificationHubNamespaceData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNotificationHubNamespaceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NotificationHubNamespaceData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NotificationHubNamespaceData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NotificationHubNamespaceData IModelSerializable<NotificationHubNamespaceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NotificationHubNamespaceData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNotificationHubNamespaceData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NotificationHubNamespaceData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NotificationHubNamespaceData"/> to convert. </param>
+        public static implicit operator RequestContent(NotificationHubNamespaceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NotificationHubNamespaceData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NotificationHubNamespaceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNotificationHubNamespaceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

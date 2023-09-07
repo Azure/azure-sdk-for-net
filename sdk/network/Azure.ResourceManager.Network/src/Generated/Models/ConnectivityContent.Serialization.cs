@@ -5,20 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectivityContent : IUtf8JsonSerializable
+    public partial class ConnectivityContent : IUtf8JsonSerializable, IModelJsonSerializable<ConnectivityContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConnectivityContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConnectivityContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectivityContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            if (Source is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<ConnectivitySource>)Source).Serialize(writer, options);
+            }
             writer.WritePropertyName("destination"u8);
-            writer.WriteObjectValue(Destination);
+            if (Destination is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<ConnectivityDestination>)Destination).Serialize(writer, options);
+            }
             if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
@@ -27,14 +49,143 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(ProtocolConfiguration))
             {
                 writer.WritePropertyName("protocolConfiguration"u8);
-                writer.WriteObjectValue(ProtocolConfiguration);
+                if (ProtocolConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ProtocolConfiguration>)ProtocolConfiguration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(PreferredIPVersion))
             {
                 writer.WritePropertyName("preferredIPVersion"u8);
                 writer.WriteStringValue(PreferredIPVersion.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ConnectivityContent DeserializeConnectivityContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ConnectivitySource source = default;
+            ConnectivityDestination destination = default;
+            Optional<NetworkWatcherProtocol> protocol = default;
+            Optional<ProtocolConfiguration> protocolConfiguration = default;
+            Optional<NetworkIPVersion> preferredIPVersion = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("source"u8))
+                {
+                    source = ConnectivitySource.DeserializeConnectivitySource(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("destination"u8))
+                {
+                    destination = ConnectivityDestination.DeserializeConnectivityDestination(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("protocol"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    protocol = new NetworkWatcherProtocol(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("protocolConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    protocolConfiguration = ProtocolConfiguration.DeserializeProtocolConfiguration(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("preferredIPVersion"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    preferredIPVersion = new NetworkIPVersion(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ConnectivityContent(source, destination, Optional.ToNullable(protocol), protocolConfiguration.Value, Optional.ToNullable(preferredIPVersion), serializedAdditionalRawData);
+        }
+
+        ConnectivityContent IModelJsonSerializable<ConnectivityContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectivityContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectivityContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConnectivityContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectivityContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConnectivityContent IModelSerializable<ConnectivityContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectivityContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConnectivityContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConnectivityContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConnectivityContent"/> to convert. </param>
+        public static implicit operator RequestContent(ConnectivityContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConnectivityContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConnectivityContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConnectivityContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

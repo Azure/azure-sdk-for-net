@@ -5,19 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.MobileNetwork.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    public partial class MobileNetworkSimPolicyData : IUtf8JsonSerializable
+    public partial class MobileNetworkSimPolicyData : IUtf8JsonSerializable, IModelJsonSerializable<MobileNetworkSimPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MobileNetworkSimPolicyData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MobileNetworkSimPolicyData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MobileNetworkSimPolicyData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -35,7 +42,14 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("ueAmbr"u8);
-            writer.WriteObjectValue(UeAmbr);
+            if (UeAmbr is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<Ambr>)UeAmbr).Serialize(writer, options);
+            }
             writer.WritePropertyName("defaultSlice"u8);
             JsonSerializer.Serialize(writer, DefaultSlice); if (Optional.IsDefined(RfspIndex))
             {
@@ -51,15 +65,36 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WriteStartArray();
             foreach (var item in SliceConfigurations)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MobileNetworkSliceConfiguration>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MobileNetworkSimPolicyData DeserializeMobileNetworkSimPolicyData(JsonElement element)
+        internal static MobileNetworkSimPolicyData DeserializeMobileNetworkSimPolicyData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -77,6 +112,7 @@ namespace Azure.ResourceManager.MobileNetwork
             Optional<int> rfspIndex = default;
             Optional<int> registrationTimer = default;
             IList<MobileNetworkSliceConfiguration> sliceConfigurations = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -195,8 +231,61 @@ namespace Azure.ResourceManager.MobileNetwork
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MobileNetworkSimPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToDictionary(siteProvisioningState), ueAmbr, defaultSlice, Optional.ToNullable(rfspIndex), Optional.ToNullable(registrationTimer), sliceConfigurations);
+            return new MobileNetworkSimPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToDictionary(siteProvisioningState), ueAmbr, defaultSlice, Optional.ToNullable(rfspIndex), Optional.ToNullable(registrationTimer), sliceConfigurations, serializedAdditionalRawData);
+        }
+
+        MobileNetworkSimPolicyData IModelJsonSerializable<MobileNetworkSimPolicyData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MobileNetworkSimPolicyData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMobileNetworkSimPolicyData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MobileNetworkSimPolicyData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MobileNetworkSimPolicyData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MobileNetworkSimPolicyData IModelSerializable<MobileNetworkSimPolicyData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MobileNetworkSimPolicyData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMobileNetworkSimPolicyData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MobileNetworkSimPolicyData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MobileNetworkSimPolicyData"/> to convert. </param>
+        public static implicit operator RequestContent(MobileNetworkSimPolicyData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MobileNetworkSimPolicyData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MobileNetworkSimPolicyData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMobileNetworkSimPolicyData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

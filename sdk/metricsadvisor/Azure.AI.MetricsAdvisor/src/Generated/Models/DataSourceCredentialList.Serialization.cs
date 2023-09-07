@@ -5,23 +5,51 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class DataSourceCredentialList
+    internal partial class DataSourceCredentialList : IUtf8JsonSerializable, IModelJsonSerializable<DataSourceCredentialList>
     {
-        internal static DataSourceCredentialList DeserializeDataSourceCredentialList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataSourceCredentialList>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataSourceCredentialList>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataSourceCredentialList>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DataSourceCredentialList DeserializeDataSourceCredentialList(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<DataSourceCredentialEntity>> value = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@nextLink"u8))
@@ -43,8 +71,61 @@ namespace Azure.AI.MetricsAdvisor.Models
                     value = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataSourceCredentialList(nextLink.Value, Optional.ToList(value));
+            return new DataSourceCredentialList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+        }
+
+        DataSourceCredentialList IModelJsonSerializable<DataSourceCredentialList>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataSourceCredentialList>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataSourceCredentialList(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataSourceCredentialList>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataSourceCredentialList>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataSourceCredentialList IModelSerializable<DataSourceCredentialList>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataSourceCredentialList>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataSourceCredentialList(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataSourceCredentialList"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataSourceCredentialList"/> to convert. </param>
+        public static implicit operator RequestContent(DataSourceCredentialList model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataSourceCredentialList"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataSourceCredentialList(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataSourceCredentialList(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

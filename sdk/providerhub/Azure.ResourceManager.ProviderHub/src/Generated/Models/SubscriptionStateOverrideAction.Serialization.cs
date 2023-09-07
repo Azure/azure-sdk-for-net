@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class SubscriptionStateOverrideAction : IUtf8JsonSerializable
+    public partial class SubscriptionStateOverrideAction : IUtf8JsonSerializable, IModelJsonSerializable<SubscriptionStateOverrideAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SubscriptionStateOverrideAction>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SubscriptionStateOverrideAction>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SubscriptionStateOverrideAction>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("state"u8);
             writer.WriteStringValue(State.ToString());
             writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SubscriptionStateOverrideAction DeserializeSubscriptionStateOverrideAction(JsonElement element)
+        internal static SubscriptionStateOverrideAction DeserializeSubscriptionStateOverrideAction(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             SubscriptionTransitioningState state = default;
             SubscriptionNotificationOperation action = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -42,8 +65,61 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     action = new SubscriptionNotificationOperation(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SubscriptionStateOverrideAction(state, action);
+            return new SubscriptionStateOverrideAction(state, action, serializedAdditionalRawData);
+        }
+
+        SubscriptionStateOverrideAction IModelJsonSerializable<SubscriptionStateOverrideAction>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SubscriptionStateOverrideAction>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubscriptionStateOverrideAction(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SubscriptionStateOverrideAction>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SubscriptionStateOverrideAction>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SubscriptionStateOverrideAction IModelSerializable<SubscriptionStateOverrideAction>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SubscriptionStateOverrideAction>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSubscriptionStateOverrideAction(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SubscriptionStateOverrideAction"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SubscriptionStateOverrideAction"/> to convert. </param>
+        public static implicit operator RequestContent(SubscriptionStateOverrideAction model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SubscriptionStateOverrideAction"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SubscriptionStateOverrideAction(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSubscriptionStateOverrideAction(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

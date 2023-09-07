@@ -5,22 +5,79 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayBackendHealthPool
+    public partial class ApplicationGatewayBackendHealthPool : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationGatewayBackendHealthPool>
     {
-        internal static ApplicationGatewayBackendHealthPool DeserializeApplicationGatewayBackendHealthPool(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationGatewayBackendHealthPool>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationGatewayBackendHealthPool>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayBackendHealthPool>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(BackendAddressPool))
+            {
+                writer.WritePropertyName("backendAddressPool"u8);
+                if (BackendAddressPool is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ApplicationGatewayBackendAddressPool>)BackendAddressPool).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(BackendHttpSettingsCollection))
+            {
+                writer.WritePropertyName("backendHttpSettingsCollection"u8);
+                writer.WriteStartArray();
+                foreach (var item in BackendHttpSettingsCollection)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ApplicationGatewayBackendHealthHttpSettings>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ApplicationGatewayBackendHealthPool DeserializeApplicationGatewayBackendHealthPool(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ApplicationGatewayBackendAddressPool> backendAddressPool = default;
             Optional<IReadOnlyList<ApplicationGatewayBackendHealthHttpSettings>> backendHttpSettingsCollection = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backendAddressPool"u8))
@@ -46,8 +103,61 @@ namespace Azure.ResourceManager.Network.Models
                     backendHttpSettingsCollection = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationGatewayBackendHealthPool(backendAddressPool.Value, Optional.ToList(backendHttpSettingsCollection));
+            return new ApplicationGatewayBackendHealthPool(backendAddressPool.Value, Optional.ToList(backendHttpSettingsCollection), serializedAdditionalRawData);
+        }
+
+        ApplicationGatewayBackendHealthPool IModelJsonSerializable<ApplicationGatewayBackendHealthPool>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayBackendHealthPool>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayBackendHealthPool(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationGatewayBackendHealthPool>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayBackendHealthPool>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationGatewayBackendHealthPool IModelSerializable<ApplicationGatewayBackendHealthPool>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayBackendHealthPool>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationGatewayBackendHealthPool(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApplicationGatewayBackendHealthPool"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApplicationGatewayBackendHealthPool"/> to convert. </param>
+        public static implicit operator RequestContent(ApplicationGatewayBackendHealthPool model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApplicationGatewayBackendHealthPool"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApplicationGatewayBackendHealthPool(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationGatewayBackendHealthPool(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

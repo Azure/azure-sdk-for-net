@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FirewallPolicySnat : IUtf8JsonSerializable
+    public partial class FirewallPolicySnat : IUtf8JsonSerializable, IModelJsonSerializable<FirewallPolicySnat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FirewallPolicySnat>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FirewallPolicySnat>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallPolicySnat>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PrivateRanges))
             {
@@ -31,17 +38,32 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("autoLearnPrivateRanges"u8);
                 writer.WriteStringValue(AutoLearnPrivateRanges.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FirewallPolicySnat DeserializeFirewallPolicySnat(JsonElement element)
+        internal static FirewallPolicySnat DeserializeFirewallPolicySnat(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<string>> privateRanges = default;
             Optional<AutoLearnPrivateRangesMode> autoLearnPrivateRanges = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateRanges"u8))
@@ -67,8 +89,61 @@ namespace Azure.ResourceManager.Network.Models
                     autoLearnPrivateRanges = new AutoLearnPrivateRangesMode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FirewallPolicySnat(Optional.ToList(privateRanges), Optional.ToNullable(autoLearnPrivateRanges));
+            return new FirewallPolicySnat(Optional.ToList(privateRanges), Optional.ToNullable(autoLearnPrivateRanges), serializedAdditionalRawData);
+        }
+
+        FirewallPolicySnat IModelJsonSerializable<FirewallPolicySnat>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallPolicySnat>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFirewallPolicySnat(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FirewallPolicySnat>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallPolicySnat>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FirewallPolicySnat IModelSerializable<FirewallPolicySnat>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallPolicySnat>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFirewallPolicySnat(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FirewallPolicySnat"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FirewallPolicySnat"/> to convert. </param>
+        public static implicit operator RequestContent(FirewallPolicySnat model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FirewallPolicySnat"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FirewallPolicySnat(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFirewallPolicySnat(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

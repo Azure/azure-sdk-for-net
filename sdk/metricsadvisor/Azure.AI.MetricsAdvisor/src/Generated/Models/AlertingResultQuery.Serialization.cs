@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.AI.MetricsAdvisor;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class AlertingResultQuery : IUtf8JsonSerializable
+    internal partial class AlertingResultQuery : IUtf8JsonSerializable, IModelJsonSerializable<AlertingResultQuery>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AlertingResultQuery>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AlertingResultQuery>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AlertingResultQuery>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime, "O");
@@ -22,7 +30,105 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStringValue(EndTime, "O");
             writer.WritePropertyName("timeMode"u8);
             writer.WriteStringValue(TimeMode.ToSerialString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static AlertingResultQuery DeserializeAlertingResultQuery(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DateTimeOffset startTime = default;
+            DateTimeOffset endTime = default;
+            AlertQueryTimeMode timeMode = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("startTime"u8))
+                {
+                    startTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("endTime"u8))
+                {
+                    endTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("timeMode"u8))
+                {
+                    timeMode = property.Value.GetString().ToAlertQueryTimeMode();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new AlertingResultQuery(startTime, endTime, timeMode, serializedAdditionalRawData);
+        }
+
+        AlertingResultQuery IModelJsonSerializable<AlertingResultQuery>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AlertingResultQuery>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAlertingResultQuery(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AlertingResultQuery>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AlertingResultQuery>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AlertingResultQuery IModelSerializable<AlertingResultQuery>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AlertingResultQuery>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAlertingResultQuery(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AlertingResultQuery"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AlertingResultQuery"/> to convert. </param>
+        public static implicit operator RequestContent(AlertingResultQuery model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AlertingResultQuery"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AlertingResultQuery(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAlertingResultQuery(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

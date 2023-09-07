@@ -5,16 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorMetricNamespace
+    public partial class MonitorMetricNamespace : IUtf8JsonSerializable, IModelJsonSerializable<MonitorMetricNamespace>
     {
-        internal static MonitorMetricNamespace DeserializeMonitorMetricNamespace(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MonitorMetricNamespace>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MonitorMetricNamespace>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorMetricNamespace>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Classification))
+            {
+                writer.WritePropertyName("classification"u8);
+                writer.WriteStringValue(Classification.Value.ToString());
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                if (Properties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MetricNamespaceName>)Properties).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MonitorMetricNamespace DeserializeMonitorMetricNamespace(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +70,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("classification"u8))
@@ -69,8 +115,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MonitorMetricNamespace(id, name, type, systemData.Value, Optional.ToNullable(classification), properties.Value);
+            return new MonitorMetricNamespace(id, name, type, systemData.Value, Optional.ToNullable(classification), properties.Value, serializedAdditionalRawData);
+        }
+
+        MonitorMetricNamespace IModelJsonSerializable<MonitorMetricNamespace>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorMetricNamespace>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorMetricNamespace(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MonitorMetricNamespace>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorMetricNamespace>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MonitorMetricNamespace IModelSerializable<MonitorMetricNamespace>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorMetricNamespace>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMonitorMetricNamespace(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MonitorMetricNamespace"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MonitorMetricNamespace"/> to convert. </param>
+        public static implicit operator RequestContent(MonitorMetricNamespace model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MonitorMetricNamespace"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MonitorMetricNamespace(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMonitorMetricNamespace(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

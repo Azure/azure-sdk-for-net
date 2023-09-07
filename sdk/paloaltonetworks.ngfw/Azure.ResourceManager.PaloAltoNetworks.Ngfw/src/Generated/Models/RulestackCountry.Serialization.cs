@@ -5,21 +5,57 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class RulestackCountry
+    public partial class RulestackCountry : IUtf8JsonSerializable, IModelJsonSerializable<RulestackCountry>
     {
-        internal static RulestackCountry DeserializeRulestackCountry(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RulestackCountry>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RulestackCountry>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RulestackCountry>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("code"u8);
+            writer.WriteStringValue(Code);
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RulestackCountry DeserializeRulestackCountry(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string code = default;
             Optional<string> description = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -32,8 +68,61 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RulestackCountry(code, description.Value);
+            return new RulestackCountry(code, description.Value, serializedAdditionalRawData);
+        }
+
+        RulestackCountry IModelJsonSerializable<RulestackCountry>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RulestackCountry>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRulestackCountry(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RulestackCountry>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RulestackCountry>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RulestackCountry IModelSerializable<RulestackCountry>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RulestackCountry>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRulestackCountry(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RulestackCountry"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RulestackCountry"/> to convert. </param>
+        public static implicit operator RequestContent(RulestackCountry model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RulestackCountry"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RulestackCountry(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRulestackCountry(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,12 +5,155 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class DataLakeGen2SharedKeyCredentialPatch : IUtf8JsonSerializable
+    internal partial class DataLakeGen2SharedKeyCredentialPatch : IUtf8JsonSerializable, IModelJsonSerializable<DataLakeGen2SharedKeyCredentialPatch>
     {
+        void IModelJsonSerializable<DataLakeGen2SharedKeyCredentialPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataLakeGen2SharedKeyCredentialPatch>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Parameters))
+            {
+                writer.WritePropertyName("parameters"u8);
+                if (Parameters is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DataLakeGen2SharedKeyParamPatch>)Parameters).Serialize(writer, options);
+                }
+            }
+            writer.WritePropertyName("dataSourceCredentialType"u8);
+            writer.WriteStringValue(DataSourceCredentialType.ToString());
+            if (Optional.IsDefined(DataSourceCredentialName))
+            {
+                writer.WritePropertyName("dataSourceCredentialName"u8);
+                writer.WriteStringValue(DataSourceCredentialName);
+            }
+            if (Optional.IsDefined(DataSourceCredentialDescription))
+            {
+                writer.WritePropertyName("dataSourceCredentialDescription"u8);
+                writer.WriteStringValue(DataSourceCredentialDescription);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DataLakeGen2SharedKeyCredentialPatch DeserializeDataLakeGen2SharedKeyCredentialPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DataLakeGen2SharedKeyParamPatch> parameters = default;
+            DataSourceCredentialKind dataSourceCredentialType = default;
+            Optional<string> dataSourceCredentialName = default;
+            Optional<string> dataSourceCredentialDescription = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("parameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parameters = DataLakeGen2SharedKeyParamPatch.DeserializeDataLakeGen2SharedKeyParamPatch(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("dataSourceCredentialType"u8))
+                {
+                    dataSourceCredentialType = new DataSourceCredentialKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("dataSourceCredentialName"u8))
+                {
+                    dataSourceCredentialName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dataSourceCredentialDescription"u8))
+                {
+                    dataSourceCredentialDescription = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new DataLakeGen2SharedKeyCredentialPatch(dataSourceCredentialType, dataSourceCredentialName.Value, dataSourceCredentialDescription.Value, parameters.Value, serializedAdditionalRawData);
+        }
+
+        DataLakeGen2SharedKeyCredentialPatch IModelJsonSerializable<DataLakeGen2SharedKeyCredentialPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataLakeGen2SharedKeyCredentialPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataLakeGen2SharedKeyCredentialPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataLakeGen2SharedKeyCredentialPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataLakeGen2SharedKeyCredentialPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataLakeGen2SharedKeyCredentialPatch IModelSerializable<DataLakeGen2SharedKeyCredentialPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataLakeGen2SharedKeyCredentialPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataLakeGen2SharedKeyCredentialPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataLakeGen2SharedKeyCredentialPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataLakeGen2SharedKeyCredentialPatch"/> to convert. </param>
+        public static implicit operator RequestContent(DataLakeGen2SharedKeyCredentialPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataLakeGen2SharedKeyCredentialPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataLakeGen2SharedKeyCredentialPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataLakeGen2SharedKeyCredentialPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
     }
 }

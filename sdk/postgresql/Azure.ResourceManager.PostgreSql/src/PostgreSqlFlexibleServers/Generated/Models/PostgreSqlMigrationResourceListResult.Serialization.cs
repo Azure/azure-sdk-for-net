@@ -5,23 +5,51 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    internal partial class PostgreSqlMigrationResourceListResult
+    internal partial class PostgreSqlMigrationResourceListResult : IUtf8JsonSerializable, IModelJsonSerializable<PostgreSqlMigrationResourceListResult>
     {
-        internal static PostgreSqlMigrationResourceListResult DeserializePostgreSqlMigrationResourceListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PostgreSqlMigrationResourceListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PostgreSqlMigrationResourceListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlMigrationResourceListResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PostgreSqlMigrationResourceListResult DeserializePostgreSqlMigrationResourceListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<PostgreSqlMigrationData>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +71,61 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PostgreSqlMigrationResourceListResult(Optional.ToList(value), nextLink.Value);
+            return new PostgreSqlMigrationResourceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+        }
+
+        PostgreSqlMigrationResourceListResult IModelJsonSerializable<PostgreSqlMigrationResourceListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlMigrationResourceListResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlMigrationResourceListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PostgreSqlMigrationResourceListResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlMigrationResourceListResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PostgreSqlMigrationResourceListResult IModelSerializable<PostgreSqlMigrationResourceListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlMigrationResourceListResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePostgreSqlMigrationResourceListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PostgreSqlMigrationResourceListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PostgreSqlMigrationResourceListResult"/> to convert. </param>
+        public static implicit operator RequestContent(PostgreSqlMigrationResourceListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PostgreSqlMigrationResourceListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PostgreSqlMigrationResourceListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePostgreSqlMigrationResourceListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

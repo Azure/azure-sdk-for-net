@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FirewallPolicyExplicitProxy : IUtf8JsonSerializable
+    public partial class FirewallPolicyExplicitProxy : IUtf8JsonSerializable, IModelJsonSerializable<FirewallPolicyExplicitProxy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FirewallPolicyExplicitProxy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FirewallPolicyExplicitProxy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallPolicyExplicitProxy>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EnableExplicitProxy))
             {
@@ -59,11 +67,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("pacFile"u8);
                 writer.WriteStringValue(PacFile);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FirewallPolicyExplicitProxy DeserializeFirewallPolicyExplicitProxy(JsonElement element)
+        internal static FirewallPolicyExplicitProxy DeserializeFirewallPolicyExplicitProxy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -74,6 +96,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<bool?> enablePacFile = default;
             Optional<int> pacFilePort = default;
             Optional<string> pacFile = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableExplicitProxy"u8))
@@ -128,8 +151,61 @@ namespace Azure.ResourceManager.Network.Models
                     pacFile = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FirewallPolicyExplicitProxy(Optional.ToNullable(enableExplicitProxy), Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), Optional.ToNullable(enablePacFile), Optional.ToNullable(pacFilePort), pacFile.Value);
+            return new FirewallPolicyExplicitProxy(Optional.ToNullable(enableExplicitProxy), Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), Optional.ToNullable(enablePacFile), Optional.ToNullable(pacFilePort), pacFile.Value, serializedAdditionalRawData);
+        }
+
+        FirewallPolicyExplicitProxy IModelJsonSerializable<FirewallPolicyExplicitProxy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallPolicyExplicitProxy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFirewallPolicyExplicitProxy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FirewallPolicyExplicitProxy>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallPolicyExplicitProxy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FirewallPolicyExplicitProxy IModelSerializable<FirewallPolicyExplicitProxy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallPolicyExplicitProxy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFirewallPolicyExplicitProxy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FirewallPolicyExplicitProxy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FirewallPolicyExplicitProxy"/> to convert. </param>
+        public static implicit operator RequestContent(FirewallPolicyExplicitProxy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FirewallPolicyExplicitProxy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FirewallPolicyExplicitProxy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFirewallPolicyExplicitProxy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

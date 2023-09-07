@@ -10,15 +10,20 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class NetworkInterfaceData : IUtf8JsonSerializable
+    public partial class NetworkInterfaceData : IUtf8JsonSerializable, IModelJsonSerializable<NetworkInterfaceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkInterfaceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkInterfaceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkInterfaceData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocation))
             {
@@ -51,7 +56,14 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 writer.WritePropertyName("networkSecurityGroup"u8);
-                writer.WriteObjectValue(NetworkSecurityGroup);
+                if (NetworkSecurityGroup is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<NetworkSecurityGroupData>)NetworkSecurityGroup).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(IPConfigurations))
             {
@@ -59,14 +71,28 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<NetworkInterfaceIPConfigurationData>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
-                writer.WriteObjectValue(DnsSettings);
+                if (DnsSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<NetworkInterfaceDnsSettings>)DnsSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(EnableAcceleratedNetworking))
             {
@@ -96,7 +122,14 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(PrivateLinkService))
             {
                 writer.WritePropertyName("privateLinkService"u8);
-                writer.WriteObjectValue(PrivateLinkService);
+                if (PrivateLinkService is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PrivateLinkServiceData>)PrivateLinkService).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(MigrationPhase))
             {
@@ -114,11 +147,25 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStringValue(AuxiliarySku.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkInterfaceData DeserializeNetworkInterfaceData(JsonElement element)
+        internal static NetworkInterfaceData DeserializeNetworkInterfaceData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -152,6 +199,7 @@ namespace Azure.ResourceManager.Network
             Optional<NetworkInterfaceMigrationPhase> migrationPhase = default;
             Optional<NetworkInterfaceAuxiliaryMode> auxiliaryMode = default;
             Optional<NetworkInterfaceAuxiliarySku> auxiliarySku = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -435,8 +483,61 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkInterfaceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, Optional.ToNullable(etag), virtualMachine, networkSecurityGroup.Value, privateEndpoint.Value, Optional.ToList(ipConfigurations), Optional.ToList(tapConfigurations), dnsSettings.Value, macAddress.Value, Optional.ToNullable(primary), Optional.ToNullable(vnetEncryptionSupported), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(disableTcpStateTracking), Optional.ToNullable(enableIPForwarding), Optional.ToList(hostedWorkloads), dscpConfiguration, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), workloadType.Value, Optional.ToNullable(nicType), privateLinkService.Value, Optional.ToNullable(migrationPhase), Optional.ToNullable(auxiliaryMode), Optional.ToNullable(auxiliarySku));
+            return new NetworkInterfaceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, Optional.ToNullable(etag), virtualMachine, networkSecurityGroup.Value, privateEndpoint.Value, Optional.ToList(ipConfigurations), Optional.ToList(tapConfigurations), dnsSettings.Value, macAddress.Value, Optional.ToNullable(primary), Optional.ToNullable(vnetEncryptionSupported), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(disableTcpStateTracking), Optional.ToNullable(enableIPForwarding), Optional.ToList(hostedWorkloads), dscpConfiguration, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), workloadType.Value, Optional.ToNullable(nicType), privateLinkService.Value, Optional.ToNullable(migrationPhase), Optional.ToNullable(auxiliaryMode), Optional.ToNullable(auxiliarySku), serializedAdditionalRawData);
+        }
+
+        NetworkInterfaceData IModelJsonSerializable<NetworkInterfaceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkInterfaceData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkInterfaceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkInterfaceData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkInterfaceData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkInterfaceData IModelSerializable<NetworkInterfaceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkInterfaceData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkInterfaceData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetworkInterfaceData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetworkInterfaceData"/> to convert. </param>
+        public static implicit operator RequestContent(NetworkInterfaceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetworkInterfaceData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetworkInterfaceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkInterfaceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

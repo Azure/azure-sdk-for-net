@@ -5,18 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewaySslProfile : IUtf8JsonSerializable
+    public partial class ApplicationGatewaySslProfile : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationGatewaySslProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationGatewaySslProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationGatewaySslProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewaySslProfile>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -43,19 +49,47 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(SslPolicy))
             {
                 writer.WritePropertyName("sslPolicy"u8);
-                writer.WriteObjectValue(SslPolicy);
+                if (SslPolicy is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ApplicationGatewaySslPolicy>)SslPolicy).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ClientAuthConfiguration))
             {
                 writer.WritePropertyName("clientAuthConfiguration"u8);
-                writer.WriteObjectValue(ClientAuthConfiguration);
+                if (ClientAuthConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ApplicationGatewayClientAuthConfiguration>)ClientAuthConfiguration).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewaySslProfile DeserializeApplicationGatewaySslProfile(JsonElement element)
+        internal static ApplicationGatewaySslProfile DeserializeApplicationGatewaySslProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -68,6 +102,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ApplicationGatewaySslPolicy> sslPolicy = default;
             Optional<ApplicationGatewayClientAuthConfiguration> clientAuthConfiguration = default;
             Optional<NetworkProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -155,8 +190,61 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationGatewaySslProfile(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToList(trustedClientCertificates), sslPolicy.Value, clientAuthConfiguration.Value, Optional.ToNullable(provisioningState));
+            return new ApplicationGatewaySslProfile(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToList(trustedClientCertificates), sslPolicy.Value, clientAuthConfiguration.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+        }
+
+        ApplicationGatewaySslProfile IModelJsonSerializable<ApplicationGatewaySslProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewaySslProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewaySslProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationGatewaySslProfile>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewaySslProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationGatewaySslProfile IModelSerializable<ApplicationGatewaySslProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewaySslProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationGatewaySslProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApplicationGatewaySslProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApplicationGatewaySslProfile"/> to convert. </param>
+        public static implicit operator RequestContent(ApplicationGatewaySslProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApplicationGatewaySslProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApplicationGatewaySslProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationGatewaySslProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

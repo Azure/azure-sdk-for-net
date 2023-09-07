@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ExpressRouteConnectionData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ExpressRouteConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteConnectionData"/>. </summary>
         public ExpressRouteConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -34,7 +36,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="expressRouteGatewayBypass"> Enable FastPath to vWan Firewall hub. </param>
         /// <param name="enablePrivateLinkFastPath"> Bypass the ExpressRoute gateway when accessing private-links. ExpressRoute FastPath (expressRouteGatewayBypass) must be enabled. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
-        internal ExpressRouteConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, NetworkProvisioningState? provisioningState, WritableSubResource expressRouteCircuitPeering, string authorizationKey, int? routingWeight, bool? enableInternetSecurity, bool? expressRouteGatewayBypass, bool? enablePrivateLinkFastPath, RoutingConfiguration routingConfiguration) : base(id, name, resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, NetworkProvisioningState? provisioningState, WritableSubResource expressRouteCircuitPeering, string authorizationKey, int? routingWeight, bool? enableInternetSecurity, bool? expressRouteGatewayBypass, bool? enablePrivateLinkFastPath, RoutingConfiguration routingConfiguration, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             ExpressRouteCircuitPeering = expressRouteCircuitPeering;

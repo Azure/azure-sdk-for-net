@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.Query.Models
 {
-    internal partial class BatchQueryRequest : IUtf8JsonSerializable
+    internal partial class BatchQueryRequest : IUtf8JsonSerializable, IModelJsonSerializable<BatchQueryRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BatchQueryRequest>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BatchQueryRequest>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BatchQueryRequest>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -29,14 +37,146 @@ namespace Azure.Monitor.Query.Models
                 writer.WriteEndObject();
             }
             writer.WritePropertyName("body"u8);
-            writer.WriteObjectValue(Body);
+            if (Body is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<QueryBody>)Body).Serialize(writer, options);
+            }
             writer.WritePropertyName("path"u8);
             writer.WriteStringValue(Path);
             writer.WritePropertyName("method"u8);
             writer.WriteStringValue(Method);
             writer.WritePropertyName("workspace"u8);
             writer.WriteStringValue(Workspace);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static BatchQueryRequest DeserializeBatchQueryRequest(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string id = default;
+            Optional<IDictionary<string, string>> headers = default;
+            QueryBody body = default;
+            string path = default;
+            string method = default;
+            string workspace = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("headers"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    headers = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("body"u8))
+                {
+                    body = QueryBody.DeserializeQueryBody(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("path"u8))
+                {
+                    path = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("method"u8))
+                {
+                    method = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("workspace"u8))
+                {
+                    workspace = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new BatchQueryRequest(id, Optional.ToDictionary(headers), body, path, method, workspace, serializedAdditionalRawData);
+        }
+
+        BatchQueryRequest IModelJsonSerializable<BatchQueryRequest>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BatchQueryRequest>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchQueryRequest(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BatchQueryRequest>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BatchQueryRequest>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BatchQueryRequest IModelSerializable<BatchQueryRequest>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BatchQueryRequest>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBatchQueryRequest(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BatchQueryRequest"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BatchQueryRequest"/> to convert. </param>
+        public static implicit operator RequestContent(BatchQueryRequest model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BatchQueryRequest"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BatchQueryRequest(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBatchQueryRequest(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

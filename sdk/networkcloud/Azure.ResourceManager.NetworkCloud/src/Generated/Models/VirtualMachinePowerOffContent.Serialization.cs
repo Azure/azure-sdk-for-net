@@ -5,22 +5,120 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class VirtualMachinePowerOffContent : IUtf8JsonSerializable
+    public partial class VirtualMachinePowerOffContent : IUtf8JsonSerializable, IModelJsonSerializable<VirtualMachinePowerOffContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualMachinePowerOffContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualMachinePowerOffContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualMachinePowerOffContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SkipShutdown))
             {
                 writer.WritePropertyName("skipShutdown"u8);
                 writer.WriteStringValue(SkipShutdown.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static VirtualMachinePowerOffContent DeserializeVirtualMachinePowerOffContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<SkipShutdown> skipShutdown = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("skipShutdown"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    skipShutdown = new SkipShutdown(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new VirtualMachinePowerOffContent(Optional.ToNullable(skipShutdown), serializedAdditionalRawData);
+        }
+
+        VirtualMachinePowerOffContent IModelJsonSerializable<VirtualMachinePowerOffContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualMachinePowerOffContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachinePowerOffContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualMachinePowerOffContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualMachinePowerOffContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualMachinePowerOffContent IModelSerializable<VirtualMachinePowerOffContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualMachinePowerOffContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualMachinePowerOffContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VirtualMachinePowerOffContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VirtualMachinePowerOffContent"/> to convert. </param>
+        public static implicit operator RequestContent(VirtualMachinePowerOffContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualMachinePowerOffContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VirtualMachinePowerOffContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualMachinePowerOffContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,18 +5,65 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorWorkspacePrivateEndpointConnection
+    public partial class MonitorWorkspacePrivateEndpointConnection : IUtf8JsonSerializable, IModelJsonSerializable<MonitorWorkspacePrivateEndpointConnection>
     {
-        internal static MonitorWorkspacePrivateEndpointConnection DeserializeMonitorWorkspacePrivateEndpointConnection(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MonitorWorkspacePrivateEndpointConnection>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MonitorWorkspacePrivateEndpointConnection>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorWorkspacePrivateEndpointConnection>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PrivateEndpoint))
+            {
+                writer.WritePropertyName("privateEndpoint"u8);
+                JsonSerializer.Serialize(writer, PrivateEndpoint);
+            }
+            if (Optional.IsDefined(ConnectionState))
+            {
+                writer.WritePropertyName("privateLinkServiceConnectionState"u8);
+                if (ConnectionState is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MonitorPrivateLinkServiceConnectionState>)ConnectionState).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MonitorWorkspacePrivateEndpointConnection DeserializeMonitorWorkspacePrivateEndpointConnection(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +76,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<SubResource> privateEndpoint = default;
             Optional<MonitorPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<MonitorPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -108,8 +156,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MonitorWorkspacePrivateEndpointConnection(id, name, type, systemData.Value, Optional.ToList(groupIds), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new MonitorWorkspacePrivateEndpointConnection(id, name, type, systemData.Value, Optional.ToList(groupIds), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+        }
+
+        MonitorWorkspacePrivateEndpointConnection IModelJsonSerializable<MonitorWorkspacePrivateEndpointConnection>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorWorkspacePrivateEndpointConnection>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorWorkspacePrivateEndpointConnection(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MonitorWorkspacePrivateEndpointConnection>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorWorkspacePrivateEndpointConnection>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MonitorWorkspacePrivateEndpointConnection IModelSerializable<MonitorWorkspacePrivateEndpointConnection>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorWorkspacePrivateEndpointConnection>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMonitorWorkspacePrivateEndpointConnection(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MonitorWorkspacePrivateEndpointConnection"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MonitorWorkspacePrivateEndpointConnection"/> to convert. </param>
+        public static implicit operator RequestContent(MonitorWorkspacePrivateEndpointConnection model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MonitorWorkspacePrivateEndpointConnection"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MonitorWorkspacePrivateEndpointConnection(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMonitorWorkspacePrivateEndpointConnection(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

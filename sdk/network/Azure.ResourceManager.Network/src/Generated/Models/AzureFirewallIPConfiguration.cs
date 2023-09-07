@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,12 +16,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> IP configuration of an Azure Firewall. </summary>
     public partial class AzureFirewallIPConfiguration : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of AzureFirewallIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallIPConfiguration"/>. </summary>
         public AzureFirewallIPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallIPConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -28,7 +30,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="subnet"> Reference to the subnet resource. This resource must be named 'AzureFirewallSubnet' or 'AzureFirewallManagementSubnet'. </param>
         /// <param name="publicIPAddress"> Reference to the PublicIP resource. This field is a mandatory input if subnet is not null. </param>
         /// <param name="provisioningState"> The provisioning state of the Azure firewall IP configuration resource. </param>
-        internal AzureFirewallIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string privateIPAddress, WritableSubResource subnet, WritableSubResource publicIPAddress, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureFirewallIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string privateIPAddress, WritableSubResource subnet, WritableSubResource publicIPAddress, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             PrivateIPAddress = privateIPAddress;

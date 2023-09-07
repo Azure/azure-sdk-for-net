@@ -5,16 +5,71 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayBackendHealthServer
+    public partial class ApplicationGatewayBackendHealthServer : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationGatewayBackendHealthServer>
     {
-        internal static ApplicationGatewayBackendHealthServer DeserializeApplicationGatewayBackendHealthServer(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationGatewayBackendHealthServer>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationGatewayBackendHealthServer>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayBackendHealthServer>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Address))
+            {
+                writer.WritePropertyName("address"u8);
+                writer.WriteStringValue(Address);
+            }
+            if (Optional.IsDefined(IPConfiguration))
+            {
+                writer.WritePropertyName("ipConfiguration"u8);
+                if (IPConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<NetworkInterfaceIPConfigurationData>)IPConfiguration).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(Health))
+            {
+                writer.WritePropertyName("health"u8);
+                writer.WriteStringValue(Health.Value.ToString());
+            }
+            if (Optional.IsDefined(HealthProbeLog))
+            {
+                writer.WritePropertyName("healthProbeLog"u8);
+                writer.WriteStringValue(HealthProbeLog);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ApplicationGatewayBackendHealthServer DeserializeApplicationGatewayBackendHealthServer(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +78,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<NetworkInterfaceIPConfigurationData> ipConfiguration = default;
             Optional<ApplicationGatewayBackendHealthServerHealth> health = default;
             Optional<string> healthProbeLog = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"u8))
@@ -53,8 +109,61 @@ namespace Azure.ResourceManager.Network.Models
                     healthProbeLog = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationGatewayBackendHealthServer(address.Value, ipConfiguration.Value, Optional.ToNullable(health), healthProbeLog.Value);
+            return new ApplicationGatewayBackendHealthServer(address.Value, ipConfiguration.Value, Optional.ToNullable(health), healthProbeLog.Value, serializedAdditionalRawData);
+        }
+
+        ApplicationGatewayBackendHealthServer IModelJsonSerializable<ApplicationGatewayBackendHealthServer>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayBackendHealthServer>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayBackendHealthServer(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationGatewayBackendHealthServer>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayBackendHealthServer>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationGatewayBackendHealthServer IModelSerializable<ApplicationGatewayBackendHealthServer>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayBackendHealthServer>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationGatewayBackendHealthServer(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApplicationGatewayBackendHealthServer"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApplicationGatewayBackendHealthServer"/> to convert. </param>
+        public static implicit operator RequestContent(ApplicationGatewayBackendHealthServer model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApplicationGatewayBackendHealthServer"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApplicationGatewayBackendHealthServer(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationGatewayBackendHealthServer(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class P2SVpnConnectionRequest : IUtf8JsonSerializable
+    public partial class P2SVpnConnectionRequest : IUtf8JsonSerializable, IModelJsonSerializable<P2SVpnConnectionRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<P2SVpnConnectionRequest>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<P2SVpnConnectionRequest>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<P2SVpnConnectionRequest>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(VpnConnectionIds))
             {
@@ -25,7 +33,102 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static P2SVpnConnectionRequest DeserializeP2SVpnConnectionRequest(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<string>> vpnConnectionIds = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("vpnConnectionIds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    vpnConnectionIds = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new P2SVpnConnectionRequest(Optional.ToList(vpnConnectionIds), serializedAdditionalRawData);
+        }
+
+        P2SVpnConnectionRequest IModelJsonSerializable<P2SVpnConnectionRequest>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<P2SVpnConnectionRequest>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeP2SVpnConnectionRequest(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<P2SVpnConnectionRequest>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<P2SVpnConnectionRequest>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        P2SVpnConnectionRequest IModelSerializable<P2SVpnConnectionRequest>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<P2SVpnConnectionRequest>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeP2SVpnConnectionRequest(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="P2SVpnConnectionRequest"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="P2SVpnConnectionRequest"/> to convert. </param>
+        public static implicit operator RequestContent(P2SVpnConnectionRequest model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="P2SVpnConnectionRequest"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator P2SVpnConnectionRequest(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeP2SVpnConnectionRequest(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

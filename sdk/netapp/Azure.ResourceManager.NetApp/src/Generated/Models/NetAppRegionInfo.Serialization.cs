@@ -5,22 +5,72 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppRegionInfo
+    public partial class NetAppRegionInfo : IUtf8JsonSerializable, IModelJsonSerializable<NetAppRegionInfo>
     {
-        internal static NetAppRegionInfo DeserializeNetAppRegionInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetAppRegionInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetAppRegionInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NetAppRegionInfo>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(StorageToNetworkProximity))
+            {
+                writer.WritePropertyName("storageToNetworkProximity"u8);
+                writer.WriteStringValue(StorageToNetworkProximity.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(AvailabilityZoneMappings))
+            {
+                writer.WritePropertyName("availabilityZoneMappings"u8);
+                writer.WriteStartArray();
+                foreach (var item in AvailabilityZoneMappings)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AvailabilityZoneMapping>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static NetAppRegionInfo DeserializeNetAppRegionInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<RegionStorageToNetworkProximity> storageToNetworkProximity = default;
             Optional<IReadOnlyList<AvailabilityZoneMapping>> availabilityZoneMappings = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageToNetworkProximity"u8))
@@ -46,8 +96,61 @@ namespace Azure.ResourceManager.NetApp.Models
                     availabilityZoneMappings = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetAppRegionInfo(Optional.ToNullable(storageToNetworkProximity), Optional.ToList(availabilityZoneMappings));
+            return new NetAppRegionInfo(Optional.ToNullable(storageToNetworkProximity), Optional.ToList(availabilityZoneMappings), serializedAdditionalRawData);
+        }
+
+        NetAppRegionInfo IModelJsonSerializable<NetAppRegionInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetAppRegionInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetAppRegionInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetAppRegionInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetAppRegionInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetAppRegionInfo IModelSerializable<NetAppRegionInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetAppRegionInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetAppRegionInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetAppRegionInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetAppRegionInfo"/> to convert. </param>
+        public static implicit operator RequestContent(NetAppRegionInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetAppRegionInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetAppRegionInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetAppRegionInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

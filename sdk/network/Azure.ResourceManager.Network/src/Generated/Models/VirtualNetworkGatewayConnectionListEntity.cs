@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> A common class for general resource information. </summary>
     public partial class VirtualNetworkGatewayConnectionListEntity : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionListEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionListEntity"/>. </summary>
         /// <param name="virtualNetworkGateway1"> The reference to virtual network gateway resource. </param>
         /// <param name="connectionType"> Gateway connection type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGateway1"/> is null. </exception>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
             TrafficSelectorPolicies = new ChangeTrackingList<TrafficSelectorPolicy>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionListEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionListEntity"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -62,7 +62,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the virtual network gateway connection resource. </param>
         /// <param name="expressRouteGatewayBypass"> Bypass ExpressRoute Gateway for data forwarding. </param>
         /// <param name="enablePrivateLinkFastPath"> Bypass the ExpressRoute gateway when accessing private-links. ExpressRoute FastPath (expressRouteGatewayBypass) must be enabled. </param>
-        internal VirtualNetworkGatewayConnectionListEntity(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, string authorizationKey, WritableSubResource virtualNetworkGateway1, WritableSubResource virtualNetworkGateway2, WritableSubResource localNetworkGateway2, VirtualNetworkGatewayConnectionType connectionType, VirtualNetworkGatewayConnectionProtocol? connectionProtocol, int? routingWeight, VirtualNetworkGatewayConnectionMode? connectionMode, string sharedKey, VirtualNetworkGatewayConnectionStatus? connectionStatus, IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus, long? egressBytesTransferred, long? ingressBytesTransferred, WritableSubResource peer, bool? enableBgp, IList<GatewayCustomBgpIPAddressIPConfiguration> gatewayCustomBgpIPAddresses, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> ipsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? expressRouteGatewayBypass, bool? enablePrivateLinkFastPath) : base(id, name, resourceType, location, tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkGatewayConnectionListEntity(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, string authorizationKey, WritableSubResource virtualNetworkGateway1, WritableSubResource virtualNetworkGateway2, WritableSubResource localNetworkGateway2, VirtualNetworkGatewayConnectionType connectionType, VirtualNetworkGatewayConnectionProtocol? connectionProtocol, int? routingWeight, VirtualNetworkGatewayConnectionMode? connectionMode, string sharedKey, VirtualNetworkGatewayConnectionStatus? connectionStatus, IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus, long? egressBytesTransferred, long? ingressBytesTransferred, WritableSubResource peer, bool? enableBgp, IList<GatewayCustomBgpIPAddressIPConfiguration> gatewayCustomBgpIPAddresses, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> ipsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? expressRouteGatewayBypass, bool? enablePrivateLinkFastPath, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             AuthorizationKey = authorizationKey;
@@ -88,6 +89,11 @@ namespace Azure.ResourceManager.Network.Models
             ProvisioningState = provisioningState;
             ExpressRouteGatewayBypass = expressRouteGatewayBypass;
             EnablePrivateLinkFastPath = enablePrivateLinkFastPath;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionListEntity"/> for deserialization. </summary>
+        internal VirtualNetworkGatewayConnectionListEntity()
+        {
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>

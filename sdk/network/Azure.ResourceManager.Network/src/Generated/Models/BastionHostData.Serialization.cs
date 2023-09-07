@@ -5,23 +5,36 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class BastionHostData : IUtf8JsonSerializable
+    public partial class BastionHostData : IUtf8JsonSerializable, IModelJsonSerializable<BastionHostData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BastionHostData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BastionHostData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BastionHostData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<NetworkSku>)Sku).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Id))
             {
@@ -52,7 +65,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<BastionHostIPConfiguration>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -97,11 +117,25 @@ namespace Azure.ResourceManager.Network
                 writer.WriteBooleanValue(EnableKerberos.Value);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BastionHostData DeserializeBastionHostData(JsonElement element)
+        internal static BastionHostData DeserializeBastionHostData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -123,6 +157,7 @@ namespace Azure.ResourceManager.Network
             Optional<bool> enableShareableLink = default;
             Optional<bool> enableTunneling = default;
             Optional<bool> enableKerberos = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -292,8 +327,61 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BastionHostData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), sku.Value, Optional.ToList(ipConfigurations), dnsName.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(scaleUnits), Optional.ToNullable(disableCopyPaste), Optional.ToNullable(enableFileCopy), Optional.ToNullable(enableIPConnect), Optional.ToNullable(enableShareableLink), Optional.ToNullable(enableTunneling), Optional.ToNullable(enableKerberos));
+            return new BastionHostData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), sku.Value, Optional.ToList(ipConfigurations), dnsName.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(scaleUnits), Optional.ToNullable(disableCopyPaste), Optional.ToNullable(enableFileCopy), Optional.ToNullable(enableIPConnect), Optional.ToNullable(enableShareableLink), Optional.ToNullable(enableTunneling), Optional.ToNullable(enableKerberos), serializedAdditionalRawData);
+        }
+
+        BastionHostData IModelJsonSerializable<BastionHostData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BastionHostData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBastionHostData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BastionHostData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BastionHostData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BastionHostData IModelSerializable<BastionHostData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BastionHostData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBastionHostData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BastionHostData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BastionHostData"/> to convert. </param>
+        public static implicit operator RequestContent(BastionHostData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BastionHostData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BastionHostData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBastionHostData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,22 @@
 
 #nullable disable
 
-using System.Collections.Generic;
+using System;
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor.Administration;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class UnknownHookInfo : IUtf8JsonSerializable
+    internal partial class UnknownHookInfo : IUtf8JsonSerializable, IModelJsonSerializable<NotificationHook>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NotificationHook>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NotificationHook>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NotificationHook>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("hookType"u8);
             writer.WriteStringValue(HookKind.ToString());
@@ -40,64 +46,44 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownHookInfo DeserializeUnknownHookInfo(JsonElement element)
+        internal static NotificationHook DeserializeUnknownHookInfo(JsonElement element, ModelSerializerOptions options = default) => DeserializeNotificationHook(element, options);
+
+        NotificationHook IModelJsonSerializable<NotificationHook>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            NotificationHookKind hookType = "Unknown";
-            Optional<string> hookId = default;
-            string hookName = default;
-            Optional<string> description = default;
-            Optional<string> externalLink = default;
-            Optional<IList<string>> admins = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("hookType"u8))
-                {
-                    hookType = new NotificationHookKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("hookId"u8))
-                {
-                    hookId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("hookName"u8))
-                {
-                    hookName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("externalLink"u8))
-                {
-                    externalLink = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("admins"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    admins = array;
-                    continue;
-                }
-            }
-            return new UnknownHookInfo(hookType, hookId.Value, hookName, description.Value, externalLink.Value, Optional.ToList(admins));
+            Core.ModelSerializerHelper.ValidateFormat<NotificationHook>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownHookInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NotificationHook>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NotificationHook>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NotificationHook IModelSerializable<NotificationHook>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NotificationHook>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNotificationHook(doc.RootElement, options);
         }
     }
 }

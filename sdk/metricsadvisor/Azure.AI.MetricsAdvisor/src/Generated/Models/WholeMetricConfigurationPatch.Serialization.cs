@@ -5,12 +5,184 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class WholeMetricConfigurationPatch : IUtf8JsonSerializable
+    internal partial class WholeMetricConfigurationPatch : IUtf8JsonSerializable, IModelJsonSerializable<WholeMetricConfigurationPatch>
     {
+        void IModelJsonSerializable<WholeMetricConfigurationPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WholeMetricConfigurationPatch>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ConditionOperator))
+            {
+                writer.WritePropertyName("conditionOperator"u8);
+                writer.WriteStringValue(ConditionOperator.Value.ToString());
+            }
+            if (Optional.IsDefined(SmartDetectionCondition))
+            {
+                writer.WritePropertyName("smartDetectionCondition"u8);
+                if (SmartDetectionCondition is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SmartDetectionConditionPatch>)SmartDetectionCondition).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(HardThresholdCondition))
+            {
+                writer.WritePropertyName("hardThresholdCondition"u8);
+                if (HardThresholdCondition is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<HardThresholdConditionPatch>)HardThresholdCondition).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(ChangeThresholdCondition))
+            {
+                writer.WritePropertyName("changeThresholdCondition"u8);
+                if (ChangeThresholdCondition is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ChangeThresholdConditionPatch>)ChangeThresholdCondition).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static WholeMetricConfigurationPatch DeserializeWholeMetricConfigurationPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DetectionConditionOperator> conditionOperator = default;
+            Optional<SmartDetectionConditionPatch> smartDetectionCondition = default;
+            Optional<HardThresholdConditionPatch> hardThresholdCondition = default;
+            Optional<ChangeThresholdConditionPatch> changeThresholdCondition = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("conditionOperator"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    conditionOperator = new DetectionConditionOperator(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("smartDetectionCondition"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    smartDetectionCondition = SmartDetectionConditionPatch.DeserializeSmartDetectionConditionPatch(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("hardThresholdCondition"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hardThresholdCondition = HardThresholdConditionPatch.DeserializeHardThresholdConditionPatch(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("changeThresholdCondition"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    changeThresholdCondition = ChangeThresholdConditionPatch.DeserializeChangeThresholdConditionPatch(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new WholeMetricConfigurationPatch(Optional.ToNullable(conditionOperator), smartDetectionCondition.Value, hardThresholdCondition.Value, changeThresholdCondition.Value, serializedAdditionalRawData);
+        }
+
+        WholeMetricConfigurationPatch IModelJsonSerializable<WholeMetricConfigurationPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WholeMetricConfigurationPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWholeMetricConfigurationPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WholeMetricConfigurationPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WholeMetricConfigurationPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WholeMetricConfigurationPatch IModelSerializable<WholeMetricConfigurationPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WholeMetricConfigurationPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWholeMetricConfigurationPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WholeMetricConfigurationPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WholeMetricConfigurationPatch"/> to convert. </param>
+        public static implicit operator RequestContent(WholeMetricConfigurationPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WholeMetricConfigurationPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WholeMetricConfigurationPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWholeMetricConfigurationPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
     }
 }

@@ -5,12 +5,125 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class SQLSourceParameterPatch : IUtf8JsonSerializable
+    internal partial class SQLSourceParameterPatch : IUtf8JsonSerializable, IModelJsonSerializable<SQLSourceParameterPatch>
     {
+        void IModelJsonSerializable<SQLSourceParameterPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SQLSourceParameterPatch>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ConnectionString))
+            {
+                writer.WritePropertyName("connectionString"u8);
+                writer.WriteStringValue(ConnectionString);
+            }
+            if (Optional.IsDefined(Query))
+            {
+                writer.WritePropertyName("query"u8);
+                writer.WriteStringValue(Query);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SQLSourceParameterPatch DeserializeSQLSourceParameterPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> connectionString = default;
+            Optional<string> query = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("connectionString"u8))
+                {
+                    connectionString = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("query"u8))
+                {
+                    query = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new SQLSourceParameterPatch(connectionString.Value, query.Value, serializedAdditionalRawData);
+        }
+
+        SQLSourceParameterPatch IModelJsonSerializable<SQLSourceParameterPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SQLSourceParameterPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSQLSourceParameterPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SQLSourceParameterPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SQLSourceParameterPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SQLSourceParameterPatch IModelSerializable<SQLSourceParameterPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SQLSourceParameterPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSQLSourceParameterPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SQLSourceParameterPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SQLSourceParameterPatch"/> to convert. </param>
+        public static implicit operator RequestContent(SQLSourceParameterPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SQLSourceParameterPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SQLSourceParameterPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSQLSourceParameterPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
     }
 }

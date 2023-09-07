@@ -5,15 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class SimNameAndEncryptedProperties : IUtf8JsonSerializable
+    public partial class SimNameAndEncryptedProperties : IUtf8JsonSerializable, IModelJsonSerializable<SimNameAndEncryptedProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SimNameAndEncryptedProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SimNameAndEncryptedProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SimNameAndEncryptedProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -42,7 +51,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in StaticIPConfiguration)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SimStaticIPProperties>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +68,201 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStringValue(EncryptedCredentials);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static SimNameAndEncryptedProperties DeserializeSimNameAndEncryptedProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string name = default;
+            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            Optional<MobileNetworkSimState> simState = default;
+            Optional<IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState>> siteProvisioningState = default;
+            string internationalMobileSubscriberIdentity = default;
+            Optional<string> integratedCircuitCardIdentifier = default;
+            Optional<string> deviceType = default;
+            Optional<WritableSubResource> simPolicy = default;
+            Optional<IList<SimStaticIPProperties>> staticIPConfiguration = default;
+            Optional<string> vendorName = default;
+            Optional<string> vendorKeyFingerprint = default;
+            Optional<string> encryptedCredentials = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new MobileNetworkProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("simState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            simState = new MobileNetworkSimState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("siteProvisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, MobileNetworkSiteProvisioningState> dictionary = new Dictionary<string, MobileNetworkSiteProvisioningState>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, new MobileNetworkSiteProvisioningState(property1.Value.GetString()));
+                            }
+                            siteProvisioningState = dictionary;
+                            continue;
+                        }
+                        if (property0.NameEquals("internationalMobileSubscriberIdentity"u8))
+                        {
+                            internationalMobileSubscriberIdentity = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("integratedCircuitCardIdentifier"u8))
+                        {
+                            integratedCircuitCardIdentifier = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("deviceType"u8))
+                        {
+                            deviceType = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("simPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            simPolicy = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("staticIpConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<SimStaticIPProperties> array = new List<SimStaticIPProperties>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(SimStaticIPProperties.DeserializeSimStaticIPProperties(item));
+                            }
+                            staticIPConfiguration = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("vendorName"u8))
+                        {
+                            vendorName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("vendorKeyFingerprint"u8))
+                        {
+                            vendorKeyFingerprint = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("encryptedCredentials"u8))
+                        {
+                            encryptedCredentials = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new SimNameAndEncryptedProperties(name, Optional.ToNullable(provisioningState), Optional.ToNullable(simState), Optional.ToDictionary(siteProvisioningState), internationalMobileSubscriberIdentity, integratedCircuitCardIdentifier.Value, deviceType.Value, simPolicy, Optional.ToList(staticIPConfiguration), vendorName.Value, vendorKeyFingerprint.Value, encryptedCredentials.Value, serializedAdditionalRawData);
+        }
+
+        SimNameAndEncryptedProperties IModelJsonSerializable<SimNameAndEncryptedProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SimNameAndEncryptedProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSimNameAndEncryptedProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SimNameAndEncryptedProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SimNameAndEncryptedProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SimNameAndEncryptedProperties IModelSerializable<SimNameAndEncryptedProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SimNameAndEncryptedProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSimNameAndEncryptedProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SimNameAndEncryptedProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SimNameAndEncryptedProperties"/> to convert. </param>
+        public static implicit operator RequestContent(SimNameAndEncryptedProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SimNameAndEncryptedProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SimNameAndEncryptedProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSimNameAndEncryptedProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

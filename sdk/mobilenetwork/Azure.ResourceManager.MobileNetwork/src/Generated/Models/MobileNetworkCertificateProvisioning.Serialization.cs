@@ -5,21 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class MobileNetworkCertificateProvisioning
+    public partial class MobileNetworkCertificateProvisioning : IUtf8JsonSerializable, IModelJsonSerializable<MobileNetworkCertificateProvisioning>
     {
-        internal static MobileNetworkCertificateProvisioning DeserializeMobileNetworkCertificateProvisioning(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MobileNetworkCertificateProvisioning>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MobileNetworkCertificateProvisioning>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MobileNetworkCertificateProvisioning>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MobileNetworkCertificateProvisioning DeserializeMobileNetworkCertificateProvisioning(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<CertificateProvisioningState> state = default;
             Optional<string> reason = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -36,8 +65,61 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     reason = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MobileNetworkCertificateProvisioning(Optional.ToNullable(state), reason.Value);
+            return new MobileNetworkCertificateProvisioning(Optional.ToNullable(state), reason.Value, serializedAdditionalRawData);
+        }
+
+        MobileNetworkCertificateProvisioning IModelJsonSerializable<MobileNetworkCertificateProvisioning>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MobileNetworkCertificateProvisioning>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMobileNetworkCertificateProvisioning(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MobileNetworkCertificateProvisioning>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MobileNetworkCertificateProvisioning>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MobileNetworkCertificateProvisioning IModelSerializable<MobileNetworkCertificateProvisioning>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MobileNetworkCertificateProvisioning>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMobileNetworkCertificateProvisioning(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MobileNetworkCertificateProvisioning"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MobileNetworkCertificateProvisioning"/> to convert. </param>
+        public static implicit operator RequestContent(MobileNetworkCertificateProvisioning model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MobileNetworkCertificateProvisioning"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MobileNetworkCertificateProvisioning(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMobileNetworkCertificateProvisioning(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

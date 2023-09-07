@@ -5,19 +5,120 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerLtrPreBackupContent : IUtf8JsonSerializable
+    public partial class PostgreSqlFlexibleServerLtrPreBackupContent : IUtf8JsonSerializable, IModelJsonSerializable<PostgreSqlFlexibleServerLtrPreBackupContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PostgreSqlFlexibleServerLtrPreBackupContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PostgreSqlFlexibleServerLtrPreBackupContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerLtrPreBackupContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("backupSettings"u8);
-            writer.WriteObjectValue(BackupSettings);
+            if (BackupSettings is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<PostgreSqlFlexibleServerBackupSettings>)BackupSettings).Serialize(writer, options);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static PostgreSqlFlexibleServerLtrPreBackupContent DeserializePostgreSqlFlexibleServerLtrPreBackupContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            PostgreSqlFlexibleServerBackupSettings backupSettings = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("backupSettings"u8))
+                {
+                    backupSettings = PostgreSqlFlexibleServerBackupSettings.DeserializePostgreSqlFlexibleServerBackupSettings(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new PostgreSqlFlexibleServerLtrPreBackupContent(backupSettings, serializedAdditionalRawData);
+        }
+
+        PostgreSqlFlexibleServerLtrPreBackupContent IModelJsonSerializable<PostgreSqlFlexibleServerLtrPreBackupContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerLtrPreBackupContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlFlexibleServerLtrPreBackupContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PostgreSqlFlexibleServerLtrPreBackupContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerLtrPreBackupContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PostgreSqlFlexibleServerLtrPreBackupContent IModelSerializable<PostgreSqlFlexibleServerLtrPreBackupContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerLtrPreBackupContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePostgreSqlFlexibleServerLtrPreBackupContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PostgreSqlFlexibleServerLtrPreBackupContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PostgreSqlFlexibleServerLtrPreBackupContent"/> to convert. </param>
+        public static implicit operator RequestContent(PostgreSqlFlexibleServerLtrPreBackupContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PostgreSqlFlexibleServerLtrPreBackupContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PostgreSqlFlexibleServerLtrPreBackupContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePostgreSqlFlexibleServerLtrPreBackupContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

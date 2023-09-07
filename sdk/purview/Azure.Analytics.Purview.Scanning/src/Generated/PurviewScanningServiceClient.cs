@@ -701,7 +701,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetKeyVaultReferencesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetKeyVaultReferencesNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetKeyVaultReferences", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetKeyVaultReferences", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -722,7 +722,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetKeyVaultReferencesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetKeyVaultReferencesNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetKeyVaultReferences", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetKeyVaultReferences", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -743,7 +743,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationRulesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassificationRulesNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetClassificationRules", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetClassificationRules", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -764,7 +764,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationRulesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassificationRulesNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetClassificationRules", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetClassificationRules", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -785,7 +785,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDataSourcesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDataSourcesNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetDataSources", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetDataSources", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -806,7 +806,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDataSourcesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDataSourcesNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetDataSources", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetDataSources", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -827,7 +827,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScanRulesetsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScanRulesetsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetScanRulesets", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetScanRulesets", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -848,7 +848,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScanRulesetsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScanRulesetsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetScanRulesets", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetScanRulesets", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -869,7 +869,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSystemRulesetsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSystemRulesetsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetSystemRulesets", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetSystemRulesets", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -890,7 +890,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSystemRulesetsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSystemRulesetsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetSystemRulesets", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetSystemRulesets", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -912,7 +912,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSystemRulesetsVersionsRequest(dataSourceType, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSystemRulesetsVersionsNextPageRequest(nextLink, dataSourceType, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetSystemRulesetsVersions", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetSystemRulesetsVersions", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -934,7 +934,7 @@ namespace Azure.Analytics.Purview.Scanning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSystemRulesetsVersionsRequest(dataSourceType, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSystemRulesetsVersionsNextPageRequest(nextLink, dataSourceType, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetSystemRulesetsVersions", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanningServiceClient.GetSystemRulesetsVersions", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetKeyVaultReferenceRequest(string keyVaultName, RequestContext context)

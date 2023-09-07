@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class PageViewPerfData : IUtf8JsonSerializable
+    internal partial class PageViewPerfData : IUtf8JsonSerializable, IModelJsonSerializable<PageViewPerfData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PageViewPerfData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PageViewPerfData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PageViewPerfData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -84,6 +92,162 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
+        }
+
+        internal static PageViewPerfData DeserializePageViewPerfData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string id = default;
+            string name = default;
+            Optional<string> url = default;
+            Optional<string> duration = default;
+            Optional<string> perfTotal = default;
+            Optional<string> networkConnect = default;
+            Optional<string> sentRequest = default;
+            Optional<string> receivedResponse = default;
+            Optional<string> domProcessing = default;
+            Optional<IDictionary<string, string>> properties = default;
+            Optional<IDictionary<string, double>> measurements = default;
+            int ver = default;
+            IDictionary<string, object> additionalProperties = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("url"u8))
+                {
+                    url = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("duration"u8))
+                {
+                    duration = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("perfTotal"u8))
+                {
+                    perfTotal = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("networkConnect"u8))
+                {
+                    networkConnect = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("sentRequest"u8))
+                {
+                    sentRequest = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("receivedResponse"u8))
+                {
+                    receivedResponse = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("domProcessing"u8))
+                {
+                    domProcessing = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    properties = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("measurements"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, double> dictionary = new Dictionary<string, double>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetDouble());
+                    }
+                    measurements = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("ver"u8))
+                {
+                    ver = property.Value.GetInt32();
+                    continue;
+                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+            }
+            additionalProperties = additionalPropertiesDictionary;
+            return new PageViewPerfData(ver, additionalProperties, id, name, url.Value, duration.Value, perfTotal.Value, networkConnect.Value, sentRequest.Value, receivedResponse.Value, domProcessing.Value, Optional.ToDictionary(properties), Optional.ToDictionary(measurements));
+        }
+
+        PageViewPerfData IModelJsonSerializable<PageViewPerfData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PageViewPerfData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePageViewPerfData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PageViewPerfData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PageViewPerfData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PageViewPerfData IModelSerializable<PageViewPerfData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PageViewPerfData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePageViewPerfData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PageViewPerfData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PageViewPerfData"/> to convert. </param>
+        public static implicit operator RequestContent(PageViewPerfData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PageViewPerfData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PageViewPerfData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePageViewPerfData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

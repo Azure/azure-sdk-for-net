@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Volume Backup Properties. </summary>
     public partial class NetAppVolumeBackupConfiguration
     {
-        /// <summary> Initializes a new instance of NetAppVolumeBackupConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupConfiguration"/>. </summary>
         public NetAppVolumeBackupConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeBackupConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupConfiguration"/>. </summary>
         /// <param name="backupPolicyId"> Backup Policy Resource ID. </param>
         /// <param name="isPolicyEnforced"> Policy Enforced. </param>
         /// <param name="isBackupEnabled"> Backup Enabled. </param>
-        internal NetAppVolumeBackupConfiguration(ResourceIdentifier backupPolicyId, bool? isPolicyEnforced, bool? isBackupEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeBackupConfiguration(ResourceIdentifier backupPolicyId, bool? isPolicyEnforced, bool? isBackupEnabled, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BackupPolicyId = backupPolicyId;
             IsPolicyEnforced = isPolicyEnforced;
             IsBackupEnabled = isBackupEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Backup Policy Resource ID. </summary>

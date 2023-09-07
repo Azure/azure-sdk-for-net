@@ -5,21 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class PredefinedUrlCategory
+    public partial class PredefinedUrlCategory : IUtf8JsonSerializable, IModelJsonSerializable<PredefinedUrlCategory>
     {
-        internal static PredefinedUrlCategory DeserializePredefinedUrlCategory(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PredefinedUrlCategory>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PredefinedUrlCategory>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PredefinedUrlCategory>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("action"u8);
+            writer.WriteStringValue(Action);
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PredefinedUrlCategory DeserializePredefinedUrlCategory(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string action = default;
             string name = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))
@@ -32,8 +65,61 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PredefinedUrlCategory(action, name);
+            return new PredefinedUrlCategory(action, name, serializedAdditionalRawData);
+        }
+
+        PredefinedUrlCategory IModelJsonSerializable<PredefinedUrlCategory>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PredefinedUrlCategory>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePredefinedUrlCategory(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PredefinedUrlCategory>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PredefinedUrlCategory>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PredefinedUrlCategory IModelSerializable<PredefinedUrlCategory>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PredefinedUrlCategory>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePredefinedUrlCategory(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PredefinedUrlCategory"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PredefinedUrlCategory"/> to convert. </param>
+        public static implicit operator RequestContent(PredefinedUrlCategory model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PredefinedUrlCategory"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PredefinedUrlCategory(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePredefinedUrlCategory(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

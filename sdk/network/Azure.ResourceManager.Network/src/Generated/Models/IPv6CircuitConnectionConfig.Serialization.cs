@@ -5,32 +5,55 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class IPv6CircuitConnectionConfig : IUtf8JsonSerializable
+    public partial class IPv6CircuitConnectionConfig : IUtf8JsonSerializable, IModelJsonSerializable<IPv6CircuitConnectionConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IPv6CircuitConnectionConfig>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IPv6CircuitConnectionConfig>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IPv6CircuitConnectionConfig>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IPv6CircuitConnectionConfig DeserializeIPv6CircuitConnectionConfig(JsonElement element)
+        internal static IPv6CircuitConnectionConfig DeserializeIPv6CircuitConnectionConfig(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> addressPrefix = default;
             Optional<CircuitConnectionStatus> circuitConnectionStatus = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addressPrefix"u8))
@@ -47,8 +70,61 @@ namespace Azure.ResourceManager.Network.Models
                     circuitConnectionStatus = new CircuitConnectionStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IPv6CircuitConnectionConfig(addressPrefix.Value, Optional.ToNullable(circuitConnectionStatus));
+            return new IPv6CircuitConnectionConfig(addressPrefix.Value, Optional.ToNullable(circuitConnectionStatus), serializedAdditionalRawData);
+        }
+
+        IPv6CircuitConnectionConfig IModelJsonSerializable<IPv6CircuitConnectionConfig>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IPv6CircuitConnectionConfig>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIPv6CircuitConnectionConfig(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IPv6CircuitConnectionConfig>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IPv6CircuitConnectionConfig>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IPv6CircuitConnectionConfig IModelSerializable<IPv6CircuitConnectionConfig>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IPv6CircuitConnectionConfig>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIPv6CircuitConnectionConfig(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IPv6CircuitConnectionConfig"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IPv6CircuitConnectionConfig"/> to convert. </param>
+        public static implicit operator RequestContent(IPv6CircuitConnectionConfig model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IPv6CircuitConnectionConfig"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IPv6CircuitConnectionConfig(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIPv6CircuitConnectionConfig(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

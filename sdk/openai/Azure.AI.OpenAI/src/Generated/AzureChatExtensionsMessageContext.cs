@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,6 +18,9 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class AzureChatExtensionsMessageContext
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of AzureChatExtensionsMessageContext. </summary>
         public AzureChatExtensionsMessageContext()
         {
@@ -30,9 +34,11 @@ namespace Azure.AI.OpenAI
         ///   course of generating a chat completions response that was augmented by capabilities from Azure OpenAI chat
         ///   extensions.
         /// </param>
-        internal AzureChatExtensionsMessageContext(IList<ChatMessage> messages)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureChatExtensionsMessageContext(IList<ChatMessage> messages, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Messages = messages;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

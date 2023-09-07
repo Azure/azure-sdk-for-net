@@ -5,17 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    public partial class PostgreSqlFlexibleServerFirewallRuleData : IUtf8JsonSerializable
+    public partial class PostgreSqlFlexibleServerFirewallRuleData : IUtf8JsonSerializable, IModelJsonSerializable<PostgreSqlFlexibleServerFirewallRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PostgreSqlFlexibleServerFirewallRuleData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PostgreSqlFlexibleServerFirewallRuleData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerFirewallRuleData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -24,11 +32,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             writer.WritePropertyName("endIpAddress"u8);
             writer.WriteStringValue(EndIPAddress.ToString());
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PostgreSqlFlexibleServerFirewallRuleData DeserializePostgreSqlFlexibleServerFirewallRuleData(JsonElement element)
+        internal static PostgreSqlFlexibleServerFirewallRuleData DeserializePostgreSqlFlexibleServerFirewallRuleData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +61,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             Optional<SystemData> systemData = default;
             IPAddress startIPAddress = default;
             IPAddress endIPAddress = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -87,8 +110,61 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PostgreSqlFlexibleServerFirewallRuleData(id, name, type, systemData.Value, startIPAddress, endIPAddress);
+            return new PostgreSqlFlexibleServerFirewallRuleData(id, name, type, systemData.Value, startIPAddress, endIPAddress, serializedAdditionalRawData);
+        }
+
+        PostgreSqlFlexibleServerFirewallRuleData IModelJsonSerializable<PostgreSqlFlexibleServerFirewallRuleData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerFirewallRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlFlexibleServerFirewallRuleData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PostgreSqlFlexibleServerFirewallRuleData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerFirewallRuleData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PostgreSqlFlexibleServerFirewallRuleData IModelSerializable<PostgreSqlFlexibleServerFirewallRuleData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerFirewallRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePostgreSqlFlexibleServerFirewallRuleData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PostgreSqlFlexibleServerFirewallRuleData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PostgreSqlFlexibleServerFirewallRuleData"/> to convert. </param>
+        public static implicit operator RequestContent(PostgreSqlFlexibleServerFirewallRuleData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PostgreSqlFlexibleServerFirewallRuleData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PostgreSqlFlexibleServerFirewallRuleData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePostgreSqlFlexibleServerFirewallRuleData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

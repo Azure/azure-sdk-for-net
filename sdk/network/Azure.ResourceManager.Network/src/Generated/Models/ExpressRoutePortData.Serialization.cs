@@ -10,16 +10,21 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ExpressRoutePortData : IUtf8JsonSerializable
+    public partial class ExpressRoutePortData : IUtf8JsonSerializable, IModelJsonSerializable<ExpressRoutePortData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExpressRoutePortData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExpressRoutePortData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressRoutePortData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -70,7 +75,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ExpressRouteLinkData>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -80,11 +92,25 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStringValue(BillingType.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExpressRoutePortData DeserializeExpressRoutePortData(JsonElement element)
+        internal static ExpressRoutePortData DeserializeExpressRoutePortData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -108,6 +134,7 @@ namespace Azure.ResourceManager.Network
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<Guid> resourceGuid = default;
             Optional<ExpressRoutePortsBillingType> billingType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -288,8 +315,61 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExpressRoutePortData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), identity, peeringLocation.Value, Optional.ToNullable(bandwidthInGbps), Optional.ToNullable(provisionedBandwidthInGbps), mtu.Value, Optional.ToNullable(encapsulation), etherType.Value, allocationDate.Value, Optional.ToList(links), Optional.ToList(circuits), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid), Optional.ToNullable(billingType));
+            return new ExpressRoutePortData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), identity, peeringLocation.Value, Optional.ToNullable(bandwidthInGbps), Optional.ToNullable(provisionedBandwidthInGbps), mtu.Value, Optional.ToNullable(encapsulation), etherType.Value, allocationDate.Value, Optional.ToList(links), Optional.ToList(circuits), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid), Optional.ToNullable(billingType), serializedAdditionalRawData);
+        }
+
+        ExpressRoutePortData IModelJsonSerializable<ExpressRoutePortData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressRoutePortData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExpressRoutePortData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExpressRoutePortData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressRoutePortData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExpressRoutePortData IModelSerializable<ExpressRoutePortData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressRoutePortData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExpressRoutePortData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExpressRoutePortData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExpressRoutePortData"/> to convert. </param>
+        public static implicit operator RequestContent(ExpressRoutePortData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExpressRoutePortData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExpressRoutePortData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExpressRoutePortData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

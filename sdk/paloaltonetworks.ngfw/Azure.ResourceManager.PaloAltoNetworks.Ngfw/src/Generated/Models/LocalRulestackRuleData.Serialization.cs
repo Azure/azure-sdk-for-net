@@ -5,19 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    public partial class LocalRulestackRuleData : IUtf8JsonSerializable
+    public partial class LocalRulestackRuleData : IUtf8JsonSerializable, IModelJsonSerializable<LocalRulestackRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LocalRulestackRuleData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LocalRulestackRuleData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LocalRulestackRuleData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -41,7 +47,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                if (Source is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SourceAddressInfo>)Source).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(NegateSource))
             {
@@ -51,7 +64,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination);
+                if (Destination is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DestinationAddressInfo>)Destination).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(NegateDestination))
             {
@@ -71,7 +91,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
-                writer.WriteObjectValue(Category);
+                if (Category is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<EdlMatchCategory>)Category).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Protocol))
             {
@@ -119,16 +146,37 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WriteStartArray();
                 foreach (var item in Tags)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<RulestackTagInfo>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LocalRulestackRuleData DeserializeLocalRulestackRuleData(JsonElement element)
+        internal static LocalRulestackRuleData DeserializeLocalRulestackRuleData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -157,6 +205,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             Optional<DecryptionRuleType> decryptionRuleType = default;
             Optional<IList<RulestackTagInfo>> tags = default;
             Optional<FirewallProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -370,8 +419,61 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LocalRulestackRuleData(id, name, type, systemData.Value, Optional.ToNullable(etag), ruleName, Optional.ToNullable(priority), description.Value, Optional.ToNullable(ruleState), source.Value, Optional.ToNullable(negateSource), destination.Value, Optional.ToNullable(negateDestination), Optional.ToList(applications), category.Value, protocol.Value, Optional.ToList(protocolPortList), inboundInspectionCertificate.Value, auditComment.Value, Optional.ToNullable(actionType), Optional.ToNullable(enableLogging), Optional.ToNullable(decryptionRuleType), Optional.ToList(tags), Optional.ToNullable(provisioningState));
+            return new LocalRulestackRuleData(id, name, type, systemData.Value, Optional.ToNullable(etag), ruleName, Optional.ToNullable(priority), description.Value, Optional.ToNullable(ruleState), source.Value, Optional.ToNullable(negateSource), destination.Value, Optional.ToNullable(negateDestination), Optional.ToList(applications), category.Value, protocol.Value, Optional.ToList(protocolPortList), inboundInspectionCertificate.Value, auditComment.Value, Optional.ToNullable(actionType), Optional.ToNullable(enableLogging), Optional.ToNullable(decryptionRuleType), Optional.ToList(tags), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+        }
+
+        LocalRulestackRuleData IModelJsonSerializable<LocalRulestackRuleData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LocalRulestackRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLocalRulestackRuleData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LocalRulestackRuleData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LocalRulestackRuleData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LocalRulestackRuleData IModelSerializable<LocalRulestackRuleData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LocalRulestackRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLocalRulestackRuleData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LocalRulestackRuleData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LocalRulestackRuleData"/> to convert. </param>
+        public static implicit operator RequestContent(LocalRulestackRuleData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LocalRulestackRuleData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LocalRulestackRuleData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLocalRulestackRuleData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

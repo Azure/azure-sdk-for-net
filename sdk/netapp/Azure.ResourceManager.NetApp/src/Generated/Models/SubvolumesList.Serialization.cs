@@ -5,23 +5,73 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    internal partial class SubvolumesList
+    internal partial class SubvolumesList : IUtf8JsonSerializable, IModelJsonSerializable<SubvolumesList>
     {
-        internal static SubvolumesList DeserializeSubvolumesList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SubvolumesList>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SubvolumesList>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SubvolumesList>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<NetAppSubvolumeInfoData>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SubvolumesList DeserializeSubvolumesList(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<NetAppSubvolumeInfoData>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +93,61 @@ namespace Azure.ResourceManager.NetApp.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SubvolumesList(Optional.ToList(value), nextLink.Value);
+            return new SubvolumesList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+        }
+
+        SubvolumesList IModelJsonSerializable<SubvolumesList>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SubvolumesList>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubvolumesList(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SubvolumesList>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SubvolumesList>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SubvolumesList IModelSerializable<SubvolumesList>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SubvolumesList>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSubvolumesList(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SubvolumesList"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SubvolumesList"/> to convert. </param>
+        public static implicit operator RequestContent(SubvolumesList model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SubvolumesList"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SubvolumesList(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSubvolumesList(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

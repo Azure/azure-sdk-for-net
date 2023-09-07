@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class SeriesIdentity : IUtf8JsonSerializable
+    internal partial class SeriesIdentity : IUtf8JsonSerializable, IModelJsonSerializable<SeriesIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SeriesIdentity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SeriesIdentity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SeriesIdentity>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("dimension"u8);
             writer.WriteStartObject();
@@ -24,16 +31,31 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WriteStringValue(item.Value);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SeriesIdentity DeserializeSeriesIdentity(JsonElement element)
+        internal static SeriesIdentity DeserializeSeriesIdentity(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IDictionary<string, string> dimension = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dimension"u8))
@@ -46,8 +68,61 @@ namespace Azure.AI.MetricsAdvisor.Models
                     dimension = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SeriesIdentity(dimension);
+            return new SeriesIdentity(dimension, serializedAdditionalRawData);
+        }
+
+        SeriesIdentity IModelJsonSerializable<SeriesIdentity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SeriesIdentity>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSeriesIdentity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SeriesIdentity>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SeriesIdentity>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SeriesIdentity IModelSerializable<SeriesIdentity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SeriesIdentity>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSeriesIdentity(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SeriesIdentity"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SeriesIdentity"/> to convert. </param>
+        public static implicit operator RequestContent(SeriesIdentity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SeriesIdentity"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SeriesIdentity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSeriesIdentity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

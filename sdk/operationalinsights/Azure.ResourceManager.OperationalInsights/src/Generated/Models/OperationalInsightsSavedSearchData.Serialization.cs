@@ -5,19 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    public partial class OperationalInsightsSavedSearchData : IUtf8JsonSerializable
+    public partial class OperationalInsightsSavedSearchData : IUtf8JsonSerializable, IModelJsonSerializable<OperationalInsightsSavedSearchData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OperationalInsightsSavedSearchData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OperationalInsightsSavedSearchData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsSavedSearchData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
@@ -53,16 +59,37 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WriteStartArray();
                 foreach (var item in Tags)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<OperationalInsightsTag>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OperationalInsightsSavedSearchData DeserializeOperationalInsightsSavedSearchData(JsonElement element)
+        internal static OperationalInsightsSavedSearchData DeserializeOperationalInsightsSavedSearchData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -79,6 +106,7 @@ namespace Azure.ResourceManager.OperationalInsights
             Optional<string> functionParameters = default;
             Optional<long> version = default;
             Optional<IList<OperationalInsightsTag>> tags = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -174,8 +202,61 @@ namespace Azure.ResourceManager.OperationalInsights
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OperationalInsightsSavedSearchData(id, name, type, systemData.Value, Optional.ToNullable(etag), category, displayName, query, functionAlias.Value, functionParameters.Value, Optional.ToNullable(version), Optional.ToList(tags));
+            return new OperationalInsightsSavedSearchData(id, name, type, systemData.Value, Optional.ToNullable(etag), category, displayName, query, functionAlias.Value, functionParameters.Value, Optional.ToNullable(version), Optional.ToList(tags), serializedAdditionalRawData);
+        }
+
+        OperationalInsightsSavedSearchData IModelJsonSerializable<OperationalInsightsSavedSearchData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsSavedSearchData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsSavedSearchData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OperationalInsightsSavedSearchData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsSavedSearchData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OperationalInsightsSavedSearchData IModelSerializable<OperationalInsightsSavedSearchData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsSavedSearchData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOperationalInsightsSavedSearchData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OperationalInsightsSavedSearchData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OperationalInsightsSavedSearchData"/> to convert. </param>
+        public static implicit operator RequestContent(OperationalInsightsSavedSearchData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OperationalInsightsSavedSearchData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OperationalInsightsSavedSearchData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOperationalInsightsSavedSearchData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,22 +5,72 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class ActiveConnectivityConfigurationsListResult
+    internal partial class ActiveConnectivityConfigurationsListResult : IUtf8JsonSerializable, IModelJsonSerializable<ActiveConnectivityConfigurationsListResult>
     {
-        internal static ActiveConnectivityConfigurationsListResult DeserializeActiveConnectivityConfigurationsListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ActiveConnectivityConfigurationsListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ActiveConnectivityConfigurationsListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ActiveConnectivityConfigurationsListResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ActiveConnectivityConfiguration>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SkipToken))
+            {
+                writer.WritePropertyName("skipToken"u8);
+                writer.WriteStringValue(SkipToken);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ActiveConnectivityConfigurationsListResult DeserializeActiveConnectivityConfigurationsListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<ActiveConnectivityConfiguration>> value = default;
             Optional<string> skipToken = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -42,8 +92,61 @@ namespace Azure.ResourceManager.Network.Models
                     skipToken = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ActiveConnectivityConfigurationsListResult(Optional.ToList(value), skipToken.Value);
+            return new ActiveConnectivityConfigurationsListResult(Optional.ToList(value), skipToken.Value, serializedAdditionalRawData);
+        }
+
+        ActiveConnectivityConfigurationsListResult IModelJsonSerializable<ActiveConnectivityConfigurationsListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ActiveConnectivityConfigurationsListResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeActiveConnectivityConfigurationsListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ActiveConnectivityConfigurationsListResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ActiveConnectivityConfigurationsListResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ActiveConnectivityConfigurationsListResult IModelSerializable<ActiveConnectivityConfigurationsListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ActiveConnectivityConfigurationsListResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeActiveConnectivityConfigurationsListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ActiveConnectivityConfigurationsListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ActiveConnectivityConfigurationsListResult"/> to convert. </param>
+        public static implicit operator RequestContent(ActiveConnectivityConfigurationsListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ActiveConnectivityConfigurationsListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ActiveConnectivityConfigurationsListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeActiveConnectivityConfigurationsListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> A ExpressRouteResourceProvider object. </summary>
     public partial class ExpressRouteServiceProvider : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of ExpressRouteServiceProvider. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProvider"/>. </summary>
         public ExpressRouteServiceProvider()
         {
             PeeringLocations = new ChangeTrackingList<string>();
             BandwidthsOffered = new ChangeTrackingList<ExpressRouteServiceProviderBandwidthsOffered>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteServiceProvider. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProvider"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -29,7 +30,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="peeringLocations"> A list of peering locations. </param>
         /// <param name="bandwidthsOffered"> A list of bandwidths offered. </param>
         /// <param name="provisioningState"> The provisioning state of the express route service provider resource. </param>
-        internal ExpressRouteServiceProvider(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IList<string> peeringLocations, IList<ExpressRouteServiceProviderBandwidthsOffered> bandwidthsOffered, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteServiceProvider(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IList<string> peeringLocations, IList<ExpressRouteServiceProviderBandwidthsOffered> bandwidthsOffered, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             PeeringLocations = peeringLocations;
             BandwidthsOffered = bandwidthsOffered;

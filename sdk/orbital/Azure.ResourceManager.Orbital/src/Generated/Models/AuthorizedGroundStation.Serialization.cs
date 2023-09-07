@@ -6,21 +6,59 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
-    public partial class AuthorizedGroundStation
+    public partial class AuthorizedGroundStation : IUtf8JsonSerializable, IModelJsonSerializable<AuthorizedGroundStation>
     {
-        internal static AuthorizedGroundStation DeserializeAuthorizedGroundStation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AuthorizedGroundStation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AuthorizedGroundStation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AuthorizedGroundStation>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(GroundStationName))
+            {
+                writer.WritePropertyName("groundStation"u8);
+                writer.WriteStringValue(GroundStationName);
+            }
+            if (Optional.IsDefined(ExpireOn))
+            {
+                writer.WritePropertyName("expirationDate"u8);
+                writer.WriteStringValue(ExpireOn.Value, "D");
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AuthorizedGroundStation DeserializeAuthorizedGroundStation(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> groundStation = default;
             Optional<DateTimeOffset> expirationDate = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groundStation"u8))
@@ -37,8 +75,61 @@ namespace Azure.ResourceManager.Orbital.Models
                     expirationDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AuthorizedGroundStation(groundStation.Value, Optional.ToNullable(expirationDate));
+            return new AuthorizedGroundStation(groundStation.Value, Optional.ToNullable(expirationDate), serializedAdditionalRawData);
+        }
+
+        AuthorizedGroundStation IModelJsonSerializable<AuthorizedGroundStation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AuthorizedGroundStation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAuthorizedGroundStation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AuthorizedGroundStation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AuthorizedGroundStation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AuthorizedGroundStation IModelSerializable<AuthorizedGroundStation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AuthorizedGroundStation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAuthorizedGroundStation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AuthorizedGroundStation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AuthorizedGroundStation"/> to convert. </param>
+        public static implicit operator RequestContent(AuthorizedGroundStation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AuthorizedGroundStation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AuthorizedGroundStation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAuthorizedGroundStation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

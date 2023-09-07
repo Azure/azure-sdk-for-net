@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class NewRelicHostsGetContent : IUtf8JsonSerializable
+    public partial class NewRelicHostsGetContent : IUtf8JsonSerializable, IModelJsonSerializable<NewRelicHostsGetContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NewRelicHostsGetContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NewRelicHostsGetContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NewRelicHostsGetContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(VmIds))
             {
@@ -32,7 +40,115 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
             writer.WritePropertyName("userEmail"u8);
             writer.WriteStringValue(UserEmail);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static NewRelicHostsGetContent DeserializeNewRelicHostsGetContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<ResourceIdentifier>> vmIds = default;
+            string userEmail = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("vmIds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
+                    }
+                    vmIds = array;
+                    continue;
+                }
+                if (property.NameEquals("userEmail"u8))
+                {
+                    userEmail = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new NewRelicHostsGetContent(Optional.ToList(vmIds), userEmail, serializedAdditionalRawData);
+        }
+
+        NewRelicHostsGetContent IModelJsonSerializable<NewRelicHostsGetContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NewRelicHostsGetContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNewRelicHostsGetContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NewRelicHostsGetContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NewRelicHostsGetContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NewRelicHostsGetContent IModelSerializable<NewRelicHostsGetContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NewRelicHostsGetContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNewRelicHostsGetContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NewRelicHostsGetContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NewRelicHostsGetContent"/> to convert. </param>
+        public static implicit operator RequestContent(NewRelicHostsGetContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NewRelicHostsGetContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NewRelicHostsGetContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNewRelicHostsGetContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

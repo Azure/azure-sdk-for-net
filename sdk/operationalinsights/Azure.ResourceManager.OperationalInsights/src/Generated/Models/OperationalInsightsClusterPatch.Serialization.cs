@@ -5,15 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsClusterPatch : IUtf8JsonSerializable
+    public partial class OperationalInsightsClusterPatch : IUtf8JsonSerializable, IModelJsonSerializable<OperationalInsightsClusterPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OperationalInsightsClusterPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OperationalInsightsClusterPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsClusterPatch>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -23,7 +32,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<OperationalInsightsClusterSku>)Sku).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -41,7 +57,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                if (KeyVaultProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<OperationalInsightsKeyVaultProperties>)KeyVaultProperties).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(BillingType))
             {
@@ -49,7 +72,154 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WriteStringValue(BillingType.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static OperationalInsightsClusterPatch DeserializeOperationalInsightsClusterPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<OperationalInsightsClusterSku> sku = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<OperationalInsightsKeyVaultProperties> keyVaultProperties = default;
+            Optional<OperationalInsightsBillingType> billingType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("sku"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = OperationalInsightsClusterSku.DeserializeOperationalInsightsClusterSku(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("keyVaultProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            keyVaultProperties = OperationalInsightsKeyVaultProperties.DeserializeOperationalInsightsKeyVaultProperties(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("billingType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            billingType = new OperationalInsightsBillingType(property0.Value.GetString());
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new OperationalInsightsClusterPatch(identity, sku.Value, Optional.ToDictionary(tags), keyVaultProperties.Value, Optional.ToNullable(billingType), serializedAdditionalRawData);
+        }
+
+        OperationalInsightsClusterPatch IModelJsonSerializable<OperationalInsightsClusterPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsClusterPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsClusterPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OperationalInsightsClusterPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsClusterPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OperationalInsightsClusterPatch IModelSerializable<OperationalInsightsClusterPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsClusterPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOperationalInsightsClusterPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OperationalInsightsClusterPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OperationalInsightsClusterPatch"/> to convert. </param>
+        public static implicit operator RequestContent(OperationalInsightsClusterPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OperationalInsightsClusterPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OperationalInsightsClusterPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOperationalInsightsClusterPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

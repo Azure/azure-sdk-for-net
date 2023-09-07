@@ -10,13 +10,154 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    internal partial class SearchMetadata
+    internal partial class SearchMetadata : IUtf8JsonSerializable, IModelJsonSerializable<SearchMetadata>
     {
-        internal static SearchMetadata DeserializeSearchMetadata(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SearchMetadata>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SearchMetadata>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SearchMetadata>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SearchId))
+            {
+                writer.WritePropertyName("requestId"u8);
+                writer.WriteStringValue(SearchId);
+            }
+            if (Optional.IsDefined(ResultType))
+            {
+                writer.WritePropertyName("resultType"u8);
+                writer.WriteStringValue(ResultType);
+            }
+            if (Optional.IsDefined(Total))
+            {
+                writer.WritePropertyName("total"u8);
+                writer.WriteNumberValue(Total.Value);
+            }
+            if (Optional.IsDefined(Top))
+            {
+                writer.WritePropertyName("top"u8);
+                writer.WriteNumberValue(Top.Value);
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsCollectionDefined(CoreSummaries))
+            {
+                writer.WritePropertyName("coreSummaries"u8);
+                writer.WriteStartArray();
+                foreach (var item in CoreSummaries)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<OperationalInsightsSearchCoreSummary>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (Optional.IsDefined(LastUpdated))
+            {
+                writer.WritePropertyName("lastUpdated"u8);
+                writer.WriteStringValue(LastUpdated.Value, "O");
+            }
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("eTag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(Sort))
+            {
+                writer.WritePropertyName("sort"u8);
+                writer.WriteStartArray();
+                foreach (var item in Sort)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SearchSort>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(RequestTime))
+            {
+                writer.WritePropertyName("requestTime"u8);
+                writer.WriteNumberValue(RequestTime.Value);
+            }
+            if (Optional.IsDefined(AggregatedValueField))
+            {
+                writer.WritePropertyName("aggregatedValueField"u8);
+                writer.WriteStringValue(AggregatedValueField);
+            }
+            if (Optional.IsDefined(AggregatedGroupingFields))
+            {
+                writer.WritePropertyName("aggregatedGroupingFields"u8);
+                writer.WriteStringValue(AggregatedGroupingFields);
+            }
+            if (Optional.IsDefined(Sum))
+            {
+                writer.WritePropertyName("sum"u8);
+                writer.WriteNumberValue(Sum.Value);
+            }
+            if (Optional.IsDefined(Max))
+            {
+                writer.WritePropertyName("max"u8);
+                writer.WriteNumberValue(Max.Value);
+            }
+            if (Optional.IsDefined(Schema))
+            {
+                writer.WritePropertyName("schema"u8);
+                if (Schema is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SearchMetadataSchema>)Schema).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SearchMetadata DeserializeSearchMetadata(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,6 +179,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<long> sum = default;
             Optional<long> max = default;
             Optional<SearchMetadataSchema> schema = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requestId"u8))
@@ -179,8 +321,61 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     schema = SearchMetadataSchema.DeserializeSearchMetadataSchema(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SearchMetadata(requestId.Value, resultType.Value, Optional.ToNullable(total), Optional.ToNullable(top), id.Value, Optional.ToList(coreSummaries), status.Value, Optional.ToNullable(startTime), Optional.ToNullable(lastUpdated), Optional.ToNullable(eTag), Optional.ToList(sort), Optional.ToNullable(requestTime), aggregatedValueField.Value, aggregatedGroupingFields.Value, Optional.ToNullable(sum), Optional.ToNullable(max), schema.Value);
+            return new SearchMetadata(requestId.Value, resultType.Value, Optional.ToNullable(total), Optional.ToNullable(top), id.Value, Optional.ToList(coreSummaries), status.Value, Optional.ToNullable(startTime), Optional.ToNullable(lastUpdated), Optional.ToNullable(eTag), Optional.ToList(sort), Optional.ToNullable(requestTime), aggregatedValueField.Value, aggregatedGroupingFields.Value, Optional.ToNullable(sum), Optional.ToNullable(max), schema.Value, serializedAdditionalRawData);
+        }
+
+        SearchMetadata IModelJsonSerializable<SearchMetadata>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SearchMetadata>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSearchMetadata(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SearchMetadata>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SearchMetadata>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SearchMetadata IModelSerializable<SearchMetadata>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SearchMetadata>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSearchMetadata(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SearchMetadata"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SearchMetadata"/> to convert. </param>
+        public static implicit operator RequestContent(SearchMetadata model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SearchMetadata"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SearchMetadata(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSearchMetadata(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,23 +5,51 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.Models
 {
-    internal partial class MySqlServerKeyListResult
+    internal partial class MySqlServerKeyListResult : IUtf8JsonSerializable, IModelJsonSerializable<MySqlServerKeyListResult>
     {
-        internal static MySqlServerKeyListResult DeserializeMySqlServerKeyListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MySqlServerKeyListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MySqlServerKeyListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlServerKeyListResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MySqlServerKeyListResult DeserializeMySqlServerKeyListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<MySqlServerKeyData>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +71,61 @@ namespace Azure.ResourceManager.MySql.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MySqlServerKeyListResult(Optional.ToList(value), nextLink.Value);
+            return new MySqlServerKeyListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+        }
+
+        MySqlServerKeyListResult IModelJsonSerializable<MySqlServerKeyListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlServerKeyListResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlServerKeyListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MySqlServerKeyListResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlServerKeyListResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MySqlServerKeyListResult IModelSerializable<MySqlServerKeyListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlServerKeyListResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMySqlServerKeyListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MySqlServerKeyListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MySqlServerKeyListResult"/> to convert. </param>
+        public static implicit operator RequestContent(MySqlServerKeyListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MySqlServerKeyListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MySqlServerKeyListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMySqlServerKeyListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

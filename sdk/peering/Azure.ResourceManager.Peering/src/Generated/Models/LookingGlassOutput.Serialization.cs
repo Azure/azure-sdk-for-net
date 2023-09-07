@@ -5,21 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class LookingGlassOutput
+    public partial class LookingGlassOutput : IUtf8JsonSerializable, IModelJsonSerializable<LookingGlassOutput>
     {
-        internal static LookingGlassOutput DeserializeLookingGlassOutput(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LookingGlassOutput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LookingGlassOutput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LookingGlassOutput>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Command))
+            {
+                writer.WritePropertyName("command"u8);
+                writer.WriteStringValue(Command.Value.ToString());
+            }
+            if (Optional.IsDefined(Output))
+            {
+                writer.WritePropertyName("output"u8);
+                writer.WriteStringValue(Output);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static LookingGlassOutput DeserializeLookingGlassOutput(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<LookingGlassCommand> command = default;
             Optional<string> output = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("command"u8))
@@ -36,8 +75,61 @@ namespace Azure.ResourceManager.Peering.Models
                     output = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LookingGlassOutput(Optional.ToNullable(command), output.Value);
+            return new LookingGlassOutput(Optional.ToNullable(command), output.Value, serializedAdditionalRawData);
+        }
+
+        LookingGlassOutput IModelJsonSerializable<LookingGlassOutput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LookingGlassOutput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLookingGlassOutput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LookingGlassOutput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LookingGlassOutput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LookingGlassOutput IModelSerializable<LookingGlassOutput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LookingGlassOutput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLookingGlassOutput(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LookingGlassOutput"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LookingGlassOutput"/> to convert. </param>
+        public static implicit operator RequestContent(LookingGlassOutput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LookingGlassOutput"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LookingGlassOutput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLookingGlassOutput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

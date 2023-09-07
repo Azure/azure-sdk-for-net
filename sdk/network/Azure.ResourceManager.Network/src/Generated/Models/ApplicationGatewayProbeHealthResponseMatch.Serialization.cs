@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayProbeHealthResponseMatch : IUtf8JsonSerializable
+    public partial class ApplicationGatewayProbeHealthResponseMatch : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationGatewayProbeHealthResponseMatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationGatewayProbeHealthResponseMatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationGatewayProbeHealthResponseMatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayProbeHealthResponseMatch>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Body))
             {
@@ -36,17 +42,32 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewayProbeHealthResponseMatch DeserializeApplicationGatewayProbeHealthResponseMatch(JsonElement element)
+        internal static ApplicationGatewayProbeHealthResponseMatch DeserializeApplicationGatewayProbeHealthResponseMatch(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<BinaryData> body = default;
             Optional<IList<string>> statusCodes = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("body"u8))
@@ -72,8 +93,61 @@ namespace Azure.ResourceManager.Network.Models
                     statusCodes = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationGatewayProbeHealthResponseMatch(body.Value, Optional.ToList(statusCodes));
+            return new ApplicationGatewayProbeHealthResponseMatch(body.Value, Optional.ToList(statusCodes), serializedAdditionalRawData);
+        }
+
+        ApplicationGatewayProbeHealthResponseMatch IModelJsonSerializable<ApplicationGatewayProbeHealthResponseMatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayProbeHealthResponseMatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayProbeHealthResponseMatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationGatewayProbeHealthResponseMatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayProbeHealthResponseMatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationGatewayProbeHealthResponseMatch IModelSerializable<ApplicationGatewayProbeHealthResponseMatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayProbeHealthResponseMatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationGatewayProbeHealthResponseMatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApplicationGatewayProbeHealthResponseMatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApplicationGatewayProbeHealthResponseMatch"/> to convert. </param>
+        public static implicit operator RequestContent(ApplicationGatewayProbeHealthResponseMatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApplicationGatewayProbeHealthResponseMatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApplicationGatewayProbeHealthResponseMatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationGatewayProbeHealthResponseMatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

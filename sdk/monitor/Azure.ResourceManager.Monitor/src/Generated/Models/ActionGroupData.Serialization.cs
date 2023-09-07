@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class ActionGroupData : IUtf8JsonSerializable
+    public partial class ActionGroupData : IUtf8JsonSerializable, IModelJsonSerializable<ActionGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ActionGroupData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ActionGroupData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ActionGroupData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -49,7 +56,14 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in EmailReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MonitorEmailReceiver>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +73,14 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in SmsReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MonitorSmsReceiver>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +90,14 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in WebhookReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MonitorWebhookReceiver>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +107,14 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in ItsmReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MonitorItsmReceiver>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +124,14 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in AzureAppPushReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MonitorAzureAppPushReceiver>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +141,14 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in AutomationRunbookReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MonitorAutomationRunbookReceiver>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +158,14 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in VoiceReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MonitorVoiceReceiver>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +175,14 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in LogicAppReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MonitorLogicAppReceiver>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +192,14 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in AzureFunctionReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MonitorAzureFunctionReceiver>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -139,7 +209,14 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in ArmRoleReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MonitorArmRoleReceiver>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -149,16 +226,37 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in EventHubReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MonitorEventHubReceiver>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ActionGroupData DeserializeActionGroupData(JsonElement element)
+        internal static ActionGroupData DeserializeActionGroupData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -182,6 +280,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<IList<MonitorAzureFunctionReceiver>> azureFunctionReceivers = default;
             Optional<IList<MonitorArmRoleReceiver>> armRoleReceivers = default;
             Optional<IList<MonitorEventHubReceiver>> eventHubReceivers = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -407,8 +506,61 @@ namespace Azure.ResourceManager.Monitor
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ActionGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, groupShortName.Value, Optional.ToNullable(enabled), Optional.ToList(emailReceivers), Optional.ToList(smsReceivers), Optional.ToList(webhookReceivers), Optional.ToList(itsmReceivers), Optional.ToList(azureAppPushReceivers), Optional.ToList(automationRunbookReceivers), Optional.ToList(voiceReceivers), Optional.ToList(logicAppReceivers), Optional.ToList(azureFunctionReceivers), Optional.ToList(armRoleReceivers), Optional.ToList(eventHubReceivers));
+            return new ActionGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, groupShortName.Value, Optional.ToNullable(enabled), Optional.ToList(emailReceivers), Optional.ToList(smsReceivers), Optional.ToList(webhookReceivers), Optional.ToList(itsmReceivers), Optional.ToList(azureAppPushReceivers), Optional.ToList(automationRunbookReceivers), Optional.ToList(voiceReceivers), Optional.ToList(logicAppReceivers), Optional.ToList(azureFunctionReceivers), Optional.ToList(armRoleReceivers), Optional.ToList(eventHubReceivers), serializedAdditionalRawData);
+        }
+
+        ActionGroupData IModelJsonSerializable<ActionGroupData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ActionGroupData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeActionGroupData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ActionGroupData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ActionGroupData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ActionGroupData IModelSerializable<ActionGroupData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ActionGroupData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeActionGroupData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ActionGroupData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ActionGroupData"/> to convert. </param>
+        public static implicit operator RequestContent(ActionGroupData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ActionGroupData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ActionGroupData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeActionGroupData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

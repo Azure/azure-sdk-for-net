@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class TunnelConnectionHealth
+    public partial class TunnelConnectionHealth : IUtf8JsonSerializable, IModelJsonSerializable<TunnelConnectionHealth>
     {
-        internal static TunnelConnectionHealth DeserializeTunnelConnectionHealth(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TunnelConnectionHealth>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TunnelConnectionHealth>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TunnelConnectionHealth>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TunnelConnectionHealth DeserializeTunnelConnectionHealth(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +51,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<long> ingressBytesTransferred = default;
             Optional<long> egressBytesTransferred = default;
             Optional<string> lastConnectionEstablishedUtcTime = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tunnel"u8))
@@ -62,8 +91,61 @@ namespace Azure.ResourceManager.Network.Models
                     lastConnectionEstablishedUtcTime = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TunnelConnectionHealth(tunnel.Value, Optional.ToNullable(connectionStatus), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), lastConnectionEstablishedUtcTime.Value);
+            return new TunnelConnectionHealth(tunnel.Value, Optional.ToNullable(connectionStatus), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), lastConnectionEstablishedUtcTime.Value, serializedAdditionalRawData);
+        }
+
+        TunnelConnectionHealth IModelJsonSerializable<TunnelConnectionHealth>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TunnelConnectionHealth>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTunnelConnectionHealth(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TunnelConnectionHealth>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TunnelConnectionHealth>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TunnelConnectionHealth IModelSerializable<TunnelConnectionHealth>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TunnelConnectionHealth>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTunnelConnectionHealth(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TunnelConnectionHealth"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TunnelConnectionHealth"/> to convert. </param>
+        public static implicit operator RequestContent(TunnelConnectionHealth model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TunnelConnectionHealth"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TunnelConnectionHealth(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTunnelConnectionHealth(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

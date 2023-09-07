@@ -8,14 +8,61 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MetricAlertStatusProperties
+    public partial class MetricAlertStatusProperties : IUtf8JsonSerializable, IModelJsonSerializable<MetricAlertStatusProperties>
     {
-        internal static MetricAlertStatusProperties DeserializeMetricAlertStatusProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MetricAlertStatusProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MetricAlertStatusProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MetricAlertStatusProperties>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Dimensions))
+            {
+                writer.WritePropertyName("dimensions"u8);
+                writer.WriteStartObject();
+                foreach (var item in Dimensions)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (Optional.IsDefined(Timestamp))
+            {
+                writer.WritePropertyName("timestamp"u8);
+                writer.WriteStringValue(Timestamp.Value, "O");
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MetricAlertStatusProperties DeserializeMetricAlertStatusProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +70,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<IReadOnlyDictionary<string, string>> dimensions = default;
             Optional<string> status = default;
             Optional<DateTimeOffset> timestamp = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dimensions"u8))
@@ -53,8 +101,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MetricAlertStatusProperties(Optional.ToDictionary(dimensions), status.Value, Optional.ToNullable(timestamp));
+            return new MetricAlertStatusProperties(Optional.ToDictionary(dimensions), status.Value, Optional.ToNullable(timestamp), serializedAdditionalRawData);
+        }
+
+        MetricAlertStatusProperties IModelJsonSerializable<MetricAlertStatusProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricAlertStatusProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricAlertStatusProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MetricAlertStatusProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricAlertStatusProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MetricAlertStatusProperties IModelSerializable<MetricAlertStatusProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricAlertStatusProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMetricAlertStatusProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MetricAlertStatusProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MetricAlertStatusProperties"/> to convert. </param>
+        public static implicit operator RequestContent(MetricAlertStatusProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MetricAlertStatusProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MetricAlertStatusProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMetricAlertStatusProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

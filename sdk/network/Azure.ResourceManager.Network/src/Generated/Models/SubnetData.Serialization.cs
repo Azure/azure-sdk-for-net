@@ -5,19 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class SubnetData : IUtf8JsonSerializable
+    public partial class SubnetData : IUtf8JsonSerializable, IModelJsonSerializable<SubnetData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SubnetData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SubnetData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SubnetData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -54,12 +60,26 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 writer.WritePropertyName("networkSecurityGroup"u8);
-                writer.WriteObjectValue(NetworkSecurityGroup);
+                if (NetworkSecurityGroup is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<NetworkSecurityGroupData>)NetworkSecurityGroup).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(RouteTable))
             {
                 writer.WritePropertyName("routeTable"u8);
-                writer.WriteObjectValue(RouteTable);
+                if (RouteTable is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RouteTableData>)RouteTable).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(NatGateway))
             {
@@ -72,7 +92,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ServiceEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ServiceEndpointProperties>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +109,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ServiceEndpointPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ServiceEndpointPolicyData>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +136,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Delegations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ServiceDelegation>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -122,16 +163,37 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ApplicationGatewayIPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ApplicationGatewayIPConfiguration>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SubnetData DeserializeSubnetData(JsonElement element)
+        internal static SubnetData DeserializeSubnetData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -159,6 +221,7 @@ namespace Azure.ResourceManager.Network
             Optional<VirtualNetworkPrivateEndpointNetworkPolicy> privateEndpointNetworkPolicies = default;
             Optional<VirtualNetworkPrivateLinkServiceNetworkPolicy> privateLinkServiceNetworkPolicies = default;
             Optional<IList<ApplicationGatewayIPConfiguration>> applicationGatewayIPConfigurations = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -423,8 +486,61 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SubnetData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), addressPrefix.Value, Optional.ToList(addressPrefixes), networkSecurityGroup.Value, routeTable.Value, natGateway, Optional.ToList(serviceEndpoints), Optional.ToList(serviceEndpointPolicies), Optional.ToList(privateEndpoints), Optional.ToList(ipConfigurations), Optional.ToList(ipConfigurationProfiles), Optional.ToList(ipAllocations), Optional.ToList(resourceNavigationLinks), Optional.ToList(serviceAssociationLinks), Optional.ToList(delegations), purpose.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(privateEndpointNetworkPolicies), Optional.ToNullable(privateLinkServiceNetworkPolicies), Optional.ToList(applicationGatewayIPConfigurations));
+            return new SubnetData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), addressPrefix.Value, Optional.ToList(addressPrefixes), networkSecurityGroup.Value, routeTable.Value, natGateway, Optional.ToList(serviceEndpoints), Optional.ToList(serviceEndpointPolicies), Optional.ToList(privateEndpoints), Optional.ToList(ipConfigurations), Optional.ToList(ipConfigurationProfiles), Optional.ToList(ipAllocations), Optional.ToList(resourceNavigationLinks), Optional.ToList(serviceAssociationLinks), Optional.ToList(delegations), purpose.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(privateEndpointNetworkPolicies), Optional.ToNullable(privateLinkServiceNetworkPolicies), Optional.ToList(applicationGatewayIPConfigurations), serializedAdditionalRawData);
+        }
+
+        SubnetData IModelJsonSerializable<SubnetData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SubnetData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubnetData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SubnetData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SubnetData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SubnetData IModelSerializable<SubnetData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SubnetData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSubnetData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SubnetData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SubnetData"/> to convert. </param>
+        public static implicit operator RequestContent(SubnetData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SubnetData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SubnetData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSubnetData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

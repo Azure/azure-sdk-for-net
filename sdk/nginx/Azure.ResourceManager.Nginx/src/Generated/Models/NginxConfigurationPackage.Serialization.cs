@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    internal partial class NginxConfigurationPackage : IUtf8JsonSerializable
+    internal partial class NginxConfigurationPackage : IUtf8JsonSerializable, IModelJsonSerializable<NginxConfigurationPackage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NginxConfigurationPackage>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NginxConfigurationPackage>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NginxConfigurationPackage>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStringValue(Data);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NginxConfigurationPackage DeserializeNginxConfigurationPackage(JsonElement element)
+        internal static NginxConfigurationPackage DeserializeNginxConfigurationPackage(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> data = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("data"u8))
@@ -37,8 +60,61 @@ namespace Azure.ResourceManager.Nginx.Models
                     data = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NginxConfigurationPackage(data.Value);
+            return new NginxConfigurationPackage(data.Value, serializedAdditionalRawData);
+        }
+
+        NginxConfigurationPackage IModelJsonSerializable<NginxConfigurationPackage>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NginxConfigurationPackage>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNginxConfigurationPackage(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NginxConfigurationPackage>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NginxConfigurationPackage>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NginxConfigurationPackage IModelSerializable<NginxConfigurationPackage>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NginxConfigurationPackage>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNginxConfigurationPackage(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NginxConfigurationPackage"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NginxConfigurationPackage"/> to convert. </param>
+        public static implicit operator RequestContent(NginxConfigurationPackage model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NginxConfigurationPackage"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NginxConfigurationPackage(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNginxConfigurationPackage(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

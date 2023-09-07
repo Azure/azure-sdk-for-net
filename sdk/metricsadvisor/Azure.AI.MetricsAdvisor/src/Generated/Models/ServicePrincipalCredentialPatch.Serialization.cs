@@ -5,12 +5,155 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class ServicePrincipalCredentialPatch : IUtf8JsonSerializable
+    internal partial class ServicePrincipalCredentialPatch : IUtf8JsonSerializable, IModelJsonSerializable<ServicePrincipalCredentialPatch>
     {
+        void IModelJsonSerializable<ServicePrincipalCredentialPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServicePrincipalCredentialPatch>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Parameters))
+            {
+                writer.WritePropertyName("parameters"u8);
+                if (Parameters is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ServicePrincipalParamPatch>)Parameters).Serialize(writer, options);
+                }
+            }
+            writer.WritePropertyName("dataSourceCredentialType"u8);
+            writer.WriteStringValue(DataSourceCredentialType.ToString());
+            if (Optional.IsDefined(DataSourceCredentialName))
+            {
+                writer.WritePropertyName("dataSourceCredentialName"u8);
+                writer.WriteStringValue(DataSourceCredentialName);
+            }
+            if (Optional.IsDefined(DataSourceCredentialDescription))
+            {
+                writer.WritePropertyName("dataSourceCredentialDescription"u8);
+                writer.WriteStringValue(DataSourceCredentialDescription);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ServicePrincipalCredentialPatch DeserializeServicePrincipalCredentialPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ServicePrincipalParamPatch> parameters = default;
+            DataSourceCredentialKind dataSourceCredentialType = default;
+            Optional<string> dataSourceCredentialName = default;
+            Optional<string> dataSourceCredentialDescription = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("parameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parameters = ServicePrincipalParamPatch.DeserializeServicePrincipalParamPatch(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("dataSourceCredentialType"u8))
+                {
+                    dataSourceCredentialType = new DataSourceCredentialKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("dataSourceCredentialName"u8))
+                {
+                    dataSourceCredentialName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dataSourceCredentialDescription"u8))
+                {
+                    dataSourceCredentialDescription = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ServicePrincipalCredentialPatch(dataSourceCredentialType, dataSourceCredentialName.Value, dataSourceCredentialDescription.Value, parameters.Value, serializedAdditionalRawData);
+        }
+
+        ServicePrincipalCredentialPatch IModelJsonSerializable<ServicePrincipalCredentialPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServicePrincipalCredentialPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServicePrincipalCredentialPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServicePrincipalCredentialPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServicePrincipalCredentialPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServicePrincipalCredentialPatch IModelSerializable<ServicePrincipalCredentialPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServicePrincipalCredentialPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServicePrincipalCredentialPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ServicePrincipalCredentialPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ServicePrincipalCredentialPatch"/> to convert. </param>
+        public static implicit operator RequestContent(ServicePrincipalCredentialPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ServicePrincipalCredentialPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ServicePrincipalCredentialPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServicePrincipalCredentialPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
     }
 }

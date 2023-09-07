@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class StorageAccountConfiguration : IUtf8JsonSerializable
+    public partial class StorageAccountConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<StorageAccountConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageAccountConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageAccountConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StorageAccountConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StorageAccountConfiguration DeserializeStorageAccountConfiguration(JsonElement element)
+        internal static StorageAccountConfiguration DeserializeStorageAccountConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Optional<ResourceIdentifier> id = default;
             Optional<string> subscriptionId = default;
             Optional<string> accountName = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -63,8 +86,61 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     accountName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageAccountConfiguration(id.Value, subscriptionId.Value, accountName.Value);
+            return new StorageAccountConfiguration(id.Value, subscriptionId.Value, accountName.Value, serializedAdditionalRawData);
+        }
+
+        StorageAccountConfiguration IModelJsonSerializable<StorageAccountConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageAccountConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageAccountConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageAccountConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageAccountConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageAccountConfiguration IModelSerializable<StorageAccountConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageAccountConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageAccountConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageAccountConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageAccountConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(StorageAccountConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageAccountConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageAccountConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageAccountConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

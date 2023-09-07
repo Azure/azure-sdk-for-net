@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class RuleEmailAction : IUtf8JsonSerializable
+    public partial class RuleEmailAction : IUtf8JsonSerializable, IModelJsonSerializable<RuleEmailAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RuleEmailAction>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RuleEmailAction>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RuleEmailAction>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SendToServiceOwners))
             {
@@ -33,11 +40,25 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RuleEmailAction DeserializeRuleEmailAction(JsonElement element)
+        internal static RuleEmailAction DeserializeRuleEmailAction(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +66,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<bool> sendToServiceOwners = default;
             Optional<IList<string>> customEmails = default;
             string odataType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sendToServiceOwners"u8))
@@ -75,8 +97,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RuleEmailAction(odataType, Optional.ToNullable(sendToServiceOwners), Optional.ToList(customEmails));
+            return new RuleEmailAction(odataType, Optional.ToNullable(sendToServiceOwners), Optional.ToList(customEmails), serializedAdditionalRawData);
+        }
+
+        RuleEmailAction IModelJsonSerializable<RuleEmailAction>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RuleEmailAction>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRuleEmailAction(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RuleEmailAction>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RuleEmailAction>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RuleEmailAction IModelSerializable<RuleEmailAction>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RuleEmailAction>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRuleEmailAction(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RuleEmailAction"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RuleEmailAction"/> to convert. </param>
+        public static implicit operator RequestContent(RuleEmailAction model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RuleEmailAction"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RuleEmailAction(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRuleEmailAction(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

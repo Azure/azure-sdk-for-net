@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class UnknownRuleDataSource : IUtf8JsonSerializable
+    internal partial class UnknownRuleDataSource : IUtf8JsonSerializable, IModelJsonSerializable<RuleDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RuleDataSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RuleDataSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RuleDataSource>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
@@ -37,57 +43,44 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownRuleDataSource DeserializeUnknownRuleDataSource(JsonElement element)
+        internal static RuleDataSource DeserializeUnknownRuleDataSource(JsonElement element, ModelSerializerOptions options = default) => DeserializeRuleDataSource(element, options);
+
+        RuleDataSource IModelJsonSerializable<RuleDataSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string odataType = "Unknown";
-            Optional<ResourceIdentifier> resourceUri = default;
-            Optional<ResourceIdentifier> legacyResourceId = default;
-            Optional<string> resourceLocation = default;
-            Optional<string> metricNamespace = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("odata.type"u8))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resourceUri"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceUri = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("legacyResourceId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    legacyResourceId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("resourceLocation"u8))
-                {
-                    resourceLocation = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("metricNamespace"u8))
-                {
-                    metricNamespace = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownRuleDataSource(odataType, resourceUri.Value, legacyResourceId.Value, resourceLocation.Value, metricNamespace.Value);
+            Core.ModelSerializerHelper.ValidateFormat<RuleDataSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownRuleDataSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RuleDataSource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RuleDataSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RuleDataSource IModelSerializable<RuleDataSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RuleDataSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRuleDataSource(doc.RootElement, options);
         }
     }
 }

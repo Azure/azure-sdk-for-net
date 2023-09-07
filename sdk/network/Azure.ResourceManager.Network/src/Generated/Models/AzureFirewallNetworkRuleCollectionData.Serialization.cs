@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AzureFirewallNetworkRuleCollectionData : IUtf8JsonSerializable
+    public partial class AzureFirewallNetworkRuleCollectionData : IUtf8JsonSerializable, IModelJsonSerializable<AzureFirewallNetworkRuleCollectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzureFirewallNetworkRuleCollectionData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzureFirewallNetworkRuleCollectionData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AzureFirewallNetworkRuleCollectionData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -37,7 +43,14 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteObjectValue(Action);
+                if (Action is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AzureFirewallRCAction>)Action).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Rules))
             {
@@ -45,16 +58,37 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AzureFirewallNetworkRule>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureFirewallNetworkRuleCollectionData DeserializeAzureFirewallNetworkRuleCollectionData(JsonElement element)
+        internal static AzureFirewallNetworkRuleCollectionData DeserializeAzureFirewallNetworkRuleCollectionData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -67,6 +101,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<AzureFirewallRCAction> action = default;
             Optional<IList<AzureFirewallNetworkRule>> rules = default;
             Optional<NetworkProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -154,8 +189,61 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AzureFirewallNetworkRuleCollectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(priority), action.Value, Optional.ToList(rules), Optional.ToNullable(provisioningState));
+            return new AzureFirewallNetworkRuleCollectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(priority), action.Value, Optional.ToList(rules), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+        }
+
+        AzureFirewallNetworkRuleCollectionData IModelJsonSerializable<AzureFirewallNetworkRuleCollectionData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureFirewallNetworkRuleCollectionData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureFirewallNetworkRuleCollectionData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureFirewallNetworkRuleCollectionData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureFirewallNetworkRuleCollectionData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureFirewallNetworkRuleCollectionData IModelSerializable<AzureFirewallNetworkRuleCollectionData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AzureFirewallNetworkRuleCollectionData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureFirewallNetworkRuleCollectionData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AzureFirewallNetworkRuleCollectionData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AzureFirewallNetworkRuleCollectionData"/> to convert. </param>
+        public static implicit operator RequestContent(AzureFirewallNetworkRuleCollectionData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AzureFirewallNetworkRuleCollectionData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AzureFirewallNetworkRuleCollectionData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureFirewallNetworkRuleCollectionData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

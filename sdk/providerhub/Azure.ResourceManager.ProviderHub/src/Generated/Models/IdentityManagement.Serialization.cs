@@ -5,20 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    internal partial class IdentityManagement
+    internal partial class IdentityManagement : IUtf8JsonSerializable, IModelJsonSerializable<IdentityManagement>
     {
-        internal static IdentityManagement DeserializeIdentityManagement(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IdentityManagement>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IdentityManagement>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IdentityManagement>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ManagementType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ManagementType.Value.ToString());
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static IdentityManagement DeserializeIdentityManagement(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IdentityManagementType> type = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -30,8 +64,61 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     type = new IdentityManagementType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IdentityManagement(Optional.ToNullable(type));
+            return new IdentityManagement(Optional.ToNullable(type), serializedAdditionalRawData);
+        }
+
+        IdentityManagement IModelJsonSerializable<IdentityManagement>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IdentityManagement>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIdentityManagement(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IdentityManagement>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IdentityManagement>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IdentityManagement IModelSerializable<IdentityManagement>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IdentityManagement>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIdentityManagement(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IdentityManagement"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IdentityManagement"/> to convert. </param>
+        public static implicit operator RequestContent(IdentityManagement model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IdentityManagement"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IdentityManagement(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIdentityManagement(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

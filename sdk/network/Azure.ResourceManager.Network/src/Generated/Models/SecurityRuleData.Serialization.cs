@@ -5,18 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class SecurityRuleData : IUtf8JsonSerializable
+    public partial class SecurityRuleData : IUtf8JsonSerializable, IModelJsonSerializable<SecurityRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityRuleData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityRuleData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityRuleData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -76,7 +82,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in SourceApplicationSecurityGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ApplicationSecurityGroupData>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -101,7 +114,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in DestinationApplicationSecurityGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ApplicationSecurityGroupData>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -141,11 +161,25 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStringValue(Direction.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityRuleData DeserializeSecurityRuleData(JsonElement element)
+        internal static SecurityRuleData DeserializeSecurityRuleData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -170,6 +204,7 @@ namespace Azure.ResourceManager.Network
             Optional<int> priority = default;
             Optional<SecurityRuleDirection> direction = default;
             Optional<NetworkProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -370,8 +405,61 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), description.Value, Optional.ToNullable(protocol), sourcePortRange.Value, destinationPortRange.Value, sourceAddressPrefix.Value, Optional.ToList(sourceAddressPrefixes), Optional.ToList(sourceApplicationSecurityGroups), destinationAddressPrefix.Value, Optional.ToList(destinationAddressPrefixes), Optional.ToList(destinationApplicationSecurityGroups), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), Optional.ToNullable(provisioningState));
+            return new SecurityRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), description.Value, Optional.ToNullable(protocol), sourcePortRange.Value, destinationPortRange.Value, sourceAddressPrefix.Value, Optional.ToList(sourceAddressPrefixes), Optional.ToList(sourceApplicationSecurityGroups), destinationAddressPrefix.Value, Optional.ToList(destinationAddressPrefixes), Optional.ToList(destinationApplicationSecurityGroups), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+        }
+
+        SecurityRuleData IModelJsonSerializable<SecurityRuleData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityRuleData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityRuleData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityRuleData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityRuleData IModelSerializable<SecurityRuleData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityRuleData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SecurityRuleData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SecurityRuleData"/> to convert. </param>
+        public static implicit operator RequestContent(SecurityRuleData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SecurityRuleData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SecurityRuleData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityRuleData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

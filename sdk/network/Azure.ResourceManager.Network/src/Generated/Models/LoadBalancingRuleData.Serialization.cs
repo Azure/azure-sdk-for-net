@@ -5,19 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class LoadBalancingRuleData : IUtf8JsonSerializable
+    public partial class LoadBalancingRuleData : IUtf8JsonSerializable, IModelJsonSerializable<LoadBalancingRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LoadBalancingRuleData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LoadBalancingRuleData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LoadBalancingRuleData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -97,11 +103,25 @@ namespace Azure.ResourceManager.Network
                 writer.WriteBooleanValue(DisableOutboundSnat.Value);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LoadBalancingRuleData DeserializeLoadBalancingRuleData(JsonElement element)
+        internal static LoadBalancingRuleData DeserializeLoadBalancingRuleData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -123,6 +143,7 @@ namespace Azure.ResourceManager.Network
             Optional<bool> enableTcpReset = default;
             Optional<bool> disableOutboundSnat = default;
             Optional<NetworkProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -291,8 +312,61 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LoadBalancingRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), frontendIPConfiguration, backendAddressPool, Optional.ToList(backendAddressPools), probe, Optional.ToNullable(protocol), Optional.ToNullable(loadDistribution), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(disableOutboundSnat), Optional.ToNullable(provisioningState));
+            return new LoadBalancingRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), frontendIPConfiguration, backendAddressPool, Optional.ToList(backendAddressPools), probe, Optional.ToNullable(protocol), Optional.ToNullable(loadDistribution), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(disableOutboundSnat), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+        }
+
+        LoadBalancingRuleData IModelJsonSerializable<LoadBalancingRuleData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LoadBalancingRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLoadBalancingRuleData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LoadBalancingRuleData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LoadBalancingRuleData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LoadBalancingRuleData IModelSerializable<LoadBalancingRuleData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LoadBalancingRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLoadBalancingRuleData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LoadBalancingRuleData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LoadBalancingRuleData"/> to convert. </param>
+        public static implicit operator RequestContent(LoadBalancingRuleData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LoadBalancingRuleData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LoadBalancingRuleData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLoadBalancingRuleData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

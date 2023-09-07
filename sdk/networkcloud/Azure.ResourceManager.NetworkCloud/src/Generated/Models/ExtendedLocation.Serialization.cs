@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class ExtendedLocation : IUtf8JsonSerializable
+    public partial class ExtendedLocation : IUtf8JsonSerializable, IModelJsonSerializable<ExtendedLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExtendedLocation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExtendedLocation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ExtendedLocation>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ExtendedLocationType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExtendedLocation DeserializeExtendedLocation(JsonElement element)
+        internal static ExtendedLocation DeserializeExtendedLocation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
             string type = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -42,8 +65,61 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExtendedLocation(name, type);
+            return new ExtendedLocation(name, type, serializedAdditionalRawData);
+        }
+
+        ExtendedLocation IModelJsonSerializable<ExtendedLocation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExtendedLocation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExtendedLocation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExtendedLocation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExtendedLocation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExtendedLocation IModelSerializable<ExtendedLocation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExtendedLocation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExtendedLocation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExtendedLocation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExtendedLocation"/> to convert. </param>
+        public static implicit operator RequestContent(ExtendedLocation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExtendedLocation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExtendedLocation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExtendedLocation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

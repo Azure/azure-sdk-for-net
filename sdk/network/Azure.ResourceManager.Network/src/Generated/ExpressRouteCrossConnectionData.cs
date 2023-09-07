@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,13 +20,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ExpressRouteCrossConnectionData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCrossConnectionData"/>. </summary>
         public ExpressRouteCrossConnectionData()
         {
             Peerings = new ChangeTrackingList<ExpressRouteCrossConnectionPeeringData>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCrossConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -42,7 +43,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceProviderNotes"> Additional read only notes set by the connectivity provider. </param>
         /// <param name="provisioningState"> The provisioning state of the express route cross connection resource. </param>
         /// <param name="peerings"> The list of peerings. </param>
-        internal ExpressRouteCrossConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, string primaryAzurePort, string secondaryAzurePort, int? stag, string peeringLocation, int? bandwidthInMbps, WritableSubResource expressRouteCircuit, ServiceProviderProvisioningState? serviceProviderProvisioningState, string serviceProviderNotes, NetworkProvisioningState? provisioningState, IList<ExpressRouteCrossConnectionPeeringData> peerings) : base(id, name, resourceType, location, tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteCrossConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, string primaryAzurePort, string secondaryAzurePort, int? stag, string peeringLocation, int? bandwidthInMbps, WritableSubResource expressRouteCircuit, ServiceProviderProvisioningState? serviceProviderProvisioningState, string serviceProviderNotes, NetworkProvisioningState? provisioningState, IList<ExpressRouteCrossConnectionPeeringData> peerings, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             PrimaryAzurePort = primaryAzurePort;

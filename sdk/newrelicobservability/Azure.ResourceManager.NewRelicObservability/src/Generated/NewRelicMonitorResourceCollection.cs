@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitorResourceMonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _newRelicMonitorResourceMonitorsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NewRelicMonitorResource(Client, NewRelicMonitorResourceData.DeserializeNewRelicMonitorResourceData(e)), _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "NewRelicMonitorResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NewRelicMonitorResource(Client, NewRelicMonitorResourceData.DeserializeNewRelicMonitorResourceData(e)), _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "NewRelicMonitorResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitorResourceMonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _newRelicMonitorResourceMonitorsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NewRelicMonitorResource(Client, NewRelicMonitorResourceData.DeserializeNewRelicMonitorResourceData(e)), _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "NewRelicMonitorResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NewRelicMonitorResource(Client, NewRelicMonitorResourceData.DeserializeNewRelicMonitorResourceData(e)), _newRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "NewRelicMonitorResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

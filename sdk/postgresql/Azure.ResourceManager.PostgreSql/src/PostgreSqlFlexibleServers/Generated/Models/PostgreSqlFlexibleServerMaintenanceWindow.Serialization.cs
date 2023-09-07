@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerMaintenanceWindow : IUtf8JsonSerializable
+    public partial class PostgreSqlFlexibleServerMaintenanceWindow : IUtf8JsonSerializable, IModelJsonSerializable<PostgreSqlFlexibleServerMaintenanceWindow>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PostgreSqlFlexibleServerMaintenanceWindow>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PostgreSqlFlexibleServerMaintenanceWindow>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerMaintenanceWindow>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomWindow))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteNumberValue(DayOfWeek.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PostgreSqlFlexibleServerMaintenanceWindow DeserializePostgreSqlFlexibleServerMaintenanceWindow(JsonElement element)
+        internal static PostgreSqlFlexibleServerMaintenanceWindow DeserializePostgreSqlFlexibleServerMaintenanceWindow(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Optional<int> startHour = default;
             Optional<int> startMinute = default;
             Optional<int> dayOfWeek = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customWindow"u8))
@@ -82,8 +105,61 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     dayOfWeek = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PostgreSqlFlexibleServerMaintenanceWindow(customWindow.Value, Optional.ToNullable(startHour), Optional.ToNullable(startMinute), Optional.ToNullable(dayOfWeek));
+            return new PostgreSqlFlexibleServerMaintenanceWindow(customWindow.Value, Optional.ToNullable(startHour), Optional.ToNullable(startMinute), Optional.ToNullable(dayOfWeek), serializedAdditionalRawData);
+        }
+
+        PostgreSqlFlexibleServerMaintenanceWindow IModelJsonSerializable<PostgreSqlFlexibleServerMaintenanceWindow>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerMaintenanceWindow>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlFlexibleServerMaintenanceWindow(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PostgreSqlFlexibleServerMaintenanceWindow>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerMaintenanceWindow>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PostgreSqlFlexibleServerMaintenanceWindow IModelSerializable<PostgreSqlFlexibleServerMaintenanceWindow>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerMaintenanceWindow>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePostgreSqlFlexibleServerMaintenanceWindow(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PostgreSqlFlexibleServerMaintenanceWindow"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PostgreSqlFlexibleServerMaintenanceWindow"/> to convert. </param>
+        public static implicit operator RequestContent(PostgreSqlFlexibleServerMaintenanceWindow model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PostgreSqlFlexibleServerMaintenanceWindow"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PostgreSqlFlexibleServerMaintenanceWindow(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePostgreSqlFlexibleServerMaintenanceWindow(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

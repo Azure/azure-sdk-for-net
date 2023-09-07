@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class RulestackSecurityServices : IUtf8JsonSerializable
+    public partial class RulestackSecurityServices : IUtf8JsonSerializable, IModelJsonSerializable<RulestackSecurityServices>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RulestackSecurityServices>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RulestackSecurityServices>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RulestackSecurityServices>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(VulnerabilityProfile))
             {
@@ -55,11 +63,25 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WritePropertyName("outboundTrustCertificate"u8);
                 writer.WriteStringValue(OutboundTrustCertificate);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RulestackSecurityServices DeserializeRulestackSecurityServices(JsonElement element)
+        internal static RulestackSecurityServices DeserializeRulestackSecurityServices(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -72,6 +94,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Optional<string> dnsSubscription = default;
             Optional<string> outboundUnTrustCertificate = default;
             Optional<string> outboundTrustCertificate = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vulnerabilityProfile"u8))
@@ -114,8 +137,61 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     outboundTrustCertificate = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RulestackSecurityServices(vulnerabilityProfile.Value, antiSpywareProfile.Value, antiVirusProfile.Value, urlFilteringProfile.Value, fileBlockingProfile.Value, dnsSubscription.Value, outboundUnTrustCertificate.Value, outboundTrustCertificate.Value);
+            return new RulestackSecurityServices(vulnerabilityProfile.Value, antiSpywareProfile.Value, antiVirusProfile.Value, urlFilteringProfile.Value, fileBlockingProfile.Value, dnsSubscription.Value, outboundUnTrustCertificate.Value, outboundTrustCertificate.Value, serializedAdditionalRawData);
+        }
+
+        RulestackSecurityServices IModelJsonSerializable<RulestackSecurityServices>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RulestackSecurityServices>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRulestackSecurityServices(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RulestackSecurityServices>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RulestackSecurityServices>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RulestackSecurityServices IModelSerializable<RulestackSecurityServices>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RulestackSecurityServices>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRulestackSecurityServices(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RulestackSecurityServices"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RulestackSecurityServices"/> to convert. </param>
+        public static implicit operator RequestContent(RulestackSecurityServices model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RulestackSecurityServices"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RulestackSecurityServices(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRulestackSecurityServices(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

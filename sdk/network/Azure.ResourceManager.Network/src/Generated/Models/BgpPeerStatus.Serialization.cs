@@ -6,15 +6,42 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class BgpPeerStatus
+    public partial class BgpPeerStatus : IUtf8JsonSerializable, IModelJsonSerializable<BgpPeerStatus>
     {
-        internal static BgpPeerStatus DeserializeBgpPeerStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BgpPeerStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BgpPeerStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BgpPeerStatus>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static BgpPeerStatus DeserializeBgpPeerStatus(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +54,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<long> routesReceived = default;
             Optional<long> messagesSent = default;
             Optional<long> messagesReceived = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("localAddress"u8))
@@ -93,8 +121,61 @@ namespace Azure.ResourceManager.Network.Models
                     messagesReceived = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BgpPeerStatus(localAddress.Value, neighbor.Value, Optional.ToNullable(asn), Optional.ToNullable(state), Optional.ToNullable(connectedDuration), Optional.ToNullable(routesReceived), Optional.ToNullable(messagesSent), Optional.ToNullable(messagesReceived));
+            return new BgpPeerStatus(localAddress.Value, neighbor.Value, Optional.ToNullable(asn), Optional.ToNullable(state), Optional.ToNullable(connectedDuration), Optional.ToNullable(routesReceived), Optional.ToNullable(messagesSent), Optional.ToNullable(messagesReceived), serializedAdditionalRawData);
+        }
+
+        BgpPeerStatus IModelJsonSerializable<BgpPeerStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BgpPeerStatus>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBgpPeerStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BgpPeerStatus>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BgpPeerStatus>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BgpPeerStatus IModelSerializable<BgpPeerStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BgpPeerStatus>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBgpPeerStatus(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BgpPeerStatus"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BgpPeerStatus"/> to convert. </param>
+        public static implicit operator RequestContent(BgpPeerStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BgpPeerStatus"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BgpPeerStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBgpPeerStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

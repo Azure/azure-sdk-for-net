@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class DetectionAnomalyFilterCondition : IUtf8JsonSerializable
+    internal partial class DetectionAnomalyFilterCondition : IUtf8JsonSerializable, IModelJsonSerializable<DetectionAnomalyFilterCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DetectionAnomalyFilterCondition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DetectionAnomalyFilterCondition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DetectionAnomalyFilterCondition>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DimensionFilter))
             {
@@ -21,16 +29,135 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WriteStartArray();
                 foreach (var item in DimensionFilter)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DimensionKey>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SeverityFilter))
             {
                 writer.WritePropertyName("severityFilter"u8);
-                writer.WriteObjectValue(SeverityFilter);
+                if (SeverityFilter is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SeverityFilterCondition>)SeverityFilter).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
+        }
+
+        internal static DetectionAnomalyFilterCondition DeserializeDetectionAnomalyFilterCondition(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<DimensionKey>> dimensionFilter = default;
+            Optional<SeverityFilterCondition> severityFilter = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("dimensionFilter"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DimensionKey> array = new List<DimensionKey>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DimensionKey.DeserializeDimensionKey(item));
+                    }
+                    dimensionFilter = array;
+                    continue;
+                }
+                if (property.NameEquals("severityFilter"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    severityFilter = SeverityFilterCondition.DeserializeSeverityFilterCondition(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new DetectionAnomalyFilterCondition(Optional.ToList(dimensionFilter), severityFilter.Value, serializedAdditionalRawData);
+        }
+
+        DetectionAnomalyFilterCondition IModelJsonSerializable<DetectionAnomalyFilterCondition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DetectionAnomalyFilterCondition>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDetectionAnomalyFilterCondition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DetectionAnomalyFilterCondition>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DetectionAnomalyFilterCondition>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DetectionAnomalyFilterCondition IModelSerializable<DetectionAnomalyFilterCondition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DetectionAnomalyFilterCondition>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDetectionAnomalyFilterCondition(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DetectionAnomalyFilterCondition"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DetectionAnomalyFilterCondition"/> to convert. </param>
+        public static implicit operator RequestContent(DetectionAnomalyFilterCondition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DetectionAnomalyFilterCondition"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DetectionAnomalyFilterCondition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDetectionAnomalyFilterCondition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

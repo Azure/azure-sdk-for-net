@@ -5,16 +5,87 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorMetric
+    public partial class MonitorMetric : IUtf8JsonSerializable, IModelJsonSerializable<MonitorMetric>
     {
-        internal static MonitorMetric DeserializeMonitorMetric(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MonitorMetric>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MonitorMetric>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorMetric>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(MetricType);
+            writer.WritePropertyName("name"u8);
+            if (Name is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<MonitorLocalizableString>)Name).Serialize(writer, options);
+            }
+            if (Optional.IsDefined(DisplayDescription))
+            {
+                writer.WritePropertyName("displayDescription"u8);
+                writer.WriteStringValue(DisplayDescription);
+            }
+            if (Optional.IsDefined(ErrorCode))
+            {
+                writer.WritePropertyName("errorCode"u8);
+                writer.WriteStringValue(ErrorCode);
+            }
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                writer.WritePropertyName("errorMessage"u8);
+                writer.WriteStringValue(ErrorMessage);
+            }
+            writer.WritePropertyName("unit"u8);
+            writer.WriteStringValue(Unit.ToString());
+            writer.WritePropertyName("timeseries"u8);
+            writer.WriteStartArray();
+            foreach (var item in Timeseries)
+            {
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MonitorTimeSeriesElement>)item).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndArray();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MonitorMetric DeserializeMonitorMetric(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +98,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> errorMessage = default;
             MonitorMetricUnit unit = default;
             IReadOnlyList<MonitorTimeSeriesElement> timeseries = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -74,8 +146,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     timeseries = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MonitorMetric(id, type, name, displayDescription.Value, errorCode.Value, errorMessage.Value, unit, timeseries);
+            return new MonitorMetric(id, type, name, displayDescription.Value, errorCode.Value, errorMessage.Value, unit, timeseries, serializedAdditionalRawData);
+        }
+
+        MonitorMetric IModelJsonSerializable<MonitorMetric>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorMetric>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorMetric(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MonitorMetric>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorMetric>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MonitorMetric IModelSerializable<MonitorMetric>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorMetric>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMonitorMetric(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MonitorMetric"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MonitorMetric"/> to convert. </param>
+        public static implicit operator RequestContent(MonitorMetric model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MonitorMetric"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MonitorMetric(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMonitorMetric(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

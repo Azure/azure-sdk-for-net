@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class SuppressConditionPatch : IUtf8JsonSerializable
+    internal partial class SuppressConditionPatch : IUtf8JsonSerializable, IModelJsonSerializable<SuppressConditionPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SuppressConditionPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SuppressConditionPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SuppressConditionPatch>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MinNumber))
             {
@@ -25,7 +33,107 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("minRatio"u8);
                 writer.WriteNumberValue(MinRatio.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static SuppressConditionPatch DeserializeSuppressConditionPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<int> minNumber = default;
+            Optional<double> minRatio = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("minNumber"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minNumber = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("minRatio"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minRatio = property.Value.GetDouble();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new SuppressConditionPatch(Optional.ToNullable(minNumber), Optional.ToNullable(minRatio), serializedAdditionalRawData);
+        }
+
+        SuppressConditionPatch IModelJsonSerializable<SuppressConditionPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SuppressConditionPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSuppressConditionPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SuppressConditionPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SuppressConditionPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SuppressConditionPatch IModelSerializable<SuppressConditionPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SuppressConditionPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSuppressConditionPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SuppressConditionPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SuppressConditionPatch"/> to convert. </param>
+        public static implicit operator RequestContent(SuppressConditionPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SuppressConditionPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SuppressConditionPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSuppressConditionPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

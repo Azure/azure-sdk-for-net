@@ -10,13 +10,82 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class ChatCompletions
+    public partial class ChatCompletions : IUtf8JsonSerializable, IModelJsonSerializable<ChatCompletions>
     {
-        internal static ChatCompletions DeserializeChatCompletions(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ChatCompletions>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ChatCompletions>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("created"u8);
+            writer.WriteNumberValue(Created, "U");
+            writer.WritePropertyName("choices"u8);
+            writer.WriteStartArray();
+            foreach (var item in Choices)
+            {
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ChatChoice>)item).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(PromptFilterResults))
+            {
+                writer.WritePropertyName("prompt_annotations"u8);
+                writer.WriteStartArray();
+                foreach (var item in PromptFilterResults)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<PromptFilterResult>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("usage"u8);
+            if (Usage is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<CompletionsUsage>)Usage).Serialize(writer, options);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ChatCompletions DeserializeChatCompletions(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +95,7 @@ namespace Azure.AI.OpenAI
             IReadOnlyList<ChatChoice> choices = default;
             Optional<IReadOnlyList<PromptFilterResult>> promptAnnotations = default;
             CompletionsUsage usage = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -67,16 +137,61 @@ namespace Azure.AI.OpenAI
                     usage = CompletionsUsage.DeserializeCompletionsUsage(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ChatCompletions(id, created, choices, Optional.ToList(promptAnnotations), usage);
+            return new ChatCompletions(id, created, choices, Optional.ToList(promptAnnotations), usage, serializedAdditionalRawData);
         }
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ChatCompletions FromResponse(Response response)
+        ChatCompletions IModelJsonSerializable<ChatCompletions>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeChatCompletions(document.RootElement);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeChatCompletions(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ChatCompletions>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ChatCompletions IModelSerializable<ChatCompletions>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeChatCompletions(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ChatCompletions"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ChatCompletions"/> to convert. </param>
+        public static implicit operator RequestContent(ChatCompletions model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ChatCompletions"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ChatCompletions(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeChatCompletions(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

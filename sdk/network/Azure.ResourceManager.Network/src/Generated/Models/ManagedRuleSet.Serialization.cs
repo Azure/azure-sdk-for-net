@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ManagedRuleSet : IUtf8JsonSerializable
+    public partial class ManagedRuleSet : IUtf8JsonSerializable, IModelJsonSerializable<ManagedRuleSet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedRuleSet>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedRuleSet>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedRuleSet>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("ruleSetType"u8);
             writer.WriteStringValue(RuleSetType);
@@ -26,15 +33,36 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RuleGroupOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ManagedRuleGroupOverride>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ManagedRuleSet DeserializeManagedRuleSet(JsonElement element)
+        internal static ManagedRuleSet DeserializeManagedRuleSet(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +70,7 @@ namespace Azure.ResourceManager.Network.Models
             string ruleSetType = default;
             string ruleSetVersion = default;
             Optional<IList<ManagedRuleGroupOverride>> ruleGroupOverrides = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleSetType"u8))
@@ -68,8 +97,61 @@ namespace Azure.ResourceManager.Network.Models
                     ruleGroupOverrides = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedRuleSet(ruleSetType, ruleSetVersion, Optional.ToList(ruleGroupOverrides));
+            return new ManagedRuleSet(ruleSetType, ruleSetVersion, Optional.ToList(ruleGroupOverrides), serializedAdditionalRawData);
+        }
+
+        ManagedRuleSet IModelJsonSerializable<ManagedRuleSet>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedRuleSet>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedRuleSet(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedRuleSet>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedRuleSet>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedRuleSet IModelSerializable<ManagedRuleSet>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedRuleSet>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedRuleSet(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagedRuleSet"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagedRuleSet"/> to convert. </param>
+        public static implicit operator RequestContent(ManagedRuleSet model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagedRuleSet"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagedRuleSet(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedRuleSet(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

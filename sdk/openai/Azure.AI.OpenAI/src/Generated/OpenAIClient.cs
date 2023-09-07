@@ -58,8 +58,8 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetChatCompletionsWithAzureExtensionsAsync(deploymentId, chatCompletionsOptions.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(ChatCompletions.FromResponse(response), response);
+            Response response = await GetChatCompletionsWithAzureExtensionsAsync(deploymentId, chatCompletionsOptions, context).ConfigureAwait(false);
+            return Response.FromValue((ChatCompletions)response, response);
         }
 
         /// <summary>
@@ -83,8 +83,8 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetChatCompletionsWithAzureExtensions(deploymentId, chatCompletionsOptions.ToRequestContent(), context);
-            return Response.FromValue(ChatCompletions.FromResponse(response), response);
+            Response response = GetChatCompletionsWithAzureExtensions(deploymentId, chatCompletionsOptions, context);
+            return Response.FromValue((ChatCompletions)response, response);
         }
 
         // The convenience method of this operation is made internal because this operation directly or indirectly uses a low confident type, for instance, unions, literal types with number values, etc.
@@ -188,8 +188,8 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(imageGenerationOptions, nameof(imageGenerationOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await BeginAzureBatchImageGenerationAsync(waitUntil, imageGenerationOptions.ToRequestContent(), context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, BatchImageGenerationOperationResponse.FromResponse, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
+            Operation<BinaryData> response = await BeginAzureBatchImageGenerationAsync(waitUntil, imageGenerationOptions, context).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(response, response => (BatchImageGenerationOperationResponse)response, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
         }
 
         /// <summary> Starts the generation of a batch of images from a text caption. </summary>
@@ -203,8 +203,8 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(imageGenerationOptions, nameof(imageGenerationOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = BeginAzureBatchImageGeneration(waitUntil, imageGenerationOptions.ToRequestContent(), context);
-            return ProtocolOperationHelpers.Convert(response, BatchImageGenerationOperationResponse.FromResponse, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
+            Operation<BinaryData> response = BeginAzureBatchImageGeneration(waitUntil, imageGenerationOptions, context);
+            return ProtocolOperationHelpers.Convert(response, response => (BatchImageGenerationOperationResponse)response, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
         }
 
         // The convenience method of this operation is made internal because this operation directly or indirectly uses a low confident type, for instance, unions, literal types with number values, etc.

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -18,12 +20,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class InboundNatRuleData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of InboundNatRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundNatRuleData"/>. </summary>
         public InboundNatRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of InboundNatRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundNatRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -40,7 +42,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="frontendPortRangeEnd"> The port range end for the external endpoint. This property is used together with BackendAddressPool and FrontendPortRangeStart. Individual inbound NAT rule port mappings will be created for each backend address from BackendAddressPool. Acceptable values range from 1 to 65534. </param>
         /// <param name="backendAddressPool"> A reference to backendAddressPool resource. </param>
         /// <param name="provisioningState"> The provisioning state of the inbound NAT rule resource. </param>
-        internal InboundNatRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource frontendIPConfiguration, NetworkInterfaceIPConfigurationData backendIPConfiguration, LoadBalancingTransportProtocol? protocol, int? frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, int? frontendPortRangeStart, int? frontendPortRangeEnd, WritableSubResource backendAddressPool, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InboundNatRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource frontendIPConfiguration, NetworkInterfaceIPConfigurationData backendIPConfiguration, LoadBalancingTransportProtocol? protocol, int? frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, int? frontendPortRangeStart, int? frontendPortRangeEnd, WritableSubResource backendAddressPool, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             FrontendIPConfiguration = frontendIPConfiguration;

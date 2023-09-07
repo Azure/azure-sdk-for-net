@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ExpressRouteCircuitConnectionData : IUtf8JsonSerializable
+    public partial class ExpressRouteCircuitConnectionData : IUtf8JsonSerializable, IModelJsonSerializable<ExpressRouteCircuitConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExpressRouteCircuitConnectionData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExpressRouteCircuitConnectionData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressRouteCircuitConnectionData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -53,14 +60,35 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(IPv6CircuitConnectionConfig))
             {
                 writer.WritePropertyName("ipv6CircuitConnectionConfig"u8);
-                writer.WriteObjectValue(IPv6CircuitConnectionConfig);
+                if (IPv6CircuitConnectionConfig is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<IPv6CircuitConnectionConfig>)IPv6CircuitConnectionConfig).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExpressRouteCircuitConnectionData DeserializeExpressRouteCircuitConnectionData(JsonElement element)
+        internal static ExpressRouteCircuitConnectionData DeserializeExpressRouteCircuitConnectionData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -76,6 +104,7 @@ namespace Azure.ResourceManager.Network
             Optional<IPv6CircuitConnectionConfig> ipv6CircuitConnectionConfig = default;
             Optional<CircuitConnectionStatus> circuitConnectionStatus = default;
             Optional<NetworkProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -177,8 +206,61 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExpressRouteCircuitConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), expressRouteCircuitPeering, peerExpressRouteCircuitPeering, addressPrefix.Value, authorizationKey.Value, ipv6CircuitConnectionConfig.Value, Optional.ToNullable(circuitConnectionStatus), Optional.ToNullable(provisioningState));
+            return new ExpressRouteCircuitConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), expressRouteCircuitPeering, peerExpressRouteCircuitPeering, addressPrefix.Value, authorizationKey.Value, ipv6CircuitConnectionConfig.Value, Optional.ToNullable(circuitConnectionStatus), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+        }
+
+        ExpressRouteCircuitConnectionData IModelJsonSerializable<ExpressRouteCircuitConnectionData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressRouteCircuitConnectionData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExpressRouteCircuitConnectionData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExpressRouteCircuitConnectionData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressRouteCircuitConnectionData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExpressRouteCircuitConnectionData IModelSerializable<ExpressRouteCircuitConnectionData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressRouteCircuitConnectionData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExpressRouteCircuitConnectionData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExpressRouteCircuitConnectionData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExpressRouteCircuitConnectionData"/> to convert. </param>
+        public static implicit operator RequestContent(ExpressRouteCircuitConnectionData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExpressRouteCircuitConnectionData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExpressRouteCircuitConnectionData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExpressRouteCircuitConnectionData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

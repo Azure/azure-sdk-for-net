@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds : IUtf8JsonSerializable
+    public partial class ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds : IUtf8JsonSerializable, IModelJsonSerializable<ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Min))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("max"u8);
                 writer.WriteNumberValue(Max.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds DeserializeExpressRouteGatewayPropertiesAutoScaleConfigurationBounds(JsonElement element)
+        internal static ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds DeserializeExpressRouteGatewayPropertiesAutoScaleConfigurationBounds(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> min = default;
             Optional<int> max = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("min"u8))
@@ -56,8 +79,61 @@ namespace Azure.ResourceManager.Network.Models
                     max = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds(Optional.ToNullable(min), Optional.ToNullable(max));
+            return new ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds(Optional.ToNullable(min), Optional.ToNullable(max), serializedAdditionalRawData);
+        }
+
+        ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds IModelJsonSerializable<ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExpressRouteGatewayPropertiesAutoScaleConfigurationBounds(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds IModelSerializable<ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExpressRouteGatewayPropertiesAutoScaleConfigurationBounds(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds"/> to convert. </param>
+        public static implicit operator RequestContent(ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExpressRouteGatewayPropertiesAutoScaleConfigurationBounds(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

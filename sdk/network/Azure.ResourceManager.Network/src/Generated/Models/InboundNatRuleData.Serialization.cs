@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class InboundNatRuleData : IUtf8JsonSerializable
+    public partial class InboundNatRuleData : IUtf8JsonSerializable, IModelJsonSerializable<InboundNatRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InboundNatRuleData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InboundNatRuleData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<InboundNatRuleData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -81,11 +88,25 @@ namespace Azure.ResourceManager.Network
                 JsonSerializer.Serialize(writer, BackendAddressPool);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static InboundNatRuleData DeserializeInboundNatRuleData(JsonElement element)
+        internal static InboundNatRuleData DeserializeInboundNatRuleData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -106,6 +127,7 @@ namespace Azure.ResourceManager.Network
             Optional<int> frontendPortRangeEnd = default;
             Optional<WritableSubResource> backendAddressPool = default;
             Optional<NetworkProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -260,8 +282,61 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InboundNatRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), frontendIPConfiguration, backendIPConfiguration.Value, Optional.ToNullable(protocol), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(frontendPortRangeStart), Optional.ToNullable(frontendPortRangeEnd), backendAddressPool, Optional.ToNullable(provisioningState));
+            return new InboundNatRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), frontendIPConfiguration, backendIPConfiguration.Value, Optional.ToNullable(protocol), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(frontendPortRangeStart), Optional.ToNullable(frontendPortRangeEnd), backendAddressPool, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+        }
+
+        InboundNatRuleData IModelJsonSerializable<InboundNatRuleData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InboundNatRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInboundNatRuleData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InboundNatRuleData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InboundNatRuleData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InboundNatRuleData IModelSerializable<InboundNatRuleData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InboundNatRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInboundNatRuleData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InboundNatRuleData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InboundNatRuleData"/> to convert. </param>
+        public static implicit operator RequestContent(InboundNatRuleData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InboundNatRuleData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InboundNatRuleData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInboundNatRuleData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -14,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Trusted client certificates of an application gateway. </summary>
     public partial class ApplicationGatewayTrustedClientCertificate : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayTrustedClientCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayTrustedClientCertificate"/>. </summary>
         public ApplicationGatewayTrustedClientCertificate()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayTrustedClientCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayTrustedClientCertificate"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -28,7 +29,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="validatedCertData"> Validated certificate data. </param>
         /// <param name="clientCertIssuerDN"> Distinguished name of client certificate issuer. </param>
         /// <param name="provisioningState"> The provisioning state of the trusted client certificate resource. </param>
-        internal ApplicationGatewayTrustedClientCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, BinaryData data, BinaryData validatedCertData, string clientCertIssuerDN, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayTrustedClientCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, BinaryData data, BinaryData validatedCertData, string clientCertIssuerDN, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             Data = data;

@@ -5,22 +5,36 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudStorageApplianceData : IUtf8JsonSerializable
+    public partial class NetworkCloudStorageApplianceData : IUtf8JsonSerializable, IModelJsonSerializable<NetworkCloudStorageApplianceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkCloudStorageApplianceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkCloudStorageApplianceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkCloudStorageApplianceData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation);
+            if (ExtendedLocation is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<ExtendedLocation>)ExtendedLocation).Serialize(writer, options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -37,7 +51,14 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("administratorCredentials"u8);
-            writer.WriteObjectValue(AdministratorCredentials);
+            if (AdministratorCredentials is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<AdministrativeCredentials>)AdministratorCredentials).Serialize(writer, options);
+            }
             writer.WritePropertyName("rackId"u8);
             writer.WriteStringValue(RackId);
             writer.WritePropertyName("rackSlot"u8);
@@ -47,11 +68,25 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WritePropertyName("storageApplianceSkuId"u8);
             writer.WriteStringValue(StorageApplianceSkuId);
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkCloudStorageApplianceData DeserializeNetworkCloudStorageApplianceData(JsonElement element)
+        internal static NetworkCloudStorageApplianceData DeserializeNetworkCloudStorageApplianceData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -77,6 +112,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Optional<RemoteVendorManagementStatus> remoteVendorManagementStatus = default;
             string serialNumber = default;
             string storageApplianceSkuId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -241,8 +277,61 @@ namespace Azure.ResourceManager.NetworkCloud
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkCloudStorageApplianceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, administratorCredentials, Optional.ToNullable(capacity), Optional.ToNullable(capacityUsed), clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, managementIPv4Address.Value, Optional.ToNullable(provisioningState), rackId, rackSlot, Optional.ToNullable(remoteVendorManagementFeature), Optional.ToNullable(remoteVendorManagementStatus), serialNumber, storageApplianceSkuId);
+            return new NetworkCloudStorageApplianceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, administratorCredentials, Optional.ToNullable(capacity), Optional.ToNullable(capacityUsed), clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, managementIPv4Address.Value, Optional.ToNullable(provisioningState), rackId, rackSlot, Optional.ToNullable(remoteVendorManagementFeature), Optional.ToNullable(remoteVendorManagementStatus), serialNumber, storageApplianceSkuId, serializedAdditionalRawData);
+        }
+
+        NetworkCloudStorageApplianceData IModelJsonSerializable<NetworkCloudStorageApplianceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkCloudStorageApplianceData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkCloudStorageApplianceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkCloudStorageApplianceData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkCloudStorageApplianceData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkCloudStorageApplianceData IModelSerializable<NetworkCloudStorageApplianceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkCloudStorageApplianceData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkCloudStorageApplianceData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetworkCloudStorageApplianceData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetworkCloudStorageApplianceData"/> to convert. </param>
+        public static implicit operator RequestContent(NetworkCloudStorageApplianceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetworkCloudStorageApplianceData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetworkCloudStorageApplianceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkCloudStorageApplianceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

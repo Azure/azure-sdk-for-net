@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    public partial class NginxFrontendIPConfiguration : IUtf8JsonSerializable
+    public partial class NginxFrontendIPConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<NginxFrontendIPConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NginxFrontendIPConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NginxFrontendIPConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NginxFrontendIPConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PublicIPAddresses))
             {
@@ -33,21 +40,43 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateIPAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<NginxPrivateIPAddress>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static NginxFrontendIPConfiguration DeserializeNginxFrontendIPConfiguration(JsonElement element)
+        internal static NginxFrontendIPConfiguration DeserializeNginxFrontendIPConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<WritableSubResource>> publicIPAddresses = default;
             Optional<IList<NginxPrivateIPAddress>> privateIPAddresses = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicIPAddresses"u8))
@@ -78,8 +107,61 @@ namespace Azure.ResourceManager.Nginx.Models
                     privateIPAddresses = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NginxFrontendIPConfiguration(Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses));
+            return new NginxFrontendIPConfiguration(Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), serializedAdditionalRawData);
+        }
+
+        NginxFrontendIPConfiguration IModelJsonSerializable<NginxFrontendIPConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NginxFrontendIPConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNginxFrontendIPConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NginxFrontendIPConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NginxFrontendIPConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NginxFrontendIPConfiguration IModelSerializable<NginxFrontendIPConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NginxFrontendIPConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNginxFrontendIPConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NginxFrontendIPConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NginxFrontendIPConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(NginxFrontendIPConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NginxFrontendIPConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NginxFrontendIPConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNginxFrontendIPConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

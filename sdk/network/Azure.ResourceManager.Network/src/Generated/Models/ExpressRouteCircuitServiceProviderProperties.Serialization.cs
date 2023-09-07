@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteCircuitServiceProviderProperties : IUtf8JsonSerializable
+    public partial class ExpressRouteCircuitServiceProviderProperties : IUtf8JsonSerializable, IModelJsonSerializable<ExpressRouteCircuitServiceProviderProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExpressRouteCircuitServiceProviderProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExpressRouteCircuitServiceProviderProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressRouteCircuitServiceProviderProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceProviderName))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("bandwidthInMbps"u8);
                 writer.WriteNumberValue(BandwidthInMbps.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExpressRouteCircuitServiceProviderProperties DeserializeExpressRouteCircuitServiceProviderProperties(JsonElement element)
+        internal static ExpressRouteCircuitServiceProviderProperties DeserializeExpressRouteCircuitServiceProviderProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> serviceProviderName = default;
             Optional<string> peeringLocation = default;
             Optional<int> bandwidthInMbps = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceProviderName"u8))
@@ -63,8 +86,61 @@ namespace Azure.ResourceManager.Network.Models
                     bandwidthInMbps = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExpressRouteCircuitServiceProviderProperties(serviceProviderName.Value, peeringLocation.Value, Optional.ToNullable(bandwidthInMbps));
+            return new ExpressRouteCircuitServiceProviderProperties(serviceProviderName.Value, peeringLocation.Value, Optional.ToNullable(bandwidthInMbps), serializedAdditionalRawData);
+        }
+
+        ExpressRouteCircuitServiceProviderProperties IModelJsonSerializable<ExpressRouteCircuitServiceProviderProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressRouteCircuitServiceProviderProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExpressRouteCircuitServiceProviderProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExpressRouteCircuitServiceProviderProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressRouteCircuitServiceProviderProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExpressRouteCircuitServiceProviderProperties IModelSerializable<ExpressRouteCircuitServiceProviderProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressRouteCircuitServiceProviderProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExpressRouteCircuitServiceProviderProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExpressRouteCircuitServiceProviderProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExpressRouteCircuitServiceProviderProperties"/> to convert. </param>
+        public static implicit operator RequestContent(ExpressRouteCircuitServiceProviderProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExpressRouteCircuitServiceProviderProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExpressRouteCircuitServiceProviderProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExpressRouteCircuitServiceProviderProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

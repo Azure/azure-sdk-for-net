@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class PrivateLinkServiceData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of PrivateLinkServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceData"/>. </summary>
         public PrivateLinkServiceData()
         {
             LoadBalancerFrontendIPConfigurations = new ChangeTrackingList<FrontendIPConfigurationData>();
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Network
             Fqdns = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -47,7 +48,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="fqdns"> The list of Fqdn. </param>
         /// <param name="alias"> The alias of the private link service. </param>
         /// <param name="enableProxyProtocol"> Whether the private link service is enabled for proxy protocol or not. </param>
-        internal PrivateLinkServiceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, IList<FrontendIPConfigurationData> loadBalancerFrontendIPConfigurations, IList<PrivateLinkServiceIPConfiguration> ipConfigurations, IReadOnlyList<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, IReadOnlyList<NetworkPrivateEndpointConnectionData> privateEndpointConnections, PrivateLinkServicePropertiesVisibility visibility, PrivateLinkServicePropertiesAutoApproval autoApproval, IList<string> fqdns, string @alias, bool? enableProxyProtocol) : base(id, name, resourceType, location, tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateLinkServiceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, IList<FrontendIPConfigurationData> loadBalancerFrontendIPConfigurations, IList<PrivateLinkServiceIPConfiguration> ipConfigurations, IReadOnlyList<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, IReadOnlyList<NetworkPrivateEndpointConnectionData> privateEndpointConnections, PrivateLinkServicePropertiesVisibility visibility, PrivateLinkServicePropertiesAutoApproval autoApproval, IList<string> fqdns, string @alias, bool? enableProxyProtocol, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ExtendedLocation = extendedLocation;
             ETag = etag;

@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql
 {
-    public partial class PostgreSqlConfigurationData : IUtf8JsonSerializable
+    public partial class PostgreSqlConfigurationData : IUtf8JsonSerializable, IModelJsonSerializable<PostgreSqlConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PostgreSqlConfigurationData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PostgreSqlConfigurationData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlConfigurationData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -29,11 +37,25 @@ namespace Azure.ResourceManager.PostgreSql
                 writer.WriteStringValue(Source);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PostgreSqlConfigurationData DeserializePostgreSqlConfigurationData(JsonElement element)
+        internal static PostgreSqlConfigurationData DeserializePostgreSqlConfigurationData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.PostgreSql
             Optional<string> dataType = default;
             Optional<string> allowedValues = default;
             Optional<string> source = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -116,8 +139,61 @@ namespace Azure.ResourceManager.PostgreSql
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PostgreSqlConfigurationData(id, name, type, systemData.Value, value.Value, description.Value, defaultValue.Value, dataType.Value, allowedValues.Value, source.Value);
+            return new PostgreSqlConfigurationData(id, name, type, systemData.Value, value.Value, description.Value, defaultValue.Value, dataType.Value, allowedValues.Value, source.Value, serializedAdditionalRawData);
+        }
+
+        PostgreSqlConfigurationData IModelJsonSerializable<PostgreSqlConfigurationData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlConfigurationData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlConfigurationData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PostgreSqlConfigurationData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlConfigurationData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PostgreSqlConfigurationData IModelSerializable<PostgreSqlConfigurationData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlConfigurationData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePostgreSqlConfigurationData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PostgreSqlConfigurationData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PostgreSqlConfigurationData"/> to convert. </param>
+        public static implicit operator RequestContent(PostgreSqlConfigurationData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PostgreSqlConfigurationData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PostgreSqlConfigurationData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePostgreSqlConfigurationData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

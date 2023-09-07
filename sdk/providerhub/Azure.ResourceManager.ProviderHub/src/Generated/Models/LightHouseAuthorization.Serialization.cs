@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class LightHouseAuthorization : IUtf8JsonSerializable
+    public partial class LightHouseAuthorization : IUtf8JsonSerializable, IModelJsonSerializable<LightHouseAuthorization>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LightHouseAuthorization>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LightHouseAuthorization>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LightHouseAuthorization>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
             writer.WritePropertyName("roleDefinitionId"u8);
             writer.WriteStringValue(RoleDefinitionId);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LightHouseAuthorization DeserializeLightHouseAuthorization(JsonElement element)
+        internal static LightHouseAuthorization DeserializeLightHouseAuthorization(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string principalId = default;
             string roleDefinitionId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -42,8 +65,61 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     roleDefinitionId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LightHouseAuthorization(principalId, roleDefinitionId);
+            return new LightHouseAuthorization(principalId, roleDefinitionId, serializedAdditionalRawData);
+        }
+
+        LightHouseAuthorization IModelJsonSerializable<LightHouseAuthorization>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LightHouseAuthorization>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLightHouseAuthorization(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LightHouseAuthorization>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LightHouseAuthorization>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LightHouseAuthorization IModelSerializable<LightHouseAuthorization>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LightHouseAuthorization>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLightHouseAuthorization(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LightHouseAuthorization"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LightHouseAuthorization"/> to convert. </param>
+        public static implicit operator RequestContent(LightHouseAuthorization model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LightHouseAuthorization"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LightHouseAuthorization(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLightHouseAuthorization(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

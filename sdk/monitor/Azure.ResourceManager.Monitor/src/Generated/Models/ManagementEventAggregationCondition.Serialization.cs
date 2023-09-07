@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class ManagementEventAggregationCondition : IUtf8JsonSerializable
+    public partial class ManagementEventAggregationCondition : IUtf8JsonSerializable, IModelJsonSerializable<ManagementEventAggregationCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagementEventAggregationCondition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagementEventAggregationCondition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagementEventAggregationCondition>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Operator))
             {
@@ -31,11 +38,25 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("windowSize"u8);
                 writer.WriteStringValue(WindowSize.Value, "P");
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagementEventAggregationCondition DeserializeManagementEventAggregationCondition(JsonElement element)
+        internal static ManagementEventAggregationCondition DeserializeManagementEventAggregationCondition(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +64,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<MonitorConditionOperator> @operator = default;
             Optional<double> threshold = default;
             Optional<TimeSpan> windowSize = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operator"u8))
@@ -72,8 +94,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     windowSize = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagementEventAggregationCondition(Optional.ToNullable(@operator), Optional.ToNullable(threshold), Optional.ToNullable(windowSize));
+            return new ManagementEventAggregationCondition(Optional.ToNullable(@operator), Optional.ToNullable(threshold), Optional.ToNullable(windowSize), serializedAdditionalRawData);
+        }
+
+        ManagementEventAggregationCondition IModelJsonSerializable<ManagementEventAggregationCondition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagementEventAggregationCondition>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagementEventAggregationCondition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagementEventAggregationCondition>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagementEventAggregationCondition>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagementEventAggregationCondition IModelSerializable<ManagementEventAggregationCondition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagementEventAggregationCondition>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagementEventAggregationCondition(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagementEventAggregationCondition"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagementEventAggregationCondition"/> to convert. </param>
+        public static implicit operator RequestContent(ManagementEventAggregationCondition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagementEventAggregationCondition"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagementEventAggregationCondition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagementEventAggregationCondition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

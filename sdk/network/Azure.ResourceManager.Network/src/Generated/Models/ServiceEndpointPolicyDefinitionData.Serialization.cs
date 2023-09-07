@@ -5,18 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ServiceEndpointPolicyDefinitionData : IUtf8JsonSerializable
+    public partial class ServiceEndpointPolicyDefinitionData : IUtf8JsonSerializable, IModelJsonSerializable<ServiceEndpointPolicyDefinitionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServiceEndpointPolicyDefinitionData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServiceEndpointPolicyDefinitionData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceEndpointPolicyDefinitionData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -56,11 +62,25 @@ namespace Azure.ResourceManager.Network
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServiceEndpointPolicyDefinitionData DeserializeServiceEndpointPolicyDefinitionData(JsonElement element)
+        internal static ServiceEndpointPolicyDefinitionData DeserializeServiceEndpointPolicyDefinitionData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -73,6 +93,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> service = default;
             Optional<IList<ResourceIdentifier>> serviceResources = default;
             Optional<NetworkProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -159,8 +180,61 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServiceEndpointPolicyDefinitionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), description.Value, service.Value, Optional.ToList(serviceResources), Optional.ToNullable(provisioningState));
+            return new ServiceEndpointPolicyDefinitionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), description.Value, service.Value, Optional.ToList(serviceResources), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+        }
+
+        ServiceEndpointPolicyDefinitionData IModelJsonSerializable<ServiceEndpointPolicyDefinitionData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceEndpointPolicyDefinitionData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceEndpointPolicyDefinitionData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServiceEndpointPolicyDefinitionData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceEndpointPolicyDefinitionData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServiceEndpointPolicyDefinitionData IModelSerializable<ServiceEndpointPolicyDefinitionData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceEndpointPolicyDefinitionData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServiceEndpointPolicyDefinitionData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ServiceEndpointPolicyDefinitionData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ServiceEndpointPolicyDefinitionData"/> to convert. </param>
+        public static implicit operator RequestContent(ServiceEndpointPolicyDefinitionData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ServiceEndpointPolicyDefinitionData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ServiceEndpointPolicyDefinitionData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServiceEndpointPolicyDefinitionData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

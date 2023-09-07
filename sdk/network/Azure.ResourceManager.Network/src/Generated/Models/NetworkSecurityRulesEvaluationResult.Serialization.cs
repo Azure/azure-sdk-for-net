@@ -5,15 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkSecurityRulesEvaluationResult
+    public partial class NetworkSecurityRulesEvaluationResult : IUtf8JsonSerializable, IModelJsonSerializable<NetworkSecurityRulesEvaluationResult>
     {
-        internal static NetworkSecurityRulesEvaluationResult DeserializeNetworkSecurityRulesEvaluationResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkSecurityRulesEvaluationResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkSecurityRulesEvaluationResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkSecurityRulesEvaluationResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(ProtocolMatched))
+            {
+                writer.WritePropertyName("protocolMatched"u8);
+                writer.WriteBooleanValue(ProtocolMatched.Value);
+            }
+            if (Optional.IsDefined(SourceMatched))
+            {
+                writer.WritePropertyName("sourceMatched"u8);
+                writer.WriteBooleanValue(SourceMatched.Value);
+            }
+            if (Optional.IsDefined(SourcePortMatched))
+            {
+                writer.WritePropertyName("sourcePortMatched"u8);
+                writer.WriteBooleanValue(SourcePortMatched.Value);
+            }
+            if (Optional.IsDefined(DestinationMatched))
+            {
+                writer.WritePropertyName("destinationMatched"u8);
+                writer.WriteBooleanValue(DestinationMatched.Value);
+            }
+            if (Optional.IsDefined(DestinationPortMatched))
+            {
+                writer.WritePropertyName("destinationPortMatched"u8);
+                writer.WriteBooleanValue(DestinationPortMatched.Value);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static NetworkSecurityRulesEvaluationResult DeserializeNetworkSecurityRulesEvaluationResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +82,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<bool> sourcePortMatched = default;
             Optional<bool> destinationMatched = default;
             Optional<bool> destinationPortMatched = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -76,8 +135,61 @@ namespace Azure.ResourceManager.Network.Models
                     destinationPortMatched = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkSecurityRulesEvaluationResult(name.Value, Optional.ToNullable(protocolMatched), Optional.ToNullable(sourceMatched), Optional.ToNullable(sourcePortMatched), Optional.ToNullable(destinationMatched), Optional.ToNullable(destinationPortMatched));
+            return new NetworkSecurityRulesEvaluationResult(name.Value, Optional.ToNullable(protocolMatched), Optional.ToNullable(sourceMatched), Optional.ToNullable(sourcePortMatched), Optional.ToNullable(destinationMatched), Optional.ToNullable(destinationPortMatched), serializedAdditionalRawData);
+        }
+
+        NetworkSecurityRulesEvaluationResult IModelJsonSerializable<NetworkSecurityRulesEvaluationResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkSecurityRulesEvaluationResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkSecurityRulesEvaluationResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkSecurityRulesEvaluationResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkSecurityRulesEvaluationResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkSecurityRulesEvaluationResult IModelSerializable<NetworkSecurityRulesEvaluationResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkSecurityRulesEvaluationResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkSecurityRulesEvaluationResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetworkSecurityRulesEvaluationResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetworkSecurityRulesEvaluationResult"/> to convert. </param>
+        public static implicit operator RequestContent(NetworkSecurityRulesEvaluationResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetworkSecurityRulesEvaluationResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetworkSecurityRulesEvaluationResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkSecurityRulesEvaluationResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

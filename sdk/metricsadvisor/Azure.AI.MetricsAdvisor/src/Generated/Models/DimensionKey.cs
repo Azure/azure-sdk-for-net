@@ -14,5 +14,21 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The DimensionGroupIdentity. </summary>
     public partial class DimensionKey
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DimensionKey"/>. </summary>
+        /// <param name="dimension"> dimension specified for series group. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DimensionKey(IDictionary<string, string> dimension, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Dimension = dimension;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DimensionKey"/> for deserialization. </summary>
+        internal DimensionKey()
+        {
+        }
     }
 }

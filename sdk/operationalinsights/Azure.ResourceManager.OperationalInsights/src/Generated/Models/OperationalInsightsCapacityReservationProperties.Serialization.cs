@@ -6,27 +6,49 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsCapacityReservationProperties : IUtf8JsonSerializable
+    public partial class OperationalInsightsCapacityReservationProperties : IUtf8JsonSerializable, IModelJsonSerializable<OperationalInsightsCapacityReservationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OperationalInsightsCapacityReservationProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OperationalInsightsCapacityReservationProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsCapacityReservationProperties>(this, options.Format);
+
             writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OperationalInsightsCapacityReservationProperties DeserializeOperationalInsightsCapacityReservationProperties(JsonElement element)
+        internal static OperationalInsightsCapacityReservationProperties DeserializeOperationalInsightsCapacityReservationProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DateTimeOffset> lastSkuUpdate = default;
             Optional<long> minCapacity = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastSkuUpdate"u8))
@@ -47,8 +69,61 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     minCapacity = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OperationalInsightsCapacityReservationProperties(Optional.ToNullable(lastSkuUpdate), Optional.ToNullable(minCapacity));
+            return new OperationalInsightsCapacityReservationProperties(Optional.ToNullable(lastSkuUpdate), Optional.ToNullable(minCapacity), serializedAdditionalRawData);
+        }
+
+        OperationalInsightsCapacityReservationProperties IModelJsonSerializable<OperationalInsightsCapacityReservationProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsCapacityReservationProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsCapacityReservationProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OperationalInsightsCapacityReservationProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsCapacityReservationProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OperationalInsightsCapacityReservationProperties IModelSerializable<OperationalInsightsCapacityReservationProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsCapacityReservationProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOperationalInsightsCapacityReservationProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OperationalInsightsCapacityReservationProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OperationalInsightsCapacityReservationProperties"/> to convert. </param>
+        public static implicit operator RequestContent(OperationalInsightsCapacityReservationProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OperationalInsightsCapacityReservationProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OperationalInsightsCapacityReservationProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOperationalInsightsCapacityReservationProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

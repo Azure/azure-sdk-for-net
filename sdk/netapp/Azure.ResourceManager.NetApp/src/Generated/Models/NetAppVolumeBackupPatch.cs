@@ -14,10 +14,40 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Backup patch. </summary>
     public partial class NetAppVolumeBackupPatch
     {
-        /// <summary> Initializes a new instance of NetAppVolumeBackupPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupPatch"/>. </summary>
         public NetAppVolumeBackupPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="backupId"> UUID v4 used to identify the Backup. </param>
+        /// <param name="createdOn"> The creation date of the backup. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="size"> Size of backup. </param>
+        /// <param name="label"> Label for backup. </param>
+        /// <param name="backupType"> Type of backup Manual or Scheduled. </param>
+        /// <param name="failureReason"> Failure reason. </param>
+        /// <param name="volumeName"> Volume name. </param>
+        /// <param name="useExistingSnapshot"> Manual backup an already existing snapshot. This will always be false for scheduled backups and true/false for manual backups. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeBackupPatch(IDictionary<string, string> tags, string backupId, DateTimeOffset? createdOn, string provisioningState, long? size, string label, NetAppBackupType? backupType, string failureReason, string volumeName, bool? useExistingSnapshot, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            BackupId = backupId;
+            CreatedOn = createdOn;
+            ProvisioningState = provisioningState;
+            Size = size;
+            Label = label;
+            BackupType = backupType;
+            FailureReason = failureReason;
+            VolumeName = volumeName;
+            UseExistingSnapshot = useExistingSnapshot;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>

@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _packetCoreDataPlaneRestClient.CreateListByPacketCoreControlPlaneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _packetCoreDataPlaneRestClient.CreateListByPacketCoreControlPlaneNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PacketCoreDataPlaneResource(Client, PacketCoreDataPlaneData.DeserializePacketCoreDataPlaneData(e)), _packetCoreDataPlaneClientDiagnostics, Pipeline, "PacketCoreDataPlaneCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new PacketCoreDataPlaneResource(Client, PacketCoreDataPlaneData.DeserializePacketCoreDataPlaneData(e)), _packetCoreDataPlaneClientDiagnostics, Pipeline, "PacketCoreDataPlaneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _packetCoreDataPlaneRestClient.CreateListByPacketCoreControlPlaneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _packetCoreDataPlaneRestClient.CreateListByPacketCoreControlPlaneNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PacketCoreDataPlaneResource(Client, PacketCoreDataPlaneData.DeserializePacketCoreDataPlaneData(e)), _packetCoreDataPlaneClientDiagnostics, Pipeline, "PacketCoreDataPlaneCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new PacketCoreDataPlaneResource(Client, PacketCoreDataPlaneData.DeserializePacketCoreDataPlaneData(e)), _packetCoreDataPlaneClientDiagnostics, Pipeline, "PacketCoreDataPlaneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

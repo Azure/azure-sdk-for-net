@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    public partial class FieldRestriction
+    public partial class FieldRestriction : IUtf8JsonSerializable, IModelJsonSerializable<FieldRestriction>
     {
-        internal static FieldRestriction DeserializeFieldRestriction(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FieldRestriction>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FieldRestriction>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FieldRestriction>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static FieldRestriction DeserializeFieldRestriction(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +50,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<string> defaultValue = default;
             Optional<IReadOnlyList<string>> values = default;
             Optional<PolicyReference> policy = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("result"u8))
@@ -62,8 +90,61 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     policy = PolicyReference.DeserializePolicyReference(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FieldRestriction(Optional.ToNullable(result), defaultValue.Value, Optional.ToList(values), policy.Value);
+            return new FieldRestriction(Optional.ToNullable(result), defaultValue.Value, Optional.ToList(values), policy.Value, serializedAdditionalRawData);
+        }
+
+        FieldRestriction IModelJsonSerializable<FieldRestriction>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FieldRestriction>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFieldRestriction(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FieldRestriction>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FieldRestriction>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FieldRestriction IModelSerializable<FieldRestriction>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FieldRestriction>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFieldRestriction(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FieldRestriction"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FieldRestriction"/> to convert. </param>
+        public static implicit operator RequestContent(FieldRestriction model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FieldRestriction"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FieldRestriction(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFieldRestriction(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

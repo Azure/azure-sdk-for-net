@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MetricAlertMultipleResourceMultipleMetricCriteria : IUtf8JsonSerializable
+    public partial class MetricAlertMultipleResourceMultipleMetricCriteria : IUtf8JsonSerializable, IModelJsonSerializable<MetricAlertMultipleResourceMultipleMetricCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MetricAlertMultipleResourceMultipleMetricCriteria>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MetricAlertMultipleResourceMultipleMetricCriteria>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MetricAlertMultipleResourceMultipleMetricCriteria>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AllOf))
             {
@@ -23,7 +29,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in AllOf)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MultiMetricCriteria>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -41,8 +54,10 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static MetricAlertMultipleResourceMultipleMetricCriteria DeserializeMetricAlertMultipleResourceMultipleMetricCriteria(JsonElement element)
+        internal static MetricAlertMultipleResourceMultipleMetricCriteria DeserializeMetricAlertMultipleResourceMultipleMetricCriteria(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -76,6 +91,54 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new MetricAlertMultipleResourceMultipleMetricCriteria(odataType, additionalProperties, Optional.ToList(allOf));
+        }
+
+        MetricAlertMultipleResourceMultipleMetricCriteria IModelJsonSerializable<MetricAlertMultipleResourceMultipleMetricCriteria>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricAlertMultipleResourceMultipleMetricCriteria>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricAlertMultipleResourceMultipleMetricCriteria(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MetricAlertMultipleResourceMultipleMetricCriteria>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricAlertMultipleResourceMultipleMetricCriteria>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MetricAlertMultipleResourceMultipleMetricCriteria IModelSerializable<MetricAlertMultipleResourceMultipleMetricCriteria>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricAlertMultipleResourceMultipleMetricCriteria>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMetricAlertMultipleResourceMultipleMetricCriteria(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/> to convert. </param>
+        public static implicit operator RequestContent(MetricAlertMultipleResourceMultipleMetricCriteria model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MetricAlertMultipleResourceMultipleMetricCriteria(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMetricAlertMultipleResourceMultipleMetricCriteria(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

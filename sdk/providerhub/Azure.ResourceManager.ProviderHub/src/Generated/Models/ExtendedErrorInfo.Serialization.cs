@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ExtendedErrorInfo : IUtf8JsonSerializable
+    public partial class ExtendedErrorInfo : IUtf8JsonSerializable, IModelJsonSerializable<ExtendedErrorInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExtendedErrorInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExtendedErrorInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ExtendedErrorInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Code))
             {
@@ -37,7 +44,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ExtendedErrorInfo>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -47,15 +61,36 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in AdditionalInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<TypedErrorInfo>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ExtendedErrorInfo DeserializeExtendedErrorInfo(JsonElement element)
+        internal static ExtendedErrorInfo DeserializeExtendedErrorInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -65,6 +100,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<string> message = default;
             Optional<IList<ExtendedErrorInfo>> details = default;
             Optional<IList<TypedErrorInfo>> additionalInfo = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -110,8 +146,61 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     additionalInfo = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExtendedErrorInfo(code.Value, target.Value, message.Value, Optional.ToList(details), Optional.ToList(additionalInfo));
+            return new ExtendedErrorInfo(code.Value, target.Value, message.Value, Optional.ToList(details), Optional.ToList(additionalInfo), serializedAdditionalRawData);
+        }
+
+        ExtendedErrorInfo IModelJsonSerializable<ExtendedErrorInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExtendedErrorInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExtendedErrorInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExtendedErrorInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExtendedErrorInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExtendedErrorInfo IModelSerializable<ExtendedErrorInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExtendedErrorInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExtendedErrorInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExtendedErrorInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExtendedErrorInfo"/> to convert. </param>
+        public static implicit operator RequestContent(ExtendedErrorInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExtendedErrorInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExtendedErrorInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExtendedErrorInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

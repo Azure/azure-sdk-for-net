@@ -5,17 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.MySql.Models;
 
 namespace Azure.ResourceManager.MySql
 {
-    public partial class MySqlVirtualNetworkRuleData : IUtf8JsonSerializable
+    public partial class MySqlVirtualNetworkRuleData : IUtf8JsonSerializable, IModelJsonSerializable<MySqlVirtualNetworkRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MySqlVirtualNetworkRuleData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MySqlVirtualNetworkRuleData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlVirtualNetworkRuleData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.MySql
                 writer.WriteBooleanValue(IgnoreMissingVnetServiceEndpoint.Value);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MySqlVirtualNetworkRuleData DeserializeMySqlVirtualNetworkRuleData(JsonElement element)
+        internal static MySqlVirtualNetworkRuleData DeserializeMySqlVirtualNetworkRuleData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +68,7 @@ namespace Azure.ResourceManager.MySql
             Optional<ResourceIdentifier> virtualNetworkSubnetId = default;
             Optional<bool> ignoreMissingVnetServiceEndpoint = default;
             Optional<MySqlVirtualNetworkRuleState> state = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -111,8 +134,61 @@ namespace Azure.ResourceManager.MySql
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MySqlVirtualNetworkRuleData(id, name, type, systemData.Value, virtualNetworkSubnetId.Value, Optional.ToNullable(ignoreMissingVnetServiceEndpoint), Optional.ToNullable(state));
+            return new MySqlVirtualNetworkRuleData(id, name, type, systemData.Value, virtualNetworkSubnetId.Value, Optional.ToNullable(ignoreMissingVnetServiceEndpoint), Optional.ToNullable(state), serializedAdditionalRawData);
+        }
+
+        MySqlVirtualNetworkRuleData IModelJsonSerializable<MySqlVirtualNetworkRuleData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlVirtualNetworkRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlVirtualNetworkRuleData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MySqlVirtualNetworkRuleData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlVirtualNetworkRuleData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MySqlVirtualNetworkRuleData IModelSerializable<MySqlVirtualNetworkRuleData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlVirtualNetworkRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMySqlVirtualNetworkRuleData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MySqlVirtualNetworkRuleData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MySqlVirtualNetworkRuleData"/> to convert. </param>
+        public static implicit operator RequestContent(MySqlVirtualNetworkRuleData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MySqlVirtualNetworkRuleData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MySqlVirtualNetworkRuleData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMySqlVirtualNetworkRuleData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

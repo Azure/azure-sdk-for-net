@@ -5,19 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PrivateDns.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    public partial class PrivateDnsZoneData : IUtf8JsonSerializable
+    public partial class PrivateDnsZoneData : IUtf8JsonSerializable, IModelJsonSerializable<PrivateDnsZoneData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PrivateDnsZoneData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PrivateDnsZoneData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PrivateDnsZoneData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
@@ -40,11 +46,25 @@ namespace Azure.ResourceManager.PrivateDns
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PrivateDnsZoneData DeserializePrivateDnsZoneData(JsonElement element)
+        internal static PrivateDnsZoneData DeserializePrivateDnsZoneData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,6 +84,7 @@ namespace Azure.ResourceManager.PrivateDns
             Optional<long> numberOfVirtualNetworkLinksWithRegistration = default;
             Optional<PrivateDnsProvisioningState> privateDnsProvisioningState = default;
             Optional<string> internalId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -198,8 +219,61 @@ namespace Azure.ResourceManager.PrivateDns
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PrivateDnsZoneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(maxNumberOfRecordSets), Optional.ToNullable(numberOfRecordSets), Optional.ToNullable(maxNumberOfVirtualNetworkLinks), Optional.ToNullable(numberOfVirtualNetworkLinks), Optional.ToNullable(maxNumberOfVirtualNetworkLinksWithRegistration), Optional.ToNullable(numberOfVirtualNetworkLinksWithRegistration), Optional.ToNullable(privateDnsProvisioningState), internalId.Value);
+            return new PrivateDnsZoneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(maxNumberOfRecordSets), Optional.ToNullable(numberOfRecordSets), Optional.ToNullable(maxNumberOfVirtualNetworkLinks), Optional.ToNullable(numberOfVirtualNetworkLinks), Optional.ToNullable(maxNumberOfVirtualNetworkLinksWithRegistration), Optional.ToNullable(numberOfVirtualNetworkLinksWithRegistration), Optional.ToNullable(privateDnsProvisioningState), internalId.Value, serializedAdditionalRawData);
+        }
+
+        PrivateDnsZoneData IModelJsonSerializable<PrivateDnsZoneData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PrivateDnsZoneData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePrivateDnsZoneData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PrivateDnsZoneData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PrivateDnsZoneData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PrivateDnsZoneData IModelSerializable<PrivateDnsZoneData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PrivateDnsZoneData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePrivateDnsZoneData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PrivateDnsZoneData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PrivateDnsZoneData"/> to convert. </param>
+        public static implicit operator RequestContent(PrivateDnsZoneData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PrivateDnsZoneData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PrivateDnsZoneData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePrivateDnsZoneData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

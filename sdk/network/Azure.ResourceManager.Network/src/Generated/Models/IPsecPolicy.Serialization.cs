@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class IPsecPolicy : IUtf8JsonSerializable
+    public partial class IPsecPolicy : IUtf8JsonSerializable, IModelJsonSerializable<IPsecPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IPsecPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IPsecPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IPsecPolicy>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("saLifeTimeSeconds"u8);
             writer.WriteNumberValue(SaLifeTimeSeconds);
@@ -31,11 +39,25 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(DhGroup.ToString());
             writer.WritePropertyName("pfsGroup"u8);
             writer.WriteStringValue(PfsGroup.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IPsecPolicy DeserializeIPsecPolicy(JsonElement element)
+        internal static IPsecPolicy DeserializeIPsecPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.Network.Models
             IkeIntegrity ikeIntegrity = default;
             DHGroup dhGroup = default;
             PfsGroup pfsGroup = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("saLifeTimeSeconds"u8))
@@ -90,8 +113,61 @@ namespace Azure.ResourceManager.Network.Models
                     pfsGroup = new PfsGroup(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IPsecPolicy(saLifeTimeSeconds, saDataSizeKilobytes, ipsecEncryption, ipsecIntegrity, ikeEncryption, ikeIntegrity, dhGroup, pfsGroup);
+            return new IPsecPolicy(saLifeTimeSeconds, saDataSizeKilobytes, ipsecEncryption, ipsecIntegrity, ikeEncryption, ikeIntegrity, dhGroup, pfsGroup, serializedAdditionalRawData);
+        }
+
+        IPsecPolicy IModelJsonSerializable<IPsecPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IPsecPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIPsecPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IPsecPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IPsecPolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IPsecPolicy IModelSerializable<IPsecPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IPsecPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIPsecPolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IPsecPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IPsecPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(IPsecPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IPsecPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IPsecPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIPsecPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

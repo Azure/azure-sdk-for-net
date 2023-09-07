@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class LoggingRule : IUtf8JsonSerializable
+    public partial class LoggingRule : IUtf8JsonSerializable, IModelJsonSerializable<LoggingRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LoggingRule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LoggingRule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LoggingRule>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action);
@@ -24,13 +32,34 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(HiddenPropertyPaths))
             {
                 writer.WritePropertyName("hiddenPropertyPaths"u8);
-                writer.WriteObjectValue(HiddenPropertyPaths);
+                if (HiddenPropertyPaths is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LoggingHiddenPropertyPaths>)HiddenPropertyPaths).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static LoggingRule DeserializeLoggingRule(JsonElement element)
+        internal static LoggingRule DeserializeLoggingRule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +68,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             LoggingDirection direction = default;
             LoggingDetail detailLevel = default;
             Optional<LoggingHiddenPropertyPaths> hiddenPropertyPaths = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))
@@ -65,8 +95,61 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     hiddenPropertyPaths = LoggingHiddenPropertyPaths.DeserializeLoggingHiddenPropertyPaths(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LoggingRule(action, direction, detailLevel, hiddenPropertyPaths.Value);
+            return new LoggingRule(action, direction, detailLevel, hiddenPropertyPaths.Value, serializedAdditionalRawData);
+        }
+
+        LoggingRule IModelJsonSerializable<LoggingRule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LoggingRule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLoggingRule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LoggingRule>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LoggingRule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LoggingRule IModelSerializable<LoggingRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LoggingRule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLoggingRule(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LoggingRule"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LoggingRule"/> to convert. </param>
+        public static implicit operator RequestContent(LoggingRule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LoggingRule"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LoggingRule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLoggingRule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

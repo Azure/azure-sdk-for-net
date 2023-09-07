@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualApplianceNicProperties
+    public partial class VirtualApplianceNicProperties : IUtf8JsonSerializable, IModelJsonSerializable<VirtualApplianceNicProperties>
     {
-        internal static VirtualApplianceNicProperties DeserializeVirtualApplianceNicProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualApplianceNicProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualApplianceNicProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualApplianceNicProperties>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static VirtualApplianceNicProperties DeserializeVirtualApplianceNicProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +50,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> publicIPAddress = default;
             Optional<string> privateIPAddress = default;
             Optional<string> instanceName = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -44,8 +73,61 @@ namespace Azure.ResourceManager.Network.Models
                     instanceName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualApplianceNicProperties(name.Value, publicIPAddress.Value, privateIPAddress.Value, instanceName.Value);
+            return new VirtualApplianceNicProperties(name.Value, publicIPAddress.Value, privateIPAddress.Value, instanceName.Value, serializedAdditionalRawData);
+        }
+
+        VirtualApplianceNicProperties IModelJsonSerializable<VirtualApplianceNicProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualApplianceNicProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualApplianceNicProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualApplianceNicProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualApplianceNicProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualApplianceNicProperties IModelSerializable<VirtualApplianceNicProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualApplianceNicProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualApplianceNicProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VirtualApplianceNicProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VirtualApplianceNicProperties"/> to convert. </param>
+        public static implicit operator RequestContent(VirtualApplianceNicProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualApplianceNicProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VirtualApplianceNicProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualApplianceNicProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

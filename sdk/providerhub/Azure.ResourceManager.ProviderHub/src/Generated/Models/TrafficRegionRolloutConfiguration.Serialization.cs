@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class TrafficRegionRolloutConfiguration : IUtf8JsonSerializable
+    public partial class TrafficRegionRolloutConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<TrafficRegionRolloutConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TrafficRegionRolloutConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TrafficRegionRolloutConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TrafficRegionRolloutConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(WaitDuration))
             {
@@ -32,17 +38,32 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TrafficRegionRolloutConfiguration DeserializeTrafficRegionRolloutConfiguration(JsonElement element)
+        internal static TrafficRegionRolloutConfiguration DeserializeTrafficRegionRolloutConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<TimeSpan> waitDuration = default;
             Optional<IList<AzureLocation>> regions = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("waitDuration"u8))
@@ -68,8 +89,61 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     regions = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TrafficRegionRolloutConfiguration(Optional.ToList(regions), Optional.ToNullable(waitDuration));
+            return new TrafficRegionRolloutConfiguration(Optional.ToList(regions), Optional.ToNullable(waitDuration), serializedAdditionalRawData);
+        }
+
+        TrafficRegionRolloutConfiguration IModelJsonSerializable<TrafficRegionRolloutConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrafficRegionRolloutConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrafficRegionRolloutConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TrafficRegionRolloutConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrafficRegionRolloutConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TrafficRegionRolloutConfiguration IModelSerializable<TrafficRegionRolloutConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrafficRegionRolloutConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTrafficRegionRolloutConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TrafficRegionRolloutConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TrafficRegionRolloutConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(TrafficRegionRolloutConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TrafficRegionRolloutConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TrafficRegionRolloutConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTrafficRegionRolloutConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

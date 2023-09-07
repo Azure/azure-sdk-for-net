@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,12 +16,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The application gateway private link ip configuration. </summary>
     public partial class ApplicationGatewayPrivateLinkIPConfiguration : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayPrivateLinkIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkIPConfiguration"/>. </summary>
         public ApplicationGatewayPrivateLinkIPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayPrivateLinkIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkIPConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -29,7 +31,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="subnet"> Reference to the subnet resource. </param>
         /// <param name="isPrimary"> Whether the ip configuration is primary or not. </param>
         /// <param name="provisioningState"> The provisioning state of the application gateway private link IP configuration. </param>
-        internal ApplicationGatewayPrivateLinkIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet, bool? isPrimary, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayPrivateLinkIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet, bool? isPrimary, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             PrivateIPAddress = privateIPAddress;

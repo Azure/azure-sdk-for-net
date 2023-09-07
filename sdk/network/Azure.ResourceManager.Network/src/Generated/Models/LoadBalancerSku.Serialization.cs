@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class LoadBalancerSku : IUtf8JsonSerializable
+    public partial class LoadBalancerSku : IUtf8JsonSerializable, IModelJsonSerializable<LoadBalancerSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LoadBalancerSku>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LoadBalancerSku>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LoadBalancerSku>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LoadBalancerSku DeserializeLoadBalancerSku(JsonElement element)
+        internal static LoadBalancerSku DeserializeLoadBalancerSku(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<LoadBalancerSkuName> name = default;
             Optional<LoadBalancerSkuTier> tier = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -56,8 +79,61 @@ namespace Azure.ResourceManager.Network.Models
                     tier = new LoadBalancerSkuTier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LoadBalancerSku(Optional.ToNullable(name), Optional.ToNullable(tier));
+            return new LoadBalancerSku(Optional.ToNullable(name), Optional.ToNullable(tier), serializedAdditionalRawData);
+        }
+
+        LoadBalancerSku IModelJsonSerializable<LoadBalancerSku>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LoadBalancerSku>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLoadBalancerSku(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LoadBalancerSku>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LoadBalancerSku>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LoadBalancerSku IModelSerializable<LoadBalancerSku>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LoadBalancerSku>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLoadBalancerSku(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LoadBalancerSku"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LoadBalancerSku"/> to convert. </param>
+        public static implicit operator RequestContent(LoadBalancerSku model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LoadBalancerSku"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LoadBalancerSku(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLoadBalancerSku(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

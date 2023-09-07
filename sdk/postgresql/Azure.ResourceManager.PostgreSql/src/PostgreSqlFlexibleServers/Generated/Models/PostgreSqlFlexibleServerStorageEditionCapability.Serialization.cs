@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerStorageEditionCapability
+    public partial class PostgreSqlFlexibleServerStorageEditionCapability : IUtf8JsonSerializable, IModelJsonSerializable<PostgreSqlFlexibleServerStorageEditionCapability>
     {
-        internal static PostgreSqlFlexibleServerStorageEditionCapability DeserializePostgreSqlFlexibleServerStorageEditionCapability(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PostgreSqlFlexibleServerStorageEditionCapability>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PostgreSqlFlexibleServerStorageEditionCapability>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerStorageEditionCapability>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PostgreSqlFlexibleServerStorageEditionCapability DeserializePostgreSqlFlexibleServerStorageEditionCapability(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +51,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Optional<IReadOnlyList<PostgreSqlFlexibleServerStorageCapability>> supportedStorageMb = default;
             Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
             Optional<string> reason = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -68,8 +96,61 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     reason = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PostgreSqlFlexibleServerStorageEditionCapability(Optional.ToNullable(status), reason.Value, name.Value, Optional.ToNullable(defaultStorageSizeMb), Optional.ToList(supportedStorageMb));
+            return new PostgreSqlFlexibleServerStorageEditionCapability(Optional.ToNullable(status), reason.Value, name.Value, Optional.ToNullable(defaultStorageSizeMb), Optional.ToList(supportedStorageMb), serializedAdditionalRawData);
+        }
+
+        PostgreSqlFlexibleServerStorageEditionCapability IModelJsonSerializable<PostgreSqlFlexibleServerStorageEditionCapability>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerStorageEditionCapability>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlFlexibleServerStorageEditionCapability(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PostgreSqlFlexibleServerStorageEditionCapability>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerStorageEditionCapability>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PostgreSqlFlexibleServerStorageEditionCapability IModelSerializable<PostgreSqlFlexibleServerStorageEditionCapability>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerStorageEditionCapability>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePostgreSqlFlexibleServerStorageEditionCapability(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PostgreSqlFlexibleServerStorageEditionCapability"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PostgreSqlFlexibleServerStorageEditionCapability"/> to convert. </param>
+        public static implicit operator RequestContent(PostgreSqlFlexibleServerStorageEditionCapability model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PostgreSqlFlexibleServerStorageEditionCapability"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PostgreSqlFlexibleServerStorageEditionCapability(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePostgreSqlFlexibleServerStorageEditionCapability(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

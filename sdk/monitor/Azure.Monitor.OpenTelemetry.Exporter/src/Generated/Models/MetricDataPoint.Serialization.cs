@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class MetricDataPoint : IUtf8JsonSerializable
+    internal partial class MetricDataPoint : IUtf8JsonSerializable, IModelJsonSerializable<MetricDataPoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MetricDataPoint>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MetricDataPoint>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MetricDataPoint>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Namespace))
             {
@@ -77,7 +85,159 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     writer.WriteNull("stdDev");
                 }
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static MetricDataPoint DeserializeMetricDataPoint(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> ns = default;
+            string name = default;
+            Optional<DataPointType> kind = default;
+            double value = default;
+            Optional<int?> count = default;
+            Optional<double?> min = default;
+            Optional<double?> max = default;
+            Optional<double?> stdDev = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("ns"u8))
+                {
+                    ns = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kind = new DataPointType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("value"u8))
+                {
+                    value = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("count"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        count = null;
+                        continue;
+                    }
+                    count = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("min"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        min = null;
+                        continue;
+                    }
+                    min = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("max"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        max = null;
+                        continue;
+                    }
+                    max = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("stdDev"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        stdDev = null;
+                        continue;
+                    }
+                    stdDev = property.Value.GetDouble();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new MetricDataPoint(ns.Value, name, Optional.ToNullable(kind), value, Optional.ToNullable(count), Optional.ToNullable(min), Optional.ToNullable(max), Optional.ToNullable(stdDev), serializedAdditionalRawData);
+        }
+
+        MetricDataPoint IModelJsonSerializable<MetricDataPoint>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricDataPoint>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricDataPoint(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MetricDataPoint>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricDataPoint>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MetricDataPoint IModelSerializable<MetricDataPoint>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricDataPoint>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMetricDataPoint(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MetricDataPoint"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MetricDataPoint"/> to convert. </param>
+        public static implicit operator RequestContent(MetricDataPoint model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MetricDataPoint"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MetricDataPoint(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMetricDataPoint(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

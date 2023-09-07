@@ -6,16 +6,42 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    public partial class RemediationDeployment
+    public partial class RemediationDeployment : IUtf8JsonSerializable, IModelJsonSerializable<RemediationDeployment>
     {
-        internal static RemediationDeployment DeserializeRemediationDeployment(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RemediationDeployment>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RemediationDeployment>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RemediationDeployment>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RemediationDeployment DeserializeRemediationDeployment(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +53,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<ResponseError> error = default;
             Optional<DateTimeOffset> createdOn = default;
             Optional<DateTimeOffset> lastUpdatedOn = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("remediatedResourceId"u8))
@@ -88,8 +115,61 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     lastUpdatedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RemediationDeployment(remediatedResourceId.Value, deploymentId.Value, status.Value, Optional.ToNullable(resourceLocation), error.Value, Optional.ToNullable(createdOn), Optional.ToNullable(lastUpdatedOn));
+            return new RemediationDeployment(remediatedResourceId.Value, deploymentId.Value, status.Value, Optional.ToNullable(resourceLocation), error.Value, Optional.ToNullable(createdOn), Optional.ToNullable(lastUpdatedOn), serializedAdditionalRawData);
+        }
+
+        RemediationDeployment IModelJsonSerializable<RemediationDeployment>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RemediationDeployment>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRemediationDeployment(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RemediationDeployment>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RemediationDeployment>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RemediationDeployment IModelSerializable<RemediationDeployment>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RemediationDeployment>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRemediationDeployment(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RemediationDeployment"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RemediationDeployment"/> to convert. </param>
+        public static implicit operator RequestContent(RemediationDeployment model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RemediationDeployment"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RemediationDeployment(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRemediationDeployment(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

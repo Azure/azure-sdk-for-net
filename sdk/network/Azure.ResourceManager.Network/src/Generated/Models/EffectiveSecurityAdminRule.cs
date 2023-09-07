@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network admin rule. </summary>
     public partial class EffectiveSecurityAdminRule : EffectiveBaseSecurityAdminRule
     {
-        /// <summary> Initializes a new instance of EffectiveSecurityAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveSecurityAdminRule"/>. </summary>
         internal EffectiveSecurityAdminRule()
         {
             Sources = new ChangeTrackingList<AddressPrefixItem>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
             Kind = EffectiveAdminRuleKind.Custom;
         }
 
-        /// <summary> Initializes a new instance of EffectiveSecurityAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveSecurityAdminRule"/>. </summary>
         /// <param name="resourceId"> Resource ID. </param>
         /// <param name="configurationDescription"> A description of the security admin configuration. </param>
         /// <param name="ruleCollectionDescription"> A description of the rule collection. </param>
@@ -42,7 +42,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        internal EffectiveSecurityAdminRule(ResourceIdentifier resourceId, string configurationDescription, string ruleCollectionDescription, IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups, IReadOnlyList<NetworkConfigurationGroup> ruleGroups, EffectiveAdminRuleKind kind, string description, SecurityConfigurationRuleProtocol? protocol, IReadOnlyList<AddressPrefixItem> sources, IReadOnlyList<AddressPrefixItem> destinations, IReadOnlyList<string> sourcePortRanges, IReadOnlyList<string> destinationPortRanges, SecurityConfigurationRuleAccess? access, int? priority, SecurityConfigurationRuleDirection? direction, NetworkProvisioningState? provisioningState, Guid? resourceGuid) : base(resourceId, configurationDescription, ruleCollectionDescription, ruleCollectionAppliesToGroups, ruleGroups, kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EffectiveSecurityAdminRule(ResourceIdentifier resourceId, string configurationDescription, string ruleCollectionDescription, IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups, IReadOnlyList<NetworkConfigurationGroup> ruleGroups, EffectiveAdminRuleKind kind, string description, SecurityConfigurationRuleProtocol? protocol, IReadOnlyList<AddressPrefixItem> sources, IReadOnlyList<AddressPrefixItem> destinations, IReadOnlyList<string> sourcePortRanges, IReadOnlyList<string> destinationPortRanges, SecurityConfigurationRuleAccess? access, int? priority, SecurityConfigurationRuleDirection? direction, NetworkProvisioningState? provisioningState, Guid? resourceGuid, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(resourceId, configurationDescription, ruleCollectionDescription, ruleCollectionAppliesToGroups, ruleGroups, kind, serializedAdditionalRawData)
         {
             Description = description;
             Protocol = protocol;

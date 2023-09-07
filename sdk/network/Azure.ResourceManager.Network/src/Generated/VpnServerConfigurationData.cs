@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class VpnServerConfigurationData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of VpnServerConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigurationData"/>. </summary>
         public VpnServerConfigurationData()
         {
             VpnProtocols = new ChangeTrackingList<VpnGatewayTunnelingProtocol>();
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Network
             ConfigurationPolicyGroups = new ChangeTrackingList<VpnServerConfigurationPolicyGroupData>();
         }
 
-        /// <summary> Initializes a new instance of VpnServerConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigurationData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -54,7 +55,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the VpnServerConfiguration resource. Possible values are: 'Updating', 'Deleting', and 'Failed'. </param>
         /// <param name="p2sVpnGateways"> List of references to P2SVpnGateways. </param>
         /// <param name="configurationPolicyGroups"> List of all VpnServerConfigurationPolicyGroups. </param>
-        internal VpnServerConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, IList<VpnGatewayTunnelingProtocol> vpnProtocols, IList<VpnAuthenticationType> vpnAuthenticationTypes, IList<VpnServerConfigVpnClientRootCertificate> vpnClientRootCertificates, IList<VpnServerConfigVpnClientRevokedCertificate> vpnClientRevokedCertificates, IList<VpnServerConfigRadiusServerRootCertificate> radiusServerRootCertificates, IList<VpnServerConfigRadiusClientRootCertificate> radiusClientRootCertificates, IList<IPsecPolicy> vpnClientIPsecPolicies, string radiusServerAddress, string radiusServerSecret, IList<RadiusServer> radiusServers, AadAuthenticationParameters aadAuthenticationParameters, string provisioningState, IReadOnlyList<P2SVpnGatewayData> p2sVpnGateways, IList<VpnServerConfigurationPolicyGroupData> configurationPolicyGroups) : base(id, name, resourceType, location, tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VpnServerConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, IList<VpnGatewayTunnelingProtocol> vpnProtocols, IList<VpnAuthenticationType> vpnAuthenticationTypes, IList<VpnServerConfigVpnClientRootCertificate> vpnClientRootCertificates, IList<VpnServerConfigVpnClientRevokedCertificate> vpnClientRevokedCertificates, IList<VpnServerConfigRadiusServerRootCertificate> radiusServerRootCertificates, IList<VpnServerConfigRadiusClientRootCertificate> radiusClientRootCertificates, IList<IPsecPolicy> vpnClientIPsecPolicies, string radiusServerAddress, string radiusServerSecret, IList<RadiusServer> radiusServers, AadAuthenticationParameters aadAuthenticationParameters, string provisioningState, IReadOnlyList<P2SVpnGatewayData> p2sVpnGateways, IList<VpnServerConfigurationPolicyGroupData> configurationPolicyGroups, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             VpnProtocols = vpnProtocols;

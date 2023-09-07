@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class AlertRuleLeafCondition : IUtf8JsonSerializable
+    public partial class AlertRuleLeafCondition : IUtf8JsonSerializable, IModelJsonSerializable<AlertRuleLeafCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AlertRuleLeafCondition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AlertRuleLeafCondition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AlertRuleLeafCondition>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Field))
             {
@@ -36,11 +43,25 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AlertRuleLeafCondition DeserializeAlertRuleLeafCondition(JsonElement element)
+        internal static AlertRuleLeafCondition DeserializeAlertRuleLeafCondition(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> field = default;
             Optional<string> @equals = default;
             Optional<IList<string>> containsAny = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("field"u8))
@@ -74,8 +96,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     containsAny = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AlertRuleLeafCondition(field.Value, @equals.Value, Optional.ToList(containsAny));
+            return new AlertRuleLeafCondition(field.Value, @equals.Value, Optional.ToList(containsAny), serializedAdditionalRawData);
+        }
+
+        AlertRuleLeafCondition IModelJsonSerializable<AlertRuleLeafCondition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AlertRuleLeafCondition>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAlertRuleLeafCondition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AlertRuleLeafCondition>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AlertRuleLeafCondition>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AlertRuleLeafCondition IModelSerializable<AlertRuleLeafCondition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AlertRuleLeafCondition>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAlertRuleLeafCondition(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AlertRuleLeafCondition"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AlertRuleLeafCondition"/> to convert. </param>
+        public static implicit operator RequestContent(AlertRuleLeafCondition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AlertRuleLeafCondition"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AlertRuleLeafCondition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAlertRuleLeafCondition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

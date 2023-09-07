@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkInterfaceIPConfigurationData : NetworkWritableResourceData
     {
-        /// <summary> Initializes a new instance of NetworkInterfaceIPConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceIPConfigurationData"/>. </summary>
         public NetworkInterfaceIPConfigurationData()
         {
             VirtualNetworkTaps = new ChangeTrackingList<VirtualNetworkTapData>();
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Network
             ApplicationSecurityGroups = new ChangeTrackingList<ApplicationSecurityGroupData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkInterfaceIPConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceIPConfigurationData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -48,7 +49,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationSecurityGroups"> Application security groups in which the IP configuration is included. </param>
         /// <param name="provisioningState"> The provisioning state of the network interface IP configuration. </param>
         /// <param name="privateLinkConnectionProperties"> PrivateLinkConnection properties for the network interface. </param>
-        internal NetworkInterfaceIPConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource gatewayLoadBalancer, IList<VirtualNetworkTapData> virtualNetworkTaps, IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools, IList<BackendAddressPoolData> loadBalancerBackendAddressPools, IList<InboundNatRuleData> loadBalancerInboundNatRules, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, NetworkIPVersion? privateIPAddressVersion, SubnetData subnet, bool? primary, PublicIPAddressData publicIPAddress, IList<ApplicationSecurityGroupData> applicationSecurityGroups, NetworkProvisioningState? provisioningState, NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties privateLinkConnectionProperties) : base(id, name, resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkInterfaceIPConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource gatewayLoadBalancer, IList<VirtualNetworkTapData> virtualNetworkTaps, IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools, IList<BackendAddressPoolData> loadBalancerBackendAddressPools, IList<InboundNatRuleData> loadBalancerInboundNatRules, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, NetworkIPVersion? privateIPAddressVersion, SubnetData subnet, bool? primary, PublicIPAddressData publicIPAddress, IList<ApplicationSecurityGroupData> applicationSecurityGroups, NetworkProvisioningState? provisioningState, NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties privateLinkConnectionProperties, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             GatewayLoadBalancer = gatewayLoadBalancer;

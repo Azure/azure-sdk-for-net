@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,14 +20,14 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class VirtualWanData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualWanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualWanData"/>. </summary>
         public VirtualWanData()
         {
             VirtualHubs = new ChangeTrackingList<WritableSubResource>();
             VpnSites = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of VirtualWanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualWanData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -41,7 +42,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="office365LocalBreakoutCategory"> The office local breakout category. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual WAN resource. </param>
         /// <param name="virtualWanType"> The type of the VirtualWAN. </param>
-        internal VirtualWanData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, bool? disableVpnEncryption, IReadOnlyList<WritableSubResource> virtualHubs, IReadOnlyList<WritableSubResource> vpnSites, bool? allowBranchToBranchTraffic, bool? allowVnetToVnetTraffic, OfficeTrafficCategory? office365LocalBreakoutCategory, NetworkProvisioningState? provisioningState, string virtualWanType) : base(id, name, resourceType, location, tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualWanData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, bool? disableVpnEncryption, IReadOnlyList<WritableSubResource> virtualHubs, IReadOnlyList<WritableSubResource> vpnSites, bool? allowBranchToBranchTraffic, bool? allowVnetToVnetTraffic, OfficeTrafficCategory? office365LocalBreakoutCategory, NetworkProvisioningState? provisioningState, string virtualWanType, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             DisableVpnEncryption = disableVpnEncryption;

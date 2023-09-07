@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class AlertRulePatch : IUtf8JsonSerializable
+    public partial class AlertRulePatch : IUtf8JsonSerializable, IModelJsonSerializable<AlertRulePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AlertRulePatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AlertRulePatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AlertRulePatch>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -51,12 +59,26 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
-                writer.WriteObjectValue(Condition);
+                if (Condition is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AlertRuleCondition>)Condition).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteObjectValue(Action);
+                if (Action is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AlertRuleAction>)Action).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Actions))
             {
@@ -64,12 +86,199 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AlertRuleAction>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static AlertRulePatch DeserializeAlertRulePatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
+            Optional<string> provisioningState = default;
+            Optional<bool> isEnabled = default;
+            Optional<AlertRuleCondition> condition = default;
+            Optional<AlertRuleAction> action = default;
+            Optional<IList<AlertRuleAction>> actions = default;
+            Optional<DateTimeOffset> lastUpdatedTime = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("name"u8))
+                        {
+                            name = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("description"u8))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            provisioningState = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("isEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("condition"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            condition = AlertRuleCondition.DeserializeAlertRuleCondition(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("action"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            action = AlertRuleAction.DeserializeAlertRuleAction(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("actions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<AlertRuleAction> array = new List<AlertRuleAction>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(AlertRuleAction.DeserializeAlertRuleAction(item));
+                            }
+                            actions = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("lastUpdatedTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            lastUpdatedTime = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new AlertRulePatch(Optional.ToDictionary(tags), name.Value, description.Value, provisioningState.Value, Optional.ToNullable(isEnabled), condition.Value, action.Value, Optional.ToList(actions), Optional.ToNullable(lastUpdatedTime), serializedAdditionalRawData);
+        }
+
+        AlertRulePatch IModelJsonSerializable<AlertRulePatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AlertRulePatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAlertRulePatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AlertRulePatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AlertRulePatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AlertRulePatch IModelSerializable<AlertRulePatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AlertRulePatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAlertRulePatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AlertRulePatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AlertRulePatch"/> to convert. </param>
+        public static implicit operator RequestContent(AlertRulePatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AlertRulePatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AlertRulePatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAlertRulePatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

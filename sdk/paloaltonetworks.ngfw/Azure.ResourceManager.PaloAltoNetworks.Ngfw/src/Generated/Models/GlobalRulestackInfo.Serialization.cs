@@ -5,20 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class GlobalRulestackInfo
+    public partial class GlobalRulestackInfo : IUtf8JsonSerializable, IModelJsonSerializable<GlobalRulestackInfo>
     {
-        internal static GlobalRulestackInfo DeserializeGlobalRulestackInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GlobalRulestackInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GlobalRulestackInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<GlobalRulestackInfo>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("azureId"u8);
+            writer.WriteStringValue(AzureId);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static GlobalRulestackInfo DeserializeGlobalRulestackInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string azureId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureId"u8))
@@ -26,8 +57,61 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     azureId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GlobalRulestackInfo(azureId);
+            return new GlobalRulestackInfo(azureId, serializedAdditionalRawData);
+        }
+
+        GlobalRulestackInfo IModelJsonSerializable<GlobalRulestackInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GlobalRulestackInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGlobalRulestackInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GlobalRulestackInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GlobalRulestackInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GlobalRulestackInfo IModelSerializable<GlobalRulestackInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GlobalRulestackInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGlobalRulestackInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GlobalRulestackInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GlobalRulestackInfo"/> to convert. </param>
+        public static implicit operator RequestContent(GlobalRulestackInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GlobalRulestackInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GlobalRulestackInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGlobalRulestackInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

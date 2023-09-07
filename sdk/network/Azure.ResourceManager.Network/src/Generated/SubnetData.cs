@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class SubnetData : NetworkWritableResourceData
     {
-        /// <summary> Initializes a new instance of SubnetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubnetData"/>. </summary>
         public SubnetData()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Network
             ApplicationGatewayIPConfigurations = new ChangeTrackingList<ApplicationGatewayIPConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of SubnetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubnetData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -59,7 +60,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateEndpointNetworkPolicy"> Enable or Disable apply network policies on private end point in the subnet. </param>
         /// <param name="privateLinkServiceNetworkPolicy"> Enable or Disable apply network policies on private link service in the subnet. </param>
         /// <param name="applicationGatewayIPConfigurations"> Application gateway IP configurations of virtual network resource. </param>
-        internal SubnetData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string addressPrefix, IList<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, WritableSubResource natGateway, IList<ServiceEndpointProperties> serviceEndpoints, IList<ServiceEndpointPolicyData> serviceEndpointPolicies, IReadOnlyList<PrivateEndpointData> privateEndpoints, IReadOnlyList<NetworkIPConfiguration> ipConfigurations, IReadOnlyList<NetworkIPConfigurationProfile> ipConfigurationProfiles, IList<WritableSubResource> ipAllocations, IReadOnlyList<ResourceNavigationLink> resourceNavigationLinks, IReadOnlyList<ServiceAssociationLink> serviceAssociationLinks, IList<ServiceDelegation> delegations, string purpose, NetworkProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicy, VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicy, IList<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations) : base(id, name, resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubnetData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string addressPrefix, IList<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, WritableSubResource natGateway, IList<ServiceEndpointProperties> serviceEndpoints, IList<ServiceEndpointPolicyData> serviceEndpointPolicies, IReadOnlyList<PrivateEndpointData> privateEndpoints, IReadOnlyList<NetworkIPConfiguration> ipConfigurations, IReadOnlyList<NetworkIPConfigurationProfile> ipConfigurationProfiles, IList<WritableSubResource> ipAllocations, IReadOnlyList<ResourceNavigationLink> resourceNavigationLinks, IReadOnlyList<ServiceAssociationLink> serviceAssociationLinks, IList<ServiceDelegation> delegations, string purpose, NetworkProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicy, VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicy, IList<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             AddressPrefix = addressPrefix;

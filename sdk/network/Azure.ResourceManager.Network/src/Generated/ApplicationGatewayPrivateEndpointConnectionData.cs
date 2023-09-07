@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ApplicationGatewayPrivateEndpointConnectionData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateEndpointConnectionData"/>. </summary>
         public ApplicationGatewayPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -31,7 +33,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the application gateway private endpoint connection resource. </param>
         /// <param name="linkIdentifier"> The consumer link id. </param>
-        internal ApplicationGatewayPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, PrivateEndpointData privateEndpoint, NetworkPrivateLinkServiceConnectionState connectionState, NetworkProvisioningState? provisioningState, string linkIdentifier) : base(id, name, resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, PrivateEndpointData privateEndpoint, NetworkPrivateLinkServiceConnectionState connectionState, NetworkProvisioningState? provisioningState, string linkIdentifier, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             PrivateEndpoint = privateEndpoint;

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
-    public partial class PowerBIDedicatedResourceData : IUtf8JsonSerializable
+    public partial class PowerBIDedicatedResourceData : IUtf8JsonSerializable, IModelJsonSerializable<PowerBIDedicatedResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PowerBIDedicatedResourceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PowerBIDedicatedResourceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PowerBIDedicatedResourceData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
@@ -32,13 +39,34 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             if (Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
-                writer.WriteObjectValue(SystemData);
+                if (SystemData is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SystemData>)SystemData).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static PowerBIDedicatedResourceData DeserializePowerBIDedicatedResourceData(JsonElement element)
+        internal static PowerBIDedicatedResourceData DeserializePowerBIDedicatedResourceData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +77,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             AzureLocation location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -94,8 +123,61 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     systemData = SystemData.DeserializeSystemData(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PowerBIDedicatedResourceData(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), systemData.Value);
+            return new PowerBIDedicatedResourceData(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), systemData.Value, serializedAdditionalRawData);
+        }
+
+        PowerBIDedicatedResourceData IModelJsonSerializable<PowerBIDedicatedResourceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PowerBIDedicatedResourceData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePowerBIDedicatedResourceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PowerBIDedicatedResourceData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PowerBIDedicatedResourceData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PowerBIDedicatedResourceData IModelSerializable<PowerBIDedicatedResourceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PowerBIDedicatedResourceData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePowerBIDedicatedResourceData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PowerBIDedicatedResourceData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PowerBIDedicatedResourceData"/> to convert. </param>
+        public static implicit operator RequestContent(PowerBIDedicatedResourceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PowerBIDedicatedResourceData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PowerBIDedicatedResourceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePowerBIDedicatedResourceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

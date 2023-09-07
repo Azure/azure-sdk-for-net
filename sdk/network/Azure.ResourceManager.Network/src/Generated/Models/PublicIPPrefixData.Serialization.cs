@@ -10,15 +10,20 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class PublicIPPrefixData : IUtf8JsonSerializable
+    public partial class PublicIPPrefixData : IUtf8JsonSerializable, IModelJsonSerializable<PublicIPPrefixData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PublicIPPrefixData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PublicIPPrefixData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PublicIPPrefixData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocation))
             {
@@ -28,7 +33,14 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PublicIPPrefixSku>)Sku).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -74,7 +86,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPTags)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<IPTag>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -91,14 +110,35 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(NatGateway))
             {
                 writer.WritePropertyName("natGateway"u8);
-                writer.WriteObjectValue(NatGateway);
+                if (NatGateway is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<NatGatewayData>)NatGateway).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PublicIPPrefixData DeserializePublicIPPrefixData(JsonElement element)
+        internal static PublicIPPrefixData DeserializePublicIPPrefixData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -122,6 +162,7 @@ namespace Azure.ResourceManager.Network
             Optional<Guid> resourceGuid = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<NatGatewayData> natGateway = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -319,8 +360,61 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PublicIPPrefixData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, sku.Value, Optional.ToNullable(etag), Optional.ToList(zones), Optional.ToNullable(publicIPAddressVersion), Optional.ToList(ipTags), Optional.ToNullable(prefixLength), ipPrefix.Value, Optional.ToList(publicIPAddresses), loadBalancerFrontendIPConfiguration, customIPPrefix, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), natGateway.Value);
+            return new PublicIPPrefixData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, sku.Value, Optional.ToNullable(etag), Optional.ToList(zones), Optional.ToNullable(publicIPAddressVersion), Optional.ToList(ipTags), Optional.ToNullable(prefixLength), ipPrefix.Value, Optional.ToList(publicIPAddresses), loadBalancerFrontendIPConfiguration, customIPPrefix, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), natGateway.Value, serializedAdditionalRawData);
+        }
+
+        PublicIPPrefixData IModelJsonSerializable<PublicIPPrefixData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PublicIPPrefixData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePublicIPPrefixData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PublicIPPrefixData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PublicIPPrefixData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PublicIPPrefixData IModelSerializable<PublicIPPrefixData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PublicIPPrefixData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePublicIPPrefixData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PublicIPPrefixData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PublicIPPrefixData"/> to convert. </param>
+        public static implicit operator RequestContent(PublicIPPrefixData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PublicIPPrefixData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PublicIPPrefixData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePublicIPPrefixData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

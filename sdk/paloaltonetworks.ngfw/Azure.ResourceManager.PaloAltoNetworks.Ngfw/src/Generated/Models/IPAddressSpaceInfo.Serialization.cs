@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class IPAddressSpaceInfo : IUtf8JsonSerializable
+    public partial class IPAddressSpaceInfo : IUtf8JsonSerializable, IModelJsonSerializable<IPAddressSpaceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IPAddressSpaceInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IPAddressSpaceInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IPAddressSpaceInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceId))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WritePropertyName("addressSpace"u8);
                 writer.WriteStringValue(AddressSpace);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IPAddressSpaceInfo DeserializeIPAddressSpaceInfo(JsonElement element)
+        internal static IPAddressSpaceInfo DeserializeIPAddressSpaceInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceIdentifier> resourceId = default;
             Optional<string> addressSpace = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -52,8 +75,61 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     addressSpace = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IPAddressSpaceInfo(resourceId.Value, addressSpace.Value);
+            return new IPAddressSpaceInfo(resourceId.Value, addressSpace.Value, serializedAdditionalRawData);
+        }
+
+        IPAddressSpaceInfo IModelJsonSerializable<IPAddressSpaceInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IPAddressSpaceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIPAddressSpaceInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IPAddressSpaceInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IPAddressSpaceInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IPAddressSpaceInfo IModelSerializable<IPAddressSpaceInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IPAddressSpaceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIPAddressSpaceInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IPAddressSpaceInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IPAddressSpaceInfo"/> to convert. </param>
+        public static implicit operator RequestContent(IPAddressSpaceInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IPAddressSpaceInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IPAddressSpaceInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIPAddressSpaceInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

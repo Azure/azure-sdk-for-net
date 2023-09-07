@@ -5,20 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class NewRelicObservabilityVmExtensionPayload
+    public partial class NewRelicObservabilityVmExtensionPayload : IUtf8JsonSerializable, IModelJsonSerializable<NewRelicObservabilityVmExtensionPayload>
     {
-        internal static NewRelicObservabilityVmExtensionPayload DeserializeNewRelicObservabilityVmExtensionPayload(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NewRelicObservabilityVmExtensionPayload>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NewRelicObservabilityVmExtensionPayload>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NewRelicObservabilityVmExtensionPayload>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IngestionKey))
+            {
+                writer.WritePropertyName("ingestionKey"u8);
+                writer.WriteStringValue(IngestionKey);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static NewRelicObservabilityVmExtensionPayload DeserializeNewRelicObservabilityVmExtensionPayload(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> ingestionKey = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ingestionKey"u8))
@@ -26,8 +60,61 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     ingestionKey = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NewRelicObservabilityVmExtensionPayload(ingestionKey.Value);
+            return new NewRelicObservabilityVmExtensionPayload(ingestionKey.Value, serializedAdditionalRawData);
+        }
+
+        NewRelicObservabilityVmExtensionPayload IModelJsonSerializable<NewRelicObservabilityVmExtensionPayload>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NewRelicObservabilityVmExtensionPayload>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNewRelicObservabilityVmExtensionPayload(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NewRelicObservabilityVmExtensionPayload>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NewRelicObservabilityVmExtensionPayload>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NewRelicObservabilityVmExtensionPayload IModelSerializable<NewRelicObservabilityVmExtensionPayload>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NewRelicObservabilityVmExtensionPayload>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNewRelicObservabilityVmExtensionPayload(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NewRelicObservabilityVmExtensionPayload"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NewRelicObservabilityVmExtensionPayload"/> to convert. </param>
+        public static implicit operator RequestContent(NewRelicObservabilityVmExtensionPayload model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NewRelicObservabilityVmExtensionPayload"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NewRelicObservabilityVmExtensionPayload(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNewRelicObservabilityVmExtensionPayload(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

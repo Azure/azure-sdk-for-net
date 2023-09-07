@@ -5,21 +5,63 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class EventCategoryCollection
+    internal partial class EventCategoryCollection : IUtf8JsonSerializable, IModelJsonSerializable<EventCategoryCollection>
     {
-        internal static EventCategoryCollection DeserializeEventCategoryCollection(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EventCategoryCollection>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EventCategoryCollection>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EventCategoryCollection>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MonitorLocalizableString>)item).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndArray();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static EventCategoryCollection DeserializeEventCategoryCollection(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<MonitorLocalizableString> value = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -32,8 +74,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     value = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EventCategoryCollection(value);
+            return new EventCategoryCollection(value, serializedAdditionalRawData);
+        }
+
+        EventCategoryCollection IModelJsonSerializable<EventCategoryCollection>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventCategoryCollection>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventCategoryCollection(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EventCategoryCollection>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventCategoryCollection>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EventCategoryCollection IModelSerializable<EventCategoryCollection>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventCategoryCollection>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEventCategoryCollection(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EventCategoryCollection"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EventCategoryCollection"/> to convert. </param>
+        public static implicit operator RequestContent(EventCategoryCollection model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EventCategoryCollection"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EventCategoryCollection(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEventCategoryCollection(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

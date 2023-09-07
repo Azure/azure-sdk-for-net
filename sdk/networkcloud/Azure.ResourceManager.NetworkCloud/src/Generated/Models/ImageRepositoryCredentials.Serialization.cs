@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class ImageRepositoryCredentials : IUtf8JsonSerializable
+    public partial class ImageRepositoryCredentials : IUtf8JsonSerializable, IModelJsonSerializable<ImageRepositoryCredentials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ImageRepositoryCredentials>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ImageRepositoryCredentials>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ImageRepositoryCredentials>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Password))
             {
@@ -24,11 +32,25 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStringValue(RegistryUriString);
             writer.WritePropertyName("username"u8);
             writer.WriteStringValue(Username);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ImageRepositoryCredentials DeserializeImageRepositoryCredentials(JsonElement element)
+        internal static ImageRepositoryCredentials DeserializeImageRepositoryCredentials(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +58,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<string> password = default;
             string registryUrl = default;
             string username = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("password"u8))
@@ -53,8 +76,61 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     username = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ImageRepositoryCredentials(password.Value, registryUrl, username);
+            return new ImageRepositoryCredentials(password.Value, registryUrl, username, serializedAdditionalRawData);
+        }
+
+        ImageRepositoryCredentials IModelJsonSerializable<ImageRepositoryCredentials>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ImageRepositoryCredentials>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeImageRepositoryCredentials(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ImageRepositoryCredentials>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ImageRepositoryCredentials>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ImageRepositoryCredentials IModelSerializable<ImageRepositoryCredentials>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ImageRepositoryCredentials>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeImageRepositoryCredentials(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ImageRepositoryCredentials"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ImageRepositoryCredentials"/> to convert. </param>
+        public static implicit operator RequestContent(ImageRepositoryCredentials model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ImageRepositoryCredentials"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ImageRepositoryCredentials(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeImageRepositoryCredentials(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

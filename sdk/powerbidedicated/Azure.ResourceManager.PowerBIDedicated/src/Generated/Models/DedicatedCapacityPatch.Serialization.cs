@@ -5,20 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
-    public partial class DedicatedCapacityPatch : IUtf8JsonSerializable
+    public partial class DedicatedCapacityPatch : IUtf8JsonSerializable, IModelJsonSerializable<DedicatedCapacityPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DedicatedCapacityPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DedicatedCapacityPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DedicatedCapacityPatch>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CapacitySku>)Sku).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -36,7 +51,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             if (Optional.IsDefined(Administration))
             {
                 writer.WritePropertyName("administration"u8);
-                writer.WriteObjectValue(Administration);
+                if (Administration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DedicatedCapacityAdministrators>)Administration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Mode))
             {
@@ -44,7 +66,160 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 writer.WriteStringValue(Mode.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static DedicatedCapacityPatch DeserializeDedicatedCapacityPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<CapacitySku> sku = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<DedicatedCapacityAdministrators> administration = default;
+            Optional<Mode> mode = default;
+            Optional<Guid> tenantId = default;
+            Optional<string> friendlyName = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sku"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = CapacitySku.DeserializeCapacitySku(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("administration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            administration = DedicatedCapacityAdministrators.DeserializeDedicatedCapacityAdministrators(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("mode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            mode = new Mode(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("tenantId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            tenantId = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("friendlyName"u8))
+                        {
+                            friendlyName = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new DedicatedCapacityPatch(sku.Value, Optional.ToDictionary(tags), administration.Value, Optional.ToNullable(mode), Optional.ToNullable(tenantId), friendlyName.Value, serializedAdditionalRawData);
+        }
+
+        DedicatedCapacityPatch IModelJsonSerializable<DedicatedCapacityPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DedicatedCapacityPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDedicatedCapacityPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DedicatedCapacityPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DedicatedCapacityPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DedicatedCapacityPatch IModelSerializable<DedicatedCapacityPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DedicatedCapacityPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDedicatedCapacityPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DedicatedCapacityPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DedicatedCapacityPatch"/> to convert. </param>
+        public static implicit operator RequestContent(DedicatedCapacityPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DedicatedCapacityPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DedicatedCapacityPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDedicatedCapacityPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

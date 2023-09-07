@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
-    public partial class IngestionPolicyPropertiesFormat : IUtf8JsonSerializable
+    public partial class IngestionPolicyPropertiesFormat : IUtf8JsonSerializable, IModelJsonSerializable<IngestionPolicyPropertiesFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IngestionPolicyPropertiesFormat>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IngestionPolicyPropertiesFormat>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IngestionPolicyPropertiesFormat>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IngestionType))
             {
@@ -27,21 +34,43 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 writer.WriteStartArray();
                 foreach (var item in IngestionSources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<IngestionSourcesPropertiesFormat>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static IngestionPolicyPropertiesFormat DeserializeIngestionPolicyPropertiesFormat(JsonElement element)
+        internal static IngestionPolicyPropertiesFormat DeserializeIngestionPolicyPropertiesFormat(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IngestionType> ingestionType = default;
             Optional<IList<IngestionSourcesPropertiesFormat>> ingestionSources = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ingestionType"u8))
@@ -67,8 +96,61 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     ingestionSources = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IngestionPolicyPropertiesFormat(Optional.ToNullable(ingestionType), Optional.ToList(ingestionSources));
+            return new IngestionPolicyPropertiesFormat(Optional.ToNullable(ingestionType), Optional.ToList(ingestionSources), serializedAdditionalRawData);
+        }
+
+        IngestionPolicyPropertiesFormat IModelJsonSerializable<IngestionPolicyPropertiesFormat>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IngestionPolicyPropertiesFormat>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIngestionPolicyPropertiesFormat(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IngestionPolicyPropertiesFormat>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IngestionPolicyPropertiesFormat>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IngestionPolicyPropertiesFormat IModelSerializable<IngestionPolicyPropertiesFormat>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IngestionPolicyPropertiesFormat>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIngestionPolicyPropertiesFormat(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IngestionPolicyPropertiesFormat"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IngestionPolicyPropertiesFormat"/> to convert. </param>
+        public static implicit operator RequestContent(IngestionPolicyPropertiesFormat model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IngestionPolicyPropertiesFormat"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IngestionPolicyPropertiesFormat(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIngestionPolicyPropertiesFormat(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

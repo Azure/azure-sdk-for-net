@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class EmailHookParameterPatch : IUtf8JsonSerializable
+    internal partial class EmailHookParameterPatch : IUtf8JsonSerializable, IModelJsonSerializable<EmailHookParameterPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EmailHookParameterPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EmailHookParameterPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EmailHookParameterPatch>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ToList))
             {
@@ -25,7 +33,102 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static EmailHookParameterPatch DeserializeEmailHookParameterPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<string>> toList = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("toList"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    toList = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new EmailHookParameterPatch(Optional.ToList(toList), serializedAdditionalRawData);
+        }
+
+        EmailHookParameterPatch IModelJsonSerializable<EmailHookParameterPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EmailHookParameterPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEmailHookParameterPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EmailHookParameterPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EmailHookParameterPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EmailHookParameterPatch IModelSerializable<EmailHookParameterPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EmailHookParameterPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEmailHookParameterPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EmailHookParameterPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EmailHookParameterPatch"/> to convert. </param>
+        public static implicit operator RequestContent(EmailHookParameterPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EmailHookParameterPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EmailHookParameterPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEmailHookParameterPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

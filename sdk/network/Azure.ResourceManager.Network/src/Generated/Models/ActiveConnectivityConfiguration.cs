@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Active connectivity configuration. </summary>
     public partial class ActiveConnectivityConfiguration : EffectiveConnectivityConfiguration
     {
-        /// <summary> Initializes a new instance of ActiveConnectivityConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActiveConnectivityConfiguration"/>. </summary>
         internal ActiveConnectivityConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ActiveConnectivityConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActiveConnectivityConfiguration"/>. </summary>
         /// <param name="id"> Connectivity configuration ID. </param>
         /// <param name="configurationGroups"> Effective configuration groups. </param>
         /// <param name="description"> A description of the connectivity configuration. </param>
@@ -32,7 +32,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <param name="committedOn"> Deployment time string. </param>
         /// <param name="region"> Deployment region. </param>
-        internal ActiveConnectivityConfiguration(string id, IReadOnlyList<NetworkConfigurationGroup> configurationGroups, string description, ConnectivityTopology? connectivityTopology, IReadOnlyList<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, IReadOnlyList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, Guid? resourceGuid, DateTimeOffset? committedOn, AzureLocation? region) : base(id, configurationGroups, description, connectivityTopology, hubs, isGlobal, appliesToGroups, provisioningState, deleteExistingPeering, resourceGuid)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ActiveConnectivityConfiguration(string id, IReadOnlyList<NetworkConfigurationGroup> configurationGroups, string description, ConnectivityTopology? connectivityTopology, IReadOnlyList<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, IReadOnlyList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, Guid? resourceGuid, DateTimeOffset? committedOn, AzureLocation? region, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, configurationGroups, description, connectivityTopology, hubs, isGlobal, appliesToGroups, provisioningState, deleteExistingPeering, resourceGuid, serializedAdditionalRawData)
         {
             CommittedOn = committedOn;
             Region = region;

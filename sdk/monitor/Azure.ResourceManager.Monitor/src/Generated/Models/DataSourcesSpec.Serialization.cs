@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DataSourcesSpec : IUtf8JsonSerializable
+    public partial class DataSourcesSpec : IUtf8JsonSerializable, IModelJsonSerializable<DataSourcesSpec>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataSourcesSpec>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataSourcesSpec>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataSourcesSpec>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PerformanceCounters))
             {
@@ -22,7 +29,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in PerformanceCounters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<PerfCounterDataSource>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -32,7 +46,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in WindowsEventLogs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<WindowsEventLogDataSource>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +63,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Syslog)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SyslogDataSource>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +80,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ExtensionDataSource>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +97,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in LogFiles)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<LogFilesDataSource>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +114,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in IisLogs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<IisLogsDataSource>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +131,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in WindowsFirewallLogs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<WindowsFirewallLogsDataSource>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +148,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in PrometheusForwarder)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<PrometheusForwarderDataSource>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -102,20 +165,48 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in PlatformTelemetry)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<PlatformTelemetryDataSource>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DataImports))
             {
                 writer.WritePropertyName("dataImports"u8);
-                writer.WriteObjectValue(DataImports);
+                if (DataImports is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DataSourcesSpecDataImports>)DataImports).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static DataSourcesSpec DeserializeDataSourcesSpec(JsonElement element)
+        internal static DataSourcesSpec DeserializeDataSourcesSpec(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -130,6 +221,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<IList<PrometheusForwarderDataSource>> prometheusForwarder = default;
             Optional<IList<PlatformTelemetryDataSource>> platformTelemetry = default;
             Optional<DataSourcesSpecDataImports> dataImports = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("performanceCounters"u8))
@@ -267,8 +359,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     dataImports = DataSourcesSpecDataImports.DeserializeDataSourcesSpecDataImports(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataSourcesSpec(Optional.ToList(performanceCounters), Optional.ToList(windowsEventLogs), Optional.ToList(syslog), Optional.ToList(extensions), Optional.ToList(logFiles), Optional.ToList(iisLogs), Optional.ToList(windowsFirewallLogs), Optional.ToList(prometheusForwarder), Optional.ToList(platformTelemetry), dataImports.Value);
+            return new DataSourcesSpec(Optional.ToList(performanceCounters), Optional.ToList(windowsEventLogs), Optional.ToList(syslog), Optional.ToList(extensions), Optional.ToList(logFiles), Optional.ToList(iisLogs), Optional.ToList(windowsFirewallLogs), Optional.ToList(prometheusForwarder), Optional.ToList(platformTelemetry), dataImports.Value, serializedAdditionalRawData);
+        }
+
+        DataSourcesSpec IModelJsonSerializable<DataSourcesSpec>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataSourcesSpec>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataSourcesSpec(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataSourcesSpec>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataSourcesSpec>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataSourcesSpec IModelSerializable<DataSourcesSpec>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataSourcesSpec>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataSourcesSpec(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataSourcesSpec"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataSourcesSpec"/> to convert. </param>
+        public static implicit operator RequestContent(DataSourcesSpec model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataSourcesSpec"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataSourcesSpec(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataSourcesSpec(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectionSharedKey : IUtf8JsonSerializable
+    public partial class ConnectionSharedKey : IUtf8JsonSerializable, IModelJsonSerializable<ConnectionSharedKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConnectionSharedKey>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConnectionSharedKey>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectionSharedKey>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
@@ -22,17 +30,32 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConnectionSharedKey DeserializeConnectionSharedKey(JsonElement element)
+        internal static ConnectionSharedKey DeserializeConnectionSharedKey(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string value = default;
             Optional<ResourceIdentifier> id = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -49,8 +72,61 @@ namespace Azure.ResourceManager.Network.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConnectionSharedKey(id.Value, value);
+            return new ConnectionSharedKey(id.Value, value, serializedAdditionalRawData);
+        }
+
+        ConnectionSharedKey IModelJsonSerializable<ConnectionSharedKey>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectionSharedKey>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectionSharedKey(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConnectionSharedKey>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectionSharedKey>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConnectionSharedKey IModelSerializable<ConnectionSharedKey>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectionSharedKey>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConnectionSharedKey(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConnectionSharedKey"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConnectionSharedKey"/> to convert. </param>
+        public static implicit operator RequestContent(ConnectionSharedKey model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConnectionSharedKey"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConnectionSharedKey(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConnectionSharedKey(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

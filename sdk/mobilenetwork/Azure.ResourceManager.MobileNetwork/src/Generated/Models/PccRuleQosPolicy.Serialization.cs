@@ -5,20 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class PccRuleQosPolicy : IUtf8JsonSerializable
+    public partial class PccRuleQosPolicy : IUtf8JsonSerializable, IModelJsonSerializable<PccRuleQosPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PccRuleQosPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PccRuleQosPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PccRuleQosPolicy>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(GuaranteedBitRate))
             {
                 writer.WritePropertyName("guaranteedBitRate"u8);
-                writer.WriteObjectValue(GuaranteedBitRate);
+                if (GuaranteedBitRate is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<Ambr>)GuaranteedBitRate).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(FiveQi))
             {
@@ -41,12 +56,33 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStringValue(PreemptionVulnerability.Value.ToString());
             }
             writer.WritePropertyName("maximumBitRate"u8);
-            writer.WriteObjectValue(MaximumBitRate);
+            if (MaximumBitRate is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<Ambr>)MaximumBitRate).Serialize(writer, options);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PccRuleQosPolicy DeserializePccRuleQosPolicy(JsonElement element)
+        internal static PccRuleQosPolicy DeserializePccRuleQosPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +93,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Optional<MobileNetworkPreemptionCapability> preemptionCapability = default;
             Optional<MobileNetworkPreemptionVulnerability> preemptionVulnerability = default;
             Ambr maximumBitRate = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("guaranteedBitRate"u8))
@@ -109,8 +146,61 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     maximumBitRate = Ambr.DeserializeAmbr(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PccRuleQosPolicy(Optional.ToNullable(_5qi), Optional.ToNullable(allocationAndRetentionPriorityLevel), Optional.ToNullable(preemptionCapability), Optional.ToNullable(preemptionVulnerability), maximumBitRate, guaranteedBitRate.Value);
+            return new PccRuleQosPolicy(Optional.ToNullable(_5qi), Optional.ToNullable(allocationAndRetentionPriorityLevel), Optional.ToNullable(preemptionCapability), Optional.ToNullable(preemptionVulnerability), maximumBitRate, guaranteedBitRate.Value, serializedAdditionalRawData);
+        }
+
+        PccRuleQosPolicy IModelJsonSerializable<PccRuleQosPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PccRuleQosPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePccRuleQosPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PccRuleQosPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PccRuleQosPolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PccRuleQosPolicy IModelSerializable<PccRuleQosPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PccRuleQosPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePccRuleQosPolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PccRuleQosPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PccRuleQosPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(PccRuleQosPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PccRuleQosPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PccRuleQosPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePccRuleQosPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

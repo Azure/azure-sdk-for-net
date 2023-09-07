@@ -21,7 +21,10 @@ namespace Azure.ResourceManager.MobileNetwork
     /// </summary>
     public partial class PacketCoreControlPlaneData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PacketCoreControlPlaneData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PacketCoreControlPlaneData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sites"> Site(s) under which this packet core control plane should be deployed. The sites must be in the same location as the packet core control plane. </param>
         /// <param name="platform"> The platform where the packet core is deployed. </param>
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.MobileNetwork
             LocalDiagnosticsAccess = localDiagnosticsAccess;
         }
 
-        /// <summary> Initializes a new instance of PacketCoreControlPlaneData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PacketCoreControlPlaneData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -65,7 +68,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="localDiagnosticsAccess"> The kubernetes ingress configuration to control access to packet core diagnostics over local APIs. </param>
         /// <param name="diagnosticsUpload"> Configuration for uploading packet core diagnostics. </param>
         /// <param name="interopSettings"> Settings to allow interoperability with third party components e.g. RANs and UEs. </param>
-        internal PacketCoreControlPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkManagedServiceIdentity userAssignedIdentity, MobileNetworkProvisioningState? provisioningState, MobileNetworkInstallation installation, IList<WritableSubResource> sites, MobileNetworkPlatformConfiguration platform, MobileNetworkCoreNetworkType? coreNetworkTechnology, string version, string installedVersion, string rollbackVersion, MobileNetworkInterfaceProperties controlPlaneAccessInterface, MobileNetworkBillingSku sku, int? ueMtu, MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess, DiagnosticsUploadConfiguration diagnosticsUpload, BinaryData interopSettings) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PacketCoreControlPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkManagedServiceIdentity userAssignedIdentity, MobileNetworkProvisioningState? provisioningState, MobileNetworkInstallation installation, IList<WritableSubResource> sites, MobileNetworkPlatformConfiguration platform, MobileNetworkCoreNetworkType? coreNetworkTechnology, string version, string installedVersion, string rollbackVersion, MobileNetworkInterfaceProperties controlPlaneAccessInterface, MobileNetworkBillingSku sku, int? ueMtu, MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess, DiagnosticsUploadConfiguration diagnosticsUpload, BinaryData interopSettings, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             UserAssignedIdentity = userAssignedIdentity;
             ProvisioningState = provisioningState;
@@ -82,6 +86,12 @@ namespace Azure.ResourceManager.MobileNetwork
             LocalDiagnosticsAccess = localDiagnosticsAccess;
             DiagnosticsUpload = diagnosticsUpload;
             InteropSettings = interopSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PacketCoreControlPlaneData"/> for deserialization. </summary>
+        internal PacketCoreControlPlaneData()
+        {
         }
 
         /// <summary> The identity used to retrieve the ingress certificate from Azure key vault. </summary>

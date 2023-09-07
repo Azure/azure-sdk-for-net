@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayGlobalConfiguration : IUtf8JsonSerializable
+    public partial class ApplicationGatewayGlobalConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationGatewayGlobalConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationGatewayGlobalConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationGatewayGlobalConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayGlobalConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EnableRequestBuffering))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("enableResponseBuffering"u8);
                 writer.WriteBooleanValue(EnableResponseBuffering.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewayGlobalConfiguration DeserializeApplicationGatewayGlobalConfiguration(JsonElement element)
+        internal static ApplicationGatewayGlobalConfiguration DeserializeApplicationGatewayGlobalConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> enableRequestBuffering = default;
             Optional<bool> enableResponseBuffering = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableRequestBuffering"u8))
@@ -56,8 +79,61 @@ namespace Azure.ResourceManager.Network.Models
                     enableResponseBuffering = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationGatewayGlobalConfiguration(Optional.ToNullable(enableRequestBuffering), Optional.ToNullable(enableResponseBuffering));
+            return new ApplicationGatewayGlobalConfiguration(Optional.ToNullable(enableRequestBuffering), Optional.ToNullable(enableResponseBuffering), serializedAdditionalRawData);
+        }
+
+        ApplicationGatewayGlobalConfiguration IModelJsonSerializable<ApplicationGatewayGlobalConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayGlobalConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayGlobalConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationGatewayGlobalConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayGlobalConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationGatewayGlobalConfiguration IModelSerializable<ApplicationGatewayGlobalConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayGlobalConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationGatewayGlobalConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApplicationGatewayGlobalConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApplicationGatewayGlobalConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(ApplicationGatewayGlobalConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApplicationGatewayGlobalConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApplicationGatewayGlobalConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationGatewayGlobalConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

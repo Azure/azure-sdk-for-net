@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network default admin rule. </summary>
     public partial class NetworkDefaultAdminRule : BaseAdminRuleData
     {
-        /// <summary> Initializes a new instance of NetworkDefaultAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDefaultAdminRule"/>. </summary>
         public NetworkDefaultAdminRule()
         {
             Sources = new ChangeTrackingList<AddressPrefixItem>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             Kind = AdminRuleKind.Default;
         }
 
-        /// <summary> Initializes a new instance of NetworkDefaultAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDefaultAdminRule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -46,7 +46,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        internal NetworkDefaultAdminRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdminRuleKind kind, ETag? etag, string description, string flag, SecurityConfigurationRuleProtocol? protocol, IReadOnlyList<AddressPrefixItem> sources, IReadOnlyList<AddressPrefixItem> destinations, IReadOnlyList<string> sourcePortRanges, IReadOnlyList<string> destinationPortRanges, SecurityConfigurationRuleAccess? access, int? priority, SecurityConfigurationRuleDirection? direction, NetworkProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, systemData, kind, etag)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkDefaultAdminRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdminRuleKind kind, ETag? etag, string description, string flag, SecurityConfigurationRuleProtocol? protocol, IReadOnlyList<AddressPrefixItem> sources, IReadOnlyList<AddressPrefixItem> destinations, IReadOnlyList<string> sourcePortRanges, IReadOnlyList<string> destinationPortRanges, SecurityConfigurationRuleAccess? access, int? priority, SecurityConfigurationRuleDirection? direction, NetworkProvisioningState? provisioningState, Guid? resourceGuid, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             Description = description;
             Flag = flag;

@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkProfileData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfileData"/>. </summary>
         public NetworkProfileData()
         {
             ContainerNetworkInterfaces = new ChangeTrackingList<ContainerNetworkInterface>();
             ContainerNetworkInterfaceConfigurations = new ChangeTrackingList<ContainerNetworkInterfaceConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of NetworkProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfileData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -37,7 +37,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="containerNetworkInterfaceConfigurations"> List of chid container network interface configurations. </param>
         /// <param name="resourceGuid"> The resource GUID property of the network profile resource. </param>
         /// <param name="provisioningState"> The provisioning state of the network profile resource. </param>
-        internal NetworkProfileData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, IReadOnlyList<ContainerNetworkInterface> containerNetworkInterfaces, IList<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfigurations, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkProfileData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, IReadOnlyList<ContainerNetworkInterface> containerNetworkInterfaces, IList<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfigurations, Guid? resourceGuid, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             ContainerNetworkInterfaces = containerNetworkInterfaces;

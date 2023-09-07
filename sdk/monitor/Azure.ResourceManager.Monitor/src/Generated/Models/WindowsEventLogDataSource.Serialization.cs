@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class WindowsEventLogDataSource : IUtf8JsonSerializable
+    public partial class WindowsEventLogDataSource : IUtf8JsonSerializable, IModelJsonSerializable<WindowsEventLogDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WindowsEventLogDataSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WindowsEventLogDataSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<WindowsEventLogDataSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Streams))
             {
@@ -41,11 +48,25 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WindowsEventLogDataSource DeserializeWindowsEventLogDataSource(JsonElement element)
+        internal static WindowsEventLogDataSource DeserializeWindowsEventLogDataSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,6 +74,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<IList<WindowsEventLogDataSourceStream>> streams = default;
             Optional<IList<string>> xPathQueries = default;
             Optional<string> name = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streams"u8))
@@ -88,8 +110,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WindowsEventLogDataSource(Optional.ToList(streams), Optional.ToList(xPathQueries), name.Value);
+            return new WindowsEventLogDataSource(Optional.ToList(streams), Optional.ToList(xPathQueries), name.Value, serializedAdditionalRawData);
+        }
+
+        WindowsEventLogDataSource IModelJsonSerializable<WindowsEventLogDataSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WindowsEventLogDataSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWindowsEventLogDataSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WindowsEventLogDataSource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WindowsEventLogDataSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WindowsEventLogDataSource IModelSerializable<WindowsEventLogDataSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WindowsEventLogDataSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWindowsEventLogDataSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WindowsEventLogDataSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WindowsEventLogDataSource"/> to convert. </param>
+        public static implicit operator RequestContent(WindowsEventLogDataSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WindowsEventLogDataSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WindowsEventLogDataSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWindowsEventLogDataSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,19 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class NetAppAccountData : IUtf8JsonSerializable
+    public partial class NetAppAccountData : IUtf8JsonSerializable, IModelJsonSerializable<NetAppAccountData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetAppAccountData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetAppAccountData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NetAppAccountData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -46,21 +52,49 @@ namespace Azure.ResourceManager.NetApp
                 writer.WriteStartArray();
                 foreach (var item in ActiveDirectories)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<NetAppAccountActiveDirectory>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                if (Encryption is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<NetAppAccountEncryption>)Encryption).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetAppAccountData DeserializeNetAppAccountData(JsonElement element)
+        internal static NetAppAccountData DeserializeNetAppAccountData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -77,6 +111,7 @@ namespace Azure.ResourceManager.NetApp
             Optional<IList<NetAppAccountActiveDirectory>> activeDirectories = default;
             Optional<NetAppAccountEncryption> encryption = default;
             Optional<bool?> disableShowmount = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -191,8 +226,61 @@ namespace Azure.ResourceManager.NetApp
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetAppAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), identity, provisioningState.Value, Optional.ToList(activeDirectories), encryption.Value, Optional.ToNullable(disableShowmount));
+            return new NetAppAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), identity, provisioningState.Value, Optional.ToList(activeDirectories), encryption.Value, Optional.ToNullable(disableShowmount), serializedAdditionalRawData);
+        }
+
+        NetAppAccountData IModelJsonSerializable<NetAppAccountData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetAppAccountData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetAppAccountData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetAppAccountData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetAppAccountData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetAppAccountData IModelSerializable<NetAppAccountData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetAppAccountData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetAppAccountData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetAppAccountData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetAppAccountData"/> to convert. </param>
+        public static implicit operator RequestContent(NetAppAccountData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetAppAccountData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetAppAccountData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetAppAccountData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

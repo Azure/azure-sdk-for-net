@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class AzureFirewallData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of AzureFirewallData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallData"/>. </summary>
         public AzureFirewallData()
         {
             Zones = new ChangeTrackingList<string>();
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Network
             AdditionalProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -52,7 +53,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipGroups"> IpGroups associated with AzureFirewall. </param>
         /// <param name="sku"> The Azure Firewall Resource SKU. </param>
         /// <param name="additionalProperties"> The additional properties used to further config this azure firewall. </param>
-        internal AzureFirewallData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IList<string> zones, ETag? etag, IList<AzureFirewallApplicationRuleCollectionData> applicationRuleCollections, IList<AzureFirewallNatRuleCollectionData> natRuleCollections, IList<AzureFirewallNetworkRuleCollectionData> networkRuleCollections, IList<AzureFirewallIPConfiguration> ipConfigurations, AzureFirewallIPConfiguration managementIPConfiguration, NetworkProvisioningState? provisioningState, AzureFirewallThreatIntelMode? threatIntelMode, WritableSubResource virtualHub, WritableSubResource firewallPolicy, HubIPAddresses hubIPAddresses, IReadOnlyList<AzureFirewallIPGroups> ipGroups, AzureFirewallSku sku, IDictionary<string, string> additionalProperties) : base(id, name, resourceType, location, tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureFirewallData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IList<string> zones, ETag? etag, IList<AzureFirewallApplicationRuleCollectionData> applicationRuleCollections, IList<AzureFirewallNatRuleCollectionData> natRuleCollections, IList<AzureFirewallNetworkRuleCollectionData> networkRuleCollections, IList<AzureFirewallIPConfiguration> ipConfigurations, AzureFirewallIPConfiguration managementIPConfiguration, NetworkProvisioningState? provisioningState, AzureFirewallThreatIntelMode? threatIntelMode, WritableSubResource virtualHub, WritableSubResource firewallPolicy, HubIPAddresses hubIPAddresses, IReadOnlyList<AzureFirewallIPGroups> ipGroups, AzureFirewallSku sku, IDictionary<string, string> additionalProperties, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             Zones = zones;
             ETag = etag;

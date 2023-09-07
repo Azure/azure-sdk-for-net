@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MetricCriteria : IUtf8JsonSerializable
+    public partial class MetricCriteria : IUtf8JsonSerializable, IModelJsonSerializable<MetricCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MetricCriteria>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MetricCriteria>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MetricCriteria>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(Operator.ToString());
@@ -40,7 +46,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MetricDimension>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -61,8 +74,10 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static MetricCriteria DeserializeMetricCriteria(JsonElement element)
+        internal static MetricCriteria DeserializeMetricCriteria(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -142,6 +157,54 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new MetricCriteria(criterionType, name, metricName, metricNamespace.Value, timeAggregation, Optional.ToList(dimensions), Optional.ToNullable(skipMetricValidation), additionalProperties, @operator, threshold);
+        }
+
+        MetricCriteria IModelJsonSerializable<MetricCriteria>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricCriteria>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricCriteria(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MetricCriteria>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricCriteria>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MetricCriteria IModelSerializable<MetricCriteria>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricCriteria>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMetricCriteria(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MetricCriteria"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MetricCriteria"/> to convert. </param>
+        public static implicit operator RequestContent(MetricCriteria model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MetricCriteria"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MetricCriteria(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMetricCriteria(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorTimeWindow : IUtf8JsonSerializable
+    public partial class MonitorTimeWindow : IUtf8JsonSerializable, IModelJsonSerializable<MonitorTimeWindow>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MonitorTimeWindow>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MonitorTimeWindow>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorTimeWindow>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TimeZone))
             {
@@ -25,11 +32,25 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("end"u8);
             writer.WriteStringValue(EndOn, "O");
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MonitorTimeWindow DeserializeMonitorTimeWindow(JsonElement element)
+        internal static MonitorTimeWindow DeserializeMonitorTimeWindow(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +58,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> timeZone = default;
             DateTimeOffset start = default;
             DateTimeOffset end = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeZone"u8))
@@ -54,8 +76,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     end = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MonitorTimeWindow(timeZone.Value, start, end);
+            return new MonitorTimeWindow(timeZone.Value, start, end, serializedAdditionalRawData);
+        }
+
+        MonitorTimeWindow IModelJsonSerializable<MonitorTimeWindow>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorTimeWindow>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorTimeWindow(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MonitorTimeWindow>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorTimeWindow>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MonitorTimeWindow IModelSerializable<MonitorTimeWindow>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorTimeWindow>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMonitorTimeWindow(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MonitorTimeWindow"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MonitorTimeWindow"/> to convert. </param>
+        public static implicit operator RequestContent(MonitorTimeWindow model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MonitorTimeWindow"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MonitorTimeWindow(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMonitorTimeWindow(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

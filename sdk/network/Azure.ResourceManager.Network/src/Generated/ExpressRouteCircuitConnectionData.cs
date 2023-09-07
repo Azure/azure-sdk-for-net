@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -18,12 +20,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ExpressRouteCircuitConnectionData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ExpressRouteCircuitConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitConnectionData"/>. </summary>
         public ExpressRouteCircuitConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -35,7 +37,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipv6CircuitConnectionConfig"> IPv6 Address PrefixProperties of the express route circuit connection. </param>
         /// <param name="circuitConnectionStatus"> Express Route Circuit connection state. </param>
         /// <param name="provisioningState"> The provisioning state of the express route circuit connection resource. </param>
-        internal ExpressRouteCircuitConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource expressRouteCircuitPeering, WritableSubResource peerExpressRouteCircuitPeering, string addressPrefix, string authorizationKey, IPv6CircuitConnectionConfig ipv6CircuitConnectionConfig, CircuitConnectionStatus? circuitConnectionStatus, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteCircuitConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource expressRouteCircuitPeering, WritableSubResource peerExpressRouteCircuitPeering, string addressPrefix, string authorizationKey, IPv6CircuitConnectionConfig ipv6CircuitConnectionConfig, CircuitConnectionStatus? circuitConnectionStatus, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             ExpressRouteCircuitPeering = expressRouteCircuitPeering;

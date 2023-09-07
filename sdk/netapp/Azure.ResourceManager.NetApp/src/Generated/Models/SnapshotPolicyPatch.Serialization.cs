@@ -5,15 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class SnapshotPolicyPatch : IUtf8JsonSerializable
+    public partial class SnapshotPolicyPatch : IUtf8JsonSerializable, IModelJsonSerializable<SnapshotPolicyPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SnapshotPolicyPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SnapshotPolicyPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SnapshotPolicyPatch>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -33,22 +42,50 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(HourlySchedule))
             {
                 writer.WritePropertyName("hourlySchedule"u8);
-                writer.WriteObjectValue(HourlySchedule);
+                if (HourlySchedule is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SnapshotPolicyHourlySchedule>)HourlySchedule).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DailySchedule))
             {
                 writer.WritePropertyName("dailySchedule"u8);
-                writer.WriteObjectValue(DailySchedule);
+                if (DailySchedule is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SnapshotPolicyDailySchedule>)DailySchedule).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(WeeklySchedule))
             {
                 writer.WritePropertyName("weeklySchedule"u8);
-                writer.WriteObjectValue(WeeklySchedule);
+                if (WeeklySchedule is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SnapshotPolicyWeeklySchedule>)WeeklySchedule).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(MonthlySchedule))
             {
                 writer.WritePropertyName("monthlySchedule"u8);
-                writer.WriteObjectValue(MonthlySchedule);
+                if (MonthlySchedule is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SnapshotPolicyMonthlySchedule>)MonthlySchedule).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(IsEnabled))
             {
@@ -56,7 +93,204 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static SnapshotPolicyPatch DeserializeSnapshotPolicyPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
+            AzureLocation location = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
+            Optional<SystemData> systemData = default;
+            Optional<SnapshotPolicyHourlySchedule> hourlySchedule = default;
+            Optional<SnapshotPolicyDailySchedule> dailySchedule = default;
+            Optional<SnapshotPolicyWeeklySchedule> weeklySchedule = default;
+            Optional<SnapshotPolicyMonthlySchedule> monthlySchedule = default;
+            Optional<bool> enabled = default;
+            Optional<string> provisioningState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("hourlySchedule"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            hourlySchedule = SnapshotPolicyHourlySchedule.DeserializeSnapshotPolicyHourlySchedule(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("dailySchedule"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dailySchedule = SnapshotPolicyDailySchedule.DeserializeSnapshotPolicyDailySchedule(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("weeklySchedule"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            weeklySchedule = SnapshotPolicyWeeklySchedule.DeserializeSnapshotPolicyWeeklySchedule(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("monthlySchedule"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            monthlySchedule = SnapshotPolicyMonthlySchedule.DeserializeSnapshotPolicyMonthlySchedule(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("enabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            provisioningState = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new SnapshotPolicyPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, hourlySchedule.Value, dailySchedule.Value, weeklySchedule.Value, monthlySchedule.Value, Optional.ToNullable(enabled), provisioningState.Value, serializedAdditionalRawData);
+        }
+
+        SnapshotPolicyPatch IModelJsonSerializable<SnapshotPolicyPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SnapshotPolicyPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSnapshotPolicyPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SnapshotPolicyPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SnapshotPolicyPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SnapshotPolicyPatch IModelSerializable<SnapshotPolicyPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SnapshotPolicyPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSnapshotPolicyPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SnapshotPolicyPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SnapshotPolicyPatch"/> to convert. </param>
+        public static implicit operator RequestContent(SnapshotPolicyPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SnapshotPolicyPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SnapshotPolicyPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSnapshotPolicyPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

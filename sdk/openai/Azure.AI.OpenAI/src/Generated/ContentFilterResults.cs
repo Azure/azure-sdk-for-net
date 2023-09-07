@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.OpenAI
 {
     /// <summary> Information about the content filtering category, if it has been detected. </summary>
     public partial class ContentFilterResults
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of ContentFilterResults. </summary>
         internal ContentFilterResults()
         {
@@ -37,12 +43,14 @@ namespace Azure.AI.OpenAI
         /// Describes language related to physical actions intended to purposely hurt, injure,
         /// or damage one’s body, or kill oneself.
         /// </param>
-        internal ContentFilterResults(ContentFilterResult sexual, ContentFilterResult violence, ContentFilterResult hate, ContentFilterResult selfHarm)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContentFilterResults(ContentFilterResult sexual, ContentFilterResult violence, ContentFilterResult hate, ContentFilterResult selfHarm, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sexual = sexual;
             Violence = violence;
             Hate = hate;
             SelfHarm = selfHarm;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

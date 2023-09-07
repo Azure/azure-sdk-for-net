@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.Monitor.Models
     /// Please note <see cref="AlertRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="RuleEmailAction"/> and <see cref="RuleWebhookAction"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownRuleAction))]
     public abstract partial class AlertRuleAction
     {
-        /// <summary> Initializes a new instance of AlertRuleAction. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AlertRuleAction"/>. </summary>
         protected AlertRuleAction()
         {
         }
 
-        /// <summary> Initializes a new instance of AlertRuleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertRuleAction"/>. </summary>
         /// <param name="odataType"> specifies the type of the action. There are two types of actions: RuleEmailAction and RuleWebhookAction. </param>
-        internal AlertRuleAction(string odataType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AlertRuleAction(string odataType, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OdataType = odataType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> specifies the type of the action. There are two types of actions: RuleEmailAction and RuleWebhookAction. </summary>

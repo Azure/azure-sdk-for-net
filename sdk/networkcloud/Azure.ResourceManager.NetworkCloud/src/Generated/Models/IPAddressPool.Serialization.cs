@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class IPAddressPool : IUtf8JsonSerializable
+    public partial class IPAddressPool : IUtf8JsonSerializable, IModelJsonSerializable<IPAddressPool>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IPAddressPool>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IPAddressPool>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IPAddressPool>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("addresses"u8);
             writer.WriteStartArray();
@@ -35,11 +42,25 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("onlyUseHostIps"u8);
                 writer.WriteStringValue(OnlyUseHostIPs.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IPAddressPool DeserializeIPAddressPool(JsonElement element)
+        internal static IPAddressPool DeserializeIPAddressPool(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +69,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<BfdEnabled> autoAssign = default;
             string name = default;
             Optional<BfdEnabled> onlyUseHostIPs = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addresses"u8))
@@ -83,8 +105,61 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     onlyUseHostIPs = new BfdEnabled(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IPAddressPool(addresses, Optional.ToNullable(autoAssign), name, Optional.ToNullable(onlyUseHostIPs));
+            return new IPAddressPool(addresses, Optional.ToNullable(autoAssign), name, Optional.ToNullable(onlyUseHostIPs), serializedAdditionalRawData);
+        }
+
+        IPAddressPool IModelJsonSerializable<IPAddressPool>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IPAddressPool>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIPAddressPool(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IPAddressPool>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IPAddressPool>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IPAddressPool IModelSerializable<IPAddressPool>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IPAddressPool>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIPAddressPool(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IPAddressPool"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IPAddressPool"/> to convert. </param>
+        public static implicit operator RequestContent(IPAddressPool model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IPAddressPool"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IPAddressPool(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIPAddressPool(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

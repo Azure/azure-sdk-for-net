@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class SyslogDataSource : IUtf8JsonSerializable
+    public partial class SyslogDataSource : IUtf8JsonSerializable, IModelJsonSerializable<SyslogDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SyslogDataSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SyslogDataSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SyslogDataSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Streams))
             {
@@ -51,11 +58,25 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SyslogDataSource DeserializeSyslogDataSource(JsonElement element)
+        internal static SyslogDataSource DeserializeSyslogDataSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,6 +85,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<IList<SyslogDataSourceFacilityName>> facilityNames = default;
             Optional<IList<SyslogDataSourceLogLevel>> logLevels = default;
             Optional<string> name = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streams"u8))
@@ -113,8 +135,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SyslogDataSource(Optional.ToList(streams), Optional.ToList(facilityNames), Optional.ToList(logLevels), name.Value);
+            return new SyslogDataSource(Optional.ToList(streams), Optional.ToList(facilityNames), Optional.ToList(logLevels), name.Value, serializedAdditionalRawData);
+        }
+
+        SyslogDataSource IModelJsonSerializable<SyslogDataSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SyslogDataSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSyslogDataSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SyslogDataSource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SyslogDataSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SyslogDataSource IModelSerializable<SyslogDataSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SyslogDataSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSyslogDataSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SyslogDataSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SyslogDataSource"/> to convert. </param>
+        public static implicit operator RequestContent(SyslogDataSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SyslogDataSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SyslogDataSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSyslogDataSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

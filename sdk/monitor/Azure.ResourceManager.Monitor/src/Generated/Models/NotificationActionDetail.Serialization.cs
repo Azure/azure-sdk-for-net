@@ -6,15 +6,72 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class NotificationActionDetail
+    public partial class NotificationActionDetail : IUtf8JsonSerializable, IModelJsonSerializable<NotificationActionDetail>
     {
-        internal static NotificationActionDetail DeserializeNotificationActionDetail(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NotificationActionDetail>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NotificationActionDetail>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NotificationActionDetail>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(MechanismType))
+            {
+                writer.WritePropertyName("MechanismType"u8);
+                writer.WriteStringValue(MechanismType);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("Name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("Status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (Optional.IsDefined(SubState))
+            {
+                writer.WritePropertyName("SubState"u8);
+                writer.WriteStringValue(SubState);
+            }
+            if (Optional.IsDefined(SendOn))
+            {
+                writer.WritePropertyName("SendTime"u8);
+                writer.WriteStringValue(SendOn.Value, "O");
+            }
+            if (Optional.IsDefined(Detail))
+            {
+                writer.WritePropertyName("Detail"u8);
+                writer.WriteStringValue(Detail);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static NotificationActionDetail DeserializeNotificationActionDetail(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +82,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> subState = default;
             Optional<DateTimeOffset> sendTime = default;
             Optional<string> detail = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("MechanismType"u8))
@@ -61,8 +119,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     detail = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NotificationActionDetail(mechanismType.Value, name.Value, status.Value, subState.Value, Optional.ToNullable(sendTime), detail.Value);
+            return new NotificationActionDetail(mechanismType.Value, name.Value, status.Value, subState.Value, Optional.ToNullable(sendTime), detail.Value, serializedAdditionalRawData);
+        }
+
+        NotificationActionDetail IModelJsonSerializable<NotificationActionDetail>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NotificationActionDetail>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNotificationActionDetail(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NotificationActionDetail>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NotificationActionDetail>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NotificationActionDetail IModelSerializable<NotificationActionDetail>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NotificationActionDetail>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNotificationActionDetail(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NotificationActionDetail"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NotificationActionDetail"/> to convert. </param>
+        public static implicit operator RequestContent(NotificationActionDetail model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NotificationActionDetail"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NotificationActionDetail(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNotificationActionDetail(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

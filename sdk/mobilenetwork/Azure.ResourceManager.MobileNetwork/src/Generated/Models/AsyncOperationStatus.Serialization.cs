@@ -6,16 +6,88 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class AsyncOperationStatus
+    public partial class AsyncOperationStatus : IUtf8JsonSerializable, IModelJsonSerializable<AsyncOperationStatus>
     {
-        internal static AsyncOperationStatus DeserializeAsyncOperationStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AsyncOperationStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AsyncOperationStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AsyncOperationStatus>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status);
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
+            }
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (Optional.IsDefined(EndOn))
+            {
+                writer.WritePropertyName("endTime"u8);
+                writer.WriteStringValue(EndOn.Value, "O");
+            }
+            if (Optional.IsDefined(PercentComplete))
+            {
+                writer.WritePropertyName("percentComplete"u8);
+                writer.WriteNumberValue(PercentComplete.Value);
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Properties);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Properties.ToString()).RootElement);
+#endif
+            }
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AsyncOperationStatus DeserializeAsyncOperationStatus(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +101,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Optional<double> percentComplete = default;
             Optional<BinaryData> properties = default;
             Optional<ResponseError> error = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -96,8 +169,61 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AsyncOperationStatus(id.Value, name.Value, status, resourceId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(percentComplete), properties.Value, error.Value);
+            return new AsyncOperationStatus(id.Value, name.Value, status, resourceId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(percentComplete), properties.Value, error.Value, serializedAdditionalRawData);
+        }
+
+        AsyncOperationStatus IModelJsonSerializable<AsyncOperationStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AsyncOperationStatus>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAsyncOperationStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AsyncOperationStatus>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AsyncOperationStatus>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AsyncOperationStatus IModelSerializable<AsyncOperationStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AsyncOperationStatus>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAsyncOperationStatus(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AsyncOperationStatus"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AsyncOperationStatus"/> to convert. </param>
+        public static implicit operator RequestContent(AsyncOperationStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AsyncOperationStatus"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AsyncOperationStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAsyncOperationStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

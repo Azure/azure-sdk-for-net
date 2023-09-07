@@ -5,36 +5,72 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NewRelicObservability.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability
 {
-    public partial class NewRelicObservabilityTagRuleData : IUtf8JsonSerializable
+    public partial class NewRelicObservabilityTagRuleData : IUtf8JsonSerializable, IModelJsonSerializable<NewRelicObservabilityTagRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NewRelicObservabilityTagRuleData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NewRelicObservabilityTagRuleData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NewRelicObservabilityTagRuleData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(LogRules))
             {
                 writer.WritePropertyName("logRules"u8);
-                writer.WriteObjectValue(LogRules);
+                if (LogRules is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<NewRelicObservabilityLogRules>)LogRules).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(MetricRules))
             {
                 writer.WritePropertyName("metricRules"u8);
-                writer.WriteObjectValue(MetricRules);
+                if (MetricRules is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<NewRelicObservabilityMetricRules>)MetricRules).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NewRelicObservabilityTagRuleData DeserializeNewRelicObservabilityTagRuleData(JsonElement element)
+        internal static NewRelicObservabilityTagRuleData DeserializeNewRelicObservabilityTagRuleData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +82,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             Optional<NewRelicProvisioningState> provisioningState = default;
             Optional<NewRelicObservabilityLogRules> logRules = default;
             Optional<NewRelicObservabilityMetricRules> metricRules = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -111,8 +148,61 @@ namespace Azure.ResourceManager.NewRelicObservability
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NewRelicObservabilityTagRuleData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), logRules.Value, metricRules.Value);
+            return new NewRelicObservabilityTagRuleData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), logRules.Value, metricRules.Value, serializedAdditionalRawData);
+        }
+
+        NewRelicObservabilityTagRuleData IModelJsonSerializable<NewRelicObservabilityTagRuleData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NewRelicObservabilityTagRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNewRelicObservabilityTagRuleData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NewRelicObservabilityTagRuleData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NewRelicObservabilityTagRuleData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NewRelicObservabilityTagRuleData IModelSerializable<NewRelicObservabilityTagRuleData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NewRelicObservabilityTagRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNewRelicObservabilityTagRuleData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NewRelicObservabilityTagRuleData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NewRelicObservabilityTagRuleData"/> to convert. </param>
+        public static implicit operator RequestContent(NewRelicObservabilityTagRuleData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NewRelicObservabilityTagRuleData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NewRelicObservabilityTagRuleData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNewRelicObservabilityTagRuleData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

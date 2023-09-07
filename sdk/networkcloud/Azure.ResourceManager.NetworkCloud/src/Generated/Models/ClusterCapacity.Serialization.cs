@@ -5,15 +5,83 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class ClusterCapacity
+    public partial class ClusterCapacity : IUtf8JsonSerializable, IModelJsonSerializable<ClusterCapacity>
     {
-        internal static ClusterCapacity DeserializeClusterCapacity(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ClusterCapacity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ClusterCapacity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ClusterCapacity>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AvailableApplianceStorageGB))
+            {
+                writer.WritePropertyName("availableApplianceStorageGB"u8);
+                writer.WriteNumberValue(AvailableApplianceStorageGB.Value);
+            }
+            if (Optional.IsDefined(AvailableCoreCount))
+            {
+                writer.WritePropertyName("availableCoreCount"u8);
+                writer.WriteNumberValue(AvailableCoreCount.Value);
+            }
+            if (Optional.IsDefined(AvailableHostStorageGB))
+            {
+                writer.WritePropertyName("availableHostStorageGB"u8);
+                writer.WriteNumberValue(AvailableHostStorageGB.Value);
+            }
+            if (Optional.IsDefined(AvailableMemoryGB))
+            {
+                writer.WritePropertyName("availableMemoryGB"u8);
+                writer.WriteNumberValue(AvailableMemoryGB.Value);
+            }
+            if (Optional.IsDefined(TotalApplianceStorageGB))
+            {
+                writer.WritePropertyName("totalApplianceStorageGB"u8);
+                writer.WriteNumberValue(TotalApplianceStorageGB.Value);
+            }
+            if (Optional.IsDefined(TotalCoreCount))
+            {
+                writer.WritePropertyName("totalCoreCount"u8);
+                writer.WriteNumberValue(TotalCoreCount.Value);
+            }
+            if (Optional.IsDefined(TotalHostStorageGB))
+            {
+                writer.WritePropertyName("totalHostStorageGB"u8);
+                writer.WriteNumberValue(TotalHostStorageGB.Value);
+            }
+            if (Optional.IsDefined(TotalMemoryGB))
+            {
+                writer.WritePropertyName("totalMemoryGB"u8);
+                writer.WriteNumberValue(TotalMemoryGB.Value);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ClusterCapacity DeserializeClusterCapacity(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +94,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<long> totalCoreCount = default;
             Optional<long> totalHostStorageGB = default;
             Optional<long> totalMemoryGB = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("availableApplianceStorageGB"u8))
@@ -100,8 +169,61 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     totalMemoryGB = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ClusterCapacity(Optional.ToNullable(availableApplianceStorageGB), Optional.ToNullable(availableCoreCount), Optional.ToNullable(availableHostStorageGB), Optional.ToNullable(availableMemoryGB), Optional.ToNullable(totalApplianceStorageGB), Optional.ToNullable(totalCoreCount), Optional.ToNullable(totalHostStorageGB), Optional.ToNullable(totalMemoryGB));
+            return new ClusterCapacity(Optional.ToNullable(availableApplianceStorageGB), Optional.ToNullable(availableCoreCount), Optional.ToNullable(availableHostStorageGB), Optional.ToNullable(availableMemoryGB), Optional.ToNullable(totalApplianceStorageGB), Optional.ToNullable(totalCoreCount), Optional.ToNullable(totalHostStorageGB), Optional.ToNullable(totalMemoryGB), serializedAdditionalRawData);
+        }
+
+        ClusterCapacity IModelJsonSerializable<ClusterCapacity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClusterCapacity>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeClusterCapacity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ClusterCapacity>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClusterCapacity>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ClusterCapacity IModelSerializable<ClusterCapacity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClusterCapacity>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeClusterCapacity(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ClusterCapacity"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ClusterCapacity"/> to convert. </param>
+        public static implicit operator RequestContent(ClusterCapacity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ClusterCapacity"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ClusterCapacity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeClusterCapacity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

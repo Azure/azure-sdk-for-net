@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -12,9 +14,23 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> DataProtection type volumes include an object containing details of the replication. </summary>
     public partial class NetAppVolumePatchDataProtection
     {
-        /// <summary> Initializes a new instance of NetAppVolumePatchDataProtection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumePatchDataProtection"/>. </summary>
         public NetAppVolumePatchDataProtection()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumePatchDataProtection"/>. </summary>
+        /// <param name="backup"> Backup Properties. </param>
+        /// <param name="snapshot"> Snapshot properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumePatchDataProtection(NetAppVolumeBackupConfiguration backup, VolumeSnapshotProperties snapshot, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Backup = backup;
+            Snapshot = snapshot;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Backup Properties. </summary>

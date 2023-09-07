@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerSkuCapability
+    public partial class MySqlFlexibleServerSkuCapability : IUtf8JsonSerializable, IModelJsonSerializable<MySqlFlexibleServerSkuCapability>
     {
-        internal static MySqlFlexibleServerSkuCapability DeserializeMySqlFlexibleServerSkuCapability(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MySqlFlexibleServerSkuCapability>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MySqlFlexibleServerSkuCapability>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlFlexibleServerSkuCapability>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MySqlFlexibleServerSkuCapability DeserializeMySqlFlexibleServerSkuCapability(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +50,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             Optional<long> vCores = default;
             Optional<long> supportedIops = default;
             Optional<long> supportedMemoryPerVCoreMB = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -56,8 +85,61 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     supportedMemoryPerVCoreMB = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MySqlFlexibleServerSkuCapability(name.Value, Optional.ToNullable(vCores), Optional.ToNullable(supportedIops), Optional.ToNullable(supportedMemoryPerVCoreMB));
+            return new MySqlFlexibleServerSkuCapability(name.Value, Optional.ToNullable(vCores), Optional.ToNullable(supportedIops), Optional.ToNullable(supportedMemoryPerVCoreMB), serializedAdditionalRawData);
+        }
+
+        MySqlFlexibleServerSkuCapability IModelJsonSerializable<MySqlFlexibleServerSkuCapability>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlFlexibleServerSkuCapability>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlFlexibleServerSkuCapability(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MySqlFlexibleServerSkuCapability>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlFlexibleServerSkuCapability>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MySqlFlexibleServerSkuCapability IModelSerializable<MySqlFlexibleServerSkuCapability>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlFlexibleServerSkuCapability>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMySqlFlexibleServerSkuCapability(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MySqlFlexibleServerSkuCapability"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MySqlFlexibleServerSkuCapability"/> to convert. </param>
+        public static implicit operator RequestContent(MySqlFlexibleServerSkuCapability model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MySqlFlexibleServerSkuCapability"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MySqlFlexibleServerSkuCapability(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMySqlFlexibleServerSkuCapability(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

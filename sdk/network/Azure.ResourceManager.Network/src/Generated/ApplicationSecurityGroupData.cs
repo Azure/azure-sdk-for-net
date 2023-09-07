@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ApplicationSecurityGroupData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationSecurityGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationSecurityGroupData"/>. </summary>
         public ApplicationSecurityGroupData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationSecurityGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationSecurityGroupData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -33,7 +33,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="resourceGuid"> The resource GUID property of the application security group resource. It uniquely identifies a resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </param>
         /// <param name="provisioningState"> The provisioning state of the application security group resource. </param>
-        internal ApplicationSecurityGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationSecurityGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, Guid? resourceGuid, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             ResourceGuid = resourceGuid;

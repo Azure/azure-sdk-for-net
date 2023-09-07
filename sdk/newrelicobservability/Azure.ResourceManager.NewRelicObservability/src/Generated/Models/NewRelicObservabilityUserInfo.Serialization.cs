@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class NewRelicObservabilityUserInfo : IUtf8JsonSerializable
+    public partial class NewRelicObservabilityUserInfo : IUtf8JsonSerializable, IModelJsonSerializable<NewRelicObservabilityUserInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NewRelicObservabilityUserInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NewRelicObservabilityUserInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NewRelicObservabilityUserInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FirstName))
             {
@@ -40,11 +48,25 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NewRelicObservabilityUserInfo DeserializeNewRelicObservabilityUserInfo(JsonElement element)
+        internal static NewRelicObservabilityUserInfo DeserializeNewRelicObservabilityUserInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +76,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             Optional<string> emailAddress = default;
             Optional<string> phoneNumber = default;
             Optional<string> country = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("firstName"u8))
@@ -81,8 +104,61 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     country = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NewRelicObservabilityUserInfo(firstName.Value, lastName.Value, emailAddress.Value, phoneNumber.Value, country.Value);
+            return new NewRelicObservabilityUserInfo(firstName.Value, lastName.Value, emailAddress.Value, phoneNumber.Value, country.Value, serializedAdditionalRawData);
+        }
+
+        NewRelicObservabilityUserInfo IModelJsonSerializable<NewRelicObservabilityUserInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NewRelicObservabilityUserInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNewRelicObservabilityUserInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NewRelicObservabilityUserInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NewRelicObservabilityUserInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NewRelicObservabilityUserInfo IModelSerializable<NewRelicObservabilityUserInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NewRelicObservabilityUserInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNewRelicObservabilityUserInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NewRelicObservabilityUserInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NewRelicObservabilityUserInfo"/> to convert. </param>
+        public static implicit operator RequestContent(NewRelicObservabilityUserInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NewRelicObservabilityUserInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NewRelicObservabilityUserInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNewRelicObservabilityUserInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

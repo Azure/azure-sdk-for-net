@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,23 +17,28 @@ namespace Azure.ResourceManager.Network.Models
     /// Please note <see cref="EffectiveBaseSecurityAdminRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="EffectiveSecurityAdminRule"/> and <see cref="EffectiveDefaultSecurityAdminRule"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownEffectiveBaseSecurityAdminRule))]
     public abstract partial class EffectiveBaseSecurityAdminRule
     {
-        /// <summary> Initializes a new instance of EffectiveBaseSecurityAdminRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EffectiveBaseSecurityAdminRule"/>. </summary>
         protected EffectiveBaseSecurityAdminRule()
         {
             RuleCollectionAppliesToGroups = new ChangeTrackingList<NetworkManagerSecurityGroupItem>();
             RuleGroups = new ChangeTrackingList<NetworkConfigurationGroup>();
         }
 
-        /// <summary> Initializes a new instance of EffectiveBaseSecurityAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveBaseSecurityAdminRule"/>. </summary>
         /// <param name="resourceId"> Resource ID. </param>
         /// <param name="configurationDescription"> A description of the security admin configuration. </param>
         /// <param name="ruleCollectionDescription"> A description of the rule collection. </param>
         /// <param name="ruleCollectionAppliesToGroups"> Groups for rule collection. </param>
         /// <param name="ruleGroups"> Effective configuration groups. </param>
         /// <param name="kind"> Whether the rule is custom or default. </param>
-        internal EffectiveBaseSecurityAdminRule(ResourceIdentifier resourceId, string configurationDescription, string ruleCollectionDescription, IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups, IReadOnlyList<NetworkConfigurationGroup> ruleGroups, EffectiveAdminRuleKind kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EffectiveBaseSecurityAdminRule(ResourceIdentifier resourceId, string configurationDescription, string ruleCollectionDescription, IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups, IReadOnlyList<NetworkConfigurationGroup> ruleGroups, EffectiveAdminRuleKind kind, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             ConfigurationDescription = configurationDescription;
@@ -39,6 +46,7 @@ namespace Azure.ResourceManager.Network.Models
             RuleCollectionAppliesToGroups = ruleCollectionAppliesToGroups;
             RuleGroups = ruleGroups;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource ID. </summary>

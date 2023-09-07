@@ -5,21 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class ServerSku
+    public partial class ServerSku : IUtf8JsonSerializable, IModelJsonSerializable<ServerSku>
     {
-        internal static ServerSku DeserializeServerSku(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServerSku>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServerSku>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ServerSku>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("tier"u8);
+            writer.WriteStringValue(Tier.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ServerSku DeserializeServerSku(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
             PostgreSqlFlexibleServerSkuTier tier = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -32,8 +65,61 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     tier = new PostgreSqlFlexibleServerSkuTier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServerSku(name, tier);
+            return new ServerSku(name, tier, serializedAdditionalRawData);
+        }
+
+        ServerSku IModelJsonSerializable<ServerSku>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServerSku>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServerSku(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServerSku>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServerSku>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServerSku IModelSerializable<ServerSku>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServerSku>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServerSku(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ServerSku"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ServerSku"/> to convert. </param>
+        public static implicit operator RequestContent(ServerSku model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ServerSku"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ServerSku(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServerSku(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

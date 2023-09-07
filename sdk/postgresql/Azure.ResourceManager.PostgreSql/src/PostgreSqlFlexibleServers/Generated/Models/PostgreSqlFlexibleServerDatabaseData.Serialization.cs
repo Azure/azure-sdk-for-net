@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    public partial class PostgreSqlFlexibleServerDatabaseData : IUtf8JsonSerializable
+    public partial class PostgreSqlFlexibleServerDatabaseData : IUtf8JsonSerializable, IModelJsonSerializable<PostgreSqlFlexibleServerDatabaseData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PostgreSqlFlexibleServerDatabaseData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PostgreSqlFlexibleServerDatabaseData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerDatabaseData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -29,11 +37,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 writer.WriteStringValue(Collation);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PostgreSqlFlexibleServerDatabaseData DeserializePostgreSqlFlexibleServerDatabaseData(JsonElement element)
+        internal static PostgreSqlFlexibleServerDatabaseData DeserializePostgreSqlFlexibleServerDatabaseData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -44,6 +66,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             Optional<SystemData> systemData = default;
             Optional<string> charset = default;
             Optional<string> collation = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -92,8 +115,61 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PostgreSqlFlexibleServerDatabaseData(id, name, type, systemData.Value, charset.Value, collation.Value);
+            return new PostgreSqlFlexibleServerDatabaseData(id, name, type, systemData.Value, charset.Value, collation.Value, serializedAdditionalRawData);
+        }
+
+        PostgreSqlFlexibleServerDatabaseData IModelJsonSerializable<PostgreSqlFlexibleServerDatabaseData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerDatabaseData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlFlexibleServerDatabaseData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PostgreSqlFlexibleServerDatabaseData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerDatabaseData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PostgreSqlFlexibleServerDatabaseData IModelSerializable<PostgreSqlFlexibleServerDatabaseData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerDatabaseData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePostgreSqlFlexibleServerDatabaseData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PostgreSqlFlexibleServerDatabaseData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PostgreSqlFlexibleServerDatabaseData"/> to convert. </param>
+        public static implicit operator RequestContent(PostgreSqlFlexibleServerDatabaseData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PostgreSqlFlexibleServerDatabaseData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PostgreSqlFlexibleServerDatabaseData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePostgreSqlFlexibleServerDatabaseData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

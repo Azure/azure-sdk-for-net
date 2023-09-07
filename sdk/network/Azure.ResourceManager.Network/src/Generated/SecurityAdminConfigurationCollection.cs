@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAdminConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityAdminConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityAdminConfigurationResource(Client, SecurityAdminConfigurationData.DeserializeSecurityAdminConfigurationData(e)), _securityAdminConfigurationClientDiagnostics, Pipeline, "SecurityAdminConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityAdminConfigurationResource(Client, SecurityAdminConfigurationData.DeserializeSecurityAdminConfigurationData(e)), _securityAdminConfigurationClientDiagnostics, Pipeline, "SecurityAdminConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAdminConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityAdminConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityAdminConfigurationResource(Client, SecurityAdminConfigurationData.DeserializeSecurityAdminConfigurationData(e)), _securityAdminConfigurationClientDiagnostics, Pipeline, "SecurityAdminConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityAdminConfigurationResource(Client, SecurityAdminConfigurationData.DeserializeSecurityAdminConfigurationData(e)), _securityAdminConfigurationClientDiagnostics, Pipeline, "SecurityAdminConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

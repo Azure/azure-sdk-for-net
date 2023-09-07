@@ -5,21 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualNetworkUsageName
+    public partial class VirtualNetworkUsageName : IUtf8JsonSerializable, IModelJsonSerializable<VirtualNetworkUsageName>
     {
-        internal static VirtualNetworkUsageName DeserializeVirtualNetworkUsageName(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualNetworkUsageName>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualNetworkUsageName>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualNetworkUsageName>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static VirtualNetworkUsageName DeserializeVirtualNetworkUsageName(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> localizedValue = default;
             Optional<string> value = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("localizedValue"u8))
@@ -32,8 +61,61 @@ namespace Azure.ResourceManager.Network.Models
                     value = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualNetworkUsageName(localizedValue.Value, value.Value);
+            return new VirtualNetworkUsageName(localizedValue.Value, value.Value, serializedAdditionalRawData);
+        }
+
+        VirtualNetworkUsageName IModelJsonSerializable<VirtualNetworkUsageName>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualNetworkUsageName>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualNetworkUsageName(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualNetworkUsageName>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualNetworkUsageName>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualNetworkUsageName IModelSerializable<VirtualNetworkUsageName>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualNetworkUsageName>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualNetworkUsageName(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VirtualNetworkUsageName"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VirtualNetworkUsageName"/> to convert. </param>
+        public static implicit operator RequestContent(VirtualNetworkUsageName model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualNetworkUsageName"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VirtualNetworkUsageName(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualNetworkUsageName(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

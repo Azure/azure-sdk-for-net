@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class O365BreakOutCategoryPolicies : IUtf8JsonSerializable
+    public partial class O365BreakOutCategoryPolicies : IUtf8JsonSerializable, IModelJsonSerializable<O365BreakOutCategoryPolicies>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<O365BreakOutCategoryPolicies>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<O365BreakOutCategoryPolicies>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<O365BreakOutCategoryPolicies>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Allow))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("default"u8);
                 writer.WriteBooleanValue(Default.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static O365BreakOutCategoryPolicies DeserializeO365BreakOutCategoryPolicies(JsonElement element)
+        internal static O365BreakOutCategoryPolicies DeserializeO365BreakOutCategoryPolicies(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<bool> allow = default;
             Optional<bool> optimize = default;
             Optional<bool> @default = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allow"u8))
@@ -71,8 +94,61 @@ namespace Azure.ResourceManager.Network.Models
                     @default = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new O365BreakOutCategoryPolicies(Optional.ToNullable(allow), Optional.ToNullable(optimize), Optional.ToNullable(@default));
+            return new O365BreakOutCategoryPolicies(Optional.ToNullable(allow), Optional.ToNullable(optimize), Optional.ToNullable(@default), serializedAdditionalRawData);
+        }
+
+        O365BreakOutCategoryPolicies IModelJsonSerializable<O365BreakOutCategoryPolicies>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<O365BreakOutCategoryPolicies>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeO365BreakOutCategoryPolicies(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<O365BreakOutCategoryPolicies>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<O365BreakOutCategoryPolicies>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        O365BreakOutCategoryPolicies IModelSerializable<O365BreakOutCategoryPolicies>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<O365BreakOutCategoryPolicies>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeO365BreakOutCategoryPolicies(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="O365BreakOutCategoryPolicies"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="O365BreakOutCategoryPolicies"/> to convert. </param>
+        public static implicit operator RequestContent(O365BreakOutCategoryPolicies model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="O365BreakOutCategoryPolicies"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator O365BreakOutCategoryPolicies(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeO365BreakOutCategoryPolicies(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

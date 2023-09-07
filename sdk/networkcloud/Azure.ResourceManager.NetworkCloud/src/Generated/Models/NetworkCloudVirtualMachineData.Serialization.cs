@@ -5,21 +5,35 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudVirtualMachineData : IUtf8JsonSerializable
+    public partial class NetworkCloudVirtualMachineData : IUtf8JsonSerializable, IModelJsonSerializable<NetworkCloudVirtualMachineData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkCloudVirtualMachineData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkCloudVirtualMachineData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkCloudVirtualMachineData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation);
+            if (ExtendedLocation is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<ExtendedLocation>)ExtendedLocation).Serialize(writer, options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -43,7 +57,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(BootMethod.Value.ToString());
             }
             writer.WritePropertyName("cloudServicesNetworkAttachment"u8);
-            writer.WriteObjectValue(CloudServicesNetworkAttachment);
+            if (CloudServicesNetworkAttachment is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<NetworkAttachment>)CloudServicesNetworkAttachment).Serialize(writer, options);
+            }
             writer.WritePropertyName("cpuCores"u8);
             writer.WriteNumberValue(CpuCores);
             if (Optional.IsDefined(IsolateEmulatorThread))
@@ -59,7 +80,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in NetworkAttachments)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<NetworkAttachment>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +102,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in PlacementHints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<VirtualMachinePlacementHint>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -84,12 +119,26 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in SshPublicKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<NetworkCloudSshPublicKey>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("storageProfile"u8);
-            writer.WriteObjectValue(StorageProfile);
+            if (StorageProfile is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<NetworkCloudStorageProfile>)StorageProfile).Serialize(writer, options);
+            }
             if (Optional.IsDefined(UserData))
             {
                 writer.WritePropertyName("userData"u8);
@@ -110,14 +159,35 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(VmImageRepositoryCredentials))
             {
                 writer.WritePropertyName("vmImageRepositoryCredentials"u8);
-                writer.WriteObjectValue(VmImageRepositoryCredentials);
+                if (VmImageRepositoryCredentials is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ImageRepositoryCredentials>)VmImageRepositoryCredentials).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkCloudVirtualMachineData DeserializeNetworkCloudVirtualMachineData(JsonElement element)
+        internal static NetworkCloudVirtualMachineData DeserializeNetworkCloudVirtualMachineData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -153,6 +223,7 @@ namespace Azure.ResourceManager.NetworkCloud
             string vmImage = default;
             Optional<ImageRepositoryCredentials> vmImageRepositoryCredentials = default;
             Optional<IReadOnlyList<ResourceIdentifier>> volumes = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -418,8 +489,61 @@ namespace Azure.ResourceManager.NetworkCloud
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkCloudVirtualMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, adminUsername, availabilityZone.Value, bareMetalMachineId.Value, Optional.ToNullable(bootMethod), cloudServicesNetworkAttachment, clusterId.Value, cpuCores, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(isolateEmulatorThread), memorySizeGB, Optional.ToList(networkAttachments), networkData.Value, Optional.ToList(placementHints), Optional.ToNullable(powerState), Optional.ToNullable(provisioningState), Optional.ToList(sshPublicKeys), storageProfile, userData.Value, Optional.ToNullable(virtioInterface), Optional.ToNullable(vmDeviceModel), vmImage, vmImageRepositoryCredentials.Value, Optional.ToList(volumes));
+            return new NetworkCloudVirtualMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, adminUsername, availabilityZone.Value, bareMetalMachineId.Value, Optional.ToNullable(bootMethod), cloudServicesNetworkAttachment, clusterId.Value, cpuCores, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(isolateEmulatorThread), memorySizeGB, Optional.ToList(networkAttachments), networkData.Value, Optional.ToList(placementHints), Optional.ToNullable(powerState), Optional.ToNullable(provisioningState), Optional.ToList(sshPublicKeys), storageProfile, userData.Value, Optional.ToNullable(virtioInterface), Optional.ToNullable(vmDeviceModel), vmImage, vmImageRepositoryCredentials.Value, Optional.ToList(volumes), serializedAdditionalRawData);
+        }
+
+        NetworkCloudVirtualMachineData IModelJsonSerializable<NetworkCloudVirtualMachineData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkCloudVirtualMachineData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkCloudVirtualMachineData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkCloudVirtualMachineData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkCloudVirtualMachineData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkCloudVirtualMachineData IModelSerializable<NetworkCloudVirtualMachineData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkCloudVirtualMachineData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkCloudVirtualMachineData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetworkCloudVirtualMachineData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetworkCloudVirtualMachineData"/> to convert. </param>
+        public static implicit operator RequestContent(NetworkCloudVirtualMachineData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetworkCloudVirtualMachineData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetworkCloudVirtualMachineData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkCloudVirtualMachineData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

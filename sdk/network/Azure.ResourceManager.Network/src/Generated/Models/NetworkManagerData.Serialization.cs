@@ -10,15 +10,20 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class NetworkManagerData : IUtf8JsonSerializable
+    public partial class NetworkManagerData : IUtf8JsonSerializable, IModelJsonSerializable<NetworkManagerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkManagerData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkManagerData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkManagerData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -51,7 +56,14 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(NetworkManagerScopes))
             {
                 writer.WritePropertyName("networkManagerScopes"u8);
-                writer.WriteObjectValue(NetworkManagerScopes);
+                if (NetworkManagerScopes is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<NetworkManagerPropertiesNetworkManagerScopes>)NetworkManagerScopes).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(NetworkManagerScopeAccesses))
             {
@@ -64,11 +76,25 @@ namespace Azure.ResourceManager.Network
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkManagerData DeserializeNetworkManagerData(JsonElement element)
+        internal static NetworkManagerData DeserializeNetworkManagerData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -85,6 +111,7 @@ namespace Azure.ResourceManager.Network
             Optional<IList<NetworkConfigurationDeploymentType>> networkManagerScopeAccesses = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<Guid> resourceGuid = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -209,8 +236,61 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkManagerData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), systemData, description.Value, networkManagerScopes.Value, Optional.ToList(networkManagerScopeAccesses), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
+            return new NetworkManagerData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), systemData, description.Value, networkManagerScopes.Value, Optional.ToList(networkManagerScopeAccesses), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid), serializedAdditionalRawData);
+        }
+
+        NetworkManagerData IModelJsonSerializable<NetworkManagerData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkManagerData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkManagerData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkManagerData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkManagerData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkManagerData IModelSerializable<NetworkManagerData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkManagerData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkManagerData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetworkManagerData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetworkManagerData"/> to convert. </param>
+        public static implicit operator RequestContent(NetworkManagerData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetworkManagerData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetworkManagerData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkManagerData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

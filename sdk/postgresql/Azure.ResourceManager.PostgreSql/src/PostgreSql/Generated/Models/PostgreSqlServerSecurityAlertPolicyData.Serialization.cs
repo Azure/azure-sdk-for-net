@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PostgreSql.Models;
 
 namespace Azure.ResourceManager.PostgreSql
 {
-    public partial class PostgreSqlServerSecurityAlertPolicyData : IUtf8JsonSerializable
+    public partial class PostgreSqlServerSecurityAlertPolicyData : IUtf8JsonSerializable, IModelJsonSerializable<PostgreSqlServerSecurityAlertPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PostgreSqlServerSecurityAlertPolicyData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PostgreSqlServerSecurityAlertPolicyData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlServerSecurityAlertPolicyData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -66,11 +73,25 @@ namespace Azure.ResourceManager.PostgreSql
                 writer.WriteNumberValue(RetentionDays.Value);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PostgreSqlServerSecurityAlertPolicyData DeserializePostgreSqlServerSecurityAlertPolicyData(JsonElement element)
+        internal static PostgreSqlServerSecurityAlertPolicyData DeserializePostgreSqlServerSecurityAlertPolicyData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -86,6 +107,7 @@ namespace Azure.ResourceManager.PostgreSql
             Optional<string> storageEndpoint = default;
             Optional<string> storageAccountAccessKey = default;
             Optional<int> retentionDays = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -189,8 +211,61 @@ namespace Azure.ResourceManager.PostgreSql
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PostgreSqlServerSecurityAlertPolicyData(id, name, type, systemData.Value, Optional.ToNullable(state), Optional.ToList(disabledAlerts), Optional.ToList(emailAddresses), Optional.ToNullable(emailAccountAdmins), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays));
+            return new PostgreSqlServerSecurityAlertPolicyData(id, name, type, systemData.Value, Optional.ToNullable(state), Optional.ToList(disabledAlerts), Optional.ToList(emailAddresses), Optional.ToNullable(emailAccountAdmins), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), serializedAdditionalRawData);
+        }
+
+        PostgreSqlServerSecurityAlertPolicyData IModelJsonSerializable<PostgreSqlServerSecurityAlertPolicyData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlServerSecurityAlertPolicyData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlServerSecurityAlertPolicyData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PostgreSqlServerSecurityAlertPolicyData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlServerSecurityAlertPolicyData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PostgreSqlServerSecurityAlertPolicyData IModelSerializable<PostgreSqlServerSecurityAlertPolicyData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlServerSecurityAlertPolicyData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePostgreSqlServerSecurityAlertPolicyData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PostgreSqlServerSecurityAlertPolicyData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PostgreSqlServerSecurityAlertPolicyData"/> to convert. </param>
+        public static implicit operator RequestContent(PostgreSqlServerSecurityAlertPolicyData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PostgreSqlServerSecurityAlertPolicyData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PostgreSqlServerSecurityAlertPolicyData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePostgreSqlServerSecurityAlertPolicyData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

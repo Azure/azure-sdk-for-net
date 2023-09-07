@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class TelemetryItem : IUtf8JsonSerializable
+    internal partial class TelemetryItem : IUtf8JsonSerializable, IModelJsonSerializable<TelemetryItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TelemetryItem>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TelemetryItem>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TelemetryItem>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Version))
             {
@@ -53,9 +61,165 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
-                writer.WriteObjectValue(Data);
+                if (Data is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MonitorBase>)Data).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
+        }
+
+        internal static TelemetryItem DeserializeTelemetryItem(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<int> ver = default;
+            string name = default;
+            DateTimeOffset time = default;
+            Optional<float> sampleRate = default;
+            Optional<string> seq = default;
+            Optional<string> iKey = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<MonitorBase> data = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("ver"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ver = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("time"u8))
+                {
+                    time = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("sampleRate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sampleRate = property.Value.GetSingle();
+                    continue;
+                }
+                if (property.NameEquals("seq"u8))
+                {
+                    seq = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("iKey"u8))
+                {
+                    iKey = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("data"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    data = MonitorBase.DeserializeMonitorBase(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new TelemetryItem(Optional.ToNullable(ver), name, time, Optional.ToNullable(sampleRate), seq.Value, iKey.Value, Optional.ToDictionary(tags), data.Value, serializedAdditionalRawData);
+        }
+
+        TelemetryItem IModelJsonSerializable<TelemetryItem>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TelemetryItem>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTelemetryItem(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TelemetryItem>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TelemetryItem>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TelemetryItem IModelSerializable<TelemetryItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TelemetryItem>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTelemetryItem(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TelemetryItem"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TelemetryItem"/> to convert. </param>
+        public static implicit operator RequestContent(TelemetryItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TelemetryItem"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TelemetryItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTelemetryItem(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

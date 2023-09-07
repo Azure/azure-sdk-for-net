@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class PerfCounterDataSource : IUtf8JsonSerializable
+    public partial class PerfCounterDataSource : IUtf8JsonSerializable, IModelJsonSerializable<PerfCounterDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PerfCounterDataSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PerfCounterDataSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PerfCounterDataSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Streams))
             {
@@ -46,11 +53,25 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PerfCounterDataSource DeserializePerfCounterDataSource(JsonElement element)
+        internal static PerfCounterDataSource DeserializePerfCounterDataSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -59,6 +80,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<int> samplingFrequencyInSeconds = default;
             Optional<IList<string>> counterSpecifiers = default;
             Optional<string> name = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streams"u8))
@@ -103,8 +125,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PerfCounterDataSource(Optional.ToList(streams), Optional.ToNullable(samplingFrequencyInSeconds), Optional.ToList(counterSpecifiers), name.Value);
+            return new PerfCounterDataSource(Optional.ToList(streams), Optional.ToNullable(samplingFrequencyInSeconds), Optional.ToList(counterSpecifiers), name.Value, serializedAdditionalRawData);
+        }
+
+        PerfCounterDataSource IModelJsonSerializable<PerfCounterDataSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PerfCounterDataSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePerfCounterDataSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PerfCounterDataSource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PerfCounterDataSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PerfCounterDataSource IModelSerializable<PerfCounterDataSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PerfCounterDataSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePerfCounterDataSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PerfCounterDataSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PerfCounterDataSource"/> to convert. </param>
+        public static implicit operator RequestContent(PerfCounterDataSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PerfCounterDataSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PerfCounterDataSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePerfCounterDataSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

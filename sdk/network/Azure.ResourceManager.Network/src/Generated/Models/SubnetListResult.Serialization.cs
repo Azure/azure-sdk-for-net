@@ -5,23 +5,73 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class SubnetListResult
+    internal partial class SubnetListResult : IUtf8JsonSerializable, IModelJsonSerializable<SubnetListResult>
     {
-        internal static SubnetListResult DeserializeSubnetListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SubnetListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SubnetListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SubnetListResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SubnetData>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SubnetListResult DeserializeSubnetListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<SubnetData>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +93,61 @@ namespace Azure.ResourceManager.Network.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SubnetListResult(Optional.ToList(value), nextLink.Value);
+            return new SubnetListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+        }
+
+        SubnetListResult IModelJsonSerializable<SubnetListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SubnetListResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubnetListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SubnetListResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SubnetListResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SubnetListResult IModelSerializable<SubnetListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SubnetListResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSubnetListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SubnetListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SubnetListResult"/> to convert. </param>
+        public static implicit operator RequestContent(SubnetListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SubnetListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SubnetListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSubnetListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

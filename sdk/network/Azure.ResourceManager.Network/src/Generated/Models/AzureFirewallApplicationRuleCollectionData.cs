@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -14,13 +15,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Application rule collection resource. </summary>
     public partial class AzureFirewallApplicationRuleCollectionData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of AzureFirewallApplicationRuleCollectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallApplicationRuleCollectionData"/>. </summary>
         public AzureFirewallApplicationRuleCollectionData()
         {
             Rules = new ChangeTrackingList<AzureFirewallApplicationRule>();
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallApplicationRuleCollectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallApplicationRuleCollectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -29,7 +30,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="action"> The action type of a rule collection. </param>
         /// <param name="rules"> Collection of rules used by a application rule collection. </param>
         /// <param name="provisioningState"> The provisioning state of the application rule collection resource. </param>
-        internal AzureFirewallApplicationRuleCollectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? priority, AzureFirewallRCAction action, IList<AzureFirewallApplicationRule> rules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureFirewallApplicationRuleCollectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? priority, AzureFirewallRCAction action, IList<AzureFirewallApplicationRule> rules, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             Priority = priority;

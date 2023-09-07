@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    public partial class PostgreSqlFlexibleServerActiveDirectoryAdministratorData : IUtf8JsonSerializable
+    public partial class PostgreSqlFlexibleServerActiveDirectoryAdministratorData : IUtf8JsonSerializable, IModelJsonSerializable<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -41,11 +48,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 writer.WriteStringValue(TenantId.Value);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PostgreSqlFlexibleServerActiveDirectoryAdministratorData DeserializePostgreSqlFlexibleServerActiveDirectoryAdministratorData(JsonElement element)
+        internal static PostgreSqlFlexibleServerActiveDirectoryAdministratorData DeserializePostgreSqlFlexibleServerActiveDirectoryAdministratorData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +79,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             Optional<string> principalName = default;
             Optional<Guid> objectId = default;
             Optional<Guid> tenantId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -128,8 +150,61 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PostgreSqlFlexibleServerActiveDirectoryAdministratorData(id, name, type, systemData.Value, Optional.ToNullable(principalType), principalName.Value, Optional.ToNullable(objectId), Optional.ToNullable(tenantId));
+            return new PostgreSqlFlexibleServerActiveDirectoryAdministratorData(id, name, type, systemData.Value, Optional.ToNullable(principalType), principalName.Value, Optional.ToNullable(objectId), Optional.ToNullable(tenantId), serializedAdditionalRawData);
+        }
+
+        PostgreSqlFlexibleServerActiveDirectoryAdministratorData IModelJsonSerializable<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlFlexibleServerActiveDirectoryAdministratorData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PostgreSqlFlexibleServerActiveDirectoryAdministratorData IModelSerializable<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePostgreSqlFlexibleServerActiveDirectoryAdministratorData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorData"/> to convert. </param>
+        public static implicit operator RequestContent(PostgreSqlFlexibleServerActiveDirectoryAdministratorData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PostgreSqlFlexibleServerActiveDirectoryAdministratorData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePostgreSqlFlexibleServerActiveDirectoryAdministratorData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

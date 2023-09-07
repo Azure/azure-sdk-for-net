@@ -5,15 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteCircuitRoutesTable
+    public partial class ExpressRouteCircuitRoutesTable : IUtf8JsonSerializable, IModelJsonSerializable<ExpressRouteCircuitRoutesTable>
     {
-        internal static ExpressRouteCircuitRoutesTable DeserializeExpressRouteCircuitRoutesTable(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExpressRouteCircuitRoutesTable>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExpressRouteCircuitRoutesTable>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressRouteCircuitRoutesTable>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Network))
+            {
+                writer.WritePropertyName("network"u8);
+                writer.WriteStringValue(Network);
+            }
+            if (Optional.IsDefined(NextHop))
+            {
+                writer.WritePropertyName("nextHop"u8);
+                writer.WriteStringValue(NextHop);
+            }
+            if (Optional.IsDefined(LocPrf))
+            {
+                writer.WritePropertyName("locPrf"u8);
+                writer.WriteStringValue(LocPrf);
+            }
+            if (Optional.IsDefined(Weight))
+            {
+                writer.WritePropertyName("weight"u8);
+                writer.WriteNumberValue(Weight.Value);
+            }
+            if (Optional.IsDefined(Path))
+            {
+                writer.WritePropertyName("path"u8);
+                writer.WriteStringValue(Path);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ExpressRouteCircuitRoutesTable DeserializeExpressRouteCircuitRoutesTable(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +76,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> locPrf = default;
             Optional<int> weight = default;
             Optional<string> path = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("network"u8))
@@ -54,8 +108,61 @@ namespace Azure.ResourceManager.Network.Models
                     path = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExpressRouteCircuitRoutesTable(network.Value, nextHop.Value, locPrf.Value, Optional.ToNullable(weight), path.Value);
+            return new ExpressRouteCircuitRoutesTable(network.Value, nextHop.Value, locPrf.Value, Optional.ToNullable(weight), path.Value, serializedAdditionalRawData);
+        }
+
+        ExpressRouteCircuitRoutesTable IModelJsonSerializable<ExpressRouteCircuitRoutesTable>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressRouteCircuitRoutesTable>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExpressRouteCircuitRoutesTable(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExpressRouteCircuitRoutesTable>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressRouteCircuitRoutesTable>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExpressRouteCircuitRoutesTable IModelSerializable<ExpressRouteCircuitRoutesTable>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExpressRouteCircuitRoutesTable>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExpressRouteCircuitRoutesTable(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExpressRouteCircuitRoutesTable"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExpressRouteCircuitRoutesTable"/> to convert. </param>
+        public static implicit operator RequestContent(ExpressRouteCircuitRoutesTable model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExpressRouteCircuitRoutesTable"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExpressRouteCircuitRoutesTable(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExpressRouteCircuitRoutesTable(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

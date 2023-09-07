@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -14,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Azure Firewall FQDN Tag Resource. </summary>
     public partial class AzureFirewallFqdnTag : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of AzureFirewallFqdnTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallFqdnTag"/>. </summary>
         public AzureFirewallFqdnTag()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallFqdnTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallFqdnTag"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -28,7 +29,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="provisioningState"> The provisioning state of the Azure firewall FQDN tag resource. </param>
         /// <param name="fqdnTagName"> The name of this FQDN Tag. </param>
-        internal AzureFirewallFqdnTag(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, NetworkProvisioningState? provisioningState, string fqdnTagName) : base(id, name, resourceType, location, tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureFirewallFqdnTag(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, NetworkProvisioningState? provisioningState, string fqdnTagName, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             ProvisioningState = provisioningState;

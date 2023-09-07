@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorEmailReceiver : IUtf8JsonSerializable
+    public partial class MonitorEmailReceiver : IUtf8JsonSerializable, IModelJsonSerializable<MonitorEmailReceiver>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MonitorEmailReceiver>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MonitorEmailReceiver>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorEmailReceiver>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -24,11 +32,25 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MonitorEmailReceiver DeserializeMonitorEmailReceiver(JsonElement element)
+        internal static MonitorEmailReceiver DeserializeMonitorEmailReceiver(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +59,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string emailAddress = default;
             Optional<bool> useCommonAlertSchema = default;
             Optional<MonitorReceiverStatus> status = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -67,8 +90,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     status = property.Value.GetString().ToMonitorReceiverStatus();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MonitorEmailReceiver(name, emailAddress, Optional.ToNullable(useCommonAlertSchema), Optional.ToNullable(status));
+            return new MonitorEmailReceiver(name, emailAddress, Optional.ToNullable(useCommonAlertSchema), Optional.ToNullable(status), serializedAdditionalRawData);
+        }
+
+        MonitorEmailReceiver IModelJsonSerializable<MonitorEmailReceiver>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorEmailReceiver>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorEmailReceiver(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MonitorEmailReceiver>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorEmailReceiver>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MonitorEmailReceiver IModelSerializable<MonitorEmailReceiver>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorEmailReceiver>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMonitorEmailReceiver(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MonitorEmailReceiver"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MonitorEmailReceiver"/> to convert. </param>
+        public static implicit operator RequestContent(MonitorEmailReceiver model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MonitorEmailReceiver"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MonitorEmailReceiver(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMonitorEmailReceiver(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

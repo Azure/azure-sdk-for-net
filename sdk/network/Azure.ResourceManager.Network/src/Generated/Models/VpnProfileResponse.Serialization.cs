@@ -6,20 +6,53 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VpnProfileResponse
+    public partial class VpnProfileResponse : IUtf8JsonSerializable, IModelJsonSerializable<VpnProfileResponse>
     {
-        internal static VpnProfileResponse DeserializeVpnProfileResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VpnProfileResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VpnProfileResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VpnProfileResponse>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ProfileUri))
+            {
+                writer.WritePropertyName("profileUrl"u8);
+                writer.WriteStringValue(ProfileUri.AbsoluteUri);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static VpnProfileResponse DeserializeVpnProfileResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<Uri> profileUrl = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profileUrl"u8))
@@ -31,8 +64,61 @@ namespace Azure.ResourceManager.Network.Models
                     profileUrl = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VpnProfileResponse(profileUrl.Value);
+            return new VpnProfileResponse(profileUrl.Value, serializedAdditionalRawData);
+        }
+
+        VpnProfileResponse IModelJsonSerializable<VpnProfileResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VpnProfileResponse>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVpnProfileResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VpnProfileResponse>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VpnProfileResponse>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VpnProfileResponse IModelSerializable<VpnProfileResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VpnProfileResponse>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVpnProfileResponse(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VpnProfileResponse"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VpnProfileResponse"/> to convert. </param>
+        public static implicit operator RequestContent(VpnProfileResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VpnProfileResponse"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VpnProfileResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVpnProfileResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

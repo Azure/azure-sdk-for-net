@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VpnDeviceScriptContent : IUtf8JsonSerializable
+    public partial class VpnDeviceScriptContent : IUtf8JsonSerializable, IModelJsonSerializable<VpnDeviceScriptContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VpnDeviceScriptContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VpnDeviceScriptContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VpnDeviceScriptContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Vendor))
             {
@@ -30,7 +38,105 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("firmwareVersion"u8);
                 writer.WriteStringValue(FirmwareVersion);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static VpnDeviceScriptContent DeserializeVpnDeviceScriptContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> vendor = default;
+            Optional<string> deviceFamily = default;
+            Optional<string> firmwareVersion = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("vendor"u8))
+                {
+                    vendor = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("deviceFamily"u8))
+                {
+                    deviceFamily = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("firmwareVersion"u8))
+                {
+                    firmwareVersion = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new VpnDeviceScriptContent(vendor.Value, deviceFamily.Value, firmwareVersion.Value, serializedAdditionalRawData);
+        }
+
+        VpnDeviceScriptContent IModelJsonSerializable<VpnDeviceScriptContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VpnDeviceScriptContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVpnDeviceScriptContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VpnDeviceScriptContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VpnDeviceScriptContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VpnDeviceScriptContent IModelSerializable<VpnDeviceScriptContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VpnDeviceScriptContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVpnDeviceScriptContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VpnDeviceScriptContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VpnDeviceScriptContent"/> to convert. </param>
+        public static implicit operator RequestContent(VpnDeviceScriptContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VpnDeviceScriptContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VpnDeviceScriptContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVpnDeviceScriptContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

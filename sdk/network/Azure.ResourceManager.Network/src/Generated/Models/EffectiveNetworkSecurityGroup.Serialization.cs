@@ -5,17 +5,99 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class EffectiveNetworkSecurityGroup
+    public partial class EffectiveNetworkSecurityGroup : IUtf8JsonSerializable, IModelJsonSerializable<EffectiveNetworkSecurityGroup>
     {
-        internal static EffectiveNetworkSecurityGroup DeserializeEffectiveNetworkSecurityGroup(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EffectiveNetworkSecurityGroup>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EffectiveNetworkSecurityGroup>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EffectiveNetworkSecurityGroup>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NetworkSecurityGroup))
+            {
+                writer.WritePropertyName("networkSecurityGroup"u8);
+                JsonSerializer.Serialize(writer, NetworkSecurityGroup);
+            }
+            if (Optional.IsDefined(Association))
+            {
+                writer.WritePropertyName("association"u8);
+                if (Association is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<EffectiveNetworkSecurityGroupAssociation>)Association).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(EffectiveSecurityRules))
+            {
+                writer.WritePropertyName("effectiveSecurityRules"u8);
+                writer.WriteStartArray();
+                foreach (var item in EffectiveSecurityRules)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<EffectiveNetworkSecurityRule>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(TagToIPAddresses))
+            {
+                writer.WritePropertyName("tagMap"u8);
+                writer.WriteStartObject();
+                foreach (var item in TagToIPAddresses)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStartArray();
+                    foreach (var item0 in item.Value)
+                    {
+                        writer.WriteStringValue(item0);
+                    }
+                    writer.WriteEndArray();
+                }
+                writer.WriteEndObject();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static EffectiveNetworkSecurityGroup DeserializeEffectiveNetworkSecurityGroup(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +106,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<EffectiveNetworkSecurityGroupAssociation> association = default;
             Optional<IReadOnlyList<EffectiveNetworkSecurityRule>> effectiveSecurityRules = default;
             Optional<IReadOnlyDictionary<string, IList<string>>> tagMap = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkSecurityGroup"u8))
@@ -84,8 +167,61 @@ namespace Azure.ResourceManager.Network.Models
                     tagMap = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EffectiveNetworkSecurityGroup(networkSecurityGroup, association.Value, Optional.ToList(effectiveSecurityRules), Optional.ToDictionary(tagMap));
+            return new EffectiveNetworkSecurityGroup(networkSecurityGroup, association.Value, Optional.ToList(effectiveSecurityRules), Optional.ToDictionary(tagMap), serializedAdditionalRawData);
+        }
+
+        EffectiveNetworkSecurityGroup IModelJsonSerializable<EffectiveNetworkSecurityGroup>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EffectiveNetworkSecurityGroup>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEffectiveNetworkSecurityGroup(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EffectiveNetworkSecurityGroup>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EffectiveNetworkSecurityGroup>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EffectiveNetworkSecurityGroup IModelSerializable<EffectiveNetworkSecurityGroup>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EffectiveNetworkSecurityGroup>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEffectiveNetworkSecurityGroup(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EffectiveNetworkSecurityGroup"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EffectiveNetworkSecurityGroup"/> to convert. </param>
+        public static implicit operator RequestContent(EffectiveNetworkSecurityGroup model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EffectiveNetworkSecurityGroup"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EffectiveNetworkSecurityGroup(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEffectiveNetworkSecurityGroup(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

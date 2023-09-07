@@ -8,14 +8,202 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ResourceProviderManifest
+    public partial class ResourceProviderManifest : IUtf8JsonSerializable, IModelJsonSerializable<ResourceProviderManifest>
     {
-        internal static ResourceProviderManifest DeserializeResourceProviderManifest(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceProviderManifest>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceProviderManifest>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceProviderManifest>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ProviderAuthentication))
+            {
+                writer.WritePropertyName("providerAuthentication"u8);
+                if (ProviderAuthentication is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourceProviderAuthentication>)ProviderAuthentication).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(ProviderAuthorizations))
+            {
+                writer.WritePropertyName("providerAuthorizations"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProviderAuthorizations)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ResourceProviderAuthorization>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Namespace))
+            {
+                writer.WritePropertyName("namespace"u8);
+                writer.WriteStringValue(Namespace);
+            }
+            if (Optional.IsDefined(ProviderVersion))
+            {
+                writer.WritePropertyName("providerVersion"u8);
+                writer.WriteStringValue(ProviderVersion);
+            }
+            if (Optional.IsDefined(ProviderType))
+            {
+                writer.WritePropertyName("providerType"u8);
+                writer.WriteStringValue(ProviderType.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(RequiredFeatures))
+            {
+                writer.WritePropertyName("requiredFeatures"u8);
+                writer.WriteStartArray();
+                foreach (var item in RequiredFeatures)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(FeaturesRule))
+            {
+                writer.WritePropertyName("featuresRule"u8);
+                if (FeaturesRule is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<FeaturesRule>)FeaturesRule).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(RequestHeaderOptions))
+            {
+                writer.WritePropertyName("requestHeaderOptions"u8);
+                if (RequestHeaderOptions is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RequestHeaderOptions>)RequestHeaderOptions).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(ResourceTypes))
+            {
+                writer.WritePropertyName("resourceTypes"u8);
+                writer.WriteStartArray();
+                foreach (var item in ResourceTypes)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ProviderResourceType>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Management))
+            {
+                writer.WritePropertyName("management"u8);
+                if (Management is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourceProviderManagement>)Management).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(Capabilities))
+            {
+                writer.WritePropertyName("capabilities"u8);
+                writer.WriteStartArray();
+                foreach (var item in Capabilities)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ResourceProviderCapabilities>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Metadata);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Metadata.ToString()).RootElement);
+#endif
+            }
+            if (Optional.IsCollectionDefined(GlobalNotificationEndpoints))
+            {
+                writer.WritePropertyName("globalNotificationEndpoints"u8);
+                writer.WriteStartArray();
+                foreach (var item in GlobalNotificationEndpoints)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ResourceProviderEndpoint>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ReRegisterSubscriptionMetadata))
+            {
+                writer.WritePropertyName("reRegisterSubscriptionMetadata"u8);
+                if (ReRegisterSubscriptionMetadata is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ReRegisterSubscriptionMetadata>)ReRegisterSubscriptionMetadata).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ResourceProviderManifest DeserializeResourceProviderManifest(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +222,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<BinaryData> metadata = default;
             Optional<IReadOnlyList<ResourceProviderEndpoint>> globalNotificationEndpoints = default;
             Optional<ReRegisterSubscriptionMetadata> reRegisterSubscriptionMetadata = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("providerAuthentication"u8))
@@ -179,8 +368,61 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     reRegisterSubscriptionMetadata = ReRegisterSubscriptionMetadata.DeserializeReRegisterSubscriptionMetadata(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResourceProviderManifest(providerAuthentication.Value, Optional.ToList(providerAuthorizations), @namespace.Value, providerVersion.Value, Optional.ToNullable(providerType), Optional.ToList(requiredFeatures), featuresRule.Value, requestHeaderOptions.Value, Optional.ToList(resourceTypes), management.Value, Optional.ToList(capabilities), metadata.Value, Optional.ToList(globalNotificationEndpoints), reRegisterSubscriptionMetadata.Value);
+            return new ResourceProviderManifest(providerAuthentication.Value, Optional.ToList(providerAuthorizations), @namespace.Value, providerVersion.Value, Optional.ToNullable(providerType), Optional.ToList(requiredFeatures), featuresRule.Value, requestHeaderOptions.Value, Optional.ToList(resourceTypes), management.Value, Optional.ToList(capabilities), metadata.Value, Optional.ToList(globalNotificationEndpoints), reRegisterSubscriptionMetadata.Value, serializedAdditionalRawData);
+        }
+
+        ResourceProviderManifest IModelJsonSerializable<ResourceProviderManifest>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceProviderManifest>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceProviderManifest(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceProviderManifest>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceProviderManifest>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceProviderManifest IModelSerializable<ResourceProviderManifest>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceProviderManifest>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceProviderManifest(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ResourceProviderManifest"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ResourceProviderManifest"/> to convert. </param>
+        public static implicit operator RequestContent(ResourceProviderManifest model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ResourceProviderManifest"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ResourceProviderManifest(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourceProviderManifest(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,14 +20,14 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ExpressRouteCircuitData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of ExpressRouteCircuitData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitData"/>. </summary>
         public ExpressRouteCircuitData()
         {
             Authorizations = new ChangeTrackingList<ExpressRouteCircuitAuthorizationData>();
             Peerings = new ChangeTrackingList<ExpressRouteCircuitPeeringData>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -50,7 +51,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="globalReachEnabled"> Flag denoting global reach status. </param>
         /// <param name="authorizationKey"> The authorizationKey. </param>
         /// <param name="authorizationStatus"> The authorization status of the Circuit. </param>
-        internal ExpressRouteCircuitData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExpressRouteCircuitSku sku, ETag? etag, bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IList<ExpressRouteCircuitAuthorizationData> authorizations, IList<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, WritableSubResource expressRoutePort, float? bandwidthInGbps, int? stag, NetworkProvisioningState? provisioningState, string gatewayManagerETag, bool? globalReachEnabled, string authorizationKey, string authorizationStatus) : base(id, name, resourceType, location, tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteCircuitData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExpressRouteCircuitSku sku, ETag? etag, bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IList<ExpressRouteCircuitAuthorizationData> authorizations, IList<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, WritableSubResource expressRoutePort, float? bandwidthInGbps, int? stag, NetworkProvisioningState? provisioningState, string gatewayManagerETag, bool? globalReachEnabled, string authorizationKey, string authorizationStatus, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             Sku = sku;
             ETag = etag;

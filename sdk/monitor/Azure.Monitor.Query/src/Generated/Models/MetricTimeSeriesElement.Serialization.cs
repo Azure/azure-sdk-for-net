@@ -5,22 +5,84 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class MetricTimeSeriesElement
+    public partial class MetricTimeSeriesElement : IUtf8JsonSerializable, IModelJsonSerializable<MetricTimeSeriesElement>
     {
-        internal static MetricTimeSeriesElement DeserializeMetricTimeSeriesElement(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MetricTimeSeriesElement>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MetricTimeSeriesElement>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MetricTimeSeriesElement>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Metadatavalues))
+            {
+                writer.WritePropertyName("metadatavalues"u8);
+                writer.WriteStartArray();
+                foreach (var item in Metadatavalues)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MetadataValue>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Values))
+            {
+                writer.WritePropertyName("data"u8);
+                writer.WriteStartArray();
+                foreach (var item in Values)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MetricValue>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MetricTimeSeriesElement DeserializeMetricTimeSeriesElement(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<MetadataValue>> metadatavalues = default;
             Optional<IReadOnlyList<MetricValue>> data = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metadatavalues"u8))
@@ -51,8 +113,61 @@ namespace Azure.Monitor.Query.Models
                     data = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MetricTimeSeriesElement(Optional.ToList(metadatavalues), Optional.ToList(data));
+            return new MetricTimeSeriesElement(Optional.ToList(metadatavalues), Optional.ToList(data), serializedAdditionalRawData);
+        }
+
+        MetricTimeSeriesElement IModelJsonSerializable<MetricTimeSeriesElement>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricTimeSeriesElement>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricTimeSeriesElement(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MetricTimeSeriesElement>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricTimeSeriesElement>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MetricTimeSeriesElement IModelSerializable<MetricTimeSeriesElement>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricTimeSeriesElement>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMetricTimeSeriesElement(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MetricTimeSeriesElement"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MetricTimeSeriesElement"/> to convert. </param>
+        public static implicit operator RequestContent(MetricTimeSeriesElement model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MetricTimeSeriesElement"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MetricTimeSeriesElement(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMetricTimeSeriesElement(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

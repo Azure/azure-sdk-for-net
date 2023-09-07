@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayProbe : IUtf8JsonSerializable
+    public partial class ApplicationGatewayProbe : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationGatewayProbe>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationGatewayProbe>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationGatewayProbe>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayProbe>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -76,7 +83,14 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Match))
             {
                 writer.WritePropertyName("match"u8);
-                writer.WriteObjectValue(Match);
+                if (Match is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ApplicationGatewayProbeHealthResponseMatch>)Match).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Port))
             {
@@ -84,11 +98,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteNumberValue(Port.Value);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewayProbe DeserializeApplicationGatewayProbe(JsonElement element)
+        internal static ApplicationGatewayProbe DeserializeApplicationGatewayProbe(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -109,6 +137,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ApplicationGatewayProbeHealthResponseMatch> match = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<int> port = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -255,8 +284,61 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationGatewayProbe(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(protocol), host.Value, path.Value, Optional.ToNullable(interval), Optional.ToNullable(timeout), Optional.ToNullable(unhealthyThreshold), Optional.ToNullable(pickHostNameFromBackendHttpSettings), Optional.ToNullable(pickHostNameFromBackendSettings), Optional.ToNullable(minServers), match.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(port));
+            return new ApplicationGatewayProbe(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(protocol), host.Value, path.Value, Optional.ToNullable(interval), Optional.ToNullable(timeout), Optional.ToNullable(unhealthyThreshold), Optional.ToNullable(pickHostNameFromBackendHttpSettings), Optional.ToNullable(pickHostNameFromBackendSettings), Optional.ToNullable(minServers), match.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(port), serializedAdditionalRawData);
+        }
+
+        ApplicationGatewayProbe IModelJsonSerializable<ApplicationGatewayProbe>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayProbe>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayProbe(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationGatewayProbe>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayProbe>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationGatewayProbe IModelSerializable<ApplicationGatewayProbe>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayProbe>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationGatewayProbe(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApplicationGatewayProbe"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApplicationGatewayProbe"/> to convert. </param>
+        public static implicit operator RequestContent(ApplicationGatewayProbe model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApplicationGatewayProbe"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApplicationGatewayProbe(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationGatewayProbe(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

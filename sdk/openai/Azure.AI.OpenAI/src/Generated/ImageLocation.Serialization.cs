@@ -6,21 +6,50 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class ImageLocation
+    public partial class ImageLocation : IUtf8JsonSerializable, IModelJsonSerializable<ImageLocation>
     {
-        internal static ImageLocation DeserializeImageLocation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ImageLocation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ImageLocation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("url"u8);
+            writer.WriteStringValue(Url.AbsoluteUri);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ImageLocation DeserializeImageLocation(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Uri url = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"u8))
@@ -28,16 +57,61 @@ namespace Azure.AI.OpenAI
                     url = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ImageLocation(url);
+            return new ImageLocation(url, serializedAdditionalRawData);
         }
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ImageLocation FromResponse(Response response)
+        ImageLocation IModelJsonSerializable<ImageLocation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeImageLocation(document.RootElement);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeImageLocation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ImageLocation>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ImageLocation IModelSerializable<ImageLocation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeImageLocation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ImageLocation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ImageLocation"/> to convert. </param>
+        public static implicit operator RequestContent(ImageLocation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ImageLocation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ImageLocation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeImageLocation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

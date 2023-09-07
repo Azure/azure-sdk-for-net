@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ExpressRouteCircuitAuthorizationData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ExpressRouteCircuitAuthorizationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitAuthorizationData"/>. </summary>
         public ExpressRouteCircuitAuthorizationData()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitAuthorizationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitAuthorizationData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -30,7 +32,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="authorizationKey"> The authorization key. </param>
         /// <param name="authorizationUseStatus"> The authorization use status. </param>
         /// <param name="provisioningState"> The provisioning state of the authorization resource. </param>
-        internal ExpressRouteCircuitAuthorizationData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string authorizationKey, AuthorizationUseStatus? authorizationUseStatus, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteCircuitAuthorizationData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string authorizationKey, AuthorizationUseStatus? authorizationUseStatus, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             AuthorizationKey = authorizationKey;

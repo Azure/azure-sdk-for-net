@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Volume resource. </summary>
     public partial class NetAppVolumeGroupVolume
     {
-        /// <summary> Initializes a new instance of NetAppVolumeGroupVolume. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeGroupVolume"/>. </summary>
         /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>
         /// <param name="usageThreshold"> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. Minimum size is 100 GiB. Upper limit is 100TiB, 500Tib for LargeVolume. Specified in bytes. </param>
         /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
@@ -34,7 +37,7 @@ namespace Azure.ResourceManager.NetApp.Models
             PlacementRules = new ChangeTrackingList<NetAppVolumePlacementRule>();
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeGroupVolume. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeGroupVolume"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -92,7 +95,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="provisionedAvailabilityZone"> The availability zone where the volume is provisioned. This refers to the logical availability zone where the volume resides. </param>
         /// <param name="isLargeVolume"> Specifies whether volume is a Large Volume or Regular Volume. </param>
         /// <param name="originatingResourceId"> Id of the snapshot or backup that the volume is restored from. </param>
-        internal NetAppVolumeGroupVolume(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, string> tags, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, VolumePropertiesExportPolicy exportPolicy, IList<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IReadOnlyList<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IList<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, ResourceIdentifier originatingResourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeGroupVolume(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, string> tags, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, VolumePropertiesExportPolicy exportPolicy, IList<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IReadOnlyList<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IList<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, ResourceIdentifier originatingResourceId, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -151,6 +155,12 @@ namespace Azure.ResourceManager.NetApp.Models
             ProvisionedAvailabilityZone = provisionedAvailabilityZone;
             IsLargeVolume = isLargeVolume;
             OriginatingResourceId = originatingResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeGroupVolume"/> for deserialization. </summary>
+        internal NetAppVolumeGroupVolume()
+        {
         }
 
         /// <summary> Resource Id. </summary>

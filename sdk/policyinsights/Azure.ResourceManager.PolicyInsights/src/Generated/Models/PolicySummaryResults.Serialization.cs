@@ -8,14 +8,106 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    public partial class PolicySummaryResults
+    public partial class PolicySummaryResults : IUtf8JsonSerializable, IModelJsonSerializable<PolicySummaryResults>
     {
-        internal static PolicySummaryResults DeserializePolicySummaryResults(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PolicySummaryResults>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PolicySummaryResults>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PolicySummaryResults>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(QueryResultsUri))
+            {
+                writer.WritePropertyName("queryResultsUri"u8);
+                writer.WriteStringValue(QueryResultsUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(NonCompliantResources))
+            {
+                writer.WritePropertyName("nonCompliantResources"u8);
+                writer.WriteNumberValue(NonCompliantResources.Value);
+            }
+            if (Optional.IsDefined(NonCompliantPolicies))
+            {
+                writer.WritePropertyName("nonCompliantPolicies"u8);
+                writer.WriteNumberValue(NonCompliantPolicies.Value);
+            }
+            if (Optional.IsCollectionDefined(ResourceDetails))
+            {
+                writer.WritePropertyName("resourceDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in ResourceDetails)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ComplianceDetail>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(PolicyDetails))
+            {
+                writer.WritePropertyName("policyDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in PolicyDetails)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ComplianceDetail>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(PolicyGroupDetails))
+            {
+                writer.WritePropertyName("policyGroupDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in PolicyGroupDetails)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ComplianceDetail>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PolicySummaryResults DeserializePolicySummaryResults(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +118,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<IReadOnlyList<ComplianceDetail>> resourceDetails = default;
             Optional<IReadOnlyList<ComplianceDetail>> policyDetails = default;
             Optional<IReadOnlyList<ComplianceDetail>> policyGroupDetails = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queryResultsUri"u8))
@@ -97,8 +190,61 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     policyGroupDetails = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PolicySummaryResults(queryResultsUri.Value, Optional.ToNullable(nonCompliantResources), Optional.ToNullable(nonCompliantPolicies), Optional.ToList(resourceDetails), Optional.ToList(policyDetails), Optional.ToList(policyGroupDetails));
+            return new PolicySummaryResults(queryResultsUri.Value, Optional.ToNullable(nonCompliantResources), Optional.ToNullable(nonCompliantPolicies), Optional.ToList(resourceDetails), Optional.ToList(policyDetails), Optional.ToList(policyGroupDetails), serializedAdditionalRawData);
+        }
+
+        PolicySummaryResults IModelJsonSerializable<PolicySummaryResults>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PolicySummaryResults>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicySummaryResults(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PolicySummaryResults>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PolicySummaryResults>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PolicySummaryResults IModelSerializable<PolicySummaryResults>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PolicySummaryResults>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePolicySummaryResults(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PolicySummaryResults"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PolicySummaryResults"/> to convert. </param>
+        public static implicit operator RequestContent(PolicySummaryResults model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PolicySummaryResults"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PolicySummaryResults(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePolicySummaryResults(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

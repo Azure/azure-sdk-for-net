@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.MySql.Models;
 
 namespace Azure.ResourceManager.MySql
 {
-    public partial class MySqlServerData : IUtf8JsonSerializable
+    public partial class MySqlServerData : IUtf8JsonSerializable, IModelJsonSerializable<MySqlServerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MySqlServerData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MySqlServerData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlServerData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -27,7 +33,14 @@ namespace Azure.ResourceManager.MySql
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MySqlSku>)Sku).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -87,7 +100,14 @@ namespace Azure.ResourceManager.MySql
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                if (StorageProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MySqlStorageProfile>)StorageProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ReplicationRole))
             {
@@ -110,7 +130,307 @@ namespace Azure.ResourceManager.MySql
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static MySqlServerData DeserializeMySqlServerData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<MySqlSku> sku = default;
+            Optional<IDictionary<string, string>> tags = default;
+            AzureLocation location = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> administratorLogin = default;
+            Optional<MySqlServerVersion> version = default;
+            Optional<MySqlSslEnforcementEnum> sslEnforcement = default;
+            Optional<MySqlMinimalTlsVersionEnum> minimalTlsVersion = default;
+            Optional<string> byokEnforcement = default;
+            Optional<MySqlInfrastructureEncryption> infrastructureEncryption = default;
+            Optional<MySqlServerState> userVisibleState = default;
+            Optional<string> fullyQualifiedDomainName = default;
+            Optional<DateTimeOffset> earliestRestoreDate = default;
+            Optional<MySqlStorageProfile> storageProfile = default;
+            Optional<string> replicationRole = default;
+            Optional<ResourceIdentifier> masterServerId = default;
+            Optional<int> replicaCapacity = default;
+            Optional<MySqlPublicNetworkAccessEnum> publicNetworkAccess = default;
+            Optional<IReadOnlyList<MySqlServerPrivateEndpointConnection>> privateEndpointConnections = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("sku"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = MySqlSku.DeserializeMySqlSku(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("administratorLogin"u8))
+                        {
+                            administratorLogin = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("version"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            version = new MySqlServerVersion(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("sslEnforcement"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sslEnforcement = property0.Value.GetString().ToMySqlSslEnforcementEnum();
+                            continue;
+                        }
+                        if (property0.NameEquals("minimalTlsVersion"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            minimalTlsVersion = new MySqlMinimalTlsVersionEnum(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("byokEnforcement"u8))
+                        {
+                            byokEnforcement = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("infrastructureEncryption"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            infrastructureEncryption = new MySqlInfrastructureEncryption(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("userVisibleState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            userVisibleState = new MySqlServerState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("fullyQualifiedDomainName"u8))
+                        {
+                            fullyQualifiedDomainName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("earliestRestoreDate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            earliestRestoreDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("storageProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            storageProfile = MySqlStorageProfile.DeserializeMySqlStorageProfile(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("replicationRole"u8))
+                        {
+                            replicationRole = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("masterServerId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            masterServerId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("replicaCapacity"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            replicaCapacity = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("publicNetworkAccess"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            publicNetworkAccess = new MySqlPublicNetworkAccessEnum(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("privateEndpointConnections"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<MySqlServerPrivateEndpointConnection> array = new List<MySqlServerPrivateEndpointConnection>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(MySqlServerPrivateEndpointConnection.DeserializeMySqlServerPrivateEndpointConnection(item));
+                            }
+                            privateEndpointConnections = array;
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new MySqlServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, administratorLogin.Value, Optional.ToNullable(version), Optional.ToNullable(sslEnforcement), Optional.ToNullable(minimalTlsVersion), byokEnforcement.Value, Optional.ToNullable(infrastructureEncryption), Optional.ToNullable(userVisibleState), fullyQualifiedDomainName.Value, Optional.ToNullable(earliestRestoreDate), storageProfile.Value, replicationRole.Value, masterServerId.Value, Optional.ToNullable(replicaCapacity), Optional.ToNullable(publicNetworkAccess), Optional.ToList(privateEndpointConnections), serializedAdditionalRawData);
+        }
+
+        MySqlServerData IModelJsonSerializable<MySqlServerData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlServerData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlServerData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MySqlServerData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlServerData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MySqlServerData IModelSerializable<MySqlServerData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlServerData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMySqlServerData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MySqlServerData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MySqlServerData"/> to convert. </param>
+        public static implicit operator RequestContent(MySqlServerData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MySqlServerData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MySqlServerData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMySqlServerData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }
