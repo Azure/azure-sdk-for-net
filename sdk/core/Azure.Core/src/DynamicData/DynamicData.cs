@@ -476,7 +476,7 @@ namespace Azure.Core.Serialization
         private string DebuggerDisplay => _element.DebuggerDisplay;
 
 #if !NET5_0
-        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "This JsonConverter is used with the DynamicData class which is already marked as RequiresUnreferencedCode.")]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "This JsonConverter is only used with its parent class DynamicData class which is already marked as RequiresUnreferencedCode.")]
 #endif
         private class DynamicDataJsonConverter : JsonConverter<DynamicData>
         {
