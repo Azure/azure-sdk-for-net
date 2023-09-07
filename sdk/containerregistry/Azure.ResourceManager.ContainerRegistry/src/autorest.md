@@ -28,7 +28,7 @@ format-by-name-rules:
   'tokenId': 'arm-id'
   'scopeMapId': 'arm-id'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

@@ -39,7 +39,7 @@ models-to-treat-empty-string-as-null:
   - ServiceFabricManagedNodeTypeData
   - VmManagedIdentity
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
