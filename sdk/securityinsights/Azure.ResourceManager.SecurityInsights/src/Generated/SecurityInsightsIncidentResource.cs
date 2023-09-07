@@ -9,7 +9,6 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -420,7 +419,7 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual AsyncPageable<SecurityInsightsAlert> GetAlertsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsIncidentIncidentsRestClient.CreateListAlertsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SecurityInsightsAlert.DeserializeSecurityInsightsAlert, _securityInsightsIncidentIncidentsClientDiagnostics, Pipeline, "SecurityInsightsIncidentResource.GetAlerts", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SecurityInsightsAlert.DeserializeSecurityInsightsAlert, _securityInsightsIncidentIncidentsClientDiagnostics, Pipeline, "SecurityInsightsIncidentResource.GetAlerts", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -441,7 +440,7 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual Pageable<SecurityInsightsAlert> GetAlerts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsIncidentIncidentsRestClient.CreateListAlertsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SecurityInsightsAlert.DeserializeSecurityInsightsAlert, _securityInsightsIncidentIncidentsClientDiagnostics, Pipeline, "SecurityInsightsIncidentResource.GetAlerts", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SecurityInsightsAlert.DeserializeSecurityInsightsAlert, _securityInsightsIncidentIncidentsClientDiagnostics, Pipeline, "SecurityInsightsIncidentResource.GetAlerts", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -462,7 +461,7 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual AsyncPageable<SecurityInsightsHuntingBookmark> GetBookmarksAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsIncidentIncidentsRestClient.CreateListBookmarksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SecurityInsightsHuntingBookmark.DeserializeSecurityInsightsHuntingBookmark, _securityInsightsIncidentIncidentsClientDiagnostics, Pipeline, "SecurityInsightsIncidentResource.GetBookmarks", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SecurityInsightsHuntingBookmark.DeserializeSecurityInsightsHuntingBookmark, _securityInsightsIncidentIncidentsClientDiagnostics, Pipeline, "SecurityInsightsIncidentResource.GetBookmarks", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -483,7 +482,7 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual Pageable<SecurityInsightsHuntingBookmark> GetBookmarks(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsIncidentIncidentsRestClient.CreateListBookmarksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SecurityInsightsHuntingBookmark.DeserializeSecurityInsightsHuntingBookmark, _securityInsightsIncidentIncidentsClientDiagnostics, Pipeline, "SecurityInsightsIncidentResource.GetBookmarks", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SecurityInsightsHuntingBookmark.DeserializeSecurityInsightsHuntingBookmark, _securityInsightsIncidentIncidentsClientDiagnostics, Pipeline, "SecurityInsightsIncidentResource.GetBookmarks", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             try
             {
                 var response = await _azureDevOpsProjectRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityDevOpsArmOperation<AzureDevOpsProjectResource>(new AzureDevOpsProjectOperationSource(Client), _azureDevOpsProjectClientDiagnostics, Pipeline, _azureDevOpsProjectRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SecurityDevOpsArmOperation<AzureDevOpsProjectResource>(new AzureDevOpsProjectOperationSource(Client), _azureDevOpsProjectClientDiagnostics, Pipeline, _azureDevOpsProjectRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             try
             {
                 var response = _azureDevOpsProjectRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SecurityDevOpsArmOperation<AzureDevOpsProjectResource>(new AzureDevOpsProjectOperationSource(Client), _azureDevOpsProjectClientDiagnostics, Pipeline, _azureDevOpsProjectRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SecurityDevOpsArmOperation<AzureDevOpsProjectResource>(new AzureDevOpsProjectOperationSource(Client), _azureDevOpsProjectClientDiagnostics, Pipeline, _azureDevOpsProjectRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
