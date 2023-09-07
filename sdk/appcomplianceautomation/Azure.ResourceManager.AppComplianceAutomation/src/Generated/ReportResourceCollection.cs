@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             try
             {
                 var response = await _reportResourceReportRestClient.CreateOrUpdateAsync(reportName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppComplianceAutomationArmOperation<ReportResource>(new ReportResourceOperationSource(Client), _reportResourceReportClientDiagnostics, Pipeline, _reportResourceReportRestClient.CreateCreateOrUpdateRequest(reportName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppComplianceAutomationArmOperation<ReportResource>(new ReportResourceOperationSource(Client), _reportResourceReportClientDiagnostics, Pipeline, _reportResourceReportRestClient.CreateCreateOrUpdateRequest(reportName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -129,7 +128,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             try
             {
                 var response = _reportResourceReportRestClient.CreateOrUpdate(reportName, data, cancellationToken);
-                var operation = new AppComplianceAutomationArmOperation<ReportResource>(new ReportResourceOperationSource(Client), _reportResourceReportClientDiagnostics, Pipeline, _reportResourceReportRestClient.CreateCreateOrUpdateRequest(reportName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppComplianceAutomationArmOperation<ReportResource>(new ReportResourceOperationSource(Client), _reportResourceReportClientDiagnostics, Pipeline, _reportResourceReportRestClient.CreateCreateOrUpdateRequest(reportName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -239,7 +238,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportResourceReportsRestClient.CreateListRequest(skipToken, top, select, offerGuid, reportCreatorTenantId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportResourceReportsRestClient.CreateListNextPageRequest(nextLink, skipToken, top, select, offerGuid, reportCreatorTenantId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReportResource(Client, ReportResourceData.DeserializeReportResourceData(e)), _reportResourceReportsClientDiagnostics, Pipeline, "ReportResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReportResource(Client, ReportResourceData.DeserializeReportResourceData(e)), _reportResourceReportsClientDiagnostics, Pipeline, "ReportResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -266,7 +265,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportResourceReportsRestClient.CreateListRequest(skipToken, top, select, offerGuid, reportCreatorTenantId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportResourceReportsRestClient.CreateListNextPageRequest(nextLink, skipToken, top, select, offerGuid, reportCreatorTenantId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReportResource(Client, ReportResourceData.DeserializeReportResourceData(e)), _reportResourceReportsClientDiagnostics, Pipeline, "ReportResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReportResource(Client, ReportResourceData.DeserializeReportResourceData(e)), _reportResourceReportsClientDiagnostics, Pipeline, "ReportResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementNamedValueNamedValueRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementNamedValueResource>(new ApiManagementNamedValueOperationSource(Client), _apiManagementNamedValueNamedValueClientDiagnostics, Pipeline, _apiManagementNamedValueNamedValueRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation<ApiManagementNamedValueResource>(new ApiManagementNamedValueOperationSource(Client), _apiManagementNamedValueNamedValueClientDiagnostics, Pipeline, _apiManagementNamedValueNamedValueRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementNamedValueNamedValueRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementNamedValueResource>(new ApiManagementNamedValueOperationSource(Client), _apiManagementNamedValueNamedValueClientDiagnostics, Pipeline, _apiManagementNamedValueNamedValueRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation<ApiManagementNamedValueResource>(new ApiManagementNamedValueOperationSource(Client), _apiManagementNamedValueNamedValueClientDiagnostics, Pipeline, _apiManagementNamedValueNamedValueRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementNamedValueNamedValueRestClient.RefreshSecretAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementNamedValueResource>(new ApiManagementNamedValueOperationSource(Client), _apiManagementNamedValueNamedValueClientDiagnostics, Pipeline, _apiManagementNamedValueNamedValueRestClient.CreateRefreshSecretRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation<ApiManagementNamedValueResource>(new ApiManagementNamedValueOperationSource(Client), _apiManagementNamedValueNamedValueClientDiagnostics, Pipeline, _apiManagementNamedValueNamedValueRestClient.CreateRefreshSecretRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementNamedValueNamedValueRestClient.RefreshSecret(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementNamedValueResource>(new ApiManagementNamedValueOperationSource(Client), _apiManagementNamedValueNamedValueClientDiagnostics, Pipeline, _apiManagementNamedValueNamedValueRestClient.CreateRefreshSecretRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation<ApiManagementNamedValueResource>(new ApiManagementNamedValueOperationSource(Client), _apiManagementNamedValueNamedValueClientDiagnostics, Pipeline, _apiManagementNamedValueNamedValueRestClient.CreateRefreshSecretRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

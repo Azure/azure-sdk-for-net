@@ -9,7 +9,6 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -752,7 +751,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRevisionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiRevisionRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ApiRevisionContract.DeserializeApiRevisionContract, _apiRevisionClientDiagnostics, Pipeline, "ApiResource.GetApiRevisionsByService", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ApiRevisionContract.DeserializeApiRevisionContract, _apiRevisionClientDiagnostics, Pipeline, "ApiResource.GetApiRevisionsByService", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -777,7 +776,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRevisionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiRevisionRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ApiRevisionContract.DeserializeApiRevisionContract, _apiRevisionClientDiagnostics, Pipeline, "ApiResource.GetApiRevisionsByService", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ApiRevisionContract.DeserializeApiRevisionContract, _apiRevisionClientDiagnostics, Pipeline, "ApiResource.GetApiRevisionsByService", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -802,7 +801,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiProductRestClient.CreateListByApisRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiProductRestClient.CreateListByApisNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementProductResource(Client, ApiManagementProductData.DeserializeApiManagementProductData(e)), _apiProductClientDiagnostics, Pipeline, "ApiResource.GetApiProducts", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementProductResource(Client, ApiManagementProductData.DeserializeApiManagementProductData(e)), _apiProductClientDiagnostics, Pipeline, "ApiResource.GetApiProducts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -827,7 +826,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiProductRestClient.CreateListByApisRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiProductRestClient.CreateListByApisNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementProductResource(Client, ApiManagementProductData.DeserializeApiManagementProductData(e)), _apiProductClientDiagnostics, Pipeline, "ApiResource.GetApiProducts", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementProductResource(Client, ApiManagementProductData.DeserializeApiManagementProductData(e)), _apiProductClientDiagnostics, Pipeline, "ApiResource.GetApiProducts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -853,7 +852,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, includeNotTaggedOperations);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _operationRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, includeNotTaggedOperations);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TagResourceContractDetails.DeserializeTagResourceContractDetails, _operationClientDiagnostics, Pipeline, "ApiResource.GetOperationsByTags", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TagResourceContractDetails.DeserializeTagResourceContractDetails, _operationClientDiagnostics, Pipeline, "ApiResource.GetOperationsByTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -879,7 +878,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, includeNotTaggedOperations);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _operationRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, includeNotTaggedOperations);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TagResourceContractDetails.DeserializeTagResourceContractDetails, _operationClientDiagnostics, Pipeline, "ApiResource.GetOperationsByTags", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TagResourceContractDetails.DeserializeTagResourceContractDetails, _operationClientDiagnostics, Pipeline, "ApiResource.GetOperationsByTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

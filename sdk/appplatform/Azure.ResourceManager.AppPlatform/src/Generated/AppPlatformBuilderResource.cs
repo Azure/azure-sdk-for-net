@@ -9,7 +9,6 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -226,7 +225,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appPlatformBuilderBuildServiceBuilderRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation(_appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, _appPlatformBuilderBuildServiceBuilderRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppPlatformArmOperation(_appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, _appPlatformBuilderBuildServiceBuilderRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -260,7 +259,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appPlatformBuilderBuildServiceBuilderRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppPlatformArmOperation(_appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, _appPlatformBuilderBuildServiceBuilderRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppPlatformArmOperation(_appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, _appPlatformBuilderBuildServiceBuilderRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -298,7 +297,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appPlatformBuilderBuildServiceBuilderRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppPlatformBuilderResource>(new AppPlatformBuilderOperationSource(Client), _appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, _appPlatformBuilderBuildServiceBuilderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppPlatformArmOperation<AppPlatformBuilderResource>(new AppPlatformBuilderOperationSource(Client), _appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, _appPlatformBuilderBuildServiceBuilderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -336,7 +335,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appPlatformBuilderBuildServiceBuilderRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppPlatformBuilderResource>(new AppPlatformBuilderOperationSource(Client), _appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, _appPlatformBuilderBuildServiceBuilderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppPlatformArmOperation<AppPlatformBuilderResource>(new AppPlatformBuilderOperationSource(Client), _appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, _appPlatformBuilderBuildServiceBuilderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -366,7 +365,7 @@ namespace Azure.ResourceManager.AppPlatform
         public virtual AsyncPageable<ResourceIdentifier> GetDeploymentsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuilderBuildServiceBuilderRestClient.CreateListDeploymentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ResourceIdentifier(e.GetString()), _appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, "AppPlatformBuilderResource.GetDeployments", "deployments", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ResourceIdentifier(e.GetString()), _appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, "AppPlatformBuilderResource.GetDeployments", "deployments", null, cancellationToken);
         }
 
         /// <summary>
@@ -387,7 +386,7 @@ namespace Azure.ResourceManager.AppPlatform
         public virtual Pageable<ResourceIdentifier> GetDeployments(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuilderBuildServiceBuilderRestClient.CreateListDeploymentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ResourceIdentifier(e.GetString()), _appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, "AppPlatformBuilderResource.GetDeployments", "deployments", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ResourceIdentifier(e.GetString()), _appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, "AppPlatformBuilderResource.GetDeployments", "deployments", null, cancellationToken);
         }
     }
 }

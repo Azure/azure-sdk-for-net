@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Threading;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.AppPlatform
         public virtual AsyncPageable<AppPlatformSupportedRuntimeVersion> GetRuntimeVersionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RuntimeVersionsRestClient.CreateListRuntimeVersionsRequest();
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppPlatformSupportedRuntimeVersion.DeserializeAppPlatformSupportedRuntimeVersion, RuntimeVersionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetRuntimeVersions", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppPlatformSupportedRuntimeVersion.DeserializeAppPlatformSupportedRuntimeVersion, RuntimeVersionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetRuntimeVersions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -81,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform
         public virtual Pageable<AppPlatformSupportedRuntimeVersion> GetRuntimeVersions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RuntimeVersionsRestClient.CreateListRuntimeVersionsRequest();
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AppPlatformSupportedRuntimeVersion.DeserializeAppPlatformSupportedRuntimeVersion, RuntimeVersionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetRuntimeVersions", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AppPlatformSupportedRuntimeVersion.DeserializeAppPlatformSupportedRuntimeVersion, RuntimeVersionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetRuntimeVersions", "value", null, cancellationToken);
         }
     }
 }

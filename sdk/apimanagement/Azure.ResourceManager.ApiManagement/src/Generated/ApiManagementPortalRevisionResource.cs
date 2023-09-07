@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementPortalRevisionPortalRevisionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementPortalRevisionResource>(new ApiManagementPortalRevisionOperationSource(Client), _apiManagementPortalRevisionPortalRevisionClientDiagnostics, Pipeline, _apiManagementPortalRevisionPortalRevisionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation<ApiManagementPortalRevisionResource>(new ApiManagementPortalRevisionOperationSource(Client), _apiManagementPortalRevisionPortalRevisionClientDiagnostics, Pipeline, _apiManagementPortalRevisionPortalRevisionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementPortalRevisionPortalRevisionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, data, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementPortalRevisionResource>(new ApiManagementPortalRevisionOperationSource(Client), _apiManagementPortalRevisionPortalRevisionClientDiagnostics, Pipeline, _apiManagementPortalRevisionPortalRevisionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation<ApiManagementPortalRevisionResource>(new ApiManagementPortalRevisionOperationSource(Client), _apiManagementPortalRevisionPortalRevisionClientDiagnostics, Pipeline, _apiManagementPortalRevisionPortalRevisionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

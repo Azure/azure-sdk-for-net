@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -335,7 +334,7 @@ namespace Azure.ResourceManager.AppConfiguration
             try
             {
                 var response = await _appConfigurationStoreConfigurationStoresRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppConfigurationArmOperation(_appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, _appConfigurationStoreConfigurationStoresRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppConfigurationArmOperation(_appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, _appConfigurationStoreConfigurationStoresRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -369,7 +368,7 @@ namespace Azure.ResourceManager.AppConfiguration
             try
             {
                 var response = _appConfigurationStoreConfigurationStoresRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AppConfigurationArmOperation(_appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, _appConfigurationStoreConfigurationStoresRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppConfigurationArmOperation(_appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, _appConfigurationStoreConfigurationStoresRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -407,7 +406,7 @@ namespace Azure.ResourceManager.AppConfiguration
             try
             {
                 var response = await _appConfigurationStoreConfigurationStoresRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new AppConfigurationArmOperation<AppConfigurationStoreResource>(new AppConfigurationStoreOperationSource(Client), _appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, _appConfigurationStoreConfigurationStoresRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppConfigurationArmOperation<AppConfigurationStoreResource>(new AppConfigurationStoreOperationSource(Client), _appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, _appConfigurationStoreConfigurationStoresRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -445,7 +444,7 @@ namespace Azure.ResourceManager.AppConfiguration
             try
             {
                 var response = _appConfigurationStoreConfigurationStoresRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new AppConfigurationArmOperation<AppConfigurationStoreResource>(new AppConfigurationStoreOperationSource(Client), _appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, _appConfigurationStoreConfigurationStoresRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppConfigurationArmOperation<AppConfigurationStoreResource>(new AppConfigurationStoreOperationSource(Client), _appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, _appConfigurationStoreConfigurationStoresRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -477,7 +476,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appConfigurationStoreConfigurationStoresRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appConfigurationStoreConfigurationStoresRestClient.CreateListKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppConfigurationStoreApiKey.DeserializeAppConfigurationStoreApiKey, _appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "AppConfigurationStoreResource.GetKeys", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppConfigurationStoreApiKey.DeserializeAppConfigurationStoreApiKey, _appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "AppConfigurationStoreResource.GetKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -500,7 +499,7 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appConfigurationStoreConfigurationStoresRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appConfigurationStoreConfigurationStoresRestClient.CreateListKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppConfigurationStoreApiKey.DeserializeAppConfigurationStoreApiKey, _appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "AppConfigurationStoreResource.GetKeys", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppConfigurationStoreApiKey.DeserializeAppConfigurationStoreApiKey, _appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "AppConfigurationStoreResource.GetKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

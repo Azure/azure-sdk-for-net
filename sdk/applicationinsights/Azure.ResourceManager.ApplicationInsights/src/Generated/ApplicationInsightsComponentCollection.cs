@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationInsightsComponentComponentsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationInsightsComponentComponentsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApplicationInsightsComponentResource(Client, ApplicationInsightsComponentData.DeserializeApplicationInsightsComponentData(e)), _applicationInsightsComponentComponentsClientDiagnostics, Pipeline, "ApplicationInsightsComponentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApplicationInsightsComponentResource(Client, ApplicationInsightsComponentData.DeserializeApplicationInsightsComponentData(e)), _applicationInsightsComponentComponentsClientDiagnostics, Pipeline, "ApplicationInsightsComponentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +250,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationInsightsComponentComponentsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationInsightsComponentComponentsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApplicationInsightsComponentResource(Client, ApplicationInsightsComponentData.DeserializeApplicationInsightsComponentData(e)), _applicationInsightsComponentComponentsClientDiagnostics, Pipeline, "ApplicationInsightsComponentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApplicationInsightsComponentResource(Client, ApplicationInsightsComponentData.DeserializeApplicationInsightsComponentData(e)), _applicationInsightsComponentComponentsClientDiagnostics, Pipeline, "ApplicationInsightsComponentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

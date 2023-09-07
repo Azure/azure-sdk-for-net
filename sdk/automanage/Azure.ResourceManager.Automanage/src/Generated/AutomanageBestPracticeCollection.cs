@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -146,7 +145,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual AsyncPageable<AutomanageBestPracticeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageBestPracticeBestPracticesRestClient.CreateListByTenantRequest();
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutomanageBestPracticeResource(Client, AutomanageBestPracticeData.DeserializeAutomanageBestPracticeData(e)), _automanageBestPracticeBestPracticesClientDiagnostics, Pipeline, "AutomanageBestPracticeCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutomanageBestPracticeResource(Client, AutomanageBestPracticeData.DeserializeAutomanageBestPracticeData(e)), _automanageBestPracticeBestPracticesClientDiagnostics, Pipeline, "AutomanageBestPracticeCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +166,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual Pageable<AutomanageBestPracticeResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageBestPracticeBestPracticesRestClient.CreateListByTenantRequest();
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutomanageBestPracticeResource(Client, AutomanageBestPracticeData.DeserializeAutomanageBestPracticeData(e)), _automanageBestPracticeBestPracticesClientDiagnostics, Pipeline, "AutomanageBestPracticeCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutomanageBestPracticeResource(Client, AutomanageBestPracticeData.DeserializeAutomanageBestPracticeData(e)), _automanageBestPracticeBestPracticesClientDiagnostics, Pipeline, "AutomanageBestPracticeCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

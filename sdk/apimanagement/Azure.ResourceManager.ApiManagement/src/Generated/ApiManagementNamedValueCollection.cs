@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementNamedValueNamedValueRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, content, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementNamedValueResource>(new ApiManagementNamedValueOperationSource(Client), _apiManagementNamedValueNamedValueClientDiagnostics, Pipeline, _apiManagementNamedValueNamedValueRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, content, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation<ApiManagementNamedValueResource>(new ApiManagementNamedValueOperationSource(Client), _apiManagementNamedValueNamedValueClientDiagnostics, Pipeline, _apiManagementNamedValueNamedValueRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, content, ifMatch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementNamedValueNamedValueRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, content, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementNamedValueResource>(new ApiManagementNamedValueOperationSource(Client), _apiManagementNamedValueNamedValueClientDiagnostics, Pipeline, _apiManagementNamedValueNamedValueRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, content, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation<ApiManagementNamedValueResource>(new ApiManagementNamedValueOperationSource(Client), _apiManagementNamedValueNamedValueClientDiagnostics, Pipeline, _apiManagementNamedValueNamedValueRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, content, ifMatch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -235,7 +234,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementNamedValueNamedValueRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, isKeyVaultRefreshFailed);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementNamedValueNamedValueRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, isKeyVaultRefreshFailed);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementNamedValueResource(Client, ApiManagementNamedValueData.DeserializeApiManagementNamedValueData(e)), _apiManagementNamedValueNamedValueClientDiagnostics, Pipeline, "ApiManagementNamedValueCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementNamedValueResource(Client, ApiManagementNamedValueData.DeserializeApiManagementNamedValueData(e)), _apiManagementNamedValueNamedValueClientDiagnostics, Pipeline, "ApiManagementNamedValueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -261,7 +260,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementNamedValueNamedValueRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, isKeyVaultRefreshFailed);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementNamedValueNamedValueRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, isKeyVaultRefreshFailed);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementNamedValueResource(Client, ApiManagementNamedValueData.DeserializeApiManagementNamedValueData(e)), _apiManagementNamedValueNamedValueClientDiagnostics, Pipeline, "ApiManagementNamedValueCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementNamedValueResource(Client, ApiManagementNamedValueData.DeserializeApiManagementNamedValueData(e)), _apiManagementNamedValueNamedValueClientDiagnostics, Pipeline, "ApiManagementNamedValueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

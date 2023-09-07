@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppPlatformApiPortalCustomDomainResource>(new AppPlatformApiPortalCustomDomainOperationSource(Client), _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics, Pipeline, _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppPlatformArmOperation<AppPlatformApiPortalCustomDomainResource>(new AppPlatformApiPortalCustomDomainOperationSource(Client), _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics, Pipeline, _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppPlatformApiPortalCustomDomainResource>(new AppPlatformApiPortalCustomDomainOperationSource(Client), _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics, Pipeline, _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppPlatformArmOperation<AppPlatformApiPortalCustomDomainResource>(new AppPlatformApiPortalCustomDomainOperationSource(Client), _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics, Pipeline, _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformApiPortalCustomDomainResource(Client, AppPlatformApiPortalCustomDomainData.DeserializeAppPlatformApiPortalCustomDomainData(e)), _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics, Pipeline, "AppPlatformApiPortalCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformApiPortalCustomDomainResource(Client, AppPlatformApiPortalCustomDomainData.DeserializeAppPlatformApiPortalCustomDomainData(e)), _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics, Pipeline, "AppPlatformApiPortalCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformApiPortalCustomDomainResource(Client, AppPlatformApiPortalCustomDomainData.DeserializeAppPlatformApiPortalCustomDomainData(e)), _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics, Pipeline, "AppPlatformApiPortalCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformApiPortalCustomDomainResource(Client, AppPlatformApiPortalCustomDomainData.DeserializeAppPlatformApiPortalCustomDomainData(e)), _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics, Pipeline, "AppPlatformApiPortalCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

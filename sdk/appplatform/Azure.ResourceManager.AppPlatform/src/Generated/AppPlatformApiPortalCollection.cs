@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appPlatformApiPortalApiPortalsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiPortalName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppPlatformApiPortalResource>(new AppPlatformApiPortalOperationSource(Client), _appPlatformApiPortalApiPortalsClientDiagnostics, Pipeline, _appPlatformApiPortalApiPortalsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiPortalName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppPlatformArmOperation<AppPlatformApiPortalResource>(new AppPlatformApiPortalOperationSource(Client), _appPlatformApiPortalApiPortalsClientDiagnostics, Pipeline, _appPlatformApiPortalApiPortalsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiPortalName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appPlatformApiPortalApiPortalsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiPortalName, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppPlatformApiPortalResource>(new AppPlatformApiPortalOperationSource(Client), _appPlatformApiPortalApiPortalsClientDiagnostics, Pipeline, _appPlatformApiPortalApiPortalsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiPortalName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppPlatformArmOperation<AppPlatformApiPortalResource>(new AppPlatformApiPortalOperationSource(Client), _appPlatformApiPortalApiPortalsClientDiagnostics, Pipeline, _appPlatformApiPortalApiPortalsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiPortalName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformApiPortalApiPortalsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformApiPortalApiPortalsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformApiPortalResource(Client, AppPlatformApiPortalData.DeserializeAppPlatformApiPortalData(e)), _appPlatformApiPortalApiPortalsClientDiagnostics, Pipeline, "AppPlatformApiPortalCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformApiPortalResource(Client, AppPlatformApiPortalData.DeserializeAppPlatformApiPortalData(e)), _appPlatformApiPortalApiPortalsClientDiagnostics, Pipeline, "AppPlatformApiPortalCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformApiPortalApiPortalsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformApiPortalApiPortalsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformApiPortalResource(Client, AppPlatformApiPortalData.DeserializeAppPlatformApiPortalData(e)), _appPlatformApiPortalApiPortalsClientDiagnostics, Pipeline, "AppPlatformApiPortalCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformApiPortalResource(Client, AppPlatformApiPortalData.DeserializeAppPlatformApiPortalData(e)), _appPlatformApiPortalApiPortalsClientDiagnostics, Pipeline, "AppPlatformApiPortalCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

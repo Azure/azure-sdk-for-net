@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Threading;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EligibleChildResourcesRestClient.CreateGetRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EligibleChildResourcesRestClient.CreateGetNextPageRequest(nextLink, Id, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EligibleChildResource.DeserializeEligibleChildResource, EligibleChildResourcesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetEligibleChildResources", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EligibleChildResource.DeserializeEligibleChildResource, EligibleChildResourcesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetEligibleChildResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,7 +161,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EligibleChildResourcesRestClient.CreateGetRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EligibleChildResourcesRestClient.CreateGetNextPageRequest(nextLink, Id, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EligibleChildResource.DeserializeEligibleChildResource, EligibleChildResourcesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetEligibleChildResources", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EligibleChildResource.DeserializeEligibleChildResource, EligibleChildResourcesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetEligibleChildResources", "value", "nextLink", cancellationToken);
         }
     }
 }

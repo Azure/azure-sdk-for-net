@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -220,7 +219,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual AsyncPageable<ApiOperationPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiOperationPolicyRestClient.CreateListByOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ApiOperationPolicyResource(Client, PolicyContractData.DeserializePolicyContractData(e)), _apiOperationPolicyClientDiagnostics, Pipeline, "ApiOperationPolicyCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ApiOperationPolicyResource(Client, PolicyContractData.DeserializePolicyContractData(e)), _apiOperationPolicyClientDiagnostics, Pipeline, "ApiOperationPolicyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -241,7 +240,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Pageable<ApiOperationPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiOperationPolicyRestClient.CreateListByOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ApiOperationPolicyResource(Client, PolicyContractData.DeserializePolicyContractData(e)), _apiOperationPolicyClientDiagnostics, Pipeline, "ApiOperationPolicyCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ApiOperationPolicyResource(Client, PolicyContractData.DeserializePolicyContractData(e)), _apiOperationPolicyClientDiagnostics, Pipeline, "ApiOperationPolicyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

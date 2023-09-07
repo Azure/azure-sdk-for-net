@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.UpdatePutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, agentPoolName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppPlatformBuildServiceAgentPoolResource>(new AppPlatformBuildServiceAgentPoolOperationSource(Client), _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics, Pipeline, _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.CreateUpdatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, agentPoolName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppPlatformArmOperation<AppPlatformBuildServiceAgentPoolResource>(new AppPlatformBuildServiceAgentPoolOperationSource(Client), _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics, Pipeline, _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.CreateUpdatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, agentPoolName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.UpdatePut(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, agentPoolName, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppPlatformBuildServiceAgentPoolResource>(new AppPlatformBuildServiceAgentPoolOperationSource(Client), _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics, Pipeline, _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.CreateUpdatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, agentPoolName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppPlatformArmOperation<AppPlatformBuildServiceAgentPoolResource>(new AppPlatformBuildServiceAgentPoolOperationSource(Client), _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics, Pipeline, _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.CreateUpdatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, agentPoolName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildServiceAgentPoolResource(Client, AppPlatformBuildServiceAgentPoolData.DeserializeAppPlatformBuildServiceAgentPoolData(e)), _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics, Pipeline, "AppPlatformBuildServiceAgentPoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildServiceAgentPoolResource(Client, AppPlatformBuildServiceAgentPoolData.DeserializeAppPlatformBuildServiceAgentPoolData(e)), _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics, Pipeline, "AppPlatformBuildServiceAgentPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildServiceAgentPoolResource(Client, AppPlatformBuildServiceAgentPoolData.DeserializeAppPlatformBuildServiceAgentPoolData(e)), _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics, Pipeline, "AppPlatformBuildServiceAgentPoolCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildServiceAgentPoolResource(Client, AppPlatformBuildServiceAgentPoolData.DeserializeAppPlatformBuildServiceAgentPoolData(e)), _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics, Pipeline, "AppPlatformBuildServiceAgentPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
