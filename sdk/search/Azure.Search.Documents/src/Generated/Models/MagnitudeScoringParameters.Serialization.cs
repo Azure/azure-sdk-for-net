@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class MagnitudeScoringParameters : IUtf8JsonSerializable
+    public partial class MagnitudeScoringParameters : IUtf8JsonSerializable, IModelJsonSerializable<MagnitudeScoringParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MagnitudeScoringParameters>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MagnitudeScoringParameters>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MagnitudeScoringParameters>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("boostingRangeStart"u8);
             writer.WriteNumberValue(BoostingRangeStart);
@@ -24,11 +32,25 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("constantBoostBeyondRange"u8);
                 writer.WriteBooleanValue(ShouldBoostBeyondRangeByConstant.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MagnitudeScoringParameters DeserializeMagnitudeScoringParameters(JsonElement element)
+        internal static MagnitudeScoringParameters DeserializeMagnitudeScoringParameters(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
             double boostingRangeStart = default;
             double boostingRangeEnd = default;
             Optional<bool> constantBoostBeyondRange = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("boostingRangeStart"u8))
@@ -57,8 +80,61 @@ namespace Azure.Search.Documents.Indexes.Models
                     constantBoostBeyondRange = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MagnitudeScoringParameters(boostingRangeStart, boostingRangeEnd, Optional.ToNullable(constantBoostBeyondRange));
+            return new MagnitudeScoringParameters(boostingRangeStart, boostingRangeEnd, Optional.ToNullable(constantBoostBeyondRange), serializedAdditionalRawData);
+        }
+
+        MagnitudeScoringParameters IModelJsonSerializable<MagnitudeScoringParameters>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MagnitudeScoringParameters>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMagnitudeScoringParameters(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MagnitudeScoringParameters>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MagnitudeScoringParameters>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MagnitudeScoringParameters IModelSerializable<MagnitudeScoringParameters>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MagnitudeScoringParameters>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMagnitudeScoringParameters(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MagnitudeScoringParameters"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MagnitudeScoringParameters"/> to convert. </param>
+        public static implicit operator RequestContent(MagnitudeScoringParameters model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MagnitudeScoringParameters"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MagnitudeScoringParameters(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMagnitudeScoringParameters(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

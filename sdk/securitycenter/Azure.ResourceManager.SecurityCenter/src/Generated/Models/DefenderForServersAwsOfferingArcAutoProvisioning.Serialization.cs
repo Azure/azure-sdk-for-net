@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForServersAwsOfferingArcAutoProvisioning : IUtf8JsonSerializable
+    public partial class DefenderForServersAwsOfferingArcAutoProvisioning : IUtf8JsonSerializable, IModelJsonSerializable<DefenderForServersAwsOfferingArcAutoProvisioning>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DefenderForServersAwsOfferingArcAutoProvisioning>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DefenderForServersAwsOfferingArcAutoProvisioning>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DefenderForServersAwsOfferingArcAutoProvisioning>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("cloudRoleArn"u8);
                 writer.WriteStringValue(CloudRoleArn);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DefenderForServersAwsOfferingArcAutoProvisioning DeserializeDefenderForServersAwsOfferingArcAutoProvisioning(JsonElement element)
+        internal static DefenderForServersAwsOfferingArcAutoProvisioning DeserializeDefenderForServersAwsOfferingArcAutoProvisioning(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> enabled = default;
             Optional<string> cloudRoleArn = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -52,8 +75,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     cloudRoleArn = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DefenderForServersAwsOfferingArcAutoProvisioning(Optional.ToNullable(enabled), cloudRoleArn.Value);
+            return new DefenderForServersAwsOfferingArcAutoProvisioning(Optional.ToNullable(enabled), cloudRoleArn.Value, serializedAdditionalRawData);
+        }
+
+        DefenderForServersAwsOfferingArcAutoProvisioning IModelJsonSerializable<DefenderForServersAwsOfferingArcAutoProvisioning>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DefenderForServersAwsOfferingArcAutoProvisioning>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefenderForServersAwsOfferingArcAutoProvisioning(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DefenderForServersAwsOfferingArcAutoProvisioning>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DefenderForServersAwsOfferingArcAutoProvisioning>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DefenderForServersAwsOfferingArcAutoProvisioning IModelSerializable<DefenderForServersAwsOfferingArcAutoProvisioning>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DefenderForServersAwsOfferingArcAutoProvisioning>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDefenderForServersAwsOfferingArcAutoProvisioning(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DefenderForServersAwsOfferingArcAutoProvisioning"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DefenderForServersAwsOfferingArcAutoProvisioning"/> to convert. </param>
+        public static implicit operator RequestContent(DefenderForServersAwsOfferingArcAutoProvisioning model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DefenderForServersAwsOfferingArcAutoProvisioning"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DefenderForServersAwsOfferingArcAutoProvisioning(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDefenderForServersAwsOfferingArcAutoProvisioning(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

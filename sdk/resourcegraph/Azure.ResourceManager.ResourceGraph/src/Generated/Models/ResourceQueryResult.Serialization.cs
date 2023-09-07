@@ -8,14 +8,74 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
-    public partial class ResourceQueryResult
+    public partial class ResourceQueryResult : IUtf8JsonSerializable, IModelJsonSerializable<ResourceQueryResult>
     {
-        internal static ResourceQueryResult DeserializeResourceQueryResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceQueryResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceQueryResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceQueryResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("totalRecords"u8);
+            writer.WriteNumberValue(TotalRecords);
+            writer.WritePropertyName("count"u8);
+            writer.WriteNumberValue(Count);
+            writer.WritePropertyName("resultTruncated"u8);
+            writer.WriteStringValue(ResultTruncated.ToSerialString());
+            if (Optional.IsDefined(SkipToken))
+            {
+                writer.WritePropertyName("$skipToken"u8);
+                writer.WriteStringValue(SkipToken);
+            }
+            writer.WritePropertyName("data"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Data);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Data.ToString()).RootElement);
+#endif
+            if (Optional.IsCollectionDefined(Facets))
+            {
+                writer.WritePropertyName("facets"u8);
+                writer.WriteStartArray();
+                foreach (var item in Facets)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<Facet>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ResourceQueryResult DeserializeResourceQueryResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +86,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             Optional<string> skipToken = default;
             BinaryData data = default;
             Optional<IReadOnlyList<Facet>> facets = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalRecords"u8))
@@ -67,8 +128,61 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     facets = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResourceQueryResult(totalRecords, count, resultTruncated, skipToken.Value, data, Optional.ToList(facets));
+            return new ResourceQueryResult(totalRecords, count, resultTruncated, skipToken.Value, data, Optional.ToList(facets), serializedAdditionalRawData);
+        }
+
+        ResourceQueryResult IModelJsonSerializable<ResourceQueryResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceQueryResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceQueryResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceQueryResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceQueryResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceQueryResult IModelSerializable<ResourceQueryResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceQueryResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceQueryResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ResourceQueryResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ResourceQueryResult"/> to convert. </param>
+        public static implicit operator RequestContent(ResourceQueryResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ResourceQueryResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ResourceQueryResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourceQueryResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

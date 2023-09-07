@@ -5,28 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    internal partial class NetworkSecurityGroupResourceReferenceInfo : IUtf8JsonSerializable
+    internal partial class NetworkSecurityGroupResourceReferenceInfo : IUtf8JsonSerializable, IModelJsonSerializable<NetworkSecurityGroupResourceReferenceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkSecurityGroupResourceReferenceInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkSecurityGroupResourceReferenceInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkSecurityGroupResourceReferenceInfo>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("sourceArmResourceId"u8);
             writer.WriteStringValue(SourceArmResourceId);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkSecurityGroupResourceReferenceInfo DeserializeNetworkSecurityGroupResourceReferenceInfo(JsonElement element)
+        internal static NetworkSecurityGroupResourceReferenceInfo DeserializeNetworkSecurityGroupResourceReferenceInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier sourceArmResourceId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceArmResourceId"u8))
@@ -34,8 +57,61 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     sourceArmResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkSecurityGroupResourceReferenceInfo(sourceArmResourceId);
+            return new NetworkSecurityGroupResourceReferenceInfo(sourceArmResourceId, serializedAdditionalRawData);
+        }
+
+        NetworkSecurityGroupResourceReferenceInfo IModelJsonSerializable<NetworkSecurityGroupResourceReferenceInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkSecurityGroupResourceReferenceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkSecurityGroupResourceReferenceInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkSecurityGroupResourceReferenceInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkSecurityGroupResourceReferenceInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkSecurityGroupResourceReferenceInfo IModelSerializable<NetworkSecurityGroupResourceReferenceInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkSecurityGroupResourceReferenceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkSecurityGroupResourceReferenceInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetworkSecurityGroupResourceReferenceInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetworkSecurityGroupResourceReferenceInfo"/> to convert. </param>
+        public static implicit operator RequestContent(NetworkSecurityGroupResourceReferenceInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetworkSecurityGroupResourceReferenceInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetworkSecurityGroupResourceReferenceInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkSecurityGroupResourceReferenceInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

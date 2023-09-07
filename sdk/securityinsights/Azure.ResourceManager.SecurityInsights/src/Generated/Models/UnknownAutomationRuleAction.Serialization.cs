@@ -5,45 +5,64 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    internal partial class UnknownAutomationRuleAction : IUtf8JsonSerializable
+    internal partial class UnknownAutomationRuleAction : IUtf8JsonSerializable, IModelJsonSerializable<SecurityInsightsAutomationRuleAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityInsightsAutomationRuleAction>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityInsightsAutomationRuleAction>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAutomationRuleAction>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("order"u8);
             writer.WriteNumberValue(Order);
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownAutomationRuleAction DeserializeUnknownAutomationRuleAction(JsonElement element)
+        internal static SecurityInsightsAutomationRuleAction DeserializeUnknownAutomationRuleAction(JsonElement element, ModelSerializerOptions options = default) => DeserializeSecurityInsightsAutomationRuleAction(element, options);
+
+        SecurityInsightsAutomationRuleAction IModelJsonSerializable<SecurityInsightsAutomationRuleAction>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            int order = default;
-            ActionType actionType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("order"u8))
-                {
-                    order = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("actionType"u8))
-                {
-                    actionType = new ActionType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownAutomationRuleAction(order, actionType);
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAutomationRuleAction>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownAutomationRuleAction(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityInsightsAutomationRuleAction>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAutomationRuleAction>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityInsightsAutomationRuleAction IModelSerializable<SecurityInsightsAutomationRuleAction>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAutomationRuleAction>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityInsightsAutomationRuleAction(doc.RootElement, options);
         }
     }
 }

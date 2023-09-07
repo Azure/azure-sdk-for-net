@@ -5,21 +5,63 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    internal partial class ThreatIntelligenceMetricsList
+    internal partial class ThreatIntelligenceMetricsList : IUtf8JsonSerializable, IModelJsonSerializable<ThreatIntelligenceMetricsList>
     {
-        internal static ThreatIntelligenceMetricsList DeserializeThreatIntelligenceMetricsList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ThreatIntelligenceMetricsList>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ThreatIntelligenceMetricsList>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ThreatIntelligenceMetricsList>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ThreatIntelligenceMetrics>)item).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndArray();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ThreatIntelligenceMetricsList DeserializeThreatIntelligenceMetricsList(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<ThreatIntelligenceMetrics> value = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -32,8 +74,61 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     value = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ThreatIntelligenceMetricsList(value);
+            return new ThreatIntelligenceMetricsList(value, serializedAdditionalRawData);
+        }
+
+        ThreatIntelligenceMetricsList IModelJsonSerializable<ThreatIntelligenceMetricsList>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ThreatIntelligenceMetricsList>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeThreatIntelligenceMetricsList(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ThreatIntelligenceMetricsList>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ThreatIntelligenceMetricsList>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ThreatIntelligenceMetricsList IModelSerializable<ThreatIntelligenceMetricsList>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ThreatIntelligenceMetricsList>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeThreatIntelligenceMetricsList(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ThreatIntelligenceMetricsList"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ThreatIntelligenceMetricsList"/> to convert. </param>
+        public static implicit operator RequestContent(ThreatIntelligenceMetricsList model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ThreatIntelligenceMetricsList"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ThreatIntelligenceMetricsList(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeThreatIntelligenceMetricsList(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

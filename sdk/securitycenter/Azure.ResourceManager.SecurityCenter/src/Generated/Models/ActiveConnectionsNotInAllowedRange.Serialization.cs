@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class ActiveConnectionsNotInAllowedRange : IUtf8JsonSerializable
+    public partial class ActiveConnectionsNotInAllowedRange : IUtf8JsonSerializable, IModelJsonSerializable<ActiveConnectionsNotInAllowedRange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ActiveConnectionsNotInAllowedRange>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ActiveConnectionsNotInAllowedRange>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ActiveConnectionsNotInAllowedRange>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("timeWindowSize"u8);
             writer.WriteStringValue(TimeWindowSize, "P");
@@ -26,11 +33,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ActiveConnectionsNotInAllowedRange DeserializeActiveConnectionsNotInAllowedRange(JsonElement element)
+        internal static ActiveConnectionsNotInAllowedRange DeserializeActiveConnectionsNotInAllowedRange(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> description = default;
             bool isEnabled = default;
             string ruleType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeWindowSize"u8))
@@ -79,8 +101,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     ruleType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ActiveConnectionsNotInAllowedRange(displayName.Value, description.Value, isEnabled, ruleType, minThreshold, maxThreshold, timeWindowSize);
+            return new ActiveConnectionsNotInAllowedRange(displayName.Value, description.Value, isEnabled, ruleType, minThreshold, maxThreshold, timeWindowSize, serializedAdditionalRawData);
+        }
+
+        ActiveConnectionsNotInAllowedRange IModelJsonSerializable<ActiveConnectionsNotInAllowedRange>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ActiveConnectionsNotInAllowedRange>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeActiveConnectionsNotInAllowedRange(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ActiveConnectionsNotInAllowedRange>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ActiveConnectionsNotInAllowedRange>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ActiveConnectionsNotInAllowedRange IModelSerializable<ActiveConnectionsNotInAllowedRange>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ActiveConnectionsNotInAllowedRange>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeActiveConnectionsNotInAllowedRange(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ActiveConnectionsNotInAllowedRange"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ActiveConnectionsNotInAllowedRange"/> to convert. </param>
+        public static implicit operator RequestContent(ActiveConnectionsNotInAllowedRange model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ActiveConnectionsNotInAllowedRange"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ActiveConnectionsNotInAllowedRange(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeActiveConnectionsNotInAllowedRange(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

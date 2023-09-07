@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AzureDevOpsConnectorRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzureDevOpsConnectorRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsConnectorResource(Client, AzureDevOpsConnectorData.DeserializeAzureDevOpsConnectorData(e)), AzureDevOpsConnectorClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAzureDevOpsConnectors", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AzureDevOpsConnectorResource(Client, AzureDevOpsConnectorData.DeserializeAzureDevOpsConnectorData(e)), AzureDevOpsConnectorClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAzureDevOpsConnectors", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AzureDevOpsConnectorRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzureDevOpsConnectorRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsConnectorResource(Client, AzureDevOpsConnectorData.DeserializeAzureDevOpsConnectorData(e)), AzureDevOpsConnectorClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAzureDevOpsConnectors", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AzureDevOpsConnectorResource(Client, AzureDevOpsConnectorData.DeserializeAzureDevOpsConnectorData(e)), AzureDevOpsConnectorClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAzureDevOpsConnectors", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => GitHubConnectorRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GitHubConnectorRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GitHubConnectorResource(Client, GitHubConnectorData.DeserializeGitHubConnectorData(e)), GitHubConnectorClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetGitHubConnectors", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new GitHubConnectorResource(Client, GitHubConnectorData.DeserializeGitHubConnectorData(e)), GitHubConnectorClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetGitHubConnectors", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => GitHubConnectorRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GitHubConnectorRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GitHubConnectorResource(Client, GitHubConnectorData.DeserializeGitHubConnectorData(e)), GitHubConnectorClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetGitHubConnectors", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new GitHubConnectorResource(Client, GitHubConnectorData.DeserializeGitHubConnectorData(e)), GitHubConnectorClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetGitHubConnectors", "value", "nextLink", cancellationToken);
         }
     }
 }

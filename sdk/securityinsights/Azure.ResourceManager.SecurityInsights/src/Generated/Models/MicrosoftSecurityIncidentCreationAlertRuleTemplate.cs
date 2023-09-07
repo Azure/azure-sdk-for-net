@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents MicrosoftSecurityIncidentCreation rule template. </summary>
     public partial class MicrosoftSecurityIncidentCreationAlertRuleTemplate : SecurityInsightsAlertRuleTemplateData
     {
-        /// <summary> Initializes a new instance of MicrosoftSecurityIncidentCreationAlertRuleTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="MicrosoftSecurityIncidentCreationAlertRuleTemplate"/>. </summary>
         public MicrosoftSecurityIncidentCreationAlertRuleTemplate()
         {
             RequiredDataConnectors = new ChangeTrackingList<AlertRuleTemplateDataSource>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = AlertRuleKind.MicrosoftSecurityIncidentCreation;
         }
 
-        /// <summary> Initializes a new instance of MicrosoftSecurityIncidentCreationAlertRuleTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="MicrosoftSecurityIncidentCreationAlertRuleTemplate"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="displayNamesExcludeFilter"> the alerts' displayNames on which the cases will not be generated. </param>
         /// <param name="productFilter"> The alerts' productName on which the cases will be generated. </param>
         /// <param name="severitiesFilter"> the alerts' severities on which the cases will be generated. </param>
-        internal MicrosoftSecurityIncidentCreationAlertRuleTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, int? alertRulesCreatedByTemplateCount, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string description, string displayName, IList<AlertRuleTemplateDataSource> requiredDataConnectors, SecurityInsightsAlertRuleTemplateStatus? status, IList<string> displayNamesFilter, IList<string> displayNamesExcludeFilter, MicrosoftSecurityProductName? productFilter, IList<SecurityInsightsAlertSeverity> severitiesFilter) : base(id, name, resourceType, systemData, kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MicrosoftSecurityIncidentCreationAlertRuleTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, int? alertRulesCreatedByTemplateCount, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string description, string displayName, IList<AlertRuleTemplateDataSource> requiredDataConnectors, SecurityInsightsAlertRuleTemplateStatus? status, IList<string> displayNamesFilter, IList<string> displayNamesExcludeFilter, MicrosoftSecurityProductName? productFilter, IList<SecurityInsightsAlertSeverity> severitiesFilter, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AlertRulesCreatedByTemplateCount = alertRulesCreatedByTemplateCount;
             CreatedOn = createdOn;

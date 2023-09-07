@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableDroppedDatabaseRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _restorableDroppedDatabaseRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RestorableDroppedDatabaseResource(Client, RestorableDroppedDatabaseData.DeserializeRestorableDroppedDatabaseData(e)), _restorableDroppedDatabaseClientDiagnostics, Pipeline, "RestorableDroppedDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new RestorableDroppedDatabaseResource(Client, RestorableDroppedDatabaseData.DeserializeRestorableDroppedDatabaseData(e)), _restorableDroppedDatabaseClientDiagnostics, Pipeline, "RestorableDroppedDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableDroppedDatabaseRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _restorableDroppedDatabaseRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RestorableDroppedDatabaseResource(Client, RestorableDroppedDatabaseData.DeserializeRestorableDroppedDatabaseData(e)), _restorableDroppedDatabaseClientDiagnostics, Pipeline, "RestorableDroppedDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new RestorableDroppedDatabaseResource(Client, RestorableDroppedDatabaseData.DeserializeRestorableDroppedDatabaseData(e)), _restorableDroppedDatabaseClientDiagnostics, Pipeline, "RestorableDroppedDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

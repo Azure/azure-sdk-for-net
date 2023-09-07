@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class ScoringFunction : IUtf8JsonSerializable
+    public partial class ScoringFunction : IUtf8JsonSerializable, IModelJsonSerializable<ScoringFunction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ScoringFunction>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ScoringFunction>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ScoringFunction>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -27,11 +35,25 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("interpolation"u8);
                 writer.WriteStringValue(Interpolation.Value.ToSerialString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ScoringFunction DeserializeScoringFunction(JsonElement element)
+        internal static ScoringFunction DeserializeScoringFunction(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,7 +68,94 @@ namespace Azure.Search.Documents.Indexes.Models
                     case "tag": return TagScoringFunction.DeserializeTagScoringFunction(element);
                 }
             }
-            return UnknownScoringFunction.DeserializeUnknownScoringFunction(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            string type = default;
+            string fieldName = default;
+            double boost = default;
+            Optional<ScoringFunctionInterpolation> interpolation = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("type"u8))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("fieldName"u8))
+                {
+                    fieldName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("boost"u8))
+                {
+                    boost = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("interpolation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    interpolation = property.Value.GetString().ToScoringFunctionInterpolation();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownScoringFunction(type, fieldName, boost, Optional.ToNullable(interpolation), serializedAdditionalRawData);
+        }
+
+        ScoringFunction IModelJsonSerializable<ScoringFunction>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScoringFunction>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeScoringFunction(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ScoringFunction>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScoringFunction>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ScoringFunction IModelSerializable<ScoringFunction>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScoringFunction>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeScoringFunction(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ScoringFunction"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ScoringFunction"/> to convert. </param>
+        public static implicit operator RequestContent(ScoringFunction model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ScoringFunction"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ScoringFunction(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeScoringFunction(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -8,14 +8,132 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    public partial class ManagementGroupInfo
+    public partial class ManagementGroupInfo : IUtf8JsonSerializable, IModelJsonSerializable<ManagementGroupInfo>
     {
-        internal static ManagementGroupInfo DeserializeManagementGroupInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagementGroupInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagementGroupInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagementGroupInfo>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteNumberValue(Version.Value);
+            }
+            if (Optional.IsDefined(UpdatedOn))
+            {
+                writer.WritePropertyName("updatedTime"u8);
+                writer.WriteStringValue(UpdatedOn.Value, "O");
+            }
+            if (Optional.IsDefined(UpdatedBy))
+            {
+                writer.WritePropertyName("updatedBy"u8);
+                writer.WriteStringValue(UpdatedBy);
+            }
+            if (Optional.IsDefined(Parent))
+            {
+                writer.WritePropertyName("parent"u8);
+                if (Parent is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ParentManagementGroupInfo>)Parent).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(Path))
+            {
+                if (Path != null)
+                {
+                    writer.WritePropertyName("path"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Path)
+                    {
+                        if (item is null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IModelJsonSerializable<ManagementGroupPathElement>)item).Serialize(writer, options);
+                        }
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("path");
+                }
+            }
+            if (Optional.IsCollectionDefined(ManagementGroupAncestors))
+            {
+                if (ManagementGroupAncestors != null)
+                {
+                    writer.WritePropertyName("managementGroupAncestors"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ManagementGroupAncestors)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("managementGroupAncestors");
+                }
+            }
+            if (Optional.IsCollectionDefined(ManagementGroupAncestorChain))
+            {
+                if (ManagementGroupAncestorChain != null)
+                {
+                    writer.WritePropertyName("managementGroupAncestorsChain"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ManagementGroupAncestorChain)
+                    {
+                        if (item is null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IModelJsonSerializable<ManagementGroupPathElement>)item).Serialize(writer, options);
+                        }
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("managementGroupAncestorsChain");
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ManagementGroupInfo DeserializeManagementGroupInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +145,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             Optional<IReadOnlyList<ManagementGroupPathElement>> path = default;
             Optional<IReadOnlyList<string>> managementGroupAncestors = default;
             Optional<IReadOnlyList<ManagementGroupPathElement>> managementGroupAncestorsChain = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("version"u8))
@@ -106,8 +225,61 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     managementGroupAncestorsChain = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagementGroupInfo(Optional.ToNullable(version), Optional.ToNullable(updatedTime), updatedBy.Value, parent.Value, Optional.ToList(path), Optional.ToList(managementGroupAncestors), Optional.ToList(managementGroupAncestorsChain));
+            return new ManagementGroupInfo(Optional.ToNullable(version), Optional.ToNullable(updatedTime), updatedBy.Value, parent.Value, Optional.ToList(path), Optional.ToList(managementGroupAncestors), Optional.ToList(managementGroupAncestorsChain), serializedAdditionalRawData);
+        }
+
+        ManagementGroupInfo IModelJsonSerializable<ManagementGroupInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagementGroupInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagementGroupInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagementGroupInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagementGroupInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagementGroupInfo IModelSerializable<ManagementGroupInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagementGroupInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagementGroupInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagementGroupInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagementGroupInfo"/> to convert. </param>
+        public static implicit operator RequestContent(ManagementGroupInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagementGroupInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagementGroupInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagementGroupInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

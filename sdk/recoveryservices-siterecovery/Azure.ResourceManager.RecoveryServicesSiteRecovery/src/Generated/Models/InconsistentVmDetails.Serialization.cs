@@ -5,16 +5,73 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InconsistentVmDetails
+    public partial class InconsistentVmDetails : IUtf8JsonSerializable, IModelJsonSerializable<InconsistentVmDetails>
     {
-        internal static InconsistentVmDetails DeserializeInconsistentVmDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InconsistentVmDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InconsistentVmDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<InconsistentVmDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(VmName))
+            {
+                writer.WritePropertyName("vmName"u8);
+                writer.WriteStringValue(VmName);
+            }
+            if (Optional.IsDefined(CloudName))
+            {
+                writer.WritePropertyName("cloudName"u8);
+                writer.WriteStringValue(CloudName);
+            }
+            if (Optional.IsCollectionDefined(Details))
+            {
+                writer.WritePropertyName("details"u8);
+                writer.WriteStartArray();
+                foreach (var item in Details)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ErrorIds))
+            {
+                writer.WritePropertyName("errorIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in ErrorIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static InconsistentVmDetails DeserializeInconsistentVmDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> cloudName = default;
             Optional<IReadOnlyList<string>> details = default;
             Optional<IReadOnlyList<string>> errorIds = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmName"u8))
@@ -63,8 +121,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     errorIds = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InconsistentVmDetails(vmName.Value, cloudName.Value, Optional.ToList(details), Optional.ToList(errorIds));
+            return new InconsistentVmDetails(vmName.Value, cloudName.Value, Optional.ToList(details), Optional.ToList(errorIds), serializedAdditionalRawData);
+        }
+
+        InconsistentVmDetails IModelJsonSerializable<InconsistentVmDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InconsistentVmDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInconsistentVmDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InconsistentVmDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InconsistentVmDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InconsistentVmDetails IModelSerializable<InconsistentVmDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InconsistentVmDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInconsistentVmDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InconsistentVmDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InconsistentVmDetails"/> to convert. </param>
+        public static implicit operator RequestContent(InconsistentVmDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InconsistentVmDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InconsistentVmDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInconsistentVmDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,21 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class RedisEnterpriseDataAccessKeys
+    public partial class RedisEnterpriseDataAccessKeys : IUtf8JsonSerializable, IModelJsonSerializable<RedisEnterpriseDataAccessKeys>
     {
-        internal static RedisEnterpriseDataAccessKeys DeserializeRedisEnterpriseDataAccessKeys(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RedisEnterpriseDataAccessKeys>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RedisEnterpriseDataAccessKeys>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RedisEnterpriseDataAccessKeys>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RedisEnterpriseDataAccessKeys DeserializeRedisEnterpriseDataAccessKeys(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryKey"u8))
@@ -32,8 +61,61 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     secondaryKey = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RedisEnterpriseDataAccessKeys(primaryKey.Value, secondaryKey.Value);
+            return new RedisEnterpriseDataAccessKeys(primaryKey.Value, secondaryKey.Value, serializedAdditionalRawData);
+        }
+
+        RedisEnterpriseDataAccessKeys IModelJsonSerializable<RedisEnterpriseDataAccessKeys>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RedisEnterpriseDataAccessKeys>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRedisEnterpriseDataAccessKeys(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RedisEnterpriseDataAccessKeys>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RedisEnterpriseDataAccessKeys>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RedisEnterpriseDataAccessKeys IModelSerializable<RedisEnterpriseDataAccessKeys>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RedisEnterpriseDataAccessKeys>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRedisEnterpriseDataAccessKeys(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RedisEnterpriseDataAccessKeys"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RedisEnterpriseDataAccessKeys"/> to convert. </param>
+        public static implicit operator RequestContent(RedisEnterpriseDataAccessKeys model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RedisEnterpriseDataAccessKeys"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RedisEnterpriseDataAccessKeys(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRedisEnterpriseDataAccessKeys(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

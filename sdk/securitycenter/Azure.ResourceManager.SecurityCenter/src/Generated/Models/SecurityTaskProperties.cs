@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Changing set of properties, depending on the task type that is derived from the name field. </summary>
     public partial class SecurityTaskProperties
     {
-        /// <summary> Initializes a new instance of SecurityTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityTaskProperties"/>. </summary>
         public SecurityTaskProperties()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SecurityTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityTaskProperties"/>. </summary>
         /// <param name="name"> Name of the task type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal SecurityTaskProperties(string name, IDictionary<string, BinaryData> additionalProperties)

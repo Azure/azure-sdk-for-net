@@ -5,20 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedInstanceDtcSecuritySettings : IUtf8JsonSerializable
+    public partial class ManagedInstanceDtcSecuritySettings : IUtf8JsonSerializable, IModelJsonSerializable<ManagedInstanceDtcSecuritySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedInstanceDtcSecuritySettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedInstanceDtcSecuritySettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedInstanceDtcSecuritySettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TransactionManagerCommunicationSettings))
             {
                 writer.WritePropertyName("transactionManagerCommunicationSettings"u8);
-                writer.WriteObjectValue(TransactionManagerCommunicationSettings);
+                if (TransactionManagerCommunicationSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ManagedInstanceDtcTransactionManagerCommunicationSettings>)TransactionManagerCommunicationSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(IsXATransactionsEnabled))
             {
@@ -40,11 +55,25 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("xaTransactionsMaximumTimeout"u8);
                 writer.WriteNumberValue(XATransactionsMaximumTimeoutInSeconds.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedInstanceDtcSecuritySettings DeserializeManagedInstanceDtcSecuritySettings(JsonElement element)
+        internal static ManagedInstanceDtcSecuritySettings DeserializeManagedInstanceDtcSecuritySettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +83,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<bool> snaLu6point2TransactionsEnabled = default;
             Optional<int> xaTransactionsDefaultTimeout = default;
             Optional<int> xaTransactionsMaximumTimeout = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("transactionManagerCommunicationSettings"u8))
@@ -101,8 +131,61 @@ namespace Azure.ResourceManager.Sql.Models
                     xaTransactionsMaximumTimeout = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedInstanceDtcSecuritySettings(transactionManagerCommunicationSettings.Value, Optional.ToNullable(xaTransactionsEnabled), Optional.ToNullable(snaLu6point2TransactionsEnabled), Optional.ToNullable(xaTransactionsDefaultTimeout), Optional.ToNullable(xaTransactionsMaximumTimeout));
+            return new ManagedInstanceDtcSecuritySettings(transactionManagerCommunicationSettings.Value, Optional.ToNullable(xaTransactionsEnabled), Optional.ToNullable(snaLu6point2TransactionsEnabled), Optional.ToNullable(xaTransactionsDefaultTimeout), Optional.ToNullable(xaTransactionsMaximumTimeout), serializedAdditionalRawData);
+        }
+
+        ManagedInstanceDtcSecuritySettings IModelJsonSerializable<ManagedInstanceDtcSecuritySettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedInstanceDtcSecuritySettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedInstanceDtcSecuritySettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedInstanceDtcSecuritySettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedInstanceDtcSecuritySettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedInstanceDtcSecuritySettings IModelSerializable<ManagedInstanceDtcSecuritySettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedInstanceDtcSecuritySettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedInstanceDtcSecuritySettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagedInstanceDtcSecuritySettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagedInstanceDtcSecuritySettings"/> to convert. </param>
+        public static implicit operator RequestContent(ManagedInstanceDtcSecuritySettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagedInstanceDtcSecuritySettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagedInstanceDtcSecuritySettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedInstanceDtcSecuritySettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

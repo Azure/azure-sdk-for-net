@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class UserRecommendation : IUtf8JsonSerializable
+    public partial class UserRecommendation : IUtf8JsonSerializable, IModelJsonSerializable<UserRecommendation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<UserRecommendation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<UserRecommendation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<UserRecommendation>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Username))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("recommendationAction"u8);
                 writer.WriteStringValue(RecommendationAction.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UserRecommendation DeserializeUserRecommendation(JsonElement element)
+        internal static UserRecommendation DeserializeUserRecommendation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> username = default;
             Optional<RecommendationAction> recommendationAction = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("username"u8))
@@ -52,8 +75,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     recommendationAction = new RecommendationAction(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new UserRecommendation(username.Value, Optional.ToNullable(recommendationAction));
+            return new UserRecommendation(username.Value, Optional.ToNullable(recommendationAction), serializedAdditionalRawData);
+        }
+
+        UserRecommendation IModelJsonSerializable<UserRecommendation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<UserRecommendation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUserRecommendation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<UserRecommendation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<UserRecommendation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        UserRecommendation IModelSerializable<UserRecommendation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<UserRecommendation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeUserRecommendation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="UserRecommendation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="UserRecommendation"/> to convert. </param>
+        public static implicit operator RequestContent(UserRecommendation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="UserRecommendation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator UserRecommendation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeUserRecommendation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

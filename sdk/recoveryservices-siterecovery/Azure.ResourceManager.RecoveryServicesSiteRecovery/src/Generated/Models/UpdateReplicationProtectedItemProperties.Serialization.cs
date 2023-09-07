@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class UpdateReplicationProtectedItemProperties : IUtf8JsonSerializable
+    public partial class UpdateReplicationProtectedItemProperties : IUtf8JsonSerializable, IModelJsonSerializable<UpdateReplicationProtectedItemProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<UpdateReplicationProtectedItemProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<UpdateReplicationProtectedItemProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<UpdateReplicationProtectedItemProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryAzureVmName))
             {
@@ -51,7 +59,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<VmNicContentDetails>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -68,9 +83,185 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
-                writer.WriteObjectValue(ProviderSpecificDetails);
+                if (ProviderSpecificDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<UpdateReplicationProtectedItemProviderContent>)ProviderSpecificDetails).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
+        }
+
+        internal static UpdateReplicationProtectedItemProperties DeserializeUpdateReplicationProtectedItemProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> recoveryAzureVmName = default;
+            Optional<string> recoveryAzureVmSize = default;
+            Optional<ResourceIdentifier> selectedRecoveryAzureNetworkId = default;
+            Optional<ResourceIdentifier> selectedTfoAzureNetworkId = default;
+            Optional<string> selectedSourceNicId = default;
+            Optional<string> enableRdpOnTargetOption = default;
+            Optional<IList<VmNicContentDetails>> vmNics = default;
+            Optional<SiteRecoveryLicenseType> licenseType = default;
+            Optional<ResourceIdentifier> recoveryAvailabilitySetId = default;
+            Optional<UpdateReplicationProtectedItemProviderContent> providerSpecificDetails = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("recoveryAzureVMName"u8))
+                {
+                    recoveryAzureVmName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("recoveryAzureVMSize"u8))
+                {
+                    recoveryAzureVmSize = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("selectedRecoveryAzureNetworkId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    selectedRecoveryAzureNetworkId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("selectedTfoAzureNetworkId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    selectedTfoAzureNetworkId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("selectedSourceNicId"u8))
+                {
+                    selectedSourceNicId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("enableRdpOnTargetOption"u8))
+                {
+                    enableRdpOnTargetOption = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("vmNics"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<VmNicContentDetails> array = new List<VmNicContentDetails>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(VmNicContentDetails.DeserializeVmNicContentDetails(item));
+                    }
+                    vmNics = array;
+                    continue;
+                }
+                if (property.NameEquals("licenseType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    licenseType = new SiteRecoveryLicenseType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("recoveryAvailabilitySetId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryAvailabilitySetId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("providerSpecificDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    providerSpecificDetails = UpdateReplicationProtectedItemProviderContent.DeserializeUpdateReplicationProtectedItemProviderContent(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UpdateReplicationProtectedItemProperties(recoveryAzureVmName.Value, recoveryAzureVmSize.Value, selectedRecoveryAzureNetworkId.Value, selectedTfoAzureNetworkId.Value, selectedSourceNicId.Value, enableRdpOnTargetOption.Value, Optional.ToList(vmNics), Optional.ToNullable(licenseType), recoveryAvailabilitySetId.Value, providerSpecificDetails.Value, serializedAdditionalRawData);
+        }
+
+        UpdateReplicationProtectedItemProperties IModelJsonSerializable<UpdateReplicationProtectedItemProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<UpdateReplicationProtectedItemProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUpdateReplicationProtectedItemProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<UpdateReplicationProtectedItemProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<UpdateReplicationProtectedItemProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        UpdateReplicationProtectedItemProperties IModelSerializable<UpdateReplicationProtectedItemProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<UpdateReplicationProtectedItemProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeUpdateReplicationProtectedItemProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="UpdateReplicationProtectedItemProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="UpdateReplicationProtectedItemProperties"/> to convert. </param>
+        public static implicit operator RequestContent(UpdateReplicationProtectedItemProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="UpdateReplicationProtectedItemProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator UpdateReplicationProtectedItemProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeUpdateReplicationProtectedItemProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

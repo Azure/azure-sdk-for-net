@@ -6,15 +6,67 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class IdentityProviderDetails
+    public partial class IdentityProviderDetails : IUtf8JsonSerializable, IModelJsonSerializable<IdentityProviderDetails>
     {
-        internal static IdentityProviderDetails DeserializeIdentityProviderDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IdentityProviderDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IdentityProviderDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IdentityProviderDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId.Value);
+            }
+            if (Optional.IsDefined(ApplicationId))
+            {
+                writer.WritePropertyName("applicationId"u8);
+                writer.WriteStringValue(ApplicationId);
+            }
+            if (Optional.IsDefined(ObjectId))
+            {
+                writer.WritePropertyName("objectId"u8);
+                writer.WriteStringValue(ObjectId);
+            }
+            if (Optional.IsDefined(Audience))
+            {
+                writer.WritePropertyName("audience"u8);
+                writer.WriteStringValue(Audience);
+            }
+            if (Optional.IsDefined(AadAuthority))
+            {
+                writer.WritePropertyName("aadAuthority"u8);
+                writer.WriteStringValue(AadAuthority);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static IdentityProviderDetails DeserializeIdentityProviderDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> objectId = default;
             Optional<string> audience = default;
             Optional<string> aadAuthority = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -55,8 +108,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     aadAuthority = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IdentityProviderDetails(Optional.ToNullable(tenantId), applicationId.Value, objectId.Value, audience.Value, aadAuthority.Value);
+            return new IdentityProviderDetails(Optional.ToNullable(tenantId), applicationId.Value, objectId.Value, audience.Value, aadAuthority.Value, serializedAdditionalRawData);
+        }
+
+        IdentityProviderDetails IModelJsonSerializable<IdentityProviderDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IdentityProviderDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIdentityProviderDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IdentityProviderDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IdentityProviderDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IdentityProviderDetails IModelSerializable<IdentityProviderDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IdentityProviderDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIdentityProviderDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IdentityProviderDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IdentityProviderDetails"/> to convert. </param>
+        public static implicit operator RequestContent(IdentityProviderDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IdentityProviderDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IdentityProviderDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIdentityProviderDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

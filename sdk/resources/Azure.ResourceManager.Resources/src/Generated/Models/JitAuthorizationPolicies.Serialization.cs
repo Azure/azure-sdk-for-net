@@ -6,31 +6,53 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class JitAuthorizationPolicies : IUtf8JsonSerializable
+    public partial class JitAuthorizationPolicies : IUtf8JsonSerializable, IModelJsonSerializable<JitAuthorizationPolicies>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JitAuthorizationPolicies>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<JitAuthorizationPolicies>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<JitAuthorizationPolicies>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
             writer.WritePropertyName("roleDefinitionId"u8);
             writer.WriteStringValue(RoleDefinitionId);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static JitAuthorizationPolicies DeserializeJitAuthorizationPolicies(JsonElement element)
+        internal static JitAuthorizationPolicies DeserializeJitAuthorizationPolicies(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Guid principalId = default;
             string roleDefinitionId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -43,8 +65,61 @@ namespace Azure.ResourceManager.Resources.Models
                     roleDefinitionId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new JitAuthorizationPolicies(principalId, roleDefinitionId);
+            return new JitAuthorizationPolicies(principalId, roleDefinitionId, serializedAdditionalRawData);
+        }
+
+        JitAuthorizationPolicies IModelJsonSerializable<JitAuthorizationPolicies>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JitAuthorizationPolicies>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJitAuthorizationPolicies(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<JitAuthorizationPolicies>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JitAuthorizationPolicies>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        JitAuthorizationPolicies IModelSerializable<JitAuthorizationPolicies>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JitAuthorizationPolicies>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeJitAuthorizationPolicies(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="JitAuthorizationPolicies"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="JitAuthorizationPolicies"/> to convert. </param>
+        public static implicit operator RequestContent(JitAuthorizationPolicies model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="JitAuthorizationPolicies"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator JitAuthorizationPolicies(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeJitAuthorizationPolicies(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

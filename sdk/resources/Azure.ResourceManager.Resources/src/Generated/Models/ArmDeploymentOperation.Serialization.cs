@@ -5,15 +5,55 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmDeploymentOperation
+    public partial class ArmDeploymentOperation : IUtf8JsonSerializable, IModelJsonSerializable<ArmDeploymentOperation>
     {
-        internal static ArmDeploymentOperation DeserializeArmDeploymentOperation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ArmDeploymentOperation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ArmDeploymentOperation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ArmDeploymentOperation>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                if (Properties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ArmDeploymentOperationProperties>)Properties).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ArmDeploymentOperation DeserializeArmDeploymentOperation(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +61,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> id = default;
             Optional<string> operationId = default;
             Optional<ArmDeploymentOperationProperties> properties = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -42,8 +83,61 @@ namespace Azure.ResourceManager.Resources.Models
                     properties = ArmDeploymentOperationProperties.DeserializeArmDeploymentOperationProperties(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ArmDeploymentOperation(id.Value, operationId.Value, properties.Value);
+            return new ArmDeploymentOperation(id.Value, operationId.Value, properties.Value, serializedAdditionalRawData);
+        }
+
+        ArmDeploymentOperation IModelJsonSerializable<ArmDeploymentOperation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArmDeploymentOperation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeArmDeploymentOperation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ArmDeploymentOperation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArmDeploymentOperation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ArmDeploymentOperation IModelSerializable<ArmDeploymentOperation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArmDeploymentOperation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeArmDeploymentOperation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ArmDeploymentOperation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ArmDeploymentOperation"/> to convert. </param>
+        public static implicit operator RequestContent(ArmDeploymentOperation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ArmDeploymentOperation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ArmDeploymentOperation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeArmDeploymentOperation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

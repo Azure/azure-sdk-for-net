@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageAzureV2EnableProtectionContent : IUtf8JsonSerializable
+    public partial class InMageAzureV2EnableProtectionContent : IUtf8JsonSerializable, IModelJsonSerializable<InMageAzureV2EnableProtectionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InMageAzureV2EnableProtectionContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InMageAzureV2EnableProtectionContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<InMageAzureV2EnableProtectionContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MasterTargetId))
             {
@@ -51,7 +59,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in DisksToInclude)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<InMageAzureV2DiskDetails>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -176,7 +191,346 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static InMageAzureV2EnableProtectionContent DeserializeInMageAzureV2EnableProtectionContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> masterTargetId = default;
+            Optional<Guid> processServerId = default;
+            Optional<ResourceIdentifier> storageAccountId = default;
+            Optional<string> runAsAccountId = default;
+            Optional<string> multiVmGroupId = default;
+            Optional<string> multiVmGroupName = default;
+            Optional<IList<InMageAzureV2DiskDetails>> disksToInclude = default;
+            Optional<ResourceIdentifier> targetAzureNetworkId = default;
+            Optional<ResourceIdentifier> targetAzureSubnetId = default;
+            Optional<string> enableRdpOnTargetOption = default;
+            Optional<string> targetAzureVmName = default;
+            Optional<ResourceIdentifier> logStorageAccountId = default;
+            Optional<ResourceIdentifier> targetAzureV1ResourceGroupId = default;
+            Optional<ResourceIdentifier> targetAzureV2ResourceGroupId = default;
+            Optional<SiteRecoveryDiskAccountType> diskType = default;
+            Optional<ResourceIdentifier> targetAvailabilitySetId = default;
+            Optional<string> targetAvailabilityZone = default;
+            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
+            Optional<SiteRecoveryLicenseType> licenseType = default;
+            Optional<SiteRecoverySqlServerLicenseType> sqlServerLicenseType = default;
+            Optional<string> targetVmSize = default;
+            Optional<ResourceIdentifier> diskEncryptionSetId = default;
+            Optional<IDictionary<string, string>> targetVmTags = default;
+            Optional<IDictionary<string, string>> seedManagedDiskTags = default;
+            Optional<IDictionary<string, string>> targetManagedDiskTags = default;
+            Optional<IDictionary<string, string>> targetNicTags = default;
+            string instanceType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("masterTargetId"u8))
+                {
+                    masterTargetId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("processServerId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    processServerId = property.Value.GetGuid();
+                    continue;
+                }
+                if (property.NameEquals("storageAccountId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageAccountId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("runAsAccountId"u8))
+                {
+                    runAsAccountId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("multiVmGroupId"u8))
+                {
+                    multiVmGroupId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("multiVmGroupName"u8))
+                {
+                    multiVmGroupName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("disksToInclude"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<InMageAzureV2DiskDetails> array = new List<InMageAzureV2DiskDetails>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(InMageAzureV2DiskDetails.DeserializeInMageAzureV2DiskDetails(item));
+                    }
+                    disksToInclude = array;
+                    continue;
+                }
+                if (property.NameEquals("targetAzureNetworkId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetAzureNetworkId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetAzureSubnetId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetAzureSubnetId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("enableRdpOnTargetOption"u8))
+                {
+                    enableRdpOnTargetOption = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("targetAzureVmName"u8))
+                {
+                    targetAzureVmName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("logStorageAccountId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    logStorageAccountId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetAzureV1ResourceGroupId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetAzureV1ResourceGroupId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetAzureV2ResourceGroupId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetAzureV2ResourceGroupId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("diskType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskType = new SiteRecoveryDiskAccountType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetAvailabilitySetId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetAvailabilitySetId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetAvailabilityZone"u8))
+                {
+                    targetAvailabilityZone = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("targetProximityPlacementGroupId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetProximityPlacementGroupId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("licenseType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    licenseType = new SiteRecoveryLicenseType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sqlServerLicenseType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sqlServerLicenseType = new SiteRecoverySqlServerLicenseType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetVmSize"u8))
+                {
+                    targetVmSize = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("diskEncryptionSetId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskEncryptionSetId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetVmTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    targetVmTags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("seedManagedDiskTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    seedManagedDiskTags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("targetManagedDiskTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    targetManagedDiskTags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("targetNicTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    targetNicTags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new InMageAzureV2EnableProtectionContent(instanceType, masterTargetId.Value, Optional.ToNullable(processServerId), storageAccountId.Value, runAsAccountId.Value, multiVmGroupId.Value, multiVmGroupName.Value, Optional.ToList(disksToInclude), targetAzureNetworkId.Value, targetAzureSubnetId.Value, enableRdpOnTargetOption.Value, targetAzureVmName.Value, logStorageAccountId.Value, targetAzureV1ResourceGroupId.Value, targetAzureV2ResourceGroupId.Value, Optional.ToNullable(diskType), targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, Optional.ToNullable(licenseType), Optional.ToNullable(sqlServerLicenseType), targetVmSize.Value, diskEncryptionSetId.Value, Optional.ToDictionary(targetVmTags), Optional.ToDictionary(seedManagedDiskTags), Optional.ToDictionary(targetManagedDiskTags), Optional.ToDictionary(targetNicTags), serializedAdditionalRawData);
+        }
+
+        InMageAzureV2EnableProtectionContent IModelJsonSerializable<InMageAzureV2EnableProtectionContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageAzureV2EnableProtectionContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageAzureV2EnableProtectionContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InMageAzureV2EnableProtectionContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageAzureV2EnableProtectionContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InMageAzureV2EnableProtectionContent IModelSerializable<InMageAzureV2EnableProtectionContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageAzureV2EnableProtectionContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInMageAzureV2EnableProtectionContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InMageAzureV2EnableProtectionContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InMageAzureV2EnableProtectionContent"/> to convert. </param>
+        public static implicit operator RequestContent(InMageAzureV2EnableProtectionContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InMageAzureV2EnableProtectionContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InMageAzureV2EnableProtectionContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInMageAzureV2EnableProtectionContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

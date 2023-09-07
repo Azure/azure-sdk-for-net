@@ -6,15 +6,42 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class CriticalJobHistoryDetails
+    public partial class CriticalJobHistoryDetails : IUtf8JsonSerializable, IModelJsonSerializable<CriticalJobHistoryDetails>
     {
-        internal static CriticalJobHistoryDetails DeserializeCriticalJobHistoryDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CriticalJobHistoryDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CriticalJobHistoryDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CriticalJobHistoryDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CriticalJobHistoryDetails DeserializeCriticalJobHistoryDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<ResourceIdentifier> jobId = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<string> jobStatus = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobName"u8))
@@ -53,8 +81,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     jobStatus = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CriticalJobHistoryDetails(jobName.Value, jobId.Value, Optional.ToNullable(startTime), jobStatus.Value);
+            return new CriticalJobHistoryDetails(jobName.Value, jobId.Value, Optional.ToNullable(startTime), jobStatus.Value, serializedAdditionalRawData);
+        }
+
+        CriticalJobHistoryDetails IModelJsonSerializable<CriticalJobHistoryDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CriticalJobHistoryDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCriticalJobHistoryDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CriticalJobHistoryDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CriticalJobHistoryDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CriticalJobHistoryDetails IModelSerializable<CriticalJobHistoryDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CriticalJobHistoryDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCriticalJobHistoryDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CriticalJobHistoryDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CriticalJobHistoryDetails"/> to convert. </param>
+        public static implicit operator RequestContent(CriticalJobHistoryDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CriticalJobHistoryDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CriticalJobHistoryDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCriticalJobHistoryDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

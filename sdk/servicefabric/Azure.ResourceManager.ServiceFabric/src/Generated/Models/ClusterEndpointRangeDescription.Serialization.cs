@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterEndpointRangeDescription : IUtf8JsonSerializable
+    public partial class ClusterEndpointRangeDescription : IUtf8JsonSerializable, IModelJsonSerializable<ClusterEndpointRangeDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ClusterEndpointRangeDescription>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ClusterEndpointRangeDescription>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ClusterEndpointRangeDescription>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("startPort"u8);
             writer.WriteNumberValue(StartPort);
             writer.WritePropertyName("endPort"u8);
             writer.WriteNumberValue(EndPort);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ClusterEndpointRangeDescription DeserializeClusterEndpointRangeDescription(JsonElement element)
+        internal static ClusterEndpointRangeDescription DeserializeClusterEndpointRangeDescription(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int startPort = default;
             int endPort = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startPort"u8))
@@ -42,8 +65,61 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     endPort = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ClusterEndpointRangeDescription(startPort, endPort);
+            return new ClusterEndpointRangeDescription(startPort, endPort, serializedAdditionalRawData);
+        }
+
+        ClusterEndpointRangeDescription IModelJsonSerializable<ClusterEndpointRangeDescription>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClusterEndpointRangeDescription>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeClusterEndpointRangeDescription(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ClusterEndpointRangeDescription>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClusterEndpointRangeDescription>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ClusterEndpointRangeDescription IModelSerializable<ClusterEndpointRangeDescription>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClusterEndpointRangeDescription>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeClusterEndpointRangeDescription(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ClusterEndpointRangeDescription"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ClusterEndpointRangeDescription"/> to convert. </param>
+        public static implicit operator RequestContent(ClusterEndpointRangeDescription model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ClusterEndpointRangeDescription"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ClusterEndpointRangeDescription(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeClusterEndpointRangeDescription(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

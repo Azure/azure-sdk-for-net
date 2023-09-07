@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class InputFieldMappingEntry : IUtf8JsonSerializable
+    public partial class InputFieldMappingEntry : IUtf8JsonSerializable, IModelJsonSerializable<InputFieldMappingEntry>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InputFieldMappingEntry>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InputFieldMappingEntry>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<InputFieldMappingEntry>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -34,15 +41,36 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<InputFieldMappingEntry>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static InputFieldMappingEntry DeserializeInputFieldMappingEntry(JsonElement element)
+        internal static InputFieldMappingEntry DeserializeInputFieldMappingEntry(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +79,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<string> source = default;
             Optional<string> sourceContext = default;
             Optional<IList<InputFieldMappingEntry>> inputs = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -82,8 +111,61 @@ namespace Azure.Search.Documents.Indexes.Models
                     inputs = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InputFieldMappingEntry(name, source.Value, sourceContext.Value, Optional.ToList(inputs));
+            return new InputFieldMappingEntry(name, source.Value, sourceContext.Value, Optional.ToList(inputs), serializedAdditionalRawData);
+        }
+
+        InputFieldMappingEntry IModelJsonSerializable<InputFieldMappingEntry>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InputFieldMappingEntry>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInputFieldMappingEntry(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InputFieldMappingEntry>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InputFieldMappingEntry>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InputFieldMappingEntry IModelSerializable<InputFieldMappingEntry>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InputFieldMappingEntry>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInputFieldMappingEntry(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InputFieldMappingEntry"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InputFieldMappingEntry"/> to convert. </param>
+        public static implicit operator RequestContent(InputFieldMappingEntry model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InputFieldMappingEntry"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InputFieldMappingEntry(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInputFieldMappingEntry(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

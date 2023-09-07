@@ -8,16 +8,242 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    public partial class ResourceHealthEventData
+    public partial class ResourceHealthEventData : IUtf8JsonSerializable, IModelJsonSerializable<ResourceHealthEventData>
     {
-        internal static ResourceHealthEventData DeserializeResourceHealthEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceHealthEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceHealthEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceHealthEventData>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(EventType))
+            {
+                writer.WritePropertyName("eventType"u8);
+                writer.WriteStringValue(EventType.Value.ToString());
+            }
+            if (Optional.IsDefined(EventSource))
+            {
+                writer.WritePropertyName("eventSource"u8);
+                writer.WriteStringValue(EventSource.Value.ToString());
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (Optional.IsDefined(Title))
+            {
+                writer.WritePropertyName("title"u8);
+                writer.WriteStringValue(Title);
+            }
+            if (Optional.IsDefined(Summary))
+            {
+                writer.WritePropertyName("summary"u8);
+                writer.WriteStringValue(Summary);
+            }
+            if (Optional.IsDefined(Header))
+            {
+                writer.WritePropertyName("header"u8);
+                writer.WriteStringValue(Header);
+            }
+            if (Optional.IsDefined(Level))
+            {
+                writer.WritePropertyName("level"u8);
+                writer.WriteStringValue(Level.Value.ToString());
+            }
+            if (Optional.IsDefined(EventLevel))
+            {
+                writer.WritePropertyName("eventLevel"u8);
+                writer.WriteStringValue(EventLevel.Value.ToString());
+            }
+            if (Optional.IsDefined(ExternalIncidentId))
+            {
+                writer.WritePropertyName("externalIncidentId"u8);
+                writer.WriteStringValue(ExternalIncidentId);
+            }
+            if (Optional.IsDefined(Reason))
+            {
+                writer.WritePropertyName("reason"u8);
+                writer.WriteStringValue(Reason);
+            }
+            if (Optional.IsDefined(Article))
+            {
+                writer.WritePropertyName("article"u8);
+                if (Article is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourceHealthEventArticle>)Article).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(Links))
+            {
+                writer.WritePropertyName("links"u8);
+                writer.WriteStartArray();
+                foreach (var item in Links)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ResourceHealthEventLink>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ImpactStartOn))
+            {
+                writer.WritePropertyName("impactStartTime"u8);
+                writer.WriteStringValue(ImpactStartOn.Value, "O");
+            }
+            if (Optional.IsDefined(ImpactMitigationOn))
+            {
+                writer.WritePropertyName("impactMitigationTime"u8);
+                writer.WriteStringValue(ImpactMitigationOn.Value, "O");
+            }
+            if (Optional.IsCollectionDefined(Impact))
+            {
+                writer.WritePropertyName("impact"u8);
+                writer.WriteStartArray();
+                foreach (var item in Impact)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ResourceHealthEventImpact>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(RecommendedActions))
+            {
+                writer.WritePropertyName("recommendedActions"u8);
+                if (RecommendedActions is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourceHealthEventRecommendedActions>)RecommendedActions).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(Faqs))
+            {
+                writer.WritePropertyName("faqs"u8);
+                writer.WriteStartArray();
+                foreach (var item in Faqs)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ResourceHealthEventFaq>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(IsHirEvent))
+            {
+                writer.WritePropertyName("isHIR"u8);
+                writer.WriteBooleanValue(IsHirEvent.Value);
+            }
+            if (Optional.IsDefined(IsMicrosoftSupportEnabled))
+            {
+                writer.WritePropertyName("enableMicrosoftSupport"u8);
+                writer.WriteBooleanValue(IsMicrosoftSupportEnabled.Value);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(IsPlatformInitiated))
+            {
+                writer.WritePropertyName("platformInitiated"u8);
+                writer.WriteBooleanValue(IsPlatformInitiated.Value);
+            }
+            if (Optional.IsDefined(IsChatWithUsEnabled))
+            {
+                writer.WritePropertyName("enableChatWithUs"u8);
+                writer.WriteBooleanValue(IsChatWithUsEnabled.Value);
+            }
+            if (Optional.IsDefined(Priority))
+            {
+                writer.WritePropertyName("priority"u8);
+                writer.WriteNumberValue(Priority.Value);
+            }
+            if (Optional.IsDefined(LastUpdateOn))
+            {
+                writer.WritePropertyName("lastUpdateTime"u8);
+                writer.WriteStringValue(LastUpdateOn.Value, "O");
+            }
+            if (Optional.IsDefined(HirStage))
+            {
+                writer.WritePropertyName("hirStage"u8);
+                writer.WriteStringValue(HirStage);
+            }
+            if (Optional.IsDefined(AdditionalInformation))
+            {
+                writer.WritePropertyName("additionalInformation"u8);
+                if (AdditionalInformation is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourceHealthEventAdditionalInformation>)AdditionalInformation).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(Duration))
+            {
+                writer.WritePropertyName("duration"u8);
+                writer.WriteNumberValue(Duration.Value);
+            }
+            if (Optional.IsDefined(ImpactType))
+            {
+                writer.WritePropertyName("impactType"u8);
+                writer.WriteStringValue(ImpactType);
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ResourceHealthEventData DeserializeResourceHealthEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +280,7 @@ namespace Azure.ResourceManager.ResourceHealth
             Optional<ResourceHealthEventAdditionalInformation> additionalInformation = default;
             Optional<int> duration = default;
             Optional<string> impactType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -327,8 +554,61 @@ namespace Azure.ResourceManager.ResourceHealth
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResourceHealthEventData(id, name, type, systemData.Value, Optional.ToNullable(eventType), Optional.ToNullable(eventSource), Optional.ToNullable(status), title.Value, summary.Value, header.Value, Optional.ToNullable(level), Optional.ToNullable(eventLevel), externalIncidentId.Value, reason.Value, article.Value, Optional.ToList(links), Optional.ToNullable(impactStartTime), Optional.ToNullable(impactMitigationTime), Optional.ToList(impact), recommendedActions.Value, Optional.ToList(faqs), Optional.ToNullable(isHIR), Optional.ToNullable(enableMicrosoftSupport), description.Value, Optional.ToNullable(platformInitiated), Optional.ToNullable(enableChatWithUs), Optional.ToNullable(priority), Optional.ToNullable(lastUpdateTime), hirStage.Value, additionalInformation.Value, Optional.ToNullable(duration), impactType.Value);
+            return new ResourceHealthEventData(id, name, type, systemData.Value, Optional.ToNullable(eventType), Optional.ToNullable(eventSource), Optional.ToNullable(status), title.Value, summary.Value, header.Value, Optional.ToNullable(level), Optional.ToNullable(eventLevel), externalIncidentId.Value, reason.Value, article.Value, Optional.ToList(links), Optional.ToNullable(impactStartTime), Optional.ToNullable(impactMitigationTime), Optional.ToList(impact), recommendedActions.Value, Optional.ToList(faqs), Optional.ToNullable(isHIR), Optional.ToNullable(enableMicrosoftSupport), description.Value, Optional.ToNullable(platformInitiated), Optional.ToNullable(enableChatWithUs), Optional.ToNullable(priority), Optional.ToNullable(lastUpdateTime), hirStage.Value, additionalInformation.Value, Optional.ToNullable(duration), impactType.Value, serializedAdditionalRawData);
+        }
+
+        ResourceHealthEventData IModelJsonSerializable<ResourceHealthEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceHealthEventData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceHealthEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceHealthEventData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceHealthEventData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceHealthEventData IModelSerializable<ResourceHealthEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceHealthEventData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceHealthEventData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ResourceHealthEventData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ResourceHealthEventData"/> to convert. </param>
+        public static implicit operator RequestContent(ResourceHealthEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ResourceHealthEventData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ResourceHealthEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourceHealthEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

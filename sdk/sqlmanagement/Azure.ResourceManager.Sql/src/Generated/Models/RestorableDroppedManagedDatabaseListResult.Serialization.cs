@@ -5,23 +5,51 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal partial class RestorableDroppedManagedDatabaseListResult
+    internal partial class RestorableDroppedManagedDatabaseListResult : IUtf8JsonSerializable, IModelJsonSerializable<RestorableDroppedManagedDatabaseListResult>
     {
-        internal static RestorableDroppedManagedDatabaseListResult DeserializeRestorableDroppedManagedDatabaseListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RestorableDroppedManagedDatabaseListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RestorableDroppedManagedDatabaseListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RestorableDroppedManagedDatabaseListResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RestorableDroppedManagedDatabaseListResult DeserializeRestorableDroppedManagedDatabaseListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<RestorableDroppedManagedDatabaseData>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +71,61 @@ namespace Azure.ResourceManager.Sql.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RestorableDroppedManagedDatabaseListResult(Optional.ToList(value), nextLink.Value);
+            return new RestorableDroppedManagedDatabaseListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+        }
+
+        RestorableDroppedManagedDatabaseListResult IModelJsonSerializable<RestorableDroppedManagedDatabaseListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RestorableDroppedManagedDatabaseListResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRestorableDroppedManagedDatabaseListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RestorableDroppedManagedDatabaseListResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RestorableDroppedManagedDatabaseListResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RestorableDroppedManagedDatabaseListResult IModelSerializable<RestorableDroppedManagedDatabaseListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RestorableDroppedManagedDatabaseListResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRestorableDroppedManagedDatabaseListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RestorableDroppedManagedDatabaseListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RestorableDroppedManagedDatabaseListResult"/> to convert. </param>
+        public static implicit operator RequestContent(RestorableDroppedManagedDatabaseListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RestorableDroppedManagedDatabaseListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RestorableDroppedManagedDatabaseListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRestorableDroppedManagedDatabaseListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

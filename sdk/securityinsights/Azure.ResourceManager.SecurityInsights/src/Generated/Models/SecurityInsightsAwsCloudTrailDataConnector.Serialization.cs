@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsAwsCloudTrailDataConnector : IUtf8JsonSerializable
+    public partial class SecurityInsightsAwsCloudTrailDataConnector : IUtf8JsonSerializable, IModelJsonSerializable<SecurityInsightsAwsCloudTrailDataConnector>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityInsightsAwsCloudTrailDataConnector>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityInsightsAwsCloudTrailDataConnector>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAwsCloudTrailDataConnector>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -34,14 +41,35 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(DataTypes))
             {
                 writer.WritePropertyName("dataTypes"u8);
-                writer.WriteObjectValue(DataTypes);
+                if (DataTypes is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AwsCloudTrailDataConnectorDataTypes>)DataTypes).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsAwsCloudTrailDataConnector DeserializeSecurityInsightsAwsCloudTrailDataConnector(JsonElement element)
+        internal static SecurityInsightsAwsCloudTrailDataConnector DeserializeSecurityInsightsAwsCloudTrailDataConnector(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +82,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<SystemData> systemData = default;
             Optional<string> awsRoleArn = default;
             Optional<AwsCloudTrailDataConnectorDataTypes> dataTypes = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -120,8 +149,61 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityInsightsAwsCloudTrailDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), awsRoleArn.Value, dataTypes.Value);
+            return new SecurityInsightsAwsCloudTrailDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), awsRoleArn.Value, dataTypes.Value, serializedAdditionalRawData);
+        }
+
+        SecurityInsightsAwsCloudTrailDataConnector IModelJsonSerializable<SecurityInsightsAwsCloudTrailDataConnector>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAwsCloudTrailDataConnector>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsAwsCloudTrailDataConnector(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityInsightsAwsCloudTrailDataConnector>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAwsCloudTrailDataConnector>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityInsightsAwsCloudTrailDataConnector IModelSerializable<SecurityInsightsAwsCloudTrailDataConnector>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAwsCloudTrailDataConnector>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityInsightsAwsCloudTrailDataConnector(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SecurityInsightsAwsCloudTrailDataConnector"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SecurityInsightsAwsCloudTrailDataConnector"/> to convert. </param>
+        public static implicit operator RequestContent(SecurityInsightsAwsCloudTrailDataConnector model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SecurityInsightsAwsCloudTrailDataConnector"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SecurityInsightsAwsCloudTrailDataConnector(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityInsightsAwsCloudTrailDataConnector(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

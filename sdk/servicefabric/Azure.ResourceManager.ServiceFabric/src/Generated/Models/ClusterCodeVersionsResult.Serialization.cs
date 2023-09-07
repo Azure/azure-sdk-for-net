@@ -6,16 +6,61 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterCodeVersionsResult
+    public partial class ClusterCodeVersionsResult : IUtf8JsonSerializable, IModelJsonSerializable<ClusterCodeVersionsResult>
     {
-        internal static ClusterCodeVersionsResult DeserializeClusterCodeVersionsResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ClusterCodeVersionsResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ClusterCodeVersionsResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ClusterCodeVersionsResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CodeVersion))
+            {
+                writer.WritePropertyName("codeVersion"u8);
+                writer.WriteStringValue(CodeVersion);
+            }
+            if (Optional.IsDefined(SupportExpireOn))
+            {
+                writer.WritePropertyName("supportExpiryUtc"u8);
+                writer.WriteStringValue(SupportExpireOn.Value, "O");
+            }
+            if (Optional.IsDefined(Environment))
+            {
+                writer.WritePropertyName("environment"u8);
+                writer.WriteStringValue(Environment.Value.ToString());
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ClusterCodeVersionsResult DeserializeClusterCodeVersionsResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +72,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Optional<string> codeVersion = default;
             Optional<DateTimeOffset> supportExpiryUtc = default;
             Optional<ClusterEnvironment> environment = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -88,8 +134,61 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ClusterCodeVersionsResult(id, name, type, systemData.Value, codeVersion.Value, Optional.ToNullable(supportExpiryUtc), Optional.ToNullable(environment));
+            return new ClusterCodeVersionsResult(id, name, type, systemData.Value, codeVersion.Value, Optional.ToNullable(supportExpiryUtc), Optional.ToNullable(environment), serializedAdditionalRawData);
+        }
+
+        ClusterCodeVersionsResult IModelJsonSerializable<ClusterCodeVersionsResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClusterCodeVersionsResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeClusterCodeVersionsResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ClusterCodeVersionsResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClusterCodeVersionsResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ClusterCodeVersionsResult IModelSerializable<ClusterCodeVersionsResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClusterCodeVersionsResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeClusterCodeVersionsResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ClusterCodeVersionsResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ClusterCodeVersionsResult"/> to convert. </param>
+        public static implicit operator RequestContent(ClusterCodeVersionsResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ClusterCodeVersionsResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ClusterCodeVersionsResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeClusterCodeVersionsResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

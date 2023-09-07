@@ -5,31 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsAlertsDataTypeOfDataConnector : IUtf8JsonSerializable
+    public partial class SecurityInsightsAlertsDataTypeOfDataConnector : IUtf8JsonSerializable, IModelJsonSerializable<SecurityInsightsAlertsDataTypeOfDataConnector>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityInsightsAlertsDataTypeOfDataConnector>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityInsightsAlertsDataTypeOfDataConnector>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAlertsDataTypeOfDataConnector>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Alerts))
             {
                 writer.WritePropertyName("alerts"u8);
-                writer.WriteObjectValue(Alerts);
+                if (Alerts is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DataConnectorDataTypeCommon>)Alerts).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsAlertsDataTypeOfDataConnector DeserializeSecurityInsightsAlertsDataTypeOfDataConnector(JsonElement element)
+        internal static SecurityInsightsAlertsDataTypeOfDataConnector DeserializeSecurityInsightsAlertsDataTypeOfDataConnector(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DataConnectorDataTypeCommon> alerts = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alerts"u8))
@@ -41,8 +71,61 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     alerts = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityInsightsAlertsDataTypeOfDataConnector(alerts.Value);
+            return new SecurityInsightsAlertsDataTypeOfDataConnector(alerts.Value, serializedAdditionalRawData);
+        }
+
+        SecurityInsightsAlertsDataTypeOfDataConnector IModelJsonSerializable<SecurityInsightsAlertsDataTypeOfDataConnector>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAlertsDataTypeOfDataConnector>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsAlertsDataTypeOfDataConnector(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityInsightsAlertsDataTypeOfDataConnector>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAlertsDataTypeOfDataConnector>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityInsightsAlertsDataTypeOfDataConnector IModelSerializable<SecurityInsightsAlertsDataTypeOfDataConnector>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAlertsDataTypeOfDataConnector>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityInsightsAlertsDataTypeOfDataConnector(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SecurityInsightsAlertsDataTypeOfDataConnector"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SecurityInsightsAlertsDataTypeOfDataConnector"/> to convert. </param>
+        public static implicit operator RequestContent(SecurityInsightsAlertsDataTypeOfDataConnector model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SecurityInsightsAlertsDataTypeOfDataConnector"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SecurityInsightsAlertsDataTypeOfDataConnector(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityInsightsAlertsDataTypeOfDataConnector(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

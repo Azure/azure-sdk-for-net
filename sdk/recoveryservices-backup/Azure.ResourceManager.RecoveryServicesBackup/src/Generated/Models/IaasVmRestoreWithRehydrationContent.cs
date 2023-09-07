@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,13 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> IaaS VM workload-specific restore with integrated rehydration of recovery point. </summary>
     public partial class IaasVmRestoreWithRehydrationContent : IaasVmRestoreContent
     {
-        /// <summary> Initializes a new instance of IaasVmRestoreWithRehydrationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmRestoreWithRehydrationContent"/>. </summary>
         public IaasVmRestoreWithRehydrationContent()
         {
             ObjectType = "IaasVMRestoreWithRehydrationRequest";
         }
 
-        /// <summary> Initializes a new instance of IaasVmRestoreWithRehydrationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmRestoreWithRehydrationContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="recoveryPointId"> ID of the backup copy to be recovered. </param>
         /// <param name="recoveryType"> Type of this recovery. </param>
@@ -68,7 +69,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="securedVmDetails"> Stores Secured VM Details. </param>
         /// <param name="targetDiskNetworkAccessSettings"> Specifies target network access settings for disks of VM to be restored,. </param>
         /// <param name="recoveryPointRehydrationInfo"> RP Rehydration Info. </param>
-        internal IaasVmRestoreWithRehydrationContent(string objectType, string recoveryPointId, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, ResourceIdentifier targetVirtualMachineId, ResourceIdentifier targetResourceGroupId, ResourceIdentifier storageAccountId, ResourceIdentifier virtualNetworkId, ResourceIdentifier subnetId, ResourceIdentifier targetDomainNameId, AzureLocation? region, string affinityGroup, bool? doesCreateNewCloudService, bool? originalStorageAccountOption, VmEncryptionDetails encryptionDetails, IList<int> restoreDiskLunList, bool? doesRestoreWithManagedDisks, string diskEncryptionSetId, IList<string> zones, BackupIdentityInfo identityInfo, IdentityBasedRestoreDetails identityBasedRestoreDetails, ExtendedLocation extendedLocation, SecuredVmDetails securedVmDetails, BackupTargetDiskNetworkAccessSettings targetDiskNetworkAccessSettings, RecoveryPointRehydrationInfo recoveryPointRehydrationInfo) : base(objectType, recoveryPointId, recoveryType, sourceResourceId, targetVirtualMachineId, targetResourceGroupId, storageAccountId, virtualNetworkId, subnetId, targetDomainNameId, region, affinityGroup, doesCreateNewCloudService, originalStorageAccountOption, encryptionDetails, restoreDiskLunList, doesRestoreWithManagedDisks, diskEncryptionSetId, zones, identityInfo, identityBasedRestoreDetails, extendedLocation, securedVmDetails, targetDiskNetworkAccessSettings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IaasVmRestoreWithRehydrationContent(string objectType, string recoveryPointId, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, ResourceIdentifier targetVirtualMachineId, ResourceIdentifier targetResourceGroupId, ResourceIdentifier storageAccountId, ResourceIdentifier virtualNetworkId, ResourceIdentifier subnetId, ResourceIdentifier targetDomainNameId, AzureLocation? region, string affinityGroup, bool? doesCreateNewCloudService, bool? originalStorageAccountOption, VmEncryptionDetails encryptionDetails, IList<int> restoreDiskLunList, bool? doesRestoreWithManagedDisks, string diskEncryptionSetId, IList<string> zones, BackupIdentityInfo identityInfo, IdentityBasedRestoreDetails identityBasedRestoreDetails, ExtendedLocation extendedLocation, SecuredVmDetails securedVmDetails, BackupTargetDiskNetworkAccessSettings targetDiskNetworkAccessSettings, RecoveryPointRehydrationInfo recoveryPointRehydrationInfo, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(objectType, recoveryPointId, recoveryType, sourceResourceId, targetVirtualMachineId, targetResourceGroupId, storageAccountId, virtualNetworkId, subnetId, targetDomainNameId, region, affinityGroup, doesCreateNewCloudService, originalStorageAccountOption, encryptionDetails, restoreDiskLunList, doesRestoreWithManagedDisks, diskEncryptionSetId, zones, identityInfo, identityBasedRestoreDetails, extendedLocation, securedVmDetails, targetDiskNetworkAccessSettings, serializedAdditionalRawData)
         {
             RecoveryPointRehydrationInfo = recoveryPointRehydrationInfo;
             ObjectType = objectType ?? "IaasVMRestoreWithRehydrationRequest";

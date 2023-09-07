@@ -8,14 +8,121 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class CalculatePriceResultProperties
+    public partial class CalculatePriceResultProperties : IUtf8JsonSerializable, IModelJsonSerializable<CalculatePriceResultProperties>
     {
-        internal static CalculatePriceResultProperties DeserializeCalculatePriceResultProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CalculatePriceResultProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CalculatePriceResultProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CalculatePriceResultProperties>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(BillingCurrencyTotal))
+            {
+                writer.WritePropertyName("billingCurrencyTotal"u8);
+                if (BillingCurrencyTotal is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CalculatePriceResultPropertiesBillingCurrencyTotal>)BillingCurrencyTotal).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(NetTotal))
+            {
+                writer.WritePropertyName("netTotal"u8);
+                writer.WriteNumberValue(NetTotal.Value);
+            }
+            if (Optional.IsDefined(TaxTotal))
+            {
+                writer.WritePropertyName("taxTotal"u8);
+                writer.WriteNumberValue(TaxTotal.Value);
+            }
+            if (Optional.IsDefined(GrandTotal))
+            {
+                writer.WritePropertyName("grandTotal"u8);
+                writer.WriteNumberValue(GrandTotal.Value);
+            }
+            if (Optional.IsDefined(IsTaxIncluded))
+            {
+                writer.WritePropertyName("isTaxIncluded"u8);
+                writer.WriteBooleanValue(IsTaxIncluded.Value);
+            }
+            if (Optional.IsDefined(IsBillingPartnerManaged))
+            {
+                writer.WritePropertyName("isBillingPartnerManaged"u8);
+                writer.WriteBooleanValue(IsBillingPartnerManaged.Value);
+            }
+            if (Optional.IsDefined(ReservationOrderId))
+            {
+                writer.WritePropertyName("reservationOrderId"u8);
+                writer.WriteStringValue(ReservationOrderId.Value);
+            }
+            if (Optional.IsDefined(SkuTitle))
+            {
+                writer.WritePropertyName("skuTitle"u8);
+                writer.WriteStringValue(SkuTitle);
+            }
+            if (Optional.IsDefined(SkuDescription))
+            {
+                writer.WritePropertyName("skuDescription"u8);
+                writer.WriteStringValue(SkuDescription);
+            }
+            if (Optional.IsDefined(PricingCurrencyTotal))
+            {
+                writer.WritePropertyName("pricingCurrencyTotal"u8);
+                if (PricingCurrencyTotal is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CalculatePriceResultPropertiesPricingCurrencyTotal>)PricingCurrencyTotal).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(PaymentSchedule))
+            {
+                writer.WritePropertyName("paymentSchedule"u8);
+                writer.WriteStartArray();
+                foreach (var item in PaymentSchedule)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<PaymentDetail>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CalculatePriceResultProperties DeserializeCalculatePriceResultProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +138,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<string> skuDescription = default;
             Optional<CalculatePriceResultPropertiesPricingCurrencyTotal> pricingCurrencyTotal = default;
             Optional<IReadOnlyList<PaymentDetail>> paymentSchedule = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("billingCurrencyTotal"u8))
@@ -129,8 +237,61 @@ namespace Azure.ResourceManager.Reservations.Models
                     paymentSchedule = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CalculatePriceResultProperties(billingCurrencyTotal.Value, Optional.ToNullable(netTotal), Optional.ToNullable(taxTotal), Optional.ToNullable(grandTotal), Optional.ToNullable(isTaxIncluded), Optional.ToNullable(isBillingPartnerManaged), Optional.ToNullable(reservationOrderId), skuTitle.Value, skuDescription.Value, pricingCurrencyTotal.Value, Optional.ToList(paymentSchedule));
+            return new CalculatePriceResultProperties(billingCurrencyTotal.Value, Optional.ToNullable(netTotal), Optional.ToNullable(taxTotal), Optional.ToNullable(grandTotal), Optional.ToNullable(isTaxIncluded), Optional.ToNullable(isBillingPartnerManaged), Optional.ToNullable(reservationOrderId), skuTitle.Value, skuDescription.Value, pricingCurrencyTotal.Value, Optional.ToList(paymentSchedule), serializedAdditionalRawData);
+        }
+
+        CalculatePriceResultProperties IModelJsonSerializable<CalculatePriceResultProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CalculatePriceResultProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCalculatePriceResultProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CalculatePriceResultProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CalculatePriceResultProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CalculatePriceResultProperties IModelSerializable<CalculatePriceResultProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CalculatePriceResultProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCalculatePriceResultProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CalculatePriceResultProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CalculatePriceResultProperties"/> to convert. </param>
+        public static implicit operator RequestContent(CalculatePriceResultProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CalculatePriceResultProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CalculatePriceResultProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCalculatePriceResultProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

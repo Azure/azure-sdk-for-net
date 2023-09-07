@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class NamedPartitionScheme : IUtf8JsonSerializable
+    public partial class NamedPartitionScheme : IUtf8JsonSerializable, IModelJsonSerializable<NamedPartitionScheme>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NamedPartitionScheme>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NamedPartitionScheme>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NamedPartitionScheme>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("names"u8);
             writer.WriteStartArray();
@@ -25,17 +32,32 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteEndArray();
             writer.WritePropertyName("partitionScheme"u8);
             writer.WriteStringValue(PartitionScheme.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NamedPartitionScheme DeserializeNamedPartitionScheme(JsonElement element)
+        internal static NamedPartitionScheme DeserializeNamedPartitionScheme(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<string> names = default;
             PartitionScheme partitionScheme = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("names"u8))
@@ -53,8 +75,61 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     partitionScheme = new PartitionScheme(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NamedPartitionScheme(partitionScheme, names);
+            return new NamedPartitionScheme(partitionScheme, names, serializedAdditionalRawData);
+        }
+
+        NamedPartitionScheme IModelJsonSerializable<NamedPartitionScheme>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NamedPartitionScheme>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNamedPartitionScheme(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NamedPartitionScheme>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NamedPartitionScheme>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NamedPartitionScheme IModelSerializable<NamedPartitionScheme>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NamedPartitionScheme>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNamedPartitionScheme(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NamedPartitionScheme"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NamedPartitionScheme"/> to convert. </param>
+        public static implicit operator RequestContent(NamedPartitionScheme model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NamedPartitionScheme"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NamedPartitionScheme(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNamedPartitionScheme(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

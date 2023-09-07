@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsWatchlistWatchlistsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsWatchlistWatchlistsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsWatchlistResource(Client, SecurityInsightsWatchlistData.DeserializeSecurityInsightsWatchlistData(e)), _securityInsightsWatchlistWatchlistsClientDiagnostics, Pipeline, "SecurityInsightsWatchlistCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityInsightsWatchlistResource(Client, SecurityInsightsWatchlistData.DeserializeSecurityInsightsWatchlistData(e)), _securityInsightsWatchlistWatchlistsClientDiagnostics, Pipeline, "SecurityInsightsWatchlistCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsWatchlistWatchlistsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsWatchlistWatchlistsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsWatchlistResource(Client, SecurityInsightsWatchlistData.DeserializeSecurityInsightsWatchlistData(e)), _securityInsightsWatchlistWatchlistsClientDiagnostics, Pipeline, "SecurityInsightsWatchlistCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityInsightsWatchlistResource(Client, SecurityInsightsWatchlistData.DeserializeSecurityInsightsWatchlistData(e)), _securityInsightsWatchlistWatchlistsClientDiagnostics, Pipeline, "SecurityInsightsWatchlistCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

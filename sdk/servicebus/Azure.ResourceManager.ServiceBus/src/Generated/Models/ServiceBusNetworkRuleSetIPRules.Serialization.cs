@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class ServiceBusNetworkRuleSetIPRules : IUtf8JsonSerializable
+    public partial class ServiceBusNetworkRuleSetIPRules : IUtf8JsonSerializable, IModelJsonSerializable<ServiceBusNetworkRuleSetIPRules>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServiceBusNetworkRuleSetIPRules>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServiceBusNetworkRuleSetIPRules>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceBusNetworkRuleSetIPRules>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IPMask))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServiceBusNetworkRuleSetIPRules DeserializeServiceBusNetworkRuleSetIPRules(JsonElement element)
+        internal static ServiceBusNetworkRuleSetIPRules DeserializeServiceBusNetworkRuleSetIPRules(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> ipMask = default;
             Optional<ServiceBusNetworkRuleIPAction> action = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipMask"u8))
@@ -52,8 +75,61 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     action = new ServiceBusNetworkRuleIPAction(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServiceBusNetworkRuleSetIPRules(ipMask.Value, Optional.ToNullable(action));
+            return new ServiceBusNetworkRuleSetIPRules(ipMask.Value, Optional.ToNullable(action), serializedAdditionalRawData);
+        }
+
+        ServiceBusNetworkRuleSetIPRules IModelJsonSerializable<ServiceBusNetworkRuleSetIPRules>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceBusNetworkRuleSetIPRules>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceBusNetworkRuleSetIPRules(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServiceBusNetworkRuleSetIPRules>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceBusNetworkRuleSetIPRules>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServiceBusNetworkRuleSetIPRules IModelSerializable<ServiceBusNetworkRuleSetIPRules>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceBusNetworkRuleSetIPRules>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServiceBusNetworkRuleSetIPRules(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ServiceBusNetworkRuleSetIPRules"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ServiceBusNetworkRuleSetIPRules"/> to convert. </param>
+        public static implicit operator RequestContent(ServiceBusNetworkRuleSetIPRules model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ServiceBusNetworkRuleSetIPRules"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ServiceBusNetworkRuleSetIPRules(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServiceBusNetworkRuleSetIPRules(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,19 +14,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Model class for event details of a job status event. </summary>
     public partial class SiteRecoveryJobStatusEventDetails : SiteRecoveryEventSpecificDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryJobStatusEventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobStatusEventDetails"/>. </summary>
         internal SiteRecoveryJobStatusEventDetails()
         {
             InstanceType = "JobStatus";
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryJobStatusEventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobStatusEventDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <param name="jobId"> Job arm id for the event. </param>
         /// <param name="jobFriendlyName"> JobName for the Event. </param>
         /// <param name="jobStatus"> JobStatus for the Event. </param>
         /// <param name="affectedObjectType"> AffectedObjectType for the event. </param>
-        internal SiteRecoveryJobStatusEventDetails(string instanceType, ResourceIdentifier jobId, string jobFriendlyName, string jobStatus, string affectedObjectType) : base(instanceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryJobStatusEventDetails(string instanceType, ResourceIdentifier jobId, string jobFriendlyName, string jobStatus, string affectedObjectType, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
         {
             JobId = jobId;
             JobFriendlyName = jobFriendlyName;

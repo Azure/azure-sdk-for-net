@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Contains configuration options related to vector search. </summary>
     public partial class VectorSearch
     {
-        /// <summary> Initializes a new instance of VectorSearch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VectorSearch"/>. </summary>
         public VectorSearch()
         {
             AlgorithmConfigurations = new ChangeTrackingList<VectorSearchAlgorithmConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of VectorSearch. </summary>
+        /// <summary> Initializes a new instance of <see cref="VectorSearch"/>. </summary>
         /// <param name="algorithmConfigurations">
         /// Contains configuration options specific to the algorithm used during indexing time.
         /// Please note <see cref="VectorSearchAlgorithmConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="HnswVectorSearchAlgorithmConfiguration"/>.
         /// </param>
-        internal VectorSearch(IList<VectorSearchAlgorithmConfiguration> algorithmConfigurations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VectorSearch(IList<VectorSearchAlgorithmConfiguration> algorithmConfigurations, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AlgorithmConfigurations = algorithmConfigurations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

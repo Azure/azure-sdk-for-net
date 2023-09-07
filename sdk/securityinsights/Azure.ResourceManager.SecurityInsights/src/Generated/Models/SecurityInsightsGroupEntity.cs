@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a security group entity. </summary>
     public partial class SecurityInsightsGroupEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsGroupEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsGroupEntity"/>. </summary>
         public SecurityInsightsGroupEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = SecurityInsightsEntityKind.SecurityGroup;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsGroupEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsGroupEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +33,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="distinguishedName"> The group distinguished name. </param>
         /// <param name="objectGuid"> A single-value attribute that is the unique identifier for the object, assigned by active directory. </param>
         /// <param name="sid"> The SID attribute is a single-value attribute that specifies the security identifier (SID) of the group. </param>
-        internal SecurityInsightsGroupEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string distinguishedName, Guid? objectGuid, string sid) : base(id, name, resourceType, systemData, kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsGroupEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string distinguishedName, Guid? objectGuid, string sid, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

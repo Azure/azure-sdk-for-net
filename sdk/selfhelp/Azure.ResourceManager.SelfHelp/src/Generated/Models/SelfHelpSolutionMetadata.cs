@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,13 +15,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Solution Metadata resource. </summary>
     public partial class SelfHelpSolutionMetadata : ResourceData
     {
-        /// <summary> Initializes a new instance of SelfHelpSolutionMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SelfHelpSolutionMetadata"/>. </summary>
         public SelfHelpSolutionMetadata()
         {
             RequiredParameterSets = new ChangeTrackingList<IList<string>>();
         }
 
-        /// <summary> Initializes a new instance of SelfHelpSolutionMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpSolutionMetadata"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,12 +33,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="solutionType"> Solution Type. </param>
         /// <param name="description"> A detailed description of solution. </param>
         /// <param name="requiredParameterSets"> Required parameters for invoking this particular solution. </param>
-        internal SelfHelpSolutionMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string solutionId, string solutionType, string description, IList<IList<string>> requiredParameterSets) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SelfHelpSolutionMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string solutionId, string solutionType, string description, IList<IList<string>> requiredParameterSets, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SolutionId = solutionId;
             SolutionType = solutionType;
             Description = description;
             RequiredParameterSets = requiredParameterSets;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Solution Id. </summary>

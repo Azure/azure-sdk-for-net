@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    internal partial class ClassicAlertSettings : IUtf8JsonSerializable
+    internal partial class ClassicAlertSettings : IUtf8JsonSerializable, IModelJsonSerializable<ClassicAlertSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ClassicAlertSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ClassicAlertSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ClassicAlertSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AlertsForCriticalOperations))
             {
                 writer.WritePropertyName("alertsForCriticalOperations"u8);
                 writer.WriteStringValue(AlertsForCriticalOperations.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ClassicAlertSettings DeserializeClassicAlertSettings(JsonElement element)
+        internal static ClassicAlertSettings DeserializeClassicAlertSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<RecoveryServicesAlertsState> alertsForCriticalOperations = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alertsForCriticalOperations"u8))
@@ -41,8 +64,61 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     alertsForCriticalOperations = new RecoveryServicesAlertsState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ClassicAlertSettings(Optional.ToNullable(alertsForCriticalOperations));
+            return new ClassicAlertSettings(Optional.ToNullable(alertsForCriticalOperations), serializedAdditionalRawData);
+        }
+
+        ClassicAlertSettings IModelJsonSerializable<ClassicAlertSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClassicAlertSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeClassicAlertSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ClassicAlertSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClassicAlertSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ClassicAlertSettings IModelSerializable<ClassicAlertSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClassicAlertSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeClassicAlertSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ClassicAlertSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ClassicAlertSettings"/> to convert. </param>
+        public static implicit operator RequestContent(ClassicAlertSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ClassicAlertSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ClassicAlertSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeClassicAlertSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmSelfHelpModelFactory
     {
-        /// <summary> Initializes a new instance of SelfHelpNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Returns true or false depending on the availability of the name. </param>
         /// <param name="reason"> Reason for why value is not available. This field is returned if nameAvailable is false. </param>
         /// <param name="message"> Gets an error message explaining the 'reason' value with more details. This field is returned iif nameAvailable is false. </param>
         /// <returns> A new <see cref="Models.SelfHelpNameAvailabilityResult"/> instance for mocking. </returns>
         public static SelfHelpNameAvailabilityResult SelfHelpNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
         {
-            return new SelfHelpNameAvailabilityResult(isNameAvailable, reason, message);
+            return new SelfHelpNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
-        /// <summary> Initializes a new instance of SelfHelpDiagnosticData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpDiagnosticData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
             insights ??= new List<SelfHelpDiagnosticInvocation>();
             diagnostics ??= new List<SelfHelpDiagnosticInfo>();
 
-            return new SelfHelpDiagnosticData(id, name, resourceType, systemData, globalParameters, insights?.ToList(), acceptedOn, provisioningState, diagnostics?.ToList());
+            return new SelfHelpDiagnosticData(id, name, resourceType, systemData, globalParameters, insights?.ToList(), acceptedOn, provisioningState, diagnostics?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of SelfHelpDiagnosticInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpDiagnosticInfo"/>. </summary>
         /// <param name="solutionId"> Solution Id. </param>
         /// <param name="status"> Denotes the status of the diagnostic resource. </param>
         /// <param name="insights"> The problems (if any) detected by this insight. </param>
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         {
             insights ??= new List<SelfHelpDiagnosticInsight>();
 
-            return new SelfHelpDiagnosticInfo(solutionId, status, insights?.ToList(), error);
+            return new SelfHelpDiagnosticInfo(solutionId, status, insights?.ToList(), error, default);
         }
 
-        /// <summary> Initializes a new instance of SelfHelpDiagnosticInsight. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpDiagnosticInsight"/>. </summary>
         /// <param name="id"> Article id. </param>
         /// <param name="title"> This insight's title. </param>
         /// <param name="results"> Detailed result content. </param>
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <returns> A new <see cref="Models.SelfHelpDiagnosticInsight"/> instance for mocking. </returns>
         public static SelfHelpDiagnosticInsight SelfHelpDiagnosticInsight(string id = null, string title = null, string results = null, SelfHelpImportanceLevel? insightImportanceLevel = null)
         {
-            return new SelfHelpDiagnosticInsight(id, title, results, insightImportanceLevel);
+            return new SelfHelpDiagnosticInsight(id, title, results, insightImportanceLevel, default);
         }
 
-        /// <summary> Initializes a new instance of SelfHelpError. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpError"/>. </summary>
         /// <param name="code"> Service specific error code which serves as the substatus for the HTTP error code. </param>
         /// <param name="errorType"> Service specific error type which serves as additional context for the error herein. </param>
         /// <param name="message"> Description of the error. </param>
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         {
             details ??= new List<SelfHelpError>();
 
-            return new SelfHelpError(code, errorType, message, details?.ToList());
+            return new SelfHelpError(code, errorType, message, details?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of SelfHelpSolutionMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpSolutionMetadata"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         {
             requiredParameterSets ??= new List<IList<string>>();
 
-            return new SelfHelpSolutionMetadata(id, name, resourceType, systemData, solutionId, solutionType, description, requiredParameterSets?.ToList());
+            return new SelfHelpSolutionMetadata(id, name, resourceType, systemData, solutionId, solutionType, description, requiredParameterSets?.ToList(), default);
         }
     }
 }

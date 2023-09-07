@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmAgentUpgradeBlockingErrorDetails
+    public partial class InMageRcmAgentUpgradeBlockingErrorDetails : IUtf8JsonSerializable, IModelJsonSerializable<InMageRcmAgentUpgradeBlockingErrorDetails>
     {
-        internal static InMageRcmAgentUpgradeBlockingErrorDetails DeserializeInMageRcmAgentUpgradeBlockingErrorDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InMageRcmAgentUpgradeBlockingErrorDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InMageRcmAgentUpgradeBlockingErrorDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<InMageRcmAgentUpgradeBlockingErrorDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static InMageRcmAgentUpgradeBlockingErrorDetails DeserializeInMageRcmAgentUpgradeBlockingErrorDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> recommendedAction = default;
             Optional<IReadOnlyDictionary<string, string>> errorMessageParameters = default;
             Optional<IReadOnlyDictionary<string, string>> errorTags = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorCode"u8))
@@ -75,8 +103,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     errorTags = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InMageRcmAgentUpgradeBlockingErrorDetails(errorCode.Value, errorMessage.Value, possibleCauses.Value, recommendedAction.Value, Optional.ToDictionary(errorMessageParameters), Optional.ToDictionary(errorTags));
+            return new InMageRcmAgentUpgradeBlockingErrorDetails(errorCode.Value, errorMessage.Value, possibleCauses.Value, recommendedAction.Value, Optional.ToDictionary(errorMessageParameters), Optional.ToDictionary(errorTags), serializedAdditionalRawData);
+        }
+
+        InMageRcmAgentUpgradeBlockingErrorDetails IModelJsonSerializable<InMageRcmAgentUpgradeBlockingErrorDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageRcmAgentUpgradeBlockingErrorDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageRcmAgentUpgradeBlockingErrorDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InMageRcmAgentUpgradeBlockingErrorDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageRcmAgentUpgradeBlockingErrorDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InMageRcmAgentUpgradeBlockingErrorDetails IModelSerializable<InMageRcmAgentUpgradeBlockingErrorDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageRcmAgentUpgradeBlockingErrorDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInMageRcmAgentUpgradeBlockingErrorDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InMageRcmAgentUpgradeBlockingErrorDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InMageRcmAgentUpgradeBlockingErrorDetails"/> to convert. </param>
+        public static implicit operator RequestContent(InMageRcmAgentUpgradeBlockingErrorDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InMageRcmAgentUpgradeBlockingErrorDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InMageRcmAgentUpgradeBlockingErrorDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInMageRcmAgentUpgradeBlockingErrorDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

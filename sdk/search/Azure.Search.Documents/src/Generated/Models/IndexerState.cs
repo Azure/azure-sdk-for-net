@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,35 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Represents all of the state that defines and dictates the indexer's current execution. </summary>
     public partial class IndexerState
     {
-        /// <summary> Initializes a new instance of IndexerState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IndexerState"/>. </summary>
         internal IndexerState()
         {
             ResetDocumentKeys = new ChangeTrackingList<string>();
             ResetDataSourceDocumentIds = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IndexerState"/>. </summary>
+        /// <param name="mode"> The mode the indexer is running in. </param>
+        /// <param name="allDocsInitialChangeTrackingState"> Change tracking state used when indexing starts on all documents in the datasource. </param>
+        /// <param name="allDocsFinalChangeTrackingState"> Change tracking state value when indexing finishes on all documents in the datasource. </param>
+        /// <param name="resetDocsInitialChangeTrackingState"> Change tracking state used when indexing starts on select, reset documents in the datasource. </param>
+        /// <param name="resetDocsFinalChangeTrackingState"> Change tracking state value when indexing finishes on select, reset documents in the datasource. </param>
+        /// <param name="resetDocumentKeys"> The list of document keys that have been reset. The document key is the document's unique identifier for the data in the search index. The indexer will prioritize selectively re-ingesting these keys. </param>
+        /// <param name="resetDataSourceDocumentIds"> The list of datasource document ids that have been reset. The datasource document id is the unique identifier for the data in the datasource. The indexer will prioritize selectively re-ingesting these ids. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IndexerState(IndexingMode? mode, string allDocsInitialChangeTrackingState, string allDocsFinalChangeTrackingState, string resetDocsInitialChangeTrackingState, string resetDocsFinalChangeTrackingState, IReadOnlyList<string> resetDocumentKeys, IReadOnlyList<string> resetDataSourceDocumentIds, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Mode = mode;
+            AllDocsInitialChangeTrackingState = allDocsInitialChangeTrackingState;
+            AllDocsFinalChangeTrackingState = allDocsFinalChangeTrackingState;
+            ResetDocsInitialChangeTrackingState = resetDocsInitialChangeTrackingState;
+            ResetDocsFinalChangeTrackingState = resetDocsFinalChangeTrackingState;
+            ResetDocumentKeys = resetDocumentKeys;
+            ResetDataSourceDocumentIds = resetDataSourceDocumentIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The mode the indexer is running in. </summary>

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ClusterFabricSettingsSection : IUtf8JsonSerializable
+    public partial class ClusterFabricSettingsSection : IUtf8JsonSerializable, IModelJsonSerializable<ClusterFabricSettingsSection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ClusterFabricSettingsSection>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ClusterFabricSettingsSection>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ClusterFabricSettingsSection>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -22,20 +29,42 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStartArray();
             foreach (var item in Parameters)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ClusterFabricSettingsParameterDescription>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ClusterFabricSettingsSection DeserializeClusterFabricSettingsSection(JsonElement element)
+        internal static ClusterFabricSettingsSection DeserializeClusterFabricSettingsSection(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
             IList<ClusterFabricSettingsParameterDescription> parameters = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -53,8 +82,61 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     parameters = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ClusterFabricSettingsSection(name, parameters);
+            return new ClusterFabricSettingsSection(name, parameters, serializedAdditionalRawData);
+        }
+
+        ClusterFabricSettingsSection IModelJsonSerializable<ClusterFabricSettingsSection>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClusterFabricSettingsSection>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeClusterFabricSettingsSection(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ClusterFabricSettingsSection>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClusterFabricSettingsSection>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ClusterFabricSettingsSection IModelSerializable<ClusterFabricSettingsSection>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClusterFabricSettingsSection>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeClusterFabricSettingsSection(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ClusterFabricSettingsSection"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ClusterFabricSettingsSection"/> to convert. </param>
+        public static implicit operator RequestContent(ClusterFabricSettingsSection model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ClusterFabricSettingsSection"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ClusterFabricSettingsSection(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeClusterFabricSettingsSection(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,17 +5,85 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    internal partial class MoverResourceList
+    internal partial class MoverResourceList : IUtf8JsonSerializable, IModelJsonSerializable<MoverResourceList>
     {
-        internal static MoverResourceList DeserializeMoverResourceList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MoverResourceList>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MoverResourceList>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MoverResourceList>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MoverResourceData>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (Optional.IsDefined(SummaryCollection))
+            {
+                if (SummaryCollection != null)
+                {
+                    writer.WritePropertyName("summaryCollection"u8);
+                    if (SummaryCollection is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MoverSummaryList>)SummaryCollection).Serialize(writer, options);
+                    }
+                }
+                else
+                {
+                    writer.WriteNull("summaryCollection");
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MoverResourceList DeserializeMoverResourceList(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +92,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<string> nextLink = default;
             Optional<MoverSummaryList> summaryCollection = default;
             Optional<long> totalCount = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -64,8 +133,61 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     totalCount = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MoverResourceList(Optional.ToList(value), nextLink.Value, summaryCollection.Value, Optional.ToNullable(totalCount));
+            return new MoverResourceList(Optional.ToList(value), nextLink.Value, summaryCollection.Value, Optional.ToNullable(totalCount), serializedAdditionalRawData);
+        }
+
+        MoverResourceList IModelJsonSerializable<MoverResourceList>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MoverResourceList>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMoverResourceList(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MoverResourceList>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MoverResourceList>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MoverResourceList IModelSerializable<MoverResourceList>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MoverResourceList>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMoverResourceList(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MoverResourceList"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MoverResourceList"/> to convert. </param>
+        public static implicit operator RequestContent(MoverResourceList model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MoverResourceList"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MoverResourceList(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMoverResourceList(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

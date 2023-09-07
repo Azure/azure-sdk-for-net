@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,25 @@ namespace Azure.Search.Documents.Models
     /// <summary> The DocumentKeysOrIds. </summary>
     public partial class ResetDocumentOptions
     {
-        /// <summary> Initializes a new instance of ResetDocumentOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResetDocumentOptions"/>. </summary>
         public ResetDocumentOptions()
         {
             DocumentKeys = new ChangeTrackingList<string>();
             DataSourceDocumentIds = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResetDocumentOptions"/>. </summary>
+        /// <param name="documentKeys"> document keys to be reset. </param>
+        /// <param name="dataSourceDocumentIds"> datasource document identifiers to be reset. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResetDocumentOptions(IList<string> documentKeys, IList<string> dataSourceDocumentIds, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DocumentKeys = documentKeys;
+            DataSourceDocumentIds = dataSourceDocumentIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> document keys to be reset. </summary>

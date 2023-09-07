@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Please note <see cref="BackupSchedulePolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="LogSchedulePolicy"/>, <see cref="LongTermSchedulePolicy"/>, <see cref="SimpleSchedulePolicy"/> and <see cref="SimpleSchedulePolicyV2"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownSchedulePolicy))]
     public abstract partial class BackupSchedulePolicy
     {
-        /// <summary> Initializes a new instance of BackupSchedulePolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupSchedulePolicy"/>. </summary>
         protected BackupSchedulePolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupSchedulePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupSchedulePolicy"/>. </summary>
         /// <param name="schedulePolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        internal BackupSchedulePolicy(string schedulePolicyType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupSchedulePolicy(string schedulePolicyType, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SchedulePolicyType = schedulePolicyType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>

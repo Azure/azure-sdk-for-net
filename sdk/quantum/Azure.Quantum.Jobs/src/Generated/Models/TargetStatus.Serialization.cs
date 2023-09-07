@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Quantum.Jobs.Models
 {
-    public partial class TargetStatus
+    public partial class TargetStatus : IUtf8JsonSerializable, IModelJsonSerializable<TargetStatus>
     {
-        internal static TargetStatus DeserializeTargetStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TargetStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TargetStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TargetStatus>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TargetStatus DeserializeTargetStatus(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +50,7 @@ namespace Azure.Quantum.Jobs.Models
             Optional<TargetAvailability> currentAvailability = default;
             Optional<long> averageQueueTime = default;
             Optional<string> statusPage = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -52,8 +81,61 @@ namespace Azure.Quantum.Jobs.Models
                     statusPage = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TargetStatus(id.Value, Optional.ToNullable(currentAvailability), Optional.ToNullable(averageQueueTime), statusPage.Value);
+            return new TargetStatus(id.Value, Optional.ToNullable(currentAvailability), Optional.ToNullable(averageQueueTime), statusPage.Value, serializedAdditionalRawData);
+        }
+
+        TargetStatus IModelJsonSerializable<TargetStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TargetStatus>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTargetStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TargetStatus>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TargetStatus>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TargetStatus IModelSerializable<TargetStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TargetStatus>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTargetStatus(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TargetStatus"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TargetStatus"/> to convert. </param>
+        public static implicit operator RequestContent(TargetStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TargetStatus"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TargetStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTargetStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

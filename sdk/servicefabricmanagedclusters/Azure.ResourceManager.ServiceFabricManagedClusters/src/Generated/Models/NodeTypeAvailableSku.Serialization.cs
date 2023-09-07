@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class NodeTypeAvailableSku
+    public partial class NodeTypeAvailableSku : IUtf8JsonSerializable, IModelJsonSerializable<NodeTypeAvailableSku>
     {
-        internal static NodeTypeAvailableSku DeserializeNodeTypeAvailableSku(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NodeTypeAvailableSku>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NodeTypeAvailableSku>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NodeTypeAvailableSku>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static NodeTypeAvailableSku DeserializeNodeTypeAvailableSku(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +49,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Optional<ResourceType> resourceType = default;
             Optional<NodeTypeSupportedSku> sku = default;
             Optional<NodeTypeSkuCapacity> capacity = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -50,8 +79,61 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     capacity = NodeTypeSkuCapacity.DeserializeNodeTypeSkuCapacity(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NodeTypeAvailableSku(Optional.ToNullable(resourceType), sku.Value, capacity.Value);
+            return new NodeTypeAvailableSku(Optional.ToNullable(resourceType), sku.Value, capacity.Value, serializedAdditionalRawData);
+        }
+
+        NodeTypeAvailableSku IModelJsonSerializable<NodeTypeAvailableSku>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NodeTypeAvailableSku>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNodeTypeAvailableSku(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NodeTypeAvailableSku>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NodeTypeAvailableSku>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NodeTypeAvailableSku IModelSerializable<NodeTypeAvailableSku>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NodeTypeAvailableSku>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNodeTypeAvailableSku(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NodeTypeAvailableSku"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NodeTypeAvailableSku"/> to convert. </param>
+        public static implicit operator RequestContent(NodeTypeAvailableSku model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NodeTypeAvailableSku"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NodeTypeAvailableSku(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNodeTypeAvailableSku(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

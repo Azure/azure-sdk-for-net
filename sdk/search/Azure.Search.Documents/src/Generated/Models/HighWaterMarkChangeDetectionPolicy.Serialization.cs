@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class HighWaterMarkChangeDetectionPolicy : IUtf8JsonSerializable
+    public partial class HighWaterMarkChangeDetectionPolicy : IUtf8JsonSerializable, IModelJsonSerializable<HighWaterMarkChangeDetectionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HighWaterMarkChangeDetectionPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HighWaterMarkChangeDetectionPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HighWaterMarkChangeDetectionPolicy>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("highWaterMarkColumnName"u8);
             writer.WriteStringValue(HighWaterMarkColumnName);
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HighWaterMarkChangeDetectionPolicy DeserializeHighWaterMarkChangeDetectionPolicy(JsonElement element)
+        internal static HighWaterMarkChangeDetectionPolicy DeserializeHighWaterMarkChangeDetectionPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string highWaterMarkColumnName = default;
             string odataType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("highWaterMarkColumnName"u8))
@@ -42,8 +65,61 @@ namespace Azure.Search.Documents.Indexes.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HighWaterMarkChangeDetectionPolicy(odataType, highWaterMarkColumnName);
+            return new HighWaterMarkChangeDetectionPolicy(odataType, highWaterMarkColumnName, serializedAdditionalRawData);
+        }
+
+        HighWaterMarkChangeDetectionPolicy IModelJsonSerializable<HighWaterMarkChangeDetectionPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HighWaterMarkChangeDetectionPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHighWaterMarkChangeDetectionPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HighWaterMarkChangeDetectionPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HighWaterMarkChangeDetectionPolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HighWaterMarkChangeDetectionPolicy IModelSerializable<HighWaterMarkChangeDetectionPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HighWaterMarkChangeDetectionPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHighWaterMarkChangeDetectionPolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HighWaterMarkChangeDetectionPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HighWaterMarkChangeDetectionPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(HighWaterMarkChangeDetectionPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HighWaterMarkChangeDetectionPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HighWaterMarkChangeDetectionPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHighWaterMarkChangeDetectionPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

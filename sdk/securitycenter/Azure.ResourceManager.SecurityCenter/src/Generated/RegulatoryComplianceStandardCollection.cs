@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _regulatoryComplianceStandardRestClient.CreateListRequest(Id.SubscriptionId, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _regulatoryComplianceStandardRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RegulatoryComplianceStandardResource(Client, RegulatoryComplianceStandardData.DeserializeRegulatoryComplianceStandardData(e)), _regulatoryComplianceStandardClientDiagnostics, Pipeline, "RegulatoryComplianceStandardCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new RegulatoryComplianceStandardResource(Client, RegulatoryComplianceStandardData.DeserializeRegulatoryComplianceStandardData(e)), _regulatoryComplianceStandardClientDiagnostics, Pipeline, "RegulatoryComplianceStandardCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _regulatoryComplianceStandardRestClient.CreateListRequest(Id.SubscriptionId, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _regulatoryComplianceStandardRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RegulatoryComplianceStandardResource(Client, RegulatoryComplianceStandardData.DeserializeRegulatoryComplianceStandardData(e)), _regulatoryComplianceStandardClientDiagnostics, Pipeline, "RegulatoryComplianceStandardCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new RegulatoryComplianceStandardResource(Client, RegulatoryComplianceStandardData.DeserializeRegulatoryComplianceStandardData(e)), _regulatoryComplianceStandardClientDiagnostics, Pipeline, "RegulatoryComplianceStandardCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

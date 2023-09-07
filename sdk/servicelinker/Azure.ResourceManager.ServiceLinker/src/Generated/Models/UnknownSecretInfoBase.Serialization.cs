@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    internal partial class UnknownSecretInfoBase : IUtf8JsonSerializable
+    internal partial class UnknownSecretInfoBase : IUtf8JsonSerializable, IModelJsonSerializable<SecretBaseInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecretBaseInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecretBaseInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecretBaseInfo>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("secretType"u8);
             writer.WriteStringValue(SecretType.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownSecretInfoBase DeserializeUnknownSecretInfoBase(JsonElement element)
+        internal static SecretBaseInfo DeserializeUnknownSecretInfoBase(JsonElement element, ModelSerializerOptions options = default) => DeserializeSecretBaseInfo(element, options);
+
+        SecretBaseInfo IModelJsonSerializable<SecretBaseInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            LinkerSecretType secretType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("secretType"u8))
-                {
-                    secretType = new LinkerSecretType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownSecretInfoBase(secretType);
+            Core.ModelSerializerHelper.ValidateFormat<SecretBaseInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownSecretInfoBase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecretBaseInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecretBaseInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecretBaseInfo IModelSerializable<SecretBaseInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecretBaseInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecretBaseInfo(doc.RootElement, options);
         }
     }
 }

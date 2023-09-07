@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the virtual network resource settings. </summary>
     public partial class MoverVirtualNetworkResourceSettings : MoverResourceSettings
     {
-        /// <summary> Initializes a new instance of MoverVirtualNetworkResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverVirtualNetworkResourceSettings"/>. </summary>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceName"/> is null. </exception>
         public MoverVirtualNetworkResourceSettings(string targetResourceName) : base(targetResourceName)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             ResourceType = "Microsoft.Network/virtualNetworks";
         }
 
-        /// <summary> Initializes a new instance of MoverVirtualNetworkResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverVirtualNetworkResourceSettings"/>. </summary>
         /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <param name="tags"> Gets or sets the Resource tags. </param>
@@ -42,7 +42,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// deployed in the virtual network.
         /// </param>
         /// <param name="subnets"> Gets or sets List of subnets in a VirtualNetwork. </param>
-        internal MoverVirtualNetworkResourceSettings(string resourceType, string targetResourceName, IDictionary<string, string> tags, bool? enableDdosProtection, IList<string> addressSpace, IList<string> dnsServers, IList<SubnetResourceSettings> subnets) : base(resourceType, targetResourceName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MoverVirtualNetworkResourceSettings(string resourceType, string targetResourceName, IDictionary<string, string> tags, bool? enableDdosProtection, IList<string> addressSpace, IList<string> dnsServers, IList<SubnetResourceSettings> subnets, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(resourceType, targetResourceName, serializedAdditionalRawData)
         {
             Tags = tags;
             EnableDdosProtection = enableDdosProtection;
@@ -50,6 +51,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
             DnsServers = dnsServers;
             Subnets = subnets;
             ResourceType = resourceType ?? "Microsoft.Network/virtualNetworks";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MoverVirtualNetworkResourceSettings"/> for deserialization. </summary>
+        internal MoverVirtualNetworkResourceSettings()
+        {
         }
 
         /// <summary> Gets or sets the Resource tags. </summary>

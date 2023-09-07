@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class JitNetworkAccessPortRule : IUtf8JsonSerializable
+    public partial class JitNetworkAccessPortRule : IUtf8JsonSerializable, IModelJsonSerializable<JitNetworkAccessPortRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JitNetworkAccessPortRule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<JitNetworkAccessPortRule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<JitNetworkAccessPortRule>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("number"u8);
             writer.WriteNumberValue(Number);
@@ -38,11 +44,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WritePropertyName("maxRequestAccessDuration"u8);
             writer.WriteStringValue(MaxRequestAccessDuration, "P");
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static JitNetworkAccessPortRule DeserializeJitNetworkAccessPortRule(JsonElement element)
+        internal static JitNetworkAccessPortRule DeserializeJitNetworkAccessPortRule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,6 +72,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> allowedSourceAddressPrefix = default;
             Optional<IList<string>> allowedSourceAddressPrefixes = default;
             TimeSpan maxRequestAccessDuration = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("number"u8))
@@ -88,8 +109,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     maxRequestAccessDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new JitNetworkAccessPortRule(number, protocol, allowedSourceAddressPrefix.Value, Optional.ToList(allowedSourceAddressPrefixes), maxRequestAccessDuration);
+            return new JitNetworkAccessPortRule(number, protocol, allowedSourceAddressPrefix.Value, Optional.ToList(allowedSourceAddressPrefixes), maxRequestAccessDuration, serializedAdditionalRawData);
+        }
+
+        JitNetworkAccessPortRule IModelJsonSerializable<JitNetworkAccessPortRule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JitNetworkAccessPortRule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJitNetworkAccessPortRule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<JitNetworkAccessPortRule>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JitNetworkAccessPortRule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        JitNetworkAccessPortRule IModelSerializable<JitNetworkAccessPortRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JitNetworkAccessPortRule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeJitNetworkAccessPortRule(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="JitNetworkAccessPortRule"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="JitNetworkAccessPortRule"/> to convert. </param>
+        public static implicit operator RequestContent(JitNetworkAccessPortRule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="JitNetworkAccessPortRule"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator JitNetworkAccessPortRule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeJitNetworkAccessPortRule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

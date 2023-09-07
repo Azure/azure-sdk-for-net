@@ -5,23 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The Defender for Databases GCP offering configurations. </summary>
     public partial class DefenderForDatabasesGcpOffering : SecurityCenterCloudOffering
     {
-        /// <summary> Initializes a new instance of DefenderForDatabasesGcpOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesGcpOffering"/>. </summary>
         public DefenderForDatabasesGcpOffering()
         {
             OfferingType = OfferingType.DefenderForDatabasesGcp;
         }
 
-        /// <summary> Initializes a new instance of DefenderForDatabasesGcpOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesGcpOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
         /// <param name="arcAutoProvisioning"> The ARC autoprovisioning configuration. </param>
         /// <param name="defenderForDatabasesArcAutoProvisioning"> The native cloud connection configuration. </param>
-        internal DefenderForDatabasesGcpOffering(OfferingType offeringType, string description, DefenderForDatabasesGcpOfferingArcAutoProvisioning arcAutoProvisioning, GcpDefenderForDatabasesArcAutoProvisioning defenderForDatabasesArcAutoProvisioning) : base(offeringType, description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DefenderForDatabasesGcpOffering(OfferingType offeringType, string description, DefenderForDatabasesGcpOfferingArcAutoProvisioning arcAutoProvisioning, GcpDefenderForDatabasesArcAutoProvisioning defenderForDatabasesArcAutoProvisioning, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(offeringType, description, serializedAdditionalRawData)
         {
             ArcAutoProvisioning = arcAutoProvisioning;
             DefenderForDatabasesArcAutoProvisioning = defenderForDatabasesArcAutoProvisioning;

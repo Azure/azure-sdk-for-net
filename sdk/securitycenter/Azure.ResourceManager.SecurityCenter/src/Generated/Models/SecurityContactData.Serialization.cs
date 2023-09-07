@@ -5,17 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class SecurityContactData : IUtf8JsonSerializable
+    public partial class SecurityContactData : IUtf8JsonSerializable, IModelJsonSerializable<SecurityContactData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityContactData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityContactData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityContactData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -32,19 +40,47 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(AlertNotifications))
             {
                 writer.WritePropertyName("alertNotifications"u8);
-                writer.WriteObjectValue(AlertNotifications);
+                if (AlertNotifications is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SecurityContactPropertiesAlertNotifications>)AlertNotifications).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(NotificationsByRole))
             {
                 writer.WritePropertyName("notificationsByRole"u8);
-                writer.WriteObjectValue(NotificationsByRole);
+                if (NotificationsByRole is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SecurityContactPropertiesNotificationsByRole>)NotificationsByRole).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityContactData DeserializeSecurityContactData(JsonElement element)
+        internal static SecurityContactData DeserializeSecurityContactData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<string> phone = default;
             Optional<SecurityContactPropertiesAlertNotifications> alertNotifications = default;
             Optional<SecurityContactPropertiesNotificationsByRole> notificationsByRole = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -123,8 +160,61 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityContactData(id, name, type, systemData.Value, emails.Value, phone.Value, alertNotifications.Value, notificationsByRole.Value);
+            return new SecurityContactData(id, name, type, systemData.Value, emails.Value, phone.Value, alertNotifications.Value, notificationsByRole.Value, serializedAdditionalRawData);
+        }
+
+        SecurityContactData IModelJsonSerializable<SecurityContactData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityContactData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityContactData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityContactData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityContactData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityContactData IModelSerializable<SecurityContactData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityContactData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityContactData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SecurityContactData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SecurityContactData"/> to convert. </param>
+        public static implicit operator RequestContent(SecurityContactData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SecurityContactData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SecurityContactData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityContactData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

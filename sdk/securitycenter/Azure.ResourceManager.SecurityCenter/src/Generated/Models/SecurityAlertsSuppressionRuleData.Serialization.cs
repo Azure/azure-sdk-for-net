@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class SecurityAlertsSuppressionRuleData : IUtf8JsonSerializable
+    public partial class SecurityAlertsSuppressionRuleData : IUtf8JsonSerializable, IModelJsonSerializable<SecurityAlertsSuppressionRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityAlertsSuppressionRuleData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityAlertsSuppressionRuleData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityAlertsSuppressionRuleData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -48,14 +55,35 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(SuppressionAlertsScope))
             {
                 writer.WritePropertyName("suppressionAlertsScope"u8);
-                writer.WriteObjectValue(SuppressionAlertsScope);
+                if (SuppressionAlertsScope is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SuppressionAlertsScope>)SuppressionAlertsScope).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityAlertsSuppressionRuleData DeserializeSecurityAlertsSuppressionRuleData(JsonElement element)
+        internal static SecurityAlertsSuppressionRuleData DeserializeSecurityAlertsSuppressionRuleData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -71,6 +99,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<SecurityAlertsSuppressionRuleState> state = default;
             Optional<string> comment = default;
             Optional<SuppressionAlertsScope> suppressionAlertsScope = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -160,8 +189,61 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityAlertsSuppressionRuleData(id, name, type, systemData.Value, alertType.Value, Optional.ToNullable(lastModifiedUtc), Optional.ToNullable(expirationDateUtc), reason.Value, Optional.ToNullable(state), comment.Value, suppressionAlertsScope.Value);
+            return new SecurityAlertsSuppressionRuleData(id, name, type, systemData.Value, alertType.Value, Optional.ToNullable(lastModifiedUtc), Optional.ToNullable(expirationDateUtc), reason.Value, Optional.ToNullable(state), comment.Value, suppressionAlertsScope.Value, serializedAdditionalRawData);
+        }
+
+        SecurityAlertsSuppressionRuleData IModelJsonSerializable<SecurityAlertsSuppressionRuleData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityAlertsSuppressionRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityAlertsSuppressionRuleData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityAlertsSuppressionRuleData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityAlertsSuppressionRuleData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityAlertsSuppressionRuleData IModelSerializable<SecurityAlertsSuppressionRuleData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityAlertsSuppressionRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityAlertsSuppressionRuleData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SecurityAlertsSuppressionRuleData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SecurityAlertsSuppressionRuleData"/> to convert. </param>
+        public static implicit operator RequestContent(SecurityAlertsSuppressionRuleData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SecurityAlertsSuppressionRuleData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SecurityAlertsSuppressionRuleData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityAlertsSuppressionRuleData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

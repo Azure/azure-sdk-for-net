@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines reference to subnet. </summary>
     public partial class SubnetReferenceInfo : ProxyResourceReferenceInfo
     {
-        /// <summary> Initializes a new instance of SubnetReferenceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubnetReferenceInfo"/>. </summary>
         /// <param name="sourceArmResourceId"> Gets the ARM resource ID of the tracked resource being referenced. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceArmResourceId"/> is null. </exception>
         public SubnetReferenceInfo(ResourceIdentifier sourceArmResourceId) : base(sourceArmResourceId)
@@ -21,13 +22,17 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Argument.AssertNotNull(sourceArmResourceId, nameof(sourceArmResourceId));
         }
 
-        /// <summary> Initializes a new instance of SubnetReferenceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubnetReferenceInfo"/>. </summary>
         /// <param name="sourceArmResourceId"> Gets the ARM resource ID of the tracked resource being referenced. </param>
         /// <param name="name"> Gets the name of the proxy resource on the target side. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceArmResourceId"/> is null. </exception>
-        internal SubnetReferenceInfo(ResourceIdentifier sourceArmResourceId, string name) : base(sourceArmResourceId, name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubnetReferenceInfo(ResourceIdentifier sourceArmResourceId, string name, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(sourceArmResourceId, name, serializedAdditionalRawData)
         {
-            Argument.AssertNotNull(sourceArmResourceId, nameof(sourceArmResourceId));
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SubnetReferenceInfo"/> for deserialization. </summary>
+        internal SubnetReferenceInfo()
+        {
         }
     }
 }

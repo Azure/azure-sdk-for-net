@@ -6,15 +6,64 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryPointProperties
+    public partial class SiteRecoveryPointProperties : IUtf8JsonSerializable, IModelJsonSerializable<SiteRecoveryPointProperties>
     {
-        internal static SiteRecoveryPointProperties DeserializeSiteRecoveryPointProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SiteRecoveryPointProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SiteRecoveryPointProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryPointProperties>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RecoveryPointOn))
+            {
+                writer.WritePropertyName("recoveryPointTime"u8);
+                writer.WriteStringValue(RecoveryPointOn.Value, "O");
+            }
+            if (Optional.IsDefined(RecoveryPointType))
+            {
+                writer.WritePropertyName("recoveryPointType"u8);
+                writer.WriteStringValue(RecoveryPointType);
+            }
+            if (Optional.IsDefined(ProviderSpecificDetails))
+            {
+                writer.WritePropertyName("providerSpecificDetails"u8);
+                if (ProviderSpecificDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ProviderSpecificRecoveryPointDetails>)ProviderSpecificDetails).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SiteRecoveryPointProperties DeserializeSiteRecoveryPointProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<DateTimeOffset> recoveryPointTime = default;
             Optional<string> recoveryPointType = default;
             Optional<ProviderSpecificRecoveryPointDetails> providerSpecificDetails = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointTime"u8))
@@ -47,8 +97,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     providerSpecificDetails = ProviderSpecificRecoveryPointDetails.DeserializeProviderSpecificRecoveryPointDetails(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SiteRecoveryPointProperties(Optional.ToNullable(recoveryPointTime), recoveryPointType.Value, providerSpecificDetails.Value);
+            return new SiteRecoveryPointProperties(Optional.ToNullable(recoveryPointTime), recoveryPointType.Value, providerSpecificDetails.Value, serializedAdditionalRawData);
+        }
+
+        SiteRecoveryPointProperties IModelJsonSerializable<SiteRecoveryPointProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryPointProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryPointProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SiteRecoveryPointProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryPointProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SiteRecoveryPointProperties IModelSerializable<SiteRecoveryPointProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryPointProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryPointProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SiteRecoveryPointProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SiteRecoveryPointProperties"/> to convert. </param>
+        public static implicit operator RequestContent(SiteRecoveryPointProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SiteRecoveryPointProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SiteRecoveryPointProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSiteRecoveryPointProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

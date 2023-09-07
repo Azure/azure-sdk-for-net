@@ -5,37 +5,63 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
+using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class UnknownSimilarity : IUtf8JsonSerializable
+    internal partial class UnknownSimilarity : IUtf8JsonSerializable, IModelJsonSerializable<SimilarityAlgorithm>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SimilarityAlgorithm>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SimilarityAlgorithm>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SimilarityAlgorithm>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownSimilarity DeserializeUnknownSimilarity(JsonElement element)
+        internal static SimilarityAlgorithm DeserializeUnknownSimilarity(JsonElement element, ModelSerializerOptions options = default) => DeserializeSimilarityAlgorithm(element, options);
+
+        SimilarityAlgorithm IModelJsonSerializable<SimilarityAlgorithm>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string odataType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@odata.type"u8))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownSimilarity(odataType);
+            Core.ModelSerializerHelper.ValidateFormat<SimilarityAlgorithm>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownSimilarity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SimilarityAlgorithm>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SimilarityAlgorithm>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SimilarityAlgorithm IModelSerializable<SimilarityAlgorithm>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SimilarityAlgorithm>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSimilarityAlgorithm(doc.RootElement, options);
         }
     }
 }

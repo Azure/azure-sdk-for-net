@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a cloud application entity. </summary>
     public partial class SecurityInsightsCloudApplicationEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsCloudApplicationEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsCloudApplicationEntity"/>. </summary>
         public SecurityInsightsCloudApplicationEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = SecurityInsightsEntityKind.CloudApplication;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsCloudApplicationEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsCloudApplicationEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +33,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="appId"> The technical identifier of the application. </param>
         /// <param name="appName"> The name of the related cloud application. </param>
         /// <param name="instanceName"> The user defined instance name of the cloud application. It is often used to distinguish between several applications of the same type that a customer has. </param>
-        internal SecurityInsightsCloudApplicationEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, int? appId, string appName, string instanceName) : base(id, name, resourceType, systemData, kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsCloudApplicationEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, int? appId, string appName, string instanceName, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

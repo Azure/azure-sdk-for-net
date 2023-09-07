@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class TargetRestoreInfo : IUtf8JsonSerializable
+    public partial class TargetRestoreInfo : IUtf8JsonSerializable, IModelJsonSerializable<TargetRestoreInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TargetRestoreInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TargetRestoreInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TargetRestoreInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(OverwriteOption))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("targetDirectoryForFileRestore"u8);
                 writer.WriteStringValue(TargetDirectoryForFileRestore);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TargetRestoreInfo DeserializeTargetRestoreInfo(JsonElement element)
+        internal static TargetRestoreInfo DeserializeTargetRestoreInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> containerId = default;
             Optional<string> databaseName = default;
             Optional<string> targetDirectoryForFileRestore = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("overwriteOption"u8))
@@ -74,8 +97,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     targetDirectoryForFileRestore = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TargetRestoreInfo(Optional.ToNullable(overwriteOption), containerId.Value, databaseName.Value, targetDirectoryForFileRestore.Value);
+            return new TargetRestoreInfo(Optional.ToNullable(overwriteOption), containerId.Value, databaseName.Value, targetDirectoryForFileRestore.Value, serializedAdditionalRawData);
+        }
+
+        TargetRestoreInfo IModelJsonSerializable<TargetRestoreInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TargetRestoreInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTargetRestoreInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TargetRestoreInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TargetRestoreInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TargetRestoreInfo IModelSerializable<TargetRestoreInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TargetRestoreInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTargetRestoreInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TargetRestoreInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TargetRestoreInfo"/> to convert. </param>
+        public static implicit operator RequestContent(TargetRestoreInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TargetRestoreInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TargetRestoreInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTargetRestoreInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

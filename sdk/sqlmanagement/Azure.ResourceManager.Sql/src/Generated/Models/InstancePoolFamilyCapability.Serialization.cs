@@ -5,16 +5,48 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class InstancePoolFamilyCapability
+    public partial class InstancePoolFamilyCapability : IUtf8JsonSerializable, IModelJsonSerializable<InstancePoolFamilyCapability>
     {
-        internal static InstancePoolFamilyCapability DeserializeInstancePoolFamilyCapability(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InstancePoolFamilyCapability>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InstancePoolFamilyCapability>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<InstancePoolFamilyCapability>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Reason))
+            {
+                writer.WritePropertyName("reason"u8);
+                writer.WriteStringValue(Reason);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static InstancePoolFamilyCapability DeserializeInstancePoolFamilyCapability(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +56,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<IReadOnlyList<InstancePoolVcoresCapability>> supportedVcoresValues = default;
             Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -73,8 +106,61 @@ namespace Azure.ResourceManager.Sql.Models
                     reason = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InstancePoolFamilyCapability(name.Value, Optional.ToList(supportedLicenseTypes), Optional.ToList(supportedVcoresValues), Optional.ToNullable(status), reason.Value);
+            return new InstancePoolFamilyCapability(name.Value, Optional.ToList(supportedLicenseTypes), Optional.ToList(supportedVcoresValues), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+        }
+
+        InstancePoolFamilyCapability IModelJsonSerializable<InstancePoolFamilyCapability>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InstancePoolFamilyCapability>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInstancePoolFamilyCapability(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InstancePoolFamilyCapability>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InstancePoolFamilyCapability>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InstancePoolFamilyCapability IModelSerializable<InstancePoolFamilyCapability>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InstancePoolFamilyCapability>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInstancePoolFamilyCapability(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InstancePoolFamilyCapability"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InstancePoolFamilyCapability"/> to convert. </param>
+        public static implicit operator RequestContent(InstancePoolFamilyCapability model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InstancePoolFamilyCapability"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InstancePoolFamilyCapability(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInstancePoolFamilyCapability(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

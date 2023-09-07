@@ -6,31 +6,53 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class NodeTypeVaultCertificate : IUtf8JsonSerializable
+    public partial class NodeTypeVaultCertificate : IUtf8JsonSerializable, IModelJsonSerializable<NodeTypeVaultCertificate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NodeTypeVaultCertificate>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NodeTypeVaultCertificate>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NodeTypeVaultCertificate>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("certificateUrl"u8);
             writer.WriteStringValue(CertificateUri.AbsoluteUri);
             writer.WritePropertyName("certificateStore"u8);
             writer.WriteStringValue(CertificateStore);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NodeTypeVaultCertificate DeserializeNodeTypeVaultCertificate(JsonElement element)
+        internal static NodeTypeVaultCertificate DeserializeNodeTypeVaultCertificate(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Uri certificateUrl = default;
             string certificateStore = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateUrl"u8))
@@ -43,8 +65,61 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     certificateStore = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NodeTypeVaultCertificate(certificateUrl, certificateStore);
+            return new NodeTypeVaultCertificate(certificateUrl, certificateStore, serializedAdditionalRawData);
+        }
+
+        NodeTypeVaultCertificate IModelJsonSerializable<NodeTypeVaultCertificate>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NodeTypeVaultCertificate>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNodeTypeVaultCertificate(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NodeTypeVaultCertificate>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NodeTypeVaultCertificate>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NodeTypeVaultCertificate IModelSerializable<NodeTypeVaultCertificate>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NodeTypeVaultCertificate>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNodeTypeVaultCertificate(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NodeTypeVaultCertificate"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NodeTypeVaultCertificate"/> to convert. </param>
+        public static implicit operator RequestContent(NodeTypeVaultCertificate model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NodeTypeVaultCertificate"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NodeTypeVaultCertificate(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNodeTypeVaultCertificate(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

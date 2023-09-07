@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.ResourceHealth
     /// </summary>
     public partial class ResourceHealthEventData : ResourceData
     {
-        /// <summary> Initializes a new instance of ResourceHealthEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventData"/>. </summary>
         internal ResourceHealthEventData()
         {
             Links = new ChangeTrackingList<ResourceHealthEventLink>();
@@ -27,7 +30,7 @@ namespace Azure.ResourceManager.ResourceHealth
             Faqs = new ChangeTrackingList<ResourceHealthEventFaq>();
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -60,7 +63,8 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="additionalInformation"> Additional information. </param>
         /// <param name="duration"> duration in seconds. </param>
         /// <param name="impactType"> The type of the impact. </param>
-        internal ResourceHealthEventData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceHealthEventTypeValue? eventType, ResourceHealthEventSourceValue? eventSource, ResourceHealthEventStatusValue? status, string title, string summary, string header, ResourceHealthEventInsightLevelValue? level, ResourceHealthEventLevelValue? eventLevel, string externalIncidentId, string reason, ResourceHealthEventArticle article, IReadOnlyList<ResourceHealthEventLink> links, DateTimeOffset? impactStartOn, DateTimeOffset? impactMitigationOn, IReadOnlyList<ResourceHealthEventImpact> impact, ResourceHealthEventRecommendedActions recommendedActions, IReadOnlyList<ResourceHealthEventFaq> faqs, bool? isHirEvent, bool? isMicrosoftSupportEnabled, string description, bool? isPlatformInitiated, bool? isChatWithUsEnabled, int? priority, DateTimeOffset? lastUpdateOn, string hirStage, ResourceHealthEventAdditionalInformation additionalInformation, int? duration, string impactType) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHealthEventData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceHealthEventTypeValue? eventType, ResourceHealthEventSourceValue? eventSource, ResourceHealthEventStatusValue? status, string title, string summary, string header, ResourceHealthEventInsightLevelValue? level, ResourceHealthEventLevelValue? eventLevel, string externalIncidentId, string reason, ResourceHealthEventArticle article, IReadOnlyList<ResourceHealthEventLink> links, DateTimeOffset? impactStartOn, DateTimeOffset? impactMitigationOn, IReadOnlyList<ResourceHealthEventImpact> impact, ResourceHealthEventRecommendedActions recommendedActions, IReadOnlyList<ResourceHealthEventFaq> faqs, bool? isHirEvent, bool? isMicrosoftSupportEnabled, string description, bool? isPlatformInitiated, bool? isChatWithUsEnabled, int? priority, DateTimeOffset? lastUpdateOn, string hirStage, ResourceHealthEventAdditionalInformation additionalInformation, int? duration, string impactType, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             EventType = eventType;
             EventSource = eventSource;
@@ -90,6 +94,7 @@ namespace Azure.ResourceManager.ResourceHealth
             AdditionalInformation = additionalInformation;
             Duration = duration;
             ImpactType = impactType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of event. </summary>

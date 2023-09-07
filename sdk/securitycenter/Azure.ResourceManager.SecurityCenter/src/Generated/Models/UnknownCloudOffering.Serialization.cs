@@ -5,43 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class UnknownCloudOffering : IUtf8JsonSerializable
+    internal partial class UnknownCloudOffering : IUtf8JsonSerializable, IModelJsonSerializable<SecurityCenterCloudOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityCenterCloudOffering>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityCenterCloudOffering>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityCenterCloudOffering>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownCloudOffering DeserializeUnknownCloudOffering(JsonElement element)
+        internal static SecurityCenterCloudOffering DeserializeUnknownCloudOffering(JsonElement element, ModelSerializerOptions options = default) => DeserializeSecurityCenterCloudOffering(element, options);
+
+        SecurityCenterCloudOffering IModelJsonSerializable<SecurityCenterCloudOffering>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            OfferingType offeringType = "Unknown";
-            Optional<string> description = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("offeringType"u8))
-                {
-                    offeringType = new OfferingType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownCloudOffering(offeringType, description.Value);
+            Core.ModelSerializerHelper.ValidateFormat<SecurityCenterCloudOffering>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownCloudOffering(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityCenterCloudOffering>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityCenterCloudOffering>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityCenterCloudOffering IModelSerializable<SecurityCenterCloudOffering>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityCenterCloudOffering>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityCenterCloudOffering(doc.RootElement, options);
         }
     }
 }

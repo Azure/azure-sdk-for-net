@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class SecurityInsightsSentinelOnboardingStateData : IUtf8JsonSerializable
+    public partial class SecurityInsightsSentinelOnboardingStateData : IUtf8JsonSerializable, IModelJsonSerializable<SecurityInsightsSentinelOnboardingStateData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityInsightsSentinelOnboardingStateData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityInsightsSentinelOnboardingStateData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsSentinelOnboardingStateData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
@@ -30,11 +37,25 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WriteBooleanValue(IsCustomerManagedKeySet.Value);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsSentinelOnboardingStateData DeserializeSecurityInsightsSentinelOnboardingStateData(JsonElement element)
+        internal static SecurityInsightsSentinelOnboardingStateData DeserializeSecurityInsightsSentinelOnboardingStateData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +66,7 @@ namespace Azure.ResourceManager.SecurityInsights
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<bool> customerManagedKey = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -101,8 +123,61 @@ namespace Azure.ResourceManager.SecurityInsights
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityInsightsSentinelOnboardingStateData(id, name, type, systemData.Value, Optional.ToNullable(customerManagedKey), Optional.ToNullable(etag));
+            return new SecurityInsightsSentinelOnboardingStateData(id, name, type, systemData.Value, Optional.ToNullable(customerManagedKey), Optional.ToNullable(etag), serializedAdditionalRawData);
+        }
+
+        SecurityInsightsSentinelOnboardingStateData IModelJsonSerializable<SecurityInsightsSentinelOnboardingStateData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsSentinelOnboardingStateData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsSentinelOnboardingStateData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityInsightsSentinelOnboardingStateData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsSentinelOnboardingStateData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityInsightsSentinelOnboardingStateData IModelSerializable<SecurityInsightsSentinelOnboardingStateData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsSentinelOnboardingStateData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityInsightsSentinelOnboardingStateData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SecurityInsightsSentinelOnboardingStateData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SecurityInsightsSentinelOnboardingStateData"/> to convert. </param>
+        public static implicit operator RequestContent(SecurityInsightsSentinelOnboardingStateData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SecurityInsightsSentinelOnboardingStateData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SecurityInsightsSentinelOnboardingStateData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityInsightsSentinelOnboardingStateData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

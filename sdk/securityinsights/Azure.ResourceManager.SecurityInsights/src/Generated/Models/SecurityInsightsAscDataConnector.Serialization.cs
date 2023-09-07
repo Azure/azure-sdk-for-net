@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsAscDataConnector : IUtf8JsonSerializable
+    public partial class SecurityInsightsAscDataConnector : IUtf8JsonSerializable, IModelJsonSerializable<SecurityInsightsAscDataConnector>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityInsightsAscDataConnector>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityInsightsAscDataConnector>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAscDataConnector>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -29,7 +36,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(DataTypes))
             {
                 writer.WritePropertyName("dataTypes"u8);
-                writer.WriteObjectValue(DataTypes);
+                if (DataTypes is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SecurityInsightsAlertsDataTypeOfDataConnector>)DataTypes).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(SubscriptionId))
             {
@@ -37,11 +51,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStringValue(SubscriptionId);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsAscDataConnector DeserializeSecurityInsightsAscDataConnector(JsonElement element)
+        internal static SecurityInsightsAscDataConnector DeserializeSecurityInsightsAscDataConnector(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +82,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<SystemData> systemData = default;
             Optional<SecurityInsightsAlertsDataTypeOfDataConnector> dataTypes = default;
             Optional<string> subscriptionId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -120,8 +149,61 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityInsightsAscDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), dataTypes.Value, subscriptionId.Value);
+            return new SecurityInsightsAscDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), dataTypes.Value, subscriptionId.Value, serializedAdditionalRawData);
+        }
+
+        SecurityInsightsAscDataConnector IModelJsonSerializable<SecurityInsightsAscDataConnector>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAscDataConnector>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsAscDataConnector(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityInsightsAscDataConnector>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAscDataConnector>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityInsightsAscDataConnector IModelSerializable<SecurityInsightsAscDataConnector>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsAscDataConnector>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityInsightsAscDataConnector(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SecurityInsightsAscDataConnector"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SecurityInsightsAscDataConnector"/> to convert. </param>
+        public static implicit operator RequestContent(SecurityInsightsAscDataConnector model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SecurityInsightsAscDataConnector"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SecurityInsightsAscDataConnector(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityInsightsAscDataConnector(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

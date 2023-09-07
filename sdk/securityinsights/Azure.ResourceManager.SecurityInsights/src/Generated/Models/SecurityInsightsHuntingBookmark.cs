@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a Hunting bookmark entity. </summary>
     public partial class SecurityInsightsHuntingBookmark : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsHuntingBookmark. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsHuntingBookmark"/>. </summary>
         public SecurityInsightsHuntingBookmark()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = SecurityInsightsEntityKind.Bookmark;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsHuntingBookmark. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsHuntingBookmark"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +42,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="updatedOn"> The last time the bookmark was updated. </param>
         /// <param name="updatedBy"> Describes a user that updated the bookmark. </param>
         /// <param name="incidentInfo"> Describes an incident that relates to bookmark. </param>
-        internal SecurityInsightsHuntingBookmark(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, DateTimeOffset? createdOn, SecurityInsightsUserInfo createdBy, string displayName, DateTimeOffset? eventOn, IList<string> labels, string notes, string query, string queryResult, DateTimeOffset? updatedOn, SecurityInsightsUserInfo updatedBy, SecurityInsightsBookmarkIncidentInfo incidentInfo) : base(id, name, resourceType, systemData, kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsHuntingBookmark(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, DateTimeOffset? createdOn, SecurityInsightsUserInfo createdBy, string displayName, DateTimeOffset? eventOn, IList<string> labels, string notes, string query, string queryResult, DateTimeOffset? updatedOn, SecurityInsightsUserInfo updatedBy, SecurityInsightsBookmarkIncidentInfo incidentInfo, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

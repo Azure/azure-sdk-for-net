@@ -5,16 +5,77 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class PredefinedTag
+    public partial class PredefinedTag : IUtf8JsonSerializable, IModelJsonSerializable<PredefinedTag>
     {
-        internal static PredefinedTag DeserializePredefinedTag(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PredefinedTag>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PredefinedTag>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PredefinedTag>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(TagName))
+            {
+                writer.WritePropertyName("tagName"u8);
+                writer.WriteStringValue(TagName);
+            }
+            if (Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                if (Count is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PredefinedTagCount>)Count).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(Values))
+            {
+                writer.WritePropertyName("values"u8);
+                writer.WriteStartArray();
+                foreach (var item in Values)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<PredefinedTagValue>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PredefinedTag DeserializePredefinedTag(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +84,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> tagName = default;
             Optional<PredefinedTagCount> count = default;
             Optional<IReadOnlyList<PredefinedTagValue>> values = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -58,8 +120,61 @@ namespace Azure.ResourceManager.Resources.Models
                     values = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PredefinedTag(id.Value, tagName.Value, count.Value, Optional.ToList(values));
+            return new PredefinedTag(id.Value, tagName.Value, count.Value, Optional.ToList(values), serializedAdditionalRawData);
+        }
+
+        PredefinedTag IModelJsonSerializable<PredefinedTag>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PredefinedTag>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePredefinedTag(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PredefinedTag>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PredefinedTag>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PredefinedTag IModelSerializable<PredefinedTag>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PredefinedTag>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePredefinedTag(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PredefinedTag"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PredefinedTag"/> to convert. </param>
+        public static implicit operator RequestContent(PredefinedTag model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PredefinedTag"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PredefinedTag(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePredefinedTag(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

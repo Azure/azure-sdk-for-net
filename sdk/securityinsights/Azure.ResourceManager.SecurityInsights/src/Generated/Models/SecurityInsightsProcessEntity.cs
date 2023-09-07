@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a process entity. </summary>
     public partial class SecurityInsightsProcessEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsProcessEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsProcessEntity"/>. </summary>
         public SecurityInsightsProcessEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = SecurityInsightsEntityKind.Process;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsProcessEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsProcessEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +39,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="imageFileEntityId"> Image file entity id. </param>
         /// <param name="parentProcessEntityId"> The parent process entity id. </param>
         /// <param name="processId"> The process ID. </param>
-        internal SecurityInsightsProcessEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string accountEntityId, string commandLine, DateTimeOffset? createdOn, SecurityInsightsProcessElevationToken? elevationToken, string hostEntityId, string hostLogonSessionEntityId, string imageFileEntityId, string parentProcessEntityId, string processId) : base(id, name, resourceType, systemData, kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsProcessEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string accountEntityId, string commandLine, DateTimeOffset? createdOn, SecurityInsightsProcessElevationToken? elevationToken, string hostEntityId, string hostLogonSessionEntityId, string imageFileEntityId, string parentProcessEntityId, string processId, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

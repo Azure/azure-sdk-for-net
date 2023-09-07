@@ -6,15 +6,71 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    public partial class QuotaSubRequestDetail
+    public partial class QuotaSubRequestDetail : IUtf8JsonSerializable, IModelJsonSerializable<QuotaSubRequestDetail>
     {
-        internal static QuotaSubRequestDetail DeserializeQuotaSubRequestDetail(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<QuotaSubRequestDetail>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<QuotaSubRequestDetail>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<QuotaSubRequestDetail>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                if (Name is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<QuotaRequestResourceName>)Name).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(Unit))
+            {
+                writer.WritePropertyName("unit"u8);
+                writer.WriteStringValue(Unit);
+            }
+            if (Optional.IsDefined(Limit))
+            {
+                writer.WritePropertyName("limit"u8);
+                if (Limit is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<QuotaLimitJsonObject>)Limit).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static QuotaSubRequestDetail DeserializeQuotaSubRequestDetail(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +82,7 @@ namespace Azure.ResourceManager.Quota.Models
             Optional<string> message = default;
             Optional<Guid> subRequestId = default;
             Optional<QuotaLimitJsonObject> limit = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -79,8 +136,61 @@ namespace Azure.ResourceManager.Quota.Models
                     limit = QuotaLimitJsonObject.DeserializeQuotaLimitJsonObject(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new QuotaSubRequestDetail(name.Value, resourceType.Value, unit.Value, Optional.ToNullable(provisioningState), message.Value, Optional.ToNullable(subRequestId), limit.Value);
+            return new QuotaSubRequestDetail(name.Value, resourceType.Value, unit.Value, Optional.ToNullable(provisioningState), message.Value, Optional.ToNullable(subRequestId), limit.Value, serializedAdditionalRawData);
+        }
+
+        QuotaSubRequestDetail IModelJsonSerializable<QuotaSubRequestDetail>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QuotaSubRequestDetail>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeQuotaSubRequestDetail(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<QuotaSubRequestDetail>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QuotaSubRequestDetail>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        QuotaSubRequestDetail IModelSerializable<QuotaSubRequestDetail>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QuotaSubRequestDetail>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeQuotaSubRequestDetail(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="QuotaSubRequestDetail"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="QuotaSubRequestDetail"/> to convert. </param>
+        public static implicit operator RequestContent(QuotaSubRequestDetail model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="QuotaSubRequestDetail"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator QuotaSubRequestDetail(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeQuotaSubRequestDetail(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

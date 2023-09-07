@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// Please note <see cref="AzureResourceBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureKeyVaultProperties"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownAzureResourcePropertiesBase))]
     public abstract partial class AzureResourceBaseProperties
     {
-        /// <summary> Initializes a new instance of AzureResourceBaseProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureResourceBaseProperties"/>. </summary>
         protected AzureResourceBaseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureResourceBaseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureResourceBaseProperties"/>. </summary>
         /// <param name="azureResourceType"> The azure resource type. </param>
-        internal AzureResourceBaseProperties(AzureResourceType azureResourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureResourceBaseProperties(AzureResourceType azureResourceType, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AzureResourceType = azureResourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The azure resource type. </summary>

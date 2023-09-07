@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class SearchServicePrivateEndpointConnectionProperties : IUtf8JsonSerializable
+    public partial class SearchServicePrivateEndpointConnectionProperties : IUtf8JsonSerializable, IModelJsonSerializable<SearchServicePrivateEndpointConnectionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SearchServicePrivateEndpointConnectionProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SearchServicePrivateEndpointConnectionProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SearchServicePrivateEndpointConnectionProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateEndpoint))
             {
@@ -24,7 +32,14 @@ namespace Azure.ResourceManager.Search.Models
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                if (ConnectionState is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SearchServicePrivateLinkServiceConnectionState>)ConnectionState).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(GroupId))
             {
@@ -36,11 +51,25 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SearchServicePrivateEndpointConnectionProperties DeserializeSearchServicePrivateEndpointConnectionProperties(JsonElement element)
+        internal static SearchServicePrivateEndpointConnectionProperties DeserializeSearchServicePrivateEndpointConnectionProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +78,7 @@ namespace Azure.ResourceManager.Search.Models
             Optional<SearchServicePrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<string> groupId = default;
             Optional<SearchPrivateLinkServiceConnectionProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateEndpoint"u8))
@@ -83,8 +113,61 @@ namespace Azure.ResourceManager.Search.Models
                     provisioningState = new SearchPrivateLinkServiceConnectionProvisioningState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SearchServicePrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState.Value, groupId.Value, Optional.ToNullable(provisioningState));
+            return new SearchServicePrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState.Value, groupId.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+        }
+
+        SearchServicePrivateEndpointConnectionProperties IModelJsonSerializable<SearchServicePrivateEndpointConnectionProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SearchServicePrivateEndpointConnectionProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSearchServicePrivateEndpointConnectionProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SearchServicePrivateEndpointConnectionProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SearchServicePrivateEndpointConnectionProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SearchServicePrivateEndpointConnectionProperties IModelSerializable<SearchServicePrivateEndpointConnectionProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SearchServicePrivateEndpointConnectionProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSearchServicePrivateEndpointConnectionProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SearchServicePrivateEndpointConnectionProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SearchServicePrivateEndpointConnectionProperties"/> to convert. </param>
+        public static implicit operator RequestContent(SearchServicePrivateEndpointConnectionProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SearchServicePrivateEndpointConnectionProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SearchServicePrivateEndpointConnectionProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSearchServicePrivateEndpointConnectionProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

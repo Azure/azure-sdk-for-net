@@ -5,15 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VMwareCbtNicContent : IUtf8JsonSerializable
+    public partial class VMwareCbtNicContent : IUtf8JsonSerializable, IModelJsonSerializable<VMwareCbtNicContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VMwareCbtNicContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VMwareCbtNicContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VMwareCbtNicContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("nicId"u8);
             writer.WriteStringValue(NicId);
@@ -49,7 +58,143 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("testStaticIPAddress"u8);
                 writer.WriteStringValue(TestStaticIPAddress.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static VMwareCbtNicContent DeserializeVMwareCbtNicContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string nicId = default;
+            string isPrimaryNic = default;
+            Optional<string> targetSubnetName = default;
+            Optional<IPAddress> targetStaticIPAddress = default;
+            Optional<string> isSelectedForMigration = default;
+            Optional<string> targetNicName = default;
+            Optional<string> testSubnetName = default;
+            Optional<IPAddress> testStaticIPAddress = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("nicId"u8))
+                {
+                    nicId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("isPrimaryNic"u8))
+                {
+                    isPrimaryNic = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("targetSubnetName"u8))
+                {
+                    targetSubnetName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("targetStaticIPAddress"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetStaticIPAddress = IPAddress.Parse(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("isSelectedForMigration"u8))
+                {
+                    isSelectedForMigration = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("targetNicName"u8))
+                {
+                    targetNicName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("testSubnetName"u8))
+                {
+                    testSubnetName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("testStaticIPAddress"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    testStaticIPAddress = IPAddress.Parse(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new VMwareCbtNicContent(nicId, isPrimaryNic, targetSubnetName.Value, targetStaticIPAddress.Value, isSelectedForMigration.Value, targetNicName.Value, testSubnetName.Value, testStaticIPAddress.Value, serializedAdditionalRawData);
+        }
+
+        VMwareCbtNicContent IModelJsonSerializable<VMwareCbtNicContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VMwareCbtNicContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVMwareCbtNicContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VMwareCbtNicContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VMwareCbtNicContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VMwareCbtNicContent IModelSerializable<VMwareCbtNicContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VMwareCbtNicContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVMwareCbtNicContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VMwareCbtNicContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VMwareCbtNicContent"/> to convert. </param>
+        public static implicit operator RequestContent(VMwareCbtNicContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VMwareCbtNicContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VMwareCbtNicContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVMwareCbtNicContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

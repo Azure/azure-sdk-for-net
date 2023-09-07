@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmDeploymentParametersLink : IUtf8JsonSerializable
+    public partial class ArmDeploymentParametersLink : IUtf8JsonSerializable, IModelJsonSerializable<ArmDeploymentParametersLink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ArmDeploymentParametersLink>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ArmDeploymentParametersLink>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ArmDeploymentParametersLink>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
@@ -23,17 +30,32 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("contentVersion"u8);
                 writer.WriteStringValue(ContentVersion);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ArmDeploymentParametersLink DeserializeArmDeploymentParametersLink(JsonElement element)
+        internal static ArmDeploymentParametersLink DeserializeArmDeploymentParametersLink(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Uri uri = default;
             Optional<string> contentVersion = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"u8))
@@ -46,8 +68,61 @@ namespace Azure.ResourceManager.Resources.Models
                     contentVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ArmDeploymentParametersLink(uri, contentVersion.Value);
+            return new ArmDeploymentParametersLink(uri, contentVersion.Value, serializedAdditionalRawData);
+        }
+
+        ArmDeploymentParametersLink IModelJsonSerializable<ArmDeploymentParametersLink>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArmDeploymentParametersLink>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeArmDeploymentParametersLink(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ArmDeploymentParametersLink>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArmDeploymentParametersLink>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ArmDeploymentParametersLink IModelSerializable<ArmDeploymentParametersLink>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArmDeploymentParametersLink>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeArmDeploymentParametersLink(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ArmDeploymentParametersLink"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ArmDeploymentParametersLink"/> to convert. </param>
+        public static implicit operator RequestContent(ArmDeploymentParametersLink model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ArmDeploymentParametersLink"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ArmDeploymentParametersLink(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeArmDeploymentParametersLink(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

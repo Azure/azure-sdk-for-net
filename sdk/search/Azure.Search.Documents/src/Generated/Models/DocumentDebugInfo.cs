@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Contains debugging information that can be used to further explore your search results. </summary>
     public partial class DocumentDebugInfo
     {
-        /// <summary> Initializes a new instance of DocumentDebugInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DocumentDebugInfo"/>. </summary>
         internal DocumentDebugInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DocumentDebugInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentDebugInfo"/>. </summary>
         /// <param name="semantic"> Contains debugging information specific to semantic search queries. </param>
-        internal DocumentDebugInfo(SemanticDebugInfo semantic)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentDebugInfo(SemanticDebugInfo semantic, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Semantic = semantic;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Contains debugging information specific to semantic search queries. </summary>

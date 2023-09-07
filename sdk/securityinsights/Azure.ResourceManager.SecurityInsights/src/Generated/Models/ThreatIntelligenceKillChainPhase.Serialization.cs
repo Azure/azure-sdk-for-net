@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class ThreatIntelligenceKillChainPhase : IUtf8JsonSerializable
+    public partial class ThreatIntelligenceKillChainPhase : IUtf8JsonSerializable, IModelJsonSerializable<ThreatIntelligenceKillChainPhase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ThreatIntelligenceKillChainPhase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ThreatIntelligenceKillChainPhase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ThreatIntelligenceKillChainPhase>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(KillChainName))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("phaseName"u8);
                 writer.WriteStringValue(PhaseName);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ThreatIntelligenceKillChainPhase DeserializeThreatIntelligenceKillChainPhase(JsonElement element)
+        internal static ThreatIntelligenceKillChainPhase DeserializeThreatIntelligenceKillChainPhase(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> killChainName = default;
             Optional<string> phaseName = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("killChainName"u8))
@@ -48,8 +71,61 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     phaseName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ThreatIntelligenceKillChainPhase(killChainName.Value, phaseName.Value);
+            return new ThreatIntelligenceKillChainPhase(killChainName.Value, phaseName.Value, serializedAdditionalRawData);
+        }
+
+        ThreatIntelligenceKillChainPhase IModelJsonSerializable<ThreatIntelligenceKillChainPhase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ThreatIntelligenceKillChainPhase>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeThreatIntelligenceKillChainPhase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ThreatIntelligenceKillChainPhase>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ThreatIntelligenceKillChainPhase>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ThreatIntelligenceKillChainPhase IModelSerializable<ThreatIntelligenceKillChainPhase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ThreatIntelligenceKillChainPhase>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeThreatIntelligenceKillChainPhase(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ThreatIntelligenceKillChainPhase"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ThreatIntelligenceKillChainPhase"/> to convert. </param>
+        public static implicit operator RequestContent(ThreatIntelligenceKillChainPhase model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ThreatIntelligenceKillChainPhase"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ThreatIntelligenceKillChainPhase(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeThreatIntelligenceKillChainPhase(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

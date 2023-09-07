@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
@@ -12,11 +14,17 @@ namespace Azure.Search.Documents.Models
     /// <summary> The UnknownSearchIndexerDataIdentity. </summary>
     internal partial class UnknownSearchIndexerDataIdentity : SearchIndexerDataIdentity
     {
-        /// <summary> Initializes a new instance of UnknownSearchIndexerDataIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSearchIndexerDataIdentity"/>. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the identity. </param>
-        internal UnknownSearchIndexerDataIdentity(string oDataType) : base(oDataType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownSearchIndexerDataIdentity(string oDataType, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(oDataType, serializedAdditionalRawData)
         {
             ODataType = oDataType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownSearchIndexerDataIdentity"/> for deserialization. </summary>
+        internal UnknownSearchIndexerDataIdentity()
+        {
         }
     }
 }

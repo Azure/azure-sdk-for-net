@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a registry key entity. </summary>
     public partial class SecurityInsightsRegistryKeyEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsRegistryKeyEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsRegistryKeyEntity"/>. </summary>
         public SecurityInsightsRegistryKeyEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = SecurityInsightsEntityKind.RegistryKey;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsRegistryKeyEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsRegistryKeyEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +32,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
         /// <param name="hive"> the hive that holds the registry key. </param>
         /// <param name="key"> The registry key path. </param>
-        internal SecurityInsightsRegistryKeyEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, SecurityInsightsRegistryHive? hive, string key) : base(id, name, resourceType, systemData, kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsRegistryKeyEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, SecurityInsightsRegistryHive? hive, string key, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

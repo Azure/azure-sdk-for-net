@@ -5,24 +5,37 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
-    public partial class BackupResourceVaultConfigData : IUtf8JsonSerializable
+    public partial class BackupResourceVaultConfigData : IUtf8JsonSerializable, IModelJsonSerializable<BackupResourceVaultConfigData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BackupResourceVaultConfigData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BackupResourceVaultConfigData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BackupResourceVaultConfigData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                if (Properties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BackupResourceVaultConfigProperties>)Properties).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ETag))
             {
@@ -42,11 +55,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BackupResourceVaultConfigData DeserializeBackupResourceVaultConfigData(JsonElement element)
+        internal static BackupResourceVaultConfigData DeserializeBackupResourceVaultConfigData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -59,6 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -122,8 +150,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BackupResourceVaultConfigData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, Optional.ToNullable(eTag));
+            return new BackupResourceVaultConfigData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+        }
+
+        BackupResourceVaultConfigData IModelJsonSerializable<BackupResourceVaultConfigData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackupResourceVaultConfigData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupResourceVaultConfigData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BackupResourceVaultConfigData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackupResourceVaultConfigData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BackupResourceVaultConfigData IModelSerializable<BackupResourceVaultConfigData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackupResourceVaultConfigData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBackupResourceVaultConfigData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BackupResourceVaultConfigData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BackupResourceVaultConfigData"/> to convert. </param>
+        public static implicit operator RequestContent(BackupResourceVaultConfigData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BackupResourceVaultConfigData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BackupResourceVaultConfigData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBackupResourceVaultConfigData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

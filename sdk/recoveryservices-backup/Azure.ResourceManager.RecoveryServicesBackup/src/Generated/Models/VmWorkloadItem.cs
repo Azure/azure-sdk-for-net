@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
@@ -14,13 +17,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public partial class VmWorkloadItem : WorkloadItem
     {
-        /// <summary> Initializes a new instance of VmWorkloadItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadItem"/>. </summary>
         public VmWorkloadItem()
         {
             WorkloadItemType = "AzureVmWorkloadItem";
         }
 
-        /// <summary> Initializes a new instance of VmWorkloadItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
         /// <param name="workloadType"> Type of workload for the backup management. </param>
         /// <param name="workloadItemType"> Type of the backup item. </param>
@@ -31,7 +34,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isAutoProtectable"> Indicates if workload item is auto-protectable. </param>
         /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB's present. </param>
         /// <param name="subWorkloadItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
-        internal VmWorkloadItem(string backupManagementType, string workloadType, string workloadItemType, string friendlyName, BackupProtectionStatus? protectionState, string parentName, string serverName, bool? isAutoProtectable, int? subInquiredItemCount, int? subWorkloadItemCount) : base(backupManagementType, workloadType, workloadItemType, friendlyName, protectionState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmWorkloadItem(string backupManagementType, string workloadType, string workloadItemType, string friendlyName, BackupProtectionStatus? protectionState, string parentName, string serverName, bool? isAutoProtectable, int? subInquiredItemCount, int? subWorkloadItemCount, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(backupManagementType, workloadType, workloadItemType, friendlyName, protectionState, serializedAdditionalRawData)
         {
             ParentName = parentName;
             ServerName = serverName;

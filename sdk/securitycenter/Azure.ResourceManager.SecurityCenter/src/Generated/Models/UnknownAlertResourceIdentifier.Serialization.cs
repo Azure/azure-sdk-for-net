@@ -5,29 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class UnknownAlertResourceIdentifier
+    internal partial class UnknownAlertResourceIdentifier : IUtf8JsonSerializable, IModelJsonSerializable<SecurityAlertResourceIdentifier>
     {
-        internal static UnknownAlertResourceIdentifier DeserializeUnknownAlertResourceIdentifier(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityAlertResourceIdentifier>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityAlertResourceIdentifier>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            Core.ModelSerializerHelper.ValidateFormat<SecurityAlertResourceIdentifier>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(ResourceIdentifierType.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
             {
-                return null;
-            }
-            ResourceIdentifierType type = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"u8))
+                foreach (var property in _serializedAdditionalRawData)
                 {
-                    type = new ResourceIdentifierType(property.Value.GetString());
-                    continue;
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
                 }
             }
-            return new UnknownAlertResourceIdentifier(type);
+            writer.WriteEndObject();
+        }
+
+        internal static SecurityAlertResourceIdentifier DeserializeUnknownAlertResourceIdentifier(JsonElement element, ModelSerializerOptions options = default) => DeserializeSecurityAlertResourceIdentifier(element, options);
+
+        SecurityAlertResourceIdentifier IModelJsonSerializable<SecurityAlertResourceIdentifier>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityAlertResourceIdentifier>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownAlertResourceIdentifier(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityAlertResourceIdentifier>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityAlertResourceIdentifier>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityAlertResourceIdentifier IModelSerializable<SecurityAlertResourceIdentifier>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityAlertResourceIdentifier>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityAlertResourceIdentifier(doc.RootElement, options);
         }
     }
 }

@@ -5,36 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsOfficeDataConnectorDataTypes : IUtf8JsonSerializable
+    public partial class SecurityInsightsOfficeDataConnectorDataTypes : IUtf8JsonSerializable, IModelJsonSerializable<SecurityInsightsOfficeDataConnectorDataTypes>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityInsightsOfficeDataConnectorDataTypes>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityInsightsOfficeDataConnectorDataTypes>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsOfficeDataConnectorDataTypes>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Exchange))
             {
                 writer.WritePropertyName("exchange"u8);
-                writer.WriteObjectValue(Exchange);
+                if (Exchange is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<OfficeDataConnectorDataTypesExchange>)Exchange).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(SharePoint))
             {
                 writer.WritePropertyName("sharePoint"u8);
-                writer.WriteObjectValue(SharePoint);
+                if (SharePoint is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<OfficeDataConnectorDataTypesSharePoint>)SharePoint).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Teams))
             {
                 writer.WritePropertyName("teams"u8);
-                writer.WriteObjectValue(Teams);
+                if (Teams is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<OfficeDataConnectorDataTypesTeams>)Teams).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsOfficeDataConnectorDataTypes DeserializeSecurityInsightsOfficeDataConnectorDataTypes(JsonElement element)
+        internal static SecurityInsightsOfficeDataConnectorDataTypes DeserializeSecurityInsightsOfficeDataConnectorDataTypes(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +85,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<OfficeDataConnectorDataTypesExchange> exchange = default;
             Optional<OfficeDataConnectorDataTypesSharePoint> sharePoint = default;
             Optional<OfficeDataConnectorDataTypesTeams> teams = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exchange"u8))
@@ -71,8 +115,61 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     teams = OfficeDataConnectorDataTypesTeams.DeserializeOfficeDataConnectorDataTypesTeams(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityInsightsOfficeDataConnectorDataTypes(exchange.Value, sharePoint.Value, teams.Value);
+            return new SecurityInsightsOfficeDataConnectorDataTypes(exchange.Value, sharePoint.Value, teams.Value, serializedAdditionalRawData);
+        }
+
+        SecurityInsightsOfficeDataConnectorDataTypes IModelJsonSerializable<SecurityInsightsOfficeDataConnectorDataTypes>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsOfficeDataConnectorDataTypes>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsOfficeDataConnectorDataTypes(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityInsightsOfficeDataConnectorDataTypes>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsOfficeDataConnectorDataTypes>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityInsightsOfficeDataConnectorDataTypes IModelSerializable<SecurityInsightsOfficeDataConnectorDataTypes>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityInsightsOfficeDataConnectorDataTypes>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityInsightsOfficeDataConnectorDataTypes(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SecurityInsightsOfficeDataConnectorDataTypes"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SecurityInsightsOfficeDataConnectorDataTypes"/> to convert. </param>
+        public static implicit operator RequestContent(SecurityInsightsOfficeDataConnectorDataTypes model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SecurityInsightsOfficeDataConnectorDataTypes"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SecurityInsightsOfficeDataConnectorDataTypes(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityInsightsOfficeDataConnectorDataTypes(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

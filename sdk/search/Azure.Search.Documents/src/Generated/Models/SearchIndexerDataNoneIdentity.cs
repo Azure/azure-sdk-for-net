@@ -5,20 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Clears the identity property of a datasource. </summary>
     public partial class SearchIndexerDataNoneIdentity : SearchIndexerDataIdentity
     {
-        /// <summary> Initializes a new instance of SearchIndexerDataNoneIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerDataNoneIdentity"/>. </summary>
         public SearchIndexerDataNoneIdentity()
         {
             ODataType = "#Microsoft.Azure.Search.DataNoneIdentity";
         }
 
-        /// <summary> Initializes a new instance of SearchIndexerDataNoneIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerDataNoneIdentity"/>. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the identity. </param>
-        internal SearchIndexerDataNoneIdentity(string oDataType) : base(oDataType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchIndexerDataNoneIdentity(string oDataType, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(oDataType, serializedAdditionalRawData)
         {
             ODataType = oDataType ?? "#Microsoft.Azure.Search.DataNoneIdentity";
         }

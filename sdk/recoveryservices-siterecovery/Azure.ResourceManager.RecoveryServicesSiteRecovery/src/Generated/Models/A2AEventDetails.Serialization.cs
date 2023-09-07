@@ -5,15 +5,75 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2AEventDetails
+    public partial class A2AEventDetails : IUtf8JsonSerializable, IModelJsonSerializable<A2AEventDetails>
     {
-        internal static A2AEventDetails DeserializeA2AEventDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<A2AEventDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<A2AEventDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<A2AEventDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ProtectedItemName))
+            {
+                writer.WritePropertyName("protectedItemName"u8);
+                writer.WriteStringValue(ProtectedItemName);
+            }
+            if (Optional.IsDefined(FabricObjectId))
+            {
+                writer.WritePropertyName("fabricObjectId"u8);
+                writer.WriteStringValue(FabricObjectId);
+            }
+            if (Optional.IsDefined(FabricName))
+            {
+                writer.WritePropertyName("fabricName"u8);
+                writer.WriteStringValue(FabricName);
+            }
+            if (Optional.IsDefined(FabricLocation))
+            {
+                writer.WritePropertyName("fabricLocation"u8);
+                writer.WriteStringValue(FabricLocation.Value);
+            }
+            if (Optional.IsDefined(RemoteFabricName))
+            {
+                writer.WritePropertyName("remoteFabricName"u8);
+                writer.WriteStringValue(RemoteFabricName);
+            }
+            if (Optional.IsDefined(RemoteFabricLocation))
+            {
+                writer.WritePropertyName("remoteFabricLocation"u8);
+                writer.WriteStringValue(RemoteFabricLocation.Value);
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static A2AEventDetails DeserializeA2AEventDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> remoteFabricName = default;
             Optional<AzureLocation> remoteFabricLocation = default;
             string instanceType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protectedItemName"u8))
@@ -74,8 +135,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new A2AEventDetails(instanceType, protectedItemName.Value, fabricObjectId.Value, fabricName.Value, Optional.ToNullable(fabricLocation), remoteFabricName.Value, Optional.ToNullable(remoteFabricLocation));
+            return new A2AEventDetails(instanceType, protectedItemName.Value, fabricObjectId.Value, fabricName.Value, Optional.ToNullable(fabricLocation), remoteFabricName.Value, Optional.ToNullable(remoteFabricLocation), serializedAdditionalRawData);
+        }
+
+        A2AEventDetails IModelJsonSerializable<A2AEventDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<A2AEventDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeA2AEventDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<A2AEventDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<A2AEventDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        A2AEventDetails IModelSerializable<A2AEventDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<A2AEventDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeA2AEventDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="A2AEventDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="A2AEventDetails"/> to convert. </param>
+        public static implicit operator RequestContent(A2AEventDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="A2AEventDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator A2AEventDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeA2AEventDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

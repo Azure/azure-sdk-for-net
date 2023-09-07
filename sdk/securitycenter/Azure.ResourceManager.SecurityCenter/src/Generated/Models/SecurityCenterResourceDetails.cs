@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownResourceDetails))]
     public abstract partial class SecurityCenterResourceDetails
     {
-        /// <summary> Initializes a new instance of SecurityCenterResourceDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterResourceDetails"/>. </summary>
         protected SecurityCenterResourceDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityCenterResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterResourceDetails"/>. </summary>
         /// <param name="source"> The platform where the assessed resource resides. </param>
-        internal SecurityCenterResourceDetails(Source source)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityCenterResourceDetails(Source source, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Source = source;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The platform where the assessed resource resides. </summary>

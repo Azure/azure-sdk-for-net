@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class UnknownAwsOrganizationalData : IUtf8JsonSerializable
+    internal partial class UnknownAwsOrganizationalData : IUtf8JsonSerializable, IModelJsonSerializable<AwsOrganizationalInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AwsOrganizationalInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AwsOrganizationalInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AwsOrganizationalInfo>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("organizationMembershipType"u8);
             writer.WriteStringValue(OrganizationMembershipType.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownAwsOrganizationalData DeserializeUnknownAwsOrganizationalData(JsonElement element)
+        internal static AwsOrganizationalInfo DeserializeUnknownAwsOrganizationalData(JsonElement element, ModelSerializerOptions options = default) => DeserializeAwsOrganizationalInfo(element, options);
+
+        AwsOrganizationalInfo IModelJsonSerializable<AwsOrganizationalInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            OrganizationMembershipType organizationMembershipType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("organizationMembershipType"u8))
-                {
-                    organizationMembershipType = new OrganizationMembershipType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownAwsOrganizationalData(organizationMembershipType);
+            Core.ModelSerializerHelper.ValidateFormat<AwsOrganizationalInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownAwsOrganizationalData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AwsOrganizationalInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AwsOrganizationalInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AwsOrganizationalInfo IModelSerializable<AwsOrganizationalInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AwsOrganizationalInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAwsOrganizationalInfo(doc.RootElement, options);
         }
     }
 }

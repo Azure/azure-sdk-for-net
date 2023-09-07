@@ -5,15 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class ReplicationJobSummary
+    public partial class ReplicationJobSummary : IUtf8JsonSerializable, IModelJsonSerializable<ReplicationJobSummary>
     {
-        internal static ReplicationJobSummary DeserializeReplicationJobSummary(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ReplicationJobSummary>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ReplicationJobSummary>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ReplicationJobSummary>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(FailedJobs))
+            {
+                writer.WritePropertyName("failedJobs"u8);
+                writer.WriteNumberValue(FailedJobs.Value);
+            }
+            if (Optional.IsDefined(SuspendedJobs))
+            {
+                writer.WritePropertyName("suspendedJobs"u8);
+                writer.WriteNumberValue(SuspendedJobs.Value);
+            }
+            if (Optional.IsDefined(InProgressJobs))
+            {
+                writer.WritePropertyName("inProgressJobs"u8);
+                writer.WriteNumberValue(InProgressJobs.Value);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ReplicationJobSummary DeserializeReplicationJobSummary(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +64,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<int> failedJobs = default;
             Optional<int> suspendedJobs = default;
             Optional<int> inProgressJobs = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failedJobs"u8))
@@ -50,8 +94,61 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     inProgressJobs = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ReplicationJobSummary(Optional.ToNullable(failedJobs), Optional.ToNullable(suspendedJobs), Optional.ToNullable(inProgressJobs));
+            return new ReplicationJobSummary(Optional.ToNullable(failedJobs), Optional.ToNullable(suspendedJobs), Optional.ToNullable(inProgressJobs), serializedAdditionalRawData);
+        }
+
+        ReplicationJobSummary IModelJsonSerializable<ReplicationJobSummary>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReplicationJobSummary>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeReplicationJobSummary(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ReplicationJobSummary>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReplicationJobSummary>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ReplicationJobSummary IModelSerializable<ReplicationJobSummary>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ReplicationJobSummary>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeReplicationJobSummary(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ReplicationJobSummary"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ReplicationJobSummary"/> to convert. </param>
+        public static implicit operator RequestContent(ReplicationJobSummary model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ReplicationJobSummary"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ReplicationJobSummary(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeReplicationJobSummary(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

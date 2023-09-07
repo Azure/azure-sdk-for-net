@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Please note <see cref="IlrContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="FileShareProvisionIlrContent"/> and <see cref="IaasVmIlrRegistrationContent"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownIlrRequest))]
     public abstract partial class IlrContent
     {
-        /// <summary> Initializes a new instance of IlrContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IlrContent"/>. </summary>
         protected IlrContent()
         {
         }
 
-        /// <summary> Initializes a new instance of IlrContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IlrContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        internal IlrContent(string objectType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IlrContent(string objectType, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ObjectType = objectType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -17,7 +18,10 @@ namespace Azure.Search.Documents.Indexes.Models
     /// </summary>
     public partial class LexicalNormalizer
     {
-        /// <summary> Initializes a new instance of LexicalNormalizer. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LexicalNormalizer"/>. </summary>
         /// <param name="name"> The name of the normalizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. It cannot end in '.microsoft' nor '.lucene', nor be named 'asciifolding', 'standard', 'lowercase', 'uppercase', or 'elision'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public LexicalNormalizer(string name)
@@ -27,13 +31,20 @@ namespace Azure.Search.Documents.Indexes.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of LexicalNormalizer. </summary>
+        /// <summary> Initializes a new instance of <see cref="LexicalNormalizer"/>. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the normalizer. </param>
         /// <param name="name"> The name of the normalizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. It cannot end in '.microsoft' nor '.lucene', nor be named 'asciifolding', 'standard', 'lowercase', 'uppercase', or 'elision'. </param>
-        internal LexicalNormalizer(string oDataType, string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LexicalNormalizer(string oDataType, string name, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ODataType = oDataType;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LexicalNormalizer"/> for deserialization. </summary>
+        internal LexicalNormalizer()
+        {
         }
 
         /// <summary> Identifies the concrete type of the normalizer. </summary>

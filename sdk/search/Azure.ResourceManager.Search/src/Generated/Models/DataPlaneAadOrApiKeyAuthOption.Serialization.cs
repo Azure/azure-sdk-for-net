@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    internal partial class DataPlaneAadOrApiKeyAuthOption : IUtf8JsonSerializable
+    internal partial class DataPlaneAadOrApiKeyAuthOption : IUtf8JsonSerializable, IModelJsonSerializable<DataPlaneAadOrApiKeyAuthOption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataPlaneAadOrApiKeyAuthOption>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataPlaneAadOrApiKeyAuthOption>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataPlaneAadOrApiKeyAuthOption>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AadAuthFailureMode))
             {
                 writer.WritePropertyName("aadAuthFailureMode"u8);
                 writer.WriteStringValue(AadAuthFailureMode.Value.ToSerialString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataPlaneAadOrApiKeyAuthOption DeserializeDataPlaneAadOrApiKeyAuthOption(JsonElement element)
+        internal static DataPlaneAadOrApiKeyAuthOption DeserializeDataPlaneAadOrApiKeyAuthOption(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<SearchAadAuthFailureMode> aadAuthFailureMode = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aadAuthFailureMode"u8))
@@ -41,8 +64,61 @@ namespace Azure.ResourceManager.Search.Models
                     aadAuthFailureMode = property.Value.GetString().ToSearchAadAuthFailureMode();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataPlaneAadOrApiKeyAuthOption(Optional.ToNullable(aadAuthFailureMode));
+            return new DataPlaneAadOrApiKeyAuthOption(Optional.ToNullable(aadAuthFailureMode), serializedAdditionalRawData);
+        }
+
+        DataPlaneAadOrApiKeyAuthOption IModelJsonSerializable<DataPlaneAadOrApiKeyAuthOption>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataPlaneAadOrApiKeyAuthOption>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataPlaneAadOrApiKeyAuthOption(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataPlaneAadOrApiKeyAuthOption>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataPlaneAadOrApiKeyAuthOption>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataPlaneAadOrApiKeyAuthOption IModelSerializable<DataPlaneAadOrApiKeyAuthOption>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataPlaneAadOrApiKeyAuthOption>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataPlaneAadOrApiKeyAuthOption(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataPlaneAadOrApiKeyAuthOption"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataPlaneAadOrApiKeyAuthOption"/> to convert. </param>
+        public static implicit operator RequestContent(DataPlaneAadOrApiKeyAuthOption model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataPlaneAadOrApiKeyAuthOption"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataPlaneAadOrApiKeyAuthOption(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataPlaneAadOrApiKeyAuthOption(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

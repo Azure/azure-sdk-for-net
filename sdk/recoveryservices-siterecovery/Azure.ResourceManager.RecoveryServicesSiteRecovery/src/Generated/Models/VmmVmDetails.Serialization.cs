@@ -5,16 +5,104 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VmmVmDetails
+    public partial class VmmVmDetails : IUtf8JsonSerializable, IModelJsonSerializable<VmmVmDetails>
     {
-        internal static VmmVmDetails DeserializeVmmVmDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VmmVmDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VmmVmDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VmmVmDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SourceItemId))
+            {
+                writer.WritePropertyName("sourceItemId"u8);
+                writer.WriteStringValue(SourceItemId);
+            }
+            if (Optional.IsDefined(Generation))
+            {
+                writer.WritePropertyName("generation"u8);
+                writer.WriteStringValue(Generation);
+            }
+            if (Optional.IsDefined(OSDetails))
+            {
+                writer.WritePropertyName("osDetails"u8);
+                if (OSDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SiteRecoveryOSDetails>)OSDetails).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(DiskDetails))
+            {
+                writer.WritePropertyName("diskDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in DiskDetails)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SiteRecoveryDiskDetails>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(HasPhysicalDisk))
+            {
+                writer.WritePropertyName("hasPhysicalDisk"u8);
+                writer.WriteStringValue(HasPhysicalDisk.Value.ToString());
+            }
+            if (Optional.IsDefined(HasFibreChannelAdapter))
+            {
+                writer.WritePropertyName("hasFibreChannelAdapter"u8);
+                writer.WriteStringValue(HasFibreChannelAdapter.Value.ToString());
+            }
+            if (Optional.IsDefined(HasSharedVhd))
+            {
+                writer.WritePropertyName("hasSharedVhd"u8);
+                writer.WriteStringValue(HasSharedVhd.Value.ToString());
+            }
+            if (Optional.IsDefined(HyperVHostId))
+            {
+                writer.WritePropertyName("hyperVHostId"u8);
+                writer.WriteStringValue(HyperVHostId);
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static VmmVmDetails DeserializeVmmVmDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<HyperVVmDiskPresenceStatus> hasSharedVhd = default;
             Optional<string> hyperVHostId = default;
             string instanceType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceItemId"u8))
@@ -100,8 +189,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VmmVmDetails(instanceType, sourceItemId.Value, generation.Value, osDetails.Value, Optional.ToList(diskDetails), Optional.ToNullable(hasPhysicalDisk), Optional.ToNullable(hasFibreChannelAdapter), Optional.ToNullable(hasSharedVhd), hyperVHostId.Value);
+            return new VmmVmDetails(instanceType, sourceItemId.Value, generation.Value, osDetails.Value, Optional.ToList(diskDetails), Optional.ToNullable(hasPhysicalDisk), Optional.ToNullable(hasFibreChannelAdapter), Optional.ToNullable(hasSharedVhd), hyperVHostId.Value, serializedAdditionalRawData);
+        }
+
+        VmmVmDetails IModelJsonSerializable<VmmVmDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VmmVmDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVmmVmDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VmmVmDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VmmVmDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VmmVmDetails IModelSerializable<VmmVmDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VmmVmDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVmmVmDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VmmVmDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VmmVmDetails"/> to convert. </param>
+        public static implicit operator RequestContent(VmmVmDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VmmVmDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VmmVmDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVmmVmDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

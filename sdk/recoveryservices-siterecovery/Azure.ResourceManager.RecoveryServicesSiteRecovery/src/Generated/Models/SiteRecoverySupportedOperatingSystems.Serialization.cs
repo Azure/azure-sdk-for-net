@@ -5,16 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoverySupportedOperatingSystems
+    public partial class SiteRecoverySupportedOperatingSystems : IUtf8JsonSerializable, IModelJsonSerializable<SiteRecoverySupportedOperatingSystems>
     {
-        internal static SiteRecoverySupportedOperatingSystems DeserializeSiteRecoverySupportedOperatingSystems(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SiteRecoverySupportedOperatingSystems>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SiteRecoverySupportedOperatingSystems>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoverySupportedOperatingSystems>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                if (Properties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SiteRecoverySupportedOSProperties>)Properties).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SiteRecoverySupportedOperatingSystems DeserializeSiteRecoverySupportedOperatingSystems(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -69,8 +115,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SiteRecoverySupportedOperatingSystems(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(location));
+            return new SiteRecoverySupportedOperatingSystems(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+        }
+
+        SiteRecoverySupportedOperatingSystems IModelJsonSerializable<SiteRecoverySupportedOperatingSystems>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoverySupportedOperatingSystems>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoverySupportedOperatingSystems(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SiteRecoverySupportedOperatingSystems>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoverySupportedOperatingSystems>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SiteRecoverySupportedOperatingSystems IModelSerializable<SiteRecoverySupportedOperatingSystems>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoverySupportedOperatingSystems>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSiteRecoverySupportedOperatingSystems(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SiteRecoverySupportedOperatingSystems"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SiteRecoverySupportedOperatingSystems"/> to convert. </param>
+        public static implicit operator RequestContent(SiteRecoverySupportedOperatingSystems model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SiteRecoverySupportedOperatingSystems"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SiteRecoverySupportedOperatingSystems(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSiteRecoverySupportedOperatingSystems(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

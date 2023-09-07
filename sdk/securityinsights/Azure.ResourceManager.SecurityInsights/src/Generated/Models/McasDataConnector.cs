@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -16,13 +17,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents MCAS (Microsoft Cloud App Security) data connector. </summary>
     public partial class McasDataConnector : SecurityInsightsDataConnectorData
     {
-        /// <summary> Initializes a new instance of McasDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="McasDataConnector"/>. </summary>
         public McasDataConnector()
         {
             Kind = DataConnectorKind.MicrosoftCloudAppSecurity;
         }
 
-        /// <summary> Initializes a new instance of McasDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="McasDataConnector"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <param name="dataTypes"> The available data types for the connector. </param>
-        internal McasDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, Guid? tenantId, McasDataConnectorDataTypes dataTypes) : base(id, name, resourceType, systemData, kind, etag)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal McasDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, Guid? tenantId, McasDataConnectorDataTypes dataTypes, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             TenantId = tenantId;
             DataTypes = dataTypes;

@@ -5,16 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmNicDetails
+    public partial class InMageRcmNicDetails : IUtf8JsonSerializable, IModelJsonSerializable<InMageRcmNicDetails>
     {
-        internal static InMageRcmNicDetails DeserializeInMageRcmNicDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InMageRcmNicDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InMageRcmNicDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<InMageRcmNicDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IsPrimaryNic))
+            {
+                writer.WritePropertyName("isPrimaryNic"u8);
+                writer.WriteStringValue(IsPrimaryNic);
+            }
+            if (Optional.IsDefined(IsSelectedForFailover))
+            {
+                writer.WritePropertyName("isSelectedForFailover"u8);
+                writer.WriteStringValue(IsSelectedForFailover);
+            }
+            if (Optional.IsDefined(TargetIPAddress))
+            {
+                writer.WritePropertyName("targetIPAddress"u8);
+                writer.WriteStringValue(TargetIPAddress.ToString());
+            }
+            if (Optional.IsDefined(TargetIPAddressType))
+            {
+                writer.WritePropertyName("targetIPAddressType"u8);
+                writer.WriteStringValue(TargetIPAddressType.Value.ToString());
+            }
+            if (Optional.IsDefined(TargetSubnetName))
+            {
+                writer.WritePropertyName("targetSubnetName"u8);
+                writer.WriteStringValue(TargetSubnetName);
+            }
+            if (Optional.IsDefined(TestSubnetName))
+            {
+                writer.WritePropertyName("testSubnetName"u8);
+                writer.WriteStringValue(TestSubnetName);
+            }
+            if (Optional.IsDefined(TestIPAddress))
+            {
+                writer.WritePropertyName("testIPAddress"u8);
+                writer.WriteStringValue(TestIPAddress.ToString());
+            }
+            if (Optional.IsDefined(TestIPAddressType))
+            {
+                writer.WritePropertyName("testIPAddressType"u8);
+                writer.WriteStringValue(TestIPAddressType.Value.ToString());
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static InMageRcmNicDetails DeserializeInMageRcmNicDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> testSubnetName = default;
             Optional<IPAddress> testIPAddress = default;
             Optional<SiteRecoveryEthernetAddressType> testIPAddressType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nicId"u8))
@@ -127,8 +196,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     testIPAddressType = new SiteRecoveryEthernetAddressType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InMageRcmNicDetails(nicId.Value, isPrimaryNic.Value, isSelectedForFailover.Value, sourceIPAddress.Value, Optional.ToNullable(sourceIPAddressType), sourceNetworkId.Value, sourceSubnetName.Value, targetIPAddress.Value, Optional.ToNullable(targetIPAddressType), targetSubnetName.Value, testSubnetName.Value, testIPAddress.Value, Optional.ToNullable(testIPAddressType));
+            return new InMageRcmNicDetails(nicId.Value, isPrimaryNic.Value, isSelectedForFailover.Value, sourceIPAddress.Value, Optional.ToNullable(sourceIPAddressType), sourceNetworkId.Value, sourceSubnetName.Value, targetIPAddress.Value, Optional.ToNullable(targetIPAddressType), targetSubnetName.Value, testSubnetName.Value, testIPAddress.Value, Optional.ToNullable(testIPAddressType), serializedAdditionalRawData);
+        }
+
+        InMageRcmNicDetails IModelJsonSerializable<InMageRcmNicDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageRcmNicDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageRcmNicDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InMageRcmNicDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageRcmNicDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InMageRcmNicDetails IModelSerializable<InMageRcmNicDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InMageRcmNicDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInMageRcmNicDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InMageRcmNicDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InMageRcmNicDetails"/> to convert. </param>
+        public static implicit operator RequestContent(InMageRcmNicDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InMageRcmNicDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InMageRcmNicDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInMageRcmNicDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

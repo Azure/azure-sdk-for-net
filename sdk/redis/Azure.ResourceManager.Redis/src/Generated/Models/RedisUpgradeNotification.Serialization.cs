@@ -8,14 +8,40 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    public partial class RedisUpgradeNotification
+    public partial class RedisUpgradeNotification : IUtf8JsonSerializable, IModelJsonSerializable<RedisUpgradeNotification>
     {
-        internal static RedisUpgradeNotification DeserializeRedisUpgradeNotification(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RedisUpgradeNotification>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RedisUpgradeNotification>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RedisUpgradeNotification>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RedisUpgradeNotification DeserializeRedisUpgradeNotification(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +49,7 @@ namespace Azure.ResourceManager.Redis.Models
             Optional<string> name = default;
             Optional<DateTimeOffset> timestamp = default;
             Optional<IReadOnlyDictionary<string, string>> upsellNotification = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -53,8 +80,61 @@ namespace Azure.ResourceManager.Redis.Models
                     upsellNotification = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RedisUpgradeNotification(name.Value, Optional.ToNullable(timestamp), Optional.ToDictionary(upsellNotification));
+            return new RedisUpgradeNotification(name.Value, Optional.ToNullable(timestamp), Optional.ToDictionary(upsellNotification), serializedAdditionalRawData);
+        }
+
+        RedisUpgradeNotification IModelJsonSerializable<RedisUpgradeNotification>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RedisUpgradeNotification>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRedisUpgradeNotification(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RedisUpgradeNotification>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RedisUpgradeNotification>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RedisUpgradeNotification IModelSerializable<RedisUpgradeNotification>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RedisUpgradeNotification>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRedisUpgradeNotification(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RedisUpgradeNotification"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RedisUpgradeNotification"/> to convert. </param>
+        public static implicit operator RequestContent(RedisUpgradeNotification model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RedisUpgradeNotification"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RedisUpgradeNotification(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRedisUpgradeNotification(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

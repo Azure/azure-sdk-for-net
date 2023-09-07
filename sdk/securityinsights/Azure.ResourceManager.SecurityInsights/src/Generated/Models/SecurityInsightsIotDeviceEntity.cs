@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents an IoT device entity. </summary>
     public partial class SecurityInsightsIotDeviceEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsIotDeviceEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIotDeviceEntity"/>. </summary>
         public SecurityInsightsIotDeviceEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = SecurityInsightsEntityKind.IotDevice;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsIotDeviceEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIotDeviceEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -49,7 +49,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="ipAddressEntityId"> The IP entity if of this device. </param>
         /// <param name="threatIntelligence"> A list of TI contexts attached to the IoTDevice entity. </param>
         /// <param name="protocols"> A list of protocols of the IoTDevice entity. </param>
-        internal SecurityInsightsIotDeviceEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string deviceId, string deviceName, string source, Guid? iotSecurityAgentId, string deviceType, string vendor, string edgeId, string macAddress, string model, string serialNumber, string firmwareVersion, string operatingSystem, string iotHubEntityId, string hostEntityId, string ipAddressEntityId, IReadOnlyList<SecurityInsightsThreatIntelligence> threatIntelligence, IReadOnlyList<string> protocols) : base(id, name, resourceType, systemData, kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsIotDeviceEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string deviceId, string deviceName, string source, Guid? iotSecurityAgentId, string deviceType, string vendor, string edgeId, string macAddress, string model, string serialNumber, string firmwareVersion, string operatingSystem, string iotHubEntityId, string hostEntityId, string ipAddressEntityId, IReadOnlyList<SecurityInsightsThreatIntelligence> threatIntelligence, IReadOnlyList<string> protocols, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

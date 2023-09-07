@@ -5,18 +5,21 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Protectable item for Azure Fileshare workloads. </summary>
     public partial class FileShareProtectableItem : WorkloadProtectableItem
     {
-        /// <summary> Initializes a new instance of FileShareProtectableItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareProtectableItem"/>. </summary>
         public FileShareProtectableItem()
         {
             ProtectableItemType = "AzureFileShare";
         }
 
-        /// <summary> Initializes a new instance of FileShareProtectableItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareProtectableItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
         /// <param name="workloadType"> Type of workload for the backup management. </param>
         /// <param name="protectableItemType"> Type of the backup item. </param>
@@ -25,7 +28,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="parentContainerFabricId"> Full Fabric ID of container to which this protectable item belongs. For example, ARM ID. </param>
         /// <param name="parentContainerFriendlyName"> Friendly name of container to which this protectable item belongs. </param>
         /// <param name="azureFileShareType"> File Share type XSync or XSMB. </param>
-        internal FileShareProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, string parentContainerFabricId, string parentContainerFriendlyName, BackupFileShareType? azureFileShareType) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FileShareProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, string parentContainerFabricId, string parentContainerFriendlyName, BackupFileShareType? azureFileShareType, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, serializedAdditionalRawData)
         {
             ParentContainerFabricId = parentContainerFabricId;
             ParentContainerFriendlyName = parentContainerFriendlyName;

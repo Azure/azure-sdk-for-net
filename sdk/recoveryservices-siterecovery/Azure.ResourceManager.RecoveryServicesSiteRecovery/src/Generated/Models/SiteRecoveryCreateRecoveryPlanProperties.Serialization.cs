@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryCreateRecoveryPlanProperties : IUtf8JsonSerializable
+    public partial class SiteRecoveryCreateRecoveryPlanProperties : IUtf8JsonSerializable, IModelJsonSerializable<SiteRecoveryCreateRecoveryPlanProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SiteRecoveryCreateRecoveryPlanProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SiteRecoveryCreateRecoveryPlanProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryCreateRecoveryPlanProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("primaryFabricId"u8);
             writer.WriteStringValue(PrimaryFabricId);
@@ -28,7 +36,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartArray();
             foreach (var item in Groups)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SiteRecoveryPlanGroup>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(ProviderSpecificContent))
@@ -37,11 +52,146 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProviderSpecificContent)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<RecoveryPlanProviderSpecificContent>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static SiteRecoveryCreateRecoveryPlanProperties DeserializeSiteRecoveryCreateRecoveryPlanProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier primaryFabricId = default;
+            ResourceIdentifier recoveryFabricId = default;
+            Optional<FailoverDeploymentModel> failoverDeploymentModel = default;
+            IList<SiteRecoveryPlanGroup> groups = default;
+            Optional<IList<RecoveryPlanProviderSpecificContent>> providerSpecificContent = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("primaryFabricId"u8))
+                {
+                    primaryFabricId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("recoveryFabricId"u8))
+                {
+                    recoveryFabricId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("failoverDeploymentModel"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    failoverDeploymentModel = new FailoverDeploymentModel(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("groups"u8))
+                {
+                    List<SiteRecoveryPlanGroup> array = new List<SiteRecoveryPlanGroup>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(SiteRecoveryPlanGroup.DeserializeSiteRecoveryPlanGroup(item));
+                    }
+                    groups = array;
+                    continue;
+                }
+                if (property.NameEquals("providerSpecificInput"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<RecoveryPlanProviderSpecificContent> array = new List<RecoveryPlanProviderSpecificContent>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(RecoveryPlanProviderSpecificContent.DeserializeRecoveryPlanProviderSpecificContent(item));
+                    }
+                    providerSpecificContent = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new SiteRecoveryCreateRecoveryPlanProperties(primaryFabricId, recoveryFabricId, Optional.ToNullable(failoverDeploymentModel), groups, Optional.ToList(providerSpecificContent), serializedAdditionalRawData);
+        }
+
+        SiteRecoveryCreateRecoveryPlanProperties IModelJsonSerializable<SiteRecoveryCreateRecoveryPlanProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryCreateRecoveryPlanProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryCreateRecoveryPlanProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SiteRecoveryCreateRecoveryPlanProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryCreateRecoveryPlanProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SiteRecoveryCreateRecoveryPlanProperties IModelSerializable<SiteRecoveryCreateRecoveryPlanProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryCreateRecoveryPlanProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryCreateRecoveryPlanProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SiteRecoveryCreateRecoveryPlanProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SiteRecoveryCreateRecoveryPlanProperties"/> to convert. </param>
+        public static implicit operator RequestContent(SiteRecoveryCreateRecoveryPlanProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SiteRecoveryCreateRecoveryPlanProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SiteRecoveryCreateRecoveryPlanProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSiteRecoveryCreateRecoveryPlanProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

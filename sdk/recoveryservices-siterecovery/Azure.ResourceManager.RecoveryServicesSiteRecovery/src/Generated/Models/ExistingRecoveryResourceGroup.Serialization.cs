@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ExistingRecoveryResourceGroup : IUtf8JsonSerializable
+    public partial class ExistingRecoveryResourceGroup : IUtf8JsonSerializable, IModelJsonSerializable<ExistingRecoveryResourceGroup>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExistingRecoveryResourceGroup>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExistingRecoveryResourceGroup>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ExistingRecoveryResourceGroup>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryResourceGroupId))
             {
@@ -22,17 +30,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExistingRecoveryResourceGroup DeserializeExistingRecoveryResourceGroup(JsonElement element)
+        internal static ExistingRecoveryResourceGroup DeserializeExistingRecoveryResourceGroup(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceIdentifier> recoveryResourceGroupId = default;
             string resourceType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryResourceGroupId"u8))
@@ -49,8 +72,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     resourceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExistingRecoveryResourceGroup(resourceType, recoveryResourceGroupId.Value);
+            return new ExistingRecoveryResourceGroup(resourceType, recoveryResourceGroupId.Value, serializedAdditionalRawData);
+        }
+
+        ExistingRecoveryResourceGroup IModelJsonSerializable<ExistingRecoveryResourceGroup>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExistingRecoveryResourceGroup>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExistingRecoveryResourceGroup(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExistingRecoveryResourceGroup>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExistingRecoveryResourceGroup>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExistingRecoveryResourceGroup IModelSerializable<ExistingRecoveryResourceGroup>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExistingRecoveryResourceGroup>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExistingRecoveryResourceGroup(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExistingRecoveryResourceGroup"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExistingRecoveryResourceGroup"/> to convert. </param>
+        public static implicit operator RequestContent(ExistingRecoveryResourceGroup model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExistingRecoveryResourceGroup"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExistingRecoveryResourceGroup(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExistingRecoveryResourceGroup(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

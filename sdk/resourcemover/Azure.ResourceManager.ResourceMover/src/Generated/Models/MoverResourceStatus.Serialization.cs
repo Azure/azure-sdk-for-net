@@ -5,15 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class MoverResourceStatus
+    public partial class MoverResourceStatus : IUtf8JsonSerializable, IModelJsonSerializable<MoverResourceStatus>
     {
-        internal static MoverResourceStatus DeserializeMoverResourceStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MoverResourceStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MoverResourceStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MoverResourceStatus>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(JobStatus))
+            {
+                if (JobStatus != null)
+                {
+                    writer.WritePropertyName("jobStatus"u8);
+                    if (JobStatus is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MoverResourceJobStatus>)JobStatus).Serialize(writer, options);
+                    }
+                }
+                else
+                {
+                    writer.WriteNull("jobStatus");
+                }
+            }
+            if (Optional.IsDefined(Errors))
+            {
+                if (Errors != null)
+                {
+                    writer.WritePropertyName("errors"u8);
+                    if (Errors is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MoveResourceError>)Errors).Serialize(writer, options);
+                    }
+                }
+                else
+                {
+                    writer.WriteNull("errors");
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MoverResourceStatus DeserializeMoverResourceStatus(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +87,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<MoverResourceMoveState> moveState = default;
             Optional<MoverResourceJobStatus> jobStatus = default;
             Optional<MoveResourceError> errors = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("moveState"u8))
@@ -52,8 +119,61 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     errors = MoveResourceError.DeserializeMoveResourceError(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MoverResourceStatus(Optional.ToNullable(moveState), jobStatus.Value, errors.Value);
+            return new MoverResourceStatus(Optional.ToNullable(moveState), jobStatus.Value, errors.Value, serializedAdditionalRawData);
+        }
+
+        MoverResourceStatus IModelJsonSerializable<MoverResourceStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MoverResourceStatus>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMoverResourceStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MoverResourceStatus>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MoverResourceStatus>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MoverResourceStatus IModelSerializable<MoverResourceStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MoverResourceStatus>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMoverResourceStatus(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MoverResourceStatus"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MoverResourceStatus"/> to convert. </param>
+        public static implicit operator RequestContent(MoverResourceStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MoverResourceStatus"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MoverResourceStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMoverResourceStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

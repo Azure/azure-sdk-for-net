@@ -5,15 +5,95 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryNetworkMappingProperties
+    public partial class SiteRecoveryNetworkMappingProperties : IUtf8JsonSerializable, IModelJsonSerializable<SiteRecoveryNetworkMappingProperties>
     {
-        internal static SiteRecoveryNetworkMappingProperties DeserializeSiteRecoveryNetworkMappingProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SiteRecoveryNetworkMappingProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SiteRecoveryNetworkMappingProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryNetworkMappingProperties>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State);
+            }
+            if (Optional.IsDefined(PrimaryNetworkFriendlyName))
+            {
+                writer.WritePropertyName("primaryNetworkFriendlyName"u8);
+                writer.WriteStringValue(PrimaryNetworkFriendlyName);
+            }
+            if (Optional.IsDefined(PrimaryNetworkId))
+            {
+                writer.WritePropertyName("primaryNetworkId"u8);
+                writer.WriteStringValue(PrimaryNetworkId);
+            }
+            if (Optional.IsDefined(PrimaryFabricFriendlyName))
+            {
+                writer.WritePropertyName("primaryFabricFriendlyName"u8);
+                writer.WriteStringValue(PrimaryFabricFriendlyName);
+            }
+            if (Optional.IsDefined(RecoveryNetworkFriendlyName))
+            {
+                writer.WritePropertyName("recoveryNetworkFriendlyName"u8);
+                writer.WriteStringValue(RecoveryNetworkFriendlyName);
+            }
+            if (Optional.IsDefined(RecoveryNetworkId))
+            {
+                writer.WritePropertyName("recoveryNetworkId"u8);
+                writer.WriteStringValue(RecoveryNetworkId);
+            }
+            if (Optional.IsDefined(RecoveryFabricArmId))
+            {
+                writer.WritePropertyName("recoveryFabricArmId"u8);
+                writer.WriteStringValue(RecoveryFabricArmId);
+            }
+            if (Optional.IsDefined(RecoveryFabricFriendlyName))
+            {
+                writer.WritePropertyName("recoveryFabricFriendlyName"u8);
+                writer.WriteStringValue(RecoveryFabricFriendlyName);
+            }
+            if (Optional.IsDefined(FabricSpecificSettings))
+            {
+                writer.WritePropertyName("fabricSpecificSettings"u8);
+                if (FabricSpecificSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<NetworkMappingFabricSpecificSettings>)FabricSpecificSettings).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SiteRecoveryNetworkMappingProperties DeserializeSiteRecoveryNetworkMappingProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<ResourceIdentifier> recoveryFabricArmId = default;
             Optional<string> recoveryFabricFriendlyName = default;
             Optional<NetworkMappingFabricSpecificSettings> fabricSpecificSettings = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -90,8 +171,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     fabricSpecificSettings = NetworkMappingFabricSpecificSettings.DeserializeNetworkMappingFabricSpecificSettings(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SiteRecoveryNetworkMappingProperties(state.Value, primaryNetworkFriendlyName.Value, primaryNetworkId.Value, primaryFabricFriendlyName.Value, recoveryNetworkFriendlyName.Value, recoveryNetworkId.Value, recoveryFabricArmId.Value, recoveryFabricFriendlyName.Value, fabricSpecificSettings.Value);
+            return new SiteRecoveryNetworkMappingProperties(state.Value, primaryNetworkFriendlyName.Value, primaryNetworkId.Value, primaryFabricFriendlyName.Value, recoveryNetworkFriendlyName.Value, recoveryNetworkId.Value, recoveryFabricArmId.Value, recoveryFabricFriendlyName.Value, fabricSpecificSettings.Value, serializedAdditionalRawData);
+        }
+
+        SiteRecoveryNetworkMappingProperties IModelJsonSerializable<SiteRecoveryNetworkMappingProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryNetworkMappingProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryNetworkMappingProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SiteRecoveryNetworkMappingProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryNetworkMappingProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SiteRecoveryNetworkMappingProperties IModelSerializable<SiteRecoveryNetworkMappingProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryNetworkMappingProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryNetworkMappingProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SiteRecoveryNetworkMappingProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SiteRecoveryNetworkMappingProperties"/> to convert. </param>
+        public static implicit operator RequestContent(SiteRecoveryNetworkMappingProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SiteRecoveryNetworkMappingProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SiteRecoveryNetworkMappingProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSiteRecoveryNetworkMappingProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,48 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedInstanceMaintenanceConfigurationCapability
+    public partial class ManagedInstanceMaintenanceConfigurationCapability : IUtf8JsonSerializable, IModelJsonSerializable<ManagedInstanceMaintenanceConfigurationCapability>
     {
-        internal static ManagedInstanceMaintenanceConfigurationCapability DeserializeManagedInstanceMaintenanceConfigurationCapability(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedInstanceMaintenanceConfigurationCapability>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedInstanceMaintenanceConfigurationCapability>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedInstanceMaintenanceConfigurationCapability>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Reason))
+            {
+                writer.WritePropertyName("reason"u8);
+                writer.WriteStringValue(Reason);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ManagedInstanceMaintenanceConfigurationCapability DeserializeManagedInstanceMaintenanceConfigurationCapability(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +54,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> name = default;
             Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -42,8 +76,61 @@ namespace Azure.ResourceManager.Sql.Models
                     reason = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedInstanceMaintenanceConfigurationCapability(name.Value, Optional.ToNullable(status), reason.Value);
+            return new ManagedInstanceMaintenanceConfigurationCapability(name.Value, Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+        }
+
+        ManagedInstanceMaintenanceConfigurationCapability IModelJsonSerializable<ManagedInstanceMaintenanceConfigurationCapability>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedInstanceMaintenanceConfigurationCapability>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedInstanceMaintenanceConfigurationCapability(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedInstanceMaintenanceConfigurationCapability>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedInstanceMaintenanceConfigurationCapability>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedInstanceMaintenanceConfigurationCapability IModelSerializable<ManagedInstanceMaintenanceConfigurationCapability>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedInstanceMaintenanceConfigurationCapability>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedInstanceMaintenanceConfigurationCapability(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagedInstanceMaintenanceConfigurationCapability"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagedInstanceMaintenanceConfigurationCapability"/> to convert. </param>
+        public static implicit operator RequestContent(ManagedInstanceMaintenanceConfigurationCapability model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagedInstanceMaintenanceConfigurationCapability"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagedInstanceMaintenanceConfigurationCapability(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedInstanceMaintenanceConfigurationCapability(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

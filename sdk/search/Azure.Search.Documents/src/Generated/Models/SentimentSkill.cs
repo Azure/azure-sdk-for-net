@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> This skill is deprecated. Use the V3.SentimentSkill instead. </summary>
     public partial class SentimentSkill : SearchIndexerSkill
     {
-        /// <summary> Initializes a new instance of SentimentSkill. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentimentSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
             ODataType = "#Microsoft.Skills.Text.SentimentSkill";
         }
 
-        /// <summary> Initializes a new instance of SentimentSkill. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentimentSkill"/>. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the skill. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
         /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
@@ -34,10 +34,16 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is en. </param>
-        internal SentimentSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, SentimentSkillLanguage? defaultLanguageCode) : base(oDataType, name, description, context, inputs, outputs)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SentimentSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, SentimentSkillLanguage? defaultLanguageCode, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(oDataType, name, description, context, inputs, outputs, serializedAdditionalRawData)
         {
             DefaultLanguageCode = defaultLanguageCode;
             ODataType = oDataType ?? "#Microsoft.Skills.Text.SentimentSkill";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SentimentSkill"/> for deserialization. </summary>
+        internal SentimentSkill()
+        {
         }
     }
 }

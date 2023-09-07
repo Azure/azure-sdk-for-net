@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class RecommendedSensitivityLabelUpdateList : IUtf8JsonSerializable
+    public partial class RecommendedSensitivityLabelUpdateList : IUtf8JsonSerializable, IModelJsonSerializable<RecommendedSensitivityLabelUpdateList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RecommendedSensitivityLabelUpdateList>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RecommendedSensitivityLabelUpdateList>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RecommendedSensitivityLabelUpdateList>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Operations))
             {
@@ -21,11 +29,113 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Operations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<RecommendedSensitivityLabelUpdate>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static RecommendedSensitivityLabelUpdateList DeserializeRecommendedSensitivityLabelUpdateList(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<RecommendedSensitivityLabelUpdate>> operations = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("operations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<RecommendedSensitivityLabelUpdate> array = new List<RecommendedSensitivityLabelUpdate>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(RecommendedSensitivityLabelUpdate.DeserializeRecommendedSensitivityLabelUpdate(item));
+                    }
+                    operations = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new RecommendedSensitivityLabelUpdateList(Optional.ToList(operations), serializedAdditionalRawData);
+        }
+
+        RecommendedSensitivityLabelUpdateList IModelJsonSerializable<RecommendedSensitivityLabelUpdateList>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RecommendedSensitivityLabelUpdateList>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecommendedSensitivityLabelUpdateList(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RecommendedSensitivityLabelUpdateList>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RecommendedSensitivityLabelUpdateList>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RecommendedSensitivityLabelUpdateList IModelSerializable<RecommendedSensitivityLabelUpdateList>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RecommendedSensitivityLabelUpdateList>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRecommendedSensitivityLabelUpdateList(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RecommendedSensitivityLabelUpdateList"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RecommendedSensitivityLabelUpdateList"/> to convert. </param>
+        public static implicit operator RequestContent(RecommendedSensitivityLabelUpdateList model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RecommendedSensitivityLabelUpdateList"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RecommendedSensitivityLabelUpdateList(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRecommendedSensitivityLabelUpdateList(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

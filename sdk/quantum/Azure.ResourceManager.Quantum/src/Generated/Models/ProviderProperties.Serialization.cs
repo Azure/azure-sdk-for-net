@@ -5,16 +5,135 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    public partial class ProviderProperties
+    public partial class ProviderProperties : IUtf8JsonSerializable, IModelJsonSerializable<ProviderProperties>
     {
-        internal static ProviderProperties DeserializeProviderProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProviderProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ProviderProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ProviderProperties>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Aad))
+            {
+                writer.WritePropertyName("aad"u8);
+                if (Aad is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ProviderPropertiesAad>)Aad).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(ManagedApplication))
+            {
+                writer.WritePropertyName("managedApplication"u8);
+                if (ManagedApplication is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ProviderPropertiesManagedApplication>)ManagedApplication).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(Targets))
+            {
+                writer.WritePropertyName("targets"u8);
+                writer.WriteStartArray();
+                foreach (var item in Targets)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<TargetDescription>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Skus))
+            {
+                writer.WritePropertyName("skus"u8);
+                writer.WriteStartArray();
+                foreach (var item in Skus)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SkuDescription>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(QuotaDimensions))
+            {
+                writer.WritePropertyName("quotaDimensions"u8);
+                writer.WriteStartArray();
+                foreach (var item in QuotaDimensions)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<QuotaDimension>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(PricingDimensions))
+            {
+                writer.WritePropertyName("pricingDimensions"u8);
+                writer.WriteStartArray();
+                foreach (var item in PricingDimensions)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<PricingDimension>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ProviderProperties DeserializeProviderProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +148,7 @@ namespace Azure.ResourceManager.Quantum.Models
             Optional<IReadOnlyList<SkuDescription>> skus = default;
             Optional<IReadOnlyList<QuotaDimension>> quotaDimensions = default;
             Optional<IReadOnlyList<PricingDimension>> pricingDimensions = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -125,8 +245,61 @@ namespace Azure.ResourceManager.Quantum.Models
                     pricingDimensions = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ProviderProperties(description.Value, providerType.Value, company.Value, defaultEndpoint.Value, aad.Value, managedApplication.Value, Optional.ToList(targets), Optional.ToList(skus), Optional.ToList(quotaDimensions), Optional.ToList(pricingDimensions));
+            return new ProviderProperties(description.Value, providerType.Value, company.Value, defaultEndpoint.Value, aad.Value, managedApplication.Value, Optional.ToList(targets), Optional.ToList(skus), Optional.ToList(quotaDimensions), Optional.ToList(pricingDimensions), serializedAdditionalRawData);
+        }
+
+        ProviderProperties IModelJsonSerializable<ProviderProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProviderProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeProviderProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ProviderProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProviderProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ProviderProperties IModelSerializable<ProviderProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProviderProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeProviderProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ProviderProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ProviderProperties"/> to convert. </param>
+        public static implicit operator RequestContent(ProviderProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ProviderProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ProviderProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeProviderProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

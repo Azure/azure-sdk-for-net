@@ -5,18 +5,21 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure VM workload-specific protectable item representing SQL Instance. </summary>
     public partial class VmWorkloadSqlInstanceProtectableItem : VmWorkloadProtectableItem
     {
-        /// <summary> Initializes a new instance of VmWorkloadSqlInstanceProtectableItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadSqlInstanceProtectableItem"/>. </summary>
         public VmWorkloadSqlInstanceProtectableItem()
         {
             ProtectableItemType = "SQLInstance";
         }
 
-        /// <summary> Initializes a new instance of VmWorkloadSqlInstanceProtectableItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadSqlInstanceProtectableItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
         /// <param name="workloadType"> Type of workload for the backup management. </param>
         /// <param name="protectableItemType"> Type of the backup item. </param>
@@ -33,7 +36,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB's present. </param>
         /// <param name="subProtectableItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
         /// <param name="preBackupValidation"> Pre-backup validation for protectable objects. </param>
-        internal VmWorkloadSqlInstanceProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, string parentName, string parentUniqueName, string serverName, bool? isAutoProtectable, bool? isAutoProtected, int? subInquiredItemCount, int? subProtectableItemCount, PreBackupValidation preBackupValidation) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, parentName, parentUniqueName, serverName, isAutoProtectable, isAutoProtected, subInquiredItemCount, subProtectableItemCount, preBackupValidation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmWorkloadSqlInstanceProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, string parentName, string parentUniqueName, string serverName, bool? isAutoProtectable, bool? isAutoProtected, int? subInquiredItemCount, int? subProtectableItemCount, PreBackupValidation preBackupValidation, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, parentName, parentUniqueName, serverName, isAutoProtectable, isAutoProtected, subInquiredItemCount, subProtectableItemCount, preBackupValidation, serializedAdditionalRawData)
         {
             ProtectableItemType = protectableItemType ?? "SQLInstance";
         }

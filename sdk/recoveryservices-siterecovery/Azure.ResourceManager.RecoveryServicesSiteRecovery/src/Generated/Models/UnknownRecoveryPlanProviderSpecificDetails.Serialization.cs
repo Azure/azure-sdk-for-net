@@ -5,29 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    internal partial class UnknownRecoveryPlanProviderSpecificDetails
+    internal partial class UnknownRecoveryPlanProviderSpecificDetails : IUtf8JsonSerializable, IModelJsonSerializable<RecoveryPlanProviderSpecificDetails>
     {
-        internal static UnknownRecoveryPlanProviderSpecificDetails DeserializeUnknownRecoveryPlanProviderSpecificDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RecoveryPlanProviderSpecificDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RecoveryPlanProviderSpecificDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            Core.ModelSerializerHelper.ValidateFormat<RecoveryPlanProviderSpecificDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
             {
-                return null;
-            }
-            string instanceType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("instanceType"u8))
+                foreach (var property in _serializedAdditionalRawData)
                 {
-                    instanceType = property.Value.GetString();
-                    continue;
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
                 }
             }
-            return new UnknownRecoveryPlanProviderSpecificDetails(instanceType);
+            writer.WriteEndObject();
+        }
+
+        internal static RecoveryPlanProviderSpecificDetails DeserializeUnknownRecoveryPlanProviderSpecificDetails(JsonElement element, ModelSerializerOptions options = default) => DeserializeRecoveryPlanProviderSpecificDetails(element, options);
+
+        RecoveryPlanProviderSpecificDetails IModelJsonSerializable<RecoveryPlanProviderSpecificDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RecoveryPlanProviderSpecificDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownRecoveryPlanProviderSpecificDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RecoveryPlanProviderSpecificDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RecoveryPlanProviderSpecificDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RecoveryPlanProviderSpecificDetails IModelSerializable<RecoveryPlanProviderSpecificDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RecoveryPlanProviderSpecificDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRecoveryPlanProviderSpecificDetails(doc.RootElement, options);
         }
     }
 }

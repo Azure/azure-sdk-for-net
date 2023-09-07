@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Recovery point specific to PointInTime. </summary>
     public partial class WorkloadSqlPointInTimeRecoveryPoint : WorkloadSqlRecoveryPoint
     {
-        /// <summary> Initializes a new instance of WorkloadSqlPointInTimeRecoveryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSqlPointInTimeRecoveryPoint"/>. </summary>
         public WorkloadSqlPointInTimeRecoveryPoint()
         {
             TimeRanges = new ChangeTrackingList<PointInTimeRange>();
             ObjectType = "AzureWorkloadSQLPointInTimeRecoveryPoint";
         }
 
-        /// <summary> Initializes a new instance of WorkloadSqlPointInTimeRecoveryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSqlPointInTimeRecoveryPoint"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="recoveryPointCreatedOn"> UTC time at which recovery point was created. </param>
         /// <param name="restorePointType"> Type of restore point. </param>
@@ -34,7 +34,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Or when ListRecoveryPoints is called for Log RP only with ExtendedInfo query filter
         /// </param>
         /// <param name="timeRanges"> List of log ranges. </param>
-        internal WorkloadSqlPointInTimeRecoveryPoint(string objectType, DateTimeOffset? recoveryPointCreatedOn, RestorePointType? restorePointType, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties, WorkloadSqlRecoveryPointExtendedInfo extendedInfo, IList<PointInTimeRange> timeRanges) : base(objectType, recoveryPointCreatedOn, restorePointType, recoveryPointTierDetails, recoveryPointMoveReadinessInfo, recoveryPointProperties, extendedInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadSqlPointInTimeRecoveryPoint(string objectType, DateTimeOffset? recoveryPointCreatedOn, RestorePointType? restorePointType, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties, WorkloadSqlRecoveryPointExtendedInfo extendedInfo, IList<PointInTimeRange> timeRanges, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(objectType, recoveryPointCreatedOn, restorePointType, recoveryPointTierDetails, recoveryPointMoveReadinessInfo, recoveryPointProperties, extendedInfo, serializedAdditionalRawData)
         {
             TimeRanges = timeRanges;
             ObjectType = objectType ?? "AzureWorkloadSQLPointInTimeRecoveryPoint";

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ServiceFabricClusterPatch : IUtf8JsonSerializable
+    public partial class ServiceFabricClusterPatch : IUtf8JsonSerializable, IModelJsonSerializable<ServiceFabricClusterPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServiceFabricClusterPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServiceFabricClusterPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceFabricClusterPatch>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -41,12 +49,26 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
-                writer.WriteObjectValue(Certificate);
+                if (Certificate is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ClusterCertificateDescription>)Certificate).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(CertificateCommonNames))
             {
                 writer.WritePropertyName("certificateCommonNames"u8);
-                writer.WriteObjectValue(CertificateCommonNames);
+                if (CertificateCommonNames is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ClusterServerCertificateCommonNames>)CertificateCommonNames).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(ClientCertificateCommonNames))
             {
@@ -54,7 +76,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in ClientCertificateCommonNames)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ClusterClientCertificateCommonName>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +93,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in ClientCertificateThumbprints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ClusterClientCertificateThumbprint>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +120,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in FabricSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SettingsSectionDescription>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +137,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in NodeTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ClusterNodeTypeDescription>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -106,17 +156,38 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(ReverseProxyCertificate))
             {
                 writer.WritePropertyName("reverseProxyCertificate"u8);
-                writer.WriteObjectValue(ReverseProxyCertificate);
+                if (ReverseProxyCertificate is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ClusterCertificateDescription>)ReverseProxyCertificate).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(UpgradeDescription))
             {
                 writer.WritePropertyName("upgradeDescription"u8);
-                writer.WriteObjectValue(UpgradeDescription);
+                if (UpgradeDescription is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ClusterUpgradePolicy>)UpgradeDescription).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ApplicationTypeVersionsCleanupPolicy))
             {
                 writer.WritePropertyName("applicationTypeVersionsCleanupPolicy"u8);
-                writer.WriteObjectValue(ApplicationTypeVersionsCleanupPolicy);
+                if (ApplicationTypeVersionsCleanupPolicy is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ApplicationTypeVersionsCleanupPolicy>)ApplicationTypeVersionsCleanupPolicy).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(UpgradeMode))
             {
@@ -164,12 +235,372 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in Notifications)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ClusterNotification>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ServiceFabricClusterPatch DeserializeServiceFabricClusterPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<IList<ClusterAddOnFeature>> addOnFeatures = default;
+            Optional<ClusterCertificateDescription> certificate = default;
+            Optional<ClusterServerCertificateCommonNames> certificateCommonNames = default;
+            Optional<IList<ClusterClientCertificateCommonName>> clientCertificateCommonNames = default;
+            Optional<IList<ClusterClientCertificateThumbprint>> clientCertificateThumbprints = default;
+            Optional<string> clusterCodeVersion = default;
+            Optional<bool> eventStoreServiceEnabled = default;
+            Optional<IList<SettingsSectionDescription>> fabricSettings = default;
+            Optional<IList<ClusterNodeTypeDescription>> nodeTypes = default;
+            Optional<ClusterReliabilityLevel> reliabilityLevel = default;
+            Optional<ClusterCertificateDescription> reverseProxyCertificate = default;
+            Optional<ClusterUpgradePolicy> upgradeDescription = default;
+            Optional<ApplicationTypeVersionsCleanupPolicy> applicationTypeVersionsCleanupPolicy = default;
+            Optional<ClusterUpgradeMode> upgradeMode = default;
+            Optional<SfZonalUpgradeMode> sfZonalUpgradeMode = default;
+            Optional<VmssZonalUpgradeMode> vmssZonalUpgradeMode = default;
+            Optional<bool> infrastructureServiceManager = default;
+            Optional<ClusterUpgradeCadence> upgradeWave = default;
+            Optional<DateTimeOffset> upgradePauseStartTimestampUtc = default;
+            Optional<DateTimeOffset> upgradePauseEndTimestampUtc = default;
+            Optional<bool> waveUpgradePaused = default;
+            Optional<IList<ClusterNotification>> notifications = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("addOnFeatures"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ClusterAddOnFeature> array = new List<ClusterAddOnFeature>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(new ClusterAddOnFeature(item.GetString()));
+                            }
+                            addOnFeatures = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("certificate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            certificate = ClusterCertificateDescription.DeserializeClusterCertificateDescription(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("certificateCommonNames"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            certificateCommonNames = ClusterServerCertificateCommonNames.DeserializeClusterServerCertificateCommonNames(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("clientCertificateCommonNames"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ClusterClientCertificateCommonName> array = new List<ClusterClientCertificateCommonName>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ClusterClientCertificateCommonName.DeserializeClusterClientCertificateCommonName(item));
+                            }
+                            clientCertificateCommonNames = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("clientCertificateThumbprints"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ClusterClientCertificateThumbprint> array = new List<ClusterClientCertificateThumbprint>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ClusterClientCertificateThumbprint.DeserializeClusterClientCertificateThumbprint(item));
+                            }
+                            clientCertificateThumbprints = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("clusterCodeVersion"u8))
+                        {
+                            clusterCodeVersion = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("eventStoreServiceEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            eventStoreServiceEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("fabricSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<SettingsSectionDescription> array = new List<SettingsSectionDescription>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(SettingsSectionDescription.DeserializeSettingsSectionDescription(item));
+                            }
+                            fabricSettings = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("nodeTypes"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ClusterNodeTypeDescription> array = new List<ClusterNodeTypeDescription>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ClusterNodeTypeDescription.DeserializeClusterNodeTypeDescription(item));
+                            }
+                            nodeTypes = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("reliabilityLevel"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            reliabilityLevel = new ClusterReliabilityLevel(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("reverseProxyCertificate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            reverseProxyCertificate = ClusterCertificateDescription.DeserializeClusterCertificateDescription(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("upgradeDescription"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            upgradeDescription = ClusterUpgradePolicy.DeserializeClusterUpgradePolicy(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("applicationTypeVersionsCleanupPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            applicationTypeVersionsCleanupPolicy = ApplicationTypeVersionsCleanupPolicy.DeserializeApplicationTypeVersionsCleanupPolicy(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("upgradeMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            upgradeMode = new ClusterUpgradeMode(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("sfZonalUpgradeMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sfZonalUpgradeMode = new SfZonalUpgradeMode(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("vmssZonalUpgradeMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            vmssZonalUpgradeMode = new VmssZonalUpgradeMode(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("infrastructureServiceManager"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            infrastructureServiceManager = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("upgradeWave"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            upgradeWave = new ClusterUpgradeCadence(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("upgradePauseStartTimestampUtc"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            upgradePauseStartTimestampUtc = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("upgradePauseEndTimestampUtc"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            upgradePauseEndTimestampUtc = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("waveUpgradePaused"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            waveUpgradePaused = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("notifications"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ClusterNotification> array = new List<ClusterNotification>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ClusterNotification.DeserializeClusterNotification(item));
+                            }
+                            notifications = array;
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ServiceFabricClusterPatch(Optional.ToDictionary(tags), Optional.ToList(addOnFeatures), certificate.Value, certificateCommonNames.Value, Optional.ToList(clientCertificateCommonNames), Optional.ToList(clientCertificateThumbprints), clusterCodeVersion.Value, Optional.ToNullable(eventStoreServiceEnabled), Optional.ToList(fabricSettings), Optional.ToList(nodeTypes), Optional.ToNullable(reliabilityLevel), reverseProxyCertificate.Value, upgradeDescription.Value, applicationTypeVersionsCleanupPolicy.Value, Optional.ToNullable(upgradeMode), Optional.ToNullable(sfZonalUpgradeMode), Optional.ToNullable(vmssZonalUpgradeMode), Optional.ToNullable(infrastructureServiceManager), Optional.ToNullable(upgradeWave), Optional.ToNullable(upgradePauseStartTimestampUtc), Optional.ToNullable(upgradePauseEndTimestampUtc), Optional.ToNullable(waveUpgradePaused), Optional.ToList(notifications), serializedAdditionalRawData);
+        }
+
+        ServiceFabricClusterPatch IModelJsonSerializable<ServiceFabricClusterPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceFabricClusterPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceFabricClusterPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServiceFabricClusterPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceFabricClusterPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServiceFabricClusterPatch IModelSerializable<ServiceFabricClusterPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceFabricClusterPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServiceFabricClusterPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ServiceFabricClusterPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ServiceFabricClusterPatch"/> to convert. </param>
+        public static implicit operator RequestContent(ServiceFabricClusterPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ServiceFabricClusterPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ServiceFabricClusterPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServiceFabricClusterPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

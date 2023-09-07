@@ -5,24 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Recovery plan A2A specific details. </summary>
     public partial class RecoveryPlanA2ADetails : RecoveryPlanProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of RecoveryPlanA2ADetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanA2ADetails"/>. </summary>
         internal RecoveryPlanA2ADetails()
         {
             InstanceType = "A2A";
         }
 
-        /// <summary> Initializes a new instance of RecoveryPlanA2ADetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanA2ADetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
         /// <param name="primaryZone"> The primary zone. </param>
         /// <param name="recoveryZone"> The recovery zone. </param>
         /// <param name="primaryExtendedLocation"> The primary extended location. </param>
         /// <param name="recoveryExtendedLocation"> The recovery extended location. </param>
-        internal RecoveryPlanA2ADetails(string instanceType, string primaryZone, string recoveryZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation) : base(instanceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryPlanA2ADetails(string instanceType, string primaryZone, string recoveryZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
         {
             PrimaryZone = primaryZone;
             RecoveryZone = recoveryZone;

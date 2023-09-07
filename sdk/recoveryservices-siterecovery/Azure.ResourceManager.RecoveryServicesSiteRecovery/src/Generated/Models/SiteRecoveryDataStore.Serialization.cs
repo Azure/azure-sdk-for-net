@@ -6,15 +6,67 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryDataStore
+    public partial class SiteRecoveryDataStore : IUtf8JsonSerializable, IModelJsonSerializable<SiteRecoveryDataStore>
     {
-        internal static SiteRecoveryDataStore DeserializeSiteRecoveryDataStore(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SiteRecoveryDataStore>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SiteRecoveryDataStore>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryDataStore>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SymbolicName))
+            {
+                writer.WritePropertyName("symbolicName"u8);
+                writer.WriteStringValue(SymbolicName);
+            }
+            if (Optional.IsDefined(Uuid))
+            {
+                writer.WritePropertyName("uuid"u8);
+                writer.WriteStringValue(Uuid.Value);
+            }
+            if (Optional.IsDefined(Capacity))
+            {
+                writer.WritePropertyName("capacity"u8);
+                writer.WriteStringValue(Capacity);
+            }
+            if (Optional.IsDefined(FreeSpace))
+            {
+                writer.WritePropertyName("freeSpace"u8);
+                writer.WriteStringValue(FreeSpace);
+            }
+            if (Optional.IsDefined(DataStoreType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(DataStoreType);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SiteRecoveryDataStore DeserializeSiteRecoveryDataStore(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> capacity = default;
             Optional<string> freeSpace = default;
             Optional<string> type = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("symbolicName"u8))
@@ -55,8 +108,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SiteRecoveryDataStore(symbolicName.Value, Optional.ToNullable(uuid), capacity.Value, freeSpace.Value, type.Value);
+            return new SiteRecoveryDataStore(symbolicName.Value, Optional.ToNullable(uuid), capacity.Value, freeSpace.Value, type.Value, serializedAdditionalRawData);
+        }
+
+        SiteRecoveryDataStore IModelJsonSerializable<SiteRecoveryDataStore>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryDataStore>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryDataStore(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SiteRecoveryDataStore>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryDataStore>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SiteRecoveryDataStore IModelSerializable<SiteRecoveryDataStore>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SiteRecoveryDataStore>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryDataStore(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SiteRecoveryDataStore"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SiteRecoveryDataStore"/> to convert. </param>
+        public static implicit operator RequestContent(SiteRecoveryDataStore model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SiteRecoveryDataStore"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SiteRecoveryDataStore(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSiteRecoveryDataStore(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

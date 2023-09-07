@@ -5,21 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class IotSecurityDeviceRecommendation : IUtf8JsonSerializable
+    public partial class IotSecurityDeviceRecommendation : IUtf8JsonSerializable, IModelJsonSerializable<IotSecurityDeviceRecommendation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IotSecurityDeviceRecommendation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IotSecurityDeviceRecommendation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IotSecurityDeviceRecommendation>(this, options.Format);
+
             writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IotSecurityDeviceRecommendation DeserializeIotSecurityDeviceRecommendation(JsonElement element)
+        internal static IotSecurityDeviceRecommendation DeserializeIotSecurityDeviceRecommendation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> recommendationDisplayName = default;
             Optional<ReportedSeverity> reportedSeverity = default;
             Optional<long> devicesCount = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recommendationDisplayName"u8))
@@ -52,8 +75,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     devicesCount = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IotSecurityDeviceRecommendation(recommendationDisplayName.Value, Optional.ToNullable(reportedSeverity), Optional.ToNullable(devicesCount));
+            return new IotSecurityDeviceRecommendation(recommendationDisplayName.Value, Optional.ToNullable(reportedSeverity), Optional.ToNullable(devicesCount), serializedAdditionalRawData);
+        }
+
+        IotSecurityDeviceRecommendation IModelJsonSerializable<IotSecurityDeviceRecommendation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotSecurityDeviceRecommendation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotSecurityDeviceRecommendation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IotSecurityDeviceRecommendation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotSecurityDeviceRecommendation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IotSecurityDeviceRecommendation IModelSerializable<IotSecurityDeviceRecommendation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotSecurityDeviceRecommendation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIotSecurityDeviceRecommendation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IotSecurityDeviceRecommendation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IotSecurityDeviceRecommendation"/> to convert. </param>
+        public static implicit operator RequestContent(IotSecurityDeviceRecommendation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IotSecurityDeviceRecommendation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IotSecurityDeviceRecommendation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIotSecurityDeviceRecommendation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

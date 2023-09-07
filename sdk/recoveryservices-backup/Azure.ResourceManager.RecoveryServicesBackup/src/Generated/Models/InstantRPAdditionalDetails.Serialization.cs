@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class InstantRPAdditionalDetails : IUtf8JsonSerializable
+    public partial class InstantRPAdditionalDetails : IUtf8JsonSerializable, IModelJsonSerializable<InstantRPAdditionalDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InstantRPAdditionalDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InstantRPAdditionalDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<InstantRPAdditionalDetails>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AzureBackupRGNamePrefix))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("azureBackupRGNameSuffix"u8);
                 writer.WriteStringValue(AzureBackupRGNameSuffix);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static InstantRPAdditionalDetails DeserializeInstantRPAdditionalDetails(JsonElement element)
+        internal static InstantRPAdditionalDetails DeserializeInstantRPAdditionalDetails(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> azureBackupRGNamePrefix = default;
             Optional<string> azureBackupRGNameSuffix = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureBackupRGNamePrefix"u8))
@@ -48,8 +71,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     azureBackupRGNameSuffix = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InstantRPAdditionalDetails(azureBackupRGNamePrefix.Value, azureBackupRGNameSuffix.Value);
+            return new InstantRPAdditionalDetails(azureBackupRGNamePrefix.Value, azureBackupRGNameSuffix.Value, serializedAdditionalRawData);
+        }
+
+        InstantRPAdditionalDetails IModelJsonSerializable<InstantRPAdditionalDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InstantRPAdditionalDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInstantRPAdditionalDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InstantRPAdditionalDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InstantRPAdditionalDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InstantRPAdditionalDetails IModelSerializable<InstantRPAdditionalDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InstantRPAdditionalDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInstantRPAdditionalDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InstantRPAdditionalDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InstantRPAdditionalDetails"/> to convert. </param>
+        public static implicit operator RequestContent(InstantRPAdditionalDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InstantRPAdditionalDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InstantRPAdditionalDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInstantRPAdditionalDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

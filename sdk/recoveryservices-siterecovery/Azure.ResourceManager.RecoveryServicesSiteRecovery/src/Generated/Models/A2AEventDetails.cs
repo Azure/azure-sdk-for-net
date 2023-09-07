@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Model class for event details of a A2A event. </summary>
     public partial class A2AEventDetails : SiteRecoveryEventProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of A2AEventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AEventDetails"/>. </summary>
         internal A2AEventDetails()
         {
             InstanceType = "A2A";
         }
 
-        /// <summary> Initializes a new instance of A2AEventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AEventDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <param name="protectedItemName"> The protected item arm name. </param>
         /// <param name="fabricObjectId"> The azure vm arm id. </param>
@@ -26,7 +28,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="fabricLocation"> The fabric location. </param>
         /// <param name="remoteFabricName"> Remote fabric arm name. </param>
         /// <param name="remoteFabricLocation"> Remote fabric location. </param>
-        internal A2AEventDetails(string instanceType, string protectedItemName, ResourceIdentifier fabricObjectId, string fabricName, AzureLocation? fabricLocation, string remoteFabricName, AzureLocation? remoteFabricLocation) : base(instanceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal A2AEventDetails(string instanceType, string protectedItemName, ResourceIdentifier fabricObjectId, string fabricName, AzureLocation? fabricLocation, string remoteFabricName, AzureLocation? remoteFabricLocation, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
         {
             ProtectedItemName = protectedItemName;
             FabricObjectId = fabricObjectId;

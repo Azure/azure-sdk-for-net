@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 using Azure.Quantum.Jobs.Models;
 
 namespace Azure.Quantum.Jobs
@@ -198,9 +199,7 @@ namespace Azure.Quantum.Jobs
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(job);
-            request.Content = content;
+            request.Content = job;
             return message;
         }
 
@@ -356,7 +355,14 @@ namespace Azure.Quantum.Jobs
             content.JsonWriter.WriteStartArray();
             foreach (var item in patchJob)
             {
-                content.JsonWriter.WriteObjectValue(item);
+                if (item is null)
+                {
+                    content.JsonWriter.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<Models.JsonPatchDocument>)item).Serialize(content.JsonWriter, ModelSerializerOptions.DefaultWireOptions);
+                }
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;

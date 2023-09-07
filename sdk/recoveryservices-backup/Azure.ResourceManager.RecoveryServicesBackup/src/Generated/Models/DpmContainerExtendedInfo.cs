@@ -6,22 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Additional information of the DPMContainer. </summary>
     internal partial class DpmContainerExtendedInfo
     {
-        /// <summary> Initializes a new instance of DpmContainerExtendedInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DpmContainerExtendedInfo"/>. </summary>
         public DpmContainerExtendedInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DpmContainerExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DpmContainerExtendedInfo"/>. </summary>
         /// <param name="lastRefreshedOn"> Last refresh time of the DPMContainer. </param>
-        internal DpmContainerExtendedInfo(DateTimeOffset? lastRefreshedOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DpmContainerExtendedInfo(DateTimeOffset? lastRefreshedOn, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LastRefreshedOn = lastRefreshedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Last refresh time of the DPMContainer. </summary>

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadContainerInquiryInfo : IUtf8JsonSerializable
+    public partial class WorkloadContainerInquiryInfo : IUtf8JsonSerializable, IModelJsonSerializable<WorkloadContainerInquiryInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WorkloadContainerInquiryInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WorkloadContainerInquiryInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<WorkloadContainerInquiryInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
@@ -24,7 +31,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ErrorDetail))
             {
                 writer.WritePropertyName("errorDetail"u8);
-                writer.WriteObjectValue(ErrorDetail);
+                if (ErrorDetail is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BackupErrorDetail>)ErrorDetail).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(InquiryDetails))
             {
@@ -32,15 +46,36 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in InquiryDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<WorkloadInquiryDetails>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static WorkloadContainerInquiryInfo DeserializeWorkloadContainerInquiryInfo(JsonElement element)
+        internal static WorkloadContainerInquiryInfo DeserializeWorkloadContainerInquiryInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +83,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> status = default;
             Optional<BackupErrorDetail> errorDetail = default;
             Optional<IList<WorkloadInquiryDetails>> inquiryDetails = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -78,8 +114,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     inquiryDetails = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WorkloadContainerInquiryInfo(status.Value, errorDetail.Value, Optional.ToList(inquiryDetails));
+            return new WorkloadContainerInquiryInfo(status.Value, errorDetail.Value, Optional.ToList(inquiryDetails), serializedAdditionalRawData);
+        }
+
+        WorkloadContainerInquiryInfo IModelJsonSerializable<WorkloadContainerInquiryInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WorkloadContainerInquiryInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkloadContainerInquiryInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WorkloadContainerInquiryInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WorkloadContainerInquiryInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WorkloadContainerInquiryInfo IModelSerializable<WorkloadContainerInquiryInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WorkloadContainerInquiryInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWorkloadContainerInquiryInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WorkloadContainerInquiryInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WorkloadContainerInquiryInfo"/> to convert. </param>
+        public static implicit operator RequestContent(WorkloadContainerInquiryInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WorkloadContainerInquiryInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WorkloadContainerInquiryInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWorkloadContainerInquiryInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

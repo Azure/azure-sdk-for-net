@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The external security solution properties for AAD solutions. </summary>
     public partial class AadSolutionProperties : ExternalSecuritySolutionProperties
     {
-        /// <summary> Initializes a new instance of AadSolutionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AadSolutionProperties"/>. </summary>
         public AadSolutionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AadSolutionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AadSolutionProperties"/>. </summary>
         /// <param name="deviceVendor"></param>
         /// <param name="deviceType"></param>
         /// <param name="workspace"> Represents an OMS workspace to which the solution is connected. </param>

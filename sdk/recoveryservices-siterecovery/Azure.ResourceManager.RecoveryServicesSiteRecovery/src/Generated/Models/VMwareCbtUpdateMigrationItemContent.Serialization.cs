@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VMwareCbtUpdateMigrationItemContent : IUtf8JsonSerializable
+    public partial class VMwareCbtUpdateMigrationItemContent : IUtf8JsonSerializable, IModelJsonSerializable<VMwareCbtUpdateMigrationItemContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VMwareCbtUpdateMigrationItemContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VMwareCbtUpdateMigrationItemContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VMwareCbtUpdateMigrationItemContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TargetVmName))
             {
@@ -66,7 +74,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<VMwareCbtNicContent>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +91,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<VMwareCbtUpdateDiskContent>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -130,7 +152,272 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static VMwareCbtUpdateMigrationItemContent DeserializeVMwareCbtUpdateMigrationItemContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> targetVmName = default;
+            Optional<string> targetVmSize = default;
+            Optional<ResourceIdentifier> targetResourceGroupId = default;
+            Optional<ResourceIdentifier> targetAvailabilitySetId = default;
+            Optional<string> targetAvailabilityZone = default;
+            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
+            Optional<ResourceIdentifier> targetBootDiagnosticsStorageAccountId = default;
+            Optional<ResourceIdentifier> targetNetworkId = default;
+            Optional<ResourceIdentifier> testNetworkId = default;
+            Optional<IList<VMwareCbtNicContent>> vmNics = default;
+            Optional<IList<VMwareCbtUpdateDiskContent>> vmDisks = default;
+            Optional<SiteRecoveryLicenseType> licenseType = default;
+            Optional<SiteRecoverySqlServerLicenseType> sqlServerLicenseType = default;
+            Optional<string> performAutoResync = default;
+            Optional<IDictionary<string, string>> targetVmTags = default;
+            Optional<IDictionary<string, string>> targetDiskTags = default;
+            Optional<IDictionary<string, string>> targetNicTags = default;
+            string instanceType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("targetVmName"u8))
+                {
+                    targetVmName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("targetVmSize"u8))
+                {
+                    targetVmSize = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("targetResourceGroupId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetResourceGroupId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetAvailabilitySetId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetAvailabilitySetId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetAvailabilityZone"u8))
+                {
+                    targetAvailabilityZone = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("targetProximityPlacementGroupId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetProximityPlacementGroupId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetBootDiagnosticsStorageAccountId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetBootDiagnosticsStorageAccountId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetNetworkId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetNetworkId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("testNetworkId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    testNetworkId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("vmNics"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<VMwareCbtNicContent> array = new List<VMwareCbtNicContent>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(VMwareCbtNicContent.DeserializeVMwareCbtNicContent(item));
+                    }
+                    vmNics = array;
+                    continue;
+                }
+                if (property.NameEquals("vmDisks"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<VMwareCbtUpdateDiskContent> array = new List<VMwareCbtUpdateDiskContent>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(VMwareCbtUpdateDiskContent.DeserializeVMwareCbtUpdateDiskContent(item));
+                    }
+                    vmDisks = array;
+                    continue;
+                }
+                if (property.NameEquals("licenseType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    licenseType = new SiteRecoveryLicenseType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sqlServerLicenseType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sqlServerLicenseType = new SiteRecoverySqlServerLicenseType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("performAutoResync"u8))
+                {
+                    performAutoResync = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("targetVmTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    targetVmTags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("targetDiskTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    targetDiskTags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("targetNicTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    targetNicTags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new VMwareCbtUpdateMigrationItemContent(instanceType, targetVmName.Value, targetVmSize.Value, targetResourceGroupId.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, targetBootDiagnosticsStorageAccountId.Value, targetNetworkId.Value, testNetworkId.Value, Optional.ToList(vmNics), Optional.ToList(vmDisks), Optional.ToNullable(licenseType), Optional.ToNullable(sqlServerLicenseType), performAutoResync.Value, Optional.ToDictionary(targetVmTags), Optional.ToDictionary(targetDiskTags), Optional.ToDictionary(targetNicTags), serializedAdditionalRawData);
+        }
+
+        VMwareCbtUpdateMigrationItemContent IModelJsonSerializable<VMwareCbtUpdateMigrationItemContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VMwareCbtUpdateMigrationItemContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVMwareCbtUpdateMigrationItemContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VMwareCbtUpdateMigrationItemContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VMwareCbtUpdateMigrationItemContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VMwareCbtUpdateMigrationItemContent IModelSerializable<VMwareCbtUpdateMigrationItemContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VMwareCbtUpdateMigrationItemContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVMwareCbtUpdateMigrationItemContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VMwareCbtUpdateMigrationItemContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VMwareCbtUpdateMigrationItemContent"/> to convert. </param>
+        public static implicit operator RequestContent(VMwareCbtUpdateMigrationItemContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VMwareCbtUpdateMigrationItemContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VMwareCbtUpdateMigrationItemContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVMwareCbtUpdateMigrationItemContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a dns entity. </summary>
     public partial class SecurityInsightsDnsEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsDnsEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsDnsEntity"/>. </summary>
         public SecurityInsightsDnsEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = SecurityInsightsEntityKind.DnsResolution;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsDnsEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsDnsEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +35,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="domainName"> The name of the dns record associated with the alert. </param>
         /// <param name="hostIPAddressEntityId"> An ip entity id for the dns request client. </param>
         /// <param name="ipAddressEntityIds"> Ip entity identifiers for the resolved ip address. </param>
-        internal SecurityInsightsDnsEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string dnsServerIPEntityId, string domainName, string hostIPAddressEntityId, IReadOnlyList<string> ipAddressEntityIds) : base(id, name, resourceType, systemData, kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsDnsEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string dnsServerIPEntityId, string domainName, string hostIPAddressEntityId, IReadOnlyList<string> ipAddressEntityIds, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

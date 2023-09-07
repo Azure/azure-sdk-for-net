@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class AnswerResult
+    public partial class AnswerResult : IUtf8JsonSerializable, IModelJsonSerializable<AnswerResult>
     {
-        internal static AnswerResult DeserializeAnswerResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AnswerResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AnswerResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AnswerResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value);
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AnswerResult DeserializeAnswerResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +80,54 @@ namespace Azure.Search.Documents.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AnswerResult(Optional.ToNullable(score), key.Value, text.Value, highlights.Value, additionalProperties);
+        }
+
+        AnswerResult IModelJsonSerializable<AnswerResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnswerResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnswerResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AnswerResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnswerResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AnswerResult IModelSerializable<AnswerResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnswerResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAnswerResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AnswerResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AnswerResult"/> to convert. </param>
+        public static implicit operator RequestContent(AnswerResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AnswerResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AnswerResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAnswerResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

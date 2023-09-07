@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class MabFileFolderProtectedItemExtendedInfo : IUtf8JsonSerializable
+    public partial class MabFileFolderProtectedItemExtendedInfo : IUtf8JsonSerializable, IModelJsonSerializable<MabFileFolderProtectedItemExtendedInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MabFileFolderProtectedItemExtendedInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MabFileFolderProtectedItemExtendedInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MabFileFolderProtectedItemExtendedInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LastRefreshedOn))
             {
@@ -31,11 +38,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("recoveryPointCount"u8);
                 writer.WriteNumberValue(RecoveryPointCount.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MabFileFolderProtectedItemExtendedInfo DeserializeMabFileFolderProtectedItemExtendedInfo(JsonElement element)
+        internal static MabFileFolderProtectedItemExtendedInfo DeserializeMabFileFolderProtectedItemExtendedInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<DateTimeOffset> lastRefreshedAt = default;
             Optional<DateTimeOffset> oldestRecoveryPoint = default;
             Optional<int> recoveryPointCount = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastRefreshedAt"u8))
@@ -72,8 +94,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryPointCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MabFileFolderProtectedItemExtendedInfo(Optional.ToNullable(lastRefreshedAt), Optional.ToNullable(oldestRecoveryPoint), Optional.ToNullable(recoveryPointCount));
+            return new MabFileFolderProtectedItemExtendedInfo(Optional.ToNullable(lastRefreshedAt), Optional.ToNullable(oldestRecoveryPoint), Optional.ToNullable(recoveryPointCount), serializedAdditionalRawData);
+        }
+
+        MabFileFolderProtectedItemExtendedInfo IModelJsonSerializable<MabFileFolderProtectedItemExtendedInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MabFileFolderProtectedItemExtendedInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMabFileFolderProtectedItemExtendedInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MabFileFolderProtectedItemExtendedInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MabFileFolderProtectedItemExtendedInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MabFileFolderProtectedItemExtendedInfo IModelSerializable<MabFileFolderProtectedItemExtendedInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MabFileFolderProtectedItemExtendedInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMabFileFolderProtectedItemExtendedInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MabFileFolderProtectedItemExtendedInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MabFileFolderProtectedItemExtendedInfo"/> to convert. </param>
+        public static implicit operator RequestContent(MabFileFolderProtectedItemExtendedInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MabFileFolderProtectedItemExtendedInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MabFileFolderProtectedItemExtendedInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMabFileFolderProtectedItemExtendedInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

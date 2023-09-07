@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> MAB workload-specific job. </summary>
     public partial class MabBackupJob : BackupGenericJob
     {
-        /// <summary> Initializes a new instance of MabBackupJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="MabBackupJob"/>. </summary>
         public MabBackupJob()
         {
             ActionsInfo = new ChangeTrackingList<JobSupportedAction>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             JobType = "MabJob";
         }
 
-        /// <summary> Initializes a new instance of MabBackupJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="MabBackupJob"/>. </summary>
         /// <param name="entityFriendlyName"> Friendly name of the entity on which the current job is executing. </param>
         /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
         /// <param name="operation"> The operation name. </param>
@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="workloadType"> Workload type of backup item. </param>
         /// <param name="errorDetails"> The errors. </param>
         /// <param name="extendedInfo"> Additional information on the job. </param>
-        internal MabBackupJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, TimeSpan? duration, IList<JobSupportedAction> actionsInfo, string mabServerName, MabServerType? mabServerType, BackupWorkloadType? workloadType, IList<MabErrorInfo> errorDetails, MabBackupJobExtendedInfo extendedInfo) : base(entityFriendlyName, backupManagementType, operation, status, startOn, endOn, activityId, jobType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MabBackupJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, TimeSpan? duration, IList<JobSupportedAction> actionsInfo, string mabServerName, MabServerType? mabServerType, BackupWorkloadType? workloadType, IList<MabErrorInfo> errorDetails, MabBackupJobExtendedInfo extendedInfo, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(entityFriendlyName, backupManagementType, operation, status, startOn, endOn, activityId, jobType, serializedAdditionalRawData)
         {
             Duration = duration;
             ActionsInfo = actionsInfo;

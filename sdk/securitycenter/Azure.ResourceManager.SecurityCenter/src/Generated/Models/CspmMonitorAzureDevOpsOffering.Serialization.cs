@@ -5,29 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class CspmMonitorAzureDevOpsOffering : IUtf8JsonSerializable
+    public partial class CspmMonitorAzureDevOpsOffering : IUtf8JsonSerializable, IModelJsonSerializable<CspmMonitorAzureDevOpsOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CspmMonitorAzureDevOpsOffering>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CspmMonitorAzureDevOpsOffering>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CspmMonitorAzureDevOpsOffering>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CspmMonitorAzureDevOpsOffering DeserializeCspmMonitorAzureDevOpsOffering(JsonElement element)
+        internal static CspmMonitorAzureDevOpsOffering DeserializeCspmMonitorAzureDevOpsOffering(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             OfferingType offeringType = default;
             Optional<string> description = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offeringType"u8))
@@ -40,8 +63,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CspmMonitorAzureDevOpsOffering(offeringType, description.Value);
+            return new CspmMonitorAzureDevOpsOffering(offeringType, description.Value, serializedAdditionalRawData);
+        }
+
+        CspmMonitorAzureDevOpsOffering IModelJsonSerializable<CspmMonitorAzureDevOpsOffering>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CspmMonitorAzureDevOpsOffering>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCspmMonitorAzureDevOpsOffering(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CspmMonitorAzureDevOpsOffering>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CspmMonitorAzureDevOpsOffering>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CspmMonitorAzureDevOpsOffering IModelSerializable<CspmMonitorAzureDevOpsOffering>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CspmMonitorAzureDevOpsOffering>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCspmMonitorAzureDevOpsOffering(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CspmMonitorAzureDevOpsOffering"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CspmMonitorAzureDevOpsOffering"/> to convert. </param>
+        public static implicit operator RequestContent(CspmMonitorAzureDevOpsOffering model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CspmMonitorAzureDevOpsOffering"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CspmMonitorAzureDevOpsOffering(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCspmMonitorAzureDevOpsOffering(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

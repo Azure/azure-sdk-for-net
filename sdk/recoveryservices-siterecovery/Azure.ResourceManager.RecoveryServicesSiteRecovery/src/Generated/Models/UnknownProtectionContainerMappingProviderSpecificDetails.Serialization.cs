@@ -5,29 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    internal partial class UnknownProtectionContainerMappingProviderSpecificDetails
+    internal partial class UnknownProtectionContainerMappingProviderSpecificDetails : IUtf8JsonSerializable, IModelJsonSerializable<ProtectionContainerMappingProviderSpecificDetails>
     {
-        internal static UnknownProtectionContainerMappingProviderSpecificDetails DeserializeUnknownProtectionContainerMappingProviderSpecificDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProtectionContainerMappingProviderSpecificDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ProtectionContainerMappingProviderSpecificDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            Core.ModelSerializerHelper.ValidateFormat<ProtectionContainerMappingProviderSpecificDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
             {
-                return null;
-            }
-            string instanceType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("instanceType"u8))
+                foreach (var property in _serializedAdditionalRawData)
                 {
-                    instanceType = property.Value.GetString();
-                    continue;
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
                 }
             }
-            return new UnknownProtectionContainerMappingProviderSpecificDetails(instanceType);
+            writer.WriteEndObject();
+        }
+
+        internal static ProtectionContainerMappingProviderSpecificDetails DeserializeUnknownProtectionContainerMappingProviderSpecificDetails(JsonElement element, ModelSerializerOptions options = default) => DeserializeProtectionContainerMappingProviderSpecificDetails(element, options);
+
+        ProtectionContainerMappingProviderSpecificDetails IModelJsonSerializable<ProtectionContainerMappingProviderSpecificDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProtectionContainerMappingProviderSpecificDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownProtectionContainerMappingProviderSpecificDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ProtectionContainerMappingProviderSpecificDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProtectionContainerMappingProviderSpecificDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ProtectionContainerMappingProviderSpecificDetails IModelSerializable<ProtectionContainerMappingProviderSpecificDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ProtectionContainerMappingProviderSpecificDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeProtectionContainerMappingProviderSpecificDetails(doc.RootElement, options);
         }
     }
 }

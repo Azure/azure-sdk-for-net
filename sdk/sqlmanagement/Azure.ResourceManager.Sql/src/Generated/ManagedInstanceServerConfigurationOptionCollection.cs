@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceServerConfigurationOptionServerConfigurationOptionsRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceServerConfigurationOptionServerConfigurationOptionsRestClient.CreateListByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceServerConfigurationOptionResource(Client, ManagedInstanceServerConfigurationOptionData.DeserializeManagedInstanceServerConfigurationOptionData(e)), _managedInstanceServerConfigurationOptionServerConfigurationOptionsClientDiagnostics, Pipeline, "ManagedInstanceServerConfigurationOptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedInstanceServerConfigurationOptionResource(Client, ManagedInstanceServerConfigurationOptionData.DeserializeManagedInstanceServerConfigurationOptionData(e)), _managedInstanceServerConfigurationOptionServerConfigurationOptionsClientDiagnostics, Pipeline, "ManagedInstanceServerConfigurationOptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceServerConfigurationOptionServerConfigurationOptionsRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceServerConfigurationOptionServerConfigurationOptionsRestClient.CreateListByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceServerConfigurationOptionResource(Client, ManagedInstanceServerConfigurationOptionData.DeserializeManagedInstanceServerConfigurationOptionData(e)), _managedInstanceServerConfigurationOptionServerConfigurationOptionsClientDiagnostics, Pipeline, "ManagedInstanceServerConfigurationOptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedInstanceServerConfigurationOptionResource(Client, ManagedInstanceServerConfigurationOptionData.DeserializeManagedInstanceServerConfigurationOptionData(e)), _managedInstanceServerConfigurationOptionServerConfigurationOptionsClientDiagnostics, Pipeline, "ManagedInstanceServerConfigurationOptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

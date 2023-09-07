@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class ServerTrustCertificateData : IUtf8JsonSerializable
+    public partial class ServerTrustCertificateData : IUtf8JsonSerializable, IModelJsonSerializable<ServerTrustCertificateData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServerTrustCertificateData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServerTrustCertificateData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ServerTrustCertificateData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -24,11 +32,25 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStringValue(PublicBlob);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServerTrustCertificateData DeserializeServerTrustCertificateData(JsonElement element)
+        internal static ServerTrustCertificateData DeserializeServerTrustCertificateData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +62,7 @@ namespace Azure.ResourceManager.Sql
             Optional<string> publicBlob = default;
             Optional<string> thumbprint = default;
             Optional<string> certificateName = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -93,8 +116,61 @@ namespace Azure.ResourceManager.Sql
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServerTrustCertificateData(id, name, type, systemData.Value, publicBlob.Value, thumbprint.Value, certificateName.Value);
+            return new ServerTrustCertificateData(id, name, type, systemData.Value, publicBlob.Value, thumbprint.Value, certificateName.Value, serializedAdditionalRawData);
+        }
+
+        ServerTrustCertificateData IModelJsonSerializable<ServerTrustCertificateData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServerTrustCertificateData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServerTrustCertificateData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServerTrustCertificateData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServerTrustCertificateData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServerTrustCertificateData IModelSerializable<ServerTrustCertificateData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServerTrustCertificateData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServerTrustCertificateData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ServerTrustCertificateData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ServerTrustCertificateData"/> to convert. </param>
+        public static implicit operator RequestContent(ServerTrustCertificateData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ServerTrustCertificateData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ServerTrustCertificateData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServerTrustCertificateData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

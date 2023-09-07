@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
-    public partial class ResourcesHistoryContent : IUtf8JsonSerializable
+    public partial class ResourcesHistoryContent : IUtf8JsonSerializable, IModelJsonSerializable<ResourcesHistoryContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourcesHistoryContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourcesHistoryContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ResourcesHistoryContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Subscriptions))
             {
@@ -33,7 +41,14 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options);
+                if (Options is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourcesHistoryRequestOptions>)Options).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(ManagementGroups))
             {
@@ -45,7 +60,133 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ResourcesHistoryContent DeserializeResourcesHistoryContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<string>> subscriptions = default;
+            Optional<string> query = default;
+            Optional<ResourcesHistoryRequestOptions> options = default;
+            Optional<IList<string>> managementGroups = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("subscriptions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    subscriptions = array;
+                    continue;
+                }
+                if (property.NameEquals("query"u8))
+                {
+                    query = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("options"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    options = ResourcesHistoryRequestOptions.DeserializeResourcesHistoryRequestOptions(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("managementGroups"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    managementGroups = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ResourcesHistoryContent(Optional.ToList(subscriptions), query.Value, options.Value, Optional.ToList(managementGroups), serializedAdditionalRawData);
+        }
+
+        ResourcesHistoryContent IModelJsonSerializable<ResourcesHistoryContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourcesHistoryContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourcesHistoryContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourcesHistoryContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourcesHistoryContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourcesHistoryContent IModelSerializable<ResourcesHistoryContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourcesHistoryContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourcesHistoryContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ResourcesHistoryContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ResourcesHistoryContent"/> to convert. </param>
+        public static implicit operator RequestContent(ResourcesHistoryContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ResourcesHistoryContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ResourcesHistoryContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourcesHistoryContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

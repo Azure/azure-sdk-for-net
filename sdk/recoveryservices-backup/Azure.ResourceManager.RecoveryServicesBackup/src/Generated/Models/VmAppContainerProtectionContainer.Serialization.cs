@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class VmAppContainerProtectionContainer : IUtf8JsonSerializable
+    public partial class VmAppContainerProtectionContainer : IUtf8JsonSerializable, IModelJsonSerializable<VmAppContainerProtectionContainer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VmAppContainerProtectionContainer>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VmAppContainerProtectionContainer>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VmAppContainerProtectionContainer>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceResourceId))
             {
@@ -29,7 +36,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                if (ExtendedInfo is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<WorkloadContainerExtendedInfo>)ExtendedInfo).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(WorkloadType))
             {
@@ -68,11 +82,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("protectableObjectType"u8);
                 writer.WriteStringValue(ProtectableObjectType);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VmAppContainerProtectionContainer DeserializeVmAppContainerProtectionContainer(JsonElement element)
+        internal static VmAppContainerProtectionContainer DeserializeVmAppContainerProtectionContainer(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -88,6 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> healthStatus = default;
             ProtectableContainerType containerType = default;
             Optional<string> protectableObjectType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceResourceId"u8))
@@ -169,8 +198,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectableObjectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VmAppContainerProtectionContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, sourceResourceId.Value, Optional.ToNullable(lastUpdatedTime), extendedInfo.Value, Optional.ToNullable(workloadType), Optional.ToNullable(operationType));
+            return new VmAppContainerProtectionContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, sourceResourceId.Value, Optional.ToNullable(lastUpdatedTime), extendedInfo.Value, Optional.ToNullable(workloadType), Optional.ToNullable(operationType), serializedAdditionalRawData);
+        }
+
+        VmAppContainerProtectionContainer IModelJsonSerializable<VmAppContainerProtectionContainer>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VmAppContainerProtectionContainer>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVmAppContainerProtectionContainer(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VmAppContainerProtectionContainer>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VmAppContainerProtectionContainer>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VmAppContainerProtectionContainer IModelSerializable<VmAppContainerProtectionContainer>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VmAppContainerProtectionContainer>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVmAppContainerProtectionContainer(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VmAppContainerProtectionContainer"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VmAppContainerProtectionContainer"/> to convert. </param>
+        public static implicit operator RequestContent(VmAppContainerProtectionContainer model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VmAppContainerProtectionContainer"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VmAppContainerProtectionContainer(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVmAppContainerProtectionContainer(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

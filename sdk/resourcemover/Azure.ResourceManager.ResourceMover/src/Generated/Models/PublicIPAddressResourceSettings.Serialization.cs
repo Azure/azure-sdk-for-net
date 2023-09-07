@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class PublicIPAddressResourceSettings : IUtf8JsonSerializable
+    public partial class PublicIPAddressResourceSettings : IUtf8JsonSerializable, IModelJsonSerializable<PublicIPAddressResourceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PublicIPAddressResourceSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PublicIPAddressResourceSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PublicIPAddressResourceSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -56,11 +63,25 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteStringValue(ResourceType);
             writer.WritePropertyName("targetResourceName"u8);
             writer.WriteStringValue(TargetResourceName);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PublicIPAddressResourceSettings DeserializePublicIPAddressResourceSettings(JsonElement element)
+        internal static PublicIPAddressResourceSettings DeserializePublicIPAddressResourceSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -73,6 +94,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<string> zones = default;
             string resourceType = default;
             string targetResourceName = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -124,8 +146,61 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     targetResourceName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PublicIPAddressResourceSettings(resourceType, targetResourceName, Optional.ToDictionary(tags), domainNameLabel.Value, fqdn.Value, publicIPAllocationMethod.Value, sku.Value, zones.Value);
+            return new PublicIPAddressResourceSettings(resourceType, targetResourceName, Optional.ToDictionary(tags), domainNameLabel.Value, fqdn.Value, publicIPAllocationMethod.Value, sku.Value, zones.Value, serializedAdditionalRawData);
+        }
+
+        PublicIPAddressResourceSettings IModelJsonSerializable<PublicIPAddressResourceSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PublicIPAddressResourceSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePublicIPAddressResourceSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PublicIPAddressResourceSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PublicIPAddressResourceSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PublicIPAddressResourceSettings IModelSerializable<PublicIPAddressResourceSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PublicIPAddressResourceSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePublicIPAddressResourceSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PublicIPAddressResourceSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PublicIPAddressResourceSettings"/> to convert. </param>
+        public static implicit operator RequestContent(PublicIPAddressResourceSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PublicIPAddressResourceSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PublicIPAddressResourceSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePublicIPAddressResourceSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Certificate details representing the Vault credentials for ACS. </summary>
     public partial class ResourceCertificateAndAcsDetails : ResourceCertificateDetails
     {
-        /// <summary> Initializes a new instance of ResourceCertificateAndAcsDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceCertificateAndAcsDetails"/>. </summary>
         /// <param name="globalAcsNamespace"> ACS namespace name - tenant for our service. </param>
         /// <param name="globalAcsHostName"> Acs mgmt host name to connect to. </param>
         /// <param name="globalAcsRPRealm"> Global ACS namespace RP realm. </param>
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             AuthType = "AccessControlService";
         }
 
-        /// <summary> Initializes a new instance of ResourceCertificateAndAcsDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceCertificateAndAcsDetails"/>. </summary>
         /// <param name="authType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="certificate"> The base64 encoded certificate raw data string. </param>
         /// <param name="friendlyName"> Certificate friendly name. </param>
@@ -43,12 +44,18 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="globalAcsNamespace"> ACS namespace name - tenant for our service. </param>
         /// <param name="globalAcsHostName"> Acs mgmt host name to connect to. </param>
         /// <param name="globalAcsRPRealm"> Global ACS namespace RP realm. </param>
-        internal ResourceCertificateAndAcsDetails(string authType, byte[] certificate, string friendlyName, string issuer, long? resourceId, string subject, BinaryData thumbprint, DateTimeOffset? validStartOn, DateTimeOffset? validEndOn, string globalAcsNamespace, string globalAcsHostName, string globalAcsRPRealm) : base(authType, certificate, friendlyName, issuer, resourceId, subject, thumbprint, validStartOn, validEndOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceCertificateAndAcsDetails(string authType, byte[] certificate, string friendlyName, string issuer, long? resourceId, string subject, BinaryData thumbprint, DateTimeOffset? validStartOn, DateTimeOffset? validEndOn, string globalAcsNamespace, string globalAcsHostName, string globalAcsRPRealm, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(authType, certificate, friendlyName, issuer, resourceId, subject, thumbprint, validStartOn, validEndOn, serializedAdditionalRawData)
         {
             GlobalAcsNamespace = globalAcsNamespace;
             GlobalAcsHostName = globalAcsHostName;
             GlobalAcsRPRealm = globalAcsRPRealm;
             AuthType = authType ?? "AccessControlService";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceCertificateAndAcsDetails"/> for deserialization. </summary>
+        internal ResourceCertificateAndAcsDetails()
+        {
         }
 
         /// <summary> ACS namespace name - tenant for our service. </summary>

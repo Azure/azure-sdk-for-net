@@ -5,29 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderCspmGcpOffering : IUtf8JsonSerializable
+    public partial class DefenderCspmGcpOffering : IUtf8JsonSerializable, IModelJsonSerializable<DefenderCspmGcpOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DefenderCspmGcpOffering>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DefenderCspmGcpOffering>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DefenderCspmGcpOffering>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DefenderCspmGcpOffering DeserializeDefenderCspmGcpOffering(JsonElement element)
+        internal static DefenderCspmGcpOffering DeserializeDefenderCspmGcpOffering(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             OfferingType offeringType = default;
             Optional<string> description = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offeringType"u8))
@@ -40,8 +63,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DefenderCspmGcpOffering(offeringType, description.Value);
+            return new DefenderCspmGcpOffering(offeringType, description.Value, serializedAdditionalRawData);
+        }
+
+        DefenderCspmGcpOffering IModelJsonSerializable<DefenderCspmGcpOffering>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DefenderCspmGcpOffering>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefenderCspmGcpOffering(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DefenderCspmGcpOffering>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DefenderCspmGcpOffering>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DefenderCspmGcpOffering IModelSerializable<DefenderCspmGcpOffering>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DefenderCspmGcpOffering>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDefenderCspmGcpOffering(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DefenderCspmGcpOffering"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DefenderCspmGcpOffering"/> to convert. </param>
+        public static implicit operator RequestContent(DefenderCspmGcpOffering model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DefenderCspmGcpOffering"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DefenderCspmGcpOffering(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDefenderCspmGcpOffering(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

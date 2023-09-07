@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class RollingUpgradeMonitoringPolicy : IUtf8JsonSerializable
+    public partial class RollingUpgradeMonitoringPolicy : IUtf8JsonSerializable, IModelJsonSerializable<RollingUpgradeMonitoringPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RollingUpgradeMonitoringPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RollingUpgradeMonitoringPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RollingUpgradeMonitoringPolicy>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("failureAction"u8);
             writer.WriteStringValue(FailureAction.ToString());
@@ -28,11 +35,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStringValue(UpgradeTimeout, "c");
             writer.WritePropertyName("upgradeDomainTimeout"u8);
             writer.WriteStringValue(UpgradeDomainTimeout, "c");
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RollingUpgradeMonitoringPolicy DeserializeRollingUpgradeMonitoringPolicy(JsonElement element)
+        internal static RollingUpgradeMonitoringPolicy DeserializeRollingUpgradeMonitoringPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +64,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             TimeSpan healthCheckRetryTimeout = default;
             TimeSpan upgradeTimeout = default;
             TimeSpan upgradeDomainTimeout = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failureAction"u8))
@@ -75,8 +97,61 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     upgradeDomainTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RollingUpgradeMonitoringPolicy(failureAction, healthCheckWaitDuration, healthCheckStableDuration, healthCheckRetryTimeout, upgradeTimeout, upgradeDomainTimeout);
+            return new RollingUpgradeMonitoringPolicy(failureAction, healthCheckWaitDuration, healthCheckStableDuration, healthCheckRetryTimeout, upgradeTimeout, upgradeDomainTimeout, serializedAdditionalRawData);
+        }
+
+        RollingUpgradeMonitoringPolicy IModelJsonSerializable<RollingUpgradeMonitoringPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RollingUpgradeMonitoringPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRollingUpgradeMonitoringPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RollingUpgradeMonitoringPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RollingUpgradeMonitoringPolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RollingUpgradeMonitoringPolicy IModelSerializable<RollingUpgradeMonitoringPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RollingUpgradeMonitoringPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRollingUpgradeMonitoringPolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RollingUpgradeMonitoringPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RollingUpgradeMonitoringPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(RollingUpgradeMonitoringPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RollingUpgradeMonitoringPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RollingUpgradeMonitoringPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRollingUpgradeMonitoringPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

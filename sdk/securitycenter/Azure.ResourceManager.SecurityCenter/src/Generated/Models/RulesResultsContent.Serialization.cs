@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class RulesResultsContent : IUtf8JsonSerializable
+    public partial class RulesResultsContent : IUtf8JsonSerializable, IModelJsonSerializable<RulesResultsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RulesResultsContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RulesResultsContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RulesResultsContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LatestScan))
             {
@@ -51,7 +59,136 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndObject();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static RulesResultsContent DeserializeRulesResultsContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<bool> latestScan = default;
+            Optional<IDictionary<string, IList<IList<string>>>> results = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("latestScan"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    latestScan = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("results"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, IList<IList<string>>> dictionary = new Dictionary<string, IList<IList<string>>>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            List<IList<string>> array = new List<IList<string>>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    List<string> array0 = new List<string>();
+                                    foreach (var item0 in item.EnumerateArray())
+                                    {
+                                        array0.Add(item0.GetString());
+                                    }
+                                    array.Add(array0);
+                                }
+                            }
+                            dictionary.Add(property0.Name, array);
+                        }
+                    }
+                    results = dictionary;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new RulesResultsContent(Optional.ToNullable(latestScan), Optional.ToDictionary(results), serializedAdditionalRawData);
+        }
+
+        RulesResultsContent IModelJsonSerializable<RulesResultsContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RulesResultsContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRulesResultsContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RulesResultsContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RulesResultsContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RulesResultsContent IModelSerializable<RulesResultsContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RulesResultsContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRulesResultsContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RulesResultsContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RulesResultsContent"/> to convert. </param>
+        public static implicit operator RequestContent(RulesResultsContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RulesResultsContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RulesResultsContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRulesResultsContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

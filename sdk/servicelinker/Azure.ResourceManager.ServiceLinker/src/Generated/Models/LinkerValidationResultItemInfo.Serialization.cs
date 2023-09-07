@@ -5,15 +5,96 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class LinkerValidationResultItemInfo
+    public partial class LinkerValidationResultItemInfo : IUtf8JsonSerializable, IModelJsonSerializable<LinkerValidationResultItemInfo>
     {
-        internal static LinkerValidationResultItemInfo DeserializeLinkerValidationResultItemInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LinkerValidationResultItemInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LinkerValidationResultItemInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LinkerValidationResultItemInfo>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                if (Description != null)
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+                else
+                {
+                    writer.WriteNull("description");
+                }
+            }
+            if (Optional.IsDefined(Result))
+            {
+                if (Result != null)
+                {
+                    writer.WritePropertyName("result"u8);
+                    writer.WriteStringValue(Result.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("result");
+                }
+            }
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                if (ErrorMessage != null)
+                {
+                    writer.WritePropertyName("errorMessage"u8);
+                    writer.WriteStringValue(ErrorMessage);
+                }
+                else
+                {
+                    writer.WriteNull("errorMessage");
+                }
+            }
+            if (Optional.IsDefined(ErrorCode))
+            {
+                if (ErrorCode != null)
+                {
+                    writer.WritePropertyName("errorCode"u8);
+                    writer.WriteStringValue(ErrorCode);
+                }
+                else
+                {
+                    writer.WriteNull("errorCode");
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static LinkerValidationResultItemInfo DeserializeLinkerValidationResultItemInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +104,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             Optional<LinkerValidationResultStatus?> result = default;
             Optional<string> errorMessage = default;
             Optional<string> errorCode = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -70,8 +152,61 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     errorCode = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LinkerValidationResultItemInfo(name.Value, description.Value, Optional.ToNullable(result), errorMessage.Value, errorCode.Value);
+            return new LinkerValidationResultItemInfo(name.Value, description.Value, Optional.ToNullable(result), errorMessage.Value, errorCode.Value, serializedAdditionalRawData);
+        }
+
+        LinkerValidationResultItemInfo IModelJsonSerializable<LinkerValidationResultItemInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinkerValidationResultItemInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinkerValidationResultItemInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LinkerValidationResultItemInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinkerValidationResultItemInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LinkerValidationResultItemInfo IModelSerializable<LinkerValidationResultItemInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LinkerValidationResultItemInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLinkerValidationResultItemInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LinkerValidationResultItemInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LinkerValidationResultItemInfo"/> to convert. </param>
+        public static implicit operator RequestContent(LinkerValidationResultItemInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LinkerValidationResultItemInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LinkerValidationResultItemInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLinkerValidationResultItemInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

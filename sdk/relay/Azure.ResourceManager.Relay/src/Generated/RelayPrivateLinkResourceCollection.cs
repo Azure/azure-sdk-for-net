@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Relay
         public virtual AsyncPageable<RelayPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _relayPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new RelayPrivateLinkResource(Client, RelayPrivateLinkResourceData.DeserializeRelayPrivateLinkResourceData(e)), _relayPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "RelayPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new RelayPrivateLinkResource(Client, RelayPrivateLinkResourceData.DeserializeRelayPrivateLinkResourceData(e)), _relayPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "RelayPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Relay
         public virtual Pageable<RelayPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _relayPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new RelayPrivateLinkResource(Client, RelayPrivateLinkResourceData.DeserializeRelayPrivateLinkResourceData(e)), _relayPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "RelayPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new RelayPrivateLinkResource(Client, RelayPrivateLinkResourceData.DeserializeRelayPrivateLinkResourceData(e)), _relayPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "RelayPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

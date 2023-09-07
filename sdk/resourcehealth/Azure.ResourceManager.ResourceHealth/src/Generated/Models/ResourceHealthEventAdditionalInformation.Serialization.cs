@@ -5,20 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
-    internal partial class ResourceHealthEventAdditionalInformation
+    internal partial class ResourceHealthEventAdditionalInformation : IUtf8JsonSerializable, IModelJsonSerializable<ResourceHealthEventAdditionalInformation>
     {
-        internal static ResourceHealthEventAdditionalInformation DeserializeResourceHealthEventAdditionalInformation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceHealthEventAdditionalInformation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceHealthEventAdditionalInformation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceHealthEventAdditionalInformation>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ResourceHealthEventAdditionalInformation DeserializeResourceHealthEventAdditionalInformation(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> message = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -26,8 +60,61 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     message = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResourceHealthEventAdditionalInformation(message.Value);
+            return new ResourceHealthEventAdditionalInformation(message.Value, serializedAdditionalRawData);
+        }
+
+        ResourceHealthEventAdditionalInformation IModelJsonSerializable<ResourceHealthEventAdditionalInformation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceHealthEventAdditionalInformation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceHealthEventAdditionalInformation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceHealthEventAdditionalInformation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceHealthEventAdditionalInformation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceHealthEventAdditionalInformation IModelSerializable<ResourceHealthEventAdditionalInformation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceHealthEventAdditionalInformation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceHealthEventAdditionalInformation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ResourceHealthEventAdditionalInformation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ResourceHealthEventAdditionalInformation"/> to convert. </param>
+        public static implicit operator RequestContent(ResourceHealthEventAdditionalInformation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ResourceHealthEventAdditionalInformation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ResourceHealthEventAdditionalInformation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourceHealthEventAdditionalInformation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

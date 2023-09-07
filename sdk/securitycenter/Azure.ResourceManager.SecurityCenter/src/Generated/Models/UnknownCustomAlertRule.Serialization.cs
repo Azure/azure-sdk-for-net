@@ -5,57 +5,64 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class UnknownCustomAlertRule : IUtf8JsonSerializable
+    internal partial class UnknownCustomAlertRule : IUtf8JsonSerializable, IModelJsonSerializable<CustomAlertRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CustomAlertRule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CustomAlertRule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CustomAlertRule>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownCustomAlertRule DeserializeUnknownCustomAlertRule(JsonElement element)
+        internal static CustomAlertRule DeserializeUnknownCustomAlertRule(JsonElement element, ModelSerializerOptions options = default) => DeserializeCustomAlertRule(element, options);
+
+        CustomAlertRule IModelJsonSerializable<CustomAlertRule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            bool isEnabled = default;
-            string ruleType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("displayName"u8))
-                {
-                    displayName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("isEnabled"u8))
-                {
-                    isEnabled = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("ruleType"u8))
-                {
-                    ruleType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownCustomAlertRule(displayName.Value, description.Value, isEnabled, ruleType);
+            Core.ModelSerializerHelper.ValidateFormat<CustomAlertRule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownCustomAlertRule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CustomAlertRule>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomAlertRule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CustomAlertRule IModelSerializable<CustomAlertRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomAlertRule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCustomAlertRule(doc.RootElement, options);
         }
     }
 }

@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
@@ -12,26 +16,37 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Please note <see cref="CustomAlertRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AllowlistCustomAlertRule"/>, <see cref="AmqpC2DMessagesNotInAllowedRange"/>, <see cref="AmqpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="AmqpD2CMessagesNotInAllowedRange"/>, <see cref="ConnectionFromIPNotAllowed"/>, <see cref="ConnectionToIPNotAllowed"/>, <see cref="DenylistCustomAlertRule"/>, <see cref="DirectMethodInvokesNotInAllowedRange"/>, <see cref="FailedLocalLoginsNotInAllowedRange"/>, <see cref="FileUploadsNotInAllowedRange"/>, <see cref="HttpC2DMessagesNotInAllowedRange"/>, <see cref="HttpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="HttpD2CMessagesNotInAllowedRange"/>, <see cref="ListCustomAlertRule"/>, <see cref="LocalUserNotAllowed"/>, <see cref="MqttC2DMessagesNotInAllowedRange"/>, <see cref="MqttC2DRejectedMessagesNotInAllowedRange"/>, <see cref="MqttD2CMessagesNotInAllowedRange"/>, <see cref="ProcessNotAllowed"/>, <see cref="QueuePurgesNotInAllowedRange"/>, <see cref="TwinUpdatesNotInAllowedRange"/>, <see cref="UnauthorizedOperationsNotInAllowedRange"/>, <see cref="ActiveConnectionsNotInAllowedRange"/>, <see cref="TimeWindowCustomAlertRule"/> and <see cref="ThresholdCustomAlertRule"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownCustomAlertRule))]
     public abstract partial class CustomAlertRule
     {
-        /// <summary> Initializes a new instance of CustomAlertRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomAlertRule"/>. </summary>
         /// <param name="isEnabled"> Status of the custom alert. </param>
         protected CustomAlertRule(bool isEnabled)
         {
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Initializes a new instance of CustomAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomAlertRule"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
         /// <param name="ruleType"> The type of the custom alert rule. </param>
-        internal CustomAlertRule(string displayName, string description, bool isEnabled, string ruleType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomAlertRule(string displayName, string description, bool isEnabled, string ruleType, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             Description = description;
             IsEnabled = isEnabled;
             RuleType = ruleType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomAlertRule"/> for deserialization. </summary>
+        internal CustomAlertRule()
+        {
         }
 
         /// <summary> The display name of the custom alert. </summary>

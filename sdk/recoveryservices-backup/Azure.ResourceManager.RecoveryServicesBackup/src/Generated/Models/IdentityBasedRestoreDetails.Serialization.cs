@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IdentityBasedRestoreDetails : IUtf8JsonSerializable
+    public partial class IdentityBasedRestoreDetails : IUtf8JsonSerializable, IModelJsonSerializable<IdentityBasedRestoreDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IdentityBasedRestoreDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IdentityBasedRestoreDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IdentityBasedRestoreDetails>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ObjectType))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("targetStorageAccountId"u8);
                 writer.WriteStringValue(TargetStorageAccountId);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IdentityBasedRestoreDetails DeserializeIdentityBasedRestoreDetails(JsonElement element)
+        internal static IdentityBasedRestoreDetails DeserializeIdentityBasedRestoreDetails(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> objectType = default;
             Optional<ResourceIdentifier> targetStorageAccountId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("objectType"u8))
@@ -52,8 +75,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     targetStorageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IdentityBasedRestoreDetails(objectType.Value, targetStorageAccountId.Value);
+            return new IdentityBasedRestoreDetails(objectType.Value, targetStorageAccountId.Value, serializedAdditionalRawData);
+        }
+
+        IdentityBasedRestoreDetails IModelJsonSerializable<IdentityBasedRestoreDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IdentityBasedRestoreDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIdentityBasedRestoreDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IdentityBasedRestoreDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IdentityBasedRestoreDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IdentityBasedRestoreDetails IModelSerializable<IdentityBasedRestoreDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IdentityBasedRestoreDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIdentityBasedRestoreDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IdentityBasedRestoreDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IdentityBasedRestoreDetails"/> to convert. </param>
+        public static implicit operator RequestContent(IdentityBasedRestoreDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IdentityBasedRestoreDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IdentityBasedRestoreDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIdentityBasedRestoreDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

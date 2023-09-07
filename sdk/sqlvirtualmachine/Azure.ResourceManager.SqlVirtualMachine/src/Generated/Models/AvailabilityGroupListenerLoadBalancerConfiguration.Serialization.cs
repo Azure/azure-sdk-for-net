@@ -5,21 +5,35 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class AvailabilityGroupListenerLoadBalancerConfiguration : IUtf8JsonSerializable
+    public partial class AvailabilityGroupListenerLoadBalancerConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<AvailabilityGroupListenerLoadBalancerConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AvailabilityGroupListenerLoadBalancerConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AvailabilityGroupListenerLoadBalancerConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AvailabilityGroupListenerLoadBalancerConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteObjectValue(PrivateIPAddress);
+                if (PrivateIPAddress is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AvailabilityGroupListenerPrivateIPAddress>)PrivateIPAddress).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(PublicIPAddressResourceId))
             {
@@ -51,11 +65,25 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AvailabilityGroupListenerLoadBalancerConfiguration DeserializeAvailabilityGroupListenerLoadBalancerConfiguration(JsonElement element)
+        internal static AvailabilityGroupListenerLoadBalancerConfiguration DeserializeAvailabilityGroupListenerLoadBalancerConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -65,6 +93,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<ResourceIdentifier> loadBalancerResourceId = default;
             Optional<int> probePort = default;
             Optional<IList<ResourceIdentifier>> sqlVmInstances = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateIpAddress"u8))
@@ -124,8 +153,61 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     sqlVmInstances = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AvailabilityGroupListenerLoadBalancerConfiguration(privateIPAddress.Value, publicIPAddressResourceId.Value, loadBalancerResourceId.Value, Optional.ToNullable(probePort), Optional.ToList(sqlVmInstances));
+            return new AvailabilityGroupListenerLoadBalancerConfiguration(privateIPAddress.Value, publicIPAddressResourceId.Value, loadBalancerResourceId.Value, Optional.ToNullable(probePort), Optional.ToList(sqlVmInstances), serializedAdditionalRawData);
+        }
+
+        AvailabilityGroupListenerLoadBalancerConfiguration IModelJsonSerializable<AvailabilityGroupListenerLoadBalancerConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AvailabilityGroupListenerLoadBalancerConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAvailabilityGroupListenerLoadBalancerConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AvailabilityGroupListenerLoadBalancerConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AvailabilityGroupListenerLoadBalancerConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AvailabilityGroupListenerLoadBalancerConfiguration IModelSerializable<AvailabilityGroupListenerLoadBalancerConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AvailabilityGroupListenerLoadBalancerConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAvailabilityGroupListenerLoadBalancerConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AvailabilityGroupListenerLoadBalancerConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AvailabilityGroupListenerLoadBalancerConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(AvailabilityGroupListenerLoadBalancerConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AvailabilityGroupListenerLoadBalancerConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AvailabilityGroupListenerLoadBalancerConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAvailabilityGroupListenerLoadBalancerConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

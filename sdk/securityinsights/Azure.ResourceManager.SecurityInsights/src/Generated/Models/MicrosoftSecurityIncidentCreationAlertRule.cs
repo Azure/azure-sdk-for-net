@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents MicrosoftSecurityIncidentCreation rule. </summary>
     public partial class MicrosoftSecurityIncidentCreationAlertRule : SecurityInsightsAlertRuleData
     {
-        /// <summary> Initializes a new instance of MicrosoftSecurityIncidentCreationAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="MicrosoftSecurityIncidentCreationAlertRule"/>. </summary>
         public MicrosoftSecurityIncidentCreationAlertRule()
         {
             DisplayNamesFilter = new ChangeTrackingList<string>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = AlertRuleKind.MicrosoftSecurityIncidentCreation;
         }
 
-        /// <summary> Initializes a new instance of MicrosoftSecurityIncidentCreationAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="MicrosoftSecurityIncidentCreationAlertRule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +42,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="displayName"> The display name for alerts created by this alert rule. </param>
         /// <param name="isEnabled"> Determines whether this alert rule is enabled or disabled. </param>
         /// <param name="lastModifiedOn"> The last time that this alert has been modified. </param>
-        internal MicrosoftSecurityIncidentCreationAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, ETag? etag, IList<string> displayNamesFilter, IList<string> displayNamesExcludeFilter, MicrosoftSecurityProductName? productFilter, IList<SecurityInsightsAlertSeverity> severitiesFilter, string alertRuleTemplateName, string description, string displayName, bool? isEnabled, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData, kind, etag)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MicrosoftSecurityIncidentCreationAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, ETag? etag, IList<string> displayNamesFilter, IList<string> displayNamesExcludeFilter, MicrosoftSecurityProductName? productFilter, IList<SecurityInsightsAlertSeverity> severitiesFilter, string alertRuleTemplateName, string description, string displayName, bool? isEnabled, DateTimeOffset? lastModifiedOn, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             DisplayNamesFilter = displayNamesFilter;
             DisplayNamesExcludeFilter = displayNamesExcludeFilter;

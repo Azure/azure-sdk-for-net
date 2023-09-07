@@ -5,29 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForDevOpsAzureDevOpsOffering : IUtf8JsonSerializable
+    public partial class DefenderForDevOpsAzureDevOpsOffering : IUtf8JsonSerializable, IModelJsonSerializable<DefenderForDevOpsAzureDevOpsOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DefenderForDevOpsAzureDevOpsOffering>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DefenderForDevOpsAzureDevOpsOffering>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DefenderForDevOpsAzureDevOpsOffering>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DefenderForDevOpsAzureDevOpsOffering DeserializeDefenderForDevOpsAzureDevOpsOffering(JsonElement element)
+        internal static DefenderForDevOpsAzureDevOpsOffering DeserializeDefenderForDevOpsAzureDevOpsOffering(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             OfferingType offeringType = default;
             Optional<string> description = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offeringType"u8))
@@ -40,8 +63,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DefenderForDevOpsAzureDevOpsOffering(offeringType, description.Value);
+            return new DefenderForDevOpsAzureDevOpsOffering(offeringType, description.Value, serializedAdditionalRawData);
+        }
+
+        DefenderForDevOpsAzureDevOpsOffering IModelJsonSerializable<DefenderForDevOpsAzureDevOpsOffering>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DefenderForDevOpsAzureDevOpsOffering>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefenderForDevOpsAzureDevOpsOffering(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DefenderForDevOpsAzureDevOpsOffering>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DefenderForDevOpsAzureDevOpsOffering>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DefenderForDevOpsAzureDevOpsOffering IModelSerializable<DefenderForDevOpsAzureDevOpsOffering>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DefenderForDevOpsAzureDevOpsOffering>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDefenderForDevOpsAzureDevOpsOffering(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DefenderForDevOpsAzureDevOpsOffering"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DefenderForDevOpsAzureDevOpsOffering"/> to convert. </param>
+        public static implicit operator RequestContent(DefenderForDevOpsAzureDevOpsOffering model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DefenderForDevOpsAzureDevOpsOffering"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DefenderForDevOpsAzureDevOpsOffering(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDefenderForDevOpsAzureDevOpsOffering(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

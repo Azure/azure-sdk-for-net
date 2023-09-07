@@ -5,23 +5,56 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class CustomAssessmentAutomationsListResult
+    internal partial class CustomAssessmentAutomationsListResult : IUtf8JsonSerializable, IModelJsonSerializable<CustomAssessmentAutomationsListResult>
     {
-        internal static CustomAssessmentAutomationsListResult DeserializeCustomAssessmentAutomationsListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CustomAssessmentAutomationsListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CustomAssessmentAutomationsListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CustomAssessmentAutomationsListResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CustomAssessmentAutomationsListResult DeserializeCustomAssessmentAutomationsListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<CustomAssessmentAutomationData>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +76,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CustomAssessmentAutomationsListResult(Optional.ToList(value), nextLink.Value);
+            return new CustomAssessmentAutomationsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+        }
+
+        CustomAssessmentAutomationsListResult IModelJsonSerializable<CustomAssessmentAutomationsListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomAssessmentAutomationsListResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomAssessmentAutomationsListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CustomAssessmentAutomationsListResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomAssessmentAutomationsListResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CustomAssessmentAutomationsListResult IModelSerializable<CustomAssessmentAutomationsListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomAssessmentAutomationsListResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCustomAssessmentAutomationsListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CustomAssessmentAutomationsListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CustomAssessmentAutomationsListResult"/> to convert. </param>
+        public static implicit operator RequestContent(CustomAssessmentAutomationsListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CustomAssessmentAutomationsListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CustomAssessmentAutomationsListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCustomAssessmentAutomationsListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a registry value entity. </summary>
     public partial class SecurityInsightsRegistryValueEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsRegistryValueEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsRegistryValueEntity"/>. </summary>
         public SecurityInsightsRegistryValueEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = SecurityInsightsEntityKind.RegistryValue;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsRegistryValueEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsRegistryValueEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +34,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="valueData"> String formatted representation of the value data. </param>
         /// <param name="valueName"> The registry value name. </param>
         /// <param name="valueType"> Specifies the data types to use when storing values in the registry, or identifies the data type of a value in the registry. </param>
-        internal SecurityInsightsRegistryValueEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string keyEntityId, string valueData, string valueName, SecurityInsightsRegistryValueKind? valueType) : base(id, name, resourceType, systemData, kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsRegistryValueEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string keyEntityId, string valueData, string valueName, SecurityInsightsRegistryValueKind? valueType, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

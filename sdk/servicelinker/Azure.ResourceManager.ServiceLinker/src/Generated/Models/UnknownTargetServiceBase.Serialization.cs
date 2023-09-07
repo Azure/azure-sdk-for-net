@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    internal partial class UnknownTargetServiceBase : IUtf8JsonSerializable
+    internal partial class UnknownTargetServiceBase : IUtf8JsonSerializable, IModelJsonSerializable<TargetServiceBaseInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TargetServiceBaseInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TargetServiceBaseInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TargetServiceBaseInfo>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TargetServiceType.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownTargetServiceBase DeserializeUnknownTargetServiceBase(JsonElement element)
+        internal static TargetServiceBaseInfo DeserializeUnknownTargetServiceBase(JsonElement element, ModelSerializerOptions options = default) => DeserializeTargetServiceBaseInfo(element, options);
+
+        TargetServiceBaseInfo IModelJsonSerializable<TargetServiceBaseInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            TargetServiceType type = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"u8))
-                {
-                    type = new TargetServiceType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownTargetServiceBase(type);
+            Core.ModelSerializerHelper.ValidateFormat<TargetServiceBaseInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownTargetServiceBase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TargetServiceBaseInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TargetServiceBaseInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TargetServiceBaseInfo IModelSerializable<TargetServiceBaseInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TargetServiceBaseInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTargetServiceBaseInfo(doc.RootElement, options);
         }
     }
 }

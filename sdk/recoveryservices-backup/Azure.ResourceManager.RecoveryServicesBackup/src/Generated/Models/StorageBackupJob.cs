@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure storage specific job. </summary>
     public partial class StorageBackupJob : BackupGenericJob
     {
-        /// <summary> Initializes a new instance of StorageBackupJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageBackupJob"/>. </summary>
         public StorageBackupJob()
         {
             ActionsInfo = new ChangeTrackingList<JobSupportedAction>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             JobType = "AzureStorageJob";
         }
 
-        /// <summary> Initializes a new instance of StorageBackupJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageBackupJob"/>. </summary>
         /// <param name="entityFriendlyName"> Friendly name of the entity on which the current job is executing. </param>
         /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
         /// <param name="operation"> The operation name. </param>
@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="storageAccountVersion"> Specifies whether the Storage account is a Classic or an Azure Resource Manager Storage account. </param>
         /// <param name="extendedInfo"> Additional information about the job. </param>
         /// <param name="isUserTriggered"> Indicated that whether the job is adhoc(true) or scheduled(false). </param>
-        internal StorageBackupJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, TimeSpan? duration, IList<JobSupportedAction> actionsInfo, IList<StorageErrorInfo> errorDetails, string storageAccountName, string storageAccountVersion, StorageBackupJobExtendedInfo extendedInfo, bool? isUserTriggered) : base(entityFriendlyName, backupManagementType, operation, status, startOn, endOn, activityId, jobType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageBackupJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, TimeSpan? duration, IList<JobSupportedAction> actionsInfo, IList<StorageErrorInfo> errorDetails, string storageAccountName, string storageAccountVersion, StorageBackupJobExtendedInfo extendedInfo, bool? isUserTriggered, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(entityFriendlyName, backupManagementType, operation, status, startOn, endOn, activityId, jobType, serializedAdditionalRawData)
         {
             Duration = duration;
             ActionsInfo = actionsInfo;
