@@ -7,6 +7,7 @@
     <ApiCompatVersion>12.8.1</ApiCompatVersion>
     <DefineConstants>TableSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Tables;Microsoft;Azure;Tables;Table;$(PackageCommonTags)</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>

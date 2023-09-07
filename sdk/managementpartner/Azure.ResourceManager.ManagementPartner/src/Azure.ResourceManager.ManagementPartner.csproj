@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.ManagementPartner</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.ManagementPartner.</Description>
     <PackageTags>azure;management;arm;resource manager;managementpartner</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
   </PropertyGroup>
 </Project>

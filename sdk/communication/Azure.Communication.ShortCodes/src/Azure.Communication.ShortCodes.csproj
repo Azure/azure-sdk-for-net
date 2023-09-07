@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>
       This client library enables working with the Microsoft Azure Communication Short Codes service.
@@ -7,6 +7,7 @@
     <AssemblyTitle>Azure Communication Short Code Service</AssemblyTitle>
     <Version>1.0.0-alpha.1</Version>
     <PackageTags>Microsoft Azure Communication Short Codes Service;Microsoft;Azure;Azure Communication Service;Azure Communication Short Codes Service;Short Codes;Communication;$(PackageCommonTags)</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>

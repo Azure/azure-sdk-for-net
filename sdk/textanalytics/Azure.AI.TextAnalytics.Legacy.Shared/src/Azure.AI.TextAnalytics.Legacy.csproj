@@ -6,6 +6,7 @@
     <IsShippingLibrary>false</IsShippingLibrary>
     <ExcludeRecordingFramework>true</ExcludeRecordingFramework>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
   </PropertyGroup>
 
   <!--

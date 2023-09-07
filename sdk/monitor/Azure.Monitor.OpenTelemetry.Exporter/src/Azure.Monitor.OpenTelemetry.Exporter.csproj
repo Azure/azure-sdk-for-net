@@ -4,6 +4,7 @@
     <AssemblyTitle>AzureMonitor OpenTelemetry Exporter</AssemblyTitle>
     <Version>1.0.0-beta.15</Version>
     <PackageTags>Azure Monitor OpenTelemetry Exporter ApplicationInsights</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>

@@ -9,6 +9,7 @@
     <ApiCompatVersion>12.15.0</ApiCompatVersion>
     <DefineConstants>QueueSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Queues;Microsoft;Azure;Queues;Queue;Storage;StorageScalable;$(PackageCommonTags)</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <Description>
       This client library enables working with the Microsoft Azure Storage Queue service for storing messages that may be accessed by a client.
       For this release see notes - https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Queues/README.md and https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Queues/CHANGELOG.md

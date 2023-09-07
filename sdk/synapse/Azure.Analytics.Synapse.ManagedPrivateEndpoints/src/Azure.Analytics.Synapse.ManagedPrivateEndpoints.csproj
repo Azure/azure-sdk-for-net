@@ -4,6 +4,7 @@
     <AssemblyTitle>Azure.Analytics.Synapse.ManagedPrivateEndpoints</AssemblyTitle>
     <Version>1.0.0-beta.6</Version>
     <PackageTags>Microsoft Azure Synapse ManagedPrivateEndpoints;$(PackageCommonTags)</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
     <NoWarn>

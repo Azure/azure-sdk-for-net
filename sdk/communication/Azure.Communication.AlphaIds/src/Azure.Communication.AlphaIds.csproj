@@ -4,6 +4,7 @@
     <AssemblyTitle>Azure Communication Alpha ID Service</AssemblyTitle>
     <Version>1.0.0-alpha.1</Version>
     <PackageTags>Microsoft Azure Communication Alpha ID Service;Microsoft;Azure;Azure Communication Service;Azure Communication Alpha ID Service;Alpha ID;Alpha Ids;Communication</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>

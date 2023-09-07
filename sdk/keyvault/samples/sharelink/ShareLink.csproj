@@ -13,6 +13,7 @@
       CA2016;
       AZC0100;
     </NoWarn>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
