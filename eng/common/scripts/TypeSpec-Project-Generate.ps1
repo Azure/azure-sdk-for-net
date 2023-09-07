@@ -41,7 +41,7 @@ try {
             $emitterAdditionalOptions = " $emitterAdditionalOptions"
         }
     }
-    $typespecCompileCommand = "npx tsp compile $mainTypeSpecFile --emit $emitterName$emitterAdditionalOptions"
+    $typespecCompileCommand = "npx --no tsp compile $mainTypeSpecFile --emit $emitterName$emitterAdditionalOptions"
     if ($TypespecAdditionalOptions) {
         $options = $TypespecAdditionalOptions.Split(";");
         foreach ($option in $options) {
@@ -53,7 +53,6 @@ try {
         $typespecCompileCommand += " --option $emitterName.save-inputs=true"
     }
 
-    Write-Host($typespecCompileCommand)
     Invoke-LoggedCommand $typespecCompileCommand
 
     if ($LASTEXITCODE) { exit $LASTEXITCODE }
