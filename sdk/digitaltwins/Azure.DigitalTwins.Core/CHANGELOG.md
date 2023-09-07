@@ -1,14 +1,14 @@
 # Release History
 
+## 1.5.0 (2023-07-26)
+
+### New Features
+- Updated service API version to use API version 2023-06-30 by default.
+- Added support for the new import job. You can now use a blob file in your storage account to import multiple models, twins and relationships at once.
+
 ## 1.5.0-beta.1 (Unreleased)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+### New Features
 
 ## 1.4.0 (2022-06-30)
 

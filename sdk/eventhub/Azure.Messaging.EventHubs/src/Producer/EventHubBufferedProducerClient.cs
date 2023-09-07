@@ -262,7 +262,6 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <exception cref="NotSupportedException">If an attempt is made to add or remove a handler while the processor is running.</exception>
         /// <exception cref="NotSupportedException">If an attempt is made to add a handler when one is currently registered.</exception>
         ///
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<SendEventBatchSucceededEventArgs, Task> SendEventBatchSucceededAsync
         {
@@ -338,7 +337,6 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <seealso cref="EventHubsRetryOptions" />
         ///
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<SendEventBatchFailedEventArgs, Task> SendEventBatchFailedAsync
         {
@@ -1231,7 +1229,6 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
         public virtual async ValueTask DisposeAsync()
         {
             await CloseAsync(true).ConfigureAwait(false);

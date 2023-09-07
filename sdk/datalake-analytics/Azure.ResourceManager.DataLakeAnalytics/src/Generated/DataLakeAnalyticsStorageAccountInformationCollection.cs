@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -231,7 +232,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Top, options.Skip, options.Select, options.Orderby, options.Count);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Top, options.Skip, options.Select, options.Orderby, options.Count);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataLakeAnalyticsStorageAccountInformationResource(Client, DataLakeAnalyticsStorageAccountInformationData.DeserializeDataLakeAnalyticsStorageAccountInformationData(e)), _dataLakeAnalyticsStorageAccountInformationStorageAccountsClientDiagnostics, Pipeline, "DataLakeAnalyticsStorageAccountInformationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataLakeAnalyticsStorageAccountInformationResource(Client, DataLakeAnalyticsStorageAccountInformationData.DeserializeDataLakeAnalyticsStorageAccountInformationData(e)), _dataLakeAnalyticsStorageAccountInformationStorageAccountsClientDiagnostics, Pipeline, "DataLakeAnalyticsStorageAccountInformationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +257,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Top, options.Skip, options.Select, options.Orderby, options.Count);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Top, options.Skip, options.Select, options.Orderby, options.Count);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataLakeAnalyticsStorageAccountInformationResource(Client, DataLakeAnalyticsStorageAccountInformationData.DeserializeDataLakeAnalyticsStorageAccountInformationData(e)), _dataLakeAnalyticsStorageAccountInformationStorageAccountsClientDiagnostics, Pipeline, "DataLakeAnalyticsStorageAccountInformationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataLakeAnalyticsStorageAccountInformationResource(Client, DataLakeAnalyticsStorageAccountInformationData.DeserializeDataLakeAnalyticsStorageAccountInformationData(e)), _dataLakeAnalyticsStorageAccountInformationStorageAccountsClientDiagnostics, Pipeline, "DataLakeAnalyticsStorageAccountInformationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

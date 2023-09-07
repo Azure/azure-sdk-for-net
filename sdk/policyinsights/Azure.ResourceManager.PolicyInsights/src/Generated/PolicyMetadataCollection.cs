@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyMetadataPolicyMetadataRestClient.CreateListRequest(policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyMetadataPolicyMetadataRestClient.CreateListNextPageRequest(nextLink, policyQuerySettings);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SlimPolicyMetadata.DeserializeSlimPolicyMetadata, _policyMetadataPolicyMetadataClientDiagnostics, Pipeline, "PolicyMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SlimPolicyMetadata.DeserializeSlimPolicyMetadata, _policyMetadataPolicyMetadataClientDiagnostics, Pipeline, "PolicyMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyMetadataPolicyMetadataRestClient.CreateListRequest(policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyMetadataPolicyMetadataRestClient.CreateListNextPageRequest(nextLink, policyQuerySettings);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SlimPolicyMetadata.DeserializeSlimPolicyMetadata, _policyMetadataPolicyMetadataClientDiagnostics, Pipeline, "PolicyMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SlimPolicyMetadata.DeserializeSlimPolicyMetadata, _policyMetadataPolicyMetadataClientDiagnostics, Pipeline, "PolicyMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

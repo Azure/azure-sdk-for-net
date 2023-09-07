@@ -76,6 +76,16 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());
             }
+            if (Optional.IsDefined(AuxiliaryMode))
+            {
+                writer.WritePropertyName("auxiliaryMode"u8);
+                writer.WriteStringValue(AuxiliaryMode.Value.ToString());
+            }
+            if (Optional.IsDefined(AuxiliarySku))
+            {
+                writer.WritePropertyName("auxiliarySku"u8);
+                writer.WriteStringValue(AuxiliarySku.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -97,6 +107,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IList<VirtualMachineScaleSetIPConfiguration>> ipConfigurations = default;
             Optional<bool> enableIPForwarding = default;
             Optional<ComputeDeleteOption> deleteOption = default;
+            Optional<ComputeNetworkInterfaceAuxiliaryMode> auxiliaryMode = default;
+            Optional<ComputeNetworkInterfaceAuxiliarySku> auxiliarySku = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -208,11 +220,29 @@ namespace Azure.ResourceManager.Compute.Models
                             deleteOption = new ComputeDeleteOption(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("auxiliaryMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            auxiliaryMode = new ComputeNetworkInterfaceAuxiliaryMode(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("auxiliarySku"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            auxiliarySku = new ComputeNetworkInterfaceAuxiliarySku(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetNetworkConfiguration(id.Value, name, Optional.ToNullable(primary), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(disableTcpStateTracking), Optional.ToNullable(enableFpga), networkSecurityGroup, dnsSettings.Value, Optional.ToList(ipConfigurations), Optional.ToNullable(enableIPForwarding), Optional.ToNullable(deleteOption));
+            return new VirtualMachineScaleSetNetworkConfiguration(id.Value, name, Optional.ToNullable(primary), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(disableTcpStateTracking), Optional.ToNullable(enableFpga), networkSecurityGroup, dnsSettings.Value, Optional.ToList(ipConfigurations), Optional.ToNullable(enableIPForwarding), Optional.ToNullable(deleteOption), Optional.ToNullable(auxiliaryMode), Optional.ToNullable(auxiliarySku));
         }
     }
 }
