@@ -215,6 +215,7 @@ namespace Azure.Core.Json
         }
 
 #if !NET5_0
+        // Since this type is used in an attribute it cannot be annotated correctly through the call chain.
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "This JsonConverter is used with the class MutableJsonDocument, which is already annotated as RequiresUnreferencedCode.")]
 #endif
         private class MutableJsonDocumentConverter : JsonConverter<MutableJsonDocument>
