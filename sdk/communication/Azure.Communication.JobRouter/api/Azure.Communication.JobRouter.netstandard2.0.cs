@@ -945,6 +945,7 @@ namespace Azure.Communication.JobRouter.Models
         public bool? AllowScoringBatchOfWorkers { get { throw null; } set { } }
         public int? BatchSize { get { throw null; } set { } }
         public bool? DescendingOrder { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Communication.JobRouter.ScoringRuleParameterSelector> ScoringParameters { get { throw null; } }
     }
     public partial class UnassignJobResult
     {
