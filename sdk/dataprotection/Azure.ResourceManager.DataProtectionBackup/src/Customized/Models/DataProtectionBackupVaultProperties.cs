@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 #nullable disable
 
@@ -18,11 +17,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary>
         /// Gets or sets the cross subscription restore state.
         /// </summary>
-        [Obsolete("CrossSubscriptionRestoreState is obsolete and will be removed in a future release. Please do not use it any longer.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupCrossSubscriptionRestoreState? CrossSubscriptionRestoreState
+        public DataProtectionBackupCrossSubscriptionRestoreState? CrossSubscriptionRestoreState
         {
-            get => FeatureSettings?.CrossSubscriptionRestoreState;
+            get => FeatureSettings is null ? default : FeatureSettings.CrossSubscriptionRestoreState;
             set
             {
                 if (FeatureSettings is null)
@@ -31,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
-        internal DataProtectionBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, DataProtectionBackupCrossSubscriptionRestoreState dataProtectionBackupCrossSubscriptionRestoreState)
+        internal DataProtectionBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, FeatureSettings featureSettings)
         {
             MonitoringSettings = monitoringSettings;
             ProvisioningState = provisioningState;
@@ -40,7 +38,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             SecuritySettings = securitySettings;
             StorageSettings = storageSettings;
             IsVaultProtectedByResourceGuard = isVaultProtectedByResourceGuard;
-            FeatureSettings = null;
+            FeatureSettings = featureSettings;
             SecureScore = default(SecureScoreLevel);
         }
     }

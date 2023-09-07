@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using System;
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -13,10 +12,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary>
         /// Gets or sets the cross subscription restore state.
         /// </summary>
-        [Obsolete("CrossSubscriptionRestoreState is obsolete and will be removed in a future release. Please do not use it any longer.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupCrossSubscriptionRestoreState? CrossSubscriptionRestoreState{
-            get => FeatureSettings?.CrossSubscriptionRestoreState;
+        public DataProtectionBackupCrossSubscriptionRestoreState? CrossSubscriptionRestoreState
+        {
+            get => FeatureSettings is null ? default : FeatureSettings.CrossSubscriptionRestoreState;
             set
             {
                 if (FeatureSettings is null)

@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -36,7 +35,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             PolicyName = policyName;
             IsProgressEnabled = isProgressEnabled;
             ProgressUri = progressUri;
-            RehydrationPriority = null;
             RestoreType = restoreType;
             SourceResourceGroup = sourceResourceGroup;
             SourceSubscriptionId = sourceSubscriptionId;
