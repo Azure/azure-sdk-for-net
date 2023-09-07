@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -239,7 +238,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabPolicyPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _policySetName, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabPolicyPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _policySetName, expand, filter, top, orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabPolicyResource(Client, DevTestLabPolicyData.DeserializeDevTestLabPolicyData(e)), _devTestLabPolicyPoliciesClientDiagnostics, Pipeline, "DevTestLabPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabPolicyResource(Client, DevTestLabPolicyData.DeserializeDevTestLabPolicyData(e)), _devTestLabPolicyPoliciesClientDiagnostics, Pipeline, "DevTestLabPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -265,7 +264,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabPolicyPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _policySetName, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabPolicyPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _policySetName, expand, filter, top, orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabPolicyResource(Client, DevTestLabPolicyData.DeserializeDevTestLabPolicyData(e)), _devTestLabPolicyPoliciesClientDiagnostics, Pipeline, "DevTestLabPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabPolicyResource(Client, DevTestLabPolicyData.DeserializeDevTestLabPolicyData(e)), _devTestLabPolicyPoliciesClientDiagnostics, Pipeline, "DevTestLabPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

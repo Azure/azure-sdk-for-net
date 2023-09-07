@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -374,7 +373,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _preconfiguredEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _preconfiguredEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PreconfiguredEndpoint.DeserializePreconfiguredEndpoint, _preconfiguredEndpointsClientDiagnostics, Pipeline, "FrontDoorNetworkExperimentProfileResource.GetPreconfiguredEndpoints", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PreconfiguredEndpoint.DeserializePreconfiguredEndpoint, _preconfiguredEndpointsClientDiagnostics, Pipeline, "FrontDoorNetworkExperimentProfileResource.GetPreconfiguredEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -396,7 +395,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _preconfiguredEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _preconfiguredEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PreconfiguredEndpoint.DeserializePreconfiguredEndpoint, _preconfiguredEndpointsClientDiagnostics, Pipeline, "FrontDoorNetworkExperimentProfileResource.GetPreconfiguredEndpoints", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PreconfiguredEndpoint.DeserializePreconfiguredEndpoint, _preconfiguredEndpointsClientDiagnostics, Pipeline, "FrontDoorNetworkExperimentProfileResource.GetPreconfiguredEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

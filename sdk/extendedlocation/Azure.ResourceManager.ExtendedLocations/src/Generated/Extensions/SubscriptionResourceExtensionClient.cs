@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Threading;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CustomLocationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CustomLocationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomLocationResource(Client, CustomLocationData.DeserializeCustomLocationData(e)), CustomLocationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCustomLocations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomLocationResource(Client, CustomLocationData.DeserializeCustomLocationData(e)), CustomLocationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCustomLocations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CustomLocationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CustomLocationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomLocationResource(Client, CustomLocationData.DeserializeCustomLocationData(e)), CustomLocationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCustomLocations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomLocationResource(Client, CustomLocationData.DeserializeCustomLocationData(e)), CustomLocationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCustomLocations", "value", "nextLink", cancellationToken);
         }
     }
 }

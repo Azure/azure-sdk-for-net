@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.DeploymentManager
         public virtual AsyncPageable<ServiceUnitResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceUnitResourceServiceUnitsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ServiceUnitResource(Client, ServiceUnitResourceData.DeserializeServiceUnitResourceData(e)), _serviceUnitResourceServiceUnitsClientDiagnostics, Pipeline, "ServiceUnitResourceCollection.GetAll", "", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ServiceUnitResource(Client, ServiceUnitResourceData.DeserializeServiceUnitResourceData(e)), _serviceUnitResourceServiceUnitsClientDiagnostics, Pipeline, "ServiceUnitResourceCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +247,7 @@ namespace Azure.ResourceManager.DeploymentManager
         public virtual Pageable<ServiceUnitResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceUnitResourceServiceUnitsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ServiceUnitResource(Client, ServiceUnitResourceData.DeserializeServiceUnitResourceData(e)), _serviceUnitResourceServiceUnitsClientDiagnostics, Pipeline, "ServiceUnitResourceCollection.GetAll", "", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ServiceUnitResource(Client, ServiceUnitResourceData.DeserializeServiceUnitResourceData(e)), _serviceUnitResourceServiceUnitsClientDiagnostics, Pipeline, "ServiceUnitResourceCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>

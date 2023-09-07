@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareSynchronizationSettingSynchronizationSettingsRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareSynchronizationSettingSynchronizationSettingsRestClient.CreateListByShareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataShareSynchronizationSettingResource(Client, DataShareSynchronizationSettingData.DeserializeDataShareSynchronizationSettingData(e)), _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics, Pipeline, "DataShareSynchronizationSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataShareSynchronizationSettingResource(Client, DataShareSynchronizationSettingData.DeserializeDataShareSynchronizationSettingData(e)), _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics, Pipeline, "DataShareSynchronizationSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +251,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareSynchronizationSettingSynchronizationSettingsRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareSynchronizationSettingSynchronizationSettingsRestClient.CreateListByShareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataShareSynchronizationSettingResource(Client, DataShareSynchronizationSettingData.DeserializeDataShareSynchronizationSettingData(e)), _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics, Pipeline, "DataShareSynchronizationSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataShareSynchronizationSettingResource(Client, DataShareSynchronizationSettingData.DeserializeDataShareSynchronizationSettingData(e)), _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics, Pipeline, "DataShareSynchronizationSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

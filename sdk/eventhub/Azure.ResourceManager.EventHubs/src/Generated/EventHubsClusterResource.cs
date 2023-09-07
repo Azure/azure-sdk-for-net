@@ -11,7 +11,6 @@ using System.Globalization;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.EventHubs
         public virtual AsyncPageable<SubResource> GetNamespacesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsClusterClustersRestClient.CreateListNamespacesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _eventHubsClusterClustersClientDiagnostics, Pipeline, "EventHubsClusterResource.GetNamespaces", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _eventHubsClusterClustersClientDiagnostics, Pipeline, "EventHubsClusterResource.GetNamespaces", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -343,7 +342,7 @@ namespace Azure.ResourceManager.EventHubs
         public virtual Pageable<SubResource> GetNamespaces(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsClusterClustersRestClient.CreateListNamespacesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _eventHubsClusterClustersClientDiagnostics, Pipeline, "EventHubsClusterResource.GetNamespaces", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _eventHubsClusterClustersClientDiagnostics, Pipeline, "EventHubsClusterResource.GetNamespaces", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Threading;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DevTestLabLabsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevTestLabLabsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand, filter, top, orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabResource(Client, DevTestLabData.DeserializeDevTestLabData(e)), DevTestLabLabsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevTestLabs", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabResource(Client, DevTestLabData.DeserializeDevTestLabData(e)), DevTestLabLabsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevTestLabs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DevTestLabLabsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevTestLabLabsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand, filter, top, orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabResource(Client, DevTestLabData.DeserializeDevTestLabData(e)), DevTestLabLabsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevTestLabs", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabResource(Client, DevTestLabData.DeserializeDevTestLabData(e)), DevTestLabLabsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevTestLabs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DevTestLabGlobalScheduleGlobalSchedulesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevTestLabGlobalScheduleGlobalSchedulesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand, filter, top, orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabGlobalScheduleResource(Client, DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e)), DevTestLabGlobalScheduleGlobalSchedulesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevTestLabGlobalSchedules", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabGlobalScheduleResource(Client, DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e)), DevTestLabGlobalScheduleGlobalSchedulesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevTestLabGlobalSchedules", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -146,7 +145,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DevTestLabGlobalScheduleGlobalSchedulesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevTestLabGlobalScheduleGlobalSchedulesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand, filter, top, orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabGlobalScheduleResource(Client, DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e)), DevTestLabGlobalScheduleGlobalSchedulesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevTestLabGlobalSchedules", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabGlobalScheduleResource(Client, DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e)), DevTestLabGlobalScheduleGlobalSchedulesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevTestLabGlobalSchedules", "value", "nextLink", cancellationToken);
         }
     }
 }
