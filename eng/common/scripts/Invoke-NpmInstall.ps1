@@ -1,65 +1,46 @@
-[CmdLetBinding()]
-param
-(
-  [string]$WorkingDirectory
-)
-
 . $PSScriptRoot/Helpers/PSModule-Helpers.ps1
 . $PSScriptRoot/Helpers/CommandInvocation-Helpers.ps1
 . $PSScriptRoot/common.ps1
 
-Push-Location $WorkingDirectory
+Push-Location $RepoRoot
 try {
     $currentDur = Resolve-Path "."
-    Write-Host "Generating from $currentDur"
+
+    if (Test-Path "node_modules") {
+        Write-Host "node_modules folder already exists. Skipping npm install."
+        exit 0
+    }
+
+    Write-Host "Installing npm dependencies in $currentDur"
 
     if (Test-Path "package.json") {
-      Write-Host "Removing existing package.json"
-      Remove-Item -Path "package.json" -Force
-  }
-
-  if (Test-Path "package-lock.json") {
-      Write-Host "Removing existing package-lock.json"
-      Remove-Item -Path "package-lock.json" -Force
-  }
-
-  if (Test-Path ".npmrc") {
-      Write-Host "Removing existing .nprc"
-      Remove-Item -Path ".npmrc" -Force
-  }
-
-  if (Test-Path "node_modules") {
-      Write-Host "Removing existing node_modules folder"
-      Remove-Item -Path "node_modules" -Force -Recurse
-  }
-
-    #default to root/eng/emitter-package.json but you can override by writing
-    #Get-${Language}-EmitterPackageJsonPath in your Language-Settings.ps1
-    $replacementPackageJson = Join-Path $PSScriptRoot "../../emitter-package.json"
-    if (Test-Path "Function:$GetEmitterPackageJsonPathFn") {
-        $replacementPackageJson = &$GetEmitterPackageJsonPathFn
+        Write-Host "Removing existing package.json"
+        Remove-Item -Path "package.json" -Force
     }
 
-    Write-Host("Copying package.json from $replacementPackageJson")
-    Copy-Item -Path $replacementPackageJson -Destination "package.json" -Force
-
-    #default to root/eng/emitter-package-lock.json but you can override by writing
-    #Get-${Language}-EmitterPackageLockPath in your Language-Settings.ps1
-    $emitterPackageLock = Join-Path $PSScriptRoot "../../emitter-package-lock.json"
-    if (Test-Path "Function:$GetEmitterPackageLockPathFn") {
-        $emitterPackageLock = &$GetEmitterPackageLockPathFn
+    if (Test-Path "package-lock.json") {
+        Write-Host "Removing existing package-lock.json"
+        Remove-Item -Path "package-lock.json" -Force
     }
 
-    $usingLockFile = Test-Path $emitterPackageLock
+    if (Test-Path ".npmrc") {
+        Write-Host "Removing existing .nprc"
+        Remove-Item -Path ".npmrc" -Force
+    }
+
+    Write-Host("Copying package.json from eng/emitter-package.json")
+    Copy-Item -Path './eng/emitter-package.json' -Destination "package.json" -Force
+
+    $usingLockFile = Test-Path './eng/emitter-package-lock.json'
 
     if ($usingLockFile) {
-        Write-Host("Copying package-lock.json from $emitterPackageLock")
-        Copy-Item -Path $emitterPackageLock -Destination "package-lock.json" -Force
+        Write-Host("Copying package-lock.json from eng/emitter-package-lock.json")
+        Copy-Item -Path './eng/emitter-package-lock.json' -Destination "package-lock.json" -Force
     }
 
-    $useAlphaNpmRegistry = (Get-Content $replacementPackageJson -Raw).Contains("-alpha.")
+    $useAlphaNpmRegistry = (Get-Content 'package.json' -Raw).Contains("-alpha.")
 
-    if($useAlphaNpmRegistry) {
+    if ($useAlphaNpmRegistry) {
         Write-Host "Package.json contains '-alpha.' in the version, Creating .npmrc using public/azure-sdk-for-js-test-autorest feed."
         "registry=https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest@local/npm/registry/" | Out-File '.npmrc'
     }
@@ -69,6 +50,13 @@ try {
     }
     else {
         Invoke-LoggedCommand "npm install"
+    }
+
+    Remove-Item -Path "package.json" -Force
+    Remove-Item -Path "package-lock.json" -Force
+
+    if ($useAlphaNpmRegistry) {
+        Remove-Item -Path ".npmrc" -Force
     }
 
     if ($LASTEXITCODE) { exit $LASTEXITCODE }
