@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.GraphServices
             try
             {
                 var response = await _graphServicesAccountResourceAccountsRestClient.CreateAndUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new GraphServicesArmOperation<GraphServicesAccountResource>(new GraphServicesAccountResourceOperationSource(Client), _graphServicesAccountResourceAccountsClientDiagnostics, Pipeline, _graphServicesAccountResourceAccountsRestClient.CreateCreateAndUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new GraphServicesArmOperation<GraphServicesAccountResource>(new GraphServicesAccountResourceOperationSource(Client), _graphServicesAccountResourceAccountsClientDiagnostics, Pipeline, _graphServicesAccountResourceAccountsRestClient.CreateCreateAndUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.GraphServices
             try
             {
                 var response = _graphServicesAccountResourceAccountsRestClient.CreateAndUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken);
-                var operation = new GraphServicesArmOperation<GraphServicesAccountResource>(new GraphServicesAccountResourceOperationSource(Client), _graphServicesAccountResourceAccountsClientDiagnostics, Pipeline, _graphServicesAccountResourceAccountsRestClient.CreateCreateAndUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new GraphServicesArmOperation<GraphServicesAccountResource>(new GraphServicesAccountResourceOperationSource(Client), _graphServicesAccountResourceAccountsClientDiagnostics, Pipeline, _graphServicesAccountResourceAccountsRestClient.CreateCreateAndUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.GraphServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _graphServicesAccountResourceAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _graphServicesAccountResourceAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GraphServicesAccountResource(Client, GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(e)), _graphServicesAccountResourceAccountsClientDiagnostics, Pipeline, "GraphServicesAccountResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GraphServicesAccountResource(Client, GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(e)), _graphServicesAccountResourceAccountsClientDiagnostics, Pipeline, "GraphServicesAccountResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +250,7 @@ namespace Azure.ResourceManager.GraphServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _graphServicesAccountResourceAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _graphServicesAccountResourceAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GraphServicesAccountResource(Client, GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(e)), _graphServicesAccountResourceAccountsClientDiagnostics, Pipeline, "GraphServicesAccountResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GraphServicesAccountResource(Client, GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(e)), _graphServicesAccountResourceAccountsClientDiagnostics, Pipeline, "GraphServicesAccountResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

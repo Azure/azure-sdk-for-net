@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -355,7 +354,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = await _hdInsightClusterClustersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -389,7 +388,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = _hdInsightClusterClustersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -496,7 +495,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = await _hdInsightClusterClustersRestClient.ResizeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateResizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateResizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -535,7 +534,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = _hdInsightClusterClustersRestClient.Resize(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, content, cancellationToken);
-                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateResizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateResizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -574,7 +573,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = await _hdInsightClusterClustersRestClient.UpdateAutoScaleConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateUpdateAutoScaleConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateUpdateAutoScaleConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -613,7 +612,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = _hdInsightClusterClustersRestClient.UpdateAutoScaleConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, content, cancellationToken);
-                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateUpdateAutoScaleConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateUpdateAutoScaleConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -651,7 +650,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = await _hdInsightClusterClustersRestClient.RotateDiskEncryptionKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateRotateDiskEncryptionKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateRotateDiskEncryptionKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -689,7 +688,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = _hdInsightClusterClustersRestClient.RotateDiskEncryptionKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateRotateDiskEncryptionKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateRotateDiskEncryptionKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -787,7 +786,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = await _hdInsightClusterClustersRestClient.UpdateGatewaySettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateUpdateGatewaySettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateUpdateGatewaySettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -825,7 +824,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = _hdInsightClusterClustersRestClient.UpdateGatewaySettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateUpdateGatewaySettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateUpdateGatewaySettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -933,7 +932,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = await _hdInsightClusterClustersRestClient.UpdateIdentityCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateUpdateIdentityCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateUpdateIdentityCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -971,7 +970,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = _hdInsightClusterClustersRestClient.UpdateIdentityCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateUpdateIdentityCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateUpdateIdentityCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1009,7 +1008,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = await _hdInsightClusterClustersRestClient.ExecuteScriptActionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateExecuteScriptActionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateExecuteScriptActionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1047,7 +1046,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = _hdInsightClusterClustersRestClient.ExecuteScriptActions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateExecuteScriptActionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateExecuteScriptActionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1148,7 +1147,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = await _configurationsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, clusterConfiguration, cancellationToken).ConfigureAwait(false);
-                var operation = new HDInsightArmOperation(_configurationsClientDiagnostics, Pipeline, _configurationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, clusterConfiguration).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_configurationsClientDiagnostics, Pipeline, _configurationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, clusterConfiguration).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1189,7 +1188,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = _configurationsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, clusterConfiguration, cancellationToken);
-                var operation = new HDInsightArmOperation(_configurationsClientDiagnostics, Pipeline, _configurationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, clusterConfiguration).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_configurationsClientDiagnostics, Pipeline, _configurationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, clusterConfiguration).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1297,7 +1296,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = await _extensionsRestClient.EnableMonitoringAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateEnableMonitoringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateEnableMonitoringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1335,7 +1334,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = _extensionsRestClient.EnableMonitoring(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateEnableMonitoringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateEnableMonitoringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1429,7 +1428,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = await _extensionsRestClient.DisableMonitoringAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateDisableMonitoringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateDisableMonitoringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1463,7 +1462,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = _extensionsRestClient.DisableMonitoring(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateDisableMonitoringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateDisableMonitoringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1501,7 +1500,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = await _extensionsRestClient.EnableAzureMonitorAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateEnableAzureMonitorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateEnableAzureMonitorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1539,7 +1538,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = _extensionsRestClient.EnableAzureMonitor(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateEnableAzureMonitorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateEnableAzureMonitorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1633,7 +1632,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = await _extensionsRestClient.DisableAzureMonitorAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateDisableAzureMonitorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateDisableAzureMonitorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1667,7 +1666,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = _extensionsRestClient.DisableAzureMonitor(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateDisableAzureMonitorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateDisableAzureMonitorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1708,7 +1707,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = await _extensionsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1749,7 +1748,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = _extensionsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, content, cancellationToken);
-                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1858,7 +1857,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = await _extensionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, cancellationToken).ConfigureAwait(false);
-                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1897,7 +1896,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = _extensionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, cancellationToken);
-                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, _extensionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -2072,7 +2071,7 @@ namespace Azure.ResourceManager.HDInsight
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptActionsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptActionsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptActionsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptActions", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptActionsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptActions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2094,7 +2093,7 @@ namespace Azure.ResourceManager.HDInsight
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptActionsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptActionsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptActionsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptActions", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptActionsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptActions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2256,7 +2255,7 @@ namespace Azure.ResourceManager.HDInsight
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptExecutionHistoryRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptExecutionHistoryRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptExecutionHistoryClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptExecutionHistories", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptExecutionHistoryClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptExecutionHistories", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2278,7 +2277,7 @@ namespace Azure.ResourceManager.HDInsight
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptExecutionHistoryRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptExecutionHistoryRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptExecutionHistoryClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptExecutionHistories", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptExecutionHistoryClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptExecutionHistories", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2369,7 +2368,7 @@ namespace Azure.ResourceManager.HDInsight
         public virtual AsyncPageable<HDInsightClusterHostInfo> GetVirtualMachineHostsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachinesRestClient.CreateListHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, HDInsightClusterHostInfo.DeserializeHDInsightClusterHostInfo, _virtualMachinesClientDiagnostics, Pipeline, "HDInsightClusterResource.GetVirtualMachineHosts", "", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, HDInsightClusterHostInfo.DeserializeHDInsightClusterHostInfo, _virtualMachinesClientDiagnostics, Pipeline, "HDInsightClusterResource.GetVirtualMachineHosts", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -2390,7 +2389,7 @@ namespace Azure.ResourceManager.HDInsight
         public virtual Pageable<HDInsightClusterHostInfo> GetVirtualMachineHosts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachinesRestClient.CreateListHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, HDInsightClusterHostInfo.DeserializeHDInsightClusterHostInfo, _virtualMachinesClientDiagnostics, Pipeline, "HDInsightClusterResource.GetVirtualMachineHosts", "", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, HDInsightClusterHostInfo.DeserializeHDInsightClusterHostInfo, _virtualMachinesClientDiagnostics, Pipeline, "HDInsightClusterResource.GetVirtualMachineHosts", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -2419,7 +2418,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = await _virtualMachinesRestClient.RestartHostsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new HDInsightArmOperation(_virtualMachinesClientDiagnostics, Pipeline, _virtualMachinesRestClient.CreateRestartHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_virtualMachinesClientDiagnostics, Pipeline, _virtualMachinesRestClient.CreateRestartHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -2457,7 +2456,7 @@ namespace Azure.ResourceManager.HDInsight
             try
             {
                 var response = _virtualMachinesRestClient.RestartHosts(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new HDInsightArmOperation(_virtualMachinesClientDiagnostics, Pipeline, _virtualMachinesRestClient.CreateRestartHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new HDInsightArmOperation(_virtualMachinesClientDiagnostics, Pipeline, _virtualMachinesRestClient.CreateRestartHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
