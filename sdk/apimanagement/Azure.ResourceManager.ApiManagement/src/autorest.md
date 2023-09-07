@@ -55,7 +55,7 @@ format-by-name-rules:
   'PrivateIPAddresses': 'ip-address'
   'PublicIPAddresses': 'ip-address'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

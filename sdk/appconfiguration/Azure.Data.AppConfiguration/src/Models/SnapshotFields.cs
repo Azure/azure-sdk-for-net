@@ -24,8 +24,8 @@ namespace Azure.Data.AppConfiguration
         private const string StatusValue = "status";
         private const string FiltersValue = "filters";
         private const string CompositionTypeValue = "composition_type";
-        private const string CreatedValue = "created";
-        private const string ExpiresValue = "expires";
+        private const string CreatedOnValue = "created";
+        private const string ExpiresOnValue = "expires";
         private const string RetentionPeriodValue = "retention_period";
         private const string SizeValue = "size";
         private const string ItemCountValue = "items_count";
@@ -41,9 +41,9 @@ namespace Azure.Data.AppConfiguration
         /// <summary> composition_type. </summary>
         public static SnapshotFields CompositionType { get; } = new SnapshotFields(CompositionTypeValue);
         /// <summary> created. </summary>
-        public static SnapshotFields Created { get; } = new SnapshotFields(CreatedValue);
+        public static SnapshotFields CreatedOn { get; } = new SnapshotFields(CreatedOnValue);
         /// <summary> expires. </summary>
-        public static SnapshotFields Expires { get; } = new SnapshotFields(ExpiresValue);
+        public static SnapshotFields ExpiresOn { get; } = new SnapshotFields(ExpiresOnValue);
         /// <summary> retention_period. </summary>
         public static SnapshotFields RetentionPeriod { get; } = new SnapshotFields(RetentionPeriodValue);
         /// <summary> size. </summary>

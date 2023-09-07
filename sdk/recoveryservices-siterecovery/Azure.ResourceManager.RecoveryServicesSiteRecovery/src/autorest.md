@@ -336,7 +336,7 @@ format-by-name-rules:
   'VMwareMachineId': 'arm-id'
   '*ProcessServerId': 'uuid'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
