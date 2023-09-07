@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
@@ -14,22 +16,28 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// Please note <see cref="AlertProcessingRuleRecurrence"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DailyRecurrence"/>, <see cref="AlertProcessingRuleMonthlyRecurrence"/> and <see cref="AlertProcessingRuleWeeklyRecurrence"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownRecurrence))]
     public abstract partial class AlertProcessingRuleRecurrence
     {
-        /// <summary> Initializes a new instance of AlertProcessingRuleRecurrence. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleRecurrence"/>. </summary>
         protected AlertProcessingRuleRecurrence()
         {
         }
 
-        /// <summary> Initializes a new instance of AlertProcessingRuleRecurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleRecurrence"/>. </summary>
         /// <param name="recurrenceType"> Specifies when the recurrence should be applied. </param>
         /// <param name="startOn"> Start time for recurrence. </param>
         /// <param name="endOn"> End time for recurrence. </param>
-        internal AlertProcessingRuleRecurrence(RecurrenceType recurrenceType, TimeSpan? startOn, TimeSpan? endOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AlertProcessingRuleRecurrence(RecurrenceType recurrenceType, TimeSpan? startOn, TimeSpan? endOn, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RecurrenceType = recurrenceType;
             StartOn = startOn;
             EndOn = endOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies when the recurrence should be applied. </summary>

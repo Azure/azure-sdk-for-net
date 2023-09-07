@@ -6,12 +6,16 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.AI.AnomalyDetector
 {
     /// <summary> Definition of input time series points. </summary>
     public partial class TimeSeriesPoint
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of TimeSeriesPoint. </summary>
         /// <param name="value"> Measurement of that point. </param>
         public TimeSeriesPoint(float value)
@@ -22,10 +26,17 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> Initializes a new instance of TimeSeriesPoint. </summary>
         /// <param name="timestamp"> Argument that indicates the time stamp of a data point (ISO8601 format). </param>
         /// <param name="value"> Measurement of that point. </param>
-        internal TimeSeriesPoint(DateTimeOffset? timestamp, float value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TimeSeriesPoint(DateTimeOffset? timestamp, float value, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Timestamp = timestamp;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesPoint"/> for deserialization. </summary>
+        internal TimeSeriesPoint()
+        {
         }
 
         /// <summary> Argument that indicates the time stamp of a data point (ISO8601 format). </summary>

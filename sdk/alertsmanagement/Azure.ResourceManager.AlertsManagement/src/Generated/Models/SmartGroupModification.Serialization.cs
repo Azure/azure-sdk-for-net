@@ -5,27 +5,56 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class SmartGroupModification : IUtf8JsonSerializable
+    public partial class SmartGroupModification : IUtf8JsonSerializable, IModelJsonSerializable<SmartGroupModification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SmartGroupModification>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SmartGroupModification>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SmartGroupModification>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                if (Properties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SmartGroupModificationProperties>)Properties).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SmartGroupModification DeserializeSmartGroupModification(JsonElement element)
+        internal static SmartGroupModification DeserializeSmartGroupModification(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,6 +64,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -70,8 +100,61 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SmartGroupModification(id, name, type, systemData.Value, properties.Value);
+            return new SmartGroupModification(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+        }
+
+        SmartGroupModification IModelJsonSerializable<SmartGroupModification>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SmartGroupModification>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSmartGroupModification(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SmartGroupModification>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SmartGroupModification>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SmartGroupModification IModelSerializable<SmartGroupModification>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SmartGroupModification>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSmartGroupModification(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SmartGroupModification"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SmartGroupModification"/> to convert. </param>
+        public static implicit operator RequestContent(SmartGroupModification model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SmartGroupModification"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SmartGroupModification(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSmartGroupModification(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

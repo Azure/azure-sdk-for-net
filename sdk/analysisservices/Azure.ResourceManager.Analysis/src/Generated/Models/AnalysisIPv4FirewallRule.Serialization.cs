@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    public partial class AnalysisIPv4FirewallRule : IUtf8JsonSerializable
+    public partial class AnalysisIPv4FirewallRule : IUtf8JsonSerializable, IModelJsonSerializable<AnalysisIPv4FirewallRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AnalysisIPv4FirewallRule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AnalysisIPv4FirewallRule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AnalysisIPv4FirewallRule>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FirewallRuleName))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.Analysis.Models
                 writer.WritePropertyName("rangeEnd"u8);
                 writer.WriteStringValue(RangeEnd);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AnalysisIPv4FirewallRule DeserializeAnalysisIPv4FirewallRule(JsonElement element)
+        internal static AnalysisIPv4FirewallRule DeserializeAnalysisIPv4FirewallRule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.Analysis.Models
             Optional<string> firewallRuleName = default;
             Optional<string> rangeStart = default;
             Optional<string> rangeEnd = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("firewallRuleName"u8))
@@ -59,8 +82,61 @@ namespace Azure.ResourceManager.Analysis.Models
                     rangeEnd = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AnalysisIPv4FirewallRule(firewallRuleName.Value, rangeStart.Value, rangeEnd.Value);
+            return new AnalysisIPv4FirewallRule(firewallRuleName.Value, rangeStart.Value, rangeEnd.Value, serializedAdditionalRawData);
+        }
+
+        AnalysisIPv4FirewallRule IModelJsonSerializable<AnalysisIPv4FirewallRule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnalysisIPv4FirewallRule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalysisIPv4FirewallRule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AnalysisIPv4FirewallRule>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnalysisIPv4FirewallRule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AnalysisIPv4FirewallRule IModelSerializable<AnalysisIPv4FirewallRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnalysisIPv4FirewallRule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAnalysisIPv4FirewallRule(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AnalysisIPv4FirewallRule"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AnalysisIPv4FirewallRule"/> to convert. </param>
+        public static implicit operator RequestContent(AnalysisIPv4FirewallRule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AnalysisIPv4FirewallRule"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AnalysisIPv4FirewallRule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAnalysisIPv4FirewallRule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

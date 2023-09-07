@@ -5,20 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class SendChatMessageResultInternal
+    internal partial class SendChatMessageResultInternal : IUtf8JsonSerializable, IModelJsonSerializable<SendChatMessageResultInternal>
     {
-        internal static SendChatMessageResultInternal DeserializeSendChatMessageResultInternal(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SendChatMessageResultInternal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SendChatMessageResultInternal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SendChatMessageResultInternal>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SendChatMessageResultInternal DeserializeSendChatMessageResultInternal(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string id = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -26,8 +57,61 @@ namespace Azure.Communication.Chat
                     id = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SendChatMessageResultInternal(id);
+            return new SendChatMessageResultInternal(id, serializedAdditionalRawData);
+        }
+
+        SendChatMessageResultInternal IModelJsonSerializable<SendChatMessageResultInternal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SendChatMessageResultInternal>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSendChatMessageResultInternal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SendChatMessageResultInternal>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SendChatMessageResultInternal>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SendChatMessageResultInternal IModelSerializable<SendChatMessageResultInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SendChatMessageResultInternal>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSendChatMessageResultInternal(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SendChatMessageResultInternal"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SendChatMessageResultInternal"/> to convert. </param>
+        public static implicit operator RequestContent(SendChatMessageResultInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SendChatMessageResultInternal"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SendChatMessageResultInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSendChatMessageResultInternal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

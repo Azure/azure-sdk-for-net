@@ -5,16 +5,105 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationActivityParameterDefinition
+    public partial class AutomationActivityParameterDefinition : IUtf8JsonSerializable, IModelJsonSerializable<AutomationActivityParameterDefinition>
     {
-        internal static AutomationActivityParameterDefinition DeserializeAutomationActivityParameterDefinition(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AutomationActivityParameterDefinition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AutomationActivityParameterDefinition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AutomationActivityParameterDefinition>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(ActivityParameterType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ActivityParameterType);
+            }
+            if (Optional.IsDefined(IsMandatory))
+            {
+                writer.WritePropertyName("isMandatory"u8);
+                writer.WriteBooleanValue(IsMandatory.Value);
+            }
+            if (Optional.IsDefined(IsDynamic))
+            {
+                writer.WritePropertyName("isDynamic"u8);
+                writer.WriteBooleanValue(IsDynamic.Value);
+            }
+            if (Optional.IsDefined(Position))
+            {
+                writer.WritePropertyName("position"u8);
+                writer.WriteNumberValue(Position.Value);
+            }
+            if (Optional.IsDefined(CanTakeValueFromPipeline))
+            {
+                writer.WritePropertyName("valueFromPipeline"u8);
+                writer.WriteBooleanValue(CanTakeValueFromPipeline.Value);
+            }
+            if (Optional.IsDefined(CanTakeValueFromPipelineByPropertyName))
+            {
+                writer.WritePropertyName("valueFromPipelineByPropertyName"u8);
+                writer.WriteBooleanValue(CanTakeValueFromPipelineByPropertyName.Value);
+            }
+            if (Optional.IsDefined(CanTakeValueValueFromRemainingArguments))
+            {
+                writer.WritePropertyName("valueFromRemainingArguments"u8);
+                writer.WriteBooleanValue(CanTakeValueValueFromRemainingArguments.Value);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsCollectionDefined(ValidationSet))
+            {
+                writer.WritePropertyName("validationSet"u8);
+                writer.WriteStartArray();
+                foreach (var item in ValidationSet)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AutomationActivityParameterValidationSet>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AutomationActivityParameterDefinition DeserializeAutomationActivityParameterDefinition(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +118,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<bool> valueFromRemainingArguments = default;
             Optional<string> description = default;
             Optional<IReadOnlyList<AutomationActivityParameterValidationSet>> validationSet = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -114,8 +204,61 @@ namespace Azure.ResourceManager.Automation.Models
                     validationSet = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AutomationActivityParameterDefinition(name.Value, type.Value, Optional.ToNullable(isMandatory), Optional.ToNullable(isDynamic), Optional.ToNullable(position), Optional.ToNullable(valueFromPipeline), Optional.ToNullable(valueFromPipelineByPropertyName), Optional.ToNullable(valueFromRemainingArguments), description.Value, Optional.ToList(validationSet));
+            return new AutomationActivityParameterDefinition(name.Value, type.Value, Optional.ToNullable(isMandatory), Optional.ToNullable(isDynamic), Optional.ToNullable(position), Optional.ToNullable(valueFromPipeline), Optional.ToNullable(valueFromPipelineByPropertyName), Optional.ToNullable(valueFromRemainingArguments), description.Value, Optional.ToList(validationSet), serializedAdditionalRawData);
+        }
+
+        AutomationActivityParameterDefinition IModelJsonSerializable<AutomationActivityParameterDefinition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AutomationActivityParameterDefinition>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutomationActivityParameterDefinition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AutomationActivityParameterDefinition>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AutomationActivityParameterDefinition>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AutomationActivityParameterDefinition IModelSerializable<AutomationActivityParameterDefinition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AutomationActivityParameterDefinition>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAutomationActivityParameterDefinition(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AutomationActivityParameterDefinition"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AutomationActivityParameterDefinition"/> to convert. </param>
+        public static implicit operator RequestContent(AutomationActivityParameterDefinition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AutomationActivityParameterDefinition"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AutomationActivityParameterDefinition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAutomationActivityParameterDefinition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

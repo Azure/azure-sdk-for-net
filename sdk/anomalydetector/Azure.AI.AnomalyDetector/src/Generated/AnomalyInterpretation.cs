@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.AnomalyDetector
 {
     /// <summary> Interpretation of the anomalous time stamp. </summary>
     public partial class AnomalyInterpretation
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of AnomalyInterpretation. </summary>
         internal AnomalyInterpretation()
         {
@@ -22,11 +28,13 @@ namespace Azure.AI.AnomalyDetector
         /// number between 0 and 1.
         /// </param>
         /// <param name="correlationChanges"> Correlation changes among the anomalous variables. </param>
-        internal AnomalyInterpretation(string variable, float? contributionScore, CorrelationChanges correlationChanges)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnomalyInterpretation(string variable, float? contributionScore, CorrelationChanges correlationChanges, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Variable = variable;
             ContributionScore = contributionScore;
             CorrelationChanges = correlationChanges;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Variable. </summary>

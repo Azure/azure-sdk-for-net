@@ -6,15 +6,65 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class ArcIdentityResult
+    public partial class ArcIdentityResult : IUtf8JsonSerializable, IModelJsonSerializable<ArcIdentityResult>
     {
-        internal static ArcIdentityResult DeserializeArcIdentityResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ArcIdentityResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ArcIdentityResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ArcIdentityResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ArcApplicationClientId))
+            {
+                writer.WritePropertyName("arcApplicationClientId"u8);
+                writer.WriteStringValue(ArcApplicationClientId.Value);
+            }
+            if (Optional.IsDefined(ArcApplicationTenantId))
+            {
+                writer.WritePropertyName("arcApplicationTenantId"u8);
+                writer.WriteStringValue(ArcApplicationTenantId.Value);
+            }
+            if (Optional.IsDefined(ArcServicePrincipalObjectId))
+            {
+                writer.WritePropertyName("arcServicePrincipalObjectId"u8);
+                writer.WriteStringValue(ArcServicePrincipalObjectId.Value);
+            }
+            if (Optional.IsDefined(ArcApplicationObjectId))
+            {
+                writer.WritePropertyName("arcApplicationObjectId"u8);
+                writer.WriteStringValue(ArcApplicationObjectId.Value);
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ArcIdentityResult DeserializeArcIdentityResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +73,7 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<Guid> arcApplicationTenantId = default;
             Optional<Guid> arcServicePrincipalObjectId = default;
             Optional<Guid> arcApplicationObjectId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -73,8 +124,61 @@ namespace Azure.ResourceManager.Hci.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ArcIdentityResult(Optional.ToNullable(arcApplicationClientId), Optional.ToNullable(arcApplicationTenantId), Optional.ToNullable(arcServicePrincipalObjectId), Optional.ToNullable(arcApplicationObjectId));
+            return new ArcIdentityResult(Optional.ToNullable(arcApplicationClientId), Optional.ToNullable(arcApplicationTenantId), Optional.ToNullable(arcServicePrincipalObjectId), Optional.ToNullable(arcApplicationObjectId), serializedAdditionalRawData);
+        }
+
+        ArcIdentityResult IModelJsonSerializable<ArcIdentityResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArcIdentityResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeArcIdentityResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ArcIdentityResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArcIdentityResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ArcIdentityResult IModelSerializable<ArcIdentityResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ArcIdentityResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeArcIdentityResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ArcIdentityResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ArcIdentityResult"/> to convert. </param>
+        public static implicit operator RequestContent(ArcIdentityResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ArcIdentityResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ArcIdentityResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeArcIdentityResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

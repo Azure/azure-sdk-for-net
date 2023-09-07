@@ -5,20 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class GenerateSsoUriResult
+    public partial class GenerateSsoUriResult : IUtf8JsonSerializable, IModelJsonSerializable<GenerateSsoUriResult>
     {
-        internal static GenerateSsoUriResult DeserializeGenerateSsoUriResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GenerateSsoUriResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GenerateSsoUriResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<GenerateSsoUriResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(Value);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static GenerateSsoUriResult DeserializeGenerateSsoUriResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> value = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -26,8 +60,61 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     value = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GenerateSsoUriResult(value.Value);
+            return new GenerateSsoUriResult(value.Value, serializedAdditionalRawData);
+        }
+
+        GenerateSsoUriResult IModelJsonSerializable<GenerateSsoUriResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GenerateSsoUriResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGenerateSsoUriResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GenerateSsoUriResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GenerateSsoUriResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GenerateSsoUriResult IModelSerializable<GenerateSsoUriResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GenerateSsoUriResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGenerateSsoUriResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GenerateSsoUriResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GenerateSsoUriResult"/> to convert. </param>
+        public static implicit operator RequestContent(GenerateSsoUriResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GenerateSsoUriResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GenerateSsoUriResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGenerateSsoUriResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

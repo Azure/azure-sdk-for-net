@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class PerNodeExtensionState
+    public partial class PerNodeExtensionState : IUtf8JsonSerializable, IModelJsonSerializable<PerNodeExtensionState>
     {
-        internal static PerNodeExtensionState DeserializePerNodeExtensionState(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PerNodeExtensionState>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PerNodeExtensionState>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PerNodeExtensionState>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PerNodeExtensionState DeserializePerNodeExtensionState(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +51,7 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<string> typeHandlerVersion = default;
             Optional<NodeExtensionState> state = default;
             Optional<HciExtensionInstanceView> instanceView = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -58,8 +87,61 @@ namespace Azure.ResourceManager.Hci.Models
                     instanceView = HciExtensionInstanceView.DeserializeHciExtensionInstanceView(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PerNodeExtensionState(name.Value, extension.Value, typeHandlerVersion.Value, Optional.ToNullable(state), instanceView.Value);
+            return new PerNodeExtensionState(name.Value, extension.Value, typeHandlerVersion.Value, Optional.ToNullable(state), instanceView.Value, serializedAdditionalRawData);
+        }
+
+        PerNodeExtensionState IModelJsonSerializable<PerNodeExtensionState>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PerNodeExtensionState>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePerNodeExtensionState(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PerNodeExtensionState>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PerNodeExtensionState>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PerNodeExtensionState IModelSerializable<PerNodeExtensionState>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PerNodeExtensionState>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePerNodeExtensionState(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PerNodeExtensionState"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PerNodeExtensionState"/> to convert. </param>
+        public static implicit operator RequestContent(PerNodeExtensionState model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PerNodeExtensionState"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PerNodeExtensionState(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePerNodeExtensionState(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

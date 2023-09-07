@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class KikChannelProperties : IUtf8JsonSerializable
+    public partial class KikChannelProperties : IUtf8JsonSerializable, IModelJsonSerializable<KikChannelProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KikChannelProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KikChannelProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KikChannelProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("userName"u8);
             writer.WriteStringValue(UserName);
@@ -29,11 +37,25 @@ namespace Azure.ResourceManager.BotService.Models
             }
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KikChannelProperties DeserializeKikChannelProperties(JsonElement element)
+        internal static KikChannelProperties DeserializeKikChannelProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<string> apiKey = default;
             Optional<bool> isValidated = default;
             bool isEnabled = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userName"u8))
@@ -68,8 +91,61 @@ namespace Azure.ResourceManager.BotService.Models
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KikChannelProperties(userName, apiKey.Value, Optional.ToNullable(isValidated), isEnabled);
+            return new KikChannelProperties(userName, apiKey.Value, Optional.ToNullable(isValidated), isEnabled, serializedAdditionalRawData);
+        }
+
+        KikChannelProperties IModelJsonSerializable<KikChannelProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KikChannelProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKikChannelProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KikChannelProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KikChannelProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KikChannelProperties IModelSerializable<KikChannelProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KikChannelProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKikChannelProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KikChannelProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KikChannelProperties"/> to convert. </param>
+        public static implicit operator RequestContent(KikChannelProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KikChannelProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KikChannelProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKikChannelProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

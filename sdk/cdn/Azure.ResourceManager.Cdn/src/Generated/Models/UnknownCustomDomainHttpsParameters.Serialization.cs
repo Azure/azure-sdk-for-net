@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    internal partial class UnknownCustomDomainHttpsParameters : IUtf8JsonSerializable
+    internal partial class UnknownCustomDomainHttpsParameters : IUtf8JsonSerializable, IModelJsonSerializable<CustomDomainHttpsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CustomDomainHttpsContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CustomDomainHttpsContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CustomDomainHttpsContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("certificateSource"u8);
             writer.WriteStringValue(CertificateSource.ToString());
@@ -24,41 +30,44 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownCustomDomainHttpsParameters DeserializeUnknownCustomDomainHttpsParameters(JsonElement element)
+        internal static CustomDomainHttpsContent DeserializeUnknownCustomDomainHttpsParameters(JsonElement element, ModelSerializerOptions options = default) => DeserializeCustomDomainHttpsContent(element, options);
+
+        CustomDomainHttpsContent IModelJsonSerializable<CustomDomainHttpsContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            CertificateSource certificateSource = "Unknown";
-            SecureDeliveryProtocolType protocolType = default;
-            Optional<CdnMinimumTlsVersion> minimumTlsVersion = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("certificateSource"u8))
-                {
-                    certificateSource = new CertificateSource(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("protocolType"u8))
-                {
-                    protocolType = new SecureDeliveryProtocolType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("minimumTlsVersion"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    minimumTlsVersion = property.Value.GetString().ToCdnMinimumTlsVersion();
-                    continue;
-                }
-            }
-            return new UnknownCustomDomainHttpsParameters(certificateSource, protocolType, Optional.ToNullable(minimumTlsVersion));
+            Core.ModelSerializerHelper.ValidateFormat<CustomDomainHttpsContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownCustomDomainHttpsParameters(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CustomDomainHttpsContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomDomainHttpsContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CustomDomainHttpsContent IModelSerializable<CustomDomainHttpsContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomDomainHttpsContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCustomDomainHttpsContent(doc.RootElement, options);
         }
     }
 }

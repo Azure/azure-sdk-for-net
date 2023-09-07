@@ -5,15 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class RankingsResponseTablesPropertiesItemsMetricsItem
+    public partial class RankingsResponseTablesPropertiesItemsMetricsItem : IUtf8JsonSerializable, IModelJsonSerializable<RankingsResponseTablesPropertiesItemsMetricsItem>
     {
-        internal static RankingsResponseTablesPropertiesItemsMetricsItem DeserializeRankingsResponseTablesPropertiesItemsMetricsItem(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RankingsResponseTablesPropertiesItemsMetricsItem>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RankingsResponseTablesPropertiesItemsMetricsItem>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RankingsResponseTablesPropertiesItemsMetricsItem>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Metric))
+            {
+                writer.WritePropertyName("metric"u8);
+                writer.WriteStringValue(Metric);
+            }
+            if (Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteNumberValue(Value.Value);
+            }
+            if (Optional.IsDefined(Percentage))
+            {
+                writer.WritePropertyName("percentage"u8);
+                writer.WriteNumberValue(Percentage.Value);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RankingsResponseTablesPropertiesItemsMetricsItem DeserializeRankingsResponseTablesPropertiesItemsMetricsItem(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +64,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<string> metric = default;
             Optional<long> value = default;
             Optional<float> percentage = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metric"u8))
@@ -46,8 +90,61 @@ namespace Azure.ResourceManager.Cdn.Models
                     percentage = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RankingsResponseTablesPropertiesItemsMetricsItem(metric.Value, Optional.ToNullable(value), Optional.ToNullable(percentage));
+            return new RankingsResponseTablesPropertiesItemsMetricsItem(metric.Value, Optional.ToNullable(value), Optional.ToNullable(percentage), serializedAdditionalRawData);
+        }
+
+        RankingsResponseTablesPropertiesItemsMetricsItem IModelJsonSerializable<RankingsResponseTablesPropertiesItemsMetricsItem>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RankingsResponseTablesPropertiesItemsMetricsItem>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRankingsResponseTablesPropertiesItemsMetricsItem(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RankingsResponseTablesPropertiesItemsMetricsItem>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RankingsResponseTablesPropertiesItemsMetricsItem>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RankingsResponseTablesPropertiesItemsMetricsItem IModelSerializable<RankingsResponseTablesPropertiesItemsMetricsItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RankingsResponseTablesPropertiesItemsMetricsItem>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRankingsResponseTablesPropertiesItemsMetricsItem(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RankingsResponseTablesPropertiesItemsMetricsItem"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RankingsResponseTablesPropertiesItemsMetricsItem"/> to convert. </param>
+        public static implicit operator RequestContent(RankingsResponseTablesPropertiesItemsMetricsItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RankingsResponseTablesPropertiesItemsMetricsItem"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RankingsResponseTablesPropertiesItemsMetricsItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRankingsResponseTablesPropertiesItemsMetricsItem(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

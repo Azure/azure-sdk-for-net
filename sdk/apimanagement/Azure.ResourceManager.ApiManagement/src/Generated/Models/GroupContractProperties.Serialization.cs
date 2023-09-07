@@ -5,15 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class GroupContractProperties
+    public partial class GroupContractProperties : IUtf8JsonSerializable, IModelJsonSerializable<GroupContractProperties>
     {
-        internal static GroupContractProperties DeserializeGroupContractProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GroupContractProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GroupContractProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<GroupContractProperties>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("displayName"u8);
+            writer.WriteStringValue(DisplayName);
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(ApiManagementGroupType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ApiManagementGroupType.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(ExternalId))
+            {
+                writer.WritePropertyName("externalId"u8);
+                writer.WriteStringValue(ExternalId);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static GroupContractProperties DeserializeGroupContractProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +68,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<bool> builtIn = default;
             Optional<ApiManagementGroupType> type = default;
             Optional<string> externalId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -58,8 +104,61 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     externalId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GroupContractProperties(displayName, description.Value, Optional.ToNullable(builtIn), Optional.ToNullable(type), externalId.Value);
+            return new GroupContractProperties(displayName, description.Value, Optional.ToNullable(builtIn), Optional.ToNullable(type), externalId.Value, serializedAdditionalRawData);
+        }
+
+        GroupContractProperties IModelJsonSerializable<GroupContractProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GroupContractProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGroupContractProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GroupContractProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GroupContractProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GroupContractProperties IModelSerializable<GroupContractProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GroupContractProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGroupContractProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GroupContractProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GroupContractProperties"/> to convert. </param>
+        public static implicit operator RequestContent(GroupContractProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GroupContractProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GroupContractProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGroupContractProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

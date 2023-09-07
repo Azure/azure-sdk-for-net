@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchAccountAutoScaleSettings : IUtf8JsonSerializable
+    public partial class BatchAccountAutoScaleSettings : IUtf8JsonSerializable, IModelJsonSerializable<BatchAccountAutoScaleSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BatchAccountAutoScaleSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BatchAccountAutoScaleSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BatchAccountAutoScaleSettings>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("formula"u8);
             writer.WriteStringValue(Formula);
@@ -23,17 +30,32 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("evaluationInterval"u8);
                 writer.WriteStringValue(EvaluationInterval.Value, "P");
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BatchAccountAutoScaleSettings DeserializeBatchAccountAutoScaleSettings(JsonElement element)
+        internal static BatchAccountAutoScaleSettings DeserializeBatchAccountAutoScaleSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string formula = default;
             Optional<TimeSpan> evaluationInterval = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("formula"u8))
@@ -50,8 +72,61 @@ namespace Azure.ResourceManager.Batch.Models
                     evaluationInterval = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BatchAccountAutoScaleSettings(formula, Optional.ToNullable(evaluationInterval));
+            return new BatchAccountAutoScaleSettings(formula, Optional.ToNullable(evaluationInterval), serializedAdditionalRawData);
+        }
+
+        BatchAccountAutoScaleSettings IModelJsonSerializable<BatchAccountAutoScaleSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BatchAccountAutoScaleSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchAccountAutoScaleSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BatchAccountAutoScaleSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BatchAccountAutoScaleSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BatchAccountAutoScaleSettings IModelSerializable<BatchAccountAutoScaleSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BatchAccountAutoScaleSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBatchAccountAutoScaleSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BatchAccountAutoScaleSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BatchAccountAutoScaleSettings"/> to convert. </param>
+        public static implicit operator RequestContent(BatchAccountAutoScaleSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BatchAccountAutoScaleSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BatchAccountAutoScaleSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBatchAccountAutoScaleSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

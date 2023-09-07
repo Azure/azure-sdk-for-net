@@ -5,20 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.Attestation
 {
-    public partial class TpmAttestationResponse
+    public partial class TpmAttestationResponse : IUtf8JsonSerializable, IModelJsonSerializable<TpmAttestationResponse>
     {
-        internal static TpmAttestationResponse DeserializeTpmAttestationResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TpmAttestationResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TpmAttestationResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TpmAttestationResponse>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(InternalData))
+            {
+                writer.WritePropertyName("data"u8);
+                writer.WriteStringValue(InternalData);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TpmAttestationResponse DeserializeTpmAttestationResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> data = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("data"u8))
@@ -26,8 +60,61 @@ namespace Azure.Security.Attestation
                     data = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TpmAttestationResponse(data.Value);
+            return new TpmAttestationResponse(data.Value, serializedAdditionalRawData);
+        }
+
+        TpmAttestationResponse IModelJsonSerializable<TpmAttestationResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TpmAttestationResponse>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTpmAttestationResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TpmAttestationResponse>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TpmAttestationResponse>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TpmAttestationResponse IModelSerializable<TpmAttestationResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TpmAttestationResponse>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTpmAttestationResponse(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TpmAttestationResponse"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TpmAttestationResponse"/> to convert. </param>
+        public static implicit operator RequestContent(TpmAttestationResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TpmAttestationResponse"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TpmAttestationResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTpmAttestationResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

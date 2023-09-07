@@ -5,15 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class FrontDoorOriginPatch : IUtf8JsonSerializable
+    public partial class FrontDoorOriginPatch : IUtf8JsonSerializable, IModelJsonSerializable<FrontDoorOriginPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FrontDoorOriginPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FrontDoorOriginPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorOriginPatch>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -71,7 +80,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (SharedPrivateLinkResource != null)
                 {
                     writer.WritePropertyName("sharedPrivateLinkResource"u8);
-                    writer.WriteObjectValue(SharedPrivateLinkResource);
+                    if (SharedPrivateLinkResource is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SharedPrivateLinkResourceProperties>)SharedPrivateLinkResource).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -89,7 +105,200 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteBooleanValue(EnforceCertificateNameCheck.Value);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static FrontDoorOriginPatch DeserializeFrontDoorOriginPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> originGroupName = default;
+            Optional<WritableSubResource> azureOrigin = default;
+            Optional<string> hostName = default;
+            Optional<int> httpPort = default;
+            Optional<int> httpsPort = default;
+            Optional<string> originHostHeader = default;
+            Optional<int?> priority = default;
+            Optional<int?> weight = default;
+            Optional<SharedPrivateLinkResourceProperties> sharedPrivateLinkResource = default;
+            Optional<EnabledState> enabledState = default;
+            Optional<bool> enforceCertificateNameCheck = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("originGroupName"u8))
+                        {
+                            originGroupName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("azureOrigin"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            azureOrigin = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("hostName"u8))
+                        {
+                            hostName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("httpPort"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            httpPort = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("httpsPort"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            httpsPort = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("originHostHeader"u8))
+                        {
+                            originHostHeader = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("priority"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                priority = null;
+                                continue;
+                            }
+                            priority = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("weight"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                weight = null;
+                                continue;
+                            }
+                            weight = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("sharedPrivateLinkResource"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                sharedPrivateLinkResource = null;
+                                continue;
+                            }
+                            sharedPrivateLinkResource = SharedPrivateLinkResourceProperties.DeserializeSharedPrivateLinkResourceProperties(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("enabledState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enabledState = new EnabledState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("enforceCertificateNameCheck"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enforceCertificateNameCheck = property0.Value.GetBoolean();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new FrontDoorOriginPatch(originGroupName.Value, azureOrigin, hostName.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), originHostHeader.Value, Optional.ToNullable(priority), Optional.ToNullable(weight), sharedPrivateLinkResource.Value, Optional.ToNullable(enabledState), Optional.ToNullable(enforceCertificateNameCheck), serializedAdditionalRawData);
+        }
+
+        FrontDoorOriginPatch IModelJsonSerializable<FrontDoorOriginPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorOriginPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFrontDoorOriginPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FrontDoorOriginPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorOriginPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FrontDoorOriginPatch IModelSerializable<FrontDoorOriginPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorOriginPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFrontDoorOriginPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FrontDoorOriginPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FrontDoorOriginPatch"/> to convert. </param>
+        public static implicit operator RequestContent(FrontDoorOriginPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FrontDoorOriginPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FrontDoorOriginPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFrontDoorOriginPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> VM-Host placement policy properties. </summary>
     public partial class VmHostPlacementPolicyProperties : PlacementPolicyProperties
     {
-        /// <summary> Initializes a new instance of VmHostPlacementPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmHostPlacementPolicyProperties"/>. </summary>
         /// <param name="vmMembers"> Virtual machine members list. </param>
         /// <param name="hostMembers"> Host members list. </param>
         /// <param name="affinityType"> placement policy affinity type. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Avs.Models
             PolicyType = PlacementPolicyType.VmHost;
         }
 
-        /// <summary> Initializes a new instance of VmHostPlacementPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmHostPlacementPolicyProperties"/>. </summary>
         /// <param name="policyType"> placement policy type. </param>
         /// <param name="state"> Whether the placement policy is enabled or disabled. </param>
         /// <param name="displayName"> Display name of the placement policy. </param>
@@ -41,7 +41,8 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="affinityType"> placement policy affinity type. </param>
         /// <param name="affinityStrength"> vm-host placement policy affinity strength (should/must). </param>
         /// <param name="azureHybridBenefitType"> placement policy azure hybrid benefit opt-in type. </param>
-        internal VmHostPlacementPolicyProperties(PlacementPolicyType policyType, PlacementPolicyState? state, string displayName, PlacementPolicyProvisioningState? provisioningState, IList<ResourceIdentifier> vmMembers, IList<string> hostMembers, AvsPlacementPolicyAffinityType affinityType, VmHostPlacementPolicyAffinityStrength? affinityStrength, AzureHybridBenefitType? azureHybridBenefitType) : base(policyType, state, displayName, provisioningState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmHostPlacementPolicyProperties(PlacementPolicyType policyType, PlacementPolicyState? state, string displayName, PlacementPolicyProvisioningState? provisioningState, IList<ResourceIdentifier> vmMembers, IList<string> hostMembers, AvsPlacementPolicyAffinityType affinityType, VmHostPlacementPolicyAffinityStrength? affinityStrength, AzureHybridBenefitType? azureHybridBenefitType, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(policyType, state, displayName, provisioningState, serializedAdditionalRawData)
         {
             VmMembers = vmMembers;
             HostMembers = hostMembers;
@@ -49,6 +50,11 @@ namespace Azure.ResourceManager.Avs.Models
             AffinityStrength = affinityStrength;
             AzureHybridBenefitType = azureHybridBenefitType;
             PolicyType = policyType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VmHostPlacementPolicyProperties"/> for deserialization. </summary>
+        internal VmHostPlacementPolicyProperties()
+        {
         }
 
         /// <summary> Virtual machine members list. </summary>

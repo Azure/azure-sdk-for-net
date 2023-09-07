@@ -5,22 +5,72 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    internal partial class SoftwareUpdateConfigurationMachineRunListResult
+    internal partial class SoftwareUpdateConfigurationMachineRunListResult : IUtf8JsonSerializable, IModelJsonSerializable<SoftwareUpdateConfigurationMachineRunListResult>
     {
-        internal static SoftwareUpdateConfigurationMachineRunListResult DeserializeSoftwareUpdateConfigurationMachineRunListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SoftwareUpdateConfigurationMachineRunListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SoftwareUpdateConfigurationMachineRunListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SoftwareUpdateConfigurationMachineRunListResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SoftwareUpdateConfigurationMachineRun>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SoftwareUpdateConfigurationMachineRunListResult DeserializeSoftwareUpdateConfigurationMachineRunListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<SoftwareUpdateConfigurationMachineRun>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -42,8 +92,61 @@ namespace Azure.ResourceManager.Automation.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SoftwareUpdateConfigurationMachineRunListResult(Optional.ToList(value), nextLink.Value);
+            return new SoftwareUpdateConfigurationMachineRunListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+        }
+
+        SoftwareUpdateConfigurationMachineRunListResult IModelJsonSerializable<SoftwareUpdateConfigurationMachineRunListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SoftwareUpdateConfigurationMachineRunListResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSoftwareUpdateConfigurationMachineRunListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SoftwareUpdateConfigurationMachineRunListResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SoftwareUpdateConfigurationMachineRunListResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SoftwareUpdateConfigurationMachineRunListResult IModelSerializable<SoftwareUpdateConfigurationMachineRunListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SoftwareUpdateConfigurationMachineRunListResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSoftwareUpdateConfigurationMachineRunListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SoftwareUpdateConfigurationMachineRunListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SoftwareUpdateConfigurationMachineRunListResult"/> to convert. </param>
+        public static implicit operator RequestContent(SoftwareUpdateConfigurationMachineRunListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SoftwareUpdateConfigurationMachineRunListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SoftwareUpdateConfigurationMachineRunListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSoftwareUpdateConfigurationMachineRunListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

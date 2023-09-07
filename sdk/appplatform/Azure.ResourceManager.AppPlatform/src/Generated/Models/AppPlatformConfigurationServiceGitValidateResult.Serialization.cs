@@ -5,22 +5,72 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformConfigurationServiceGitValidateResult
+    public partial class AppPlatformConfigurationServiceGitValidateResult : IUtf8JsonSerializable, IModelJsonSerializable<AppPlatformConfigurationServiceGitValidateResult>
     {
-        internal static AppPlatformConfigurationServiceGitValidateResult DeserializeAppPlatformConfigurationServiceGitValidateResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppPlatformConfigurationServiceGitValidateResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppPlatformConfigurationServiceGitValidateResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AppPlatformConfigurationServiceGitValidateResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IsValid))
+            {
+                writer.WritePropertyName("isValid"u8);
+                writer.WriteBooleanValue(IsValid.Value);
+            }
+            if (Optional.IsCollectionDefined(GitReposValidationResult))
+            {
+                writer.WritePropertyName("gitReposValidationResult"u8);
+                writer.WriteStartArray();
+                foreach (var item in GitReposValidationResult)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AppPlatformConfigurationServiceGitReposValidationMessages>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AppPlatformConfigurationServiceGitValidateResult DeserializeAppPlatformConfigurationServiceGitValidateResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> isValid = default;
             Optional<IReadOnlyList<AppPlatformConfigurationServiceGitReposValidationMessages>> gitReposValidationResult = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isValid"u8))
@@ -46,8 +96,61 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     gitReposValidationResult = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppPlatformConfigurationServiceGitValidateResult(Optional.ToNullable(isValid), Optional.ToList(gitReposValidationResult));
+            return new AppPlatformConfigurationServiceGitValidateResult(Optional.ToNullable(isValid), Optional.ToList(gitReposValidationResult), serializedAdditionalRawData);
+        }
+
+        AppPlatformConfigurationServiceGitValidateResult IModelJsonSerializable<AppPlatformConfigurationServiceGitValidateResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppPlatformConfigurationServiceGitValidateResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformConfigurationServiceGitValidateResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppPlatformConfigurationServiceGitValidateResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppPlatformConfigurationServiceGitValidateResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppPlatformConfigurationServiceGitValidateResult IModelSerializable<AppPlatformConfigurationServiceGitValidateResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppPlatformConfigurationServiceGitValidateResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppPlatformConfigurationServiceGitValidateResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppPlatformConfigurationServiceGitValidateResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppPlatformConfigurationServiceGitValidateResult"/> to convert. </param>
+        public static implicit operator RequestContent(AppPlatformConfigurationServiceGitValidateResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppPlatformConfigurationServiceGitValidateResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppPlatformConfigurationServiceGitValidateResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppPlatformConfigurationServiceGitValidateResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

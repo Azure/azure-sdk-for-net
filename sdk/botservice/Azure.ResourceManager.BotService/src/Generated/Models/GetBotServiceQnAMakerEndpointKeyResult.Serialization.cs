@@ -5,15 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class GetBotServiceQnAMakerEndpointKeyResult
+    public partial class GetBotServiceQnAMakerEndpointKeyResult : IUtf8JsonSerializable, IModelJsonSerializable<GetBotServiceQnAMakerEndpointKeyResult>
     {
-        internal static GetBotServiceQnAMakerEndpointKeyResult DeserializeGetBotServiceQnAMakerEndpointKeyResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GetBotServiceQnAMakerEndpointKeyResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GetBotServiceQnAMakerEndpointKeyResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<GetBotServiceQnAMakerEndpointKeyResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PrimaryEndpointKey))
+            {
+                writer.WritePropertyName("primaryEndpointKey"u8);
+                writer.WriteStringValue(PrimaryEndpointKey);
+            }
+            if (Optional.IsDefined(SecondaryEndpointKey))
+            {
+                writer.WritePropertyName("secondaryEndpointKey"u8);
+                writer.WriteStringValue(SecondaryEndpointKey);
+            }
+            if (Optional.IsDefined(InstalledVersion))
+            {
+                writer.WritePropertyName("installedVersion"u8);
+                writer.WriteStringValue(InstalledVersion);
+            }
+            if (Optional.IsDefined(LastStableVersion))
+            {
+                writer.WritePropertyName("lastStableVersion"u8);
+                writer.WriteStringValue(LastStableVersion);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static GetBotServiceQnAMakerEndpointKeyResult DeserializeGetBotServiceQnAMakerEndpointKeyResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +70,7 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<string> secondaryEndpointKey = default;
             Optional<string> installedVersion = default;
             Optional<string> lastStableVersion = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryEndpointKey"u8))
@@ -44,8 +93,61 @@ namespace Azure.ResourceManager.BotService.Models
                     lastStableVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GetBotServiceQnAMakerEndpointKeyResult(primaryEndpointKey.Value, secondaryEndpointKey.Value, installedVersion.Value, lastStableVersion.Value);
+            return new GetBotServiceQnAMakerEndpointKeyResult(primaryEndpointKey.Value, secondaryEndpointKey.Value, installedVersion.Value, lastStableVersion.Value, serializedAdditionalRawData);
+        }
+
+        GetBotServiceQnAMakerEndpointKeyResult IModelJsonSerializable<GetBotServiceQnAMakerEndpointKeyResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GetBotServiceQnAMakerEndpointKeyResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGetBotServiceQnAMakerEndpointKeyResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GetBotServiceQnAMakerEndpointKeyResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GetBotServiceQnAMakerEndpointKeyResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GetBotServiceQnAMakerEndpointKeyResult IModelSerializable<GetBotServiceQnAMakerEndpointKeyResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GetBotServiceQnAMakerEndpointKeyResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGetBotServiceQnAMakerEndpointKeyResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GetBotServiceQnAMakerEndpointKeyResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GetBotServiceQnAMakerEndpointKeyResult"/> to convert. </param>
+        public static implicit operator RequestContent(GetBotServiceQnAMakerEndpointKeyResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GetBotServiceQnAMakerEndpointKeyResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GetBotServiceQnAMakerEndpointKeyResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGetBotServiceQnAMakerEndpointKeyResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

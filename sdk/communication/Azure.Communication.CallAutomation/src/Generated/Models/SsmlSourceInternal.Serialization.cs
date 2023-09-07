@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class SsmlSourceInternal : IUtf8JsonSerializable
+    internal partial class SsmlSourceInternal : IUtf8JsonSerializable, IModelJsonSerializable<SsmlSourceInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SsmlSourceInternal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SsmlSourceInternal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SsmlSourceInternal>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("ssmlText"u8);
             writer.WriteStringValue(SsmlText);
@@ -22,7 +30,99 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("customVoiceEndpointId"u8);
                 writer.WriteStringValue(CustomVoiceEndpointId);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static SsmlSourceInternal DeserializeSsmlSourceInternal(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string ssmlText = default;
+            Optional<string> customVoiceEndpointId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("ssmlText"u8))
+                {
+                    ssmlText = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("customVoiceEndpointId"u8))
+                {
+                    customVoiceEndpointId = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new SsmlSourceInternal(ssmlText, customVoiceEndpointId.Value, serializedAdditionalRawData);
+        }
+
+        SsmlSourceInternal IModelJsonSerializable<SsmlSourceInternal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SsmlSourceInternal>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSsmlSourceInternal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SsmlSourceInternal>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SsmlSourceInternal>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SsmlSourceInternal IModelSerializable<SsmlSourceInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SsmlSourceInternal>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSsmlSourceInternal(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SsmlSourceInternal"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SsmlSourceInternal"/> to convert. </param>
+        public static implicit operator RequestContent(SsmlSourceInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SsmlSourceInternal"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SsmlSourceInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSsmlSourceInternal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,37 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class SoftwareUpdateConfigurationTasks : IUtf8JsonSerializable
+    public partial class SoftwareUpdateConfigurationTasks : IUtf8JsonSerializable, IModelJsonSerializable<SoftwareUpdateConfigurationTasks>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SoftwareUpdateConfigurationTasks>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SoftwareUpdateConfigurationTasks>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SoftwareUpdateConfigurationTasks>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PreTask))
             {
                 writer.WritePropertyName("preTask"u8);
-                writer.WriteObjectValue(PreTask);
+                if (PreTask is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SoftwareUpdateConfigurationTaskProperties>)PreTask).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(PostTask))
             {
                 writer.WritePropertyName("postTask"u8);
-                writer.WriteObjectValue(PostTask);
+                if (PostTask is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SoftwareUpdateConfigurationTaskProperties>)PostTask).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SoftwareUpdateConfigurationTasks DeserializeSoftwareUpdateConfigurationTasks(JsonElement element)
+        internal static SoftwareUpdateConfigurationTasks DeserializeSoftwareUpdateConfigurationTasks(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<SoftwareUpdateConfigurationTaskProperties> preTask = default;
             Optional<SoftwareUpdateConfigurationTaskProperties> postTask = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("preTask"u8))
@@ -56,8 +93,61 @@ namespace Azure.ResourceManager.Automation.Models
                     postTask = SoftwareUpdateConfigurationTaskProperties.DeserializeSoftwareUpdateConfigurationTaskProperties(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SoftwareUpdateConfigurationTasks(preTask.Value, postTask.Value);
+            return new SoftwareUpdateConfigurationTasks(preTask.Value, postTask.Value, serializedAdditionalRawData);
+        }
+
+        SoftwareUpdateConfigurationTasks IModelJsonSerializable<SoftwareUpdateConfigurationTasks>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SoftwareUpdateConfigurationTasks>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSoftwareUpdateConfigurationTasks(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SoftwareUpdateConfigurationTasks>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SoftwareUpdateConfigurationTasks>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SoftwareUpdateConfigurationTasks IModelSerializable<SoftwareUpdateConfigurationTasks>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SoftwareUpdateConfigurationTasks>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSoftwareUpdateConfigurationTasks(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SoftwareUpdateConfigurationTasks"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SoftwareUpdateConfigurationTasks"/> to convert. </param>
+        public static implicit operator RequestContent(SoftwareUpdateConfigurationTasks model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SoftwareUpdateConfigurationTasks"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SoftwareUpdateConfigurationTasks(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSoftwareUpdateConfigurationTasks(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

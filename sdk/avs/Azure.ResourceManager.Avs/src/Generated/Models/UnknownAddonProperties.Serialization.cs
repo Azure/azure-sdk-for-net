@@ -5,47 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    internal partial class UnknownAddonProperties : IUtf8JsonSerializable
+    internal partial class UnknownAddonProperties : IUtf8JsonSerializable, IModelJsonSerializable<AvsPrivateCloudAddonProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AvsPrivateCloudAddonProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AvsPrivateCloudAddonProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AvsPrivateCloudAddonProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("addonType"u8);
             writer.WriteStringValue(AddonType.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownAddonProperties DeserializeUnknownAddonProperties(JsonElement element)
+        internal static AvsPrivateCloudAddonProperties DeserializeUnknownAddonProperties(JsonElement element, ModelSerializerOptions options = default) => DeserializeAvsPrivateCloudAddonProperties(element, options);
+
+        AvsPrivateCloudAddonProperties IModelJsonSerializable<AvsPrivateCloudAddonProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            AddonType addonType = "Unknown";
-            Optional<AddonProvisioningState> provisioningState = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("addonType"u8))
-                {
-                    addonType = new AddonType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new AddonProvisioningState(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownAddonProperties(addonType, Optional.ToNullable(provisioningState));
+            Core.ModelSerializerHelper.ValidateFormat<AvsPrivateCloudAddonProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownAddonProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AvsPrivateCloudAddonProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AvsPrivateCloudAddonProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AvsPrivateCloudAddonProperties IModelSerializable<AvsPrivateCloudAddonProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AvsPrivateCloudAddonProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAvsPrivateCloudAddonProperties(doc.RootElement, options);
         }
     }
 }

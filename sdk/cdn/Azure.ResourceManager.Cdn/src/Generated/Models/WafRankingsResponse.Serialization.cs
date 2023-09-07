@@ -8,14 +8,77 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class WafRankingsResponse
+    public partial class WafRankingsResponse : IUtf8JsonSerializable, IModelJsonSerializable<WafRankingsResponse>
     {
-        internal static WafRankingsResponse DeserializeWafRankingsResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WafRankingsResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WafRankingsResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<WafRankingsResponse>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DateTimeBegin))
+            {
+                writer.WritePropertyName("dateTimeBegin"u8);
+                writer.WriteStringValue(DateTimeBegin.Value, "O");
+            }
+            if (Optional.IsDefined(DateTimeEnd))
+            {
+                writer.WritePropertyName("dateTimeEnd"u8);
+                writer.WriteStringValue(DateTimeEnd.Value, "O");
+            }
+            if (Optional.IsCollectionDefined(Groups))
+            {
+                writer.WritePropertyName("groups"u8);
+                writer.WriteStartArray();
+                foreach (var item in Groups)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Data))
+            {
+                writer.WritePropertyName("data"u8);
+                writer.WriteStartArray();
+                foreach (var item in Data)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<WafRankingsResponseDataItem>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static WafRankingsResponse DeserializeWafRankingsResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +87,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<DateTimeOffset> dateTimeEnd = default;
             Optional<IReadOnlyList<string>> groups = default;
             Optional<IReadOnlyList<WafRankingsResponseDataItem>> data = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dateTimeBegin"u8))
@@ -72,8 +136,61 @@ namespace Azure.ResourceManager.Cdn.Models
                     data = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WafRankingsResponse(Optional.ToNullable(dateTimeBegin), Optional.ToNullable(dateTimeEnd), Optional.ToList(groups), Optional.ToList(data));
+            return new WafRankingsResponse(Optional.ToNullable(dateTimeBegin), Optional.ToNullable(dateTimeEnd), Optional.ToList(groups), Optional.ToList(data), serializedAdditionalRawData);
+        }
+
+        WafRankingsResponse IModelJsonSerializable<WafRankingsResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WafRankingsResponse>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWafRankingsResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WafRankingsResponse>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WafRankingsResponse>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WafRankingsResponse IModelSerializable<WafRankingsResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WafRankingsResponse>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWafRankingsResponse(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WafRankingsResponse"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WafRankingsResponse"/> to convert. </param>
+        public static implicit operator RequestContent(WafRankingsResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WafRankingsResponse"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WafRankingsResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWafRankingsResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -8,13 +8,18 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    internal partial class UnknownRecurrence : IUtf8JsonSerializable
+    internal partial class UnknownRecurrence : IUtf8JsonSerializable, IModelJsonSerializable<AlertProcessingRuleRecurrence>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AlertProcessingRuleRecurrence>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AlertProcessingRuleRecurrence>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AlertProcessingRuleRecurrence>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("recurrenceType"u8);
             writer.WriteStringValue(RecurrenceType.ToString());
@@ -28,45 +33,44 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "T");
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownRecurrence DeserializeUnknownRecurrence(JsonElement element)
+        internal static AlertProcessingRuleRecurrence DeserializeUnknownRecurrence(JsonElement element, ModelSerializerOptions options = default) => DeserializeAlertProcessingRuleRecurrence(element, options);
+
+        AlertProcessingRuleRecurrence IModelJsonSerializable<AlertProcessingRuleRecurrence>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            RecurrenceType recurrenceType = "Unknown";
-            Optional<TimeSpan> startTime = default;
-            Optional<TimeSpan> endTime = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("recurrenceType"u8))
-                {
-                    recurrenceType = new RecurrenceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("startTime"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    startTime = property.Value.GetTimeSpan("T");
-                    continue;
-                }
-                if (property.NameEquals("endTime"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    endTime = property.Value.GetTimeSpan("T");
-                    continue;
-                }
-            }
-            return new UnknownRecurrence(recurrenceType, Optional.ToNullable(startTime), Optional.ToNullable(endTime));
+            Core.ModelSerializerHelper.ValidateFormat<AlertProcessingRuleRecurrence>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownRecurrence(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AlertProcessingRuleRecurrence>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AlertProcessingRuleRecurrence>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AlertProcessingRuleRecurrence IModelSerializable<AlertProcessingRuleRecurrence>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AlertProcessingRuleRecurrence>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAlertProcessingRuleRecurrence(doc.RootElement, options);
         }
     }
 }

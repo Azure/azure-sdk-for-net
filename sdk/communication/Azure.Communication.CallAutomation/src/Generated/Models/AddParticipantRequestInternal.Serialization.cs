@@ -5,20 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
+using Azure.Communication;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class AddParticipantRequestInternal : IUtf8JsonSerializable
+    internal partial class AddParticipantRequestInternal : IUtf8JsonSerializable, IModelJsonSerializable<AddParticipantRequestInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AddParticipantRequestInternal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AddParticipantRequestInternal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AddParticipantRequestInternal>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceCallerIdNumber))
             {
                 writer.WritePropertyName("sourceCallerIdNumber"u8);
-                writer.WriteObjectValue(SourceCallerIdNumber);
+                if (SourceCallerIdNumber is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PhoneNumberIdentifierModel>)SourceCallerIdNumber).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(SourceDisplayName))
             {
@@ -26,7 +42,14 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStringValue(SourceDisplayName);
             }
             writer.WritePropertyName("participantToAdd"u8);
-            writer.WriteObjectValue(ParticipantToAdd);
+            if (ParticipantToAdd is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<CommunicationIdentifierModel>)ParticipantToAdd).Serialize(writer, options);
+            }
             if (Optional.IsDefined(InvitationTimeoutInSeconds))
             {
                 writer.WritePropertyName("invitationTimeoutInSeconds"u8);
@@ -40,14 +63,155 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(CustomContext))
             {
                 writer.WritePropertyName("customContext"u8);
-                writer.WriteObjectValue(CustomContext);
+                if (CustomContext is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CustomContextInternal>)CustomContext).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(CallbackUri))
             {
                 writer.WritePropertyName("callbackUri"u8);
                 writer.WriteStringValue(CallbackUri);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static AddParticipantRequestInternal DeserializeAddParticipantRequestInternal(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<PhoneNumberIdentifierModel> sourceCallerIdNumber = default;
+            Optional<string> sourceDisplayName = default;
+            CommunicationIdentifierModel participantToAdd = default;
+            Optional<int> invitationTimeoutInSeconds = default;
+            Optional<string> operationContext = default;
+            Optional<CustomContextInternal> customContext = default;
+            Optional<string> callbackUri = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sourceCallerIdNumber"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceCallerIdNumber = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("sourceDisplayName"u8))
+                {
+                    sourceDisplayName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("participantToAdd"u8))
+                {
+                    participantToAdd = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("invitationTimeoutInSeconds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    invitationTimeoutInSeconds = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("operationContext"u8))
+                {
+                    operationContext = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("customContext"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customContext = CustomContextInternal.DeserializeCustomContextInternal(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("callbackUri"u8))
+                {
+                    callbackUri = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new AddParticipantRequestInternal(sourceCallerIdNumber.Value, sourceDisplayName.Value, participantToAdd, Optional.ToNullable(invitationTimeoutInSeconds), operationContext.Value, customContext.Value, callbackUri.Value, serializedAdditionalRawData);
+        }
+
+        AddParticipantRequestInternal IModelJsonSerializable<AddParticipantRequestInternal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AddParticipantRequestInternal>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAddParticipantRequestInternal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AddParticipantRequestInternal>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AddParticipantRequestInternal>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AddParticipantRequestInternal IModelSerializable<AddParticipantRequestInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AddParticipantRequestInternal>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAddParticipantRequestInternal(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AddParticipantRequestInternal"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AddParticipantRequestInternal"/> to convert. </param>
+        public static implicit operator RequestContent(AddParticipantRequestInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AddParticipantRequestInternal"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AddParticipantRequestInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAddParticipantRequestInternal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

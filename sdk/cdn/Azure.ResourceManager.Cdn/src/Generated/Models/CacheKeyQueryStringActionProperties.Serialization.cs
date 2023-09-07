@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CacheKeyQueryStringActionProperties : IUtf8JsonSerializable
+    public partial class CacheKeyQueryStringActionProperties : IUtf8JsonSerializable, IModelJsonSerializable<CacheKeyQueryStringActionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CacheKeyQueryStringActionProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CacheKeyQueryStringActionProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CacheKeyQueryStringActionProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(ActionType.ToString());
@@ -31,11 +39,25 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("queryParameters");
                 }
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CacheKeyQueryStringActionProperties DeserializeCacheKeyQueryStringActionProperties(JsonElement element)
+        internal static CacheKeyQueryStringActionProperties DeserializeCacheKeyQueryStringActionProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +65,7 @@ namespace Azure.ResourceManager.Cdn.Models
             CacheKeyQueryStringActionType typeName = default;
             QueryStringBehavior queryStringBehavior = default;
             Optional<string> queryParameters = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("typeName"u8))
@@ -65,8 +88,61 @@ namespace Azure.ResourceManager.Cdn.Models
                     queryParameters = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CacheKeyQueryStringActionProperties(typeName, queryStringBehavior, queryParameters.Value);
+            return new CacheKeyQueryStringActionProperties(typeName, queryStringBehavior, queryParameters.Value, serializedAdditionalRawData);
+        }
+
+        CacheKeyQueryStringActionProperties IModelJsonSerializable<CacheKeyQueryStringActionProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CacheKeyQueryStringActionProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCacheKeyQueryStringActionProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CacheKeyQueryStringActionProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CacheKeyQueryStringActionProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CacheKeyQueryStringActionProperties IModelSerializable<CacheKeyQueryStringActionProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CacheKeyQueryStringActionProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCacheKeyQueryStringActionProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CacheKeyQueryStringActionProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CacheKeyQueryStringActionProperties"/> to convert. </param>
+        public static implicit operator RequestContent(CacheKeyQueryStringActionProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CacheKeyQueryStringActionProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CacheKeyQueryStringActionProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCacheKeyQueryStringActionProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

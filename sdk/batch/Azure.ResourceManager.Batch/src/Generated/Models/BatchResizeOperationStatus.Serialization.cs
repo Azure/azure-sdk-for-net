@@ -10,13 +10,73 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchResizeOperationStatus
+    public partial class BatchResizeOperationStatus : IUtf8JsonSerializable, IModelJsonSerializable<BatchResizeOperationStatus>
     {
-        internal static BatchResizeOperationStatus DeserializeBatchResizeOperationStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BatchResizeOperationStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BatchResizeOperationStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BatchResizeOperationStatus>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(TargetDedicatedNodes))
+            {
+                writer.WritePropertyName("targetDedicatedNodes"u8);
+                writer.WriteNumberValue(TargetDedicatedNodes.Value);
+            }
+            if (Optional.IsDefined(TargetLowPriorityNodes))
+            {
+                writer.WritePropertyName("targetLowPriorityNodes"u8);
+                writer.WriteNumberValue(TargetLowPriorityNodes.Value);
+            }
+            if (Optional.IsDefined(ResizeTimeout))
+            {
+                writer.WritePropertyName("resizeTimeout"u8);
+                writer.WriteStringValue(ResizeTimeout.Value, "P");
+            }
+            if (Optional.IsDefined(NodeDeallocationOption))
+            {
+                writer.WritePropertyName("nodeDeallocationOption"u8);
+                writer.WriteStringValue(NodeDeallocationOption.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                writer.WritePropertyName("errors"u8);
+                writer.WriteStartArray();
+                foreach (var item in Errors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static BatchResizeOperationStatus DeserializeBatchResizeOperationStatus(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +87,7 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<BatchNodeDeallocationOption> nodeDeallocationOption = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<IReadOnlyList<ResponseError>> errors = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetDedicatedNodes"u8))
@@ -88,8 +149,61 @@ namespace Azure.ResourceManager.Batch.Models
                     errors = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BatchResizeOperationStatus(Optional.ToNullable(targetDedicatedNodes), Optional.ToNullable(targetLowPriorityNodes), Optional.ToNullable(resizeTimeout), Optional.ToNullable(nodeDeallocationOption), Optional.ToNullable(startTime), Optional.ToList(errors));
+            return new BatchResizeOperationStatus(Optional.ToNullable(targetDedicatedNodes), Optional.ToNullable(targetLowPriorityNodes), Optional.ToNullable(resizeTimeout), Optional.ToNullable(nodeDeallocationOption), Optional.ToNullable(startTime), Optional.ToList(errors), serializedAdditionalRawData);
+        }
+
+        BatchResizeOperationStatus IModelJsonSerializable<BatchResizeOperationStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BatchResizeOperationStatus>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchResizeOperationStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BatchResizeOperationStatus>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BatchResizeOperationStatus>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BatchResizeOperationStatus IModelSerializable<BatchResizeOperationStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BatchResizeOperationStatus>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBatchResizeOperationStatus(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BatchResizeOperationStatus"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BatchResizeOperationStatus"/> to convert. </param>
+        public static implicit operator RequestContent(BatchResizeOperationStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BatchResizeOperationStatus"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BatchResizeOperationStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBatchResizeOperationStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

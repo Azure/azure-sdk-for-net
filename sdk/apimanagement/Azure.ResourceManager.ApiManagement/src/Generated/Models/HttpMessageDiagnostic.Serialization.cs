@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class HttpMessageDiagnostic : IUtf8JsonSerializable
+    public partial class HttpMessageDiagnostic : IUtf8JsonSerializable, IModelJsonSerializable<HttpMessageDiagnostic>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HttpMessageDiagnostic>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HttpMessageDiagnostic>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HttpMessageDiagnostic>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Headers))
             {
@@ -29,18 +36,46 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
-                writer.WriteObjectValue(Body);
+                if (Body is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BodyDiagnosticSettings>)Body).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DataMasking))
             {
                 writer.WritePropertyName("dataMasking"u8);
-                writer.WriteObjectValue(DataMasking);
+                if (DataMasking is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DataMasking>)DataMasking).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static HttpMessageDiagnostic DeserializeHttpMessageDiagnostic(JsonElement element)
+        internal static HttpMessageDiagnostic DeserializeHttpMessageDiagnostic(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +83,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<IList<string>> headers = default;
             Optional<BodyDiagnosticSettings> body = default;
             Optional<DataMasking> dataMasking = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("headers"u8))
@@ -82,8 +118,61 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     dataMasking = DataMasking.DeserializeDataMasking(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HttpMessageDiagnostic(Optional.ToList(headers), body.Value, dataMasking.Value);
+            return new HttpMessageDiagnostic(Optional.ToList(headers), body.Value, dataMasking.Value, serializedAdditionalRawData);
+        }
+
+        HttpMessageDiagnostic IModelJsonSerializable<HttpMessageDiagnostic>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HttpMessageDiagnostic>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHttpMessageDiagnostic(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HttpMessageDiagnostic>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HttpMessageDiagnostic>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HttpMessageDiagnostic IModelSerializable<HttpMessageDiagnostic>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HttpMessageDiagnostic>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHttpMessageDiagnostic(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HttpMessageDiagnostic"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HttpMessageDiagnostic"/> to convert. </param>
+        public static implicit operator RequestContent(HttpMessageDiagnostic model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HttpMessageDiagnostic"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HttpMessageDiagnostic(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHttpMessageDiagnostic(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

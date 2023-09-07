@@ -5,19 +5,113 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchApplicationPackageActivateContent : IUtf8JsonSerializable
+    public partial class BatchApplicationPackageActivateContent : IUtf8JsonSerializable, IModelJsonSerializable<BatchApplicationPackageActivateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BatchApplicationPackageActivateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BatchApplicationPackageActivateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BatchApplicationPackageActivateContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("format"u8);
             writer.WriteStringValue(Format);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static BatchApplicationPackageActivateContent DeserializeBatchApplicationPackageActivateContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string format = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("format"u8))
+                {
+                    format = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new BatchApplicationPackageActivateContent(format, serializedAdditionalRawData);
+        }
+
+        BatchApplicationPackageActivateContent IModelJsonSerializable<BatchApplicationPackageActivateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BatchApplicationPackageActivateContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchApplicationPackageActivateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BatchApplicationPackageActivateContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BatchApplicationPackageActivateContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BatchApplicationPackageActivateContent IModelSerializable<BatchApplicationPackageActivateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BatchApplicationPackageActivateContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBatchApplicationPackageActivateContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BatchApplicationPackageActivateContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BatchApplicationPackageActivateContent"/> to convert. </param>
+        public static implicit operator RequestContent(BatchApplicationPackageActivateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BatchApplicationPackageActivateContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BatchApplicationPackageActivateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBatchApplicationPackageActivateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

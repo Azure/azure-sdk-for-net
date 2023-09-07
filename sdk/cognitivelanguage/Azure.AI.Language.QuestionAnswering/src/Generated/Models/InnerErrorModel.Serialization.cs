@@ -5,16 +5,75 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
-    internal partial class InnerErrorModel
+    internal partial class InnerErrorModel : IUtf8JsonSerializable, IModelJsonSerializable<InnerErrorModel>
     {
-        internal static InnerErrorModel DeserializeInnerErrorModel(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InnerErrorModel>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InnerErrorModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<InnerErrorModel>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("code"u8);
+            writer.WriteStringValue(Code.ToString());
+            writer.WritePropertyName("message"u8);
+            writer.WriteStringValue(Message);
+            if (Optional.IsCollectionDefined(Details))
+            {
+                writer.WritePropertyName("details"u8);
+                writer.WriteStartObject();
+                foreach (var item in Details)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Target))
+            {
+                writer.WritePropertyName("target"u8);
+                writer.WriteStringValue(Target);
+            }
+            if (Optional.IsDefined(Innererror))
+            {
+                writer.WritePropertyName("innererror"u8);
+                if (Innererror is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<InnerErrorModel>)Innererror).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static InnerErrorModel DeserializeInnerErrorModel(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +83,7 @@ namespace Azure.AI.Language.QuestionAnswering
             Optional<IReadOnlyDictionary<string, string>> details = default;
             Optional<string> target = default;
             Optional<InnerErrorModel> innererror = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -64,8 +124,61 @@ namespace Azure.AI.Language.QuestionAnswering
                     innererror = DeserializeInnerErrorModel(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InnerErrorModel(code, message, Optional.ToDictionary(details), target.Value, innererror.Value);
+            return new InnerErrorModel(code, message, Optional.ToDictionary(details), target.Value, innererror.Value, serializedAdditionalRawData);
+        }
+
+        InnerErrorModel IModelJsonSerializable<InnerErrorModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InnerErrorModel>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInnerErrorModel(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InnerErrorModel>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InnerErrorModel>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InnerErrorModel IModelSerializable<InnerErrorModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InnerErrorModel>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInnerErrorModel(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InnerErrorModel"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InnerErrorModel"/> to convert. </param>
+        public static implicit operator RequestContent(InnerErrorModel model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InnerErrorModel"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InnerErrorModel(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInnerErrorModel(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

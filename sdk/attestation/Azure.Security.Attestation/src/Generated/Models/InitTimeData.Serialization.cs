@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.Attestation
 {
-    internal partial class InitTimeData : IUtf8JsonSerializable
+    internal partial class InitTimeData : IUtf8JsonSerializable, IModelJsonSerializable<InitTimeData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InitTimeData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InitTimeData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<InitTimeData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Data))
             {
@@ -25,7 +33,107 @@ namespace Azure.Security.Attestation
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType.Value.ToString());
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static InitTimeData DeserializeInitTimeData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<byte[]> data = default;
+            Optional<DataType> dataType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("data"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    data = property.Value.GetBytesFromBase64("U");
+                    continue;
+                }
+                if (property.NameEquals("dataType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataType = new DataType(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new InitTimeData(data.Value, Optional.ToNullable(dataType), serializedAdditionalRawData);
+        }
+
+        InitTimeData IModelJsonSerializable<InitTimeData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InitTimeData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInitTimeData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InitTimeData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InitTimeData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InitTimeData IModelSerializable<InitTimeData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<InitTimeData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInitTimeData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InitTimeData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InitTimeData"/> to convert. </param>
+        public static implicit operator RequestContent(InitTimeData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InitTimeData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InitTimeData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInitTimeData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

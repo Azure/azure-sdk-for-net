@@ -5,15 +5,75 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class ContinuousDtmfRecognitionToneFailed
+    public partial class ContinuousDtmfRecognitionToneFailed : IUtf8JsonSerializable, IModelJsonSerializable<ContinuousDtmfRecognitionToneFailed>
     {
-        internal static ContinuousDtmfRecognitionToneFailed DeserializeContinuousDtmfRecognitionToneFailed(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContinuousDtmfRecognitionToneFailed>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContinuousDtmfRecognitionToneFailed>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContinuousDtmfRecognitionToneFailed>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CallConnectionId))
+            {
+                writer.WritePropertyName("callConnectionId"u8);
+                writer.WriteStringValue(CallConnectionId);
+            }
+            if (Optional.IsDefined(ServerCallId))
+            {
+                writer.WritePropertyName("serverCallId"u8);
+                writer.WriteStringValue(ServerCallId);
+            }
+            if (Optional.IsDefined(CorrelationId))
+            {
+                writer.WritePropertyName("correlationId"u8);
+                writer.WriteStringValue(CorrelationId);
+            }
+            if (Optional.IsDefined(ResultInformation))
+            {
+                writer.WritePropertyName("resultInformation"u8);
+                if (ResultInformation is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResultInformation>)ResultInformation).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(OperationContext))
+            {
+                writer.WritePropertyName("operationContext"u8);
+                writer.WriteStringValue(OperationContext);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ContinuousDtmfRecognitionToneFailed DeserializeContinuousDtmfRecognitionToneFailed(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +83,7 @@ namespace Azure.Communication.CallAutomation
             Optional<string> correlationId = default;
             Optional<ResultInformation> resultInformation = default;
             Optional<string> operationContext = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -54,8 +115,61 @@ namespace Azure.Communication.CallAutomation
                     operationContext = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContinuousDtmfRecognitionToneFailed(callConnectionId.Value, serverCallId.Value, correlationId.Value, resultInformation.Value, operationContext.Value);
+            return new ContinuousDtmfRecognitionToneFailed(callConnectionId.Value, serverCallId.Value, correlationId.Value, resultInformation.Value, operationContext.Value, serializedAdditionalRawData);
+        }
+
+        ContinuousDtmfRecognitionToneFailed IModelJsonSerializable<ContinuousDtmfRecognitionToneFailed>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContinuousDtmfRecognitionToneFailed>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContinuousDtmfRecognitionToneFailed(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContinuousDtmfRecognitionToneFailed>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContinuousDtmfRecognitionToneFailed>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContinuousDtmfRecognitionToneFailed IModelSerializable<ContinuousDtmfRecognitionToneFailed>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContinuousDtmfRecognitionToneFailed>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContinuousDtmfRecognitionToneFailed(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContinuousDtmfRecognitionToneFailed"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContinuousDtmfRecognitionToneFailed"/> to convert. </param>
+        public static implicit operator RequestContent(ContinuousDtmfRecognitionToneFailed model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContinuousDtmfRecognitionToneFailed"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContinuousDtmfRecognitionToneFailed(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContinuousDtmfRecognitionToneFailed(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

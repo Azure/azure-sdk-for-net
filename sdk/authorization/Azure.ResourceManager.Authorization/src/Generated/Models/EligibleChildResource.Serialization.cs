@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class EligibleChildResource
+    public partial class EligibleChildResource : IUtf8JsonSerializable, IModelJsonSerializable<EligibleChildResource>
     {
-        internal static EligibleChildResource DeserializeEligibleChildResource(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EligibleChildResource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EligibleChildResource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EligibleChildResource>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static EligibleChildResource DeserializeEligibleChildResource(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +49,7 @@ namespace Azure.ResourceManager.Authorization.Models
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -38,8 +67,61 @@ namespace Azure.ResourceManager.Authorization.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EligibleChildResource(id.Value, name.Value, type.Value);
+            return new EligibleChildResource(id.Value, name.Value, type.Value, serializedAdditionalRawData);
+        }
+
+        EligibleChildResource IModelJsonSerializable<EligibleChildResource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EligibleChildResource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEligibleChildResource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EligibleChildResource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EligibleChildResource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EligibleChildResource IModelSerializable<EligibleChildResource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EligibleChildResource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEligibleChildResource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EligibleChildResource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EligibleChildResource"/> to convert. </param>
+        public static implicit operator RequestContent(EligibleChildResource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EligibleChildResource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EligibleChildResource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEligibleChildResource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,70 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class ServiceAccountCallRateLimit
+    public partial class ServiceAccountCallRateLimit : IUtf8JsonSerializable, IModelJsonSerializable<ServiceAccountCallRateLimit>
     {
-        internal static ServiceAccountCallRateLimit DeserializeServiceAccountCallRateLimit(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServiceAccountCallRateLimit>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServiceAccountCallRateLimit>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceAccountCallRateLimit>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (Optional.IsDefined(RenewalPeriod))
+            {
+                writer.WritePropertyName("renewalPeriod"u8);
+                writer.WriteNumberValue(RenewalPeriod.Value);
+            }
+            if (Optional.IsCollectionDefined(Rules))
+            {
+                writer.WritePropertyName("rules"u8);
+                writer.WriteStartArray();
+                foreach (var item in Rules)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ServiceAccountThrottlingRule>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ServiceAccountCallRateLimit DeserializeServiceAccountCallRateLimit(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +76,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<float> count = default;
             Optional<float> renewalPeriod = default;
             Optional<IReadOnlyList<ServiceAccountThrottlingRule>> rules = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -56,8 +111,61 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     rules = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServiceAccountCallRateLimit(Optional.ToNullable(count), Optional.ToNullable(renewalPeriod), Optional.ToList(rules));
+            return new ServiceAccountCallRateLimit(Optional.ToNullable(count), Optional.ToNullable(renewalPeriod), Optional.ToList(rules), serializedAdditionalRawData);
+        }
+
+        ServiceAccountCallRateLimit IModelJsonSerializable<ServiceAccountCallRateLimit>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceAccountCallRateLimit>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceAccountCallRateLimit(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServiceAccountCallRateLimit>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceAccountCallRateLimit>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServiceAccountCallRateLimit IModelSerializable<ServiceAccountCallRateLimit>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceAccountCallRateLimit>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServiceAccountCallRateLimit(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ServiceAccountCallRateLimit"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ServiceAccountCallRateLimit"/> to convert. </param>
+        public static implicit operator RequestContent(ServiceAccountCallRateLimit model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ServiceAccountCallRateLimit"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ServiceAccountCallRateLimit(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServiceAccountCallRateLimit(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

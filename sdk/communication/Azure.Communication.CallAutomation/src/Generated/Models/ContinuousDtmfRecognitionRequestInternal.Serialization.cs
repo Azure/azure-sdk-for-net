@@ -5,18 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
+using Azure.Communication;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class ContinuousDtmfRecognitionRequestInternal : IUtf8JsonSerializable
+    internal partial class ContinuousDtmfRecognitionRequestInternal : IUtf8JsonSerializable, IModelJsonSerializable<ContinuousDtmfRecognitionRequestInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContinuousDtmfRecognitionRequestInternal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContinuousDtmfRecognitionRequestInternal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContinuousDtmfRecognitionRequestInternal>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("targetParticipant"u8);
-            writer.WriteObjectValue(TargetParticipant);
+            if (TargetParticipant is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<CommunicationIdentifierModel>)TargetParticipant).Serialize(writer, options);
+            }
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
@@ -27,7 +43,105 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("callbackUri"u8);
                 writer.WriteStringValue(CallbackUri);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ContinuousDtmfRecognitionRequestInternal DeserializeContinuousDtmfRecognitionRequestInternal(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            CommunicationIdentifierModel targetParticipant = default;
+            Optional<string> operationContext = default;
+            Optional<string> callbackUri = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("targetParticipant"u8))
+                {
+                    targetParticipant = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("operationContext"u8))
+                {
+                    operationContext = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("callbackUri"u8))
+                {
+                    callbackUri = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ContinuousDtmfRecognitionRequestInternal(targetParticipant, operationContext.Value, callbackUri.Value, serializedAdditionalRawData);
+        }
+
+        ContinuousDtmfRecognitionRequestInternal IModelJsonSerializable<ContinuousDtmfRecognitionRequestInternal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContinuousDtmfRecognitionRequestInternal>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContinuousDtmfRecognitionRequestInternal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContinuousDtmfRecognitionRequestInternal>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContinuousDtmfRecognitionRequestInternal>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContinuousDtmfRecognitionRequestInternal IModelSerializable<ContinuousDtmfRecognitionRequestInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContinuousDtmfRecognitionRequestInternal>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContinuousDtmfRecognitionRequestInternal(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContinuousDtmfRecognitionRequestInternal"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContinuousDtmfRecognitionRequestInternal"/> to convert. </param>
+        public static implicit operator RequestContent(ContinuousDtmfRecognitionRequestInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContinuousDtmfRecognitionRequestInternal"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContinuousDtmfRecognitionRequestInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContinuousDtmfRecognitionRequestInternal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

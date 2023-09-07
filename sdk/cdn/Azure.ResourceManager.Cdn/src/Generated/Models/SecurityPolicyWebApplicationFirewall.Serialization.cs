@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class SecurityPolicyWebApplicationFirewall : IUtf8JsonSerializable
+    public partial class SecurityPolicyWebApplicationFirewall : IUtf8JsonSerializable, IModelJsonSerializable<SecurityPolicyWebApplicationFirewall>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityPolicyWebApplicationFirewall>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityPolicyWebApplicationFirewall>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityPolicyWebApplicationFirewall>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(WafPolicy))
             {
@@ -28,17 +35,38 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Associations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SecurityPolicyWebApplicationFirewallAssociation>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(PolicyType.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityPolicyWebApplicationFirewall DeserializeSecurityPolicyWebApplicationFirewall(JsonElement element)
+        internal static SecurityPolicyWebApplicationFirewall DeserializeSecurityPolicyWebApplicationFirewall(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +74,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<WritableSubResource> wafPolicy = default;
             Optional<IList<SecurityPolicyWebApplicationFirewallAssociation>> associations = default;
             SecurityPolicyType type = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("wafPolicy"u8))
@@ -76,8 +105,61 @@ namespace Azure.ResourceManager.Cdn.Models
                     type = new SecurityPolicyType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityPolicyWebApplicationFirewall(type, wafPolicy, Optional.ToList(associations));
+            return new SecurityPolicyWebApplicationFirewall(type, wafPolicy, Optional.ToList(associations), serializedAdditionalRawData);
+        }
+
+        SecurityPolicyWebApplicationFirewall IModelJsonSerializable<SecurityPolicyWebApplicationFirewall>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityPolicyWebApplicationFirewall>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityPolicyWebApplicationFirewall(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityPolicyWebApplicationFirewall>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityPolicyWebApplicationFirewall>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityPolicyWebApplicationFirewall IModelSerializable<SecurityPolicyWebApplicationFirewall>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityPolicyWebApplicationFirewall>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityPolicyWebApplicationFirewall(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SecurityPolicyWebApplicationFirewall"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SecurityPolicyWebApplicationFirewall"/> to convert. </param>
+        public static implicit operator RequestContent(SecurityPolicyWebApplicationFirewall model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SecurityPolicyWebApplicationFirewall"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SecurityPolicyWebApplicationFirewall(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityPolicyWebApplicationFirewall(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

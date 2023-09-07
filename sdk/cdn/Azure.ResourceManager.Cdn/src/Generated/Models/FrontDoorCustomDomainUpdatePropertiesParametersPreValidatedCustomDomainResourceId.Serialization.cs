@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    internal partial class FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId : IUtf8JsonSerializable
+    internal partial class FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId : IUtf8JsonSerializable, IModelJsonSerializable<FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId DeserializeFrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(JsonElement element)
+        internal static FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId DeserializeFrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceIdentifier> id = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -41,8 +64,61 @@ namespace Azure.ResourceManager.Cdn.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(id.Value);
+            return new FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(id.Value, serializedAdditionalRawData);
+        }
+
+        FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId IModelJsonSerializable<FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId IModelSerializable<FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId"/> to convert. </param>
+        public static implicit operator RequestContent(FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

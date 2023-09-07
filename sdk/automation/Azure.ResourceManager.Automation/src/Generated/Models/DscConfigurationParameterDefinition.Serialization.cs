@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class DscConfigurationParameterDefinition : IUtf8JsonSerializable
+    public partial class DscConfigurationParameterDefinition : IUtf8JsonSerializable, IModelJsonSerializable<DscConfigurationParameterDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DscConfigurationParameterDefinition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DscConfigurationParameterDefinition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DscConfigurationParameterDefinition>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DscConfigurationParameterType))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DscConfigurationParameterDefinition DeserializeDscConfigurationParameterDefinition(JsonElement element)
+        internal static DscConfigurationParameterDefinition DeserializeDscConfigurationParameterDefinition(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<bool> isMandatory = default;
             Optional<int> position = default;
             Optional<string> defaultValue = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -78,8 +101,61 @@ namespace Azure.ResourceManager.Automation.Models
                     defaultValue = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DscConfigurationParameterDefinition(type.Value, Optional.ToNullable(isMandatory), Optional.ToNullable(position), defaultValue.Value);
+            return new DscConfigurationParameterDefinition(type.Value, Optional.ToNullable(isMandatory), Optional.ToNullable(position), defaultValue.Value, serializedAdditionalRawData);
+        }
+
+        DscConfigurationParameterDefinition IModelJsonSerializable<DscConfigurationParameterDefinition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DscConfigurationParameterDefinition>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDscConfigurationParameterDefinition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DscConfigurationParameterDefinition>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DscConfigurationParameterDefinition>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DscConfigurationParameterDefinition IModelSerializable<DscConfigurationParameterDefinition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DscConfigurationParameterDefinition>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDscConfigurationParameterDefinition(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DscConfigurationParameterDefinition"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DscConfigurationParameterDefinition"/> to convert. </param>
+        public static implicit operator RequestContent(DscConfigurationParameterDefinition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DscConfigurationParameterDefinition"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DscConfigurationParameterDefinition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDscConfigurationParameterDefinition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

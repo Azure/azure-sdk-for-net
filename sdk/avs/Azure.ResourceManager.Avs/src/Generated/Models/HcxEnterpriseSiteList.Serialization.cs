@@ -5,23 +5,51 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    internal partial class HcxEnterpriseSiteList
+    internal partial class HcxEnterpriseSiteList : IUtf8JsonSerializable, IModelJsonSerializable<HcxEnterpriseSiteList>
     {
-        internal static HcxEnterpriseSiteList DeserializeHcxEnterpriseSiteList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HcxEnterpriseSiteList>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HcxEnterpriseSiteList>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HcxEnterpriseSiteList>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static HcxEnterpriseSiteList DeserializeHcxEnterpriseSiteList(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<HcxEnterpriseSiteData>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +71,61 @@ namespace Azure.ResourceManager.Avs.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HcxEnterpriseSiteList(Optional.ToList(value), nextLink.Value);
+            return new HcxEnterpriseSiteList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+        }
+
+        HcxEnterpriseSiteList IModelJsonSerializable<HcxEnterpriseSiteList>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HcxEnterpriseSiteList>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHcxEnterpriseSiteList(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HcxEnterpriseSiteList>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HcxEnterpriseSiteList>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HcxEnterpriseSiteList IModelSerializable<HcxEnterpriseSiteList>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HcxEnterpriseSiteList>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHcxEnterpriseSiteList(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HcxEnterpriseSiteList"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HcxEnterpriseSiteList"/> to convert. </param>
+        public static implicit operator RequestContent(HcxEnterpriseSiteList model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HcxEnterpriseSiteList"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HcxEnterpriseSiteList(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHcxEnterpriseSiteList(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

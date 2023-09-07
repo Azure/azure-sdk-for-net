@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Avs.Models
@@ -12,13 +13,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> NSX DHCP Server. </summary>
     public partial class WorkloadNetworkDhcpServer : WorkloadNetworkDhcpEntity
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkDhcpServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDhcpServer"/>. </summary>
         public WorkloadNetworkDhcpServer()
         {
             DhcpType = DhcpTypeEnum.Server;
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkDhcpServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDhcpServer"/>. </summary>
         /// <param name="dhcpType"> Type of DHCP: SERVER or RELAY. </param>
         /// <param name="displayName"> Display name of the DHCP entity. </param>
         /// <param name="segments"> NSX Segments consuming DHCP. </param>
@@ -26,7 +27,8 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="revision"> NSX revision number. </param>
         /// <param name="serverAddress"> DHCP Server Address. </param>
         /// <param name="leaseTime"> DHCP Server Lease Time. </param>
-        internal WorkloadNetworkDhcpServer(DhcpTypeEnum dhcpType, string displayName, IReadOnlyList<string> segments, WorkloadNetworkDhcpProvisioningState? provisioningState, long? revision, string serverAddress, long? leaseTime) : base(dhcpType, displayName, segments, provisioningState, revision)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadNetworkDhcpServer(DhcpTypeEnum dhcpType, string displayName, IReadOnlyList<string> segments, WorkloadNetworkDhcpProvisioningState? provisioningState, long? revision, string serverAddress, long? leaseTime, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(dhcpType, displayName, segments, provisioningState, revision, serializedAdditionalRawData)
         {
             ServerAddress = serverAddress;
             LeaseTime = leaseTime;

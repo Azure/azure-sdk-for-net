@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions : IUtf8JsonSerializable
+    public partial class ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -56,11 +63,25 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("SupportsEmailNotifications"u8);
                 writer.WriteBooleanValue(SupportsEmailNotifications.Value);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions DeserializeApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(JsonElement element)
+        internal static ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions DeserializeApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -73,6 +94,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Optional<bool> isEnabledByDefault = default;
             Optional<bool> isInPreview = default;
             Optional<bool> supportsEmailNotifications = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Name"u8))
@@ -135,8 +157,61 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     supportsEmailNotifications = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(name.Value, displayName.Value, description.Value, helpUrl.Value, Optional.ToNullable(isHidden), Optional.ToNullable(isEnabledByDefault), Optional.ToNullable(isInPreview), Optional.ToNullable(supportsEmailNotifications));
+            return new ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(name.Value, displayName.Value, description.Value, helpUrl.Value, Optional.ToNullable(isHidden), Optional.ToNullable(isEnabledByDefault), Optional.ToNullable(isInPreview), Optional.ToNullable(supportsEmailNotifications), serializedAdditionalRawData);
+        }
+
+        ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions IModelJsonSerializable<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions IModelSerializable<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions"/> to convert. </param>
+        public static implicit operator RequestContent(ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

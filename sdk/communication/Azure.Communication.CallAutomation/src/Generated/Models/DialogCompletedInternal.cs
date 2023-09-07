@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Communication.CallAutomation;
 
 namespace Azure.Communication.CallAutomation.Models.Events
@@ -12,12 +14,15 @@ namespace Azure.Communication.CallAutomation.Models.Events
     /// <summary> The DialogCompleted. </summary>
     internal partial class DialogCompletedInternal
     {
-        /// <summary> Initializes a new instance of DialogCompletedInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DialogCompletedInternal"/>. </summary>
         internal DialogCompletedInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of DialogCompletedInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DialogCompletedInternal"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
@@ -25,7 +30,8 @@ namespace Azure.Communication.CallAutomation.Models.Events
         /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
         /// <param name="dialogInputType"> Determines the type of the dialog. </param>
         /// <param name="dialogId"> Dialog ID. </param>
-        internal DialogCompletedInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, DialogInputType? dialogInputType, string dialogId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DialogCompletedInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, DialogInputType? dialogInputType, string dialogId, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -34,6 +40,7 @@ namespace Azure.Communication.CallAutomation.Models.Events
             ResultInformation = resultInformation;
             DialogInputType = dialogInputType;
             DialogId = dialogId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Call connection ID. </summary>

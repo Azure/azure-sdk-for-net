@@ -5,21 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    public partial class BillingBenefitsExtendedStatusInfo
+    public partial class BillingBenefitsExtendedStatusInfo : IUtf8JsonSerializable, IModelJsonSerializable<BillingBenefitsExtendedStatusInfo>
     {
-        internal static BillingBenefitsExtendedStatusInfo DeserializeBillingBenefitsExtendedStatusInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BillingBenefitsExtendedStatusInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BillingBenefitsExtendedStatusInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BillingBenefitsExtendedStatusInfo>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(StatusCode))
+            {
+                writer.WritePropertyName("statusCode"u8);
+                writer.WriteStringValue(StatusCode);
+            }
+            if (Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static BillingBenefitsExtendedStatusInfo DeserializeBillingBenefitsExtendedStatusInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> statusCode = default;
             Optional<string> message = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("statusCode"u8))
@@ -32,8 +71,61 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     message = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BillingBenefitsExtendedStatusInfo(statusCode.Value, message.Value);
+            return new BillingBenefitsExtendedStatusInfo(statusCode.Value, message.Value, serializedAdditionalRawData);
+        }
+
+        BillingBenefitsExtendedStatusInfo IModelJsonSerializable<BillingBenefitsExtendedStatusInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BillingBenefitsExtendedStatusInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBillingBenefitsExtendedStatusInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BillingBenefitsExtendedStatusInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BillingBenefitsExtendedStatusInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BillingBenefitsExtendedStatusInfo IModelSerializable<BillingBenefitsExtendedStatusInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BillingBenefitsExtendedStatusInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBillingBenefitsExtendedStatusInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BillingBenefitsExtendedStatusInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BillingBenefitsExtendedStatusInfo"/> to convert. </param>
+        public static implicit operator RequestContent(BillingBenefitsExtendedStatusInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BillingBenefitsExtendedStatusInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BillingBenefitsExtendedStatusInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBillingBenefitsExtendedStatusInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

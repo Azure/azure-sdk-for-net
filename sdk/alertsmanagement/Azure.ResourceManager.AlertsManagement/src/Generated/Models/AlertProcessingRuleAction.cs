@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// Please note <see cref="AlertProcessingRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AlertProcessingRuleAddGroupsAction"/> and <see cref="AlertProcessingRuleRemoveAllGroupsAction"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownAction))]
     public abstract partial class AlertProcessingRuleAction
     {
-        /// <summary> Initializes a new instance of AlertProcessingRuleAction. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleAction"/>. </summary>
         protected AlertProcessingRuleAction()
         {
         }
 
-        /// <summary> Initializes a new instance of AlertProcessingRuleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleAction"/>. </summary>
         /// <param name="actionType"> Action that should be applied. </param>
-        internal AlertProcessingRuleAction(AlertProcessingRuleActionType actionType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AlertProcessingRuleAction(AlertProcessingRuleActionType actionType, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionType = actionType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Action that should be applied. </summary>

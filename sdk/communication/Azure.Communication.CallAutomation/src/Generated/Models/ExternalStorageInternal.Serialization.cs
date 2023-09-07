@@ -5,24 +5,135 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class ExternalStorageInternal : IUtf8JsonSerializable
+    internal partial class ExternalStorageInternal : IUtf8JsonSerializable, IModelJsonSerializable<ExternalStorageInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExternalStorageInternal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExternalStorageInternal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ExternalStorageInternal>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("storageType"u8);
             writer.WriteStringValue(StorageType.ToString());
             if (Optional.IsDefined(BlobStorage))
             {
                 writer.WritePropertyName("blobStorage"u8);
-                writer.WriteObjectValue(BlobStorage);
+                if (BlobStorage is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BlobStorageInternal>)BlobStorage).Serialize(writer, options);
+                }
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
+        }
+
+        internal static ExternalStorageInternal DeserializeExternalStorageInternal(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            RecordingStorageType storageType = default;
+            Optional<BlobStorageInternal> blobStorage = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("storageType"u8))
+                {
+                    storageType = new RecordingStorageType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("blobStorage"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    blobStorage = BlobStorageInternal.DeserializeBlobStorageInternal(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ExternalStorageInternal(storageType, blobStorage.Value, serializedAdditionalRawData);
+        }
+
+        ExternalStorageInternal IModelJsonSerializable<ExternalStorageInternal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExternalStorageInternal>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExternalStorageInternal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExternalStorageInternal>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExternalStorageInternal>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExternalStorageInternal IModelSerializable<ExternalStorageInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExternalStorageInternal>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExternalStorageInternal(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExternalStorageInternal"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExternalStorageInternal"/> to convert. </param>
+        public static implicit operator RequestContent(ExternalStorageInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExternalStorageInternal"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExternalStorageInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExternalStorageInternal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

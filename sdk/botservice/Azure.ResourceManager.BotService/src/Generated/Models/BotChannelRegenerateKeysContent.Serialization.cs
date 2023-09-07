@@ -5,21 +5,121 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class BotChannelRegenerateKeysContent : IUtf8JsonSerializable
+    public partial class BotChannelRegenerateKeysContent : IUtf8JsonSerializable, IModelJsonSerializable<BotChannelRegenerateKeysContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BotChannelRegenerateKeysContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BotChannelRegenerateKeysContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BotChannelRegenerateKeysContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("siteName"u8);
             writer.WriteStringValue(SiteName);
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key.ToSerialString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static BotChannelRegenerateKeysContent DeserializeBotChannelRegenerateKeysContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string siteName = default;
+            BotServiceKey key = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("siteName"u8))
+                {
+                    siteName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("key"u8))
+                {
+                    key = property.Value.GetString().ToBotServiceKey();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new BotChannelRegenerateKeysContent(siteName, key, serializedAdditionalRawData);
+        }
+
+        BotChannelRegenerateKeysContent IModelJsonSerializable<BotChannelRegenerateKeysContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BotChannelRegenerateKeysContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBotChannelRegenerateKeysContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BotChannelRegenerateKeysContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BotChannelRegenerateKeysContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BotChannelRegenerateKeysContent IModelSerializable<BotChannelRegenerateKeysContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BotChannelRegenerateKeysContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBotChannelRegenerateKeysContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BotChannelRegenerateKeysContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BotChannelRegenerateKeysContent"/> to convert. </param>
+        public static implicit operator RequestContent(BotChannelRegenerateKeysContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BotChannelRegenerateKeysContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BotChannelRegenerateKeysContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBotChannelRegenerateKeysContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

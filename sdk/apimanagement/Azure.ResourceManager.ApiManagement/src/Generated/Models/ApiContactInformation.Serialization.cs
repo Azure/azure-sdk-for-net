@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiContactInformation : IUtf8JsonSerializable
+    public partial class ApiContactInformation : IUtf8JsonSerializable, IModelJsonSerializable<ApiContactInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApiContactInformation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApiContactInformation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApiContactInformation>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -31,11 +38,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApiContactInformation DeserializeApiContactInformation(JsonElement element)
+        internal static ApiContactInformation DeserializeApiContactInformation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +64,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> name = default;
             Optional<Uri> uri = default;
             Optional<string> email = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -64,8 +86,61 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     email = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApiContactInformation(name.Value, uri.Value, email.Value);
+            return new ApiContactInformation(name.Value, uri.Value, email.Value, serializedAdditionalRawData);
+        }
+
+        ApiContactInformation IModelJsonSerializable<ApiContactInformation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiContactInformation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiContactInformation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApiContactInformation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiContactInformation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApiContactInformation IModelSerializable<ApiContactInformation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiContactInformation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApiContactInformation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApiContactInformation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApiContactInformation"/> to convert. </param>
+        public static implicit operator RequestContent(ApiContactInformation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApiContactInformation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApiContactInformation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApiContactInformation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

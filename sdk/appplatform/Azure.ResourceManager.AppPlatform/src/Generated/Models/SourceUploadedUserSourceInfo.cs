@@ -5,18 +5,21 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Uploaded Java source code binary for a deployment. </summary>
     public partial class SourceUploadedUserSourceInfo : AppPlatformUploadedUserSourceInfo
     {
-        /// <summary> Initializes a new instance of SourceUploadedUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceUploadedUserSourceInfo"/>. </summary>
         public SourceUploadedUserSourceInfo()
         {
             UserSourceInfoType = "Source";
         }
 
-        /// <summary> Initializes a new instance of SourceUploadedUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceUploadedUserSourceInfo"/>. </summary>
         /// <param name="userSourceInfoType"> Type of the source uploaded. </param>
         /// <param name="version"> Version of the source. </param>
         /// <param name="relativePath"> Relative path of the storage which stores the source. </param>
@@ -25,7 +28,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// the relative path to the target module/project.
         /// </param>
         /// <param name="runtimeVersion"> Runtime version of the source file. </param>
-        internal SourceUploadedUserSourceInfo(string userSourceInfoType, string version, string relativePath, string artifactSelector, string runtimeVersion) : base(userSourceInfoType, version, relativePath)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SourceUploadedUserSourceInfo(string userSourceInfoType, string version, string relativePath, string artifactSelector, string runtimeVersion, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(userSourceInfoType, version, relativePath, serializedAdditionalRawData)
         {
             ArtifactSelector = artifactSelector;
             RuntimeVersion = runtimeVersion;

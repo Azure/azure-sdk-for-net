@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Product profile. </summary>
     public partial class AssociatedProductProperties : ProductEntityBaseProperties
     {
-        /// <summary> Initializes a new instance of AssociatedProductProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssociatedProductProperties"/>. </summary>
         /// <param name="name"> Product name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal AssociatedProductProperties(string name)
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of AssociatedProductProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssociatedProductProperties"/>. </summary>
         /// <param name="description"> Product description. May include HTML formatting tags. </param>
         /// <param name="terms"> Product terms of use. Developers trying to subscribe to the product will be presented and required to accept these terms before they can complete the subscription process. </param>
         /// <param name="isSubscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </param>
@@ -32,10 +33,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="state"> whether product is published or not. Published products are discoverable by users of developer portal. Non published products are visible only to administrators. Default state of Product is notPublished. </param>
         /// <param name="id"> Identifier of the product in the form of /products/{productId}. </param>
         /// <param name="name"> Product name. </param>
-        internal AssociatedProductProperties(string description, string terms, bool? isSubscriptionRequired, bool? isApprovalRequired, int? subscriptionsLimit, ApiManagementProductState? state, string id, string name) : base(description, terms, isSubscriptionRequired, isApprovalRequired, subscriptionsLimit, state)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssociatedProductProperties(string description, string terms, bool? isSubscriptionRequired, bool? isApprovalRequired, int? subscriptionsLimit, ApiManagementProductState? state, string id, string name, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(description, terms, isSubscriptionRequired, isApprovalRequired, subscriptionsLimit, state, serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AssociatedProductProperties"/> for deserialization. </summary>
+        internal AssociatedProductProperties()
+        {
         }
 
         /// <summary> Identifier of the product in the form of /products/{productId}. </summary>

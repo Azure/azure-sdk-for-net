@@ -5,16 +5,21 @@
 
 #nullable disable
 
-using System.Collections.Generic;
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    internal partial class UnknownCustomPersistentDiskProperties : IUtf8JsonSerializable
+    internal partial class UnknownCustomPersistentDiskProperties : IUtf8JsonSerializable, IModelJsonSerializable<AppCustomPersistentDiskProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppCustomPersistentDiskProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppCustomPersistentDiskProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AppCustomPersistentDiskProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UnderlyingResourceType.ToString());
@@ -35,56 +40,44 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownCustomPersistentDiskProperties DeserializeUnknownCustomPersistentDiskProperties(JsonElement element)
+        internal static AppCustomPersistentDiskProperties DeserializeUnknownCustomPersistentDiskProperties(JsonElement element, ModelSerializerOptions options = default) => DeserializeAppCustomPersistentDiskProperties(element, options);
+
+        AppCustomPersistentDiskProperties IModelJsonSerializable<AppCustomPersistentDiskProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            UnderlyingResourceType type = "Unknown";
-            string mountPath = default;
-            Optional<bool> readOnly = default;
-            Optional<IList<string>> mountOptions = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"u8))
-                {
-                    type = new UnderlyingResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("mountPath"u8))
-                {
-                    mountPath = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("readOnly"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    readOnly = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("mountOptions"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    mountOptions = array;
-                    continue;
-                }
-            }
-            return new UnknownCustomPersistentDiskProperties(type, mountPath, Optional.ToNullable(readOnly), Optional.ToList(mountOptions));
+            Core.ModelSerializerHelper.ValidateFormat<AppCustomPersistentDiskProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownCustomPersistentDiskProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppCustomPersistentDiskProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppCustomPersistentDiskProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppCustomPersistentDiskProperties IModelSerializable<AppCustomPersistentDiskProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppCustomPersistentDiskProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppCustomPersistentDiskProperties(doc.RootElement, options);
         }
     }
 }

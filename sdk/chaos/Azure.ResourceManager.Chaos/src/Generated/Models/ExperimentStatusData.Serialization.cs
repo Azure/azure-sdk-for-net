@@ -6,16 +6,46 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos
 {
-    public partial class ExperimentStatusData
+    public partial class ExperimentStatusData : IUtf8JsonSerializable, IModelJsonSerializable<ExperimentStatusData>
     {
-        internal static ExperimentStatusData DeserializeExperimentStatusData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExperimentStatusData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExperimentStatusData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ExperimentStatusData>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ExperimentStatusData DeserializeExperimentStatusData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +57,7 @@ namespace Azure.ResourceManager.Chaos
             Optional<string> status = default;
             Optional<DateTimeOffset> createdDateUtc = default;
             Optional<DateTimeOffset?> endDateUtc = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -89,8 +120,61 @@ namespace Azure.ResourceManager.Chaos
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExperimentStatusData(id, name, type, systemData.Value, status.Value, Optional.ToNullable(createdDateUtc), Optional.ToNullable(endDateUtc));
+            return new ExperimentStatusData(id, name, type, systemData.Value, status.Value, Optional.ToNullable(createdDateUtc), Optional.ToNullable(endDateUtc), serializedAdditionalRawData);
+        }
+
+        ExperimentStatusData IModelJsonSerializable<ExperimentStatusData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExperimentStatusData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExperimentStatusData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExperimentStatusData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExperimentStatusData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExperimentStatusData IModelSerializable<ExperimentStatusData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExperimentStatusData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExperimentStatusData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExperimentStatusData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExperimentStatusData"/> to convert. </param>
+        public static implicit operator RequestContent(ExperimentStatusData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExperimentStatusData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExperimentStatusData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExperimentStatusData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

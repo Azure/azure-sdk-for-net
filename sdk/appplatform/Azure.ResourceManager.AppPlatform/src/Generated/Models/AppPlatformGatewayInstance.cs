@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Collection of instances belong to the Spring Cloud Gateway. </summary>
     public partial class AppPlatformGatewayInstance
     {
-        /// <summary> Initializes a new instance of AppPlatformGatewayInstance. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayInstance"/>. </summary>
         internal AppPlatformGatewayInstance()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformGatewayInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayInstance"/>. </summary>
         /// <param name="name"> Name of the Spring Cloud Gateway instance. </param>
         /// <param name="status"> Status of the Spring Cloud Gateway instance. </param>
-        internal AppPlatformGatewayInstance(string name, string status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformGatewayInstance(string name, string status, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the Spring Cloud Gateway instance. </summary>

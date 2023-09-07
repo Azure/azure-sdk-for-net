@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiManagementIdentityProviderPatch : IUtf8JsonSerializable
+    public partial class ApiManagementIdentityProviderPatch : IUtf8JsonSerializable, IModelJsonSerializable<ApiManagementIdentityProviderPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApiManagementIdentityProviderPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApiManagementIdentityProviderPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApiManagementIdentityProviderPatch>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -73,7 +81,172 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStringValue(ClientSecret);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ApiManagementIdentityProviderPatch DeserializeApiManagementIdentityProviderPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IdentityProviderType> type = default;
+            Optional<string> signinTenant = default;
+            Optional<IList<string>> allowedTenants = default;
+            Optional<string> authority = default;
+            Optional<string> signupPolicyName = default;
+            Optional<string> signinPolicyName = default;
+            Optional<string> profileEditingPolicyName = default;
+            Optional<string> passwordResetPolicyName = default;
+            Optional<string> clientId = default;
+            Optional<string> clientSecret = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("type"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            type = new IdentityProviderType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("signinTenant"u8))
+                        {
+                            signinTenant = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("allowedTenants"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            allowedTenants = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("authority"u8))
+                        {
+                            authority = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("signupPolicyName"u8))
+                        {
+                            signupPolicyName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("signinPolicyName"u8))
+                        {
+                            signinPolicyName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("profileEditingPolicyName"u8))
+                        {
+                            profileEditingPolicyName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("passwordResetPolicyName"u8))
+                        {
+                            passwordResetPolicyName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("clientId"u8))
+                        {
+                            clientId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("clientSecret"u8))
+                        {
+                            clientSecret = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ApiManagementIdentityProviderPatch(Optional.ToNullable(type), signinTenant.Value, Optional.ToList(allowedTenants), authority.Value, signupPolicyName.Value, signinPolicyName.Value, profileEditingPolicyName.Value, passwordResetPolicyName.Value, clientId.Value, clientSecret.Value, serializedAdditionalRawData);
+        }
+
+        ApiManagementIdentityProviderPatch IModelJsonSerializable<ApiManagementIdentityProviderPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiManagementIdentityProviderPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiManagementIdentityProviderPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApiManagementIdentityProviderPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiManagementIdentityProviderPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApiManagementIdentityProviderPatch IModelSerializable<ApiManagementIdentityProviderPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiManagementIdentityProviderPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApiManagementIdentityProviderPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApiManagementIdentityProviderPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApiManagementIdentityProviderPatch"/> to convert. </param>
+        public static implicit operator RequestContent(ApiManagementIdentityProviderPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApiManagementIdentityProviderPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApiManagementIdentityProviderPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApiManagementIdentityProviderPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,9 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Model status. </summary>
     public partial class ModelState
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of ModelState. </summary>
         public ModelState()
         {
@@ -36,12 +40,14 @@ namespace Azure.AI.AnomalyDetector
         /// epoch.
         /// </param>
         /// <param name="latenciesInSeconds"> Latency for each epoch. </param>
-        internal ModelState(IList<int> epochIds, IList<float> trainLosses, IList<float> validationLosses, IList<float> latenciesInSeconds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ModelState(IList<int> epochIds, IList<float> trainLosses, IList<float> validationLosses, IList<float> latenciesInSeconds, Dictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EpochIds = epochIds;
             TrainLosses = trainLosses;
             ValidationLosses = validationLosses;
             LatenciesInSeconds = latenciesInSeconds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

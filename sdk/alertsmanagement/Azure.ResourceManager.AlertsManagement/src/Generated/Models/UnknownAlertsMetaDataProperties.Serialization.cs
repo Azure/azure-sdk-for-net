@@ -5,29 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    internal partial class UnknownAlertsMetaDataProperties
+    internal partial class UnknownAlertsMetaDataProperties : IUtf8JsonSerializable, IModelJsonSerializable<ServiceAlertMetadataProperties>
     {
-        internal static UnknownAlertsMetaDataProperties DeserializeUnknownAlertsMetaDataProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServiceAlertMetadataProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServiceAlertMetadataProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            Core.ModelSerializerHelper.ValidateFormat<ServiceAlertMetadataProperties>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("metadataIdentifier"u8);
+            writer.WriteStringValue(MetadataIdentifier.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
             {
-                return null;
-            }
-            ServiceAlertMetadataIdentifier metadataIdentifier = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("metadataIdentifier"u8))
+                foreach (var property in _serializedAdditionalRawData)
                 {
-                    metadataIdentifier = new ServiceAlertMetadataIdentifier(property.Value.GetString());
-                    continue;
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
                 }
             }
-            return new UnknownAlertsMetaDataProperties(metadataIdentifier);
+            writer.WriteEndObject();
+        }
+
+        internal static ServiceAlertMetadataProperties DeserializeUnknownAlertsMetaDataProperties(JsonElement element, ModelSerializerOptions options = default) => DeserializeServiceAlertMetadataProperties(element, options);
+
+        ServiceAlertMetadataProperties IModelJsonSerializable<ServiceAlertMetadataProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceAlertMetadataProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownAlertsMetaDataProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServiceAlertMetadataProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceAlertMetadataProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServiceAlertMetadataProperties IModelSerializable<ServiceAlertMetadataProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceAlertMetadataProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServiceAlertMetadataProperties(doc.RootElement, options);
         }
     }
 }

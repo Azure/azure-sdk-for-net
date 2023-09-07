@@ -53,9 +53,7 @@ namespace Azure.AI.Language.QuestionAnswering
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(knowledgeBaseQueryOptions);
-            request.Content = content;
+            request.Content = knowledgeBaseQueryOptions;
             return message;
         }
 
@@ -146,9 +144,7 @@ namespace Azure.AI.Language.QuestionAnswering
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(textQueryOptions);
-            request.Content = content;
+            request.Content = textQueryOptions;
             return message;
         }
 

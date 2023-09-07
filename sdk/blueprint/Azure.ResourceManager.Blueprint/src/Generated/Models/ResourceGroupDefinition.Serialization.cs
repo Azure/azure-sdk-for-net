@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
-    public partial class ResourceGroupDefinition : IUtf8JsonSerializable
+    public partial class ResourceGroupDefinition : IUtf8JsonSerializable, IModelJsonSerializable<ResourceGroupDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceGroupDefinition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceGroupDefinition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceGroupDefinition>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -65,11 +72,25 @@ namespace Azure.ResourceManager.Blueprint.Models
                 writer.WriteStringValue(StrongType);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ResourceGroupDefinition DeserializeResourceGroupDefinition(JsonElement element)
+        internal static ResourceGroupDefinition DeserializeResourceGroupDefinition(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -81,6 +102,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             Optional<string> displayName = default;
             Optional<string> description = default;
             Optional<string> strongType = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -152,8 +174,61 @@ namespace Azure.ResourceManager.Blueprint.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResourceGroupDefinition(name.Value, Optional.ToNullable(location), Optional.ToList(dependsOn), Optional.ToDictionary(tags), displayName.Value, description.Value, strongType.Value);
+            return new ResourceGroupDefinition(name.Value, Optional.ToNullable(location), Optional.ToList(dependsOn), Optional.ToDictionary(tags), displayName.Value, description.Value, strongType.Value, serializedAdditionalRawData);
+        }
+
+        ResourceGroupDefinition IModelJsonSerializable<ResourceGroupDefinition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceGroupDefinition>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceGroupDefinition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceGroupDefinition>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceGroupDefinition>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceGroupDefinition IModelSerializable<ResourceGroupDefinition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceGroupDefinition>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceGroupDefinition(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ResourceGroupDefinition"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ResourceGroupDefinition"/> to convert. </param>
+        public static implicit operator RequestContent(ResourceGroupDefinition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ResourceGroupDefinition"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ResourceGroupDefinition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourceGroupDefinition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

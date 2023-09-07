@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Blueprint artifact that applies a Role assignment. </summary>
     public partial class RoleAssignmentArtifact : ArtifactData
     {
-        /// <summary> Initializes a new instance of RoleAssignmentArtifact. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentArtifact"/>. </summary>
         /// <param name="roleDefinitionId"> Azure resource ID of the RoleDefinition. </param>
         /// <param name="principalIds"> Array of user or group identities in Azure Active Directory. The roleDefinition will apply to each identity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> or <paramref name="principalIds"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             Kind = ArtifactKind.RoleAssignment;
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentArtifact. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentArtifact"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <param name="roleDefinitionId"> Azure resource ID of the RoleDefinition. </param>
         /// <param name="principalIds"> Array of user or group identities in Azure Active Directory. The roleDefinition will apply to each identity. </param>
         /// <param name="resourceGroup"> RoleAssignment will be scope to this resourceGroup. If empty, it scopes to the subscription. </param>
-        internal RoleAssignmentArtifact(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArtifactKind kind, string displayName, string description, IList<string> dependsOn, string roleDefinitionId, BinaryData principalIds, string resourceGroup) : base(id, name, resourceType, systemData, kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleAssignmentArtifact(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArtifactKind kind, string displayName, string description, IList<string> dependsOn, string roleDefinitionId, BinaryData principalIds, string resourceGroup, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             DisplayName = displayName;
             Description = description;
@@ -52,6 +53,11 @@ namespace Azure.ResourceManager.Blueprint.Models
             PrincipalIds = principalIds;
             ResourceGroup = resourceGroup;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentArtifact"/> for deserialization. </summary>
+        internal RoleAssignmentArtifact()
+        {
         }
 
         /// <summary> One-liner string explain this resource. </summary>

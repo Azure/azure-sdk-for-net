@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class AlertProcessingRuleCondition : IUtf8JsonSerializable
+    public partial class AlertProcessingRuleCondition : IUtf8JsonSerializable, IModelJsonSerializable<AlertProcessingRuleCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AlertProcessingRuleCondition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AlertProcessingRuleCondition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AlertProcessingRuleCondition>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Field))
             {
@@ -36,11 +43,25 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AlertProcessingRuleCondition DeserializeAlertProcessingRuleCondition(JsonElement element)
+        internal static AlertProcessingRuleCondition DeserializeAlertProcessingRuleCondition(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +69,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             Optional<AlertProcessingRuleField> field = default;
             Optional<AlertProcessingRuleOperator> @operator = default;
             Optional<IList<string>> values = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("field"u8))
@@ -82,8 +104,61 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     values = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AlertProcessingRuleCondition(Optional.ToNullable(field), Optional.ToNullable(@operator), Optional.ToList(values));
+            return new AlertProcessingRuleCondition(Optional.ToNullable(field), Optional.ToNullable(@operator), Optional.ToList(values), serializedAdditionalRawData);
+        }
+
+        AlertProcessingRuleCondition IModelJsonSerializable<AlertProcessingRuleCondition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AlertProcessingRuleCondition>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAlertProcessingRuleCondition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AlertProcessingRuleCondition>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AlertProcessingRuleCondition>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AlertProcessingRuleCondition IModelSerializable<AlertProcessingRuleCondition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AlertProcessingRuleCondition>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAlertProcessingRuleCondition(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AlertProcessingRuleCondition"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AlertProcessingRuleCondition"/> to convert. </param>
+        public static implicit operator RequestContent(AlertProcessingRuleCondition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AlertProcessingRuleCondition"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AlertProcessingRuleCondition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAlertProcessingRuleCondition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

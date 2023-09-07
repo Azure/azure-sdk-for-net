@@ -5,22 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Communication;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class AcsCallParticipantInternal
+    internal partial class AcsCallParticipantInternal : IUtf8JsonSerializable, IModelJsonSerializable<AcsCallParticipantInternal>
     {
-        internal static AcsCallParticipantInternal DeserializeAcsCallParticipantInternal(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AcsCallParticipantInternal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AcsCallParticipantInternal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AcsCallParticipantInternal>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Identifier))
+            {
+                writer.WritePropertyName("identifier"u8);
+                if (Identifier is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CommunicationIdentifierModel>)Identifier).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(IsMuted))
+            {
+                writer.WritePropertyName("isMuted"u8);
+                writer.WriteBooleanValue(IsMuted.Value);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AcsCallParticipantInternal DeserializeAcsCallParticipantInternal(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<CommunicationIdentifierModel> identifier = default;
             Optional<bool> isMuted = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identifier"u8))
@@ -41,8 +87,61 @@ namespace Azure.Communication.CallingServer
                     isMuted = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AcsCallParticipantInternal(identifier.Value, Optional.ToNullable(isMuted));
+            return new AcsCallParticipantInternal(identifier.Value, Optional.ToNullable(isMuted), serializedAdditionalRawData);
+        }
+
+        AcsCallParticipantInternal IModelJsonSerializable<AcsCallParticipantInternal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AcsCallParticipantInternal>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcsCallParticipantInternal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AcsCallParticipantInternal>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AcsCallParticipantInternal>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AcsCallParticipantInternal IModelSerializable<AcsCallParticipantInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AcsCallParticipantInternal>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAcsCallParticipantInternal(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AcsCallParticipantInternal"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AcsCallParticipantInternal"/> to convert. </param>
+        public static implicit operator RequestContent(AcsCallParticipantInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AcsCallParticipantInternal"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AcsCallParticipantInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAcsCallParticipantInternal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -52,9 +52,7 @@ namespace Azure.Communication.CallingServer
             request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(createCallRequest);
-            request.Content = content;
+            request.Content = createCallRequest;
             return message;
         }
 
@@ -126,9 +124,7 @@ namespace Azure.Communication.CallingServer
             request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(answerCallRequest);
-            request.Content = content;
+            request.Content = answerCallRequest;
             return message;
         }
 
@@ -201,9 +197,7 @@ namespace Azure.Communication.CallingServer
             request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
             request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(redirectCallRequest);
-            request.Content = content;
+            request.Content = redirectCallRequest;
             return message;
         }
 
@@ -264,9 +258,7 @@ namespace Azure.Communication.CallingServer
             request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
             request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(rejectCallRequest);
-            request.Content = content;
+            request.Content = rejectCallRequest;
             return message;
         }
 

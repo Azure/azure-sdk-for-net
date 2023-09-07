@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CognitiveServicesSkuAvailabilityContent : IUtf8JsonSerializable
+    public partial class CognitiveServicesSkuAvailabilityContent : IUtf8JsonSerializable, IModelJsonSerializable<CognitiveServicesSkuAvailabilityContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CognitiveServicesSkuAvailabilityContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CognitiveServicesSkuAvailabilityContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CognitiveServicesSkuAvailabilityContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("skus"u8);
             writer.WriteStartArray();
@@ -26,7 +34,110 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteStringValue(Kind);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ResourceType);
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static CognitiveServicesSkuAvailabilityContent DeserializeCognitiveServicesSkuAvailabilityContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<string> skus = default;
+            string kind = default;
+            ResourceType type = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("skus"u8))
+                {
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    skus = array;
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new CognitiveServicesSkuAvailabilityContent(skus, kind, type, serializedAdditionalRawData);
+        }
+
+        CognitiveServicesSkuAvailabilityContent IModelJsonSerializable<CognitiveServicesSkuAvailabilityContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CognitiveServicesSkuAvailabilityContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCognitiveServicesSkuAvailabilityContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CognitiveServicesSkuAvailabilityContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CognitiveServicesSkuAvailabilityContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CognitiveServicesSkuAvailabilityContent IModelSerializable<CognitiveServicesSkuAvailabilityContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CognitiveServicesSkuAvailabilityContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCognitiveServicesSkuAvailabilityContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CognitiveServicesSkuAvailabilityContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CognitiveServicesSkuAvailabilityContent"/> to convert. </param>
+        public static implicit operator RequestContent(CognitiveServicesSkuAvailabilityContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CognitiveServicesSkuAvailabilityContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CognitiveServicesSkuAvailabilityContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCognitiveServicesSkuAvailabilityContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

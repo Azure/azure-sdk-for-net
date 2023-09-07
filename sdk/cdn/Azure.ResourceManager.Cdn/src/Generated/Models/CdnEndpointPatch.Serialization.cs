@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CdnEndpointPatch : IUtf8JsonSerializable
+    public partial class CdnEndpointPatch : IUtf8JsonSerializable, IModelJsonSerializable<CdnEndpointPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CdnEndpointPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CdnEndpointPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CdnEndpointPatch>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -91,7 +99,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in GeoFilters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<GeoFilter>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +115,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (DefaultOriginGroup != null)
                 {
                     writer.WritePropertyName("defaultOriginGroup"u8);
-                    writer.WriteObjectValue(DefaultOriginGroup);
+                    if (DefaultOriginGroup is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<EndpointPropertiesUpdateParametersDefaultOriginGroup>)DefaultOriginGroup).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -115,7 +137,14 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteStartArray();
                     foreach (var item in UriSigningKeys)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item is null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IModelJsonSerializable<UriSigningKey>)item).Serialize(writer, options);
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -129,7 +158,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (DeliveryPolicy != null)
                 {
                     writer.WritePropertyName("deliveryPolicy"u8);
-                    writer.WriteObjectValue(DeliveryPolicy);
+                    if (DeliveryPolicy is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<EndpointDeliveryPolicy>)DeliveryPolicy).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -141,7 +177,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (WebApplicationFirewallPolicyLink != null)
                 {
                     writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
-                    writer.WriteObjectValue(WebApplicationFirewallPolicyLink);
+                    if (WebApplicationFirewallPolicyLink is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink>)WebApplicationFirewallPolicyLink).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -149,7 +192,262 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static CdnEndpointPatch DeserializeCdnEndpointPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> originPath = default;
+            Optional<IList<string>> contentTypesToCompress = default;
+            Optional<string> originHostHeader = default;
+            Optional<bool> isCompressionEnabled = default;
+            Optional<bool> isHttpAllowed = default;
+            Optional<bool> isHttpsAllowed = default;
+            Optional<QueryStringCachingBehavior> queryStringCachingBehavior = default;
+            Optional<OptimizationType?> optimizationType = default;
+            Optional<string> probePath = default;
+            Optional<IList<GeoFilter>> geoFilters = default;
+            Optional<EndpointPropertiesUpdateParametersDefaultOriginGroup> defaultOriginGroup = default;
+            Optional<IList<UriSigningKey>> uriSigningKeys = default;
+            Optional<EndpointDeliveryPolicy> deliveryPolicy = default;
+            Optional<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink> webApplicationFirewallPolicyLink = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("originPath"u8))
+                        {
+                            originPath = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("contentTypesToCompress"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            contentTypesToCompress = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("originHostHeader"u8))
+                        {
+                            originHostHeader = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("isCompressionEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isCompressionEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("isHttpAllowed"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isHttpAllowed = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("isHttpsAllowed"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isHttpsAllowed = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("queryStringCachingBehavior"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            queryStringCachingBehavior = property0.Value.GetString().ToQueryStringCachingBehavior();
+                            continue;
+                        }
+                        if (property0.NameEquals("optimizationType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                optimizationType = null;
+                                continue;
+                            }
+                            optimizationType = new OptimizationType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("probePath"u8))
+                        {
+                            probePath = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("geoFilters"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<GeoFilter> array = new List<GeoFilter>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(GeoFilter.DeserializeGeoFilter(item));
+                            }
+                            geoFilters = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("defaultOriginGroup"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                defaultOriginGroup = null;
+                                continue;
+                            }
+                            defaultOriginGroup = EndpointPropertiesUpdateParametersDefaultOriginGroup.DeserializeEndpointPropertiesUpdateParametersDefaultOriginGroup(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("urlSigningKeys"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                uriSigningKeys = null;
+                                continue;
+                            }
+                            List<UriSigningKey> array = new List<UriSigningKey>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(UriSigningKey.DeserializeUriSigningKey(item));
+                            }
+                            uriSigningKeys = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("deliveryPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                deliveryPolicy = null;
+                                continue;
+                            }
+                            deliveryPolicy = EndpointDeliveryPolicy.DeserializeEndpointDeliveryPolicy(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("webApplicationFirewallPolicyLink"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                webApplicationFirewallPolicyLink = null;
+                                continue;
+                            }
+                            webApplicationFirewallPolicyLink = EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink.DeserializeEndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(property0.Value);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new CdnEndpointPatch(Optional.ToDictionary(tags), originPath.Value, Optional.ToList(contentTypesToCompress), originHostHeader.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(isHttpAllowed), Optional.ToNullable(isHttpsAllowed), Optional.ToNullable(queryStringCachingBehavior), Optional.ToNullable(optimizationType), probePath.Value, Optional.ToList(geoFilters), defaultOriginGroup.Value, Optional.ToList(uriSigningKeys), deliveryPolicy.Value, webApplicationFirewallPolicyLink.Value, serializedAdditionalRawData);
+        }
+
+        CdnEndpointPatch IModelJsonSerializable<CdnEndpointPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CdnEndpointPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCdnEndpointPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CdnEndpointPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CdnEndpointPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CdnEndpointPatch IModelSerializable<CdnEndpointPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CdnEndpointPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCdnEndpointPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CdnEndpointPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CdnEndpointPatch"/> to convert. </param>
+        public static implicit operator RequestContent(CdnEndpointPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CdnEndpointPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CdnEndpointPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCdnEndpointPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

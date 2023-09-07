@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    public partial class SnapshotDownloadContent : IUtf8JsonSerializable
+    public partial class SnapshotDownloadContent : IUtf8JsonSerializable, IModelJsonSerializable<SnapshotDownloadContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SnapshotDownloadContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SnapshotDownloadContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SnapshotDownloadContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ReportCreatorTenantId))
             {
@@ -27,7 +35,105 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WritePropertyName("offerGuid"u8);
                 writer.WriteStringValue(OfferGuid);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static SnapshotDownloadContent DeserializeSnapshotDownloadContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> reportCreatorTenantId = default;
+            DownloadType downloadType = default;
+            Optional<string> offerGuid = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("reportCreatorTenantId"u8))
+                {
+                    reportCreatorTenantId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("downloadType"u8))
+                {
+                    downloadType = new DownloadType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("offerGuid"u8))
+                {
+                    offerGuid = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new SnapshotDownloadContent(reportCreatorTenantId.Value, downloadType, offerGuid.Value, serializedAdditionalRawData);
+        }
+
+        SnapshotDownloadContent IModelJsonSerializable<SnapshotDownloadContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SnapshotDownloadContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSnapshotDownloadContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SnapshotDownloadContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SnapshotDownloadContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SnapshotDownloadContent IModelSerializable<SnapshotDownloadContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SnapshotDownloadContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSnapshotDownloadContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SnapshotDownloadContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SnapshotDownloadContent"/> to convert. </param>
+        public static implicit operator RequestContent(SnapshotDownloadContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SnapshotDownloadContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SnapshotDownloadContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSnapshotDownloadContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

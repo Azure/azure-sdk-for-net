@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class ApplicationInsightsComponentExportRequest : IUtf8JsonSerializable
+    public partial class ApplicationInsightsComponentExportRequest : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationInsightsComponentExportRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationInsightsComponentExportRequest>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationInsightsComponentExportRequest>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationInsightsComponentExportRequest>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RecordTypes))
             {
@@ -60,7 +68,145 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("DestinationAccountId"u8);
                 writer.WriteStringValue(DestinationAccountId);
             }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ApplicationInsightsComponentExportRequest DeserializeApplicationInsightsComponentExportRequest(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> recordTypes = default;
+            Optional<string> destinationType = default;
+            Optional<string> destinationAddress = default;
+            Optional<string> isEnabled = default;
+            Optional<string> notificationQueueEnabled = default;
+            Optional<Uri> notificationQueueUri = default;
+            Optional<string> destinationStorageSubscriptionId = default;
+            Optional<string> destinationStorageLocationId = default;
+            Optional<string> destinationAccountId = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("RecordTypes"u8))
+                {
+                    recordTypes = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("DestinationType"u8))
+                {
+                    destinationType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("DestinationAddress"u8))
+                {
+                    destinationAddress = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("IsEnabled"u8))
+                {
+                    isEnabled = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("NotificationQueueEnabled"u8))
+                {
+                    notificationQueueEnabled = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("NotificationQueueUri"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    notificationQueueUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("DestinationStorageSubscriptionId"u8))
+                {
+                    destinationStorageSubscriptionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("DestinationStorageLocationId"u8))
+                {
+                    destinationStorageLocationId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("DestinationAccountId"u8))
+                {
+                    destinationAccountId = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ApplicationInsightsComponentExportRequest(recordTypes.Value, destinationType.Value, destinationAddress.Value, isEnabled.Value, notificationQueueEnabled.Value, notificationQueueUri.Value, destinationStorageSubscriptionId.Value, destinationStorageLocationId.Value, destinationAccountId.Value, serializedAdditionalRawData);
+        }
+
+        ApplicationInsightsComponentExportRequest IModelJsonSerializable<ApplicationInsightsComponentExportRequest>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationInsightsComponentExportRequest>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationInsightsComponentExportRequest(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationInsightsComponentExportRequest>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationInsightsComponentExportRequest>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationInsightsComponentExportRequest IModelSerializable<ApplicationInsightsComponentExportRequest>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationInsightsComponentExportRequest>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationInsightsComponentExportRequest(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApplicationInsightsComponentExportRequest"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApplicationInsightsComponentExportRequest"/> to convert. </param>
+        public static implicit operator RequestContent(ApplicationInsightsComponentExportRequest model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApplicationInsightsComponentExportRequest"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApplicationInsightsComponentExportRequest(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationInsightsComponentExportRequest(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

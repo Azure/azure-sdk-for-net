@@ -5,45 +5,64 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    internal partial class UnknownScriptExecutionParameter : IUtf8JsonSerializable
+    internal partial class UnknownScriptExecutionParameter : IUtf8JsonSerializable, IModelJsonSerializable<ScriptExecutionParameterDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ScriptExecutionParameterDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ScriptExecutionParameterDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ScriptExecutionParameterDetails>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ParameterType.ToString());
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownScriptExecutionParameter DeserializeUnknownScriptExecutionParameter(JsonElement element)
+        internal static ScriptExecutionParameterDetails DeserializeUnknownScriptExecutionParameter(JsonElement element, ModelSerializerOptions options = default) => DeserializeScriptExecutionParameterDetails(element, options);
+
+        ScriptExecutionParameterDetails IModelJsonSerializable<ScriptExecutionParameterDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string name = default;
-            ScriptExecutionParameterType type = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ScriptExecutionParameterType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownScriptExecutionParameter(name, type);
+            Core.ModelSerializerHelper.ValidateFormat<ScriptExecutionParameterDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownScriptExecutionParameter(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ScriptExecutionParameterDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScriptExecutionParameterDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ScriptExecutionParameterDetails IModelSerializable<ScriptExecutionParameterDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScriptExecutionParameterDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeScriptExecutionParameterDetails(doc.RootElement, options);
         }
     }
 }

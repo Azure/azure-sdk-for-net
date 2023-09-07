@@ -10,15 +10,20 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Automanage.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automanage
 {
-    public partial class AutomanageConfigurationProfileAssignmentReportData : IUtf8JsonSerializable
+    public partial class AutomanageConfigurationProfileAssignmentReportData : IUtf8JsonSerializable, IModelJsonSerializable<AutomanageConfigurationProfileAssignmentReportData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AutomanageConfigurationProfileAssignmentReportData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AutomanageConfigurationProfileAssignmentReportData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AutomanageConfigurationProfileAssignmentReportData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -33,11 +38,25 @@ namespace Azure.ResourceManager.Automanage
                 writer.WriteStringValue(EndOn.Value, "O");
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AutomanageConfigurationProfileAssignmentReportData DeserializeAutomanageConfigurationProfileAssignmentReportData(JsonElement element)
+        internal static AutomanageConfigurationProfileAssignmentReportData DeserializeAutomanageConfigurationProfileAssignmentReportData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -56,6 +75,7 @@ namespace Azure.ResourceManager.Automanage
             Optional<IReadOnlyList<ConfigurationProfileAssignmentReportResourceDetails>> resources = default;
             Optional<ResponseError> error = default;
             Optional<string> reportFormatVersion = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -173,8 +193,61 @@ namespace Azure.ResourceManager.Automanage
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AutomanageConfigurationProfileAssignmentReportData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(duration), type0.Value, status.Value, configurationProfile.Value, Optional.ToList(resources), error.Value, reportFormatVersion.Value);
+            return new AutomanageConfigurationProfileAssignmentReportData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(duration), type0.Value, status.Value, configurationProfile.Value, Optional.ToList(resources), error.Value, reportFormatVersion.Value, serializedAdditionalRawData);
+        }
+
+        AutomanageConfigurationProfileAssignmentReportData IModelJsonSerializable<AutomanageConfigurationProfileAssignmentReportData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AutomanageConfigurationProfileAssignmentReportData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutomanageConfigurationProfileAssignmentReportData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AutomanageConfigurationProfileAssignmentReportData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AutomanageConfigurationProfileAssignmentReportData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AutomanageConfigurationProfileAssignmentReportData IModelSerializable<AutomanageConfigurationProfileAssignmentReportData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AutomanageConfigurationProfileAssignmentReportData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAutomanageConfigurationProfileAssignmentReportData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AutomanageConfigurationProfileAssignmentReportData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AutomanageConfigurationProfileAssignmentReportData"/> to convert. </param>
+        public static implicit operator RequestContent(AutomanageConfigurationProfileAssignmentReportData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AutomanageConfigurationProfileAssignmentReportData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AutomanageConfigurationProfileAssignmentReportData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAutomanageConfigurationProfileAssignmentReportData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

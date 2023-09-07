@@ -6,15 +6,82 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class BotServiceHostSettingsResult
+    public partial class BotServiceHostSettingsResult : IUtf8JsonSerializable, IModelJsonSerializable<BotServiceHostSettingsResult>
     {
-        internal static BotServiceHostSettingsResult DeserializeBotServiceHostSettingsResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BotServiceHostSettingsResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BotServiceHostSettingsResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BotServiceHostSettingsResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(OAuthUri))
+            {
+                writer.WritePropertyName("OAuthUrl"u8);
+                writer.WriteStringValue(OAuthUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(ToBotFromChannelOpenIdMetadataUri))
+            {
+                writer.WritePropertyName("ToBotFromChannelOpenIdMetadataUrl"u8);
+                writer.WriteStringValue(ToBotFromChannelOpenIdMetadataUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(ToBotFromChannelTokenIssuer))
+            {
+                writer.WritePropertyName("ToBotFromChannelTokenIssuer"u8);
+                writer.WriteStringValue(ToBotFromChannelTokenIssuer);
+            }
+            if (Optional.IsDefined(ToBotFromEmulatorOpenIdMetadataUri))
+            {
+                writer.WritePropertyName("ToBotFromEmulatorOpenIdMetadataUrl"u8);
+                writer.WriteStringValue(ToBotFromEmulatorOpenIdMetadataUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(ToChannelFromBotLoginUri))
+            {
+                writer.WritePropertyName("ToChannelFromBotLoginUrl"u8);
+                writer.WriteStringValue(ToChannelFromBotLoginUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(ToChannelFromBotOAuthScope))
+            {
+                writer.WritePropertyName("ToChannelFromBotOAuthScope"u8);
+                writer.WriteStringValue(ToChannelFromBotOAuthScope);
+            }
+            if (Optional.IsDefined(ValidateAuthority))
+            {
+                writer.WritePropertyName("ValidateAuthority"u8);
+                writer.WriteBooleanValue(ValidateAuthority.Value);
+            }
+            if (Optional.IsDefined(BotOpenIdMetadata))
+            {
+                writer.WritePropertyName("BotOpenIdMetadata"u8);
+                writer.WriteStringValue(BotOpenIdMetadata);
+            }
+            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static BotServiceHostSettingsResult DeserializeBotServiceHostSettingsResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +94,7 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<string> toChannelFromBotOAuthScope = default;
             Optional<bool> validateAuthority = default;
             Optional<string> botOpenIdMetadata = default;
+            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("OAuthUrl"u8))
@@ -89,8 +157,61 @@ namespace Azure.ResourceManager.BotService.Models
                     botOpenIdMetadata = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BotServiceHostSettingsResult(oAuthUrl.Value, toBotFromChannelOpenIdMetadataUrl.Value, toBotFromChannelTokenIssuer.Value, toBotFromEmulatorOpenIdMetadataUrl.Value, toChannelFromBotLoginUrl.Value, toChannelFromBotOAuthScope.Value, Optional.ToNullable(validateAuthority), botOpenIdMetadata.Value);
+            return new BotServiceHostSettingsResult(oAuthUrl.Value, toBotFromChannelOpenIdMetadataUrl.Value, toBotFromChannelTokenIssuer.Value, toBotFromEmulatorOpenIdMetadataUrl.Value, toChannelFromBotLoginUrl.Value, toChannelFromBotOAuthScope.Value, Optional.ToNullable(validateAuthority), botOpenIdMetadata.Value, serializedAdditionalRawData);
+        }
+
+        BotServiceHostSettingsResult IModelJsonSerializable<BotServiceHostSettingsResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BotServiceHostSettingsResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBotServiceHostSettingsResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BotServiceHostSettingsResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BotServiceHostSettingsResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BotServiceHostSettingsResult IModelSerializable<BotServiceHostSettingsResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BotServiceHostSettingsResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBotServiceHostSettingsResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BotServiceHostSettingsResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BotServiceHostSettingsResult"/> to convert. </param>
+        public static implicit operator RequestContent(BotServiceHostSettingsResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BotServiceHostSettingsResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BotServiceHostSettingsResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBotServiceHostSettingsResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }
