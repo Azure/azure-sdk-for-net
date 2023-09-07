@@ -44,8 +44,10 @@ namespace Azure.ResourceManager.Maintenance.Tests
         public async Task MaintenanceConfigurationCancelTest()
         {
             string resourceName = Recording.GenerateAssetName("maintenance-config-");
-            DateTime startOn = DateTime.UtcNow.AddMinutes(42);
+
+            DateTime startOn = DateTime.UtcNow.AddMinutes(12);
             MaintenanceConfigurationResource config = await CreateMaintenanceConfiguration(resourceName, startOn);
+            Assert.IsNotEmpty(config.Data.Id);
 
             MaintenanceApplyUpdateData data = new MaintenanceApplyUpdateData()
             {
@@ -53,16 +55,17 @@ namespace Azure.ResourceManager.Maintenance.Tests
             };
             string providerName = "Microsoft.Maintenance";
             string resourceType = "maintenanceConfigurations";
-            string applyUpdateName = $"{startOn:yyyyMMddHHmmss}";
+            string applyUpdateName = $"{startOn:yyyyMMddHHmm00}";
 
-            // wait 10 minutes
-            await Delay(10 * 60 * 1000);
+            // wait 2 minutes
+            await Delay(2 * 60 * 1000);
 
             // cancel the maintenance
             ArmOperation<MaintenanceApplyUpdateResource> lro = await _configCollection.CreateOrUpdateAsync(WaitUntil.Completed, providerName, resourceType, resourceName, applyUpdateName, data);
             MaintenanceApplyUpdateResource result = lro.Value;
 
             Assert.IsTrue(result.HasData);
+            Assert.AreEqual(result.Data.Status, MaintenanceUpdateStatus.Cancelled);
         }
 
         private async Task<MaintenanceConfigurationResource> CreateMaintenanceConfiguration(string resourceName, DateTime startOn)
@@ -74,17 +77,13 @@ namespace Azure.ResourceManager.Maintenance.Tests
                 Visibility = MaintenanceConfigurationVisibility.Custom,
                 StartOn = startOn,
                 ExpireOn = DateTimeOffset.Parse("9999-12-31 00:00"),
-                Duration = TimeSpan.Parse("03:55"),
-                TimeZone = "Pacific Standard Time",
+                Duration = TimeSpan.Parse("03:00"),
+                TimeZone = "UTC",
                 RecurEvery = "Day",
-                InstallPatches = new MaintenancePatchConfiguration()
-                {
-                    LinuxParameters = new MaintenanceLinuxPatchSettings (null, null, new List<string>() { "Critical", "Security" }),
-                    RebootSetting=MaintenanceRebootOption.IfRequired,
-                    WindowsParameters = new MaintenanceWindowsPatchSettings(),
-                },
+                InstallPatches = new MaintenancePatchConfiguration(MaintenanceRebootOption.Always,
+                    new MaintenanceWindowsPatchSettings(new List<string>(), new List<string>(), new List<string>() { "Security", "Critical" }, false),
+                    new MaintenanceLinuxPatchSettings(new List<string>(), new List<string>(), new List<string>() { "Security", "Critical" }))
             };
-            data.InstallPatches.WindowsParameters.ClassificationsToInclude.Add("CriticalUpdates");
             data.ExtensionProperties.Add("InGuestPatchMode", "User");
 
             ArmOperation<MaintenanceConfigurationResource> lro = await _resourceGroup.GetMaintenanceConfigurations().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
