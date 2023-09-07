@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -347,7 +346,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseKustoPoolKustoPoolsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation(_synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -381,7 +380,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseKustoPoolKustoPoolsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation(_synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -420,7 +419,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseKustoPoolKustoPoolsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseKustoPoolResource>(new SynapseKustoPoolOperationSource(Client), _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<SynapseKustoPoolResource>(new SynapseKustoPoolOperationSource(Client), _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -459,7 +458,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseKustoPoolKustoPoolsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseKustoPoolResource>(new SynapseKustoPoolOperationSource(Client), _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<SynapseKustoPoolResource>(new SynapseKustoPoolOperationSource(Client), _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -493,7 +492,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseKustoPoolKustoPoolsRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation(_synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -527,7 +526,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseKustoPoolKustoPoolsRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation(_synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -561,7 +560,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseKustoPoolKustoPoolsRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation(_synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -595,7 +594,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseKustoPoolKustoPoolsRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation(_synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -625,7 +624,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseDataSourceResourceSku> GetSkusByResourceAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListSkusByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SynapseDataSourceResourceSku.DeserializeSynapseDataSourceResourceSku, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetSkusByResource", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SynapseDataSourceResourceSku.DeserializeSynapseDataSourceResourceSku, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetSkusByResource", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -646,7 +645,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseDataSourceResourceSku> GetSkusByResource(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListSkusByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SynapseDataSourceResourceSku.DeserializeSynapseDataSourceResourceSku, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetSkusByResource", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SynapseDataSourceResourceSku.DeserializeSynapseDataSourceResourceSku, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetSkusByResource", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -667,7 +666,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseLanguageExtension> GetLanguageExtensionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SynapseLanguageExtension.DeserializeSynapseLanguageExtension, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetLanguageExtensions", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SynapseLanguageExtension.DeserializeSynapseLanguageExtension, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetLanguageExtensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -688,7 +687,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseLanguageExtension> GetLanguageExtensions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SynapseLanguageExtension.DeserializeSynapseLanguageExtension, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetLanguageExtensions", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SynapseLanguageExtension.DeserializeSynapseLanguageExtension, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetLanguageExtensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -717,7 +716,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseKustoPoolKustoPoolsRestClient.AddLanguageExtensionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, languageExtensionsToAdd, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation(_synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateAddLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, languageExtensionsToAdd).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateAddLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, languageExtensionsToAdd).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -755,7 +754,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseKustoPoolKustoPoolsRestClient.AddLanguageExtensions(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, languageExtensionsToAdd, cancellationToken);
-                var operation = new SynapseArmOperation(_synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateAddLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, languageExtensionsToAdd).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateAddLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, languageExtensionsToAdd).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -793,7 +792,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseKustoPoolKustoPoolsRestClient.RemoveLanguageExtensionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, languageExtensionsToRemove, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation(_synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateRemoveLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, languageExtensionsToRemove).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateRemoveLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, languageExtensionsToRemove).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -831,7 +830,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseKustoPoolKustoPoolsRestClient.RemoveLanguageExtensions(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, languageExtensionsToRemove, cancellationToken);
-                var operation = new SynapseArmOperation(_synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateRemoveLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, languageExtensionsToRemove).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateRemoveLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, languageExtensionsToRemove).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -861,7 +860,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseFollowerDatabaseDefinition> GetFollowerDatabasesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SynapseFollowerDatabaseDefinition.DeserializeSynapseFollowerDatabaseDefinition, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetFollowerDatabases", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SynapseFollowerDatabaseDefinition.DeserializeSynapseFollowerDatabaseDefinition, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetFollowerDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -882,7 +881,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseFollowerDatabaseDefinition> GetFollowerDatabases(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SynapseFollowerDatabaseDefinition.DeserializeSynapseFollowerDatabaseDefinition, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetFollowerDatabases", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SynapseFollowerDatabaseDefinition.DeserializeSynapseFollowerDatabaseDefinition, _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetFollowerDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -911,7 +910,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseKustoPoolKustoPoolsRestClient.DetachFollowerDatabasesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, followerDatabaseToRemove, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation(_synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateDetachFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, followerDatabaseToRemove).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateDetachFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, followerDatabaseToRemove).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -949,7 +948,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseKustoPoolKustoPoolsRestClient.DetachFollowerDatabases(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, followerDatabaseToRemove, cancellationToken);
-                var operation = new SynapseArmOperation(_synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateDetachFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, followerDatabaseToRemove).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateDetachFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, followerDatabaseToRemove).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1115,7 +1114,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseKustoPoolPrivateLinkData> GetAllKustoPoolPrivateLinkDataAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoPoolPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SynapseKustoPoolPrivateLinkData.DeserializeSynapseKustoPoolPrivateLinkData, _kustoPoolPrivateLinkResourcesClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetAllKustoPoolPrivateLinkData", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SynapseKustoPoolPrivateLinkData.DeserializeSynapseKustoPoolPrivateLinkData, _kustoPoolPrivateLinkResourcesClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetAllKustoPoolPrivateLinkData", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1136,7 +1135,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseKustoPoolPrivateLinkData> GetAllKustoPoolPrivateLinkData(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoPoolPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SynapseKustoPoolPrivateLinkData.DeserializeSynapseKustoPoolPrivateLinkData, _kustoPoolPrivateLinkResourcesClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetAllKustoPoolPrivateLinkData", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SynapseKustoPoolPrivateLinkData.DeserializeSynapseKustoPoolPrivateLinkData, _kustoPoolPrivateLinkResourcesClientDiagnostics, Pipeline, "SynapseKustoPoolResource.GetAllKustoPoolPrivateLinkData", "value", null, cancellationToken);
         }
 
         /// <summary>

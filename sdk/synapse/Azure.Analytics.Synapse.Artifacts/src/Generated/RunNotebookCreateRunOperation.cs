@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal RunNotebookCreateRunOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            IOperation<RunNotebookResponse> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
+            IOperation<RunNotebookResponse> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, Core.OperationFinalStateVia.Location);
             _operation = new OperationInternal<RunNotebookResponse>(nextLinkOperation, clientDiagnostics, response, "RunNotebookCreateRunOperation");
         }
 

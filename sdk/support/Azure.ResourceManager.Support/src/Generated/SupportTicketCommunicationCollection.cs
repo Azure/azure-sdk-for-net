@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.Support
             try
             {
                 var response = await _supportTicketCommunicationCommunicationsRestClient.CreateAsync(Id.SubscriptionId, Id.Name, communicationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SupportArmOperation<SupportTicketCommunicationResource>(new SupportTicketCommunicationOperationSource(Client), _supportTicketCommunicationCommunicationsClientDiagnostics, Pipeline, _supportTicketCommunicationCommunicationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Name, communicationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SupportArmOperation<SupportTicketCommunicationResource>(new SupportTicketCommunicationOperationSource(Client), _supportTicketCommunicationCommunicationsClientDiagnostics, Pipeline, _supportTicketCommunicationCommunicationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Name, communicationName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Support
             try
             {
                 var response = _supportTicketCommunicationCommunicationsRestClient.Create(Id.SubscriptionId, Id.Name, communicationName, data, cancellationToken);
-                var operation = new SupportArmOperation<SupportTicketCommunicationResource>(new SupportTicketCommunicationOperationSource(Client), _supportTicketCommunicationCommunicationsClientDiagnostics, Pipeline, _supportTicketCommunicationCommunicationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Name, communicationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SupportArmOperation<SupportTicketCommunicationResource>(new SupportTicketCommunicationOperationSource(Client), _supportTicketCommunicationCommunicationsClientDiagnostics, Pipeline, _supportTicketCommunicationCommunicationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Name, communicationName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -230,7 +229,7 @@ namespace Azure.ResourceManager.Support
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketCommunicationCommunicationsRestClient.CreateListRequest(Id.SubscriptionId, Id.Name, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketCommunicationCommunicationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, top, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SupportTicketCommunicationResource(Client, SupportTicketCommunicationData.DeserializeSupportTicketCommunicationData(e)), _supportTicketCommunicationCommunicationsClientDiagnostics, Pipeline, "SupportTicketCommunicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SupportTicketCommunicationResource(Client, SupportTicketCommunicationData.DeserializeSupportTicketCommunicationData(e)), _supportTicketCommunicationCommunicationsClientDiagnostics, Pipeline, "SupportTicketCommunicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +253,7 @@ namespace Azure.ResourceManager.Support
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketCommunicationCommunicationsRestClient.CreateListRequest(Id.SubscriptionId, Id.Name, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketCommunicationCommunicationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, top, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SupportTicketCommunicationResource(Client, SupportTicketCommunicationData.DeserializeSupportTicketCommunicationData(e)), _supportTicketCommunicationCommunicationsClientDiagnostics, Pipeline, "SupportTicketCommunicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SupportTicketCommunicationResource(Client, SupportTicketCommunicationData.DeserializeSupportTicketCommunicationData(e)), _supportTicketCommunicationCommunicationsClientDiagnostics, Pipeline, "SupportTicketCommunicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

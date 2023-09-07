@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = await _streamingJobRestClient.CreateOrReplaceAsync(Id.SubscriptionId, Id.ResourceGroupName, jobName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new StreamAnalyticsArmOperation<StreamingJobResource>(new StreamingJobOperationSource(Client), _streamingJobClientDiagnostics, Pipeline, _streamingJobRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new StreamAnalyticsArmOperation<StreamingJobResource>(new StreamingJobOperationSource(Client), _streamingJobClientDiagnostics, Pipeline, _streamingJobRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, data, ifMatch, ifNoneMatch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = _streamingJobRestClient.CreateOrReplace(Id.SubscriptionId, Id.ResourceGroupName, jobName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new StreamAnalyticsArmOperation<StreamingJobResource>(new StreamingJobOperationSource(Client), _streamingJobClientDiagnostics, Pipeline, _streamingJobRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new StreamAnalyticsArmOperation<StreamingJobResource>(new StreamingJobOperationSource(Client), _streamingJobClientDiagnostics, Pipeline, _streamingJobRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, data, ifMatch, ifNoneMatch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -236,7 +235,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingJobRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingJobRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamingJobResource(Client, StreamingJobData.DeserializeStreamingJobData(e)), _streamingJobClientDiagnostics, Pipeline, "StreamingJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamingJobResource(Client, StreamingJobData.DeserializeStreamingJobData(e)), _streamingJobClientDiagnostics, Pipeline, "StreamingJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -259,7 +258,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingJobRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingJobRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamingJobResource(Client, StreamingJobData.DeserializeStreamingJobData(e)), _streamingJobClientDiagnostics, Pipeline, "StreamingJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamingJobResource(Client, StreamingJobData.DeserializeStreamingJobData(e)), _streamingJobClientDiagnostics, Pipeline, "StreamingJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

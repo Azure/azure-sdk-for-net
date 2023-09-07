@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal SqlScriptCreateOrUpdateSqlScriptOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            IOperation<SqlScriptResource> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
+            IOperation<SqlScriptResource> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, Core.OperationFinalStateVia.Location);
             _operation = new OperationInternal<SqlScriptResource>(nextLinkOperation, clientDiagnostics, response, "SqlScriptCreateOrUpdateSqlScriptOperation");
         }
 

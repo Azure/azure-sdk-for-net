@@ -9,7 +9,6 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
@@ -181,7 +180,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LibraryResource.DeserializeLibraryResource, _clientDiagnostics, _pipeline, "LibraryClient.List", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LibraryResource.DeserializeLibraryResource, _clientDiagnostics, _pipeline, "LibraryClient.List", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists Library. </summary>
@@ -190,7 +189,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LibraryResource.DeserializeLibraryResource, _clientDiagnostics, _pipeline, "LibraryClient.List", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LibraryResource.DeserializeLibraryResource, _clientDiagnostics, _pipeline, "LibraryClient.List", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Flush Library. </summary>

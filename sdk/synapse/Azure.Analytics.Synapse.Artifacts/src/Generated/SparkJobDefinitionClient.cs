@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
@@ -106,7 +105,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetSparkJobDefinitionsByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetSparkJobDefinitionsByWorkspaceNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource, _clientDiagnostics, _pipeline, "SparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource, _clientDiagnostics, _pipeline, "SparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists spark job definitions. </summary>
@@ -115,7 +114,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetSparkJobDefinitionsByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetSparkJobDefinitionsByWorkspaceNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource, _clientDiagnostics, _pipeline, "SparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SparkJobDefinitionResource.DeserializeSparkJobDefinitionResource, _clientDiagnostics, _pipeline, "SparkJobDefinitionClient.GetSparkJobDefinitionsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Creates or updates a Spark Job Definition. </summary>

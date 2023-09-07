@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseWorkspaceWorkspacesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseWorkspaceResource>(new SynapseWorkspaceOperationSource(Client), _synapseWorkspaceWorkspacesClientDiagnostics, Pipeline, _synapseWorkspaceWorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<SynapseWorkspaceResource>(new SynapseWorkspaceOperationSource(Client), _synapseWorkspaceWorkspacesClientDiagnostics, Pipeline, _synapseWorkspaceWorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseWorkspaceWorkspacesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseWorkspaceResource>(new SynapseWorkspaceOperationSource(Client), _synapseWorkspaceWorkspacesClientDiagnostics, Pipeline, _synapseWorkspaceWorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<SynapseWorkspaceResource>(new SynapseWorkspaceOperationSource(Client), _synapseWorkspaceWorkspacesClientDiagnostics, Pipeline, _synapseWorkspaceWorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseWorkspaceWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkspaceResource(Client, SynapseWorkspaceData.DeserializeSynapseWorkspaceData(e)), _synapseWorkspaceWorkspacesClientDiagnostics, Pipeline, "SynapseWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkspaceResource(Client, SynapseWorkspaceData.DeserializeSynapseWorkspaceData(e)), _synapseWorkspaceWorkspacesClientDiagnostics, Pipeline, "SynapseWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +250,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseWorkspaceWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkspaceResource(Client, SynapseWorkspaceData.DeserializeSynapseWorkspaceData(e)), _synapseWorkspaceWorkspacesClientDiagnostics, Pipeline, "SynapseWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkspaceResource(Client, SynapseWorkspaceData.DeserializeSynapseWorkspaceData(e)), _synapseWorkspaceWorkspacesClientDiagnostics, Pipeline, "SynapseWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

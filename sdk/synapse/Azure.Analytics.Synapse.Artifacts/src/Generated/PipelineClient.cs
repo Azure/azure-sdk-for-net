@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
@@ -151,7 +150,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetPipelinesByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetPipelinesByWorkspaceNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PipelineResource.DeserializePipelineResource, _clientDiagnostics, _pipeline, "PipelineClient.GetPipelinesByWorkspace", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PipelineResource.DeserializePipelineResource, _clientDiagnostics, _pipeline, "PipelineClient.GetPipelinesByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists pipelines. </summary>
@@ -160,7 +159,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetPipelinesByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetPipelinesByWorkspaceNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PipelineResource.DeserializePipelineResource, _clientDiagnostics, _pipeline, "PipelineClient.GetPipelinesByWorkspace", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PipelineResource.DeserializePipelineResource, _clientDiagnostics, _pipeline, "PipelineClient.GetPipelinesByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Creates or updates a pipeline. </summary>

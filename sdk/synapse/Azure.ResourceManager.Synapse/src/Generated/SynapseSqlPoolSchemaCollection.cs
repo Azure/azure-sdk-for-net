@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSqlPoolSchemaSqlPoolSchemasRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseSqlPoolSchemaSqlPoolSchemasRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseSqlPoolSchemaResource(Client, SynapseSqlPoolSchemaData.DeserializeSynapseSqlPoolSchemaData(e)), _synapseSqlPoolSchemaSqlPoolSchemasClientDiagnostics, Pipeline, "SynapseSqlPoolSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseSqlPoolSchemaResource(Client, SynapseSqlPoolSchemaData.DeserializeSynapseSqlPoolSchemaData(e)), _synapseSqlPoolSchemaSqlPoolSchemasClientDiagnostics, Pipeline, "SynapseSqlPoolSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -170,7 +169,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSqlPoolSchemaSqlPoolSchemasRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseSqlPoolSchemaSqlPoolSchemasRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseSqlPoolSchemaResource(Client, SynapseSqlPoolSchemaData.DeserializeSynapseSqlPoolSchemaData(e)), _synapseSqlPoolSchemaSqlPoolSchemasClientDiagnostics, Pipeline, "SynapseSqlPoolSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseSqlPoolSchemaResource(Client, SynapseSqlPoolSchemaData.DeserializeSynapseSqlPoolSchemaData(e)), _synapseSqlPoolSchemaSqlPoolSchemasClientDiagnostics, Pipeline, "SynapseSqlPoolSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

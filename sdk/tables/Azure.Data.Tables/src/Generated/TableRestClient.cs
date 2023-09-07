@@ -175,7 +175,7 @@ namespace Azure.Data.Tables
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 204:
-                    return ResponseWithHeaders.FromValue((TableResponse)null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue<TableResponse, TableCreateHeaders>((TableResponse)null, headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -207,7 +207,7 @@ namespace Azure.Data.Tables
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 204:
-                    return ResponseWithHeaders.FromValue((TableResponse)null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue<TableResponse, TableCreateHeaders>((TableResponse)null, headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1187,7 +1187,7 @@ namespace Azure.Data.Tables
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 204:
-                    return ResponseWithHeaders.FromValue((IReadOnlyDictionary<string, object>)null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue<IReadOnlyDictionary<string, object>, TableInsertEntityHeaders>((IReadOnlyDictionary<string, object>)null, headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1233,7 +1233,7 @@ namespace Azure.Data.Tables
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 204:
-                    return ResponseWithHeaders.FromValue((IReadOnlyDictionary<string, object>)null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue<IReadOnlyDictionary<string, object>, TableInsertEntityHeaders>((IReadOnlyDictionary<string, object>)null, headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

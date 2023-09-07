@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, principalAssignmentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseClusterPrincipalAssignmentResource>(new SynapseClusterPrincipalAssignmentOperationSource(Client), _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics, Pipeline, _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, principalAssignmentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<SynapseClusterPrincipalAssignmentResource>(new SynapseClusterPrincipalAssignmentOperationSource(Client), _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics, Pipeline, _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, principalAssignmentName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, principalAssignmentName, data, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseClusterPrincipalAssignmentResource>(new SynapseClusterPrincipalAssignmentOperationSource(Client), _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics, Pipeline, _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, principalAssignmentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<SynapseClusterPrincipalAssignmentResource>(new SynapseClusterPrincipalAssignmentOperationSource(Client), _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics, Pipeline, _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, principalAssignmentName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseClusterPrincipalAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseClusterPrincipalAssignmentResource(Client, SynapseClusterPrincipalAssignmentData.DeserializeSynapseClusterPrincipalAssignmentData(e)), _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics, Pipeline, "SynapseClusterPrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseClusterPrincipalAssignmentResource(Client, SynapseClusterPrincipalAssignmentData.DeserializeSynapseClusterPrincipalAssignmentData(e)), _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics, Pipeline, "SynapseClusterPrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +247,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseClusterPrincipalAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseClusterPrincipalAssignmentResource(Client, SynapseClusterPrincipalAssignmentData.DeserializeSynapseClusterPrincipalAssignmentData(e)), _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics, Pipeline, "SynapseClusterPrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseClusterPrincipalAssignmentResource(Client, SynapseClusterPrincipalAssignmentData.DeserializeSynapseClusterPrincipalAssignmentData(e)), _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics, Pipeline, "SynapseClusterPrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

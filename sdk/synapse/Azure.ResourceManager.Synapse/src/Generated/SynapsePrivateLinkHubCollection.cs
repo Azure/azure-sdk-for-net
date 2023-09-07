@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapsePrivateLinkHubPrivateLinkHubsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapsePrivateLinkHubPrivateLinkHubsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapsePrivateLinkHubResource(Client, SynapsePrivateLinkHubData.DeserializeSynapsePrivateLinkHubData(e)), _synapsePrivateLinkHubPrivateLinkHubsClientDiagnostics, Pipeline, "SynapsePrivateLinkHubCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapsePrivateLinkHubResource(Client, SynapsePrivateLinkHubData.DeserializeSynapsePrivateLinkHubData(e)), _synapsePrivateLinkHubPrivateLinkHubsClientDiagnostics, Pipeline, "SynapsePrivateLinkHubCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +250,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapsePrivateLinkHubPrivateLinkHubsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapsePrivateLinkHubPrivateLinkHubsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapsePrivateLinkHubResource(Client, SynapsePrivateLinkHubData.DeserializeSynapsePrivateLinkHubData(e)), _synapsePrivateLinkHubPrivateLinkHubsClientDiagnostics, Pipeline, "SynapsePrivateLinkHubCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapsePrivateLinkHubResource(Client, SynapsePrivateLinkHubData.DeserializeSynapsePrivateLinkHubData(e)), _synapsePrivateLinkHubPrivateLinkHubsClientDiagnostics, Pipeline, "SynapsePrivateLinkHubCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -741,7 +740,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseSqlPoolSqlPoolsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<BinaryData>(new BinaryDataOperationSource(), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<BinaryData>(new BinaryDataOperationSource(), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -775,7 +774,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseSqlPoolSqlPoolsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation<BinaryData>(new BinaryDataOperationSource(), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<BinaryData>(new BinaryDataOperationSource(), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -813,7 +812,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseSqlPoolSqlPoolsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseSqlPoolResource>(new SynapseSqlPoolOperationSource(Client), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<SynapseSqlPoolResource>(new SynapseSqlPoolOperationSource(Client), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -851,7 +850,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseSqlPoolSqlPoolsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseSqlPoolResource>(new SynapseSqlPoolOperationSource(Client), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<SynapseSqlPoolResource>(new SynapseSqlPoolOperationSource(Client), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -885,7 +884,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseSqlPoolSqlPoolsRestClient.PauseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<BinaryData>(new BinaryDataOperationSource(), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreatePauseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<BinaryData>(new BinaryDataOperationSource(), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreatePauseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -919,7 +918,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseSqlPoolSqlPoolsRestClient.Pause(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation<BinaryData>(new BinaryDataOperationSource(), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreatePauseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<BinaryData>(new BinaryDataOperationSource(), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreatePauseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -953,7 +952,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseSqlPoolSqlPoolsRestClient.ResumeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<BinaryData>(new BinaryDataOperationSource(), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<BinaryData>(new BinaryDataOperationSource(), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -987,7 +986,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseSqlPoolSqlPoolsRestClient.Resume(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation<BinaryData>(new BinaryDataOperationSource(), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<BinaryData>(new BinaryDataOperationSource(), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1093,7 +1092,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseRestorePointSqlPoolRestorePointsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseRestorePointResource>(new SynapseRestorePointOperationSource(Client), _synapseRestorePointSqlPoolRestorePointsClientDiagnostics, Pipeline, _synapseRestorePointSqlPoolRestorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<SynapseRestorePointResource>(new SynapseRestorePointOperationSource(Client), _synapseRestorePointSqlPoolRestorePointsClientDiagnostics, Pipeline, _synapseRestorePointSqlPoolRestorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1131,7 +1130,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseRestorePointSqlPoolRestorePointsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseRestorePointResource>(new SynapseRestorePointOperationSource(Client), _synapseRestorePointSqlPoolRestorePointsClientDiagnostics, Pipeline, _synapseRestorePointSqlPoolRestorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<SynapseRestorePointResource>(new SynapseRestorePointOperationSource(Client), _synapseRestorePointSqlPoolRestorePointsClientDiagnostics, Pipeline, _synapseRestorePointSqlPoolRestorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1162,7 +1161,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlPoolUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlPoolUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SqlPoolUsage.DeserializeSqlPoolUsage, _sqlPoolUsagesClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetSqlPoolUsages", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SqlPoolUsage.DeserializeSqlPoolUsage, _sqlPoolUsagesClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetSqlPoolUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1184,7 +1183,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlPoolUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlPoolUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SqlPoolUsage.DeserializeSqlPoolUsage, _sqlPoolUsagesClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetSqlPoolUsages", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SqlPoolUsage.DeserializeSqlPoolUsage, _sqlPoolUsagesClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetSqlPoolUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1207,7 +1206,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.CreateListCurrentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.CreateListCurrentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseSensitivityLabelResource(Client, SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(e)), _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetCurrentSqlPoolSensitivityLabels", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseSensitivityLabelResource(Client, SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(e)), _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetCurrentSqlPoolSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1230,7 +1229,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.CreateListCurrentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.CreateListCurrentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseSensitivityLabelResource(Client, SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(e)), _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetCurrentSqlPoolSensitivityLabels", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseSensitivityLabelResource(Client, SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(e)), _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetCurrentSqlPoolSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1323,7 +1322,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.CreateListRecommendedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, includeDisabledRecommendations, skipToken, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.CreateListRecommendedNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, includeDisabledRecommendations, skipToken, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseSensitivityLabelResource(Client, SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(e)), _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetRecommendedSqlPoolSensitivityLabels", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseSensitivityLabelResource(Client, SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(e)), _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetRecommendedSqlPoolSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1348,7 +1347,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.CreateListRecommendedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, includeDisabledRecommendations, skipToken, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.CreateListRecommendedNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, includeDisabledRecommendations, skipToken, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseSensitivityLabelResource(Client, SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(e)), _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetRecommendedSqlPoolSensitivityLabels", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseSensitivityLabelResource(Client, SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(e)), _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetRecommendedSqlPoolSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

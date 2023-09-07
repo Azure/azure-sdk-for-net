@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.StorageSync
             try
             {
                 var response = await _storageSyncServerEndpointServerEndpointsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverEndpointName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageSyncArmOperation<StorageSyncServerEndpointResource>(new StorageSyncServerEndpointOperationSource(Client), _storageSyncServerEndpointServerEndpointsClientDiagnostics, Pipeline, _storageSyncServerEndpointServerEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverEndpointName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageSyncArmOperation<StorageSyncServerEndpointResource>(new StorageSyncServerEndpointOperationSource(Client), _storageSyncServerEndpointServerEndpointsClientDiagnostics, Pipeline, _storageSyncServerEndpointServerEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverEndpointName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.StorageSync
             try
             {
                 var response = _storageSyncServerEndpointServerEndpointsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverEndpointName, content, cancellationToken);
-                var operation = new StorageSyncArmOperation<StorageSyncServerEndpointResource>(new StorageSyncServerEndpointOperationSource(Client), _storageSyncServerEndpointServerEndpointsClientDiagnostics, Pipeline, _storageSyncServerEndpointServerEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverEndpointName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageSyncArmOperation<StorageSyncServerEndpointResource>(new StorageSyncServerEndpointOperationSource(Client), _storageSyncServerEndpointServerEndpointsClientDiagnostics, Pipeline, _storageSyncServerEndpointServerEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverEndpointName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.StorageSync
         public virtual AsyncPageable<StorageSyncServerEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSyncServerEndpointServerEndpointsRestClient.CreateListBySyncGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StorageSyncServerEndpointResource(Client, StorageSyncServerEndpointData.DeserializeStorageSyncServerEndpointData(e)), _storageSyncServerEndpointServerEndpointsClientDiagnostics, Pipeline, "StorageSyncServerEndpointCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StorageSyncServerEndpointResource(Client, StorageSyncServerEndpointData.DeserializeStorageSyncServerEndpointData(e)), _storageSyncServerEndpointServerEndpointsClientDiagnostics, Pipeline, "StorageSyncServerEndpointCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +248,7 @@ namespace Azure.ResourceManager.StorageSync
         public virtual Pageable<StorageSyncServerEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSyncServerEndpointServerEndpointsRestClient.CreateListBySyncGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new StorageSyncServerEndpointResource(Client, StorageSyncServerEndpointData.DeserializeStorageSyncServerEndpointData(e)), _storageSyncServerEndpointServerEndpointsClientDiagnostics, Pipeline, "StorageSyncServerEndpointCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new StorageSyncServerEndpointResource(Client, StorageSyncServerEndpointData.DeserializeStorageSyncServerEndpointData(e)), _storageSyncServerEndpointServerEndpointsClientDiagnostics, Pipeline, "StorageSyncServerEndpointCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

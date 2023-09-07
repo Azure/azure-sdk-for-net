@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapsePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation(_synapsePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _synapsePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_synapsePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _synapsePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapsePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation(_synapsePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _synapsePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation(_synapsePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _synapsePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapsePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapsePrivateEndpointConnectionResource>(new SynapsePrivateEndpointConnectionOperationSource(Client), _synapsePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _synapsePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SynapseArmOperation<SynapsePrivateEndpointConnectionResource>(new SynapsePrivateEndpointConnectionOperationSource(Client), _synapsePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _synapsePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapsePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SynapseArmOperation<SynapsePrivateEndpointConnectionResource>(new SynapsePrivateEndpointConnectionOperationSource(Client), _synapsePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _synapsePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SynapseArmOperation<SynapsePrivateEndpointConnectionResource>(new SynapsePrivateEndpointConnectionOperationSource(Client), _synapsePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _synapsePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.StoragePool
             try
             {
                 var response = await _diskPoolRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StoragePoolArmOperation(_diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StoragePoolArmOperation(_diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -263,7 +262,7 @@ namespace Azure.ResourceManager.StoragePool
             try
             {
                 var response = _diskPoolRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StoragePoolArmOperation(_diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StoragePoolArmOperation(_diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -301,7 +300,7 @@ namespace Azure.ResourceManager.StoragePool
             try
             {
                 var response = await _diskPoolRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new StoragePoolArmOperation<DiskPoolResource>(new DiskPoolOperationSource(Client), _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StoragePoolArmOperation<DiskPoolResource>(new DiskPoolOperationSource(Client), _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -339,7 +338,7 @@ namespace Azure.ResourceManager.StoragePool
             try
             {
                 var response = _diskPoolRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new StoragePoolArmOperation<DiskPoolResource>(new DiskPoolOperationSource(Client), _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StoragePoolArmOperation<DiskPoolResource>(new DiskPoolOperationSource(Client), _diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -370,7 +369,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskPoolRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _diskPoolRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StoragePoolOutboundEnvironment.DeserializeStoragePoolOutboundEnvironment, _diskPoolClientDiagnostics, Pipeline, "DiskPoolResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StoragePoolOutboundEnvironment.DeserializeStoragePoolOutboundEnvironment, _diskPoolClientDiagnostics, Pipeline, "DiskPoolResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -392,7 +391,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskPoolRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _diskPoolRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StoragePoolOutboundEnvironment.DeserializeStoragePoolOutboundEnvironment, _diskPoolClientDiagnostics, Pipeline, "DiskPoolResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StoragePoolOutboundEnvironment.DeserializeStoragePoolOutboundEnvironment, _diskPoolClientDiagnostics, Pipeline, "DiskPoolResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -417,7 +416,7 @@ namespace Azure.ResourceManager.StoragePool
             try
             {
                 var response = await _diskPoolRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StoragePoolArmOperation(_diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StoragePoolArmOperation(_diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -451,7 +450,7 @@ namespace Azure.ResourceManager.StoragePool
             try
             {
                 var response = _diskPoolRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StoragePoolArmOperation(_diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StoragePoolArmOperation(_diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -485,7 +484,7 @@ namespace Azure.ResourceManager.StoragePool
             try
             {
                 var response = await _diskPoolRestClient.DeallocateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StoragePoolArmOperation(_diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateDeallocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StoragePoolArmOperation(_diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateDeallocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -519,7 +518,7 @@ namespace Azure.ResourceManager.StoragePool
             try
             {
                 var response = _diskPoolRestClient.Deallocate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StoragePoolArmOperation(_diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateDeallocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StoragePoolArmOperation(_diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateDeallocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -553,7 +552,7 @@ namespace Azure.ResourceManager.StoragePool
             try
             {
                 var response = await _diskPoolRestClient.UpgradeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StoragePoolArmOperation(_diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StoragePoolArmOperation(_diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -587,7 +586,7 @@ namespace Azure.ResourceManager.StoragePool
             try
             {
                 var response = _diskPoolRestClient.Upgrade(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StoragePoolArmOperation(_diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StoragePoolArmOperation(_diskPoolClientDiagnostics, Pipeline, _diskPoolRestClient.CreateUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

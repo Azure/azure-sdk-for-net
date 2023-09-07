@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.Support
             try
             {
                 var response = await _supportTicketRestClient.CreateAsync(Id.SubscriptionId, supportTicketName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SupportArmOperation<SupportTicketResource>(new SupportTicketOperationSource(Client), _supportTicketClientDiagnostics, Pipeline, _supportTicketRestClient.CreateCreateRequest(Id.SubscriptionId, supportTicketName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SupportArmOperation<SupportTicketResource>(new SupportTicketOperationSource(Client), _supportTicketClientDiagnostics, Pipeline, _supportTicketRestClient.CreateCreateRequest(Id.SubscriptionId, supportTicketName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.Support
             try
             {
                 var response = _supportTicketRestClient.Create(Id.SubscriptionId, supportTicketName, data, cancellationToken);
-                var operation = new SupportArmOperation<SupportTicketResource>(new SupportTicketOperationSource(Client), _supportTicketClientDiagnostics, Pipeline, _supportTicketRestClient.CreateCreateRequest(Id.SubscriptionId, supportTicketName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SupportArmOperation<SupportTicketResource>(new SupportTicketOperationSource(Client), _supportTicketClientDiagnostics, Pipeline, _supportTicketRestClient.CreateCreateRequest(Id.SubscriptionId, supportTicketName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -231,7 +230,7 @@ namespace Azure.ResourceManager.Support
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketRestClient.CreateListRequest(Id.SubscriptionId, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SupportTicketResource(Client, SupportTicketData.DeserializeSupportTicketData(e)), _supportTicketClientDiagnostics, Pipeline, "SupportTicketCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SupportTicketResource(Client, SupportTicketData.DeserializeSupportTicketData(e)), _supportTicketClientDiagnostics, Pipeline, "SupportTicketCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +254,7 @@ namespace Azure.ResourceManager.Support
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketRestClient.CreateListRequest(Id.SubscriptionId, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SupportTicketResource(Client, SupportTicketData.DeserializeSupportTicketData(e)), _supportTicketClientDiagnostics, Pipeline, "SupportTicketCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SupportTicketResource(Client, SupportTicketData.DeserializeSupportTicketData(e)), _supportTicketClientDiagnostics, Pipeline, "SupportTicketCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

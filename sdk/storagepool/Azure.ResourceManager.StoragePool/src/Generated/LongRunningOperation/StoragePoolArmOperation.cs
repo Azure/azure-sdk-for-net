@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StoragePool
             _operation = OperationInternal.Succeeded(response);
         }
 
-        internal StoragePoolArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
+        internal StoragePoolArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, Core.OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
             _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response, "StoragePoolArmOperation", fallbackStrategy: new SequentialDelayStrategy());
