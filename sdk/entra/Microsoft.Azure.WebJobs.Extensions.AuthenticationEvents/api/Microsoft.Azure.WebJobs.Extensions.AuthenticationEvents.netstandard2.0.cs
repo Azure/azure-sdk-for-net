@@ -133,6 +133,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
     public abstract partial class CloudEventRequest<TResponse, TData> : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventRequest<TResponse, TData> where TResponse : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventResponse, new() where TData : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.CloudEventData
     {
         internal CloudEventRequest() { }
+        [System.ComponentModel.DataAnnotations.RequiredAttribute]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("oDataType")]
         public string ODataType { get { throw null; } set { } }
         [System.ComponentModel.DataAnnotations.RequiredAttribute]
