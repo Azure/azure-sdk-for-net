@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -148,7 +147,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual AsyncPageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspacesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new OperationalInsightsWorkspaceResource(Client, OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(e)), DeletedWorkspacesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetDeletedWorkspaces", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new OperationalInsightsWorkspaceResource(Client, OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(e)), DeletedWorkspacesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetDeletedWorkspaces", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +168,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual Pageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new OperationalInsightsWorkspaceResource(Client, OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(e)), DeletedWorkspacesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetDeletedWorkspaces", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new OperationalInsightsWorkspaceResource(Client, OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(e)), DeletedWorkspacesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetDeletedWorkspaces", "value", null, cancellationToken);
         }
     }
 }

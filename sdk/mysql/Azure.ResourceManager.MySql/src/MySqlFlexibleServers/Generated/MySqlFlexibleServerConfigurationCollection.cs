@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -232,7 +231,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, keyword, page, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, keyword, page, pageSizeHint);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerConfigurationResource(Client, MySqlFlexibleServerConfigurationData.DeserializeMySqlFlexibleServerConfigurationData(e)), _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics, Pipeline, "MySqlFlexibleServerConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerConfigurationResource(Client, MySqlFlexibleServerConfigurationData.DeserializeMySqlFlexibleServerConfigurationData(e)), _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics, Pipeline, "MySqlFlexibleServerConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +257,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, keyword, page, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, keyword, page, pageSizeHint);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerConfigurationResource(Client, MySqlFlexibleServerConfigurationData.DeserializeMySqlFlexibleServerConfigurationData(e)), _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics, Pipeline, "MySqlFlexibleServerConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerConfigurationResource(Client, MySqlFlexibleServerConfigurationData.DeserializeMySqlFlexibleServerConfigurationData(e)), _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics, Pipeline, "MySqlFlexibleServerConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

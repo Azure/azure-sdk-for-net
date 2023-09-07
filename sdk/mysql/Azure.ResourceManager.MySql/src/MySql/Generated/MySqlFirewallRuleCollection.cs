@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.MySql
         public virtual AsyncPageable<MySqlFirewallRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFirewallRuleFirewallRulesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MySqlFirewallRuleResource(Client, MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(e)), _mySqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "MySqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MySqlFirewallRuleResource(Client, MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(e)), _mySqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "MySqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +247,7 @@ namespace Azure.ResourceManager.MySql
         public virtual Pageable<MySqlFirewallRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFirewallRuleFirewallRulesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MySqlFirewallRuleResource(Client, MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(e)), _mySqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "MySqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MySqlFirewallRuleResource(Client, MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(e)), _mySqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "MySqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

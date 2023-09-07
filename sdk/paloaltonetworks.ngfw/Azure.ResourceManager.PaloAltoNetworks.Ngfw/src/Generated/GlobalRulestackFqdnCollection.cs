@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackFqdnFqdnListGlobalRulestackRestClient.CreateListRequest(Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _globalRulestackFqdnFqdnListGlobalRulestackRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GlobalRulestackFqdnResource(Client, GlobalRulestackFqdnData.DeserializeGlobalRulestackFqdnData(e)), _globalRulestackFqdnFqdnListGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackFqdnCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GlobalRulestackFqdnResource(Client, GlobalRulestackFqdnData.DeserializeGlobalRulestackFqdnData(e)), _globalRulestackFqdnFqdnListGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackFqdnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackFqdnFqdnListGlobalRulestackRestClient.CreateListRequest(Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _globalRulestackFqdnFqdnListGlobalRulestackRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GlobalRulestackFqdnResource(Client, GlobalRulestackFqdnData.DeserializeGlobalRulestackFqdnData(e)), _globalRulestackFqdnFqdnListGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackFqdnCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GlobalRulestackFqdnResource(Client, GlobalRulestackFqdnData.DeserializeGlobalRulestackFqdnData(e)), _globalRulestackFqdnFqdnListGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackFqdnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

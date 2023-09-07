@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -230,7 +229,7 @@ namespace Azure.ResourceManager.Network
         public virtual AsyncPageable<ConnectionMonitorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectionMonitorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConnectionMonitorResource(Client, ConnectionMonitorData.DeserializeConnectionMonitorData(e)), _connectionMonitorClientDiagnostics, Pipeline, "ConnectionMonitorCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConnectionMonitorResource(Client, ConnectionMonitorData.DeserializeConnectionMonitorData(e)), _connectionMonitorClientDiagnostics, Pipeline, "ConnectionMonitorCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +250,7 @@ namespace Azure.ResourceManager.Network
         public virtual Pageable<ConnectionMonitorResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectionMonitorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConnectionMonitorResource(Client, ConnectionMonitorData.DeserializeConnectionMonitorData(e)), _connectionMonitorClientDiagnostics, Pipeline, "ConnectionMonitorCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConnectionMonitorResource(Client, ConnectionMonitorData.DeserializeConnectionMonitorData(e)), _connectionMonitorClientDiagnostics, Pipeline, "ConnectionMonitorCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

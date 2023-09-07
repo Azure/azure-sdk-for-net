@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -540,7 +539,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListActiveConnectivityConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ActiveConnectivityConfiguration.DeserializeActiveConnectivityConfiguration, _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveConnectivityConfigurations", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ActiveConnectivityConfiguration.DeserializeActiveConnectivityConfiguration, _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveConnectivityConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -566,7 +565,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListActiveConnectivityConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ActiveConnectivityConfiguration.DeserializeActiveConnectivityConfiguration, _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveConnectivityConfigurations", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ActiveConnectivityConfiguration.DeserializeActiveConnectivityConfiguration, _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveConnectivityConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -592,7 +591,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListActiveSecurityAdminRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ActiveBaseSecurityAdminRule.DeserializeActiveBaseSecurityAdminRule, _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveSecurityAdminRules", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ActiveBaseSecurityAdminRule.DeserializeActiveBaseSecurityAdminRule, _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveSecurityAdminRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -618,7 +617,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListActiveSecurityAdminRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ActiveBaseSecurityAdminRule.DeserializeActiveBaseSecurityAdminRule, _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveSecurityAdminRules", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ActiveBaseSecurityAdminRule.DeserializeActiveBaseSecurityAdminRule, _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveSecurityAdminRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -720,7 +719,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkManagerDeploymentStatusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetworkManagerDeploymentStatus.DeserializeNetworkManagerDeploymentStatus, _networkManagerDeploymentStatusClientDiagnostics, Pipeline, "NetworkManagerResource.GetNetworkManagerDeploymentStatus", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetworkManagerDeploymentStatus.DeserializeNetworkManagerDeploymentStatus, _networkManagerDeploymentStatusClientDiagnostics, Pipeline, "NetworkManagerResource.GetNetworkManagerDeploymentStatus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -746,7 +745,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkManagerDeploymentStatusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, NetworkManagerDeploymentStatus.DeserializeNetworkManagerDeploymentStatus, _networkManagerDeploymentStatusClientDiagnostics, Pipeline, "NetworkManagerResource.GetNetworkManagerDeploymentStatus", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, NetworkManagerDeploymentStatus.DeserializeNetworkManagerDeploymentStatus, _networkManagerDeploymentStatusClientDiagnostics, Pipeline, "NetworkManagerResource.GetNetworkManagerDeploymentStatus", "value", null, cancellationToken);
         }
 
         /// <summary>

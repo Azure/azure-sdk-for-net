@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.PrivateDns
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualNetworkLinkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualNetworkLinkRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkLinkResource(Client, VirtualNetworkLinkData.DeserializeVirtualNetworkLinkData(e)), _virtualNetworkLinkClientDiagnostics, Pipeline, "VirtualNetworkLinkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkLinkResource(Client, VirtualNetworkLinkData.DeserializeVirtualNetworkLinkData(e)), _virtualNetworkLinkClientDiagnostics, Pipeline, "VirtualNetworkLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +255,7 @@ namespace Azure.ResourceManager.PrivateDns
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualNetworkLinkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualNetworkLinkRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkLinkResource(Client, VirtualNetworkLinkData.DeserializeVirtualNetworkLinkData(e)), _virtualNetworkLinkClientDiagnostics, Pipeline, "VirtualNetworkLinkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkLinkResource(Client, VirtualNetworkLinkData.DeserializeVirtualNetworkLinkData(e)), _virtualNetworkLinkClientDiagnostics, Pipeline, "VirtualNetworkLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

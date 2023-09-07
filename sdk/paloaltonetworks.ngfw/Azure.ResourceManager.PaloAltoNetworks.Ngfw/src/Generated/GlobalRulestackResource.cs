@@ -9,7 +9,6 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -770,7 +769,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual AsyncPageable<string> GetAppIdsAsync(string appIdVersion = null, string appPrefix = null, string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListAppIdsRequest(Id.Name, appIdVersion, appPrefix, skip, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetAppIds", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetAppIds", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -795,7 +794,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual Pageable<string> GetAppIds(string appIdVersion = null, string appPrefix = null, string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListAppIdsRequest(Id.Name, appIdVersion, appPrefix, skip, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetAppIds", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetAppIds", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -818,7 +817,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual AsyncPageable<RulestackCountry> GetCountriesAsync(string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListCountriesRequest(Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RulestackCountry.DeserializeRulestackCountry, _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetCountries", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RulestackCountry.DeserializeRulestackCountry, _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetCountries", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -841,7 +840,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual Pageable<RulestackCountry> GetCountries(string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListCountriesRequest(Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, RulestackCountry.DeserializeRulestackCountry, _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetCountries", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, RulestackCountry.DeserializeRulestackCountry, _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetCountries", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -862,7 +861,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual AsyncPageable<string> GetFirewallsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListFirewallsRequest(Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetFirewalls", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetFirewalls", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -883,7 +882,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual Pageable<string> GetFirewalls(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListFirewallsRequest(Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetFirewalls", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetFirewalls", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -906,7 +905,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual AsyncPageable<PredefinedUrlCategory> GetPredefinedUrlCategoriesAsync(string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListPredefinedUrlCategoriesRequest(Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PredefinedUrlCategory.DeserializePredefinedUrlCategory, _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetPredefinedUrlCategories", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PredefinedUrlCategory.DeserializePredefinedUrlCategory, _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetPredefinedUrlCategories", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -929,7 +928,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual Pageable<PredefinedUrlCategory> GetPredefinedUrlCategories(string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListPredefinedUrlCategoriesRequest(Id.Name, skip, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PredefinedUrlCategory.DeserializePredefinedUrlCategory, _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetPredefinedUrlCategories", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, PredefinedUrlCategory.DeserializePredefinedUrlCategory, _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetPredefinedUrlCategories", "value", null, cancellationToken);
         }
 
         /// <summary>
