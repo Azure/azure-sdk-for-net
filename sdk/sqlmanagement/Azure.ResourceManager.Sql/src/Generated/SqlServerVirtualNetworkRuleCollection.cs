@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerVirtualNetworkRuleResource>(new SqlServerVirtualNetworkRuleOperationSource(Client), _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerVirtualNetworkRuleResource>(new SqlServerVirtualNetworkRuleOperationSource(Client), _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerVirtualNetworkRuleResource>(new SqlServerVirtualNetworkRuleOperationSource(Client), _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerVirtualNetworkRuleResource>(new SqlServerVirtualNetworkRuleOperationSource(Client), _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerVirtualNetworkRuleResource(Client, SqlServerVirtualNetworkRuleData.DeserializeSqlServerVirtualNetworkRuleData(e)), _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, "SqlServerVirtualNetworkRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerVirtualNetworkRuleResource(Client, SqlServerVirtualNetworkRuleData.DeserializeSqlServerVirtualNetworkRuleData(e)), _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, "SqlServerVirtualNetworkRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerVirtualNetworkRuleResource(Client, SqlServerVirtualNetworkRuleData.DeserializeSqlServerVirtualNetworkRuleData(e)), _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, "SqlServerVirtualNetworkRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerVirtualNetworkRuleResource(Client, SqlServerVirtualNetworkRuleData.DeserializeSqlServerVirtualNetworkRuleData(e)), _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, "SqlServerVirtualNetworkRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -335,7 +334,7 @@ namespace Azure.ResourceManager.Sphere
             try
             {
                 var response = await _sphereCatalogCatalogsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SphereArmOperation(_sphereCatalogCatalogsClientDiagnostics, Pipeline, _sphereCatalogCatalogsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SphereArmOperation(_sphereCatalogCatalogsClientDiagnostics, Pipeline, _sphereCatalogCatalogsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -369,7 +368,7 @@ namespace Azure.ResourceManager.Sphere
             try
             {
                 var response = _sphereCatalogCatalogsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new SphereArmOperation(_sphereCatalogCatalogsClientDiagnostics, Pipeline, _sphereCatalogCatalogsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SphereArmOperation(_sphereCatalogCatalogsClientDiagnostics, Pipeline, _sphereCatalogCatalogsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -532,7 +531,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCatalogCatalogsRestClient.CreateListDeploymentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereCatalogCatalogsRestClient.CreateListDeploymentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereDeploymentResource(Client, SphereDeploymentData.DeserializeSphereDeploymentData(e)), _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogResource.GetDeployments", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereDeploymentResource(Client, SphereDeploymentData.DeserializeSphereDeploymentData(e)), _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogResource.GetDeployments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -558,7 +557,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCatalogCatalogsRestClient.CreateListDeploymentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereCatalogCatalogsRestClient.CreateListDeploymentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereDeploymentResource(Client, SphereDeploymentData.DeserializeSphereDeploymentData(e)), _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogResource.GetDeployments", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereDeploymentResource(Client, SphereDeploymentData.DeserializeSphereDeploymentData(e)), _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogResource.GetDeployments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -588,7 +587,7 @@ namespace Azure.ResourceManager.Sphere
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCatalogCatalogsRestClient.CreateListDeviceGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, filter, top, skip, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereCatalogCatalogsRestClient.CreateListDeviceGroupsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, filter, top, skip, pageSizeHint);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereDeviceGroupResource(Client, SphereDeviceGroupData.DeserializeSphereDeviceGroupData(e)), _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogResource.GetDeviceGroups", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereDeviceGroupResource(Client, SphereDeviceGroupData.DeserializeSphereDeviceGroupData(e)), _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogResource.GetDeviceGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -618,7 +617,7 @@ namespace Azure.ResourceManager.Sphere
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCatalogCatalogsRestClient.CreateListDeviceGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, filter, top, skip, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereCatalogCatalogsRestClient.CreateListDeviceGroupsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, filter, top, skip, pageSizeHint);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereDeviceGroupResource(Client, SphereDeviceGroupData.DeserializeSphereDeviceGroupData(e)), _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogResource.GetDeviceGroups", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereDeviceGroupResource(Client, SphereDeviceGroupData.DeserializeSphereDeviceGroupData(e)), _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogResource.GetDeviceGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -644,7 +643,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCatalogCatalogsRestClient.CreateListDeviceInsightsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereCatalogCatalogsRestClient.CreateListDeviceInsightsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SphereDeviceInsight.DeserializeSphereDeviceInsight, _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogResource.GetDeviceInsights", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SphereDeviceInsight.DeserializeSphereDeviceInsight, _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogResource.GetDeviceInsights", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -670,7 +669,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCatalogCatalogsRestClient.CreateListDeviceInsightsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereCatalogCatalogsRestClient.CreateListDeviceInsightsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SphereDeviceInsight.DeserializeSphereDeviceInsight, _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogResource.GetDeviceInsights", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SphereDeviceInsight.DeserializeSphereDeviceInsight, _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogResource.GetDeviceInsights", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -696,7 +695,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCatalogCatalogsRestClient.CreateListDevicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereCatalogCatalogsRestClient.CreateListDevicesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereDeviceResource(Client, SphereDeviceData.DeserializeSphereDeviceData(e)), _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogResource.GetDevices", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereDeviceResource(Client, SphereDeviceData.DeserializeSphereDeviceData(e)), _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogResource.GetDevices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -722,7 +721,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCatalogCatalogsRestClient.CreateListDevicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereCatalogCatalogsRestClient.CreateListDevicesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereDeviceResource(Client, SphereDeviceData.DeserializeSphereDeviceData(e)), _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogResource.GetDevices", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereDeviceResource(Client, SphereDeviceData.DeserializeSphereDeviceData(e)), _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogResource.GetDevices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

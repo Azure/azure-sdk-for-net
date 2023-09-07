@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation(_sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlArmOperation(_sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation(_sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.FailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerDatabaseReplicationLinkResource>(new SqlServerDatabaseReplicationLinkOperationSource(Client), _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerDatabaseReplicationLinkResource>(new SqlServerDatabaseReplicationLinkOperationSource(Client), _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.Failover(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerDatabaseReplicationLinkResource>(new SqlServerDatabaseReplicationLinkOperationSource(Client), _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerDatabaseReplicationLinkResource>(new SqlServerDatabaseReplicationLinkOperationSource(Client), _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.FailoverAllowDataLossAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerDatabaseReplicationLinkResource>(new SqlServerDatabaseReplicationLinkOperationSource(Client), _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateFailoverAllowDataLossRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerDatabaseReplicationLinkResource>(new SqlServerDatabaseReplicationLinkOperationSource(Client), _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateFailoverAllowDataLossRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.FailoverAllowDataLoss(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerDatabaseReplicationLinkResource>(new SqlServerDatabaseReplicationLinkOperationSource(Client), _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateFailoverAllowDataLossRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerDatabaseReplicationLinkResource>(new SqlServerDatabaseReplicationLinkOperationSource(Client), _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateFailoverAllowDataLossRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

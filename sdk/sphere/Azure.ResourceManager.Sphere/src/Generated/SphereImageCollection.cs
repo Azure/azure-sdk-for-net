@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.Sphere
             try
             {
                 var response = await _sphereImageImagesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SphereArmOperation<SphereImageResource>(new SphereImageOperationSource(Client), _sphereImageImagesClientDiagnostics, Pipeline, _sphereImageImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SphereArmOperation<SphereImageResource>(new SphereImageOperationSource(Client), _sphereImageImagesClientDiagnostics, Pipeline, _sphereImageImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Sphere
             try
             {
                 var response = _sphereImageImagesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, data, cancellationToken);
-                var operation = new SphereArmOperation<SphereImageResource>(new SphereImageOperationSource(Client), _sphereImageImagesClientDiagnostics, Pipeline, _sphereImageImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SphereArmOperation<SphereImageResource>(new SphereImageOperationSource(Client), _sphereImageImagesClientDiagnostics, Pipeline, _sphereImageImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -232,7 +231,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereImageImagesRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereImageImagesRestClient.CreateListByCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereImageResource(Client, SphereImageData.DeserializeSphereImageData(e)), _sphereImageImagesClientDiagnostics, Pipeline, "SphereImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereImageResource(Client, SphereImageData.DeserializeSphereImageData(e)), _sphereImageImagesClientDiagnostics, Pipeline, "SphereImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +257,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereImageImagesRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereImageImagesRestClient.CreateListByCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereImageResource(Client, SphereImageData.DeserializeSphereImageData(e)), _sphereImageImagesClientDiagnostics, Pipeline, "SphereImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereImageResource(Client, SphereImageData.DeserializeSphereImageData(e)), _sphereImageImagesClientDiagnostics, Pipeline, "SphereImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
