@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HDInsightClusterPoolClusterPoolsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HDInsightClusterPoolClusterPoolsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HDInsightClusterPoolResource(Client, HDInsightClusterPoolData.DeserializeHDInsightClusterPoolData(e)), HDInsightClusterPoolClusterPoolsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHDInsightClusterPools", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HDInsightClusterPoolResource(Client, HDInsightClusterPoolData.DeserializeHDInsightClusterPoolData(e)), HDInsightClusterPoolClusterPoolsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHDInsightClusterPools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HDInsightClusterPoolClusterPoolsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HDInsightClusterPoolClusterPoolsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HDInsightClusterPoolResource(Client, HDInsightClusterPoolData.DeserializeHDInsightClusterPoolData(e)), HDInsightClusterPoolClusterPoolsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHDInsightClusterPools", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HDInsightClusterPoolResource(Client, HDInsightClusterPoolData.DeserializeHDInsightClusterPoolData(e)), HDInsightClusterPoolClusterPoolsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHDInsightClusterPools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableClusterPoolVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableClusterPoolVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ClusterPoolVersion.DeserializeClusterPoolVersion, AvailableClusterPoolVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableClusterPoolVersionsByLocation", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ClusterPoolVersion.DeserializeClusterPoolVersion, AvailableClusterPoolVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableClusterPoolVersionsByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -207,7 +206,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableClusterPoolVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableClusterPoolVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ClusterPoolVersion.DeserializeClusterPoolVersion, AvailableClusterPoolVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableClusterPoolVersionsByLocation", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ClusterPoolVersion.DeserializeClusterPoolVersion, AvailableClusterPoolVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableClusterPoolVersionsByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,7 +229,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableClusterVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableClusterVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, HDInsightClusterVersion.DeserializeHDInsightClusterVersion, AvailableClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableClusterVersionsByLocation", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, HDInsightClusterVersion.DeserializeHDInsightClusterVersion, AvailableClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableClusterVersionsByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +252,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableClusterVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableClusterVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, HDInsightClusterVersion.DeserializeHDInsightClusterVersion, AvailableClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableClusterVersionsByLocation", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, HDInsightClusterVersion.DeserializeHDInsightClusterVersion, AvailableClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableClusterVersionsByLocation", "value", "nextLink", cancellationToken);
         }
     }
 }

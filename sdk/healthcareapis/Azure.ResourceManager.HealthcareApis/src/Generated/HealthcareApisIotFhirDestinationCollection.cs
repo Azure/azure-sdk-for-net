@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.HealthcareApis
             try
             {
                 var response = await _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fhirDestinationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HealthcareApisArmOperation<HealthcareApisIotFhirDestinationResource>(new HealthcareApisIotFhirDestinationOperationSource(Client), _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics, Pipeline, _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fhirDestinationName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new HealthcareApisArmOperation<HealthcareApisIotFhirDestinationResource>(new HealthcareApisIotFhirDestinationOperationSource(Client), _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics, Pipeline, _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fhirDestinationName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.HealthcareApis
             try
             {
                 var response = _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fhirDestinationName, data, cancellationToken);
-                var operation = new HealthcareApisArmOperation<HealthcareApisIotFhirDestinationResource>(new HealthcareApisIotFhirDestinationOperationSource(Client), _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics, Pipeline, _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fhirDestinationName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new HealthcareApisArmOperation<HealthcareApisIotFhirDestinationResource>(new HealthcareApisIotFhirDestinationOperationSource(Client), _healthcareApisIotFhirDestinationIotConnectorFhirDestinationClientDiagnostics, Pipeline, _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fhirDestinationName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisIotFhirDestinationFhirDestinationsRestClient.CreateListByIotConnectorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthcareApisIotFhirDestinationFhirDestinationsRestClient.CreateListByIotConnectorNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisIotFhirDestinationResource(Client, HealthcareApisIotFhirDestinationData.DeserializeHealthcareApisIotFhirDestinationData(e)), _healthcareApisIotFhirDestinationFhirDestinationsClientDiagnostics, Pipeline, "HealthcareApisIotFhirDestinationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisIotFhirDestinationResource(Client, HealthcareApisIotFhirDestinationData.DeserializeHealthcareApisIotFhirDestinationData(e)), _healthcareApisIotFhirDestinationFhirDestinationsClientDiagnostics, Pipeline, "HealthcareApisIotFhirDestinationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +254,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisIotFhirDestinationFhirDestinationsRestClient.CreateListByIotConnectorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthcareApisIotFhirDestinationFhirDestinationsRestClient.CreateListByIotConnectorNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisIotFhirDestinationResource(Client, HealthcareApisIotFhirDestinationData.DeserializeHealthcareApisIotFhirDestinationData(e)), _healthcareApisIotFhirDestinationFhirDestinationsClientDiagnostics, Pipeline, "HealthcareApisIotFhirDestinationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisIotFhirDestinationResource(Client, HealthcareApisIotFhirDestinationData.DeserializeHealthcareApisIotFhirDestinationData(e)), _healthcareApisIotFhirDestinationFhirDestinationsClientDiagnostics, Pipeline, "HealthcareApisIotFhirDestinationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

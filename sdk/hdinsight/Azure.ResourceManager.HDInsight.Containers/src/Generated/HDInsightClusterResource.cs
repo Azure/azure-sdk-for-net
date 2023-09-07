@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -179,7 +178,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             try
             {
                 var response = await _hdInsightClusterClustersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainersArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ContainersArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -213,7 +212,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             try
             {
                 var response = _hdInsightClusterClustersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ContainersArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ContainersArmOperation(_hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -251,7 +250,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             try
             {
                 var response = await _hdInsightClusterClustersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainersArmOperation<HDInsightClusterResource>(new HDInsightClusterOperationSource(Client), _hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ContainersArmOperation<HDInsightClusterResource>(new HDInsightClusterOperationSource(Client), _hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -289,7 +288,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             try
             {
                 var response = _hdInsightClusterClustersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new ContainersArmOperation<HDInsightClusterResource>(new HDInsightClusterOperationSource(Client), _hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ContainersArmOperation<HDInsightClusterResource>(new HDInsightClusterOperationSource(Client), _hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -327,7 +326,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             try
             {
                 var response = await _hdInsightClusterClustersRestClient.ResizeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainersArmOperation<HDInsightClusterResource>(new HDInsightClusterOperationSource(Client), _hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateResizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainersArmOperation<HDInsightClusterResource>(new HDInsightClusterOperationSource(Client), _hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateResizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -365,7 +364,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             try
             {
                 var response = _hdInsightClusterClustersRestClient.Resize(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new ContainersArmOperation<HDInsightClusterResource>(new HDInsightClusterOperationSource(Client), _hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateResizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainersArmOperation<HDInsightClusterResource>(new HDInsightClusterOperationSource(Client), _hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateResizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -396,7 +395,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightClusterClustersRestClient.CreateListServiceConfigsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hdInsightClusterClustersRestClient.CreateListServiceConfigsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ClusterServiceConfigResult.DeserializeClusterServiceConfigResult, _hdInsightClusterClustersClientDiagnostics, Pipeline, "HDInsightClusterResource.GetServiceConfigs", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ClusterServiceConfigResult.DeserializeClusterServiceConfigResult, _hdInsightClusterClustersClientDiagnostics, Pipeline, "HDInsightClusterResource.GetServiceConfigs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -418,7 +417,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightClusterClustersRestClient.CreateListServiceConfigsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hdInsightClusterClustersRestClient.CreateListServiceConfigsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ClusterServiceConfigResult.DeserializeClusterServiceConfigResult, _hdInsightClusterClustersClientDiagnostics, Pipeline, "HDInsightClusterResource.GetServiceConfigs", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ClusterServiceConfigResult.DeserializeClusterServiceConfigResult, _hdInsightClusterClustersClientDiagnostics, Pipeline, "HDInsightClusterResource.GetServiceConfigs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -440,7 +439,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightClusterClustersRestClient.CreateListInstanceViewsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hdInsightClusterClustersRestClient.CreateListInstanceViewsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ClusterInstanceViewResult.DeserializeClusterInstanceViewResult, _hdInsightClusterClustersClientDiagnostics, Pipeline, "HDInsightClusterResource.GetInstanceViews", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ClusterInstanceViewResult.DeserializeClusterInstanceViewResult, _hdInsightClusterClustersClientDiagnostics, Pipeline, "HDInsightClusterResource.GetInstanceViews", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -462,7 +461,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightClusterClustersRestClient.CreateListInstanceViewsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hdInsightClusterClustersRestClient.CreateListInstanceViewsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ClusterInstanceViewResult.DeserializeClusterInstanceViewResult, _hdInsightClusterClustersClientDiagnostics, Pipeline, "HDInsightClusterResource.GetInstanceViews", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ClusterInstanceViewResult.DeserializeClusterInstanceViewResult, _hdInsightClusterClustersClientDiagnostics, Pipeline, "HDInsightClusterResource.GetInstanceViews", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -551,7 +550,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             try
             {
                 var response = await _clusterJobsRestClient.RunJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clusterJob, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainersArmOperation<ClusterJob>(new ClusterJobOperationSource(), _clusterJobsClientDiagnostics, Pipeline, _clusterJobsRestClient.CreateRunJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clusterJob).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainersArmOperation<ClusterJob>(new ClusterJobOperationSource(), _clusterJobsClientDiagnostics, Pipeline, _clusterJobsRestClient.CreateRunJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clusterJob).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -589,7 +588,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             try
             {
                 var response = _clusterJobsRestClient.RunJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clusterJob, cancellationToken);
-                var operation = new ContainersArmOperation<ClusterJob>(new ClusterJobOperationSource(), _clusterJobsClientDiagnostics, Pipeline, _clusterJobsRestClient.CreateRunJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clusterJob).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainersArmOperation<ClusterJob>(new ClusterJobOperationSource(), _clusterJobsClientDiagnostics, Pipeline, _clusterJobsRestClient.CreateRunJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clusterJob).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -620,7 +619,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ClusterJob.DeserializeClusterJob, _clusterJobsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetClusterJobs", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ClusterJob.DeserializeClusterJob, _clusterJobsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetClusterJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -642,7 +641,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ClusterJob.DeserializeClusterJob, _clusterJobsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetClusterJobs", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ClusterJob.DeserializeClusterJob, _clusterJobsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetClusterJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

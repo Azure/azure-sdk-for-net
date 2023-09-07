@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             try
             {
                 var response = await _hdInsightClusterPoolClusterPoolsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainersArmOperation(_hdInsightClusterPoolClusterPoolsClientDiagnostics, Pipeline, _hdInsightClusterPoolClusterPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainersArmOperation(_hdInsightClusterPoolClusterPoolsClientDiagnostics, Pipeline, _hdInsightClusterPoolClusterPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             try
             {
                 var response = _hdInsightClusterPoolClusterPoolsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ContainersArmOperation(_hdInsightClusterPoolClusterPoolsClientDiagnostics, Pipeline, _hdInsightClusterPoolClusterPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainersArmOperation(_hdInsightClusterPoolClusterPoolsClientDiagnostics, Pipeline, _hdInsightClusterPoolClusterPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             try
             {
                 var response = await _hdInsightClusterPoolClusterPoolsRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainersArmOperation<HDInsightClusterPoolResource>(new HDInsightClusterPoolOperationSource(Client), _hdInsightClusterPoolClusterPoolsClientDiagnostics, Pipeline, _hdInsightClusterPoolClusterPoolsRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ContainersArmOperation<HDInsightClusterPoolResource>(new HDInsightClusterPoolOperationSource(Client), _hdInsightClusterPoolClusterPoolsClientDiagnostics, Pipeline, _hdInsightClusterPoolClusterPoolsRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             try
             {
                 var response = _hdInsightClusterPoolClusterPoolsRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new ContainersArmOperation<HDInsightClusterPoolResource>(new HDInsightClusterPoolOperationSource(Client), _hdInsightClusterPoolClusterPoolsClientDiagnostics, Pipeline, _hdInsightClusterPoolClusterPoolsRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ContainersArmOperation<HDInsightClusterPoolResource>(new HDInsightClusterPoolOperationSource(Client), _hdInsightClusterPoolClusterPoolsClientDiagnostics, Pipeline, _hdInsightClusterPoolClusterPoolsRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
